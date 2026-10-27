@@ -28,6 +28,16 @@
     "body": "This page does not exist or no longer exists.",
     "home": "Go to home page"
   },
+  "ToolsIndex": {
+    "metaTitle": "Generators | Motivo",
+    "metaDescription": "All generators for patterns, gradients and backgrounds, right in your browser.",
+    "title": "Generators",
+    "lead": "Pick a generator, press Space and enjoy the surprise."
+  },
+  "ToolPage": {
+    "metaTitle": "{tool} | Motivo",
+    "allTools": "All generators"
+  },
   "tools": {
     "common": {
       "params": {

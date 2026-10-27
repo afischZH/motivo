@@ -28,6 +28,16 @@
     "body": "Diese Seite gibt es nicht oder nicht mehr.",
     "home": "Zur Startseite"
   },
+  "ToolsIndex": {
+    "metaTitle": "Generatoren | Motivo",
+    "metaDescription": "Alle Generatoren für Muster, Verläufe und Hintergründe, direkt in deinem Browser.",
+    "title": "Generatoren",
+    "lead": "Such dir einen Generator aus, drück die Leertaste und lass dich überraschen."
+  },
+  "ToolPage": {
+    "metaTitle": "{tool} | Motivo",
+    "allTools": "Alle Generatoren"
+  },
   "tools": {
     "common": {
       "params": {
