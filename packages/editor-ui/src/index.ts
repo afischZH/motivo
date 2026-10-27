@@ -6,6 +6,15 @@ export { ControlPanel, EditorControls, type ControlPanelProps } from "./controls
 export { ColorPicker, toLongHex, type ColorPickerProps } from "./controls/color";
 export { useT, type Translate } from "./i18n";
 export { EditorShell, type EditorShellProps } from "./shell/editor-shell";
+export {
+  ExportDialog,
+  browserExportServices,
+  renderTextExport,
+  type ExportDialogProps,
+  type ExportServices,
+} from "./export/export-dialog";
+export * from "./export/export-model";
+export { applyShareHash, buildShareUrl, useShareHash, type ShareNotice } from "./share/use-share";
 export { Motif, type MotifProps } from "./shell/motif";
 export {
   cssToStyle,

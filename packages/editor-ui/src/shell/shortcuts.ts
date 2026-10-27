@@ -16,7 +16,8 @@ export type ShortcutAction =
   | "zoomFit"
   | "zoom100"
   | "help"
-  | "export";
+  | "export"
+  | "copyImage";
 
 /** The parts of a `KeyboardEvent` the matcher reads. */
 export interface ShortcutKeyEvent {
@@ -37,6 +38,7 @@ export function matchShortcut(event: ShortcutKeyEvent): ShortcutAction | null {
     if (key === "z") return event.shiftKey ? "redo" : "undo";
     if (key === "y" && event.ctrlKey && !event.metaKey && !event.shiftKey) return "redo";
     if (key === "e" && !event.shiftKey) return "export";
+    if (key === "c" && event.shiftKey) return "copyImage";
     return null;
   }
   // "?" needs Shift on most layouts, so it is matched before the Shift check.
@@ -188,6 +190,7 @@ export const NON_REPEATING_ACTIONS: ReadonlySet<ShortcutAction> = new Set([
   "newVariant",
   "help",
   "export",
+  "copyImage",
   "zoomFit",
   "zoom100",
 ]);
@@ -215,6 +218,8 @@ export const SHORTCUT_HELP: readonly ShortcutHelpEntry[] = [
   { action: "nextVariant", keys: [["→"]] },
   { action: "zoomFit", keys: [["0"]] },
   { action: "zoom100", keys: [["1"]] },
+  { action: "export", keys: [["mod", "E"]] },
+  { action: "copyImage", keys: [["mod", "shift", "C"]] },
   { action: "theme", keys: [["mod", "shift", "K"]] },
   { action: "help", keys: [["?"]] },
 ];

@@ -1,8 +1,18 @@
 "use client";
 
-import { TRANSPARENT, type AnyToolDefinition, type CanvasSize } from "@motivo/tool-registry";
+import { supportsExport } from "@motivo/exporters";
+import {
+  TRANSPARENT,
+  createRenderContext,
+  type AnyToolDefinition,
+  type CanvasSize,
+  type Params,
+  type ParamsSchema,
+} from "@motivo/tool-registry";
 import { useDeferredValue, useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import { EditorControls } from "../controls/control-panel";
+import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
+import { buildShareUrl, useShareHash } from "../share/use-share";
 import { cx } from "../controls/primitives";
 import { useT } from "../i18n";
 import {
@@ -17,6 +27,8 @@ import {
   ChevronRightIcon,
   DownloadIcon,
   KeyboardIcon,
+  CloseIcon,
+  LinkIcon,
   RedoIcon,
   ShuffleIcon,
   UndoIcon,
@@ -32,10 +44,21 @@ import { useEditorShortcuts } from "./use-shortcuts";
 export interface EditorShellProps {
   /** Rendered before the title, e.g. a link back to the catalogue. */
   headerStart?: ReactNode;
-  /** Opens the export dialog. Without it the Export button is shown disabled (M1-AP05). */
-  onExport?: () => void;
+  /** Browser side effects of export, copy and share; replaceable in tests. */
+  exportServices?: ExportServices;
   className?: string;
 }
+
+/** A dismissible notice under the header (share link problems, copy fallbacks). */
+interface ShellNotice {
+  tone: "error" | "info";
+  message: string;
+  /** A share link to copy by hand when the clipboard failed. */
+  url?: string;
+}
+
+/** How long the visible "Kopiert" confirmation stays. */
+const FLASH_MS = 4000;
 
 const PRESET_THUMB_EDGE = 72;
 const VARIANT_THUMB_EDGE = 56;
@@ -49,7 +72,11 @@ const percent = (scale: number) => Math.round(scale * 100);
  * filmstrip, plus the keyboard shortcuts of DESIGN.md 4. Needs an
  * `EditorStoreProvider` above it.
  */
-export function EditorShell({ headerStart, onExport, className }: EditorShellProps) {
+export function EditorShell({
+  headerStart,
+  exportServices = browserExportServices,
+  className,
+}: EditorShellProps) {
   const t = useT();
   const store = useEditorStoreApi();
   const tool = useEditorStore((s) => s.tool);
@@ -62,8 +89,19 @@ export function EditorShell({ headerStart, onExport, className }: EditorShellPro
   const [zoom, setZoom] = useState<Zoom>("fit");
   const [shownScale, setShownScale] = useState<number | null>(null);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
   const [announcement, setAnnouncement] = useState("");
+  // `id` restarts the fade timer when the same message is shown again.
+  const [flash, setFlash] = useState<{ message: string; id: number } | null>(null);
+  const [notice, setNotice] = useState<ShellNotice | null>(null);
+  const [hashNotice, dismissHashNotice] = useShareHash(store);
   const ids = useId();
+
+  useEffect(() => {
+    if (!flash) return;
+    const timer = setTimeout(() => setFlash(null), FLASH_MS);
+    return () => clearTimeout(timer);
+  }, [flash]);
 
   const toolName = t(`tools.${tool.id}.name`);
   const activeIndex = variants.findIndex((v) => v.id === activeVariantId);
@@ -101,10 +139,68 @@ export function EditorShell({ headerStart, onExport, className }: EditorShellPro
       zoomFit: () => setZoom("fit"),
       zoom100: () => setZoom(1),
       help: () => setHelpOpen(true),
+      export: () => setExportOpen(true),
     };
   }, [store, t]);
 
-  useEditorShortcuts(onExport ? { ...actions, export: onExport } : actions);
+  /** Visible and announced confirmation that fades after a few seconds. */
+  const confirm = (message: string) => setFlash((f) => ({ message, id: (f?.id ?? 0) + 1 }));
+
+  const share = async () => {
+    const built = buildShareUrl(store, window.location.href);
+    if (!built.ok) {
+      setNotice({ tone: "error", message: t(`Editor.share.encodeErrors.${built.error}`) });
+      return;
+    }
+    const result = await exportServices.copyText(built.url);
+    if (result.ok) {
+      setNotice(null);
+      confirm(t("Editor.share.copied"));
+    } else {
+      setNotice({ tone: "error", message: t("Editor.share.copyFailed"), url: built.url });
+    }
+  };
+
+  // ⌘/Ctrl+Shift+C: the current design as PNG (DESIGN.md 4), for tools that export PNG.
+  const copyImage = supportsExport(tool, "png")
+    ? () => {
+        if (!exportServices.canCopyImage()) {
+          setNotice({ tone: "error", message: t("Editor.export.copyUnavailableImage") });
+          return;
+        }
+        const s = store.getState();
+        const png = exportServices
+          .exportRaster(
+            s.tool,
+            s.params as Params<ParamsSchema>,
+            createRenderContext(s.seed, s.size),
+            {
+              format: "png",
+            },
+          )
+          .then((r) => r.blob);
+        // Created synchronously inside the key event, as Safari requires.
+        const pending = exportServices.copyPng(png);
+        void png.catch(() => undefined);
+        void pending.then((result) => {
+          if (result.ok) confirm(t("Editor.export.copiedPng"));
+          else
+            setNotice({ tone: "error", message: t(`Editor.export.copyErrors.${result.reason}`) });
+        });
+      }
+    : undefined;
+
+  useEditorShortcuts(copyImage ? { ...actions, copyImage } : actions);
+
+  const shownNotice: ShellNotice | null =
+    notice ??
+    (hashNotice
+      ? { tone: hashNotice.tone, message: t(`Editor.share.notices.${hashNotice.key}`) }
+      : null);
+  const dismissNotice = () => {
+    setNotice(null);
+    dismissHashNotice();
+  };
 
   return (
     <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
@@ -157,23 +253,71 @@ export function EditorShell({ headerStart, onExport, className }: EditorShellPro
         >
           <KeyboardIcon />
         </button>
+        <span
+          role="status"
+          aria-live="polite"
+          className="text-xs text-muted-foreground"
+          data-testid="shell-flash"
+        >
+          {flash?.message}
+        </span>
+        <button
+          type="button"
+          className={BUTTON_CLASS}
+          onClick={() => void share()}
+          title={t("Editor.share.hint")}
+          data-testid="share-link"
+        >
+          <LinkIcon />
+          {t("Editor.share.button")}
+        </button>
         <button
           type="button"
           className={PRIMARY_BUTTON_CLASS}
-          onClick={onExport}
-          disabled={!onExport}
-          title={onExport ? undefined : t("Editor.shell.exportSoon")}
-          aria-describedby={onExport ? undefined : `${ids}-export-soon`}
+          onClick={actions.export}
+          aria-haspopup="dialog"
+          aria-keyshortcuts="Control+E Meta+E"
+          title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
         >
           <DownloadIcon />
           {t("Editor.shell.export")}
         </button>
-        {!onExport && (
-          <span id={`${ids}-export-soon`} className="sr-only">
-            {t("Editor.shell.exportSoon")}
-          </span>
-        )}
       </div>
+
+      {shownNotice && (
+        <div
+          role={shownNotice.tone === "error" ? "alert" : "status"}
+          className={cx(
+            "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
+            shownNotice.tone === "error" ? "bg-destructive/10" : "bg-muted",
+          )}
+          data-testid="shell-notice"
+        >
+          <p className="min-w-0 flex-[1_1_16rem]">{shownNotice.message}</p>
+          {shownNotice.url !== undefined && (
+            <>
+              <label htmlFor={`${ids}-share-url`} className="sr-only">
+                {t("Editor.share.linkLabel")}
+              </label>
+              <input
+                id={`${ids}-share-url`}
+                readOnly
+                value={shownNotice.url}
+                onFocus={(event) => event.currentTarget.select()}
+                className="h-8 min-w-0 flex-[1_1_16rem] rounded-md border border-input bg-background px-2 text-xs"
+              />
+            </>
+          )}
+          <button
+            type="button"
+            className={ICON_BUTTON}
+            onClick={dismissNotice}
+            aria-label={t("Editor.share.dismiss")}
+          >
+            <CloseIcon />
+          </button>
+        </div>
+      )}
 
       <div
         className={cx(
@@ -212,6 +356,11 @@ export function EditorShell({ headerStart, onExport, className }: EditorShellPro
         {announcement}
       </p>
       <ShortcutHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
+      <ExportDialog
+        open={exportOpen}
+        onClose={() => setExportOpen(false)}
+        services={exportServices}
+      />
     </div>
   );
 }

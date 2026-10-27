@@ -1,8 +1,12 @@
-import { act, fireEvent, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { createRegistry, type ToolRegistry } from "@motivo/tool-registry";
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
+import type { ExportServices } from "../export/export-dialog";
+import { designToHash } from "../share/share-codec";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
 import { EditorStoreProvider } from "../store/react";
-import { createFixtureRegistry } from "../test/fixture-tool";
+import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fixture-tool";
+import { fakeServices } from "../test/fake-services";
 import { fixtureMessages, renderWithIntl } from "../test/render";
 import { EditorShell } from "./editor-shell";
 import { matchSizePreset, parseEdge } from "./size-picker";
@@ -22,21 +26,27 @@ const messages = {
   },
 };
 
-function setup(): EditorStoreApi {
+function setup(
+  options: { registry?: ToolRegistry; services?: ExportServices } = {},
+): EditorStoreApi {
   let seed = 100;
   const store = createEditorStore({
     toolId: "test-fixture",
-    registry: createFixtureRegistry(),
+    registry: options.registry ?? createFixtureRegistry(),
     randomSeed: () => ++seed,
   });
   renderWithIntl(
     <EditorStoreProvider store={store}>
-      <EditorShell />
+      <EditorShell exportServices={options.services ?? fakeServices()} />
     </EditorStoreProvider>,
     messages,
   );
   return store;
 }
+
+afterEach(() => {
+  window.history.replaceState(null, "", "/");
+});
 
 const press = (key: string, init: KeyboardEventInit = {}, target: Element = document.body) =>
   act(() => {
@@ -135,10 +145,112 @@ describe("EditorShell", () => {
     expect(screen.getByRole("dialog", { name: "Tastaturkürzel" })).toBeTruthy();
   });
 
-  it("shows Export disabled until the export dialog exists", () => {
+  it("opens the export dialog from the button and with Ctrl+E", () => {
     setup();
-    const exportButton = screen.getByRole("button", { name: "Exportieren" }) as HTMLButtonElement;
-    expect(exportButton.disabled).toBe(true);
+    expect(screen.queryByRole("dialog", { name: "Exportieren" })).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Exportieren" }));
+    const dialog = screen.getByRole("dialog", { name: "Exportieren" });
+    expect(within(dialog).getByRole("radio", { name: "SVG" })).toBeTruthy();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Schliessen" }));
+    expect(screen.queryByRole("dialog", { name: "Exportieren" })).toBeNull();
+
+    press("e", { ctrlKey: true });
+    expect(screen.getByRole("dialog", { name: "Exportieren" })).toBeTruthy();
+  });
+
+  it("copies the current design as PNG with Ctrl+Shift+C when the tool exports PNG", async () => {
+    const registry = createRegistry();
+    registry.register({ ...fixtureTool, exports: ["svg", "png"] });
+    const services = fakeServices();
+    setup({ registry, services });
+    press("C", { ctrlKey: true, shiftKey: true });
+    await waitFor(() =>
+      expect(screen.getByTestId("shell-flash").textContent).toBe(
+        "Als PNG kopiert! Ab ins Projekt damit.",
+      ),
+    );
+    expect(services.copyPng).toHaveBeenCalledTimes(1);
+    expect(services.exportRaster.mock.calls[0]?.[3]).toEqual({ format: "png" });
+  });
+
+  it("leaves Ctrl+Shift+C alone for tools without PNG export", () => {
+    const services = fakeServices();
+    setup({ services });
+    press("C", { ctrlKey: true, shiftKey: true });
+    expect(services.copyPng).not.toHaveBeenCalled();
+  });
+});
+
+describe("EditorShell share", () => {
+  const shared = {
+    toolId: "test-fixture",
+    params: { ...fixtureDefaults, count: 7 },
+    seed: 4242,
+    size: { width: 640, height: 480 },
+  };
+  const hash = (design = shared) => {
+    const r = designToHash(design, createFixtureRegistry());
+    if (!r.ok) throw new Error(r.error);
+    return r.value;
+  };
+
+  it("copies a link with the design in the hash and confirms it", async () => {
+    const services = fakeServices();
+    const store = setup({ services });
+    act(() => store.getState().setParam("count", 33));
+    fireEvent.click(screen.getByRole("button", { name: "Teilen" }));
+    await waitFor(() =>
+      expect(screen.getByTestId("shell-flash").textContent).toBe(
+        "Link kopiert! Wer ihn öffnet, sieht genau dieses Motiv.",
+      ),
+    );
+    const url = services.copyText.mock.calls[0]?.[0] ?? "";
+    expect(url).toMatch(/^http:\/\/localhost(:\d+)?\/#d=[\w-]+$/);
+    // The page URL is not touched.
+    expect(window.location.hash).toBe("");
+  });
+
+  it("shows the link to copy by hand when the clipboard fails", async () => {
+    setup({ services: fakeServices({ copyText: async () => ({ ok: false, reason: "denied" }) }) });
+    fireEvent.click(screen.getByRole("button", { name: "Teilen" }));
+    const notice = await screen.findByTestId("shell-notice");
+    expect(notice.getAttribute("role")).toBe("alert");
+    const input = within(notice).getByLabelText("Link zu diesem Motiv") as HTMLInputElement;
+    expect(input.value).toMatch(/#d=/);
+    fireEvent.click(within(notice).getByRole("button", { name: "Hinweis schliessen" }));
+    expect(screen.queryByTestId("shell-notice")).toBeNull();
+  });
+
+  it("loads a design from the hash on page load", () => {
+    window.history.replaceState(null, "", `/de/tools/test-fixture${hash()}`);
+    const store = setup();
+    const state = store.getState();
+    expect(state.params).toEqual(shared.params);
+    expect(state.seed).toBe(4242);
+    expect(state.size).toEqual({ width: 640, height: 480 });
+    expect(screen.queryByTestId("shell-notice")).toBeNull();
+  });
+
+  it("keeps the defaults and shows a dismissible notice for a broken hash", () => {
+    window.history.replaceState(null, "", "/de/tools/test-fixture#d=@@@");
+    const store = setup();
+    expect(store.getState().params).toEqual(fixtureDefaults);
+    const notice = screen.getByTestId("shell-notice");
+    expect(notice.getAttribute("role")).toBe("alert");
+    expect(notice.textContent).toContain(
+      "Der geteilte Link ist beschädigt. Du siehst die Standardeinstellungen.",
+    );
+    fireEvent.click(within(notice).getByRole("button", { name: "Hinweis schliessen" }));
+    expect(screen.queryByTestId("shell-notice")).toBeNull();
+  });
+
+  it("follows hash changes", async () => {
+    const store = setup();
+    expect(store.getState().params).toEqual(fixtureDefaults);
+    act(() => {
+      window.location.hash = hash();
+    });
+    await waitFor(() => expect(store.getState().params).toEqual(shared.params));
   });
 });
 

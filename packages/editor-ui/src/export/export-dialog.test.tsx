@@ -1,0 +1,282 @@
+import { ExportError, type RasterExportResult } from "@motivo/exporters";
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
+import { EditorStoreProvider } from "../store/react";
+import { createFixtureRegistry } from "../test/fixture-tool";
+import { fakeServices } from "../test/fake-services";
+import { renderWithIntl } from "../test/render";
+import { EXPORT_FORMAT_STORAGE_KEY, ExportDialog, type ExportServices } from "./export-dialog";
+
+type RasterArgs = Parameters<ExportServices["exportRaster"]>;
+
+function setup(toolId = "blob", services: ExportServices = fakeServices()): EditorStoreApi {
+  const store =
+    toolId === "blob" || toolId === "css-gradient"
+      ? createEditorStore({ toolId, size: { width: 1080, height: 1350 } })
+      : createEditorStore({ toolId, registry: createFixtureRegistry() });
+  renderWithIntl(
+    <EditorStoreProvider store={store}>
+      <ExportDialog open onClose={() => undefined} services={services} />
+    </EditorStoreProvider>,
+  );
+  return store;
+}
+
+const dialog = () => screen.getByRole("dialog", { name: "Exportieren" });
+const formatRadio = (name: string | RegExp) => within(dialog()).getByRole("radio", { name });
+const status = () => within(screen.getByTestId("export-status")).getByRole("status");
+const alert = () => within(screen.getByTestId("export-status")).getByRole("alert");
+
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
+describe("ExportDialog formats", () => {
+  it("offers the tool's formats grouped as image, vector and code", () => {
+    setup("blob");
+    const names = within(dialog())
+      .getAllByRole("radio")
+      .filter((r) => r.getAttribute("data-format") !== null)
+      .map((r) => r.getAttribute("data-format"));
+    expect(names).toEqual(["png", "jpg", "webp", "svg", "css", "extra:clip-path"]);
+    const group = (name: string) =>
+      within(within(dialog()).getByRole("group", { name }))
+        .getAllByRole("radio")
+        .map((r) => r.getAttribute("data-format"));
+    expect(group("Bild")).toEqual(["png", "jpg", "webp"]);
+    expect(group("Vektor")).toEqual(["svg"]);
+    expect(group("Code")).toEqual(["css", "extra:clip-path"]);
+    expect(formatRadio("CSS clip-path")).toBeTruthy();
+    expect((formatRadio("PNG") as HTMLInputElement).checked).toBe(true);
+  });
+
+  it("offers Tailwind for the CSS gradient", () => {
+    setup("css-gradient");
+    expect(formatRadio("Tailwind-Klassen")).toBeTruthy();
+  });
+
+  it("only lists what a tool declares", () => {
+    setup("test-fixture");
+    const radios = within(dialog())
+      .getAllByRole("radio")
+      .filter((r) => r.getAttribute("data-format") !== null);
+    expect(radios.map((r) => r.getAttribute("data-format"))).toEqual(["svg"]);
+    expect(screen.queryByRole("group", { name: "Grösse" })).toBeNull();
+  });
+
+  it("remembers the last chosen format", () => {
+    window.localStorage.setItem(EXPORT_FORMAT_STORAGE_KEY, "svg");
+    setup("blob");
+    expect((formatRadio("SVG") as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(formatRadio("CSS"));
+    expect(window.localStorage.getItem(EXPORT_FORMAT_STORAGE_KEY)).toBe("css");
+  });
+
+  it("shows code with its size for text formats and copies it", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.click(formatRadio("CSS"));
+    const code = screen.getByTestId("export-code").textContent ?? "";
+    expect(code).toMatch(/^background-image: url\("data:image\/svg\+xml,/);
+    expect(screen.getByTestId("export-file-size").textContent).toMatch(/^\d+(\.\d)? (B|KB)$/);
+
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(status().textContent).toBe("Kopiert! Ab ins Projekt damit."));
+    expect(services.copyText).toHaveBeenCalledWith(code);
+  });
+
+  it("downloads SVG as a file named after tool and seed", () => {
+    const services = fakeServices();
+    const store = setup("blob", services);
+    fireEvent.click(formatRadio("SVG"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    expect(services.downloadBlob).toHaveBeenCalledTimes(1);
+    const [blob, name] = services.downloadBlob.mock.calls[0] ?? [];
+    expect(blob?.type).toBe("image/svg+xml");
+    expect(name).toBe(`motivo-blob-${store.getState().seed}.svg`);
+    expect(status().textContent).toBe("Heruntergeladen.");
+  });
+});
+
+describe("ExportDialog size", () => {
+  it("offers 1x, 2x and 4x of the design size", () => {
+    setup("blob");
+    const group = screen.getByRole("group", { name: "Grösse" });
+    expect(within(group).getByRole("radio", { name: "1× (1080 × 1350)" })).toBeTruthy();
+    expect(within(group).getByRole("radio", { name: "4× (4320 × 5400)" })).toBeTruthy();
+    fireEvent.click(within(group).getByRole("radio", { name: "2× (2160 × 2700)" }));
+    expect(screen.getByTestId("export-output-size").textContent).toBe("Ergebnis: 2160 × 2700 px.");
+  });
+
+  it("scales the vector for 2x", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.click(screen.getByRole("radio", { name: "2× (2160 × 2700)" }));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(services.downloadBlob).toHaveBeenCalled());
+    const [, , ctx, options] = services.exportRaster.mock.calls[0] ?? [];
+    expect({ width: ctx?.width, height: ctx?.height }).toEqual({ width: 1080, height: 1350 });
+    expect(options?.size).toEqual({ width: 2160, height: 2700 });
+    expect(options?.format).toBe("png");
+  });
+
+  it("re-renders at a custom size with another aspect ratio", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.click(screen.getByRole("radio", { name: "Eigene Grösse" }));
+    const width = within(dialog()).getByLabelText("Breite");
+    const height = within(dialog()).getByLabelText("Höhe");
+    expect((width as HTMLInputElement).value).toBe("1080");
+    fireEvent.change(width, { target: { value: "1920" } });
+    fireEvent.blur(width);
+    fireEvent.change(within(dialog()).getByLabelText("Höhe"), { target: { value: "1080" } });
+    fireEvent.keyDown(within(dialog()).getByLabelText("Höhe"), { key: "Enter" });
+    expect(height).toBeTruthy();
+    expect(screen.getByTestId("export-output-size").textContent).toBe(
+      "Ergebnis: 1920 × 1080 px. Anderes Seitenverhältnis: Das Motiv wird für dieses Format neu berechnet.",
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(services.downloadBlob).toHaveBeenCalled());
+    const [, , ctx, options] = services.exportRaster.mock.calls[0] ?? [];
+    expect({ width: ctx?.width, height: ctx?.height }).toEqual({ width: 1920, height: 1080 });
+    expect(options?.size).toEqual({ width: 1920, height: 1080 });
+  });
+
+  it("rejects custom edges outside the canvas limits", () => {
+    setup("blob");
+    fireEvent.click(screen.getByRole("radio", { name: "Eigene Grösse" }));
+    const width = within(dialog()).getByLabelText("Breite");
+    fireEvent.change(width, { target: { value: "9000" } });
+    fireEvent.blur(width);
+    expect(width.getAttribute("aria-invalid")).toBe("true");
+    expect(screen.getByTestId("export-output-size").textContent).toBe("Ergebnis: 1080 × 1350 px.");
+  });
+});
+
+describe("ExportDialog raster options", () => {
+  it("has a quality slider for JPG and WebP and a background for JPG", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    expect(screen.queryByLabelText("Qualität")).toBeNull();
+    fireEvent.click(formatRadio("JPG"));
+    const quality = screen.getByLabelText("Qualität") as HTMLInputElement;
+    expect(quality.value).toBe("92");
+    fireEvent.change(quality, { target: { value: "70" } });
+    const background = screen.getByLabelText("Hintergrund") as HTMLInputElement;
+    fireEvent.change(background, { target: { value: "#112233" } });
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(services.downloadBlob).toHaveBeenCalled());
+    const options = services.exportRaster.mock.calls[0]?.[3];
+    expect(options?.quality).toBeCloseTo(0.7);
+    expect(options?.background).toBe("#112233");
+
+    fireEvent.click(formatRadio("WebP"));
+    expect((screen.getByLabelText("Qualität") as HTMLInputElement).value).toBe("90");
+    expect(screen.queryByLabelText("Hintergrund")).toBeNull();
+  });
+
+  it("copies PNG through ClipboardItem and explains why JPG cannot be copied", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.click(screen.getByRole("button", { name: "Bild kopieren" }));
+    await waitFor(() => expect(status().textContent).toBe("Kopiert! Ab ins Projekt damit."));
+    expect(services.copyPng).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(formatRadio("JPG"));
+    const copy = screen.getByRole("button", { name: "Bild kopieren" }) as HTMLButtonElement;
+    expect(copy.disabled).toBe(true);
+    expect(copy.getAttribute("aria-describedby")).toBeTruthy();
+    expect(screen.getByText("Bilder lassen sich nur als PNG kopieren.")).toBeTruthy();
+  });
+
+  it("disables image copy with an explanation when ClipboardItem is missing", () => {
+    setup("blob", fakeServices({ canCopyImage: () => false }));
+    const copy = screen.getByRole("button", { name: "Bild kopieren" }) as HTMLButtonElement;
+    expect(copy.disabled).toBe(true);
+    expect(
+      screen.getByText(
+        "Dein Browser kann keine Bilder in die Zwischenablage legen. Lade das PNG herunter.",
+      ),
+    ).toBeTruthy();
+  });
+
+  it("shows progress and cancels a running export", async () => {
+    const services = fakeServices({
+      exportRaster: vi.fn(
+        (...[, , , options]: RasterArgs) =>
+          new Promise<RasterExportResult>((_, reject) => {
+            options.onProgress?.(0.4);
+            options.signal?.addEventListener("abort", () =>
+              reject(new ExportError("aborted", "aborted")),
+            );
+          }),
+      ),
+    });
+    setup("blob", services);
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    const progress = await screen.findByRole("progressbar", { name: "Exportfortschritt" });
+    expect(progress.getAttribute("value")).toBe("0.4");
+    expect(
+      (screen.getByRole("button", { name: "Herunterladen" }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Abbrechen" }));
+    });
+    await waitFor(() => expect(status().textContent).toBe("Export abgebrochen."));
+    expect(screen.queryByRole("progressbar")).toBeNull();
+    expect(services.downloadBlob).not.toHaveBeenCalled();
+  });
+});
+
+describe("ExportDialog errors", () => {
+  const failing = (code: ConstructorParameters<typeof ExportError>[0]) =>
+    fakeServices({
+      exportRaster: vi.fn(async () => {
+        throw new ExportError(code, code);
+      }),
+    });
+
+  it("explains encode-failed with a hint to choose a smaller size", async () => {
+    setup("blob", failing("encode-failed"));
+    fireEvent.click(screen.getByRole("radio", { name: "4× (4320 × 5400)" }));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Das Bild ist zu gross für dieses Gerät.Wähle eine kleinere Grösse, zum Beispiel 1× oder 2×.",
+      ),
+    );
+  });
+
+  it("explains encode-unsupported (WebP in Safari)", async () => {
+    setup("blob", failing("encode-unsupported"));
+    fireEvent.click(formatRadio("WebP"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Dein Browser kann dieses Format nicht speichern. Nimm PNG oder JPG.",
+      ),
+    );
+  });
+
+  it("explains decode-failed and unknown errors", async () => {
+    setup("blob", failing("decode-failed"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(alert().textContent).toMatch(/^Das Motiv liess sich nicht/));
+  });
+
+  it("explains clipboard denial", async () => {
+    setup("blob", fakeServices({ copyText: async () => ({ ok: false, reason: "denied" }) }));
+    fireEvent.click(formatRadio("SVG"));
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Der Browser hat den Zugriff auf die Zwischenablage blockiert. Lade die Datei stattdessen herunter.",
+      ),
+    );
+  });
+});

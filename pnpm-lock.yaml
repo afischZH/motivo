@@ -56,6 +56,9 @@ importers:
       '@motivo/engine':
         specifier: workspace:*
         version: link:../../packages/engine
+      '@motivo/exporters':
+        specifier: workspace:*
+        version: link:../../packages/exporters
       '@motivo/tool-registry':
         specifier: workspace:*
         version: link:../../packages/tool-registry
@@ -131,6 +134,9 @@ importers:
       '@motivo/engine':
         specifier: workspace:*
         version: link:../engine
+      '@motivo/exporters':
+        specifier: workspace:*
+        version: link:../exporters
       '@motivo/tool-registry':
         specifier: workspace:*
         version: link:../tool-registry
