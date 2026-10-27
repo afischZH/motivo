@@ -13,6 +13,9 @@ import { pageAlternates } from "@/lib/seo/alternates";
 
 type ToolPageProps = Readonly<{ params: Promise<{ locale: string; toolSlug: string }> }>;
 
+/** Only the prerendered slugs exist, like every other slug route (no on-demand renders). */
+export const dynamicParams = false;
+
 /** Prerenders every registered tool under its slug in this locale. */
 export function generateStaticParams({ params }: { params: { locale: string } }) {
   const locale = params.locale as EnabledLocale;
