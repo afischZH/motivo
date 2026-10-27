@@ -1,0 +1,27 @@
+{
+  "Editor": {
+    "controls": {
+      "lock": "{label} sperren",
+      "lockHint": "Gesperrte Werte bleiben beim Neu würfeln erhalten",
+      "resetHint": "Doppelklick setzt den Standardwert",
+      "advanced": "Erweitert",
+      "moreSettings": "Weitere Einstellungen"
+    },
+    "color": {
+      "picker": "Farbe wählen",
+      "hex": "HEX-Wert",
+      "invalid": "Gib einen HEX-Wert wie #1e90ff ein.",
+      "eyedropper": "Farbe vom Bildschirm aufnehmen"
+    },
+    "background": {
+      "transparent": "Transparent"
+    },
+    "palette": {
+      "swatch": "Farbe {index} von {count}, {value}",
+      "add": "Farbe hinzufügen",
+      "remove": "Farbe entfernen",
+      "moveLeft": "Nach links schieben",
+      "moveRight": "Nach rechts schieben"
+    }
+  }
+}

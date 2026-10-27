@@ -1,0 +1,27 @@
+{
+  "Editor": {
+    "controls": {
+      "lock": "Lock {label}",
+      "lockHint": "Locked values stay the same when you shuffle",
+      "resetHint": "Double-click to reset to the default",
+      "advanced": "Advanced",
+      "moreSettings": "More settings"
+    },
+    "color": {
+      "picker": "Pick a color",
+      "hex": "Hex value",
+      "invalid": "Enter a hex value like #1e90ff.",
+      "eyedropper": "Pick a color from the screen"
+    },
+    "background": {
+      "transparent": "Transparent"
+    },
+    "palette": {
+      "swatch": "Color {index} of {count}, {value}",
+      "add": "Add color",
+      "remove": "Remove color",
+      "moveLeft": "Move left",
+      "moveRight": "Move right"
+    }
+  }
+}

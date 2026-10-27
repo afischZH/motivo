@@ -50,6 +50,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@motivo/editor-ui':
+        specifier: workspace:*
+        version: link:../../packages/editor-ui
       '@motivo/engine':
         specifier: workspace:*
         version: link:../../packages/engine
