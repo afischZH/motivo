@@ -5,7 +5,8 @@
   "description": "Tool definitions: schema, defaults, presets, meta",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -13,5 +14,9 @@
   },
   "devDependencies": {
     "@motivo/config": "workspace:*"
+  },
+  "dependencies": {
+    "@motivo/engine": "workspace:*",
+    "zod": "^4.6.7"
   }
 }
