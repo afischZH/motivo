@@ -16,3 +16,4 @@ export * from "./tools/grid-patterns";
 export * from "./tools/confetti";
 export * from "./tools/starry-sky";
 export * from "./tools/dieter-dots";
+export * from "./tools/css-patterns";
