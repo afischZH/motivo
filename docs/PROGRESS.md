@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: PAUSIERT auf Wunsch von Andreas (2026-10-27, 14:02). Fortsetzen mit AP04 (Zwischenstand auf Branch `wip/m2-ap04`, Editor-Texte fehlen noch) und AP10 (Zwischenstand auf `wip/m2-ap10`, Web-Teil fehlt noch; Supabase-Projekt muss Andreas anlegen oder freigeben), danach AP12. Offen von Andreas: Impressum-Angaben, Analytics-Token, Sentry-DSN, Domain.
+- **Nächster Schritt**: Fortgesetzt nach Pause (2026-10-27). CI-E2E in WebKit repariert (Sicherheits-Header ohne HTTPS-Upgrade und HSTS auf localhost). AP04 (ab `wip/m2-ap04`) und AP10 (ab `wip/m2-ap10`; Supabase-Projekt muss Andreas anlegen oder freigeben) laufen, danach AP12. Offen von Andreas: Impressum-Angaben, Analytics-Token, Sentry-DSN, Domain.
 - Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins

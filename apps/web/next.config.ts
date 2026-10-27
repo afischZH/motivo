@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-import { securityHeaders } from "./lib/security-headers";
+import { localHostHeaderRule, securityHeaders } from "./lib/security-headers";
 import { noindexHeaderRule } from "./lib/seo/indexing";
 import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
@@ -27,15 +27,15 @@ const nextConfig: NextConfig = {
   // production host is indexable; previews and other hosts get
   // `X-Robots-Tag: noindex` (lib/seo/indexing.ts).
   async headers() {
+    const options = {
+      dev: process.env.NODE_ENV === "development",
+      // Analytics and Sentry origins only when their variables are set.
+      services: externalServices(telemetryEnv()),
+    };
     return [
-      {
-        source: "/:path*",
-        headers: securityHeaders({
-          dev: process.env.NODE_ENV === "development",
-          // Analytics and Sentry origins only when their variables are set.
-          services: externalServices(telemetryEnv()),
-        }),
-      },
+      { source: "/:path*", headers: securityHeaders(options) },
+      // `next start` on http://localhost (E2E): no https upgrade, no HSTS.
+      localHostHeaderRule(options),
       noindexHeaderRule(),
     ];
   },

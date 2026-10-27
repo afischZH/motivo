@@ -43,12 +43,32 @@ export interface SecurityHeaderOptions {
   dev: boolean;
   /** Enabled third-party services (default: none). Ignored in dev. */
   services?: ExternalServices;
+  /**
+   * The request comes from a local host over plain http (`next start` in E2E).
+   * Drops the HTTPS-only parts: WebKit, unlike Chromium, applies
+   * upgrade-insecure-requests on http://localhost and then cannot load any
+   * script, so pages never hydrate.
+   */
+  local?: boolean;
+}
+
+/**
+ * Hosts served over plain http during local and CI runs, as a Next `has`
+ * host value (Next anchors it and matches the host name without port).
+ */
+export const LOCAL_HOST_PATTERN = "(?:localhost|127\\.0\\.0\\.1)";
+
+/** True for `localhost` and `127.0.0.1`, with or without port. */
+export function isLocalHost(host: string | null | undefined): boolean {
+  if (!host) return false;
+  return new RegExp(`^${LOCAL_HOST_PATTERN}$`).test(host.replace(/:\d+$/, "").toLowerCase());
 }
 
 /** The Content-Security-Policy value as a single header line. */
 export function contentSecurityPolicy({
   dev,
   services = NO_EXTERNAL_SERVICES,
+  local = false,
 }: SecurityHeaderOptions): string {
   const enabled = dev ? NO_EXTERNAL_SERVICES : services;
   const directives: Record<string, string[]> = {
@@ -78,8 +98,8 @@ export function contentSecurityPolicy({
     "frame-ancestors": ["'none'"],
   };
   const parts = Object.entries(directives).map(([name, values]) => `${name} ${values.join(" ")}`);
-  // Dev runs on plain http://localhost; upgrading would break subresources there.
-  if (!dev) parts.push("upgrade-insecure-requests");
+  // Dev and local runs use plain http://localhost; upgrading would break subresources there.
+  if (!dev && !local) parts.push("upgrade-insecure-requests");
   return parts.join("; ");
 }
 
@@ -104,8 +124,12 @@ export interface Header {
 export function securityHeaders(options: SecurityHeaderOptions): Header[] {
   return [
     { key: "Content-Security-Policy", value: contentSecurityPolicy(options) },
-    // No `preload` until the final domain is fixed. Browsers ignore it over http.
-    { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+    // No `preload` until the final domain is fixed. Browsers ignore it over http;
+    // local hosts get max-age=0 so no browser ever pins localhost to https.
+    {
+      key: "Strict-Transport-Security",
+      value: options.local ? "max-age=0" : "max-age=63072000; includeSubDomains",
+    },
     { key: "X-Content-Type-Options", value: "nosniff" },
     // Legacy fallback for frame-ancestors 'none'.
     { key: "X-Frame-Options", value: "DENY" },
@@ -113,6 +137,22 @@ export function securityHeaders(options: SecurityHeaderOptions): Header[] {
     { key: "Permissions-Policy", value: PERMISSIONS_POLICY },
     { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   ];
+}
+
+/**
+ * next.config `headers()` rule for local hosts. Listed after the main rule:
+ * Next lets the last matching rule win for the same header key, so only CSP
+ * and HSTS change. Production hosts never match.
+ */
+export function localHostHeaderRule(options: SecurityHeaderOptions) {
+  const local = securityHeaders({ ...options, local: true });
+  return {
+    source: "/:path*",
+    has: [{ type: "host" as const, value: LOCAL_HOST_PATTERN }],
+    headers: local.filter(
+      ({ key }) => key === "Content-Security-Policy" || key === "Strict-Transport-Security",
+    ),
+  };
 }
 
 /**

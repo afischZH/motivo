@@ -3,7 +3,13 @@ import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 
 import { THEME_SCRIPT_HASH } from "./csp-hash";
-import { cloudflareHeadersFile, contentSecurityPolicy, securityHeaders } from "./security-headers";
+import {
+  cloudflareHeadersFile,
+  contentSecurityPolicy,
+  isLocalHost,
+  localHostHeaderRule,
+  securityHeaders,
+} from "./security-headers";
 import { themeInitScript } from "./theme";
 
 function directives(csp: string): Map<string, string[]> {
@@ -151,5 +157,44 @@ describe("public/_headers", () => {
     expect(cloudflareHeadersFile({ analytics: false, sentry: true })).toContain(
       "https://*.ingest.de.sentry.io",
     );
+  });
+});
+
+describe("local hosts", () => {
+  // WebKit applies upgrade-insecure-requests on http://localhost, so E2E
+  // against `next start` would never load scripts with the production policy.
+  it("drops only the https upgrade from the policy", () => {
+    const prod = contentSecurityPolicy({ dev: false });
+    const local = contentSecurityPolicy({ dev: false, local: true });
+    expect(prod).toContain("upgrade-insecure-requests");
+    expect(local).not.toContain("upgrade-insecure-requests");
+    expect(`${local}; upgrade-insecure-requests`).toBe(prod);
+  });
+
+  it("overrides only CSP and HSTS, for local hosts only", () => {
+    const rule = localHostHeaderRule({ dev: false });
+    expect(rule.headers.map(({ key }) => key).sort()).toEqual([
+      "Content-Security-Policy",
+      "Strict-Transport-Security",
+    ]);
+    expect(rule.headers).toContainEqual({ key: "Strict-Transport-Security", value: "max-age=0" });
+    // Next anchors the value as ^value$ and matches the host name without port.
+    const matcher = new RegExp(`^${rule.has[0]?.value}$`);
+    for (const host of ["localhost", "127.0.0.1"]) expect(matcher.test(host)).toBe(true);
+    for (const host of ["motivo-web.andreas-65d.workers.dev", "localhost.evil.com", "x127.0.0.1"])
+      expect(matcher.test(host)).toBe(false);
+  });
+
+  it("recognises local Host headers with ports", () => {
+    expect(isLocalHost("localhost:3100")).toBe(true);
+    expect(isLocalHost("127.0.0.1")).toBe(true);
+    expect(isLocalHost("example.com")).toBe(false);
+    expect(isLocalHost("localhost.example.com")).toBe(false);
+    expect(isLocalHost(null)).toBe(false);
+  });
+
+  it("never reaches public/_headers", () => {
+    expect(cloudflareHeadersFile()).toContain("upgrade-insecure-requests");
+    expect(cloudflareHeadersFile()).toContain("max-age=63072000");
   });
 });

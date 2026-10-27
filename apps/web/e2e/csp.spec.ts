@@ -61,7 +61,10 @@ test.describe("content security policy", () => {
     expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
     expect(headers["cross-origin-opener-policy"]).toBe("same-origin");
     expect(headers["permissions-policy"]).toContain("camera=()");
-    expect(headers["strict-transport-security"]).toBe("max-age=63072000; includeSubDomains");
+    // E2E runs on http://localhost, which gets the local variant (no HSTS, no
+    // https upgrade); production values are covered by security-headers.test.ts.
+    expect(headers["strict-transport-security"]).toBe("max-age=0");
+    expect(headers["content-security-policy"]).not.toContain("upgrade-insecure-requests");
 
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     // The inline theme script ran (and was allowed): the dark class follows the system.

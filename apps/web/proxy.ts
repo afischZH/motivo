@@ -3,24 +3,30 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { canonicalRedirect } from "./i18n/legacy";
 import { routing } from "./i18n/routing";
-import { securityHeaders } from "./lib/security-headers";
+import { isLocalHost, securityHeaders } from "./lib/security-headers";
 import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
 const intlMiddleware = createMiddleware(routing);
 
-const SECURITY_HEADERS = securityHeaders({
+const OPTIONS = {
   dev: process.env.NODE_ENV === "development",
   services: externalServices(telemetryEnv()),
-});
+};
+const SECURITY_HEADERS = securityHeaders(OPTIONS);
+// Same override as localHostHeaderRule() in next.config.ts.
+const LOCAL_SECURITY_HEADERS = securityHeaders({ ...OPTIONS, local: true });
 
 /**
  * OpenNext on Cloudflare returns proxy redirects without the next.config
  * `headers()`, so redirects get the security headers here. Other responses
  * get them from next.config.ts; setting them twice would duplicate values.
  */
-function withSecurityHeaders(response: Response): Response {
+function withSecurityHeaders(request: NextRequest, response: Response): Response {
   if (response.status >= 300 && response.status < 400) {
-    for (const { key, value } of SECURITY_HEADERS) response.headers.set(key, value);
+    const headers = isLocalHost(request.headers.get("host"))
+      ? LOCAL_SECURITY_HEADERS
+      : SECURITY_HEADERS;
+    for (const { key, value } of headers) response.headers.set(key, value);
   }
   return response;
 }
@@ -34,9 +40,9 @@ export default function proxy(request: NextRequest) {
   if (target) {
     const url = request.nextUrl.clone();
     url.pathname = target;
-    return withSecurityHeaders(NextResponse.redirect(url, 308));
+    return withSecurityHeaders(request, NextResponse.redirect(url, 308));
   }
-  return withSecurityHeaders(intlMiddleware(request));
+  return withSecurityHeaders(request, intlMiddleware(request));
 }
 
 export const config = {
