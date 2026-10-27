@@ -4,13 +4,13 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M3 (Plan zur Freigabe vorgelegt 2026-10-27). M2 abgenommen und live seit 2026-10-27 (PR #3, Merge 648bbad). M1 live seit 2026-10-27 (PR #2), M0 live seit 2026-10-27.
+- **Meilenstein**: M3, teilweise freigegeben 2026-10-27: zuerst nur Tools und SEO (AP07, AP08, AP09); Konten, Supabase und Brand Kit (AP01 bis AP06, AP10) warten auf Andreas. M2 abgenommen und live seit 2026-10-27 (PR #3, Merge 648bbad). M1 live seit 2026-10-27 (PR #2), M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: Andreas gibt den M3-Plan frei (Entscheide unten). Danach AP01 (Schema) und parallel AP07/AP08 (Tools). Offen aus M2 für Andreas: Impressum-Angaben, Domain, Analytics-Token, Sentry-DSN, Supabase-Projekt, Resend, Turnstile, Mail-Tagesbudget der Warteliste, juristische Prüfung der Rechtstexte.
+- **Nächster Schritt**: AP07 und AP08 laufen parallel, danach AP09. Konten-Teil startet erst nach Freigabe durch Andreas (Supabase-Projekt, Google-OAuth, Entscheid Apple-Login). Offen aus M2 für Andreas: Impressum-Angaben, Domain, Analytics-Token, Sentry-DSN, Supabase-Projekt, Resend, Turnstile, Mail-Tagesbudget der Warteliste, juristische Prüfung der Rechtstexte.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M3: Accounts, Speichern, Brand Kit, Gradient-Tools (Plan, wartet auf Freigabe)
+### M3: Accounts, Speichern, Brand Kit, Gradient-Tools (Tools und SEO freigegeben 2026-10-27, Konten-Teil wartet)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
