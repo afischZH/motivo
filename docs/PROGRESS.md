@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: M1-AP01 (freigegeben 2026-10-27, ohne SVGO).
+- **Nächster Schritt**: M1-AP02/03 (UI-Strang) und AP07 bis AP10 (Engine-Strang) laufen parallel; danach AP04.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
@@ -14,16 +14,16 @@
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
-| M1-AP01 | `ToolDefinition`-Typen, Registry, Test-Helfer (Schema-, Preset-, Snapshot-Tests generisch) | engine-dev | offen | – | Dep: zod |
-| M1-AP02 | Editor-State: Params, Seed, Locks, Randomize, Undo/Redo, Varianten-Verlauf | ui-dev | offen | AP01 | Dep: zustand (+ ggf. immer) |
-| M1-AP03 | Auto-Controls aus Zod-Schema (Slider, Segmented, Switch, Farbe, Palette) inkl. Schloss | ui-dev | offen | AP01 | DESIGN.md 3 |
+| M1-AP01 | `ToolDefinition`-Typen, Registry, Test-Helfer (Schema-, Preset-, Snapshot-Tests generisch) | engine-dev | erledigt | – | Dep: zod 4 (ca. 27 KB gzip); 82 Tests |
+| M1-AP02 | Editor-State: Params, Seed, Locks, Randomize, Undo/Redo, Varianten-Verlauf | ui-dev | in Arbeit | AP01 | Dep: zustand (+ ggf. immer) |
+| M1-AP03 | Auto-Controls aus Zod-Schema (Slider, Segmented, Switch, Farbe, Palette) inkl. Schloss | ui-dev | in Arbeit | AP01 | DESIGN.md 3 |
 | M1-AP04 | Editor-Seite `/[locale]/tools/[toolId]`: Layout, Presets-Leiste, Vorschau mit Zoom/Fit, Filmstreifen, Tastaturkürzel | ui-dev | offen | AP02, AP03 | DESIGN.md 2 und 4 |
 | M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | offen | AP01, AP04 | ohne SVGO (Entscheid Andreas) |
 | M1-AP06 | Teilen per URL-Hash (Params komprimiert) | ui-dev | offen | AP02 | Dep: fflate oder lz-string |
-| M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | offen | AP01 | Dep: culori |
-| M1-AP08 | Tool **Blob** | engine-dev | offen | AP01 | nutzt curves.ts |
-| M1-AP09 | Tool **SVG Waves** | engine-dev | offen | AP01 | nutzt curves.ts |
-| M1-AP10 | Tool **Polka Dots** | engine-dev | offen | AP01 | ROADMAP M1 (TOOLS.md sagt M2/M3, ROADMAP gilt) |
+| M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | in Arbeit | AP01 | Dep: culori |
+| M1-AP08 | Tool **Blob** | engine-dev | in Arbeit | AP01 | nutzt curves.ts |
+| M1-AP09 | Tool **SVG Waves** | engine-dev | in Arbeit | AP01 | nutzt curves.ts |
+| M1-AP10 | Tool **Polka Dots** | engine-dev | in Arbeit | AP01 | ROADMAP M1 (TOOLS.md sagt M2/M3, ROADMAP gilt) |
 | M1-AP11 | 6 **Konverter**-Seiten (SVG↔CSS, SVG↔Base64, Bild↔Base64) | ui-dev | offen | – | Nutzer-SVG nur per `<img>` anzeigen, nie inline |
 | M1-AP12 | Snapshot-Tests je Preset, visueller Test Vorschau == PNG-Export in 3 Browsern | qa-tester | offen | AP05, AP07 bis AP10 | DoD M1 |
 
