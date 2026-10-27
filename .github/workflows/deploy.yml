@@ -4,6 +4,8 @@ name: Deploy (Cloudflare)
 # - pull requests: uploads a new Worker version with a per-branch preview URL
 # - push to main: deploys to production (motivo-web.<subdomain>.workers.dev)
 # Needs the repository secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+# Optional repository variables for production: NEXT_PUBLIC_CF_ANALYTICS_TOKEN,
+# NEXT_PUBLIC_SENTRY_DSN (see docs/ARCHITECTURE.md).
 
 on:
   push:
@@ -60,6 +62,11 @@ jobs:
       - name: Build for Cloudflare
         if: steps.secrets.outputs.ready == 'true'
         working-directory: apps/web
+        env:
+          # Analytics and error monitoring only in production builds, never in
+          # previews (repository variables, both optional; empty = off).
+          NEXT_PUBLIC_CF_ANALYTICS_TOKEN: ${{ github.event_name == 'push' && vars.NEXT_PUBLIC_CF_ANALYTICS_TOKEN || '' }}
+          NEXT_PUBLIC_SENTRY_DSN: ${{ github.event_name == 'push' && vars.NEXT_PUBLIC_SENTRY_DSN || '' }}
         run: pnpm cf:build
 
       - name: Deploy production
