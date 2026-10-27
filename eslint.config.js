@@ -91,5 +91,12 @@ export default tseslint.config(
       globals: { ...globals.browser },
     },
   },
+  {
+    // Browser-side exporters (canvas, clipboard, workers); only used inside functions.
+    files: ["packages/exporters/**/*.ts"],
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.worker },
+    },
+  },
   prettier,
 );
