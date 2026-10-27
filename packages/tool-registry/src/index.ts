@@ -1,3 +1,5 @@
+import "./zod-config";
+
 export * from "./types";
 export * from "./common";
 export * from "./registry";
