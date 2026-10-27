@@ -1,8 +1,8 @@
 /**
- * Which third-party services run: cookie-free Cloudflare Web Analytics and
- * client-side error reporting with Sentry (EU region). Both are off unless
- * their public environment variable is set at build time, and always off in
- * `next dev`. The same switch drives the CSP (`security-headers.ts`), the
+ * Which third-party services run: cookie-free Cloudflare Web Analytics,
+ * client-side error reporting with Sentry (EU region) and the Cloudflare
+ * Turnstile challenge on the waitlist form. Each is off unless its public
+ * environment variable is set at build time, and always off in `next dev`. The same switch drives the CSP (`security-headers.ts`), the
  * generated `public/_headers` and the client loader, so a service is either
  * allowed and loaded, or neither.
  *
@@ -18,6 +18,7 @@ export interface TelemetryEnv {
   NODE_ENV?: string | undefined;
   NEXT_PUBLIC_CF_ANALYTICS_TOKEN?: string | undefined;
   NEXT_PUBLIC_SENTRY_DSN?: string | undefined;
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY?: string | undefined;
 }
 
 /**
@@ -29,6 +30,7 @@ export function telemetryEnv(): TelemetryEnv {
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_CF_ANALYTICS_TOKEN: process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
   };
 }
 
@@ -69,17 +71,41 @@ export function sentryDsn(env: TelemetryEnv): string | null {
   }
 }
 
+/**
+ * Cloudflare Turnstile site key for the Founders waitlist form (M2-AP10), or
+ * null when the form runs without a challenge. Production keys start with
+ * `0x`, Cloudflare's test keys with `1x` to `3x`.
+ */
+export function turnstileSiteKey(env: TelemetryEnv): string | null {
+  const key = env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
+  if (isDev(env) || !key || !/^[0-3]x[0-9A-Za-z_-]{16,64}$/.test(key)) return null;
+  return key;
+}
+
 export interface ExternalServices {
   analytics: boolean;
   sentry: boolean;
+  turnstile: boolean;
 }
 
-export const NO_EXTERNAL_SERVICES: ExternalServices = { analytics: false, sentry: false };
+export const NO_EXTERNAL_SERVICES: ExternalServices = {
+  analytics: false,
+  sentry: false,
+  turnstile: false,
+};
 
 /** Which services the build enables (drives the CSP). */
 export function externalServices(env: TelemetryEnv): ExternalServices {
-  return { analytics: analyticsToken(env) !== null, sentry: sentryDsn(env) !== null };
+  return {
+    analytics: analyticsToken(env) !== null,
+    sentry: sentryDsn(env) !== null,
+    turnstile: turnstileSiteKey(env) !== null,
+  };
 }
+
+/** Turnstile loader, explicit rendering (the widget appears only on the waitlist form). */
+export const TURNSTILE_SCRIPT =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
 /** Beacon script and endpoint for sites not proxied through Cloudflare. */
 export const CF_BEACON_SCRIPT = "https://static.cloudflareinsights.com/beacon.min.js";

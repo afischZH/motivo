@@ -91,19 +91,18 @@ describe("securityHeaders", () => {
 });
 
 describe("external services", () => {
-  const both = { analytics: true, sentry: true };
+  const both = { analytics: true, sentry: true, turnstile: true };
+  const none = { analytics: false, sentry: false, turnstile: false };
 
   it("adds no third-party origin unless a service is enabled", () => {
     const csp = contentSecurityPolicy({ dev: false });
     expect(csp).not.toMatch(/cloudflareinsights|sentry/);
-    expect(
-      contentSecurityPolicy({ dev: false, services: { analytics: false, sentry: false } }),
-    ).toBe(csp);
+    expect(contentSecurityPolicy({ dev: false, services: none })).toBe(csp);
   });
 
   it("allows the Cloudflare beacon script and endpoint only with analytics", () => {
     const csp = directives(
-      contentSecurityPolicy({ dev: false, services: { analytics: true, sentry: false } }),
+      contentSecurityPolicy({ dev: false, services: { ...none, analytics: true } }),
     );
     expect(csp.get("script-src")).toEqual([
       "'self'",
@@ -115,10 +114,25 @@ describe("external services", () => {
 
   it("allows only the Sentry EU ingest with Sentry", () => {
     const csp = directives(
-      contentSecurityPolicy({ dev: false, services: { analytics: false, sentry: true } }),
+      contentSecurityPolicy({ dev: false, services: { ...none, sentry: true } }),
     );
     expect(csp.get("script-src")).toEqual(["'self'", "'unsafe-inline'"]);
     expect(csp.get("connect-src")).toEqual(["'self'", "https://*.ingest.de.sentry.io"]);
+  });
+
+  it("allows the Turnstile script and frame only with Turnstile", () => {
+    expect(contentSecurityPolicy({ dev: false })).not.toMatch(/challenges\.cloudflare|frame-src/);
+    const csp = directives(
+      contentSecurityPolicy({ dev: false, services: { ...none, turnstile: true } }),
+    );
+    expect(csp.get("script-src")).toEqual([
+      "'self'",
+      "'unsafe-inline'",
+      "https://challenges.cloudflare.com",
+    ]);
+    expect(csp.get("frame-src")).toEqual(["'self'", "https://challenges.cloudflare.com"]);
+    expect(csp.get("connect-src")).toEqual(["'self'"]);
+    expect(csp.get("frame-ancestors")).toEqual(["'none'"]);
   });
 
   it("never enables services in dev", () => {
@@ -137,7 +151,7 @@ describe("public/_headers", () => {
   // Static assets on Cloudflare skip the Worker, so they need this file.
   // scripts/headers.mjs writes it before every build from the same env.
   it("carries exactly the Worker's production headers", () => {
-    for (const services of [undefined, { analytics: true, sentry: true }]) {
+    for (const services of [undefined, { analytics: true, sentry: true, turnstile: true }]) {
       const file = cloudflareHeadersFile(services);
       const expected = securityHeaders({ dev: false, ...(services ? { services } : {}) });
       expect(file.split("\n").slice(0, 3)).toEqual([
@@ -150,11 +164,11 @@ describe("public/_headers", () => {
   });
 
   it("allows external services only when the build enables them", () => {
-    expect(cloudflareHeadersFile()).not.toMatch(/cloudflareinsights|sentry/);
-    expect(cloudflareHeadersFile({ analytics: true, sentry: false })).toContain(
+    expect(cloudflareHeadersFile()).not.toMatch(/cloudflareinsights|sentry|challenges/);
+    expect(cloudflareHeadersFile({ analytics: true, sentry: false, turnstile: false })).toContain(
       "https://static.cloudflareinsights.com",
     );
-    expect(cloudflareHeadersFile({ analytics: false, sentry: true })).toContain(
+    expect(cloudflareHeadersFile({ analytics: false, sentry: true, turnstile: false })).toContain(
       "https://*.ingest.de.sentry.io",
     );
   });
