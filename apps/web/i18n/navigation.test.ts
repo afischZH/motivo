@@ -21,7 +21,7 @@ function walk(dir: string): string[] {
 
 const read = (path: string) => readFileSync(join(APP, path), "utf8");
 const importsOf = (source: string) =>
-  [...source.matchAll(/^\s*import\s+(?!type\b)[^'"]*?["']([^"']+)["']/gm)].map(([, s]) => s);
+  [...source.matchAll(/^\s*import\s+(?!type\b)[^'"]*?["']([^"']+)["']/gm)].map(([, s]) => s ?? "");
 
 describe("localized navigation", () => {
   it("is only imported from server components (the async Link)", () => {
