@@ -1,0 +1,100 @@
+/**
+ * Localized URL slugs: the single source for tool and converter URLs.
+ *
+ * Plain data plus pure lookups, so the proxy (legacy redirects), server pages
+ * (metadata, hreflang) and the client language switcher can all import it
+ * without pulling in the registry or any messages.
+ *
+ * Adding a tool = one entry in `TOOL_SLUGS`. The contract test in
+ * `slugs.test.ts` fails if a registered tool lacks a slug in an enabled locale.
+ * Slugs are lowercase ASCII words joined by "-", unique per locale, and stay
+ * stable once published (changing one needs a redirect).
+ */
+import type { ConverterId } from "@/lib/convert/ids";
+
+import { ALL_LOCALES, SLUG_FALLBACK_LOCALE, type AnyLocale, type LocalizedSlugs } from "./locales";
+
+/** Tool id (from `@motivo/tool-registry`) to its localized slugs. */
+export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
+  "css-gradient": { de: "css-verlauf-generator", en: "css-gradient-generator" },
+  blob: { de: "blob-generator", en: "blob-generator" },
+  "svg-waves": { de: "svg-wellen-generator", en: "svg-wave-generator" },
+  "polka-dots": { de: "punktmuster-generator", en: "polka-dot-pattern-generator" },
+};
+
+/** Converter id to its localized slugs. */
+export const CONVERTER_SLUGS: Readonly<Record<ConverterId, LocalizedSlugs>> = {
+  "svg-to-css": { de: "svg-zu-css", en: "svg-to-css" },
+  "css-to-svg": { de: "css-zu-svg", en: "css-to-svg" },
+  "svg-to-base64": { de: "svg-zu-base64", en: "svg-to-base64" },
+  "base64-to-svg": { de: "base64-zu-svg", en: "base64-to-svg" },
+  "image-to-base64": { de: "bild-zu-base64", en: "image-to-base64" },
+  "base64-to-image": { de: "base64-zu-bild", en: "base64-to-image" },
+};
+
+/** Localized first path segment of each section (internal name to slug). */
+export const SECTION_SLUGS = {
+  tools: { de: "tools", en: "tools" },
+  convert: { de: "konverter", en: "convert" },
+} as const satisfies Record<string, LocalizedSlugs>;
+
+export type Section = keyof typeof SECTION_SLUGS;
+
+/** Slug format: lowercase ASCII words joined by single hyphens. */
+export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function pick(entry: LocalizedSlugs, locale: AnyLocale): string {
+  return entry[locale] ?? entry[SLUG_FALLBACK_LOCALE];
+}
+
+function findId<Id extends string>(
+  map: Readonly<Record<Id, LocalizedSlugs>>,
+  test: (entry: LocalizedSlugs) => boolean,
+): Id | undefined {
+  return (Object.keys(map) as Id[]).find((id) => test(map[id]));
+}
+
+function hasSlug(entry: LocalizedSlugs, value: string): boolean {
+  return ALL_LOCALES.some((locale) => entry[locale] === value);
+}
+
+/** Slug of a tool in a locale. A tool without an entry falls back to its id. */
+export function toolSlug(toolId: string, locale: AnyLocale): string {
+  const entry = TOOL_SLUGS[toolId];
+  return entry ? pick(entry, locale) : toolId;
+}
+
+/** Tool id for the slug this locale uses, or undefined. */
+export function toolIdFromSlug(slug: string, locale: AnyLocale): string | undefined {
+  return findId(TOOL_SLUGS, (entry) => pick(entry, locale) === slug);
+}
+
+/** Tool id for any known spelling (id or a slug of any locale), for redirects. */
+export function toolIdFromAnySlug(value: string): string | undefined {
+  if (Object.hasOwn(TOOL_SLUGS, value)) return value;
+  return findId(TOOL_SLUGS, (entry) => hasSlug(entry, value));
+}
+
+export function converterSlug(id: ConverterId, locale: AnyLocale): string {
+  return pick(CONVERTER_SLUGS[id], locale);
+}
+
+export function converterIdFromSlug(slug: string, locale: AnyLocale): ConverterId | undefined {
+  return findId(CONVERTER_SLUGS, (entry) => pick(entry, locale) === slug);
+}
+
+export function converterIdFromAnySlug(value: string): ConverterId | undefined {
+  if (Object.hasOwn(CONVERTER_SLUGS, value)) return value as ConverterId;
+  return findId(CONVERTER_SLUGS, (entry) => hasSlug(entry, value));
+}
+
+export function sectionSlug(section: Section, locale: AnyLocale): string {
+  return pick(SECTION_SLUGS[section], locale);
+}
+
+/** Section for any localized spelling of its first segment. */
+export function sectionFromAnySlug(value: string): Section | undefined {
+  return (Object.keys(SECTION_SLUGS) as Section[]).find((section) =>
+    hasSlug(SECTION_SLUGS[section], value),
+  );
+}

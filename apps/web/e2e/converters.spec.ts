@@ -74,7 +74,7 @@ test.describe("SVG to CSS converter", () => {
   });
 
   test("explains invalid input", async ({ page }) => {
-    await page.goto("/de/convert/svg-to-css");
+    await page.goto("/de/konverter/svg-zu-css");
     const input = page.getByLabel("SVG-Code");
     // Retried: input typed before hydration never reaches React, and the
     // debounced worker run can be slow on CI (WebKit).

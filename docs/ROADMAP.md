@@ -45,7 +45,7 @@ Gesamtüberblick:
 
 - [ ] Tools: **CSS Pattern Library + Editor**, **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots**, **Noise/Grain**
 - [ ] Farbtools: **Palette Generator**, **Tints & Shades**, **Tailwind Palette**, **Palette aus Bild**
-- [ ] i18n mit next-intl (DE, EN zuerst; FR, IT vorbereitet), lokalisierte Slugs, `hreflang`
+- [x] i18n mit next-intl (DE, EN zuerst; FR, IT vorbereitet), lokalisierte Slugs, `hreflang`
 - [ ] SEO-Landingpage-Template pro Tool (Inhalte aus i18n-Dateien), Katalog, Kategorie-Seiten, Sitemap, strukturierte Daten, dynamische OG-Bilder
 - [ ] Startseite, Impressum, Datenschutz (nDSG/DSGVO), cookiefreie Analytics, Sentry
 - [ ] **Founders-Warteliste** (E-Mail mit Double-Opt-in) mit Hinweis auf Lifetime-Preis ab 49, Zähler der Anmeldungen

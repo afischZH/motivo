@@ -1,14 +1,20 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 
-import { getPathname, usePathname } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
+import { routeFromPathname, routePath } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 
 export function LocaleSwitcher() {
   const t = useTranslations("Layout");
   const current = useLocale();
+  // With localized pathnames this is the internal template, e.g. "/tools/[toolSlug]".
   const pathname = usePathname();
+  const params = useParams();
+  // Pages outside the slug model (the 404 page) switch to the home page.
+  const route = routeFromPathname(pathname, params, current) ?? { page: "home" };
 
   return (
     <nav aria-label={t("languageNav")}>
@@ -21,7 +27,7 @@ export function LocaleSwitcher() {
               set by the inline script before hydration.
             */}
             <a
-              href={getPathname({ href: pathname, locale })}
+              href={routePath(route, locale)}
               lang={locale}
               hrefLang={locale}
               aria-current={locale === current ? "true" : undefined}

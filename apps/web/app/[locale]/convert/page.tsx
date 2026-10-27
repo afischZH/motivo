@@ -4,8 +4,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { Link } from "@/i18n/navigation";
+import { routeHref } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { pageAlternates } from "@/lib/seo/alternates";
 
 type ConvertIndexProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -15,7 +17,11 @@ export async function generateMetadata({ params }: ConvertIndexProps): Promise<M
   const t = await getTranslations({ locale, namespace: "Converters" });
   const brand = (await getTranslations({ locale, namespace: "Layout" }))("brand");
 
-  return { title: `${t("index.metaTitle")} · ${brand}`, description: t("index.metaDescription") };
+  return {
+    title: `${t("index.metaTitle")} · ${brand}`,
+    description: t("index.metaDescription"),
+    alternates: pageAlternates({ page: "convert" }, locale),
+  };
 }
 
 export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
@@ -34,7 +40,7 @@ export default async function ConvertIndexPage({ params }: ConvertIndexProps) {
         {CONVERTER_IDS.map((id) => (
           <li key={id}>
             <Link
-              href={`/convert/${id}`}
+              href={routeHref({ page: "converter", converterId: id }, locale)}
               className="flex h-full flex-col gap-2 rounded-card border border-border bg-card p-5 transition-colors hover:bg-accent"
             >
               <span className="text-lg font-semibold">{t(`items.${id}.name`)}</span>

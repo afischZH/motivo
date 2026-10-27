@@ -8,6 +8,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MAIN_CONTENT_ID, SkipLink } from "@/components/layout/skip-link";
 import { routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/seo/site-url";
 import { themeInitScript } from "@/lib/theme";
 
 import "../globals.css";
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
-  return { title: t("title"), description: t("description") };
+  return { metadataBase: siteUrl(), title: t("title"), description: t("description") };
 }
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {

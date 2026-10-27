@@ -4,36 +4,53 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { Converter } from "@/components/convert/converter";
+import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
+import { routeHref } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
-import { CONVERTER_IDS, FAQ_COUNT, INVERSE_CONVERTER, isConverterId } from "@/lib/convert/ids";
+import { converterIdFromSlug, converterSlug } from "@/i18n/slugs";
+import { CONVERTER_IDS, FAQ_COUNT, INVERSE_CONVERTER } from "@/lib/convert/ids";
+import { pageAlternates } from "@/lib/seo/alternates";
 
-type ConverterPageProps = Readonly<{ params: Promise<{ locale: string; converterId: string }> }>;
+type ConverterPageProps = Readonly<{
+  params: Promise<{ locale: string; converterSlug: string }>;
+}>;
 
-// Only the six known converters exist; anything else is a 404.
+// Only the six known converters exist under this locale's slugs; anything
+// else is a 404. Old ids and foreign slugs are redirected by the proxy.
 export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    CONVERTER_IDS.map((converterId) => ({ locale, converterId })),
-  );
+/** The parent layout supplies the locale; slugs depend on it. */
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  const locale = params.locale as EnabledLocale;
+  return CONVERTER_IDS.map((id) => ({ converterSlug: converterSlug(id, locale) }));
+}
+
+async function resolve(params: ConverterPageProps["params"]) {
+  const { locale, converterSlug: slug } = await params;
+  if (!hasLocale(routing.locales, locale)) return undefined;
+  const converterId = converterIdFromSlug(slug, locale);
+  return converterId ? { locale, converterId } : undefined;
 }
 
 export async function generateMetadata({ params }: ConverterPageProps): Promise<Metadata> {
-  const { locale, converterId } = await params;
-  if (!hasLocale(routing.locales, locale) || !isConverterId(converterId)) return {};
+  const resolved = await resolve(params);
+  if (!resolved) return {};
+  const { locale, converterId } = resolved;
   const t = await getTranslations({ locale, namespace: "Converters" });
   const brand = (await getTranslations({ locale, namespace: "Layout" }))("brand");
 
   return {
     title: `${t(`items.${converterId}.title`)} · ${brand}`,
     description: t(`items.${converterId}.description`),
+    alternates: pageAlternates({ page: "converter", converterId }, locale),
   };
 }
 
 export default async function ConverterPage({ params }: ConverterPageProps) {
-  const { locale, converterId } = await params;
-  if (!hasLocale(routing.locales, locale) || !isConverterId(converterId)) notFound();
+  const resolved = await resolve(params);
+  if (!resolved) notFound();
+  const { locale, converterId } = resolved;
   setRequestLocale(locale);
   const t = await getTranslations("Converters");
 
@@ -91,7 +108,7 @@ export default async function ConverterPage({ params }: ConverterPageProps) {
           {related.map((other) => (
             <li key={other}>
               <Link
-                href={`/convert/${other}`}
+                href={routeHref({ page: "converter", converterId: other }, locale)}
                 className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
               >
                 {t(`items.${other}.name`)}
