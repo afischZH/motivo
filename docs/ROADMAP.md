@@ -46,7 +46,7 @@ Gesamtüberblick:
 - [ ] Tools: **CSS Pattern Library + Editor**, **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots**, **Noise/Grain**
 - [ ] Farbtools: **Palette Generator**, **Tints & Shades**, **Tailwind Palette**, **Palette aus Bild**
 - [x] i18n mit next-intl (DE, EN zuerst; FR, IT vorbereitet), lokalisierte Slugs, `hreflang`
-- [ ] SEO-Landingpage-Template pro Tool (Inhalte aus i18n-Dateien), Katalog, Kategorie-Seiten, Sitemap, strukturierte Daten, dynamische OG-Bilder
+- [x] SEO-Landingpage-Template pro Tool (Inhalte aus i18n-Dateien), Katalog, Kategorie-Seiten, Sitemap, strukturierte Daten, OG-Bilder pro Tool und Sprache (beim Build gerendert, siehe `ARCHITECTURE.md` Abschnitt 7)
 - [ ] Startseite, Impressum, Datenschutz (nDSG/DSGVO), cookiefreie Analytics, Sentry
 - [ ] **Founders-Warteliste** (E-Mail mit Double-Opt-in) mit Hinweis auf Lifetime-Preis ab 49, Zähler der Anmeldungen
 - [ ] Lighthouse ≥ 95 (Performance, SEO, A11y) auf Landingpages

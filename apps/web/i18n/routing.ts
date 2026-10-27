@@ -1,13 +1,25 @@
 import { defineRouting } from "next-intl/routing";
 
 import { DEFAULT_LOCALE, ENABLED_LOCALES, type EnabledLocale } from "./locales";
-import { SECTION_SLUGS, type Section } from "./slugs";
+import { CATEGORY_SEGMENT, SECTION_SLUGS, type Section } from "./slugs";
 
 /** Localized external pathname of a section, optionally with a dynamic tail. */
 function sectionPath(section: Section, tail = ""): Record<EnabledLocale, string> {
   const entry: Record<EnabledLocale, string> = SECTION_SLUGS[section];
   return Object.fromEntries(
     ENABLED_LOCALES.map((locale) => [locale, `/${entry[locale]}${tail}`]),
+  ) as Record<EnabledLocale, string>;
+}
+
+/** Category pages: `/tools/<localized "category">/[categorySlug]`. */
+function categoryPath(): Record<EnabledLocale, string> {
+  const tools: Record<EnabledLocale, string> = SECTION_SLUGS.tools;
+  const segment: Record<EnabledLocale, string> = CATEGORY_SEGMENT;
+  return Object.fromEntries(
+    ENABLED_LOCALES.map((locale) => [
+      locale,
+      `/${tools[locale]}/${segment[locale]}/[categorySlug]`,
+    ]),
   ) as Record<EnabledLocale, string>;
 }
 
@@ -26,6 +38,9 @@ export const routing = defineRouting({
     "/": "/",
     "/tools": sectionPath("tools"),
     "/tools/[toolSlug]": sectionPath("tools", "/[toolSlug]"),
+    "/tools/category/[categorySlug]": categoryPath(),
+    // SEO landing page of a tool; the slug is localized by the page itself.
+    "/[toolSlug]": "/[toolSlug]",
     "/convert": sectionPath("convert"),
     "/convert/[converterSlug]": sectionPath("convert", "/[converterSlug]"),
   },

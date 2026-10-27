@@ -10,6 +10,8 @@
  * Slugs are lowercase ASCII words joined by "-", unique per locale, and stay
  * stable once published (changing one needs a redirect).
  */
+import type { ToolCategory } from "@motivo/tool-registry";
+
 import type { ConverterId } from "@/lib/convert/ids";
 
 import { ALL_LOCALES, SLUG_FALLBACK_LOCALE, type AnyLocale, type LocalizedSlugs } from "./locales";
@@ -43,6 +45,29 @@ export const CONVERTER_SLUGS: Readonly<Record<ConverterId, LocalizedSlugs>> = {
   "image-to-base64": { de: "bild-zu-base64", en: "image-to-base64" },
   "base64-to-image": { de: "base64-zu-bild", en: "base64-to-image" },
 };
+
+/**
+ * Catalogue category (`ToolCategory` from the registry) to its localized slug,
+ * used in `/[locale]/tools/<CATEGORY_SEGMENT>/<slug>`. Every category has an
+ * entry, also those without tools yet; `slugs.test.ts` checks the set.
+ */
+export const CATEGORY_SLUGS: Readonly<Record<ToolCategory, LocalizedSlugs>> = {
+  patterns: { de: "muster", en: "patterns" },
+  "css-patterns": { de: "css-muster", en: "css-patterns" },
+  gradients: { de: "verlaeufe", en: "gradients" },
+  backgrounds: { de: "hintergruende", en: "backgrounds" },
+  "image-effects": { de: "bildeffekte", en: "image-effects" },
+  colors: { de: "farben", en: "colors" },
+  converters: { de: "konverter", en: "converters" },
+  social: { de: "social-media", en: "social-media" },
+  composer: { de: "composer", en: "composer" },
+};
+
+/** Localized segment between `tools` and a category slug. */
+export const CATEGORY_SEGMENT = {
+  de: "kategorie",
+  en: "category",
+} as const satisfies LocalizedSlugs;
 
 /** Localized first path segment of each section (internal name to slug). */
 export const SECTION_SLUGS = {
@@ -109,4 +134,26 @@ export function sectionFromAnySlug(value: string): Section | undefined {
   return (Object.keys(SECTION_SLUGS) as Section[]).find((section) =>
     hasSlug(SECTION_SLUGS[section], value),
   );
+}
+
+export function categorySlug(category: ToolCategory, locale: AnyLocale): string {
+  return pick(CATEGORY_SLUGS[category], locale);
+}
+
+export function categoryIdFromSlug(slug: string, locale: AnyLocale): ToolCategory | undefined {
+  return findId(CATEGORY_SLUGS, (entry) => pick(entry, locale) === slug);
+}
+
+export function categoryIdFromAnySlug(value: string): ToolCategory | undefined {
+  if (Object.hasOwn(CATEGORY_SLUGS, value)) return value as ToolCategory;
+  return findId(CATEGORY_SLUGS, (entry) => hasSlug(entry, value));
+}
+
+export function categorySegment(locale: AnyLocale): string {
+  return pick(CATEGORY_SEGMENT, locale);
+}
+
+/** Whether `value` is the category segment in any locale. */
+export function isCategorySegment(value: string): boolean {
+  return hasSlug(CATEGORY_SEGMENT, value);
 }

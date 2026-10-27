@@ -4,13 +4,18 @@
  * href (for `Link`), path, or the set of paths in every enabled locale (for
  * hreflang, sitemap and the language switcher).
  */
+import type { ToolCategory } from "@motivo/tool-registry";
+
 import { isConverterId, type ConverterId } from "@/lib/convert/ids";
 
 import { ENABLED_LOCALES, type AnyLocale, type EnabledLocale } from "./locales";
 import { getPathname } from "./navigation";
 import {
+  categoryIdFromSlug,
+  categorySlug,
   converterIdFromSlug,
   converterSlug,
+  isCategorySegment,
   sectionFromAnySlug,
   toolIdFromSlug,
   toolSlug,
@@ -19,6 +24,8 @@ import {
 export type AppRoute =
   | { page: "home" }
   | { page: "tools" }
+  | { page: "category"; category: ToolCategory }
+  | { page: "landing"; toolId: string }
   | { page: "tool"; toolId: string }
   | { page: "convert" }
   | { page: "converter"; converterId: ConverterId };
@@ -32,6 +39,16 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/tools" as const;
     case "convert":
       return "/convert" as const;
+    case "category":
+      return {
+        pathname: "/tools/category/[categorySlug]" as const,
+        params: { categorySlug: categorySlug(route.category, locale) },
+      };
+    case "landing":
+      return {
+        pathname: "/[toolSlug]" as const,
+        params: { toolSlug: toolSlug(route.toolId, locale) },
+      };
     case "tool":
       return {
         pathname: "/tools/[toolSlug]" as const,
@@ -55,6 +72,11 @@ export function localizedPaths(route: AppRoute): Record<EnabledLocale, string> {
   return Object.fromEntries(
     ENABLED_LOCALES.map((locale) => [locale, routePath(route, locale)]),
   ) as Record<EnabledLocale, string>;
+}
+
+/** Landing page paths of a tool in every enabled locale. */
+export function toolLandingPaths(toolId: string): Record<EnabledLocale, string> {
+  return localizedPaths({ page: "landing", toolId });
 }
 
 /** Editor paths of a tool in every enabled locale (sitemap, catalogue). */
@@ -85,11 +107,24 @@ export function routeFromPathname(
   const segments = pathname.split("/").filter(Boolean);
   if (segments[0] === locale) segments.shift();
   if (segments.length === 0) return { page: "home" };
-  if (segments.length > 2) return undefined;
+  if (segments.length > 3) return undefined;
 
   const section = sectionFromAnySlug(segments[0] ?? "");
   const param = (value: string | string[] | undefined) =>
-    typeof value === "string" ? value : segments[1];
+    typeof value === "string" ? value : segments[segments.length - 1];
+
+  if (segments.length === 3) {
+    if (section !== "tools" || !isCategorySegment(segments[1] ?? "")) return undefined;
+    const slug = param(params.categorySlug);
+    const category = slug ? categoryIdFromSlug(slug, locale) : undefined;
+    return category ? { page: "category", category } : undefined;
+  }
+  if (!section && segments.length === 1) {
+    // Top-level segment: the SEO landing page of a tool (template or real slug).
+    const slug = param(params.toolSlug);
+    const toolId = slug ? toolIdFromSlug(slug, locale) : undefined;
+    return toolId ? { page: "landing", toolId } : undefined;
+  }
 
   if (section === "tools") {
     if (segments.length === 1) return { page: "tools" };

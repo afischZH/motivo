@@ -24,21 +24,33 @@ async function headLinks(page: Page) {
 }
 
 const PAGES: { path: string; de: string; en: string; xDefault: string }[] = [
-  // Next drops the trailing slash of the bare origin.
-  { path: "/en", de: "/de", en: "/en", xDefault: "" },
-  { path: "/de/tools", de: "/de/tools", en: "/en/tools", xDefault: "/de/tools" },
+  // x-default always points at the English page.
+  { path: "/en", de: "/de", en: "/en", xDefault: "/en" },
+  { path: "/de/tools", de: "/de/tools", en: "/en/tools", xDefault: "/en/tools" },
   {
     path: "/en/tools/svg-wave-generator",
     de: "/de/tools/svg-wellen-generator",
     en: "/en/tools/svg-wave-generator",
-    xDefault: "/de/tools/svg-wellen-generator",
+    xDefault: "/en/tools/svg-wave-generator",
   },
-  { path: "/en/convert", de: "/de/konverter", en: "/en/convert", xDefault: "/de/konverter" },
+  { path: "/en/convert", de: "/de/konverter", en: "/en/convert", xDefault: "/en/convert" },
   {
     path: "/de/konverter/bild-zu-base64",
     de: "/de/konverter/bild-zu-base64",
     en: "/en/convert/image-to-base64",
-    xDefault: "/de/konverter/bild-zu-base64",
+    xDefault: "/en/convert/image-to-base64",
+  },
+  {
+    path: "/de/punktmuster-generator",
+    de: "/de/punktmuster-generator",
+    en: "/en/polka-dot-pattern-generator",
+    xDefault: "/en/polka-dot-pattern-generator",
+  },
+  {
+    path: "/en/tools/category/colors",
+    de: "/de/tools/kategorie/farben",
+    en: "/en/tools/category/colors",
+    xDefault: "/en/tools/category/colors",
   },
 ];
 

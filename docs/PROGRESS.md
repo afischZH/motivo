@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: Welle 1 (AP01, AP02, AP05, AP07) läuft; danach integrieren, dann Welle 2 (AP06, AP08, AP11). Domain und Impressum-Angaben von Andreas noch offen.
+- **Nächster Schritt**: Welle 3 (AP03 CSS Pattern Library, dann AP04 Editor; AP09 Startseite, Rechtsseiten-Entwürfe, Analytics, Sentry). Domain und Impressum-Angaben von Andreas noch offen.
 - Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins
@@ -20,12 +20,12 @@
 | M2-AP03 | **CSS Pattern Library** (Dots, Grid, Stripes, Waves, Geometric) inkl. eigener Seite pro Muster | engine-dev + ui-dev | geplant | AP08 (Template) | Eigene, frei entworfene Muster (Clean-Room); Exporte CSS, Tailwind, SVG, PNG |
 | M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | geplant | AP03 | Neuer Control-Typ Ebenenliste |
 | M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | – | Ohne Shell-Erweiterung: Farben als Einzel-Params (color1 bis color8), Schloss pro Farbe; Harmonie-Wechsel wirkt erst bei nächster Leertaste (UX in AP12 prüfen); Code-Exporte statt CSS |
-| M2-AP06 | **Palette aus Bild** | engine-dev | geplant | AP05 | k-means in OKLab im Worker, Bild bleibt im Browser |
+| M2-AP06 | **Palette aus Bild** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | AP05 | Generischer Bild-Eingang in der Shell (`imageInput` in der ToolDefinition, Worker, 5 MB, Magic Bytes); abgeleitete Farben nie im Teilen-Link; SVG wird im Haupt-Thread gerastert (kann > 50 ms dauern, in AP12 prüfen) |
 | M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | erledigt | – | Slugs zentral in `apps/web/i18n/slugs.ts` (Contract-Test), alte Pfade per 308; Basis-URL aus `NEXT_PUBLIC_SITE_URL`; x-default zeigt auf DE (in AP08 nochmals prüfen, ggf. EN) |
-| M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, dynamische OG-Bilder | ui-dev | geplant | AP07 | OG-Bilder zur Build-Zeit oder im Worker, keine laufenden Kosten |
+| M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, OG-Bilder | ui-dev | erledigt (Lighthouse in AP12) | AP07 | OG-Bilder beim Build (Worker 1.8 MiB gzip); x-default EN; noindex ausser Produktions-Host; echte SEO-Texte für M1-Tools; Editor-Seiten nicht in der Sitemap |
 | M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | geplant | AP08 | Rechtstexte "juristisch zu prüfen"; Analytics/Sentry nach Entscheid Andreas |
 | M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | geplant, Entscheid offen | – | Neue Tabelle (Supabase EU, RLS) und E-Mail-Versand: Stopp-Punkte |
-| M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | geplant | – | Aus M1-Review |
+| M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | erledigt (Security-Review in AP12) | – | CSP erzwungen, aber `unsafe-inline` für Scripts (Next setzt pro Seite Inline-Scripts, Nonces würden statische Seiten verhindern); HSTS ohne preload; zod `jitless` gegen eval |
 | M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | geplant | alle | Domain, DNS, Search Console durch Andreas |
 
 Reihenfolge: zuerst parallel Tool-Strang (AP01, AP02, AP05, AP06) und Seiten-Strang (AP07, dann AP08, dann AP03/AP04 und AP09); AP10 und AP11 parallel, sobald entschieden; zum Schluss AP12.

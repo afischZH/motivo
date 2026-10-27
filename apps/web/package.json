@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NEXT_TELEMETRY_DISABLED=1 next dev",
-    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "dev": "node scripts/og-images.mjs && NEXT_TELEMETRY_DISABLED=1 next dev",
+    "build": "node scripts/og-images.mjs && NEXT_TELEMETRY_DISABLED=1 next build",
+    "og": "node scripts/og-images.mjs",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests --exclude 'e2e/**'",

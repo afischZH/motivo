@@ -8,3 +8,6 @@ next-env.d.ts
 .open-next/
 .wrangler/
 .dev.vars*
+
+# Generated at build time by scripts/og-images.mjs
+/public/og/
