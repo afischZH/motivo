@@ -4,14 +4,36 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
+- **Meilenstein**: M3 (Plan zur Freigabe vorgelegt 2026-10-27). M2 abgenommen und live seit 2026-10-27 (PR #3, Merge 648bbad). M1 live seit 2026-10-27 (PR #2), M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: M2 im Code abgeschlossen (2026-10-27): alle 12 APs zusammengeführt, CI auf 3678eb8 grün in Chromium, Firefox und WebKit. Wartet auf Andreas: Meilenstein-Abnahme und Merge von PR #3 (Produktions-Deploy), Impressum-Angaben, Domain, Analytics-Token, Sentry-DSN, Supabase-Projekt, Resend, Turnstile, Entscheid zum Mail-Tagesbudget der Warteliste, juristische Prüfung der Rechtstexte. Danach M3-Plan.
-- Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
+- **Nächster Schritt**: Andreas gibt den M3-Plan frei (Entscheide unten). Danach AP01 (Schema) und parallel AP07/AP08 (Tools). Offen aus M2 für Andreas: Impressum-Angaben, Domain, Analytics-Token, Sentry-DSN, Supabase-Projekt, Resend, Turnstile, Mail-Tagesbudget der Warteliste, juristische Prüfung der Rechtstexte.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M2: SEO-Seiten, mehr Tools, Beta (freigegeben 2026-10-27)
+### M3: Accounts, Speichern, Brand Kit, Gradient-Tools (Plan, wartet auf Freigabe)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M3-AP01 | Supabase-Schema: `profiles`, `folders`, `designs`, `brand_kits`, `brand_palettes`, `brand_assets`, `export_events`; RLS-Policies mit PGlite-Tests | backend-dev + security-reviewer | offen | Supabase-Projekt (Andreas) | Neue Tabellen = Stopp-Punkt, mit diesem Plan zur Freigabe; Limits pro Stufe (Free 5 Designs) in der DB erzwungen |
+| M3-AP02 | Auth: Magic Link, Google, Apple; Login-Seite, Konto-Menü, Abmelden, Konto löschen | backend-dev + ui-dev | offen | AP01 | Mails über Resend-SMTP; Session-Cookie ist das erste Cookie (technisch notwendig, kein Banner, Datenschutz anpassen, juristisch zu prüfen); SDK-Grösse prüfen, über 50 KB gzip nur mit Freigabe |
+| M3-AP03 | Designs speichern/laden (`?d=<id>`), Thumbnails WebP 400 px in Storage, Autosave-Entwurf lokal | ui-dev + backend-dev | offen | AP02 | Nur Params speichern (kleines JSON), Render bleibt im Browser |
+| M3-AP04 | Dashboard: Raster, Ordner, Suche, Duplizieren, Löschen | ui-dev | offen | AP03 | |
+| M3-AP05 | Brand Kit v1: Paletten (max. 10 Farben), Logos, Upload eigener SVG-Shapes mit Sanitizer | backend-dev + ui-dev + security-reviewer | offen | AP02 | Sanitizer als eigener Whitelist-Parser (Workers haben kein DOM); Nutzer-SVG weiterhin nur per `<img>` |
+| M3-AP06 | Brand-Palette in jedem Tool nutzbar (Palette-Control) | ui-dev | offen | AP05 | DoD-Punkt der Roadmap |
+| M3-AP07 | Tools **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients** | engine-dev | offen | – | Läuft parallel zu AP01 bis AP03; Mesh-SVG auf Illustrator-Tauglichkeit prüfen |
+| M3-AP08 | Tools **Blob Composition**, **Doodle Backgrounds**, **SVG Charts** | engine-dev | offen | – | Doodles eigene, prozedurale Formen (Clean-Room) |
+| M3-AP09 | Programmatic SEO: Gradient- und Paletten-Sammlungsseiten | ui-dev | offen | AP07 | |
+| M3-AP10 | Export-Events protokollieren | backend-dev | offen | AP01 | Nur für angemeldete Nutzer plus anonyme Zählung ohne Kennung (keine Cookies, keine Geräte-ID) |
+| M3-AP11 | QA in 3 Browsern, Sicherheitstest (fremde Designs per ID nicht lesbar), Code- und Security-Review, Lighthouse | qa-tester + reviewer | offen | alle | |
+
+Reihenfolge: AP07 und AP08 sofort parallel (keine Abhängigkeit von Supabase). AP01, AP02, AP03 nacheinander, sobald das Supabase-Projekt steht; danach AP04, AP05, AP06, AP10 parallel; AP09 nach AP07; zum Schluss AP11.
+
+Entscheide für Andreas (Empfehlung jeweils zuerst):
+- **Supabase-Projekt**: Andreas legt `motivo` in eu-central-2 (Zürich) an, Free-Plan bis Launch, Pro (25 USD/Monat) vor dem Lifetime-Launch in M4, weil Free-Projekte nach 7 Tagen ohne Aktivität pausieren.
+- **Apple-Login**: braucht ein Apple-Developer-Konto (99 USD/Jahr) und eine Services-ID. Empfehlung: Magic Link und Google sofort, Apple sobald das Konto bereitsteht.
+- **Google-Login**: OAuth-Client in der Google Cloud Console (gratis), Andreas legt ihn an.
+
+### M2: SEO-Seiten, mehr Tools, Beta (abgenommen 2026-10-27, live)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
@@ -75,6 +97,7 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 
 | Datum | Feature | Laufende Kosten (Schätzung) | Lösung (clientseitig / Credits / Fair Use) |
 |---|---|---|---|
+| 2026-10-27 | Accounts und Speichern (M3, Schätzung) | 0 CHF bis Launch (Supabase Free: 500 MB DB, 1 GB Storage, 50 000 MAU); ab M4 Supabase Pro 25 USD/Monat fix. Pro Nutzer: Design-JSON ca. 2 KB, Thumbnail ca. 20 KB, Free max. 5 Designs = ca. 0.1 MB | Rendering bleibt im Browser; Fair-Use-Limits pro Stufe in der DB; Ziel unter CHF 0.05 pro aktivem Nutzer und Monat nach M3 messen |
 | 2026-10-27 | Founders-Warteliste (M2-AP10) | 0 CHF: Supabase Free (500 MB), Resend Free (100 Mails/Tag, 3000/Monat), Turnstile gratis | Höchstens 90 Bestätigungsmails pro Tag, 5 pro Adresse, 10 Anfragen pro Stunde und IP-Hash; Supabase Free pausiert nach 7 Tagen ohne Aktivität (Owner prüfen) |
 
 ## Werkzeug-Status
