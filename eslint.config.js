@@ -37,10 +37,6 @@ export default tseslint.config(
   },
   {
     files: DETERMINISTIC_PACKAGES,
-    languageOptions: {
-      // No DOM globals here on purpose: engine code must run in workers and on the server.
-      globals: {},
-    },
     rules: {
       "no-restricted-properties": [
         "error",
@@ -52,6 +48,7 @@ export default tseslint.config(
       "no-restricted-syntax": [
         "error",
         { selector: "NewExpression[callee.name='Date']", message: NON_DETERMINISTIC_MESSAGE },
+        { selector: "CallExpression[callee.name='Date']", message: NON_DETERMINISTIC_MESSAGE },
       ],
       "no-restricted-globals": [
         "error",

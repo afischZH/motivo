@@ -25,7 +25,7 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 ## Blocker und offene Fragen an Andreas
 
 - Cloudflare Workers Builds mit GitHub-Repo verbinden (AP07).
-- Offen (niedrig): Inline-Theme-Script braucht Nonce/Hash, sobald CSP kommt. Firefox öffnet evtl. Konsole bei Ctrl+Shift+K.
+- Offen (niedrig, aus Code-Review M0): Sprachwechsel übernimmt Query/Hash nicht (relevant ab Editor-URLs in M1). Inline-Theme-Script braucht Nonce/Hash, sobald CSP kommt. Firefox öffnet evtl. Konsole bei Ctrl+Shift+K.
 
 ## Kostenentscheide (Lifetime-Ökonomie)
 
