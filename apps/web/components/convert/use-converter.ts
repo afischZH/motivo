@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import type { WorkerRequest, WorkerResponse } from "@/lib/convert/convert.worker";
+import { createConverterClient, type ConverterClient } from "@/lib/convert/client";
 import type { ConverterId } from "@/lib/convert/ids";
-import { runConverter, type ConverterInput, type ConverterResult } from "@/lib/convert/run";
+import type { ConverterInput, ConverterResult } from "@/lib/convert/run";
 
 /** Typing pauses this long before a conversion starts. */
 const DEBOUNCE_MS = 200;
@@ -16,35 +16,29 @@ const isEmpty = (input: ConverterInput | null) =>
 
 /**
  * Converts `input` in a Web Worker (falls back to a deferred main-thread call
- * where workers are unavailable). Only the response to the latest request is
+ * where workers are unavailable or the worker fails). Only the response to the latest request is
  * kept, so fast typing never shows a stale result.
  */
 export function useConverter(id: ConverterId, input: ConverterInput | null) {
-  const workerRef = useRef<Worker | null>(null);
+  const clientRef = useRef<ConverterClient | null>(null);
   const counter = useRef(0);
   const [state, setState] = useState<State>({ requested: 0, completed: 0, result: null });
 
   useEffect(() => {
-    let worker: Worker | null = null;
-    try {
-      worker = new Worker(new URL("../../lib/convert/convert.worker.ts", import.meta.url), {
-        type: "module",
-      });
-    } catch {
-      worker = null;
-    }
-    if (worker) {
-      worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
-        const { requestId, result } = event.data;
+    const client = createConverterClient({
+      createWorker: () =>
+        new Worker(new URL("../../lib/convert/convert.worker.ts", import.meta.url), {
+          type: "module",
+        }),
+      onResult: (requestId, result) =>
         setState((prev) =>
           requestId === prev.requested ? { ...prev, completed: requestId, result } : prev,
-        );
-      };
-    }
-    workerRef.current = worker;
+        ),
+    });
+    clientRef.current = client;
     return () => {
-      worker?.terminate();
-      workerRef.current = null;
+      client.dispose();
+      clientRef.current = null;
     };
   }, []);
 
@@ -54,16 +48,7 @@ export function useConverter(id: ConverterId, input: ConverterInput | null) {
       () => {
         const requestId = ++counter.current;
         setState((prev) => ({ ...prev, requested: requestId }));
-        const worker = workerRef.current;
-        if (worker && input !== null) {
-          const request: WorkerRequest = { requestId, id, input };
-          worker.postMessage(request);
-        } else if (input !== null) {
-          const result = runConverter(id, input);
-          setState((prev) =>
-            requestId === prev.requested ? { ...prev, completed: requestId, result } : prev,
-          );
-        }
+        if (input !== null) clientRef.current?.request({ requestId, id, input });
       },
       typeof input === "string" ? DEBOUNCE_MS : 0,
     );

@@ -5,7 +5,6 @@ import {
   TRANSPARENT,
   createRenderContext,
   type AnyToolDefinition,
-  type CanvasSize,
   type Params,
   type ParamsSchema,
 } from "@motivo/tool-registry";
@@ -15,12 +14,7 @@ import { ExportDialog, browserExportServices, type ExportServices } from "../exp
 import { buildShareUrl, useShareHash } from "../share/use-share";
 import { cx } from "../controls/primitives";
 import { useT } from "../i18n";
-import {
-  findMatchingPresetId,
-  selectCanRedo,
-  selectCanUndo,
-  type Variant,
-} from "../store/editor-store";
+import { findMatchingPresetId, selectCanRedo, selectCanUndo } from "../store/editor-store";
 import { useEditorStore, useEditorStoreApi } from "../store/react";
 import {
   ChevronLeftIcon,
@@ -34,11 +28,12 @@ import {
   UndoIcon,
 } from "./icons";
 import { PreviewStage, ZOOM_LEVELS, type Zoom } from "./preview";
-import { renderMotif } from "./render";
+import { renderMotifCached } from "./render";
 import { ShortcutHelp } from "./shortcut-help";
 import { SizePicker } from "./size-picker";
 import { BUTTON_CLASS, ICON_BUTTON, PRIMARY_BUTTON_CLASS, TILE_CLASS } from "./styles";
 import { Thumbnail } from "./thumbnail";
+import { useHydrated } from "./use-hydrated";
 import { useEditorShortcuts } from "./use-shortcuts";
 
 export interface EditorShellProps {
@@ -82,9 +77,6 @@ export function EditorShell({
   const tool = useEditorStore((s) => s.tool);
   const canUndo = useEditorStore(selectCanUndo);
   const canRedo = useEditorStore(selectCanRedo);
-  const size = useEditorStore((s) => s.size);
-  const variants = useEditorStore((s) => s.variants);
-  const activeVariantId = useEditorStore((s) => s.activeVariantId);
 
   const [zoom, setZoom] = useState<Zoom>("fit");
   const [shownScale, setShownScale] = useState<number | null>(null);
@@ -95,6 +87,9 @@ export function EditorShell({
   const [flash, setFlash] = useState<{ message: string; id: number } | null>(null);
   const [notice, setNotice] = useState<ShellNotice | null>(null);
   const [hashNotice, dismissHashNotice] = useShareHash(store);
+  // Share only works once the client runs; disabled in the server HTML so a
+  // click before hydration is not silently lost (and tests can wait for it).
+  const hydrated = useHydrated();
   const ids = useId();
 
   useEffect(() => {
@@ -104,13 +99,18 @@ export function EditorShell({
   }, [flash]);
 
   const toolName = t(`tools.${tool.id}.name`);
-  const activeIndex = variants.findIndex((v) => v.id === activeVariantId);
 
-  // Announce the variant position whenever the active variant changes.
+  // Announce the variant position whenever the active variant or the variant
+  // count changes. Not on array identity: edits replace `variants` without
+  // moving the position, and re-announcing then would be noise.
   useEffect(
     () =>
       store.subscribe((s, prev) => {
-        if (s.activeVariantId === prev.activeVariantId && s.variants === prev.variants) return;
+        if (
+          s.activeVariantId === prev.activeVariantId &&
+          s.variants.length === prev.variants.length
+        )
+          return;
         const index = s.variants.findIndex((v) => v.id === s.activeVariantId);
         if (index === -1) return;
         setAnnouncement(
@@ -265,6 +265,7 @@ export function EditorShell({
           type="button"
           className={BUTTON_CLASS}
           onClick={() => void share()}
+          disabled={!hydrated}
           title={t("Editor.share.hint")}
           data-testid="share-link"
         >
@@ -332,14 +333,7 @@ export function EditorShell({
           onScaleChange={setShownScale}
           toolName={toolName}
         />
-        <Filmstrip
-          tool={tool}
-          size={size}
-          variants={variants}
-          activeIndex={activeIndex}
-          onPrevious={actions.previousVariant}
-          onNext={actions.nextVariant}
-        />
+        <Filmstrip tool={tool} onPrevious={actions.previousVariant} onNext={actions.nextVariant} />
         <PresetBar />
         <section
           aria-labelledby={`${ids}-controls`}
@@ -382,7 +376,10 @@ function PreviewSection(props: {
   const size = useDeferredValue(useEditorStore((s) => s.size));
   const liveSize = useEditorStore((s) => s.size);
 
-  const output = useMemo(() => renderMotif(tool, params, seed, size), [tool, params, seed, size]);
+  const output = useMemo(
+    () => renderMotifCached(tool, params, seed, size),
+    [tool, params, seed, size],
+  );
   const transparent = params.background === TRANSPARENT;
 
   const zoomButtons: { zoom: Zoom; label: string }[] = [
@@ -453,7 +450,8 @@ function PresetBar() {
   const tool = useEditorStore((s) => s.tool);
   const params = useEditorStore((s) => s.params);
   const seed = useDeferredValue(useEditorStore((s) => s.seed));
-  const size = useEditorStore((s) => s.size);
+  // Deferred like the preview: thumbnails follow size changes without blocking input.
+  const size = useDeferredValue(useEditorStore((s) => s.size));
   const applyPreset = useEditorStore((s) => s.applyPreset);
   const activePreset = findMatchingPresetId(tool, params);
 
@@ -476,6 +474,7 @@ function PresetBar() {
               aria-pressed={activePreset === preset.id}
               onClick={() => applyPreset(preset.id)}
               data-preset={preset.id}
+              data-editor-tile=""
             >
               <span className="flex size-18 items-center justify-center overflow-hidden rounded-md bg-canvas">
                 <Thumbnail
@@ -495,18 +494,17 @@ function PresetBar() {
   );
 }
 
-function Filmstrip(props: {
-  tool: AnyToolDefinition;
-  size: CanvasSize;
-  variants: readonly Variant[];
-  activeIndex: number;
-  onPrevious(): void;
-  onNext(): void;
-}) {
+function Filmstrip(props: { tool: AnyToolDefinition; onPrevious(): void; onNext(): void }) {
   const t = useT();
   const headingId = useId();
   const selectVariant = useEditorStore((s) => s.selectVariant);
-  const { variants, activeIndex } = props;
+  // Deferred like the preview, so a new variant's tile renders in the same
+  // pass as the preview and reuses its output (see Thumbnail); size changes
+  // never block input either.
+  const variants = useDeferredValue(useEditorStore((s) => s.variants));
+  const activeVariantId = useDeferredValue(useEditorStore((s) => s.activeVariantId));
+  const size = useDeferredValue(useEditorStore((s) => s.size));
+  const activeIndex = variants.findIndex((v) => v.id === activeVariantId);
 
   return (
     <section
@@ -520,7 +518,9 @@ function Filmstrip(props: {
         type="button"
         className={ICON_BUTTON}
         onClick={props.onPrevious}
-        disabled={activeIndex <= 0}
+        // Without an active variant (design edited) both arrows jump to the
+        // newest variant, exactly like the arrow keys.
+        disabled={activeIndex === 0}
         aria-label={t("Editor.shell.previousVariant")}
         aria-keyshortcuts="ArrowLeft"
       >
@@ -535,13 +535,14 @@ function Filmstrip(props: {
               aria-current={index === activeIndex ? "true" : undefined}
               aria-label={t("Editor.shell.variantLabel", { index: index + 1 })}
               onClick={() => selectVariant(variant.id)}
+              data-editor-tile=""
             >
               <span className="flex size-14 items-center justify-center overflow-hidden rounded-md bg-canvas">
                 <Thumbnail
                   tool={props.tool}
                   params={variant.params}
                   seed={variant.seed}
-                  size={props.size}
+                  size={size}
                   edge={VARIANT_THUMB_EDGE}
                 />
               </span>
@@ -553,7 +554,7 @@ function Filmstrip(props: {
         type="button"
         className={ICON_BUTTON}
         onClick={props.onNext}
-        disabled={activeIndex === -1 || activeIndex >= variants.length - 1}
+        disabled={activeIndex !== -1 && activeIndex >= variants.length - 1}
         aria-label={t("Editor.shell.nextVariant")}
         aria-keyshortcuts="ArrowRight"
       >

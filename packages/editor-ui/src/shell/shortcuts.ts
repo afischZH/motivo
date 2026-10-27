@@ -133,7 +133,14 @@ export function isEditableTarget(el: Element): boolean {
   return role !== null && TEXT_ROLES.has(role);
 }
 
+/**
+ * Marks preset and filmstrip tiles. After a click they keep focus, but Space
+ * still means "new variant" there (DESIGN.md 4); Enter activates the tile.
+ */
+export const EDITOR_TILE_ATTRIBUTE = "data-editor-tile";
+
 function nativeSpaceTarget(el: Element): boolean {
+  if (el.hasAttribute(EDITOR_TILE_ATTRIBUTE)) return false;
   const tag = el.tagName;
   if (tag === "BUTTON" || tag === "SUMMARY") return true;
   if (tag === "INPUT") return true; // remaining inputs are button-like

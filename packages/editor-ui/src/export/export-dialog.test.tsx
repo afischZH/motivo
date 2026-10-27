@@ -36,6 +36,45 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+describe("ExportDialog backdrop", () => {
+  function setupWithClose() {
+    const onClose = vi.fn();
+    const store = createEditorStore({ toolId: "test-fixture", registry: createFixtureRegistry() });
+    renderWithIntl(
+      <EditorStoreProvider store={store}>
+        <ExportDialog open onClose={onClose} services={fakeServices()} />
+      </EditorStoreProvider>,
+    );
+    return onClose;
+  }
+
+  it("closes on a click that starts and ends on the backdrop", () => {
+    const onClose = setupWithClose();
+    const el = screen.getByTestId("export-dialog");
+    fireEvent.pointerDown(el);
+    fireEvent.click(el);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("stays open when a drag starts inside and ends on the backdrop", () => {
+    const onClose = setupWithClose();
+    const el = screen.getByTestId("export-dialog");
+    fireEvent.pointerDown(within(el).getByRole("heading", { name: "Exportieren" }));
+    fireEvent.click(el);
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("stays open on a click inside the dialog", () => {
+    const onClose = setupWithClose();
+    const heading = within(screen.getByTestId("export-dialog")).getByRole("heading", {
+      name: "Exportieren",
+    });
+    fireEvent.pointerDown(heading);
+    fireEvent.click(heading);
+    expect(onClose).not.toHaveBeenCalled();
+  });
+});
+
 describe("ExportDialog formats", () => {
   it("offers the tool's formats grouped as image, vector and code", () => {
     setup("blob");

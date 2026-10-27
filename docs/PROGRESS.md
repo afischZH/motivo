@@ -6,7 +6,8 @@
 
 - **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: AP12 (QA cross-browser) sowie Code- und Security-Review, danach M1-Abnahme durch Andreas.
+- **Nächster Schritt**: AP12 WebKit-Fehler im Vergleichstest Vorschau/PNG beheben, dann M1-Abnahme durch Andreas.
+- Reviews 2026-10-27: Code-Review (keine kritischen Befunde, 2 mittel, 5 tief) und Security-Review (PASS WITH NOTES: Polka-Dots-Link konnte Tab einfrieren) alle behoben. Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben).
 - Offene Kleinfragen (Orchestrator entschieden, bei Abnahme nennen): Link eines anderen Tools zeigt Hinweis statt Weiterleitung; Teilen kopiert nur, ändert die Adresszeile nicht; ⌘⇧C kollidiert unter Windows/Linux evtl. mit DevTools.
 
 ## Arbeitspakete des aktuellen Meilensteins
@@ -50,7 +51,6 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 
 ## Blocker und offene Fragen an Andreas
 
-- ...
 - Offen (niedrig, aus Code-Review M0): Sprachwechsel übernimmt Query/Hash nicht (relevant ab Editor-URLs in M1). Inline-Theme-Script braucht Nonce/Hash, sobald CSP kommt. Firefox öffnet evtl. Konsole bei Ctrl+Shift+K.
 
 ## Kostenentscheide (Lifetime-Ökonomie)

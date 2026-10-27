@@ -33,13 +33,51 @@ export interface DotLayoutOptions {
   readonly rng: Rng;
 }
 
+/** Smallest centre distance in px; finer grids are invisible and only cost time. */
+export const MIN_DOT_SPACING_PX = 4;
+/** Upper bound for dot sites per render, so extreme sizes cannot freeze the UI. */
+export const MAX_DOT_SITES = 10_000;
+
+const rowStep = (layout: DotLayout, s: number): number =>
+  layout === "offset" ? (s * Math.sqrt(3)) / 2 : s;
+
+/** Sites `dotSites` produces (grids, exact) or can produce at most (scatter, hex packing). */
+function siteCount(w: number, h: number, layout: DotLayout, s: number): number {
+  if (layout === "scatter") {
+    // Poisson-disk points are at least `s` apart, so they never beat hexagonal packing.
+    const pw = w + s;
+    const ph = h + s;
+    return (Math.floor(pw / s) + 2) * (Math.floor(ph / rowStep("offset", s)) + 2);
+  }
+  const dy = rowStep(layout, s);
+  return (2 * (Math.ceil(h / 2 / dy) + 1) + 1) * (2 * (Math.ceil(w / 2 / s) + 1) + 1);
+}
+
+/**
+ * The spacing actually used for a canvas: at least `MIN_DOT_SPACING_PX`, and
+ * widened uniformly until the canvas holds at most `MAX_DOT_SITES` sites.
+ * Returns `spacing` unchanged for all regular sizes.
+ */
+export function effectiveDotSpacing(
+  o: Pick<DotLayoutOptions, "width" | "height" | "layout" | "spacing">,
+): number {
+  const { width: w, height: h, layout } = o;
+  if (!(o.spacing > 0)) throw new RangeError("dotSites: spacing must be positive");
+  let s = Math.max(o.spacing, MIN_DOT_SPACING_PX);
+  if (siteCount(w, h, layout, s) <= MAX_DOT_SITES) return s;
+  s = Math.max(s, Math.sqrt((w * h) / MAX_DOT_SITES));
+  while (siteCount(w, h, layout, s) > MAX_DOT_SITES) s *= 1.02;
+  return s;
+}
+
 /**
  * Dot centres covering the canvas, including dots cut by the edges. Grids are
  * centred on the canvas so the pattern is symmetric. Only `scatter` uses the rng.
+ * The spacing is clamped with `effectiveDotSpacing`.
  */
 export function dotSites(o: DotLayoutOptions): DotSite[] {
-  const { width: w, height: h, spacing: s } = o;
-  if (!(s > 0)) throw new RangeError("dotSites: spacing must be positive");
+  const { width: w, height: h } = o;
+  const s = effectiveDotSpacing(o);
   if (o.layout === "scatter") {
     // Sample a padded area so dots near the edges are cut like in the grids.
     return poissonDisk({ width: w + s, height: h + s, minDistance: s, rng: o.rng }).map((p, i) => ({
@@ -49,7 +87,7 @@ export function dotSites(o: DotLayoutOptions): DotSite[] {
       col: i,
     }));
   }
-  const dy = o.layout === "offset" ? (s * Math.sqrt(3)) / 2 : s;
+  const dy = rowStep(o.layout, s);
   const rowsHalf = Math.ceil(h / 2 / dy) + 1;
   const colsHalf = Math.ceil(w / 2 / s) + 1;
   const sites: DotSite[] = [];
@@ -83,7 +121,8 @@ export interface PolkaDotsSvgOptions {
 const mod = (a: number, n: number): number => ((a % n) + n) % n;
 
 export function polkaDotsSvg(o: PolkaDotsSvgOptions): string {
-  const { width: w, height: h, spacing: s } = o;
+  const { width: w, height: h } = o;
+  const s = effectiveDotSpacing(o);
   const sites = dotSites({ width: w, height: h, layout: o.layout, spacing: s, rng: o.rng });
   const baseR = (s * o.size) / 2;
   const ringWidth = Math.max(baseR * 0.3, 0.5);

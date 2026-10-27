@@ -1,10 +1,24 @@
-import { createRng } from "@motivo/engine";
+import { MAX_DOT_SITES, createRng } from "@motivo/engine";
 import { describe, expect, it } from "vitest";
 import { registry } from "../registry";
 import { createRenderContext } from "../render";
 import { renderStatic, describePresetSnapshots, describeToolContract } from "../testing";
 import type { AnyToolDefinition, CssOutput } from "../types";
 import { blobTool, builtInTools, cssGradientTool, polkaDotsTool, svgWavesTool } from "./index";
+
+// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
+const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
+/** Runs `fn` three times and returns the fastest run in ms plus its result (ignores JIT warm-up and CI noise). */
+function fastest<T>(fn: () => T): { ms: number; value: T } {
+  let best = Infinity;
+  let value = fn();
+  for (let i = 0; i < 3; i++) {
+    const start = clock.now();
+    value = fn();
+    best = Math.min(best, clock.now() - start);
+  }
+  return { ms: best, value };
+}
 
 for (const tool of builtInTools) {
   describeToolContract(tool);
@@ -142,5 +156,19 @@ describe("polka-dots", () => {
       height: 1080,
     }) as string;
     expect(svg.length).toBeLessThan(150_000);
+  });
+
+  it("stays fast and bounded on an extreme strip canvas (crafted share link)", () => {
+    for (const layout of ["grid", "offset", "scatter"] as const) {
+      const { ms, value: svg } = fastest(
+        () =>
+          renderStatic(polkaDotsTool, { ...polkaDotsTool.defaults, layout, spacing: 2 }, 1, {
+            width: 8192,
+            height: 16,
+          }) as string,
+      );
+      expect(ms).toBeLessThan(200);
+      expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES);
+    }
   });
 });

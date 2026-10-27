@@ -28,7 +28,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 ### A3. Polka Dots, Grid Patterns, Confetti, Starry Sky, Dieter Dots · M2/M3 · G
 - Einfache SVG-Generatoren mit wenigen Parametern (Dichte, Grösse, Varianz, Farbe, Form). Dieter Dots: konzentrische Ringe aus Punkten (`rings`, `dotsPerRing`, `ringSpacing`, `scale`).
 - Confetti/Starry Sky: Poisson-Disk-Sampling (Bridson) für gleichmässige, natürliche Verteilung.
-- **Polka Dots umgesetzt in M1** (ROADMAP gilt): `layout` (Raster, versetzt, verstreut per Poisson-Disk), `shape` (Kreis, Ring, Quadrat), `colorMode` (eine Farbe, abwechselnd, zufällig), `spacing` in Prozent der kürzeren Kante (Aussehen bleibt beim Ändern der Grösse gleich), `size`, `sizeVariance`, `jitter`. Exporte: SVG, CSS, PNG, JPG, WebP.
+- **Polka Dots umgesetzt in M1** (ROADMAP gilt): `layout` (Raster, versetzt, verstreut per Poisson-Disk), `shape` (Kreis, Ring, Quadrat), `colorMode` (eine Farbe, abwechselnd, zufällig), `spacing` in Prozent der kürzeren Kante (Aussehen bleibt beim Ändern der Grösse gleich), `size`, `sizeVariance`, `jitter`. Schutz vor extremen Formaten: Abstand mindestens 4 px und höchstens 10 000 Punkte pro Render (der Abstand wird bei Bedarf gleichmässig vergrössert). Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ### A4. Doodle Backgrounds · M3 · G
 - Handgezeichnet wirkende Formen: Linien/Pfade mit leichtem Rauschen (Perlin-Offset der Kontrollpunkte), runde Linienenden, Verteilung per Poisson-Disk.
@@ -44,7 +44,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 ### B2. CSS Gradient Generator · M1 · G
 - Linear, radial, conic; Farbstopps mit Drag; **Easing** der Übergänge (Zwischenstopps entlang Easing-Kurve, um Banding zu vermeiden); Interpolation in OKLCH (`in oklch` Syntax mit Fallback).
 - Exporte: CSS, Tailwind, SVG, PNG. Teilen per Link.
-- **Umsetzung M1**: Farbstopps gleichmässig verteilt aus der Palette (Drag-Stopps brauchen ein eigenes Control, später). Kein `background`-Parameter, der Verlauf deckt immer alles ab. CSS mit sRGB-Fallback (Zwischenstopps in OKLCH vorberechnet) plus zweiter Deklaration mit `in oklch`/`in oklab`. SVG-Vorschau exakt für linear und radial, konisch als Keile angenähert (SVG kennt keine konischen Verläufe). Tailwind-Export folgt mit dem Exporter (AP05).
+- **Umsetzung M1**: Farbstopps gleichmässig verteilt aus der Palette (Drag-Stopps brauchen ein eigenes Control, später). Kein `background`-Parameter, der Verlauf deckt immer alles ab. CSS mit sRGB-Fallback (Zwischenstopps in OKLCH vorberechnet) plus zweiter Deklaration mit `in oklch`/`in oklab`. SVG-Vorschau exakt für linear und radial, konisch als Keile angenähert (SVG kennt keine konischen Verläufe). Tailwind-Export (Arbitrary Value) als Zusatzausgabe im Export-Dialog umgesetzt.
 
 ## C. Gradients
 
@@ -72,7 +72,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **Algorithmus**: N Punkte auf Kreis (Winkel gleichmässig), Radius je Punkt `r * (1 ± randomness)`, geschlossene Catmull-Rom-Spline ► kubische Bezier ► SVG-Pfad.
 - **Parameter**: `complexity` (Punkte), `randomness`, `fill` (Farbe | Outline | Verlauf | Bild | Pattern aus A1/A2).
 - Exporte: SVG, PNG, CSS (`clip-path: path()` als Bonus).
-- **Umsetzung M1**: `fillStyle` Farbe, Kontur oder Verlauf (Bild und Pattern folgen mit A1/A2). Radius-Abweichung max. 60 % bei `randomness = 1`; Catmull-Rom-Spannung so gewählt, dass die Punkte ohne Zufall einen Kreis ergeben. `clip-path`-Bonus noch offen (braucht Zusatzausgabe im Exporter).
+- **Umsetzung M1**: `fillStyle` Farbe, Kontur oder Verlauf (Bild und Pattern folgen mit A1/A2). Radius-Abweichung max. 60 % bei `randomness = 1`; Catmull-Rom-Spannung so gewählt, dass die Punkte ohne Zufall einen Kreis ergeben. `clip-path: path()`-Bonus als Zusatzausgabe im Export-Dialog umgesetzt (px-Einheiten, Element in Canvas-Grösse).
 
 ### D2. Blob Composition · M3 · G/P
 - Mehrere Blobs als Ebenen, Positionen an Ecken/Rändern, Brand-Farben, "Magic Resize" (Positionen relativ in % gespeichert).

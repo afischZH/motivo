@@ -55,6 +55,65 @@ export function svgDataUrl(svg: string): string {
 }
 
 /**
+ * Recent outputs per params object (the store replaces params on every
+ * change, so object identity plus seed and size identify a design). Lets
+ * the filmstrip tile of the active variant reuse the preview's render
+ * instead of rendering and decoding the same design a second time.
+ */
+const outputCache = new WeakMap<object, Map<string, MotifOutput>>();
+/** Entries kept per params object (preview size, thumbnail size, a few resizes). */
+const CACHE_ENTRIES_PER_PARAMS = 4;
+
+const cacheKey = (tool: AnyToolDefinition, seed: number, size: CanvasSize) =>
+  `${tool.id}@${tool.version}:${seed}:${size.width}x${size.height}`;
+
+/** A previously rendered output for exactly this design, if any. Never renders. */
+export function peekMotif(
+  tool: AnyToolDefinition,
+  params: ParamValues,
+  seed: number,
+  size: CanvasSize,
+): MotifOutput | undefined {
+  return outputCache.get(params)?.get(cacheKey(tool, seed, size));
+}
+
+/** `renderMotif` with the per-params cache described above. */
+export function renderMotifCached(
+  tool: AnyToolDefinition,
+  params: ParamValues,
+  seed: number,
+  size: CanvasSize,
+): MotifOutput {
+  const key = cacheKey(tool, seed, size);
+  let entries = outputCache.get(params);
+  const hit = entries?.get(key);
+  if (hit) return hit;
+  const output = renderMotif(tool, params, seed, size);
+  if (!entries) {
+    entries = new Map();
+    outputCache.set(params, entries);
+  }
+  if (entries.size >= CACHE_ENTRIES_PER_PARAMS) {
+    const oldest = entries.keys().next().value;
+    if (oldest !== undefined) entries.delete(oldest);
+  }
+  entries.set(key, output);
+  return output;
+}
+
+const dataUrlCache = new WeakMap<MotifOutput, string>();
+
+/** `svgDataUrl` of an SVG output, computed once per output object. */
+export function motifDataUrl(output: Extract<MotifOutput, { kind: "svg" }>): string {
+  let url = dataUrlCache.get(output);
+  if (url === undefined) {
+    url = svgDataUrl(output.svg);
+    dataUrlCache.set(output, url);
+  }
+  return url;
+}
+
+/**
  * Splits `prop: value; prop: value` into declarations. Semicolons inside
  * parentheses or quotes (data URLs, `url("a;b")`) do not end a declaration.
  */

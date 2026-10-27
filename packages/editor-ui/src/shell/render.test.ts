@@ -4,8 +4,11 @@ import { fixtureTool } from "../test/fixture-tool";
 import { fitScale } from "./preview";
 import {
   cssToStyle,
+  motifDataUrl,
   parseCssDeclarations,
+  peekMotif,
   renderMotif,
+  renderMotifCached,
   svgDataUrl,
   toReactStyleProperty,
 } from "./render";
@@ -39,6 +42,34 @@ describe("renderMotif", () => {
     const tool = { ...fixtureTool, render: { kind: "webgl", fragment: "", uniforms: () => ({}) } };
     const out = renderMotif(tool as never, fixtureTool.defaults, 1, { width: 10, height: 10 });
     expect(out).toEqual({ kind: "unsupported", renderKind: "webgl" });
+  });
+});
+
+describe("renderMotifCached", () => {
+  const size = { width: 120, height: 80 };
+
+  it("renders once per params object, seed and size", () => {
+    const params = { ...polkaDotsTool.defaults };
+    expect(peekMotif(polkaDotsTool as never, params, 1, size)).toBeUndefined();
+    const a = renderMotifCached(polkaDotsTool as never, params, 1, size);
+    expect(a).toEqual(renderMotif(polkaDotsTool as never, params, 1, size));
+    expect(renderMotifCached(polkaDotsTool as never, params, 1, size)).toBe(a);
+    expect(peekMotif(polkaDotsTool as never, params, 1, size)).toBe(a);
+  });
+
+  it("misses for another seed, size or params object", () => {
+    const params = { ...polkaDotsTool.defaults };
+    const a = renderMotifCached(polkaDotsTool as never, params, 1, size);
+    expect(renderMotifCached(polkaDotsTool as never, params, 2, size)).not.toBe(a);
+    expect(peekMotif(polkaDotsTool as never, params, 1, { width: 80, height: 80 })).toBeUndefined();
+    expect(peekMotif(polkaDotsTool as never, { ...params }, 1, size)).toBeUndefined();
+  });
+
+  it("computes the data URL once per output", () => {
+    const out = renderMotifCached(polkaDotsTool as never, { ...polkaDotsTool.defaults }, 1, size);
+    if (out.kind !== "svg") throw new Error("expected svg");
+    expect(motifDataUrl(out)).toBe(svgDataUrl(out.svg));
+    expect(motifDataUrl(out)).toBe(motifDataUrl(out));
   });
 });
 

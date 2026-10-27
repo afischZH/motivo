@@ -1,7 +1,29 @@
 import { describe, expect, it } from "vitest";
 import { createRng } from "../../rng";
 import { distance } from "../../vec";
-import { type PolkaDotsSvgOptions, dotSites, polkaDotsSvg } from "./index";
+import {
+  DOT_LAYOUTS,
+  MAX_DOT_SITES,
+  MIN_DOT_SPACING_PX,
+  type PolkaDotsSvgOptions,
+  dotSites,
+  effectiveDotSpacing,
+  polkaDotsSvg,
+} from "./index";
+
+// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
+const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
+/** Runs `fn` three times and returns the fastest run in ms plus its result (ignores JIT warm-up and CI noise). */
+function fastest<T>(fn: () => T): { ms: number; value: T } {
+  let best = Infinity;
+  let value = fn();
+  for (let i = 0; i < 3; i++) {
+    const start = clock.now();
+    value = fn();
+    best = Math.min(best, clock.now() - start);
+  }
+  return { ms: best, value };
+}
 
 describe("dotSites", () => {
   it("centres a square grid on the canvas and covers the edges", () => {
@@ -113,4 +135,57 @@ describe("polkaDotsSvg", () => {
       polkaDotsSvg({ ...o, rng: createRng(8) }),
     );
   });
+});
+
+describe("effectiveDotSpacing", () => {
+  it("keeps regular spacings unchanged", () => {
+    for (const layout of DOT_LAYOUTS) {
+      expect(effectiveDotSpacing({ width: 1080, height: 1080, layout, spacing: 21.6 })).toBe(21.6);
+      expect(effectiveDotSpacing({ width: 8192, height: 8192, layout, spacing: 163.84 })).toBe(
+        163.84,
+      );
+    }
+  });
+
+  it("raises tiny spacings to the pixel floor", () => {
+    expect(effectiveDotSpacing({ width: 100, height: 100, layout: "grid", spacing: 0.5 })).toBe(
+      MIN_DOT_SPACING_PX,
+    );
+  });
+
+  it("widens the spacing until the site count is under the cap", () => {
+    for (const layout of DOT_LAYOUTS) {
+      const s = effectiveDotSpacing({ width: 8192, height: 8192, layout, spacing: 4 });
+      expect(s).toBeGreaterThan(4);
+      const sites = dotSites({ width: 8192, height: 8192, layout, spacing: 4, rng: createRng(1) });
+      expect(sites.length).toBeLessThanOrEqual(MAX_DOT_SITES);
+    }
+  });
+});
+
+describe("polkaDotsSvg size guard", () => {
+  // 8192 x 16 with spacing 2 % of the short edge (0.32 px) used to yield about 1.4M dots.
+  for (const layout of DOT_LAYOUTS) {
+    it(`renders an extreme strip quickly (${layout})`, () => {
+      const o: PolkaDotsSvgOptions = {
+        width: 8192,
+        height: 16,
+        rng: createRng(1),
+        background: "#ffffff",
+        colors: ["#000000"],
+        layout,
+        shape: "circle",
+        colorMode: "single",
+        spacing: 0.32,
+        size: 0.5,
+        sizeVariance: 0,
+        jitter: 0,
+      };
+      expect(dotSites({ ...o, rng: createRng(1) }).length).toBeLessThanOrEqual(MAX_DOT_SITES);
+      const { ms, value: svg } = fastest(() => polkaDotsSvg({ ...o, rng: createRng(1) }));
+      expect(ms).toBeLessThan(200);
+      expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES);
+      expect(svg.length).toBeLessThan(1_000_000);
+    });
+  }
 });
