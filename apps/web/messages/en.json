@@ -27,5 +27,241 @@
     "title": "Page not found",
     "body": "This page does not exist or no longer exists.",
     "home": "Go to home page"
+  },
+  "tools": {
+    "common": {
+      "params": {
+        "background": {
+          "label": "Background"
+        },
+        "palette": {
+          "label": "Colors"
+        }
+      },
+      "groups": {
+        "colors": "Colors",
+        "shape": "Shape",
+        "layout": "Layout"
+      }
+    },
+    "css-gradient": {
+      "name": "CSS Gradient",
+      "description": "Linear, radial and conic gradients with smooth OKLCH transitions. Export as CSS, SVG or image.",
+      "groups": {
+        "gradient": "Gradient",
+        "easing": "Transition"
+      },
+      "params": {
+        "interpolation": {
+          "label": "Color space",
+          "options": {
+            "oklch": "OKLCH",
+            "oklab": "OKLab",
+            "srgb": "sRGB"
+          }
+        },
+        "hue": {
+          "label": "Hue direction",
+          "options": {
+            "shorter": "Shorter",
+            "longer": "Longer"
+          }
+        },
+        "type": {
+          "label": "Type",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "conic": "Conic"
+          }
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "centerX": {
+          "label": "Center X"
+        },
+        "centerY": {
+          "label": "Center Y"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Circle",
+            "ellipse": "Ellipse"
+          }
+        },
+        "loop": {
+          "label": "Loop back to first color"
+        },
+        "easing": {
+          "label": "Easing",
+          "options": {
+            "linear": "Linear",
+            "ease-in": "Ease in",
+            "ease-out": "Ease out",
+            "ease-in-out": "Ease in-out"
+          }
+        },
+        "steps": {
+          "label": "Extra stops"
+        }
+      },
+      "presets": {
+        "dawn": "Dawn",
+        "lagoon": "Lagoon",
+        "ember": "Ember",
+        "prism": "Prism",
+        "meadow": "Meadow",
+        "dusk": "Dusk",
+        "citrus": "Citrus"
+      },
+      "seo": {
+        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
+        "whatIs": "A CSS gradient is a color transition drawn by the browser itself. It needs no image file and stays sharp at any size.",
+        "howTo": "Pick colors and a type, adjust angle and easing, then copy the CSS. Press the space bar for new variations."
+      }
+    },
+    "blob": {
+      "name": "Blob Generator",
+      "description": "Organic shapes in one click, filled, outlined or with a gradient. Export as SVG or image.",
+      "params": {
+        "complexity": {
+          "label": "Complexity"
+        },
+        "randomness": {
+          "label": "Randomness"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "fillStyle": {
+          "label": "Fill",
+          "options": {
+            "solid": "Solid",
+            "outline": "Outline",
+            "gradient": "Gradient"
+          }
+        },
+        "strokeWidth": {
+          "label": "Stroke width"
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        }
+      },
+      "presets": {
+        "pebble": "Pebble",
+        "splash": "Splash",
+        "lava": "Lava",
+        "lasso": "Lasso",
+        "petal": "Petal",
+        "cumulus": "Cumulus",
+        "sticker": "Sticker"
+      },
+      "seo": {
+        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
+        "whatIs": "Blobs are soft, organic shapes for backgrounds, illustrations and accents on websites.",
+        "howTo": "Set complexity and randomness, choose a fill and download your SVG."
+      }
+    },
+    "svg-waves": {
+      "name": "SVG Waves",
+      "description": "Layered waves for sections, headers and backgrounds. Export as SVG, CSS or image.",
+      "params": {
+        "layers": {
+          "label": "Layers"
+        },
+        "points": {
+          "label": "Points"
+        },
+        "amplitude": {
+          "label": "Amplitude"
+        },
+        "smoothness": {
+          "label": "Smoothness"
+        },
+        "coverage": {
+          "label": "Coverage"
+        },
+        "direction": {
+          "label": "Direction",
+          "options": {
+            "up": "From bottom",
+            "down": "From top"
+          }
+        }
+      },
+      "presets": {
+        "tide": "Tide",
+        "dunes": "Dunes",
+        "aurora": "Aurora",
+        "shallows": "Shallows",
+        "ridges": "Ridges",
+        "storm": "Storm",
+        "ribbon": "Ribbon"
+      },
+      "seo": {
+        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
+        "whatIs": "SVG waves are lightweight vector graphics that softly separate sections of a website.",
+        "howTo": "Choose the number of layers, amplitude and direction, then export as SVG or CSS."
+      }
+    },
+    "polka-dots": {
+      "name": "Polka Dots",
+      "description": "Dot patterns on a grid, offset or freely scattered. Export as SVG or image.",
+      "params": {
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "grid": "Grid",
+            "offset": "Offset",
+            "scatter": "Scatter"
+          }
+        },
+        "spacing": {
+          "label": "Spacing"
+        },
+        "jitter": {
+          "label": "Jitter"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Circle",
+            "ring": "Ring",
+            "square": "Square"
+          }
+        },
+        "size": {
+          "label": "Dot size"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "colorMode": {
+          "label": "Color mode",
+          "options": {
+            "single": "Single",
+            "alternate": "Alternate",
+            "random": "Random"
+          }
+        }
+      },
+      "presets": {
+        "picnic": "Picnic",
+        "retro": "Retro",
+        "pebbles": "Pebbles",
+        "halo": "Halo",
+        "mosaic": "Mosaic",
+        "fizz": "Fizz",
+        "speckle": "Speckle"
+      },
+      "seo": {
+        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
+        "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
+        "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
+      }
+    }
   }
 }

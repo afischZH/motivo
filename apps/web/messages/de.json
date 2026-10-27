@@ -27,5 +27,241 @@
     "title": "Seite nicht gefunden",
     "body": "Diese Seite gibt es nicht oder nicht mehr.",
     "home": "Zur Startseite"
+  },
+  "tools": {
+    "common": {
+      "params": {
+        "background": {
+          "label": "Hintergrund"
+        },
+        "palette": {
+          "label": "Farben"
+        }
+      },
+      "groups": {
+        "colors": "Farben",
+        "shape": "Form",
+        "layout": "Anordnung"
+      }
+    },
+    "css-gradient": {
+      "name": "CSS-Verlauf",
+      "description": "Lineare, radiale und konische Verläufe mit sanften Übergängen in OKLCH. Als CSS, SVG oder Bild exportieren.",
+      "groups": {
+        "gradient": "Verlauf",
+        "easing": "Übergang"
+      },
+      "params": {
+        "interpolation": {
+          "label": "Farbraum",
+          "options": {
+            "oklch": "OKLCH",
+            "oklab": "OKLab",
+            "srgb": "sRGB"
+          }
+        },
+        "hue": {
+          "label": "Farbton-Richtung",
+          "options": {
+            "shorter": "Kurzer Weg",
+            "longer": "Langer Weg"
+          }
+        },
+        "type": {
+          "label": "Typ",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "conic": "Konisch"
+          }
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "centerX": {
+          "label": "Mitte horizontal"
+        },
+        "centerY": {
+          "label": "Mitte vertikal"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "ellipse": "Ellipse"
+          }
+        },
+        "loop": {
+          "label": "Zurück zur ersten Farbe"
+        },
+        "easing": {
+          "label": "Übergangskurve",
+          "options": {
+            "linear": "Gleichmässig",
+            "ease-in": "Langsamer Start",
+            "ease-out": "Sanftes Ende",
+            "ease-in-out": "Beidseitig sanft"
+          }
+        },
+        "steps": {
+          "label": "Zwischenstopps"
+        }
+      },
+      "presets": {
+        "dawn": "Morgengrauen",
+        "lagoon": "Lagune",
+        "ember": "Glut",
+        "prism": "Prisma",
+        "meadow": "Wiese",
+        "dusk": "Abenddämmerung",
+        "citrus": "Zitrus"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei und bleibt in jeder Grösse scharf.",
+        "howTo": "Wähle Farben und Typ, passe Winkel und Übergang an und kopiere das CSS. Mit der Leertaste würfelst du neue Varianten."
+      }
+    },
+    "blob": {
+      "name": "Blob-Generator",
+      "description": "Organische Formen per Klick, mit Farbe, Kontur oder Verlauf. Als SVG oder Bild exportieren.",
+      "params": {
+        "complexity": {
+          "label": "Komplexität"
+        },
+        "randomness": {
+          "label": "Zufälligkeit"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "fillStyle": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "outline": "Kontur",
+            "gradient": "Verlauf"
+          }
+        },
+        "strokeWidth": {
+          "label": "Linienstärke"
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        }
+      },
+      "presets": {
+        "pebble": "Kiesel",
+        "splash": "Spritzer",
+        "lava": "Lava",
+        "lasso": "Lasso",
+        "petal": "Blütenblatt",
+        "cumulus": "Quellwolke",
+        "sticker": "Sticker"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "Blobs sind weiche, organische Formen für Hintergründe, Illustrationen und Akzente auf Websites.",
+        "howTo": "Stelle Komplexität und Zufälligkeit ein, wähle eine Füllung und lade dein SVG herunter."
+      }
+    },
+    "svg-waves": {
+      "name": "SVG-Wellen",
+      "description": "Geschichtete Wellen für Abschnitte, Header und Hintergründe. Als SVG, CSS oder Bild exportieren.",
+      "params": {
+        "layers": {
+          "label": "Ebenen"
+        },
+        "points": {
+          "label": "Punkte"
+        },
+        "amplitude": {
+          "label": "Wellenhöhe"
+        },
+        "smoothness": {
+          "label": "Rundung"
+        },
+        "coverage": {
+          "label": "Abdeckung"
+        },
+        "direction": {
+          "label": "Richtung",
+          "options": {
+            "up": "Von unten",
+            "down": "Von oben"
+          }
+        }
+      },
+      "presets": {
+        "tide": "Flut",
+        "dunes": "Dünen",
+        "aurora": "Polarlicht",
+        "shallows": "Untiefe",
+        "ridges": "Bergkämme",
+        "storm": "Sturm",
+        "ribbon": "Band"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst.",
+        "howTo": "Wähle Anzahl Ebenen, Wellenhöhe und Richtung, dann exportiere als SVG oder CSS."
+      }
+    },
+    "polka-dots": {
+      "name": "Polka Dots",
+      "description": "Punktmuster im Raster, versetzt oder frei verstreut. Als SVG oder Bild exportieren.",
+      "params": {
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "grid": "Raster",
+            "offset": "Versetzt",
+            "scatter": "Verstreut"
+          }
+        },
+        "spacing": {
+          "label": "Abstand"
+        },
+        "jitter": {
+          "label": "Zufallsversatz"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "ring": "Ring",
+            "square": "Quadrat"
+          }
+        },
+        "size": {
+          "label": "Punktgrösse"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "single": "Eine Farbe",
+            "alternate": "Abwechselnd",
+            "random": "Zufällig"
+          }
+        }
+      },
+      "presets": {
+        "picnic": "Picknick",
+        "retro": "Retro",
+        "pebbles": "Kieselsteine",
+        "halo": "Lichtringe",
+        "mosaic": "Mosaik",
+        "fizz": "Sprudel",
+        "speckle": "Sprenkel"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "Polka Dots sind regelmässige oder verstreute Punktmuster, ein Klassiker für Hintergründe, Verpackungen und Textilien.",
+        "howTo": "Wähle Anordnung, Abstand und Punktgrösse, mische deine Farben und exportiere als SVG oder PNG."
+      }
+    }
   }
 }

@@ -28,6 +28,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 ### A3. Polka Dots, Grid Patterns, Confetti, Starry Sky, Dieter Dots · M2/M3 · G
 - Einfache SVG-Generatoren mit wenigen Parametern (Dichte, Grösse, Varianz, Farbe, Form). Dieter Dots: konzentrische Ringe aus Punkten (`rings`, `dotsPerRing`, `ringSpacing`, `scale`).
 - Confetti/Starry Sky: Poisson-Disk-Sampling (Bridson) für gleichmässige, natürliche Verteilung.
+- **Polka Dots umgesetzt in M1** (ROADMAP gilt): `layout` (Raster, versetzt, verstreut per Poisson-Disk), `shape` (Kreis, Ring, Quadrat), `colorMode` (eine Farbe, abwechselnd, zufällig), `spacing` in Prozent der kürzeren Kante (Aussehen bleibt beim Ändern der Grösse gleich), `size`, `sizeVariance`, `jitter`. Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ### A4. Doodle Backgrounds · M3 · G
 - Handgezeichnet wirkende Formen: Linien/Pfade mit leichtem Rauschen (Perlin-Offset der Kontrollpunkte), runde Linienenden, Verteilung per Poisson-Disk.
@@ -43,6 +44,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 ### B2. CSS Gradient Generator · M1 · G
 - Linear, radial, conic; Farbstopps mit Drag; **Easing** der Übergänge (Zwischenstopps entlang Easing-Kurve, um Banding zu vermeiden); Interpolation in OKLCH (`in oklch` Syntax mit Fallback).
 - Exporte: CSS, Tailwind, SVG, PNG. Teilen per Link.
+- **Umsetzung M1**: Farbstopps gleichmässig verteilt aus der Palette (Drag-Stopps brauchen ein eigenes Control, später). Kein `background`-Parameter, der Verlauf deckt immer alles ab. CSS mit sRGB-Fallback (Zwischenstopps in OKLCH vorberechnet) plus zweiter Deklaration mit `in oklch`/`in oklab`. SVG-Vorschau exakt für linear und radial, konisch als Keile angenähert (SVG kennt keine konischen Verläufe). Tailwind-Export folgt mit dem Exporter (AP05).
 
 ## C. Gradients
 
@@ -70,12 +72,14 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **Algorithmus**: N Punkte auf Kreis (Winkel gleichmässig), Radius je Punkt `r * (1 ± randomness)`, geschlossene Catmull-Rom-Spline ► kubische Bezier ► SVG-Pfad.
 - **Parameter**: `complexity` (Punkte), `randomness`, `fill` (Farbe | Outline | Verlauf | Bild | Pattern aus A1/A2).
 - Exporte: SVG, PNG, CSS (`clip-path: path()` als Bonus).
+- **Umsetzung M1**: `fillStyle` Farbe, Kontur oder Verlauf (Bild und Pattern folgen mit A1/A2). Radius-Abweichung max. 60 % bei `randomness = 1`; Catmull-Rom-Spannung so gewählt, dass die Punkte ohne Zufall einen Kreis ergeben. `clip-path`-Bonus noch offen (braucht Zusatzausgabe im Exporter).
 
 ### D2. Blob Composition · M3 · G/P
 - Mehrere Blobs als Ebenen, Positionen an Ecken/Rändern, Brand-Farben, "Magic Resize" (Positionen relativ in % gespeichert).
 
 ### D3. SVG Waves · M1 · G
 - Layers 1 bis 5, Punkte pro Welle, Amplitude, Glättung, Richtung (oben/unten), Farbverlauf über Layers. Spline wie bei Blobs, aber offen. Exporte: SVG, PNG, CSS.
+- **Umsetzung M1**: zusätzlich `coverage` (Anteil der Fläche, den die Wellen belegen). Layer-Farben werden in OKLCH entlang der Palette verteilt. Standardgrösse 1920 × 1080.
 
 ### D4. 3D Perspective Grid · M5 · G
 - Retro-Synthwave-Grid: Linien in Perspektive (einfache 3D-Projektion ohne three.js möglich), Horizont, Glow (Blur-Ebene), Nebel (Verlauf), Sonne optional, Animation (Grid fährt nach vorne) für Video.
