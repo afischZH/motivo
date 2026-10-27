@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: Fortgesetzt nach Pause (2026-10-27). CI-E2E in WebKit repariert (Sicherheits-Header ohne HTTPS-Upgrade und HSTS auf localhost). AP04 erledigt. AP10 (ab `wip/m2-ap10`; Supabase-Projekt muss Andreas anlegen oder freigeben) läuft, danach AP12. Offen von Andreas: Impressum-Angaben, Analytics-Token, Sentry-DSN, Domain.
+- **Nächster Schritt**: Fortgesetzt nach Pause (2026-10-27). CI-E2E in WebKit repariert (Sicherheits-Header ohne HTTPS-Upgrade und HSTS auf localhost). CI-E2E in Firefox: COOP auf localhost gelockert (Farbschema-Emulation). AP04 und AP10 erledigt und zusammengeführt. AP12 läuft (Performance, Security-Review, Code-Review parallel). Offen von Andreas: Impressum-Angaben, Analytics-Token, Sentry-DSN, Domain.
 - Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins
@@ -26,7 +26,7 @@
 | M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | erledigt bis auf Lighthouse-Performance (AP12) | AP08 | Rechtstexte als Entwurf mit Banner und noindex, Platzhalter in `lib/legal/config.ts`, "juristisch zu prüfen"; Analytics und Sentry nur mit Repo-Variablen und nur in Production (deploy.yml); @sentry/browser 11.9.0 MIT, 19.8 KB gzip, erst beim ersten Fehler geladen; Locale-Cookie abgeschaltet (keine Cookies); Lighthouse mobil Performance 75 bis 87 (Ziel 95), Rest 100; csp.spec unter Volllast einmal instabil |
 | M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | erledigt im Code, aus bis zum Owner-Setup (Security-Review in AP12) | – | Supabase und Resend per fetch; RLS ohne Policies, nur SECURITY-DEFINER-Funktionen; Migration und RLS mit PGlite getestet (Docker lief nicht, vor Deploy `supabase db reset`); aus ohne Secrets ("bald verfügbar"); Turnstile optional; Texte juristisch zu prüfen; Einrichtung: `docs/SETUP-WAITLIST.md` |
 | M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | erledigt (Security-Review in AP12) | – | CSP erzwungen, aber `unsafe-inline` für Scripts (Next setzt pro Seite Inline-Scripts, Nonces würden statische Seiten verhindern); HSTS ohne preload; zod `jitless` gegen eval |
-| M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | geplant | alle | Domain, DNS, Search Console durch Andreas |
+| M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | in Arbeit | alle | Domain, DNS, Search Console durch Andreas |
 
 Reihenfolge: zuerst parallel Tool-Strang (AP01, AP02, AP05, AP06) und Seiten-Strang (AP07, dann AP08, dann AP03/AP04 und AP09); AP10 und AP11 parallel, sobald entschieden; zum Schluss AP12.
 
