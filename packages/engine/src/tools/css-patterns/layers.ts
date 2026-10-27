@@ -13,7 +13,8 @@
  *   restricted to hard sectors, which are drawn as polygons.
  *
  * Layers are listed top first, as in CSS. Stacking several patterns (layer
- * editor) is a concatenation of their layer lists over one background.
+ * editor) is a concatenation of their layer lists over one background, each
+ * painted with its own inks (`PaintedLayers`, `stackDeclarations`, `stackSvg`).
  *
  * Pure and deterministic, no DOM. Colours are validated here as well
  * (defence in depth next to the tool's zod schema), so no caller can inject
@@ -77,16 +78,26 @@ export interface PatternLayer {
   readonly offset?: { readonly x: number; readonly y: number };
 }
 
-/** Colours a layer list is painted with. */
-export interface PatternPaint {
+/** Inks one layer list is painted with. */
+export interface PatternInks {
   /** Primary pattern colour, hex. */
   readonly color: string;
   /** Second pattern colour, hex. */
   readonly accent: string;
-  /** Background colour (hex) or "transparent". */
-  readonly background: string;
   /** Pattern opacity in [0, 1]; the background stays opaque. */
   readonly opacity: number;
+}
+
+/** Colours a layer list is painted with. */
+export interface PatternPaint extends PatternInks {
+  /** Background colour (hex) or "transparent". */
+  readonly background: string;
+}
+
+/** One pattern of a stack: its layers (top first) and its own inks. */
+export interface PaintedLayers {
+  readonly layers: readonly PatternLayer[];
+  readonly inks: PatternInks;
 }
 
 /** Most layers a single pattern may use (keeps CSS and SVG small). */
@@ -103,14 +114,13 @@ export function strictHex(value: string): string {
   return `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`;
 }
 
-function checkPaint(paint: PatternPaint): PatternPaint {
-  const opacity = Number.isFinite(paint.opacity) ? Math.min(Math.max(paint.opacity, 0), 1) : 1;
-  return {
-    color: strictHex(paint.color),
-    accent: strictHex(paint.accent),
-    background: paint.background === "transparent" ? "transparent" : strictHex(paint.background),
-    opacity,
-  };
+function checkInks(inks: PatternInks): PatternInks {
+  const opacity = Number.isFinite(inks.opacity) ? Math.min(Math.max(inks.opacity, 0), 1) : 1;
+  return { color: strictHex(inks.color), accent: strictHex(inks.accent), opacity };
+}
+
+function checkBackground(background: string): string {
+  return background === "transparent" ? "transparent" : strictHex(background);
 }
 
 function checkNumber(value: number, what: string): number {
@@ -128,7 +138,7 @@ interface Resolved {
   readonly alpha255: number;
 }
 
-function inkHex(ink: Exclude<Ink, null>, paint: PatternPaint): string {
+function inkHex(ink: Exclude<Ink, null>, paint: PatternInks): string {
   return ink === "a" ? paint.color : paint.accent;
 }
 
@@ -137,7 +147,7 @@ function inkHex(ink: Exclude<Ink, null>, paint: PatternPaint): string {
  * coloured stop (with alpha 0), so SVG, which interpolates without
  * premultiplied alpha, fades exactly like CSS does.
  */
-function resolveStops(stops: readonly PatternStop[], paint: PatternPaint): Resolved[] {
+function resolveStops(stops: readonly PatternStop[], paint: PatternInks): Resolved[] {
   const fallback = stops.find((s) => s.ink !== null);
   return stops.map((stop, i) => {
     if (stop.ink !== null) {
@@ -165,7 +175,7 @@ function cssColor(stop: PatternStop, r: Resolved): string {
 /** Stop list with consecutive stops of one colour merged into two-position stops. */
 function cssStops(
   stops: readonly PatternStop[],
-  paint: PatternPaint,
+  paint: PatternInks,
   unit: string,
   positions: (stop: PatternStop, i: number) => readonly number[] = (s) => [s.at],
 ): string {
@@ -201,7 +211,7 @@ function cssPoint(p: PatternPoint): string {
 }
 
 /** The CSS `<image>` of one layer. */
-export function layerImageCss(image: PatternImage, paint: PatternPaint): string {
+export function layerImageCss(image: PatternImage, paint: PatternInks): string {
   switch (image.kind) {
     case "linear":
     case "repeating-linear":
@@ -232,7 +242,6 @@ export interface PatternDeclarations {
 }
 
 function checkLayers(layers: readonly PatternLayer[]): void {
-  if (layers.length === 0) throw new RangeError("css-patterns: no layers");
   for (const layer of layers) {
     if (layer.tile) {
       checkNumber(layer.tile.w, "tile width");
@@ -244,21 +253,52 @@ function checkLayers(layers: readonly PatternLayer[]): void {
   }
 }
 
+/** Every layer of a stack with its checked inks, top first. */
+function flatten(stack: readonly PaintedLayers[]): { layer: PatternLayer; inks: PatternInks }[] {
+  return stack.flatMap((entry) => {
+    checkLayers(entry.layers);
+    const inks = checkInks(entry.inks);
+    return entry.layers.map((layer) => ({ layer, inks }));
+  });
+}
+
+function singleStack(layers: readonly PatternLayer[], paint: PatternPaint): PaintedLayers[] {
+  if (layers.length === 0) throw new RangeError("css-patterns: no layers");
+  return [{ layers, inks: paint }];
+}
+
 export function patternDeclarations(
   layers: readonly PatternLayer[],
-  paintInput: PatternPaint,
+  paint: PatternPaint,
 ): PatternDeclarations {
-  checkLayers(layers);
-  const paint = checkPaint(paintInput);
-  const images = layers.map((l) => layerImageCss(l.image, paint));
-  const sizes = layers.map((l) => (l.tile ? `${f(l.tile.w)}px ${f(l.tile.h)}px` : "100% 100%"));
-  const positions = layers.map((l) =>
+  return stackDeclarations(singleStack(layers, paint), paint.background);
+}
+
+/**
+ * CSS values of several patterns stacked over one background (first entry on
+ * top). An empty stack paints only the background (`background-image: none`).
+ */
+export function stackDeclarations(
+  stack: readonly PaintedLayers[],
+  backgroundInput: string,
+): PatternDeclarations {
+  const background = checkBackground(backgroundInput);
+  const layers = flatten(stack);
+  const color = background !== "transparent" ? { backgroundColor: background } : {};
+  if (layers.length === 0) {
+    return { ...color, backgroundImage: "none", backgroundSize: "auto", backgroundPosition: "0 0" };
+  }
+  const images = layers.map(({ layer, inks }) => layerImageCss(layer.image, inks));
+  const sizes = layers.map(({ layer: l }) =>
+    l.tile ? `${f(l.tile.w)}px ${f(l.tile.h)}px` : "100% 100%",
+  );
+  const positions = layers.map(({ layer: l }) =>
     l.offset && (l.offset.x !== 0 || l.offset.y !== 0)
       ? `${f(l.offset.x)}px ${f(l.offset.y)}px`
       : "0 0",
   );
   return {
-    ...(paint.background !== "transparent" ? { backgroundColor: paint.background } : {}),
+    ...color,
     backgroundImage: images.join(", "),
     backgroundSize: sizes.join(", "),
     backgroundPosition: positions.join(", "),
@@ -301,7 +341,7 @@ export function declarationsToTailwind(d: PatternDeclarations): string {
 
 function svgStops(
   stops: readonly PatternStop[],
-  paint: PatternPaint,
+  paint: PatternInks,
   offset: (stop: PatternStop) => number,
 ): string {
   const resolved = resolveStops(stops, paint);
@@ -333,7 +373,7 @@ function polar(cx: number, cy: number, angle: number, r: number): string {
  */
 function imageSvg(
   image: PatternImage,
-  paint: PatternPaint,
+  paint: PatternInks,
   w: number,
   h: number,
   id: string,
@@ -408,22 +448,32 @@ function imageSvg(
  */
 export function patternSvg(
   layers: readonly PatternLayer[],
-  paintInput: PatternPaint,
+  paint: PatternPaint,
   width: number,
   height: number,
 ): string {
-  checkLayers(layers);
-  const paint = checkPaint(paintInput);
+  return stackSvg(singleStack(layers, paint), paint.background, width, height);
+}
+
+/** SVG twin of `stackDeclarations` on a `width` × `height` element. */
+export function stackSvg(
+  stack: readonly PaintedLayers[],
+  backgroundInput: string,
+  width: number,
+  height: number,
+): string {
+  const background = checkBackground(backgroundInput);
+  const layers = flatten(stack);
   const defs: string[] = [];
-  const body: string[] = [svgBackground(paint.background, width, height)];
+  const body: string[] = [svgBackground(background, width, height)];
   // CSS paints the first layer on top: draw from the last to the first.
   for (let i = layers.length - 1; i >= 0; i--) {
-    const layer = layers[i] as PatternLayer;
-    const key = `${i}:${layerImageCss(layer.image, paint)}:${JSON.stringify(layer.tile ?? null)}:${JSON.stringify(layer.offset ?? null)}`;
+    const { layer, inks } = layers[i] as { layer: PatternLayer; inks: PatternInks };
+    const key = `${i}:${layerImageCss(layer.image, inks)}:${JSON.stringify(layer.tile ?? null)}:${JSON.stringify(layer.offset ?? null)}`;
     const gid = stableId("g", key);
     if (layer.tile) {
       const { w, h } = layer.tile;
-      const content = imageSvg(layer.image, paint, w, h, gid);
+      const content = imageSvg(layer.image, inks, w, h, gid);
       const pid = stableId("p", key);
       const x = layer.offset?.x ?? 0;
       const y = layer.offset?.y ?? 0;
@@ -433,10 +483,11 @@ export function patternSvg(
       );
       body.push(`<rect width="${f(width)}" height="${f(height)}" fill="url(#${pid})"/>`);
     } else {
-      const content = imageSvg(layer.image, paint, width, height, gid);
+      const content = imageSvg(layer.image, inks, width, height, gid);
       defs.push(content.defs);
       body.push(content.body);
     }
   }
-  return svgDocument(width, height, `<defs>${defs.join("")}</defs>${body.join("")}`);
+  const inner = layers.length > 0 ? `<defs>${defs.join("")}</defs>` : "";
+  return svgDocument(width, height, `${inner}${body.join("")}`);
 }

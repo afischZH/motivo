@@ -2,19 +2,20 @@
  * CSS pattern library (docs/TOOLS.md B1): one call renders a library
  * pattern as CSS declarations, Tailwind classes and an equivalent SVG.
  *
- * Data model for stacking (layer editor, M2-AP04): a pattern instance is
+ * Stacking (layer editor, M2-AP04): a pattern instance is
  * `CssPatternInstance` (pattern id, colours, size, angle, opacity). Each
  * instance expands to a list of `PatternLayer`s painted with its own
- * colours; stacking several instances means concatenating their painted
- * layers (top first) over one background, which `layers.ts` already handles
- * for any layer count.
+ * colours; `cssPatternStack` concatenates the painted layers of several
+ * instances (top first) over one background. The single-pattern functions
+ * are a stack of one.
  */
 import {
   MAX_PATTERN_LAYERS,
   declarationsToCss,
   declarationsToTailwind,
-  patternDeclarations,
-  patternSvg,
+  stackDeclarations,
+  stackSvg,
+  type PaintedLayers,
   type PatternDeclarations,
   type PatternLayer,
 } from "./layers";
@@ -79,27 +80,63 @@ export function cssPatternLayers(
   return layers;
 }
 
-function paintOf(o: CssPatternOptions) {
-  return { color: o.color, accent: o.accent, background: o.background, opacity: o.opacity / 100 };
+/** Most pattern instances in one stack (layer editor). */
+export const CSS_PATTERN_STACK_MAX = 5;
+
+export interface CssPatternStackOptions {
+  /** Background colour (hex) or "transparent". */
+  readonly background: string;
+  /** Pattern instances, top first. May be empty (background only). */
+  readonly layers: readonly CssPatternInstance[];
 }
 
+function painted(o: CssPatternStackOptions): PaintedLayers[] {
+  if (o.layers.length > CSS_PATTERN_STACK_MAX) {
+    throw new RangeError(`css-patterns: more than ${CSS_PATTERN_STACK_MAX} stacked patterns`);
+  }
+  return o.layers.map((instance) => ({
+    layers: cssPatternLayers(instance),
+    inks: { color: instance.color, accent: instance.accent, opacity: instance.opacity / 100 },
+  }));
+}
+
+/** CSS values of a stack of pattern instances over one background. */
+export function cssPatternStackDeclarations(o: CssPatternStackOptions): PatternDeclarations {
+  return stackDeclarations(painted(o), o.background);
+}
+
+export function cssPatternStackTailwind(o: CssPatternStackOptions): string {
+  return declarationsToTailwind(cssPatternStackDeclarations(o));
+}
+
+/** CSS and the SVG twin of a stack, from the same layer list (one render path). */
+export function cssPatternStack(
+  o: CssPatternStackOptions & { width: number; height: number },
+): CssPatternResult {
+  const stack = painted(o);
+  const declarations = stackDeclarations(stack, o.background);
+  return {
+    declarations,
+    css: declarationsToCss(declarations),
+    svg: stackSvg(stack, o.background, o.width, o.height),
+  };
+}
+
+const single = (o: CssPatternOptions): CssPatternStackOptions => ({
+  background: o.background,
+  layers: [o],
+});
+
 export function cssPatternDeclarations(o: CssPatternOptions): PatternDeclarations {
-  return patternDeclarations(cssPatternLayers(o), paintOf(o));
+  return cssPatternStackDeclarations(single(o));
 }
 
 export function cssPatternTailwind(o: CssPatternOptions): string {
-  return declarationsToTailwind(cssPatternDeclarations(o));
+  return cssPatternStackTailwind(single(o));
 }
 
 export function cssPattern(
   o: CssPatternOptions & { width: number; height: number },
 ): CssPatternResult {
-  const layers = cssPatternLayers(o);
-  const paint = paintOf(o);
-  const declarations = patternDeclarations(layers, paint);
-  return {
-    declarations,
-    css: declarationsToCss(declarations),
-    svg: patternSvg(layers, paint, o.width, o.height),
-  };
+  return cssPatternStack({ ...single(o), width: o.width, height: o.height });
 }
