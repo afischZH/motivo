@@ -4,8 +4,10 @@
  * themes and locales, no horizontal overflow at 375/768/1280 px, keyboard-only
  * preset use, main-thread budget for normal edits).
  */
+import { readFile } from "node:fs/promises";
+
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
@@ -74,6 +76,63 @@ test.describe("responsive layout", () => {
       });
     }
   }
+});
+
+test.describe("flows not covered by the feature specs", () => {
+  test("a locked control keeps its value when shuffling", async ({ page }) => {
+    await openEditor(page, "/en/tools/blob");
+    const slider = page.getByRole("slider", { name: "Complexity" });
+    const before = await slider.getAttribute("aria-valuenow");
+    const motifSrc = () => page.getByTestId("preview").locator("img").getAttribute("src");
+    const src = await motifSrc();
+    const lock = page.getByRole("button", { name: "Lock Complexity" });
+    await lock.click();
+    await expect(lock).toHaveAttribute("aria-pressed", "true");
+    // Space on a focused button activates the button, not the shuffle.
+    await lock.blur();
+    for (let i = 0; i < 3; i++) await page.locator("body").press("Space");
+    await expect(page.getByTestId("filmstrip").getByRole("listitem")).toHaveCount(4);
+    await expect.poll(motifSrc).not.toBe(src);
+    await expect(slider).toHaveAttribute("aria-valuenow", before ?? "");
+  });
+
+  async function exportAs(
+    page: Page,
+    format: string,
+  ): Promise<{ dialog: Locator; bytes?: Buffer }> {
+    const dialog = page.getByRole("dialog", { name: "Export" });
+    await expect(async () => {
+      await page.getByRole("button", { name: "Export", exact: true }).click();
+      await expect(dialog).toBeVisible({ timeout: 1000 });
+    }).toPass();
+    const radio = dialog.getByRole("radio", { name: format, exact: true });
+    await dialog.locator(`label[for="${await radio.getAttribute("id")}"]`).click();
+    await expect(radio).toBeChecked();
+    const downloadPromise = page.waitForEvent("download", { timeout: 15_000 }).catch(() => null);
+    await dialog.getByRole("button", { name: "Download" }).click();
+    const status = dialog.getByRole("status").or(dialog.getByRole("alert"));
+    await expect(status.first()).toHaveText(/\S/, { timeout: 15_000 });
+    const download = await downloadPromise;
+    return download ? { dialog, bytes: await readFile(await download.path()) } : { dialog };
+  }
+
+  test("downloads JPG", async ({ page }) => {
+    await openEditor(page, "/en/tools/svg-waves");
+    const { bytes } = await exportAs(page, "JPG");
+    expect(bytes?.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]));
+  });
+
+  test("downloads WebP or explains that the browser cannot encode it", async ({ page }) => {
+    await openEditor(page, "/en/tools/polka-dots");
+    const { dialog, bytes } = await exportAs(page, "WebP");
+    if (bytes) {
+      expect(bytes.subarray(0, 4).toString("ascii")).toBe("RIFF");
+      expect(bytes.subarray(8, 12).toString("ascii")).toBe("WEBP");
+    } else {
+      // Safari cannot encode WebP from a canvas; the dialog must say so.
+      await expect(dialog).toContainText("Your browser cannot save this format. Use PNG or JPG.");
+    }
+  });
 });
 
 test.describe("keyboard only", () => {
