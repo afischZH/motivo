@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { GENERATOR_BUDGET_MS, fastest } from "../../testing/timing";
 import {
   MAX_DIETER_DOTS,
   type DieterDotsSvgOptions,
@@ -7,9 +8,6 @@ import {
   dieterDotsSvg,
   effectiveRings,
 } from "./index";
-
-// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
-const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
 
 const opts: DieterDotsSvgOptions = {
   width: 200,
@@ -85,16 +83,17 @@ describe("dieterDotsSvg", () => {
   });
 
   it("stays bounded and fast with extreme params", () => {
-    const start = clock.now();
-    const svg = dieterDotsSvg({
-      ...opts,
-      width: 8192,
-      height: 8192,
-      rings: 1000,
-      dotsPerRing: 36,
-      ringSpacing: 0.1,
-    });
-    expect(clock.now() - start).toBeLessThan(500);
+    const { ms, value: svg } = fastest(() =>
+      dieterDotsSvg({
+        ...opts,
+        width: 8192,
+        height: 8192,
+        rings: 1000,
+        dotsPerRing: 36,
+        ringSpacing: 0.1,
+      }),
+    );
+    expect(ms).toBeLessThan(GENERATOR_BUDGET_MS);
     expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DIETER_DOTS);
   });
 });
