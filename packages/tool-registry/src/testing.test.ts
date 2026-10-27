@@ -14,6 +14,13 @@ describe("checkSvg", () => {
     ).toEqual([]);
   });
 
+  it("ignores words like NaN inside base64 payloads, but not elsewhere", () => {
+    const img = (href: string, w: string): string =>
+      `<svg ${NS} viewBox="0 0 1 1"><image width="${w}" href="${href}"/></svg>`;
+    expect(checkSvg(img("data:image/png;base64,ab+NaN/null+Q==", "1"))).toEqual([]);
+    expect(checkSvg(img("data:image/png;base64,ab+NaN/Q==", "NaN"))).toEqual(['contains "NaN"']);
+  });
+
   it.each([
     ["missing root", `<g ${NS}></g>`],
     ["missing xmlns", `<svg viewBox="0 0 1 1"></svg>`],

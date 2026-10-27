@@ -75,8 +75,10 @@ export function checkSvg(svg: string): string[] {
   const hasSize = /\swidth="[^"]+"/.test(rootAttrs) && /\sheight="[^"]+"/.test(rootAttrs);
   if (!hasViewBox && !hasSize) problems.push("root <svg> has neither viewBox nor width/height");
 
+  // Base64 payloads (embedded raster tiles) may contain these words by chance.
+  const text = src.replace(/data:[\w/+.-]+;base64,[A-Za-z0-9+/=]*/g, "data:");
   for (const bad of ["NaN", "undefined", "Infinity", "null"]) {
-    if (new RegExp(`\\b${bad}\\b`).test(src)) problems.push(`contains "${bad}"`);
+    if (new RegExp(`\\b${bad}\\b`).test(text)) problems.push(`contains "${bad}"`);
   }
 
   const stack: string[] = [];
@@ -296,23 +298,33 @@ export function describeToolContract<S extends ParamsSchema>(
   });
 }
 
+export interface SnapshotOptions extends Pick<ContractOptions, "seed" | "size"> {
+  /**
+   * Shortens the output before snapshotting, e.g. replaces an embedded
+   * raster data URI by its checksum. Must stay deterministic and must not
+   * hide changes (keep a digest of what it removes).
+   */
+  normalize?(output: StaticRenderOutput): StaticRenderOutput;
+}
+
 /**
  * Snapshots the static output of every preset, rendered with `seed`
  * (default 1, as required by CLAUDE.md) unless the preset pins its own seed.
  */
 export function describePresetSnapshots<S extends ParamsSchema>(
   tool: ToolDefinition<S>,
-  options: Pick<ContractOptions, "seed" | "size"> = {},
+  options: SnapshotOptions = {},
 ): void {
   const anyTool: AnyToolDefinition = tool;
   const seed = options.seed ?? 1;
   const size = options.size ?? tool.defaultSize ?? DEFAULT_CANVAS_SIZE;
+  const normalize = options.normalize ?? ((out: StaticRenderOutput) => out);
 
   describe(`preset snapshots: ${tool.id}`, () => {
     it.each(tool.presets.map((p) => [p.id, p] as const))("%s", (_, p) => {
       const out = renderStatic(anyTool, p.params, p.seed ?? seed, size);
       expect(out, `${tool.render.kind} tools cannot be snapshotted statically`).toBeDefined();
-      expect(out).toMatchSnapshot();
+      expect(out === undefined ? out : normalize(out)).toMatchSnapshot();
     });
 
     const extras = anyTool.extraExports ?? [];

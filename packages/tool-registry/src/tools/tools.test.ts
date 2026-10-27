@@ -1,10 +1,18 @@
-import { MAX_DOT_SITES, createRng } from "@motivo/engine";
+import { GRAIN_TILE_EDGE, MAX_DOT_SITES, createRng, crc32 } from "@motivo/engine";
 import { describe, expect, it } from "vitest";
 import { registry } from "../registry";
 import { createRenderContext } from "../render";
 import { renderStatic, describePresetSnapshots, describeToolContract } from "../testing";
 import type { AnyToolDefinition, CssOutput } from "../types";
-import { blobTool, builtInTools, cssGradientTool, polkaDotsTool, svgWavesTool } from "./index";
+import {
+  blobTool,
+  builtInTools,
+  cssGradientTool,
+  noiseGrainTool,
+  polkaDotsTool,
+  svgWavesTool,
+} from "./index";
+import { noiseGrainTileCacheSize } from "./noise-grain";
 
 // Wall-clock timing for performance budgets in tests only; product code stays deterministic.
 const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
@@ -20,9 +28,21 @@ function fastest<T>(fn: () => T): { ms: number; value: T } {
   return { ms: best, value };
 }
 
+const PNG_DATA_URI = /data:image\/png;base64,([A-Za-z0-9+/=]+)/g;
+
+/** Replaces embedded PNG data URIs by length and CRC-32, so snapshots stay small but exact. */
+function digestDataUris(svg: string): string {
+  return svg.replace(PNG_DATA_URI, (_, b64: string) => {
+    const crc = crc32(Uint8Array.from(b64, (c) => c.charCodeAt(0)));
+    return `png-base64:${b64.length}:${crc.toString(16).padStart(8, "0")}`;
+  });
+}
+
 for (const tool of builtInTools) {
   describeToolContract(tool);
-  describePresetSnapshots(tool);
+  describePresetSnapshots(tool, {
+    normalize: (out) => (typeof out === "string" ? digestDataUris(out) : out),
+  });
 }
 
 describe("built-in tool registration", () => {
@@ -32,9 +52,11 @@ describe("built-in tool registration", () => {
       "blob",
       "svg-waves",
       "polka-dots",
+      "noise-grain",
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual(["polka-dots"]);
+    expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });
 
   it.each(builtInTools.map((t) => [t.id, t] as const))("%s is fully free in M1", (_, tool) => {
@@ -169,6 +191,82 @@ describe("polka-dots", () => {
       );
       expect(ms).toBeLessThan(200);
       expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES);
+    }
+  });
+});
+
+describe("noise-grain", () => {
+  const size = { width: 600, height: 400 };
+  const render = (params: object, seed = 1, sz = size): string =>
+    renderStatic(noiseGrainTool, { ...noiseGrainTool.defaults, ...params }, seed, sz) as string;
+  const tile = (svg: string): string | undefined =>
+    /data:image\/png;base64,([A-Za-z0-9+/=]+)/.exec(svg)?.[1];
+
+  it("embeds one seamless grain tile and blends it over the base", () => {
+    const svg = render({});
+    expect(svg.match(PNG_DATA_URI)).toHaveLength(1);
+    expect(svg).toContain(`width="${GRAIN_TILE_EDGE}" height="${GRAIN_TILE_EDGE}"`);
+    expect(svg).toContain('opacity="0.4" style="mix-blend-mode:overlay"');
+  });
+
+  it("changes the grain with the seed, not with colours, angle or amount", () => {
+    const a = tile(render({}));
+    expect(tile(render({}, 2))).not.toBe(a);
+    expect(tile(render({ color: "#000000", amount: 80, angle: 10 }))).toBe(a);
+    expect(tile(render({ size: 2 }))).not.toBe(a);
+  });
+
+  it("returns identical output from a cold and a warm tile cache", () => {
+    const params = { size: 3.5, mono: false, blend: "soft-light" };
+    const first = render(params, 77);
+    for (let s = 1000; s < 1020; s++) render({}, s); // evict
+    expect(render(params, 77)).toBe(first);
+    expect(noiseGrainTileCacheSize()).toBeLessThanOrEqual(16);
+  });
+
+  it("stores mono grain as greyscale and colour grain as RGB", () => {
+    const mono = tile(render({ mono: true })) ?? "";
+    const color = tile(render({ mono: false })) ?? "";
+    // About 64 KB vs 192 KB of pixels, base64 encoded.
+    expect(mono.length).toBeLessThan(100_000);
+    expect(color.length).toBeGreaterThan(2.5 * mono.length);
+    expect(color.length).toBeLessThan(300_000);
+  });
+
+  it("drops the grain layer at amount 0", () => {
+    const svg = render({ amount: 0 });
+    expect(svg).not.toContain("<pattern");
+    expect(svg).not.toContain("data:image");
+  });
+
+  it("rejects params outside the caps", () => {
+    const bad = [
+      { size: 0 },
+      { size: 100 },
+      { amount: 101 },
+      { palette: ["#000", "#111", "#222", "#333"] },
+    ];
+    for (const p of bad) {
+      expect(noiseGrainTool.schema.safeParse({ ...noiseGrainTool.defaults, ...p }).success).toBe(
+        false,
+      );
+    }
+  });
+
+  it("stays fast and bounded on the largest and most extreme canvases (crafted share link)", () => {
+    for (const sz of [
+      { width: 8192, height: 8192 },
+      { width: 8192, height: 16 },
+    ]) {
+      for (const [i, mono] of [true, false].entries()) {
+        // A fresh seed per run defeats the tile cache, so the full tile is computed.
+        let seed = 5000 + i * 10;
+        const { ms, value: svg } = fastest(() =>
+          render({ mono, size: 1.5, amount: 100 }, seed++, sz),
+        );
+        expect(ms).toBeLessThan(150);
+        expect(svg.length).toBeLessThan(300_000);
+      }
     }
   });
 });

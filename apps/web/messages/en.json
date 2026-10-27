@@ -274,6 +274,71 @@
         "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
         "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
       }
+    },
+    "noise-grain": {
+      "name": "Noise and Grain",
+      "description": "Grainy textures and backgrounds with fine noise over a color or gradient. Export as PNG, JPG, WebP or SVG.",
+      "groups": {
+        "grain": "Grain",
+        "base": "Base"
+      },
+      "params": {
+        "amount": {
+          "label": "Amount"
+        },
+        "size": {
+          "label": "Grain size"
+        },
+        "blend": {
+          "label": "Blend mode",
+          "options": {
+            "overlay": "Overlay",
+            "soft-light": "Soft light",
+            "multiply": "Multiply"
+          }
+        },
+        "mono": {
+          "label": "Monochrome"
+        },
+        "base": {
+          "label": "Base",
+          "options": {
+            "solid": "Color",
+            "linear": "Linear",
+            "radial": "Radial",
+            "none": "Transparent"
+          }
+        },
+        "color": {
+          "label": "Color"
+        },
+        "angle": {
+          "label": "Angle"
+        }
+      },
+      "presets": {
+        "film": "Film",
+        "paper": "Paper",
+        "riso": "Riso",
+        "midnight": "Midnight",
+        "aurora": "Aurora",
+        "sand": "Sand",
+        "overlay": "Overlay"
+      },
+      "seo": {
+        "whatIs": "Grain is fine random noise on top of a surface. It takes the sterile smoothness out of digital colors and gradients, hides banding in gradients and evokes analog film or paper.",
+        "howTo": "Pick a color or gradient as the base, adjust amount, grain size and blend mode, and press Space for a new variant. Then export as PNG, JPG, WebP or SVG at the size you need.",
+        "faq": {
+          "q1": "Which blend mode should I use?",
+          "a1": "Overlay brightens light areas and darkens dark ones for a punchy grain. Soft light is gentler. Multiply only darkens and suits paper looks and light surfaces.",
+          "q2": "How do I get a transparent grain texture?",
+          "a2": "Set the base to Transparent and export as PNG or WebP. The file then holds only the grain, ready to place over images in other apps.",
+          "q3": "Does the export look the same as the preview?",
+          "a3": "Yes. Preview and export use the same graphic, and the noise is computed from the seed. The same settings and seed always give the same grain, in every browser.",
+          "q4": "Does the pattern repeat?",
+          "a4": "The grain is a seamless 256 pixel tile. With fine grain the repeat is practically invisible, and the file stays small."
+        }
+      }
     }
   },
   "Converters": {
