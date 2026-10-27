@@ -8,7 +8,7 @@
  * this build, exactly like `next.config.ts`, so the file and the Worker's
  * headers come from the same environment and never disagree.
  */
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { register } from "node:module";
 
 register("./ts-resolve-hook.mjs", import.meta.url);
@@ -21,6 +21,8 @@ const [{ cloudflareHeadersFile }, { externalServices, telemetryEnv }] = await Pr
 // `next build` runs with NODE_ENV=production; this script runs before it.
 const env = { ...telemetryEnv(), NODE_ENV: "production" };
 const services = externalServices(env);
+// `public/` holds only generated files, so a fresh checkout has none.
+await mkdir(new URL("../public/", import.meta.url), { recursive: true });
 await writeFile(new URL("../public/_headers", import.meta.url), cloudflareHeadersFile(services));
 
 const enabled = Object.entries(services)
