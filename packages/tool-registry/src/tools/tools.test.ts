@@ -2,6 +2,7 @@ import { CSS_PATTERN_IDS, GRAIN_TILE_EDGE, MAX_DOT_SITES, createRng, crc32 } fro
 import { describe, expect, it } from "vitest";
 import { registry } from "../registry";
 import { createRenderContext } from "../render";
+import { parseToolParams } from "../randomize";
 import { renderStatic, describePresetSnapshots, describeToolContract } from "../testing";
 import type { AnyToolDefinition, CssOutput } from "../types";
 import {
@@ -18,7 +19,21 @@ import {
   starrySkyTool,
   svgWavesTool,
 } from "./index";
+import type { CssPatternLayer, CssPatternsParams } from "./css-patterns";
 import { noiseGrainTileCacheSize } from "./noise-grain";
+
+function required<T>(value: T | undefined): T {
+  if (value === undefined) throw new Error("missing value");
+  return value;
+}
+
+const defaultLayer = (): CssPatternLayer => required(cssPatternsTool.defaults.layers[0]);
+
+function extra(tool: AnyToolDefinition, id: string) {
+  const e = tool.extraExports?.find((x) => x.id === id);
+  if (!e) throw new Error(`missing extra export ${id}`);
+  return e;
+}
 
 // Wall-clock timing for performance budgets in tests only; product code stays deterministic.
 const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
@@ -126,6 +141,11 @@ describe("css-gradient", () => {
 
 describe("css-patterns", () => {
   const size = { width: 400, height: 300 };
+  const layerOf = (p: CssPatternsParams, i: number): CssPatternLayer => {
+    const l = p.layers[i];
+    if (!l) throw new Error(`no layer ${i}`);
+    return l;
+  };
 
   it("renders CSS declarations and an SVG twin of the same size", () => {
     const out = renderStatic(cssPatternsTool, cssPatternsTool.defaults, 1, size) as CssOutput;
@@ -138,50 +158,173 @@ describe("css-patterns", () => {
     expect(renderStatic(cssPatternsTool, cssPatternsTool.defaults, 99, size)).toEqual(a);
   });
 
-  it("has a valid showcase for every library pattern", () => {
+  it("has a valid showcase (a stack of one) for every library pattern", () => {
     for (const id of CSS_PATTERN_IDS) {
       const params = cssPatternShowcase(id);
       expect(cssPatternsTool.schema.parse(params)).toEqual(params);
-      expect(params.pattern).toBe(id);
+      expect(params.layers).toHaveLength(1);
+      expect(layerOf(params, 0).pattern).toBe(id);
     }
     expect(() => cssPatternShowcase("nope")).toThrow(RangeError);
+  });
+
+  it("has at least six presets with several layers", () => {
+    const stacked = cssPatternsTool.presets.filter((p) => p.params.layers.length > 1);
+    expect(stacked.length).toBeGreaterThanOrEqual(6);
+  });
+
+  it("stacks visible layers top first and skips hidden ones", () => {
+    const params = required(cssPatternsTool.presets.find((p) => p.id === "night-dots")).params;
+    const all = renderStatic(cssPatternsTool, params, 1, size) as CssOutput;
+    const top = renderStatic(
+      cssPatternsTool,
+      { ...params, layers: [layerOf(params, 0)] },
+      1,
+      size,
+    ) as CssOutput;
+    const imageOf = (css: string) => /background-image: (.*);/.exec(css)?.[1] ?? "";
+    expect(imageOf(all.css).startsWith(imageOf(top.css))).toBe(true);
+    expect(imageOf(all.css).length).toBeGreaterThan(imageOf(top.css).length);
+
+    const hidden = {
+      ...params,
+      layers: params.layers.map((l, i) => (i === 0 ? l : { ...l, visible: false })),
+    };
+    expect(renderStatic(cssPatternsTool, hidden, 1, size)).toEqual(top);
+
+    const none = { ...params, layers: params.layers.map((l) => ({ ...l, visible: false })) };
+    const empty = renderStatic(cssPatternsTool, none, 1, size) as CssOutput;
+    expect(empty.css).toContain("background-image: none;");
+    expect(extra(cssPatternsTool, "tailwind").render(none, createRenderContext(1, size))).toBe(
+      "bg-[#0f172a] [background-image:none] [background-size:auto] [background-position:0_0]",
+    );
+  });
+
+  it("allows one to five layers", () => {
+    const five = { ...cssPatternsTool.defaults, layers: Array(5).fill(defaultLayer()) };
+    expect(cssPatternsTool.schema.safeParse(five).success).toBe(true);
+    expect(cssPatternsTool.schema.safeParse({ ...five, layers: [] }).success).toBe(false);
+    expect(
+      cssPatternsTool.schema.safeParse({ ...five, layers: [...five.layers, defaultLayer()] })
+        .success,
+    ).toBe(false);
+  });
+
+  it("upgrades single-pattern params (AP03 share links) to a stack of one", () => {
+    const old = {
+      pattern: "gingham",
+      background: "#fffaf5",
+      color: "#d62839",
+      accent: "#e07a5f",
+      size: 28,
+      angle: 0,
+      opacity: 90,
+    };
+    const parsed = parseToolParams(cssPatternsTool, old);
+    expect(parsed.success && parsed.data).toEqual({
+      background: "#fffaf5",
+      layers: [
+        {
+          pattern: "gingham",
+          color: "#d62839",
+          accent: "#e07a5f",
+          size: 28,
+          angle: 0,
+          opacity: 90,
+          visible: true,
+        },
+      ],
+    });
+    // Current params pass through untouched; junk stays junk.
+    expect(cssPatternsTool.migrateParams?.(cssPatternsTool.defaults)).toBe(
+      cssPatternsTool.defaults,
+    );
+    expect(parseToolParams(cssPatternsTool, { foo: 1 }).success).toBe(false);
+    expect(parseToolParams(cssPatternsTool, { ...old, pattern: "nope" }).success).toBe(false);
   });
 
   it("rejects colours and patterns that could inject CSS (crafted share links)", () => {
     const attacks: Record<string, unknown>[] = [
       { color: "red;background:url(https://evil.example/x)" },
       { accent: "#fff) , url(https://evil.example/x" },
-      { background: "#000;}body{display:none" },
-      { background: "url(x)" },
       { color: '#fff"/><script>alert(1)</script>' },
       { pattern: "polka;color:red" },
       { pattern: "__proto__" },
       { size: 1e9 },
       { angle: Number.NaN },
       { opacity: -1 },
+      { visible: "yes" },
     ];
     for (const attack of attacks) {
-      const parsed = cssPatternsTool.schema.safeParse({ ...cssPatternsTool.defaults, ...attack });
-      expect(parsed.success, JSON.stringify(attack)).toBe(false);
+      const params = { ...cssPatternsTool.defaults, layers: [{ ...defaultLayer(), ...attack }] };
+      expect(cssPatternsTool.schema.safeParse(params).success, JSON.stringify(attack)).toBe(false);
+      // The old single-pattern shape is migrated, then validated just the same.
+      if ("visible" in attack) continue; // not part of the old shape
+      const flat = { ...defaultLayer(), background: "#ffffff", ...attack };
+      expect(parseToolParams(cssPatternsTool, flat).success, JSON.stringify(attack)).toBe(false);
+    }
+    for (const background of ["#000;}body{display:none", "url(x)"]) {
+      expect(
+        cssPatternsTool.schema.safeParse({ ...cssPatternsTool.defaults, background }).success,
+      ).toBe(false);
     }
   });
 
   it("only shows the angle for rotatable patterns and the accent where it is used", () => {
-    const hints = cssPatternsTool.controls?.params;
+    const hints = cssPatternsTool.controls?.params?.layers?.list?.item?.params;
     const show = (key: "angle" | "accent", pattern: string) =>
-      hints?.[key]?.visibleWhen?.({ ...cssPatternsTool.defaults, pattern }) ?? true;
+      hints?.[key]?.visibleWhen?.({ ...defaultLayer(), pattern }) ?? true;
     expect(show("angle", "stripes")).toBe(true);
     expect(show("angle", "polka")).toBe(false);
     expect(show("accent", "dots-duo")).toBe(true);
     expect(show("accent", "polka")).toBe(false);
   });
 
-  it("keeps the size even and in range when randomising", () => {
+  it("previews every pattern as a small CSS thumbnail in the layer colours", () => {
+    const hints = cssPatternsTool.controls?.params?.layers?.list?.item?.params;
+    const preview = hints?.pattern?.optionPreview;
+    expect(preview).toBeDefined();
+    const item = { ...defaultLayer(), color: "#123456" };
+    for (const id of CSS_PATTERN_IDS) {
+      const out = preview?.(id, item, cssPatternsTool.defaults);
+      expect(out && "css" in out ? out.css : "").toMatch(
+        /^background-color: #f8f5ee;\nbackground-image: /,
+      );
+    }
+  });
+
+  it("adds a layer with a pattern that is not in use yet", () => {
+    const list = cssPatternsTool.controls?.params?.layers?.list;
+    const added = list?.newItem?.(cssPatternsTool.defaults.layers);
+    expect(added?.pattern).not.toBe("zigzag");
+    const params = { ...cssPatternsTool.defaults, layers: [added] };
+    expect(cssPatternsTool.schema.safeParse(params).success).toBe(true);
+  });
+
+  it("keeps the layer count, visibility and even sizes when randomising", () => {
+    const start = required(cssPatternsTool.presets.find((p) => p.id === "highland")).params;
+    const hidden = { ...start, layers: start.layers.map((l, i) => ({ ...l, visible: i !== 1 })) };
     for (let s = 0; s < 50; s++) {
-      const out = cssPatternsTool.randomize(createRng(s), cssPatternsTool.defaults, new Set());
-      expect(out.size % 2).toBe(0);
+      const out = cssPatternsTool.randomize(createRng(s), hidden, new Set());
+      expect(out.layers).toHaveLength(3);
+      expect(out.layers.map((l) => l.visible)).toEqual([true, false, true]);
+      for (const l of out.layers) expect(l.size % 2).toBe(0);
       expect(cssPatternsTool.schema.safeParse(out).success).toBe(true);
     }
+  });
+
+  it("keeps locked fields of single layers when randomising", () => {
+    const start = required(cssPatternsTool.presets.find((p) => p.id === "highland")).params;
+    const locks = new Set(["layers.1.pattern", "layers.1.color", "layers.2.opacity"] as const);
+    const outs = Array.from({ length: 20 }, (_, s) =>
+      cssPatternsTool.randomize(createRng(s), start, locks),
+    );
+    for (const out of outs) {
+      expect(layerOf(out, 1).pattern).toBe(layerOf(start, 1).pattern);
+      expect(layerOf(out, 1).color).toBe(layerOf(start, 1).color);
+      expect(layerOf(out, 2).opacity).toBe(layerOf(start, 2).opacity);
+    }
+    expect(outs.some((o) => layerOf(o, 0).pattern !== layerOf(start, 0).pattern)).toBe(true);
   });
 });
 
@@ -204,11 +347,6 @@ describe("blob", () => {
 
 describe("extra exports", () => {
   const size = { width: 300, height: 200 };
-  const extra = (tool: AnyToolDefinition, id: string) => {
-    const e = tool.extraExports?.find((x) => x.id === id);
-    if (!e) throw new Error(`missing extra export ${id}`);
-    return e;
-  };
 
   it("css-gradient offers Tailwind classes", () => {
     const out = extra(cssGradientTool, "tailwind").render(
