@@ -28,7 +28,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 ### A3. Polka Dots, Grid Patterns, Confetti, Starry Sky, Dieter Dots · M2/M3 · G
 - Einfache SVG-Generatoren mit wenigen Parametern (Dichte, Grösse, Varianz, Farbe, Form). Dieter Dots: konzentrische Ringe aus Punkten (`rings`, `dotsPerRing`, `ringSpacing`, `scale`).
 - Confetti/Starry Sky: Poisson-Disk-Sampling (Bridson) für gleichmässige, natürliche Verteilung.
-- **Polka Dots umgesetzt in M1** (ROADMAP gilt): `layout` (Raster, versetzt, verstreut per Poisson-Disk), `shape` (Kreis, Ring, Quadrat), `colorMode` (eine Farbe, abwechselnd, zufällig), `spacing` in Prozent der kürzeren Kante (Aussehen bleibt beim Ändern der Grösse gleich), `size`, `sizeVariance`, `jitter`. Exporte: SVG, CSS, PNG, JPG, WebP.
+- **Polka Dots umgesetzt in M1** (ROADMAP gilt): `layout` (Raster, versetzt, verstreut per Poisson-Disk), `shape` (Kreis, Ring, Quadrat), `colorMode` (eine Farbe, abwechselnd, zufällig), `spacing` in Prozent der kürzeren Kante (Aussehen bleibt beim Ändern der Grösse gleich), `size`, `sizeVariance`, `jitter`. Schutz vor extremen Formaten: Abstand mindestens 4 px und höchstens 20 000 Punkte pro Render (der Abstand wird bei Bedarf gleichmässig vergrössert). Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ### A4. Doodle Backgrounds · M3 · G
 - Handgezeichnet wirkende Formen: Linien/Pfade mit leichtem Rauschen (Perlin-Offset der Kontrollpunkte), runde Linienenden, Verteilung per Poisson-Disk.
