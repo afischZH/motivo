@@ -12,6 +12,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.12",
     "@motivo/config": "workspace:*"
   }
 }
