@@ -148,9 +148,26 @@
         "citrus": "Citrus"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "A CSS gradient is a color transition drawn by the browser itself. It needs no image file and stays sharp at any size.",
-        "howTo": "Pick colors and a type, adjust angle and easing, then copy the CSS. Press the space bar for new variations."
+        "whatIs": "A CSS gradient is a color transition the browser draws itself. It needs no image file, loads instantly and stays sharp at any size. This generator mixes colors in the OKLCH color space, so transitions look even and avoid a muddy gray middle.",
+        "howTo": "Choose linear, radial or conic, set your colors and adjust angle, center and easing. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Why OKLCH instead of sRGB?",
+            "answer": "In sRGB many color pairs pass through a dull, gray middle. OKLCH blends by perceived lightness and chroma, so transitions stay vivid. For older browsers the CSS also contains an sRGB gradient as a fallback."
+          },
+          "q2": {
+            "question": "What do the extra stops do?",
+            "answer": "They add intermediate colors along the transition, so the gradient follows the chosen easing curve, such as ease in and out, instead of running linearly."
+          },
+          "q3": {
+            "question": "Can I use the gradient with Tailwind?",
+            "answer": "Yes. Next to the CSS, the export offers ready-made Tailwind classes you can paste straight into your markup."
+          },
+          "q4": {
+            "question": "Does the exported image match the preview?",
+            "answer": "Yes. For SVG and images the same gradient is drawn as a vector graphic, at the size you choose in the export dialog."
+          }
+        }
       }
     },
     "blob": {
@@ -191,9 +208,26 @@
         "sticker": "Sticker"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "Blobs are soft, organic shapes for backgrounds, illustrations and accents on websites.",
-        "howTo": "Set complexity and randomness, choose a fill and download your SVG."
+        "whatIs": "Blobs are soft, organic shapes. They loosen up strict layouts and work as backgrounds, photo frames or accents behind text. Each shape starts as a few points on a circle that are nudged at random and joined with smooth curves.",
+        "howTo": "Set complexity, randomness and size, then pick a fill: solid, outline or gradient. Press Space until you like the shape. Export as SVG, as an image or as a CSS clip-path to crop photos into a blob.",
+        "faq": {
+          "q1": {
+            "question": "How do I get the same shape again?",
+            "answer": "Every shape depends on the seed and the settings. Share or bookmark the link from the editor and the exact same shape appears when you open it."
+          },
+          "q2": {
+            "question": "Can I crop a photo into a blob shape?",
+            "answer": "Yes. Export the shape as a clip-path and apply the CSS to your image. The shape scales with the element."
+          },
+          "q3": {
+            "question": "Does the SVG have a background?",
+            "answer": "No, the background is transparent by default, so the blob sits on any surface without visible edges."
+          },
+          "q4": {
+            "question": "How many points does a blob have?",
+            "answer": "That is what complexity controls. Few points give calm, round shapes, many points give lively, playful outlines."
+          }
+        }
       }
     },
     "svg-waves": {
@@ -233,9 +267,26 @@
         "ribbon": "Ribbon"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "SVG waves are lightweight vector graphics that softly separate sections of a website.",
-        "howTo": "Choose the number of layers, amplitude and direction, then export as SVG or CSS."
+        "whatIs": "SVG waves are lightweight vector graphics that softly separate the sections of a website. Instead of a hard edge, one surface flows into the next. Several layers in graded colors add depth while the file stays just a few kilobytes.",
+        "howTo": "Choose the number of layers and points, set amplitude, smoothness and coverage, and decide whether the waves rise from the bottom or hang from the top. Press Space for new variations. Export as SVG, CSS background or image.",
+        "faq": {
+          "q1": {
+            "question": "How do I place a wave between two sections?",
+            "answer": "Download the SVG and put it at the bottom of the upper section. Use the background color of the next section as the wave color and both blend seamlessly."
+          },
+          "q2": {
+            "question": "Does the wave stay sharp on wide screens?",
+            "answer": "Yes. As a vector graphic it scales without losing quality. Set its width to 100 percent in CSS and let the height follow."
+          },
+          "q3": {
+            "question": "What does smoothness do?",
+            "answer": "It sets how softly the curve runs between points. Low smoothness gives jagged, mountain-like shapes, high smoothness calm, rounded waves."
+          },
+          "q4": {
+            "question": "Can I flip the waves?",
+            "answer": "Yes. The direction setting decides whether the waves rise from the bottom or come down from the top."
+          }
+        }
       }
     },
     "polka-dots": {
@@ -289,9 +340,26 @@
         "speckle": "Speckle"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
-        "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
+        "whatIs": "Polka dots are dot patterns, evenly spaced or freely scattered. Depending on size and color they look playful or calm, and they suit backgrounds for websites, packaging, cards and fabrics. Besides circles you can use rings and squares.",
+        "howTo": "Pick a layout (grid, offset or scatter), set spacing and dot size, and choose whether dots share one color, alternate or get random colors. Press Space for new variations. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "What is the difference between grid and offset?",
+            "answer": "In a grid the dots sit in straight rows and columns. Offset shifts every other row by half a step, which looks denser and more classic."
+          },
+          "q2": {
+            "question": "How do I keep scattered dots from overlapping?",
+            "answer": "With the scatter layout the dots keep a minimum distance based on the spacing. Add size variation for extra variety."
+          },
+          "q3": {
+            "question": "Can I use the pattern as a CSS background?",
+            "answer": "Yes. The CSS export embeds the pattern as SVG, so you can use it directly as a background-image."
+          },
+          "q4": {
+            "question": "Which shapes are available?",
+            "answer": "Circles, rings and squares. Rings feel lighter and work well for bright, airy backgrounds."
+          }
+        }
       }
     },
     "noise-grain": {
@@ -948,6 +1016,79 @@
           "a3": "Yes, decoded images can be up to 5 MB. Everything runs in your browser."
         }
       }
+    }
+  },
+  "Seo": {
+    "home": "Home",
+    "breadcrumbLabel": "Breadcrumb"
+  },
+  "Landing": {
+    "metaTitle": "{tool} online | Motivo",
+    "cta": "Open the generator",
+    "ctaSecondary": "Try the {tool} now",
+    "ctaHint": "Runs right in your browser. Your graphics are made on your device.",
+    "previewAlt": "Example motif made with the {tool}",
+    "ogAlt": "{tool} by Motivo with an example motif",
+    "presetsHeading": "Start from a preset",
+    "presetsLead": "Pick a preset and it opens right in the editor, ready to adjust.",
+    "presetLink": "{preset}, open in the editor",
+    "categoriesLabel": "Categories",
+    "whatIsHeading": "What is it?",
+    "howToHeading": "How it works",
+    "faqHeading": "FAQ",
+    "relatedHeading": "Related generators",
+    "moreInCategory": "All generators in {category}"
+  },
+  "Catalogue": {
+    "categoryNav": "Categories",
+    "openEditor": "Open in editor",
+    "openEditorFor": "{tool}: open in editor",
+    "toolCount": "{count, plural, one {# generator} other {# generators}}",
+    "showCategory": "View category",
+    "convertersLead": "Convert code and images, right in your browser.",
+    "allConverters": "All converters"
+  },
+  "CategoryPage": {
+    "metaTitle": "{category} generators | Motivo",
+    "otherCategories": "More categories",
+    "backToCatalogue": "All generators"
+  },
+  "Categories": {
+    "patterns": {
+      "name": "Patterns",
+      "description": "Repeatable patterns made of dots, lines and shapes for websites, slides and print."
+    },
+    "css-patterns": {
+      "name": "CSS patterns",
+      "description": "Patterns and gradients the browser draws itself. Copy the CSS, no image file needed."
+    },
+    "gradients": {
+      "name": "Gradients",
+      "description": "Smooth color transitions for backgrounds, buttons and hero images."
+    },
+    "backgrounds": {
+      "name": "Backgrounds",
+      "description": "Surfaces, shapes and textures that frame websites, slides and social posts."
+    },
+    "image-effects": {
+      "name": "Image effects",
+      "description": "Grain, halftone and other effects for surfaces and images."
+    },
+    "colors": {
+      "name": "Colors",
+      "description": "Palettes, tints and color scales that stay readable and fit your design system."
+    },
+    "converters": {
+      "name": "Converters",
+      "description": "Convert SVG, CSS, Base64 and images, right in your browser."
+    },
+    "social": {
+      "name": "Social media",
+      "description": "Graphics in the right formats for your channels."
+    },
+    "composer": {
+      "name": "Composer",
+      "description": "Combine several motifs into one graphic."
     }
   }
 }

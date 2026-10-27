@@ -24,9 +24,9 @@ test.describe("tools index", () => {
   test("lists the registered tools and links to the editor", async ({ page }) => {
     await page.goto("/en/tools");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Generators");
-    const cards = page.getByRole("main").getByRole("listitem");
+    const cards = page.getByRole("main").getByRole("article");
     await expect(cards).toHaveCount(builtInTools.length);
-    await page.getByRole("link", { name: /Blob Generator/ }).click();
+    await page.getByRole("link", { name: "Blob Generator: open in editor" }).click();
     await expect(page).toHaveURL(/\/en\/tools\/blob-generator$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Blob Generator");
   });

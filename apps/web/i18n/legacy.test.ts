@@ -1,4 +1,4 @@
-import { registry } from "@motivo/tool-registry";
+import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
@@ -23,6 +23,21 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/konverter/")).toBeNull();
   });
 
+  it("redirects landing pages to this locale's slug", () => {
+    expect(canonicalRedirect("/de/polka-dot-pattern-generator")).toBe("/de/punktmuster-generator");
+    expect(canonicalRedirect("/en/blob")).toBe("/en/blob-generator");
+    expect(canonicalRedirect("/en/blob-generator")).toBeNull();
+    expect(canonicalRedirect("/en/pricing")).toBeNull();
+  });
+
+  it("redirects category pages to this locale's segment and slug", () => {
+    expect(canonicalRedirect("/en/tools/kategorie/muster")).toBe("/en/tools/category/patterns");
+    expect(canonicalRedirect("/de/tools/category/colors")).toBe("/de/tools/kategorie/farben");
+    expect(canonicalRedirect("/de/tools/kategorie/farben")).toBeNull();
+    expect(canonicalRedirect("/de/tools/kategorie/nope")).toBeNull();
+    expect(canonicalRedirect("/de/konverter/kategorie/farben")).toBeNull();
+  });
+
   it("leaves canonical, unknown and unrelated paths alone", () => {
     expect(canonicalRedirect("/en/tools/blob-generator")).toBeNull();
     expect(canonicalRedirect("/de/konverter/svg-zu-css")).toBeNull();
@@ -38,6 +53,8 @@ describe("canonicalRedirect", () => {
       { page: "tools" },
       { page: "convert" },
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
+      ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
+      ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),
       ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
     ];
     for (const route of routes) {

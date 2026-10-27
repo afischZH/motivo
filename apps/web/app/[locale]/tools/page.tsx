@@ -1,78 +1,150 @@
-import { Motif, renderMotif } from "@motivo/editor-ui";
-import { DEFAULT_CANVAS_SIZE, registry } from "@motivo/tool-registry";
+/**
+ * Catalogue: every registered tool, grouped by its primary category, plus
+ * the converters. Built entirely from the registry and the slug maps, so new
+ * tools appear here without changes to this page. Static, no client JS.
+ */
 import type { Metadata } from "next";
-import { hasLocale, useTranslations } from "next-intl";
+import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { use } from "react";
 
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { ToolCard } from "@/components/seo/tool-card";
 import { Link } from "@/i18n/navigation";
 import { routeHref } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
+import { catalogueGroups } from "@/lib/catalogue";
+import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { pageAlternates } from "@/lib/seo/alternates";
+import { pageOpenGraph } from "@/lib/seo/page-meta";
 
 type ToolsPageProps = Readonly<{ params: Promise<{ locale: string }> }>;
-
-/** Longest edge of the card previews in CSS pixels. */
-const CARD_PREVIEW_EDGE = 160;
 
 export async function generateMetadata({ params }: ToolsPageProps): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
-  const t = await getTranslations({ locale, namespace: "ToolsIndex" });
+  const t = await getTranslations({ locale });
+  const title = t("ToolsIndex.metaTitle");
+  const description = t("ToolsIndex.metaDescription");
+  const route = { page: "tools" } as const;
   return {
-    title: t("metaTitle"),
-    description: t("metaDescription"),
-    alternates: pageAlternates({ page: "tools" }, locale),
+    title,
+    description,
+    alternates: pageAlternates(route, locale),
+    openGraph: pageOpenGraph({ route, locale, siteName: t("Layout.brand"), title, description }),
   };
 }
 
-export default function ToolsPage({ params }: ToolsPageProps) {
-  const { locale } = use(params);
+export default async function ToolsPage({ params }: ToolsPageProps) {
+  const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
-  const t = useTranslations();
-  // Tool keys are built from the id, which the typed message keys cannot know.
-  const toolText = t as unknown as (key: string) => string;
+  const t = await getTranslations();
+  const groups = catalogueGroups();
 
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:py-16">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight">{t("ToolsIndex.title")}</h1>
+    <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-8 sm:py-12">
+      <div className="flex flex-col gap-4">
+        <Breadcrumbs
+          locale={locale}
+          items={[
+            { name: t("Seo.home"), route: { page: "home" } },
+            { name: t("ToolsIndex.title"), route: { page: "tools" } },
+          ]}
+        />
+        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          {t("ToolsIndex.title")}
+        </h1>
         <p className="max-w-prose text-muted-foreground">{t("ToolsIndex.lead")}</p>
-      </div>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {registry.list().map((tool) => {
-          const size = tool.defaultSize ?? DEFAULT_CANVAS_SIZE;
-          // Same render path as the editor, with the tool's defaults and seed 1.
-          const output = renderMotif(tool, tool.defaults, 1, size);
-          const name = toolText(`tools.${tool.id}.name`);
-          return (
-            <li key={tool.id}>
-              <Link
-                href={routeHref({ page: "tool", toolId: tool.id }, locale)}
-                className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-card text-card-foreground transition-colors hover:border-ring"
+        <nav aria-label={t("Catalogue.categoryNav")}>
+          <ul className="flex flex-wrap gap-2">
+            {groups.map(({ category }) => (
+              <li key={category}>
+                <a
+                  href={`#${category}`}
+                  className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
+                >
+                  {t(`Categories.${category}.name`)}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href="#converters"
+                className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
               >
-                <div className="flex h-44 items-center justify-center bg-canvas" aria-hidden="true">
-                  <Motif
-                    output={output}
-                    width={size.width}
-                    height={size.height}
-                    scale={CARD_PREVIEW_EDGE / Math.max(size.width, size.height)}
-                    className="rounded-md shadow-sm"
-                  />
-                </div>
-                <div className="flex flex-col gap-1 p-4">
-                  <h2 className="text-base font-semibold">{name}</h2>
-                  <p className="text-sm text-muted-foreground">
-                    {toolText(`tools.${tool.id}.description`)}
-                  </p>
-                </div>
+                {t("Categories.converters.name")}
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      {groups.map(({ category, tools }) => (
+        <section
+          key={category}
+          id={category}
+          aria-labelledby={`${category}-heading`}
+          className="flex scroll-mt-4 flex-col gap-4"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2 id={`${category}-heading`} className="text-xl font-semibold tracking-tight">
+              {t(`Categories.${category}.name`)}{" "}
+              <span className="text-sm font-normal text-muted-foreground">
+                ({t("Catalogue.toolCount", { count: tools.length })})
+              </span>
+            </h2>
+            <Link
+              href={routeHref({ page: "category", category }, locale)}
+              className="rounded-control text-sm text-link underline-offset-4 hover:underline"
+            >
+              {t("Catalogue.showCategory")}
+              <span className="sr-only">: {t(`Categories.${category}.name`)}</span>
+            </Link>
+          </div>
+          <p className="max-w-prose text-sm text-muted-foreground">
+            {t(`Categories.${category}.description`)}
+          </p>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {tools.map((tool) => (
+              <li key={tool.id}>
+                <ToolCard tool={tool} locale={locale} headingLevel={3} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <section
+        id="converters"
+        aria-labelledby="converters-heading"
+        className="flex scroll-mt-4 flex-col gap-4"
+      >
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h2 id="converters-heading" className="text-xl font-semibold tracking-tight">
+            {t("Categories.converters.name")}
+          </h2>
+          <Link
+            href="/convert"
+            className="rounded-control text-sm text-link underline-offset-4 hover:underline"
+          >
+            {t("Catalogue.allConverters")}
+          </Link>
+        </div>
+        <p className="max-w-prose text-sm text-muted-foreground">{t("Catalogue.convertersLead")}</p>
+        <ul className="flex flex-wrap gap-2">
+          {CONVERTER_IDS.map((id) => (
+            <li key={id}>
+              <Link
+                href={routeHref({ page: "converter", converterId: id }, locale)}
+                className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
+              >
+                {t(`Converters.items.${id}.name`)}
               </Link>
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }

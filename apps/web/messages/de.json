@@ -148,9 +148,26 @@
         "citrus": "Zitrus"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei und bleibt in jeder Grösse scharf.",
-        "howTo": "Wähle Farben und Typ, passe Winkel und Übergang an und kopiere das CSS. Mit der Leertaste würfelst du neue Varianten."
+        "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei, lädt sofort und bleibt in jeder Grösse scharf. Der Generator mischt die Farben im Farbraum OKLCH, darum wirken Übergänge gleichmässig und ohne graue Mitte.",
+        "howTo": "Wähle linear, radial oder konisch, lege deine Farben fest und stelle Winkel, Mittelpunkt und Übergang ein. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Warum OKLCH statt sRGB?",
+            "answer": "In sRGB laufen viele Farbpaare durch eine trübe, graue Mitte. OKLCH mischt nach wahrgenommener Helligkeit und Buntheit, darum bleiben Übergänge frisch. Für ältere Browser liefert das CSS zusätzlich einen sRGB-Verlauf als Rückfall."
+          },
+          "q2": {
+            "question": "Was machen die zusätzlichen Stopps?",
+            "answer": "Sie setzen Zwischenfarben entlang des Übergangs. So folgt der Verlauf der gewählten Kurve, etwa sanft hinein und heraus, statt linear zu laufen."
+          },
+          "q3": {
+            "question": "Kann ich den Verlauf in Tailwind verwenden?",
+            "answer": "Ja. Im Export findest du neben dem CSS auch fertige Tailwind-Klassen, die du direkt in dein Markup kopierst."
+          },
+          "q4": {
+            "question": "Sieht das exportierte Bild aus wie die Vorschau?",
+            "answer": "Ja. Für SVG und Bilder wird derselbe Verlauf als Vektorgrafik gezeichnet, in der Grösse, die du im Export wählst."
+          }
+        }
       }
     },
     "blob": {
@@ -191,9 +208,26 @@
         "sticker": "Sticker"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "Blobs sind weiche, organische Formen für Hintergründe, Illustrationen und Akzente auf Websites.",
-        "howTo": "Stelle Komplexität und Zufälligkeit ein, wähle eine Füllung und lade dein SVG herunter."
+        "whatIs": "Blobs sind weiche, organische Formen. Sie lockern strenge Layouts auf und eignen sich als Hintergrund, als Rahmen für Fotos oder als Akzent hinter Text. Jede Form entsteht aus wenigen Punkten auf einem Kreis, die zufällig verschoben und mit glatten Kurven verbunden werden.",
+        "howTo": "Stelle Komplexität, Zufälligkeit und Grösse ein und wähle eine Füllung: Fläche, Kontur oder Verlauf. Drücke die Leertaste, bis dir eine Form gefällt. Exportiere als SVG, als Bild oder als CSS-clip-path, um Fotos in Blob-Form zuzuschneiden.",
+        "faq": {
+          "q1": {
+            "question": "Wie bekomme ich die gleiche Form wieder?",
+            "answer": "Jede Form hängt vom Seed und den Einstellungen ab. Teile den Link aus dem Editor oder speichere ihn, dann entsteht beim Öffnen genau dieselbe Form."
+          },
+          "q2": {
+            "question": "Kann ich ein Foto in Blob-Form zuschneiden?",
+            "answer": "Ja. Exportiere die Form als clip-path und wende das CSS auf dein Bild an. Die Form passt sich der Grösse des Elements an."
+          },
+          "q3": {
+            "question": "Hat das SVG einen Hintergrund?",
+            "answer": "Nein, standardmässig ist der Hintergrund transparent. So setzt du den Blob auf jede Fläche, ohne störende Kanten."
+          },
+          "q4": {
+            "question": "Wie viele Punkte hat ein Blob?",
+            "answer": "Das bestimmt die Komplexität. Wenige Punkte ergeben ruhige, runde Formen, viele Punkte lebendige, verspielte Umrisse."
+          }
+        }
       }
     },
     "svg-waves": {
@@ -233,9 +267,26 @@
         "ribbon": "Band"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst.",
-        "howTo": "Wähle Anzahl Ebenen, Wellenhöhe und Richtung, dann exportiere als SVG oder CSS."
+        "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst. Statt einer harten Kante läuft eine Fläche in Wellen aus. Mehrere Ebenen in abgestuften Farben erzeugen Tiefe, die Datei bleibt trotzdem nur wenige Kilobyte gross.",
+        "howTo": "Wähle die Anzahl Ebenen und Punkte, stelle Höhe, Glätte und Abdeckung ein und lege fest, ob die Wellen von unten oder von oben kommen. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, CSS-Hintergrund oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Wie setze ich die Welle zwischen zwei Abschnitte?",
+            "answer": "Lade das SVG herunter und platziere es am unteren Rand des oberen Abschnitts. Wähle als Wellenfarbe die Hintergrundfarbe des nächsten Abschnitts, dann gehen beide nahtlos ineinander über."
+          },
+          "q2": {
+            "question": "Bleibt die Welle auf breiten Bildschirmen scharf?",
+            "answer": "Ja. Als Vektorgrafik skaliert sie ohne Qualitätsverlust. Stelle die Breite im CSS auf 100 Prozent und lass die Höhe mitwachsen."
+          },
+          "q3": {
+            "question": "Was bewirkt die Glätte?",
+            "answer": "Sie bestimmt, wie weich die Kurven zwischen den Punkten verlaufen. Wenig Glätte ergibt kantige, bergige Formen, viel Glätte ruhige, runde Wellen."
+          },
+          "q4": {
+            "question": "Kann ich die Wellen umdrehen?",
+            "answer": "Ja. Mit der Richtung wählst du, ob die Wellen von unten oder von oben in die Fläche ragen."
+          }
+        }
       }
     },
     "polka-dots": {
@@ -289,9 +340,26 @@
         "speckle": "Sprenkel"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "Polka Dots sind regelmässige oder verstreute Punktmuster, ein Klassiker für Hintergründe, Verpackungen und Textilien.",
-        "howTo": "Wähle Anordnung, Abstand und Punktgrösse, mische deine Farben und exportiere als SVG oder PNG."
+        "whatIs": "Polka Dots sind Punktmuster in regelmässigem Abstand oder frei verstreut. Sie wirken verspielt oder ruhig, je nach Grösse und Farbe, und passen als Hintergrund für Websites, Verpackungen, Karten und Stoffe. Neben Kreisen kannst du auch Ringe und Quadrate verwenden.",
+        "howTo": "Wähle die Anordnung (Raster, versetzt oder verstreut), stelle Abstand und Punktgrösse ein und bestimme, ob die Punkte eine Farbe haben, sich abwechseln oder zufällig gefärbt sind. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Was ist der Unterschied zwischen Raster und versetzt?",
+            "answer": "Im Raster liegen die Punkte in geraden Reihen und Spalten. Versetzt verschiebt jede zweite Reihe um einen halben Abstand, das wirkt dichter und klassischer."
+          },
+          "q2": {
+            "question": "Wie verhindere ich, dass sich verstreute Punkte überlappen?",
+            "answer": "Bei der Anordnung verstreut halten die Punkte automatisch einen Mindestabstand ein, der sich nach dem Abstand richtet. Mit der Grössenvariation bringst du zusätzlich Abwechslung hinein."
+          },
+          "q3": {
+            "question": "Kann ich das Muster als CSS-Hintergrund verwenden?",
+            "answer": "Ja. Der CSS-Export bettet das Muster als SVG ein, sodass du es direkt als background-image einsetzen kannst."
+          },
+          "q4": {
+            "question": "Welche Formen gibt es?",
+            "answer": "Kreise, Ringe und Quadrate. Ringe wirken leichter und eignen sich gut für helle, luftige Hintergründe."
+          }
+        }
       }
     },
     "noise-grain": {
@@ -948,6 +1016,79 @@
           "a3": "Ja, dekodierte Bilder dürfen bis 5 MB gross sein. Alles läuft in deinem Browser."
         }
       }
+    }
+  },
+  "Seo": {
+    "home": "Start",
+    "breadcrumbLabel": "Pfad"
+  },
+  "Landing": {
+    "metaTitle": "{tool} online | Motivo",
+    "cta": "Generator öffnen",
+    "ctaSecondary": "{tool} jetzt ausprobieren",
+    "ctaHint": "Läuft direkt in deinem Browser. Deine Grafiken entstehen auf deinem Gerät.",
+    "previewAlt": "Beispielmotiv aus dem {tool}",
+    "ogAlt": "{tool} von Motivo mit einem Beispielmotiv",
+    "presetsHeading": "Mit einem Preset starten",
+    "presetsLead": "Wähle ein Preset, es öffnet sich direkt im Editor. Dort passt du alles an.",
+    "presetLink": "{preset}, im Editor öffnen",
+    "categoriesLabel": "Kategorien",
+    "whatIsHeading": "Worum geht’s?",
+    "howToHeading": "So geht’s",
+    "faqHeading": "Häufige Fragen",
+    "relatedHeading": "Passende Generatoren",
+    "moreInCategory": "Alle Generatoren in {category}"
+  },
+  "Catalogue": {
+    "categoryNav": "Kategorien",
+    "openEditor": "Im Editor öffnen",
+    "openEditorFor": "{tool}: im Editor öffnen",
+    "toolCount": "{count, plural, one {# Generator} other {# Generatoren}}",
+    "showCategory": "Kategorie ansehen",
+    "convertersLead": "Code und Bilder umwandeln, direkt im Browser.",
+    "allConverters": "Alle Konverter"
+  },
+  "CategoryPage": {
+    "metaTitle": "{category}: Generatoren | Motivo",
+    "otherCategories": "Weitere Kategorien",
+    "backToCatalogue": "Alle Generatoren"
+  },
+  "Categories": {
+    "patterns": {
+      "name": "Muster",
+      "description": "Wiederholbare Muster aus Punkten, Linien und Formen für Websites, Präsentationen und Drucksachen."
+    },
+    "css-patterns": {
+      "name": "CSS-Muster",
+      "description": "Muster und Verläufe, die der Browser selbst zeichnet. Kopiere einfach das CSS, ganz ohne Bilddatei."
+    },
+    "gradients": {
+      "name": "Verläufe",
+      "description": "Weiche Farbübergänge für Hintergründe, Buttons und Titelbilder."
+    },
+    "backgrounds": {
+      "name": "Hintergründe",
+      "description": "Flächen, Formen und Texturen, die Websites, Slides und Social-Media-Posts einen Rahmen geben."
+    },
+    "image-effects": {
+      "name": "Bildeffekte",
+      "description": "Körnung, Raster und andere Effekte für Flächen und Bilder."
+    },
+    "colors": {
+      "name": "Farben",
+      "description": "Paletten, Abstufungen und Farbskalen, gut lesbar und bereit für dein Design-System."
+    },
+    "converters": {
+      "name": "Konverter",
+      "description": "SVG, CSS, Base64 und Bilder umwandeln, direkt in deinem Browser."
+    },
+    "social": {
+      "name": "Social Media",
+      "description": "Grafiken in den passenden Formaten für deine Kanäle."
+    },
+    "composer": {
+      "name": "Composer",
+      "description": "Mehrere Motive zu einer Grafik kombinieren."
     }
   }
 }

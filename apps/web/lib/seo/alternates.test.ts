@@ -27,7 +27,7 @@ describe("pageAlternates", () => {
       languages: {
         de: "https://example.test/de/tools/css-verlauf-generator",
         en: "https://example.test/en/tools/css-gradient-generator",
-        "x-default": "https://example.test/de/tools/css-verlauf-generator",
+        "x-default": "https://example.test/en/tools/css-gradient-generator",
       },
     });
   });
@@ -38,10 +38,21 @@ describe("pageAlternates", () => {
     expect(alt.languages).toMatchObject({ en: "https://example.test/en/convert/image-to-base64" });
   });
 
-  it("points the home page's x-default at the language-detecting root", () => {
-    const alt = pageAlternates({ page: "home" }, "de", base);
-    expect(alt.canonical).toBe("https://example.test/de");
-    expect(alt.languages).toMatchObject({ "x-default": "https://example.test/" });
+  it("points x-default at the English page everywhere", () => {
+    const home = pageAlternates({ page: "home" }, "de", base);
+    expect(home.canonical).toBe("https://example.test/de");
+    expect(home.languages).toMatchObject({ "x-default": "https://example.test/en" });
+    const landing = pageAlternates({ page: "landing", toolId: "polka-dots" }, "de", base);
+    expect(landing.canonical).toBe("https://example.test/de/punktmuster-generator");
+    expect(landing.languages).toMatchObject({
+      en: "https://example.test/en/polka-dot-pattern-generator",
+      "x-default": "https://example.test/en/polka-dot-pattern-generator",
+    });
+    const category = pageAlternates({ page: "category", category: "backgrounds" }, "de", base);
+    expect(category.canonical).toBe("https://example.test/de/tools/kategorie/hintergruende");
+    expect(category.languages).toMatchObject({
+      "x-default": "https://example.test/en/tools/category/backgrounds",
+    });
   });
 });
 
