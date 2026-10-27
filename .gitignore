@@ -7,3 +7,9 @@ node_modules/
 dist/
 coverage/
 .turbo/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

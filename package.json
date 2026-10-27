@@ -12,6 +12,8 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
+    "test:e2e": "pnpm --filter @motivo/web test:e2e",
+    "test:e2e:chromium": "pnpm --filter @motivo/web test:e2e --project=chromium",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"
