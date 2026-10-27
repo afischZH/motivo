@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: M1-AP04 Editor-Seite (AP11 Konverter läuft parallel).
+- **Nächster Schritt**: AP05/06-Kern (Exporter, Share-Codec) abschliessen, dann Export-Dialog und Teilen-Knopf in die Editor-Seite einbauen.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
@@ -17,7 +17,7 @@
 | M1-AP01 | `ToolDefinition`-Typen, Registry, Test-Helfer (Schema-, Preset-, Snapshot-Tests generisch) | engine-dev | erledigt | – | Dep: zod 4 (ca. 27 KB gzip); 82 Tests |
 | M1-AP02 | Editor-State: Params, Seed, Locks, Randomize, Undo/Redo, Varianten-Verlauf | ui-dev | erledigt | AP01 | Dep: zustand 5 (ca. 0.4 KB gzip); Preset erzeugt neue Variante; Locks und Filmstreifen nicht im Undo |
 | M1-AP03 | Auto-Controls aus Zod-Schema (Slider, Segmented, Switch, Farbe, Palette) inkl. Schloss | ui-dev | erledigt | AP01 | Farbwähler ohne OKLCH-Tabs, Palette per Knöpfe statt Drag, Reset per Doppelklick (Tastatur folgt); 116 Tests |
-| M1-AP04 | Editor-Seite `/[locale]/tools/[toolId]`: Layout, Presets-Leiste, Vorschau mit Zoom/Fit, Filmstreifen, Tastaturkürzel | ui-dev | offen | AP02, AP03 | DESIGN.md 2 und 4 |
+| M1-AP04 | Editor-Seite `/[locale]/tools/[toolId]`: Layout, Presets-Leiste, Vorschau mit Zoom/Fit, Filmstreifen, Tastaturkürzel | ui-dev | erledigt | AP02, AP03 | EditorShell in editor-ui; Mobile einspaltig statt Bottom-Sheet; ⌘K, ⌘S, ⌘⇧C fehlen noch; Preset-Thumbnails als data-URL im HTML (Polka Dots ca. 34 KB gzip), in AP12 prüfen |
 | M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | offen | AP01, AP04 | ohne SVGO (Entscheid Andreas) |
 | M1-AP06 | Teilen per URL-Hash (Params komprimiert) | ui-dev | offen | AP02 | Dep: fflate oder lz-string |
 | M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Dep: culori 4 via `culori/fn` (ca. 1.3 KB gzip); Stopps gleichmässig, ziehbare Stopps später (neuer Control-Typ) |
