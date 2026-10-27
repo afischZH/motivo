@@ -31,3 +31,21 @@ export {
   type ShortcutAction,
 } from "./shell/shortcuts";
 export { useEditorShortcuts, type ShortcutHandlers } from "./shell/use-shortcuts";
+export { ImageInputPanel } from "./image-input/image-input-panel";
+export { ImageInputSection } from "./image-input/image-input-section";
+export {
+  createImageInputController,
+  useImageInput,
+  type ImageInputController,
+  type ImageInputControls,
+  type ImageSource,
+} from "./image-input/use-image-input";
+export * from "./image-input/check";
+export {
+  browserImageInputServices,
+  createImageInputServices,
+  type ImageDecodeResult,
+  type ImageDeriveResult,
+  type ImageInputEnv,
+  type ImageInputServices,
+} from "./image-input/services";

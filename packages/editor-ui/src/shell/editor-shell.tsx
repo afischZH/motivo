@@ -11,6 +11,8 @@ import {
 import { useDeferredValue, useEffect, useId, useMemo, useState, type ReactNode } from "react";
 import { EditorControls } from "../controls/control-panel";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
+import { ImageInputSection } from "../image-input/image-input-section";
+import type { ImageInputServices } from "../image-input/services";
 import { buildShareUrl, useShareHash } from "../share/use-share";
 import { cx } from "../controls/primitives";
 import { useT } from "../i18n";
@@ -41,6 +43,8 @@ export interface EditorShellProps {
   headerStart?: ReactNode;
   /** Browser side effects of export, copy and share; replaceable in tests. */
   exportServices?: ExportServices;
+  /** Decoding and analysis of user images (tools with `imageInput`); replaceable in tests. */
+  imageInputServices?: ImageInputServices;
   className?: string;
 }
 
@@ -70,6 +74,7 @@ const percent = (scale: number) => Math.round(scale * 100);
 export function EditorShell({
   headerStart,
   exportServices = browserExportServices,
+  imageInputServices,
   className,
 }: EditorShellProps) {
   const t = useT();
@@ -342,6 +347,7 @@ export function EditorShell({
           <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
             {t("Editor.shell.settings")}
           </h2>
+          <ImageInputSection services={imageInputServices} />
           <EditorControls />
         </section>
       </div>

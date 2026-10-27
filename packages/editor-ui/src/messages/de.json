@@ -180,6 +180,30 @@
         "other-tool": "Dieser Link gehört zu einem anderen Tool. Du siehst die Standardeinstellungen.",
         "outdated": "Dieser Link stammt aus einer älteren Version. Das Motiv kann leicht anders aussehen."
       }
+    },
+    "imageInput": {
+      "title": "Bild",
+      "sample": "Beispielbild",
+      "yourImage": "Dein Bild",
+      "choose": "Bild wählen",
+      "useSample": "Beispielbild verwenden",
+      "dropNow": "Loslassen, um das Bild zu laden",
+      "hint": "Zieh ein Bild hierher, füg es mit Ctrl+V ein oder wähl eine Datei: PNG, JPG, WebP, GIF oder SVG bis 5 MB. Dein Bild bleibt auf deinem Gerät und wird nicht hochgeladen.",
+      "thumbnailSample": "Beispielbild: Sonnenuntergang über einem See",
+      "thumbnailUser": "Dein Bild: {name}",
+      "loading": "Bild wird gelesen …",
+      "analysing": "Bild wird ausgewertet …",
+      "ready": "{name} ist ausgewertet. Die Vorschau zeigt das Ergebnis.",
+      "dismiss": "Meldung schliessen",
+      "errors": {
+        "too-large": "Das Bild ist grösser als 5 MB. Verkleinere es und versuch es nochmals.",
+        "unsupported-type": "Dieses Format kennt Motivo nicht. Nimm ein PNG, JPG, WebP, GIF oder SVG.",
+        "too-many-pixels": "Das Bild hat zu viele Pixel (über 64 Megapixel). Verkleinere es und versuch es nochmals.",
+        "read-failed": "Die Datei liess sich nicht lesen. Versuch es nochmals.",
+        "decode-failed": "Das Bild liess sich nicht öffnen. Vielleicht ist die Datei beschädigt.",
+        "timeout": "Das Auswerten dauert zu lange und wurde abgebrochen. Versuch ein kleineres Bild.",
+        "no-result": "In diesem Bild gibt es nichts auszuwerten, zum Beispiel weil es ganz durchsichtig ist."
+      }
     }
   },
   "sizes": {

@@ -253,6 +253,43 @@ export interface ExtraExport<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Image input
+// ---------------------------------------------------------------------------
+
+/**
+ * A tool that analyses a user image (e.g. "Palette from image"). The editor
+ * shows a generic image picker; the image is decoded and downsampled in the
+ * browser (never uploaded, never stored, never in share links) and handed to
+ * `derive`, which turns it into ordinary params. `render` therefore stays a
+ * pure function of params and seed: preview and export are unchanged.
+ *
+ * `derive` runs again whenever the image, the seed (Space) or one of
+ * `deriveOn` changes.
+ */
+export interface ImageInput<P> {
+  /**
+   * Params computed by `derive`. They describe the user's image, so share
+   * links never carry them: they are reset to the defaults on encode and
+   * decode, and the opened link shows the sample state.
+   */
+  derivedKeys: readonly ParamKey<P>[];
+  /** Params that feed `derive` (e.g. a colour count). */
+  deriveOn: readonly ParamKey<P>[];
+  /** Longest edge in pixels of the buffer `derive` receives (downsampled before). */
+  maxEdge: number;
+  /**
+   * Built-in picture used until the user picks one, so the tool never starts
+   * empty. `defaults` should equal `derive(sample(), defaults, rng(seed 1))`.
+   */
+  sample(): PixelBuffer;
+  /**
+   * Pure and deterministic: same pixels, params and rng state give the same
+   * patch. Must return values that pass the schema.
+   */
+  derive(pixels: PixelBuffer, params: P, rng: Rng): Partial<P>;
+}
+
+// ---------------------------------------------------------------------------
 // Tool definition
 // ---------------------------------------------------------------------------
 
@@ -283,8 +320,10 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   /** Tool-specific text outputs, offered next to `exports`. */
   extraExports?: readonly ExtraExport<Params<S>>[];
   gating: Gating<Params<S>>;
-  /** Needs an uploaded image (halftone, dither, ...). */
+  /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
+  /** Derives params from a user image; see `ImageInput`. */
+  imageInput?: ImageInput<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
 }

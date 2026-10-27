@@ -779,6 +779,58 @@
           "a4": "OKLCH describes colors by lightness, chroma and hue the way the eye perceives them. Modern browsers understand OKLCH directly in CSS."
         }
       }
+    },
+    "palette-from-image": {
+      "name": "Palette from Image",
+      "description": "Drop in a photo and get its main colors with their share in percent. The image stays in your browser.",
+      "params": {
+        "count": {
+          "label": "Number of colors",
+          "description": "How many main colors to look for in the image."
+        },
+        "sort": {
+          "label": "Order",
+          "options": {
+            "share": "Share",
+            "lightness": "Lightness",
+            "hue": "Hue"
+          }
+        },
+        "colors": {
+          "label": "Colors found"
+        },
+        "shares": {
+          "label": "Show share"
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "dominant": "Main colors",
+        "trio": "Trio",
+        "light-to-dark": "Light to dark",
+        "color-wheel": "Color wheel",
+        "full-spectrum": "All ten",
+        "quiet": "Quiet",
+        "contrast-check": "Contrast check"
+      },
+      "seo": {
+        "whatIs": "Palette from Image finds the colors that define a photo or graphic and shows how much of the area each one covers. The analysis runs entirely in your browser: your image is never uploaded and never stored.",
+        "howTo": "Drop an image onto the drop zone, paste it with Ctrl+V or choose a file (PNG, JPG, WebP, GIF or SVG up to 5 MB). Set the number of colors, press the space bar for another grouping and export the palette as a HEX list, CSS variables, Tailwind or an image.",
+        "faq": {
+          "q1": "Is my image uploaded?",
+          "a1": "No. The image is scaled down and analyzed in your browser. It never leaves your device, is not part of shared links and is not stored.",
+          "q2": "How are the colors found?",
+          "a2": "Motivo groups the pixels with k-means in the OKLab color space, which measures color differences the way the eye sees them. Each group becomes one color, and its share is the area it covers in the image.",
+          "q3": "Why does the space bar change the palette?",
+          "a3": "k-means starts from randomly chosen colors and can settle on slightly different groups depending on the start. The space bar tries a new start, so you can keep the variant you like best.",
+          "q4": "Why does a shared link show the sample image?",
+          "a4": "Shared links contain only the settings, never your image or the colors taken from it. Whoever opens the link sees the sample image and can drop in their own. To pass on the colors, export them as a HEX list or an image.",
+          "q5": "Which images work?",
+          "a5": "PNG, JPG, WebP, GIF (first frame of an animation) and SVG up to 5 MB. Transparent pixels are not counted."
+        }
+      }
     }
   },
   "Converters": {

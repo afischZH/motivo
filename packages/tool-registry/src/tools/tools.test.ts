@@ -64,11 +64,13 @@ describe("built-in tool registration", () => {
       "palette-generator",
       "tints-shades",
       "tailwind-palette",
+      "palette-from-image",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
       "tints-shades",
       "tailwind-palette",
+      "palette-from-image",
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
@@ -169,6 +171,7 @@ describe("extra exports", () => {
       "palette-generator",
       "tints-shades",
       "tailwind-palette",
+      "palette-from-image",
     ]);
   });
 });
