@@ -53,15 +53,10 @@ describe.each(Object.entries(MESSAGES))("SEO texts in %s", (_, messages) => {
   });
 });
 
-describe("German SEO copy", () => {
-  const texts = [
-    ...strings(de.tools),
-    ...strings(de.Landing),
-    ...strings(de.Catalogue),
-    ...strings(de.CategoryPage),
-    ...strings(de.Categories),
-    ...strings(de.Seo),
-  ];
+// Every namespace, not only the SEO ones: home, waitlist, footer and editor
+// pages follow the same rules (CLAUDE.md, "Sprache und Stil").
+describe("German web copy", () => {
+  const texts = strings(de);
 
   it("uses Swiss spelling (no ß)", () => {
     expect(texts.filter((s) => s.includes("ß"))).toEqual([]);
