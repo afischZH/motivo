@@ -23,6 +23,8 @@ export default tseslint.config(
       "**/.next/**",
       "**/coverage/**",
       "**/.turbo/**",
+      "**/.open-next/**",
+      "**/.wrangler/**",
       "**/next-env.d.ts",
     ],
   },

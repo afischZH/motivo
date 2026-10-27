@@ -4,28 +4,28 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M0 (AP-Plan erstellt, wartet auf Freigabe)
+- **Meilenstein**: M0 (freigegeben 2026-10-27, Hosting Cloudflare; AP01 bis AP06 erledigt, AP07 wartet auf Cloudflare-Verknüpfung)
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: Freigabe des M0-AP-Plans durch Andreas, dann AP01 und AP06 starten.
+- **Nächster Schritt**: Andreas verbindet Cloudflare Workers Builds mit dem Repo; danach Preview-URL prüfen, M0-Abnahme.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
-| M0-AP01 | Monorepo-Grundgerüst: pnpm-Workspaces, Turborepo, `packages/config` (tsconfig strict, ESLint, Prettier), leere Pakete gemäss ARCHITECTURE.md 3 | Orchestrator | offen | – | Basis für alles |
-| M0-AP02 | `apps/web`: Next.js (App Router), TypeScript strict, Tailwind, shadcn/ui | ui-dev | offen | AP01 | Versionen per offizieller Doku prüfen |
-| M0-AP03 | Lint-Regel "kein `Math.random`/`Date.now` in engine/effects/shaders", Husky + lint-staged | Orchestrator | offen | AP01 | |
-| M0-AP04 | Vitest + Playwright einrichten, GitHub Actions (lint, typecheck, test, build) | qa-tester | offen | AP01, AP02 | |
-| M0-AP05 | Design-Tokens Light/Dark, Basis-Layout, Theme-Switch (⌘⇧K), i18n-Grundgerüst DE/EN | ui-dev | offen | AP02 | Texte nur über i18n-Keys |
-| M0-AP06 | `packages/engine`: PRNG `mulberry32`, Vektor-Helfer, Catmull-Rom zu Bezier, Poisson-Disk, je mit Unit-Tests | engine-dev | offen | AP01 | parallel zu AP02 bis AP05 |
-| M0-AP07 | Deployment: Vercel-Preview pro PR, Production auf `main` | Orchestrator + backend-dev | offen | AP02, AP04 | braucht Vercel-Verknüpfung durch Andreas |
+| M0-AP01 | Monorepo-Grundgerüst: pnpm-Workspaces, Turborepo, `packages/config` (tsconfig strict, ESLint, Prettier), leere Pakete gemäss ARCHITECTURE.md 3 | Orchestrator | erledigt | – | Basis für alles |
+| M0-AP02 | `apps/web`: Next.js (App Router), TypeScript strict, Tailwind, shadcn/ui | ui-dev | erledigt | AP01 | Versionen per offizieller Doku prüfen |
+| M0-AP03 | Lint-Regel "kein `Math.random`/`Date.now` in engine/effects/shaders", Husky + lint-staged | Orchestrator | erledigt | AP01 | |
+| M0-AP04 | Vitest + Playwright einrichten, GitHub Actions (lint, typecheck, test, build) | qa-tester | erledigt | AP01, AP02 | |
+| M0-AP05 | Design-Tokens Light/Dark, Basis-Layout, Theme-Switch (⌘⇧K), i18n-Grundgerüst DE/EN | ui-dev | erledigt | AP02 | Texte nur über i18n-Keys |
+| M0-AP06 | `packages/engine`: PRNG `mulberry32`, Vektor-Helfer, Catmull-Rom zu Bezier, Poisson-Disk, je mit Unit-Tests | engine-dev | erledigt | AP01 | parallel zu AP02 bis AP05 |
+| M0-AP07 | Deployment: Cloudflare Workers via OpenNext, Preview pro Branch, Production auf `main` | Orchestrator | blockiert | AP02, AP04 | Konfiguration fertig und lokal in workerd getestet; Workers Builds muss Andreas im Cloudflare-Dashboard verbinden |
 
 Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04, AP05, zum Schluss AP07. Quality Gates je AP: lint/typecheck/test, code-reviewer.
 
 ## Blocker und offene Fragen an Andreas
 
-- Freigabe M0-AP-Plan.
-- Hosting: Vercel (Empfehlung, weniger Reibung mit Next.js) oder Cloudflare Workers via OpenNext (ARCHITECTURE.md 2).
+- Cloudflare Workers Builds mit GitHub-Repo verbinden (AP07).
+- Offen (niedrig): Inline-Theme-Script braucht Nonce/Hash, sobald CSP kommt. Firefox öffnet evtl. Konsole bei Ctrl+Shift+K.
 
 ## Kostenentscheide (Lifetime-Ökonomie)
 
@@ -37,7 +37,8 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 | Werkzeug | Verfügbar? | Notiz |
 |---|---|---|
 | Supabase MCP/CLI | MCP ja (Cloud) | CLI nicht geprüft |
-| Vercel MCP/CLI | MCP ja (Cloud) | CLI nicht geprüft |
+| Vercel MCP/CLI | MCP ja (Cloud) | nicht mehr benötigt (Hosting Cloudflare) |
+| Cloudflare | wrangler lokal ja | Cloudflare-API aus der Cloud-Sitzung blockiert; Deploy über Workers Builds |
 | Stripe CLI | nein | Fallback: Fixtures mit signierten Test-Events (erst ab M4 nötig) |
 | Playwright | ja (Cloud-Container) | Chromium vorinstalliert |
 | shadcnspace MCP | nein | Fallback: shadcn/ui + Tailwind |
@@ -51,4 +52,6 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 - Erledigt: Sitzungsstart-Ritual. CLAUDE.md, ROADMAP.md, PROGRESS.md gelesen. Kein Git-Repo, noch kein Code, daher Lint/Tests entfallen.
 - Entscheide: keine.
 - Repo `afischZH/motivo` angelegt (durch Andreas), Docs als erster Commit gepusht. M0-AP-Plan erstellt.
-- Nächster Schritt: Freigabe M0-AP-Plan, dann AP01.
+- M0 freigegeben (Hosting Cloudflare). AP01 bis AP06 umgesetzt, CI grün (Chromium, Firefox, WebKit). PR #1.
+- Entscheide: TypeScript 6.0.x gepinnt; Turbopack statt webpack (engine-Imports ohne `.js`); next-intl 4 mit `/de` und `/en`; Theme ohne next-themes (Inline-Script).
+- Nächster Schritt: Cloudflare-Verknüpfung durch Andreas, dann M0-Abnahme.

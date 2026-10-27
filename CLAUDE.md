@@ -71,7 +71,9 @@ pnpm install            # Abhängigkeiten
 pnpm dev                # Web-App lokal (apps/web)
 pnpm build              # Alle Pakete bauen
 pnpm test               # Vitest (alle Pakete)
-pnpm test:e2e           # Playwright
+pnpm test:e2e           # Playwright (alle Browser)
+pnpm test:e2e:chromium  # Playwright nur Chromium
+pnpm --filter @motivo/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
 pnpm lint && pnpm typecheck
 pnpm db:migrate         # Supabase-Migrationen lokal anwenden (ab M3)
 pnpm db:types           # Supabase-Typen generieren (ab M3)
