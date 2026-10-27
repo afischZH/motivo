@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { builtInTools } from "@motivo/tool-registry";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
@@ -24,7 +25,7 @@ test.describe("tools index", () => {
     await page.goto("/en/tools");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Generators");
     const cards = page.getByRole("main").getByRole("listitem");
-    await expect(cards).toHaveCount(4);
+    await expect(cards).toHaveCount(builtInTools.length);
     await page.getByRole("link", { name: /Blob Generator/ }).click();
     await expect(page).toHaveURL(/\/en\/tools\/blob$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Blob Generator");
