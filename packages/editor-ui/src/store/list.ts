@@ -47,7 +47,8 @@ export interface ListSpec {
   hint: ListHint<ListItem>;
 }
 
-function lengthBounds(schema: AnySchema): { min?: number; max?: number } {
+/** `.min()`/`.max()` of an array schema (also used by the control resolver). */
+export function lengthBounds(schema: AnySchema): { min?: number; max?: number } {
   const out: { min?: number; max?: number } = {};
   for (const check of schema._zod.def.checks ?? []) {
     const def = check._zod.def as { check: string; minimum?: number; maximum?: number };
