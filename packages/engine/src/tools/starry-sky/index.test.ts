@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { createRng } from "../../rng";
+import { GENERATOR_BUDGET_MS, fastest } from "../../testing/timing";
 import { MAX_DOT_SITES } from "../polka-dots";
 import { type StarrySkySvgOptions, sparklePath, starrySkySvg } from "./index";
-
-// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
-const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
 
 const opts: StarrySkySvgOptions = {
   width: 300,
@@ -67,17 +65,18 @@ describe("starrySkySvg", () => {
   });
 
   it("stays bounded and fast on an extreme strip", () => {
-    const start = clock.now();
-    const svg = starrySkySvg({
-      ...opts,
-      width: 8192,
-      height: 16,
-      spacing: 0.05,
-      glow: 1,
-      sparkles: 24,
-      rng: createRng(1),
-    });
-    expect(clock.now() - start).toBeLessThan(500);
+    const { ms, value: svg } = fastest(() =>
+      starrySkySvg({
+        ...opts,
+        width: 8192,
+        height: 16,
+        spacing: 0.05,
+        glow: 1,
+        sparkles: 24,
+        rng: createRng(1),
+      }),
+    );
+    expect(ms).toBeLessThan(GENERATOR_BUDGET_MS);
     // Stars are capped; glows only surround the larger ones.
     expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES * 1.5);
   });

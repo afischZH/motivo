@@ -163,7 +163,15 @@ export function ImageInputPanel({ input }: { input: ImageInputControls }) {
               {t("Editor.imageInput.choose")}
             </label>
             {user && (
-              <button type="button" className={BUTTON_CLASS} onClick={input.resetToSample}>
+              <button
+                type="button"
+                className={BUTTON_CLASS}
+                onClick={() => {
+                  input.resetToSample();
+                  // The button disappears with the user image: keep focus in the panel.
+                  fileRef.current?.focus();
+                }}
+              >
                 {t("Editor.imageInput.useSample")}
               </button>
             )}
@@ -191,7 +199,11 @@ export function ImageInputPanel({ input }: { input: ImageInputControls }) {
           <button
             type="button"
             className={cx(ICON_BUTTON, FOCUS_RING)}
-            onClick={input.dismissError}
+            onClick={() => {
+              input.dismissError();
+              // The alert and its button disappear: keep focus in the panel.
+              fileRef.current?.focus();
+            }}
             aria-label={t("Editor.imageInput.dismiss")}
           >
             <CloseIcon />

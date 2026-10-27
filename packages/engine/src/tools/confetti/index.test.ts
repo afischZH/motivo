@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { createRng } from "../../rng";
+import { GENERATOR_BUDGET_MS, fastest } from "../../testing/timing";
 import { MAX_DOT_SITES } from "../polka-dots";
 import { CONFETTI_SHAPES, type ConfettiSvgOptions, confettiPiece, confettiSvg } from "./index";
-
-// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
-const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
 
 const opts: ConfettiSvgOptions = {
   width: 200,
@@ -71,16 +69,17 @@ describe("confettiSvg", () => {
 
   for (const shape of CONFETTI_SHAPES) {
     it(`stays bounded and fast on an extreme strip (${shape})`, () => {
-      const start = clock.now();
-      const svg = confettiSvg({
-        ...opts,
-        shape,
-        width: 8192,
-        height: 16,
-        spacing: 0.1,
-        rng: createRng(1),
-      });
-      expect(clock.now() - start).toBeLessThan(500);
+      const { ms, value: svg } = fastest(() =>
+        confettiSvg({
+          ...opts,
+          shape,
+          width: 8192,
+          height: 16,
+          spacing: 0.1,
+          rng: createRng(1),
+        }),
+      );
+      expect(ms).toBeLessThan(GENERATOR_BUDGET_MS);
       expect((svg.match(/<(path|circle) /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES);
     });
   }

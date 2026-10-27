@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { GENERATOR_BUDGET_MS, fastest } from "../../testing/timing";
 import {
   GRID_STYLES,
   MAX_GRID_POINTS,
@@ -8,9 +9,6 @@ import {
   gridPatternSvg,
   isMajorLine,
 } from "./index";
-
-// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
-const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
 
 const opts: GridPatternSvgOptions = {
   width: 100,
@@ -90,16 +88,17 @@ describe("grid size guard", () => {
 
   for (const style of GRID_STYLES) {
     it(`stays bounded and fast on an extreme canvas (${style})`, () => {
-      const start = clock.now();
-      const svg = gridPatternSvg({
-        ...opts,
-        style,
-        width: 8192,
-        height: 8192,
-        cell: 0.1,
-        majorEvery: 3,
-      });
-      expect(clock.now() - start).toBeLessThan(500);
+      const { ms, value: svg } = fastest(() =>
+        gridPatternSvg({
+          ...opts,
+          style,
+          width: 8192,
+          height: 8192,
+          cell: 0.1,
+          majorEvery: 3,
+        }),
+      );
+      expect(ms).toBeLessThan(GENERATOR_BUDGET_MS);
       const elements =
         (svg.match(/<(circle|rect)\b/g) ?? []).length + (svg.match(/H/g) ?? []).length;
       expect(elements).toBeLessThanOrEqual(MAX_GRID_POINTS + 2);

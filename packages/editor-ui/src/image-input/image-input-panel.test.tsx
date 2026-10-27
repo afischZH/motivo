@@ -81,6 +81,8 @@ describe("ImageInputPanel in the editor", () => {
     expect(screen.getByTestId("image-input-source").textContent).toBe("rot.png");
     fireEvent.click(screen.getByRole("button", { name: "Beispielbild verwenden" }));
     await waitFor(() => expect(colors()).toEqual(tool.defaults.colors));
+    // The button is gone; focus stays in the panel instead of falling to the page.
+    expect(document.activeElement).toBe(screen.getByLabelText("Bild wählen"));
   });
 
   it("accepts a dropped file and highlights the drop zone while dragging", async () => {
@@ -110,6 +112,7 @@ describe("ImageInputPanel in the editor", () => {
     expect(alert.textContent).toContain("grösser als 5 MB");
     fireEvent.click(screen.getByRole("button", { name: "Meldung schliessen" }));
     expect(screen.queryByRole("alert")).toBeNull();
+    expect(document.activeElement).toBe(screen.getByLabelText("Bild wählen"));
   });
 
   it("is not shown for tools without image input", () => {

@@ -16,7 +16,7 @@ import {
 } from "@motivo/tool-registry";
 import * as z from "zod";
 import type { ParamValues } from "../store/editor-store";
-import { LIST_DEFAULT_MAX, type ListItem } from "../store/list";
+import { LIST_DEFAULT_MAX, lengthBounds, type ListItem } from "../store/list";
 
 /**
  * What the panel is built from: a tool, or the item schema of a list param
@@ -211,16 +211,6 @@ function numberBounds(schema: AnySchema): NumberBounds | undefined {
   const out: NumberBounds = { integer: schema.isInt };
   if (Number.isFinite(schema.minValue)) out.min = schema.minValue as number;
   if (Number.isFinite(schema.maxValue)) out.max = schema.maxValue as number;
-  return out;
-}
-
-function lengthBounds(schema: AnySchema): { min?: number; max?: number } {
-  const out: { min?: number; max?: number } = {};
-  for (const check of schema._zod.def.checks ?? []) {
-    const def = check._zod.def as { check: string; minimum?: number; maximum?: number };
-    if (def.check === "min_length" && def.minimum !== undefined) out.min = def.minimum;
-    if (def.check === "max_length" && def.maximum !== undefined) out.max = def.maximum;
-  }
   return out;
 }
 
