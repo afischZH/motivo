@@ -1,0 +1,17 @@
+{
+  "name": "@motivo/ui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Design system (shadcn-based) and tokens",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@motivo/config": "workspace:*"
+  }
+}

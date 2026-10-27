@@ -71,7 +71,9 @@ pnpm install            # Abhängigkeiten
 pnpm dev                # Web-App lokal (apps/web)
 pnpm build              # Alle Pakete bauen
 pnpm test               # Vitest (alle Pakete)
-pnpm test:e2e           # Playwright
+pnpm test:e2e           # Playwright (alle Browser)
+pnpm test:e2e:chromium  # Playwright nur Chromium
+pnpm --filter @motivo/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
 pnpm lint && pnpm typecheck
 pnpm db:migrate         # Supabase-Migrationen lokal anwenden (ab M3)
 pnpm db:types           # Supabase-Typen generieren (ab M3)
@@ -105,3 +107,6 @@ pnpm db:types           # Supabase-Typen generieren (ab M3)
 | 2026-10-27 | Client-first Rendering, schema-getriebene Tools | Tiefe Betriebskosten, 30+ Tools mit kleiner Crew wartbar |
 | 2026-10-27 | Arbeitstitel "Motivo" | Vor Launch Marke/Domain prüfen |
 | 2026-10-27 | Lifetime-Lizenzen statt Abos, KI/API über Credits, Preistreppe Founders/Early Bird/Regulär | Klare Differenzierung, keine Abo-Müdigkeit; laufende Kosten bleiben dank Client-Rendering und Credits gedeckt |
+| 2026-10-27 | Hosting auf Cloudflare Workers via OpenNext statt Vercel | Entscheid Andreas; Preview-Deployments pro PR über Cloudflare |
+| 2026-10-27 | TypeScript auf 6.0.x gepinnt (nicht 7.x) | typescript-eslint unterstützt aktuell nur TypeScript < 6.1; bei Support upgraden |
+| 2026-10-27 | Deploy über GitHub Actions statt Cloudflare Workers Builds | Workers Builds konnte das Repo wiederholt nicht klonen; Actions-Deploy ist unabhängig davon und zeigt Preview-URL im PR |

@@ -28,7 +28,7 @@
 | Social-Editor/Composer | **Konva** (`react-konva`) | Ebenen, Transformationen, Text, Export |
 | Backend/DB | **Supabase** (Postgres, Auth, Storage, RLS, Edge Functions), Region EU (Zürich-Region prüfen, sonst Frankfurt) | Schnell, RLS-Sicherheit, EU-Datenhaltung |
 | Payments | **Stripe** (Checkout als Einmalzahlung, Tax, Rechnungen; TWINT, Karten, Apple/Google Pay in Checkout aktivieren, Verfügbarkeit pro Methode prüfen) | Standard, CH-tauglich; Einmalzahlungen sind einfacher als Abos |
-| Hosting | **Vercel** (EU-Region für Functions) oder **Cloudflare Workers** via OpenNext | Beide ok; Vercel = weniger Reibung mit Next.js |
+| Hosting | **Cloudflare Workers** via OpenNext (`@opennextjs/cloudflare`) | Entscheid 2026-10-27, siehe Entscheidungslog in `CLAUDE.md` |
 | Server-Rasterisierung (API) | **@resvg/resvg-js** (Node) bzw. `resvg-wasm` (Edge) | SVG zu PNG ohne Headless-Browser |
 | KI | LLM via API mit **strukturiertem Output** (JSON gegen Zod-Schema) | KI erzeugt Parameter, keine Pixel |
 | i18n | **next-intl** | DE/FR/IT/EN, lokalisierte Slugs für SEO |

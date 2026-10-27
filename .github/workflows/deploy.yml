@@ -1,0 +1,103 @@
+name: Deploy (Cloudflare)
+
+# Builds the web app with OpenNext and deploys it to Cloudflare Workers:
+# - pull requests: uploads a new Worker version with a per-branch preview URL
+# - push to main: deploys to production (motivo-web.<subdomain>.workers.dev)
+# Needs the repository secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  NEXT_TELEMETRY_DISABLED: 1
+  TURBO_TELEMETRY_DISABLED: 1
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Forks have no access to secrets; skip quietly until the secrets exist.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID missing, skipping deploy."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: actions/checkout@v5
+
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+
+      - if: steps.secrets.outputs.ready == 'true'
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - if: steps.secrets.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for Cloudflare
+        if: steps.secrets.outputs.ready == 'true'
+        working-directory: apps/web
+        run: pnpm cf:build
+
+      - name: Deploy production
+        if: steps.secrets.outputs.ready == 'true' && github.event_name == 'push'
+        working-directory: apps/web
+        run: pnpm exec opennextjs-cloudflare deploy
+
+      - name: Upload preview
+        id: preview
+        if: steps.secrets.outputs.ready == 'true' && github.event_name == 'pull_request'
+        working-directory: apps/web
+        env:
+          BRANCH: ${{ github.head_ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Preview aliases allow lowercase letters, digits and dashes only.
+          alias=$(echo "$BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g' | cut -c1-40)
+          pnpm exec opennextjs-cloudflare upload --preview-alias "$alias" --message "PR #${{ github.event.pull_request.number }} ${HEAD_SHA::7}" 2>&1 | tee upload.log
+          url=$(grep -oE "https://${alias}-[a-z0-9.-]+\.workers\.dev" upload.log | head -1)
+          [ -z "$url" ] && url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' upload.log | tail -1)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### Preview: $url" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Comment preview URL
+        if: steps.preview.outputs.url != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          URL: ${{ steps.preview.outputs.url }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          marker="<!-- motivo-preview -->"
+          body="$marker
+          **Preview:** $URL (commit ${HEAD_SHA::7})"
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.body | startswith(\"$marker\")) | .id" | head -1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$body" > /dev/null
+          else
+            gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -f body="$body" > /dev/null
+          fi

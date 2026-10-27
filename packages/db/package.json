@@ -1,0 +1,17 @@
+{
+  "name": "@motivo/db",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Supabase types, queries and migrations",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@motivo/config": "workspace:*"
+  }
+}

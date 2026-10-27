@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "motivo-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-20",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  // No WORKER_SELF_REFERENCE service binding yet: OpenNext only needs it for ISR
+  // revalidation, and service bindings are not supported in Worker Previews.
+  // Add it back together with the R2 incremental cache when ISR pages arrive.
+  "observability": { "enabled": true },
+  // Serve production on <name>.<subdomain>.workers.dev and give every preview its own URL.
+  "workers_dev": true,
+  "preview_urls": true,
+  // Settings for `wrangler preview` (preview builds of non-production branches).
+  "previews": {},
+}

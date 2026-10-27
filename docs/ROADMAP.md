@@ -19,13 +19,13 @@ Gesamtüberblick:
 
 ## M0: Setup & Fundament (Woche 1)
 
-- [ ] Monorepo (pnpm, Turborepo), Struktur gemäss `ARCHITECTURE.md` Abschnitt 3
-- [ ] `apps/web` mit Next.js (App Router), TypeScript strict, Tailwind, shadcn/ui
-- [ ] ESLint inkl. Regel "kein `Math.random` in packages/engine", Prettier, Husky + lint-staged
-- [ ] Vitest + Playwright eingerichtet, GitHub Actions (lint, typecheck, test, build)
-- [ ] Design-Tokens Light/Dark, Basis-Layout, Theme-Switch (⌘⇧K)
-- [ ] `packages/engine`: PRNG (`mulberry32`), Vektor-Helfer, Catmull-Rom zu Bezier, Poisson-Disk
-- [ ] Deployment-Pipeline (Preview pro PR, Production auf `main`)
+- [x] Monorepo (pnpm, Turborepo), Struktur gemäss `ARCHITECTURE.md` Abschnitt 3
+- [x] `apps/web` mit Next.js (App Router), TypeScript strict, Tailwind, shadcn/ui
+- [x] ESLint inkl. Regel "kein `Math.random` in packages/engine", Prettier, Husky + lint-staged
+- [x] Vitest + Playwright eingerichtet, GitHub Actions (lint, typecheck, test, build)
+- [x] Design-Tokens Light/Dark, Basis-Layout, Theme-Switch (⌘⇧K)
+- [x] `packages/engine`: PRNG (`mulberry32`), Vektor-Helfer, Catmull-Rom zu Bezier, Poisson-Disk
+- [x] Deployment-Pipeline (Preview pro PR, Production auf `main`)
 
 **DoD**: CI grün, Preview-URL zeigt leere App in Light/Dark, Engine-Helfer mit Unit-Tests.
 
