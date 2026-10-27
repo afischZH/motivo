@@ -17,3 +17,6 @@ export * from "./tools/confetti";
 export * from "./tools/starry-sky";
 export * from "./tools/dieter-dots";
 export * from "./tools/css-patterns";
+export * from "./tools/mesh-gradient";
+export * from "./tools/blurry-gradient";
+export * from "./tools/striped-gradient";
