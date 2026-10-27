@@ -45,10 +45,15 @@ export const routing = defineRouting({
     "/convert/[converterSlug]": sectionPath("convert", "/[converterSlug]"),
     "/css-patterns": sectionPath("cssPatterns"),
     "/css-patterns/[patternSlug]": sectionPath("cssPatterns", "/[patternSlug]"),
+    "/imprint": sectionPath("imprint"),
+    "/privacy": sectionPath("privacy"),
   },
   // hreflang and canonical come from the Metadata API (lib/seo), which knows
   // the localized slugs; the middleware's Link header would not.
   alternateLinks: false,
+  // No cookies at all (privacy policy): "/" picks the language from
+  // Accept-Language only, every other URL carries its locale anyway.
+  localeCookie: false,
 });
 
 export type AppLocale = (typeof routing.locales)[number];

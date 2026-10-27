@@ -113,6 +113,21 @@ describe("CSS pattern slug map", () => {
   });
 });
 
+describe("legal sections", () => {
+  it("have the documented localized slugs", () => {
+    expect(SECTION_SLUGS.imprint).toEqual({ de: "impressum", en: "imprint" });
+    expect(SECTION_SLUGS.privacy).toEqual({ de: "datenschutz", en: "privacy" });
+  });
+
+  it.each(ENABLED_LOCALES)("are unique section slugs in %s", (locale) => {
+    const all = Object.values(SECTION_SLUGS).map((entry) => entry[locale]);
+    for (const slug of all) expect(slug).toMatch(SLUG_PATTERN);
+    expect(new Set(all).size).toBe(all.length);
+    expect(sectionFromAnySlug(SECTION_SLUGS.imprint[locale])).toBe("imprint");
+    expect(sectionFromAnySlug(SECTION_SLUGS.privacy[locale])).toBe("privacy");
+  });
+});
+
 describe("slug map", () => {
   it("has no entries for unknown tools", () => {
     expect(Object.keys(TOOL_SLUGS).filter((id) => !toolIds.includes(id))).toEqual([]);

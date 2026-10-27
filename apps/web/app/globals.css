@@ -238,3 +238,13 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Home hero: a slow drift of the stage motif (only with motion allowed, see motion-safe). */
+@keyframes motif-drift {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(-6px) scale(1.012);
+  }
+}

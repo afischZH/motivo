@@ -54,10 +54,13 @@ export function canonicalRedirect(pathname: string): string | null {
     const patternId = patternIdFromAnySlug(slug);
     if (!patternId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${patternSlug(patternId, locale)}`;
-  } else {
+  } else if (section === "convert") {
     const converterId = converterIdFromAnySlug(slug);
     if (!converterId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${converterSlug(converterId, locale)}`;
+  } else {
+    // Single-page sections (legal pages) have no sub-pages.
+    return null;
   }
 
   return canonical === pathname.replace(/\/+$/, "") ? null : canonical;

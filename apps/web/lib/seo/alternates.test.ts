@@ -96,4 +96,11 @@ describe("path helpers", () => {
     expect(routeFromPathname("/de/konverter/svg-zu-css", {}, "de")).toEqual(svgToCss);
     expect(routeFromPathname("/de/konverter", {}, "de")).toEqual({ page: "convert" });
   });
+
+  it("knows the legal pages in every spelling", () => {
+    expect(routeFromPathname("/imprint", {}, "de")).toEqual({ page: "imprint" });
+    expect(routeFromPathname("/de/impressum", {}, "de")).toEqual({ page: "imprint" });
+    expect(routeFromPathname("/en/privacy", {}, "en")).toEqual({ page: "privacy" });
+    expect(routeFromPathname("/de/datenschutz/x", {}, "de")).toBeUndefined();
+  });
 });

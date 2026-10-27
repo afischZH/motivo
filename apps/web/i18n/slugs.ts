@@ -112,11 +112,17 @@ export const CATEGORY_SEGMENT = {
   en: "category",
 } as const satisfies LocalizedSlugs;
 
-/** Localized first path segment of each section (internal name to slug). */
+/**
+ * Localized first path segment of each section (internal name to slug). The
+ * internal name is also the folder under `app/[locale]`. `imprint` and
+ * `privacy` are the legal pages linked from the footer.
+ */
 export const SECTION_SLUGS = {
   tools: { de: "tools", en: "tools" },
   convert: { de: "konverter", en: "convert" },
   cssPatterns: { de: "css-muster", en: "css-patterns" },
+  imprint: { de: "impressum", en: "imprint" },
+  privacy: { de: "datenschutz", en: "privacy" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;

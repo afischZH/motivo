@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MAIN_CONTENT_ID, SkipLink } from "@/components/layout/skip-link";
+import { Telemetry } from "@/components/telemetry/telemetry";
 import { routing } from "@/i18n/routing";
+import { LAYOUT_CLIENT_NAMESPACES, pickMessages } from "@/lib/client-messages";
 import { siteUrl } from "@/lib/seo/site-url";
 import { themeInitScript } from "@/lib/theme";
 
@@ -34,6 +36,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  // Only what the layout's client components need; pages add their own.
+  const messages = pickMessages(await getMessages(), LAYOUT_CLIENT_NAMESPACES);
 
   return (
     // The inline script adds the `dark` class before hydration.
@@ -42,7 +46,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col antialiased">
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
           <SkipLink />
           <SiteHeader />
           <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1 focus:outline-none">
@@ -50,6 +54,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           </main>
           <SiteFooter />
         </NextIntlClientProvider>
+        {/* Analytics and error reporting; renders nothing and is off without env vars. */}
+        <Telemetry />
       </body>
     </html>
   );

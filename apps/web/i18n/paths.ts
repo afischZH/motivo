@@ -32,7 +32,9 @@ export type AppRoute =
   | { page: "convert" }
   | { page: "converter"; converterId: ConverterId }
   | { page: "patterns" }
-  | { page: "pattern"; patternId: string };
+  | { page: "pattern"; patternId: string }
+  | { page: "imprint" }
+  | { page: "privacy" };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
 export function routeHref(route: AppRoute, locale: AnyLocale) {
@@ -43,6 +45,10 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/tools" as const;
     case "convert":
       return "/convert" as const;
+    case "imprint":
+      return "/imprint" as const;
+    case "privacy":
+      return "/privacy" as const;
     case "category":
       return {
         pathname: "/tools/category/[categorySlug]" as const,
@@ -148,6 +154,9 @@ export function routeFromPathname(
     const slug = param(params.patternSlug);
     const patternId = slug ? patternIdFromSlug(slug, locale) : undefined;
     return patternId ? { page: "pattern", patternId } : undefined;
+  }
+  if (section === "imprint" || section === "privacy") {
+    return segments.length === 1 ? { page: section } : undefined;
   }
   if (section === "convert") {
     if (segments.length === 1) return { page: "convert" };

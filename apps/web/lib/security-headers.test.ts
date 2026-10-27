@@ -84,10 +84,72 @@ describe("securityHeaders", () => {
   });
 });
 
+describe("external services", () => {
+  const both = { analytics: true, sentry: true };
+
+  it("adds no third-party origin unless a service is enabled", () => {
+    const csp = contentSecurityPolicy({ dev: false });
+    expect(csp).not.toMatch(/cloudflareinsights|sentry/);
+    expect(
+      contentSecurityPolicy({ dev: false, services: { analytics: false, sentry: false } }),
+    ).toBe(csp);
+  });
+
+  it("allows the Cloudflare beacon script and endpoint only with analytics", () => {
+    const csp = directives(
+      contentSecurityPolicy({ dev: false, services: { analytics: true, sentry: false } }),
+    );
+    expect(csp.get("script-src")).toEqual([
+      "'self'",
+      "'unsafe-inline'",
+      "https://static.cloudflareinsights.com",
+    ]);
+    expect(csp.get("connect-src")).toEqual(["'self'", "https://cloudflareinsights.com"]);
+  });
+
+  it("allows only the Sentry EU ingest with Sentry", () => {
+    const csp = directives(
+      contentSecurityPolicy({ dev: false, services: { analytics: false, sentry: true } }),
+    );
+    expect(csp.get("script-src")).toEqual(["'self'", "'unsafe-inline'"]);
+    expect(csp.get("connect-src")).toEqual(["'self'", "https://*.ingest.de.sentry.io"]);
+  });
+
+  it("never enables services in dev", () => {
+    expect(contentSecurityPolicy({ dev: true, services: both })).toBe(
+      contentSecurityPolicy({ dev: true }),
+    );
+  });
+
+  it("stays within the _headers line limit with every service", () => {
+    const csp = contentSecurityPolicy({ dev: false, services: both });
+    expect(`  Content-Security-Policy: ${csp}`.length).toBeLessThan(2000);
+  });
+});
+
 describe("public/_headers", () => {
   // Static assets on Cloudflare skip the Worker, so they need this file.
-  // Update after changing the headers: `pnpm --filter @motivo/web headers:write`.
-  it("matches the generated production headers", async () => {
-    await expect(cloudflareHeadersFile()).toMatchFileSnapshot("../public/_headers");
+  // scripts/headers.mjs writes it before every build from the same env.
+  it("carries exactly the Worker's production headers", () => {
+    for (const services of [undefined, { analytics: true, sentry: true }]) {
+      const file = cloudflareHeadersFile(services);
+      const expected = securityHeaders({ dev: false, ...(services ? { services } : {}) });
+      expect(file.split("\n").slice(0, 3)).toEqual([
+        expect.stringMatching(/^# Generated/),
+        expect.stringMatching(/^# Applies/),
+        "/*",
+      ]);
+      for (const { key, value } of expected) expect(file).toContain(`  ${key}: ${value}\n`);
+    }
+  });
+
+  it("allows external services only when the build enables them", () => {
+    expect(cloudflareHeadersFile()).not.toMatch(/cloudflareinsights|sentry/);
+    expect(cloudflareHeadersFile({ analytics: true, sentry: false })).toContain(
+      "https://static.cloudflareinsights.com",
+    );
+    expect(cloudflareHeadersFile({ analytics: false, sentry: true })).toContain(
+      "https://*.ingest.de.sentry.io",
+    );
   });
 });

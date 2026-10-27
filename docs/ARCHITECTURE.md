@@ -32,8 +32,8 @@
 | Server-Rasterisierung (API) | **@resvg/resvg-js** (Node) bzw. `resvg-wasm` (Edge) | SVG zu PNG ohne Headless-Browser |
 | KI | LLM via API mit **strukturiertem Output** (JSON gegen Zod-Schema) | KI erzeugt Parameter, keine Pixel |
 | i18n | **next-intl** | DE/FR/IT/EN, lokalisierte Slugs für SEO |
-| Analytics | **Plausible** oder **Umami** (cookiefrei) + PostHog (optional, EU) für Produkt-Events | nDSG-freundlich |
-| Fehler | **Sentry** (EU-Region) | |
+| Analytics | **Cloudflare Web Analytics** (cookiefrei, gratis; Entscheid 2026-10-27, siehe Abschnitt 13) | nDSG-freundlich, kein Cookie-Banner nötig |
+| Fehler | **Sentry** (EU-Region, nur clientseitige Fehler, Gratis-Tarif; Abschnitt 13) | |
 | Tests | **Vitest** (Engine, Snapshot-Tests), **Playwright** (E2E + visuelle Regression) | Deterministik ermöglicht Bild-Snapshots |
 
 ## 3. Monorepo-Struktur
@@ -176,13 +176,13 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
 - API-Keys nur gehasht speichern (SHA-256 + Pepper), Klartext nur einmal anzeigen.
 - Uploads: SVG serverseitig **sanitizen** (DOMPurify im SVG-Profil oder eigener Whitelist-Parser: keine `script`, `foreignObject`, Event-Handler, externen Referenzen). Bilder auf Grösse/Typ prüfen.
 - Stripe-Webhooks mit Signaturprüfung, idempotent verarbeiten (Unique-Key auf `stripe_checkout_id`).
-- **Security-Header** (M2-AP11) kommen aus einer Quelle, `apps/web/lib/security-headers.ts`, und werden an drei Stellen gesetzt: `next.config.ts` `headers()` (HTML, RSC), `proxy.ts` (Redirects, die OpenNext sonst ohne `headers()` ausliefert) und `public/_headers` (Dateien, die Cloudflare Workers Static Assets ohne Worker ausliefert; vom Unit-Test als Datei-Snapshot geprüft, neu erzeugen mit `pnpm --filter @motivo/web headers:write`).
+- **Security-Header** (M2-AP11) kommen aus einer Quelle, `apps/web/lib/security-headers.ts`, und werden an drei Stellen gesetzt: `next.config.ts` `headers()` (HTML, RSC), `proxy.ts` (Redirects, die OpenNext sonst ohne `headers()` ausliefert) und `public/_headers` (Dateien, die Cloudflare Workers Static Assets ohne Worker ausliefert). Seit M2-AP09 ist `public/_headers` nicht mehr eingecheckt: `scripts/headers.mjs` schreibt die Datei vor jedem `next build` und `next dev` aus demselben Modul und denselben Umgebungsvariablen wie `next.config.ts` (manuell: `pnpm --filter @motivo/web headers:write`). So stimmen Worker und Static Assets immer überein, auch wenn Analytics oder Sentry pro Build an- oder abgeschaltet sind.
   - CSP (Produktion): `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`.
   - Weitere: `Strict-Transport-Security: max-age=63072000; includeSubDomains` (ohne `preload`, bis die Domain feststeht), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (Kamera, Mikrofon, Standort, Zahlung, USB, Sensoren, Topics gesperrt; Zwischenablage erlaubt), `Cross-Origin-Opener-Policy: same-origin`.
   - **Warum `'unsafe-inline'` bei Scripts**: Statisch vorgerenderte App-Router-Seiten enthalten neben dem Theme-Script seitenspezifische Inline-Scripts von Next (Turbopack-Bootstrap, React-Flight-Daten `self.__next_f.push`). Diese lassen sich nur mit Nonces erlauben, und Nonces erzwingen dynamisches Rendering (Next.js-Doku "Content Security Policy"). Ein Hash in der Policy würde `'unsafe-inline'` im Browser abschalten und die Hydration brechen. Der sha256-Hash des Theme-Scripts wird trotzdem in `lib/csp-hash.ts` aus demselben String berechnet und getestet, damit der Wechsel ein Einzeiler ist, sobald Next statische Inline-Scripts hashen kann. Schutz gegen XSS liefern weiterhin: kein Nutzer-HTML im DOM, Nutzer-SVG nur per `<img>`, kein `eval` (auch Zod läuft `jitless`), keine fremden Script-Quellen.
   - **Warum `'unsafe-inline'` bei Styles**: React rendert `style`-Attribute ins statische HTML (Vorschaugrössen, CSS-Tool-Vorschau, Farbfelder), Radix setzt `<style>` für die Scroll-Sperre. CSS führt keinen Code aus; Datenabfluss per CSS ist durch `img-src`, `font-src` und `connect-src` begrenzt.
   - Nur in `next dev`: `'unsafe-eval'` (React-Debugging) und `ws:` (HMR), ohne `upgrade-insecure-requests`. Ein Unit-Test stellt sicher, dass das nie in Produktion landet.
-  - Geplante Dienste sind in `EXTERNAL` vorbereitet (je eine auskommentierte Zeile): Cloudflare Web Analytics (`static.cloudflareinsights.com` Script, `cloudflareinsights.com` Beacon) und Sentry EU (`*.ingest.de.sentry.io`).
+  - Fremde Ursprünge stehen pro Dienst in `EXTERNAL` und landen nur in der CSP, wenn der Build den Dienst aktiviert (`lib/telemetry/config.ts`, Abschnitt 13): Cloudflare Web Analytics (`script-src https://static.cloudflareinsights.com`, `connect-src https://cloudflareinsights.com`) und Sentry EU (`connect-src https://*.ingest.de.sentry.io`). In `next dev` nie. Unit-Tests prüfen beide Fälle, E2E prüft, dass ohne Variablen kein fremder Ursprung in der CSP steht.
   - E2E (`e2e/csp.spec.ts`) prüft Header, Durchsetzung und dass Startseite, Editor (PNG-Export im Worker, Kopieren) und Konverter keine CSP-Verletzung auslösen.
 
 **Lifetime-Kauf und Credits (Ablauf)**
@@ -201,6 +201,8 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
 /de/tools/kategorie/[cat], /en/tools/category/[cat]   Kategorie-Seiten
 /[locale]/[tool-slug]                   SEO-Landingpage (statisch generiert)
 /[locale]/tools/[tool-slug]             Editor (Client), ?d=<designId> oder ?p=<base64-params>
+/de/impressum, /en/imprint              Impressum (Entwurf, noindex bis zur juristischen Prüfung)
+/de/datenschutz, /en/privacy            Datenschutzerklärung (ebenso)
 /de/konverter, /en/convert              Konverter-Übersicht
 /de/konverter/[slug], /en/convert/[slug]   Konverter (z. B. /de/konverter/svg-zu-css)
 /[locale]/community/...                 Packs, Paletten, Templates (ISR)
@@ -234,6 +236,9 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
 - **Ausspielung auf Cloudflare**: `open-next.config.ts` nutzt den Static-Assets-Incremental-Cache mit Cache Interception. Vorgerenderte Seiten, Motive, Sitemap und Robots kommen ohne Rendering aus den Workers Static Assets (`x-opennext-cache: HIT`), OG-Bilder sind gewöhnliche Assets. Revalidierung (ISR) ist damit nicht möglich; sobald ISR-Seiten kommen, auf den R2-Cache wechseln.
 - **Sitemap und Robots**: `app/sitemap.ts` (statisch) listet Startseite, Katalog, Kategorien, Landingpages, Konverter-Übersicht und Konverter in jeder Sprache, jeweils mit denselben `hreflang`-Alternativen wie die Seite (`lib/seo/sitemap.ts`). Editor-Seiten bleiben indexierbar, stehen aber nicht in der Sitemap, weil die Landingpages den Text tragen. `app/robots.ts` erlaubt alles und verweist auf die Sitemap.
 - **Keine Indexierung ausserhalb der Produktion**: `next.config.ts` setzt per `headers()`-Regel mit `missing: host` auf jedem Host ausser dem Produktions-Host (Host von `NEXT_PUBLIC_SITE_URL`, sonst der workers.dev-Fallback) `X-Robots-Tag: noindex, nofollow` (`lib/seo/indexing.ts`). Das trifft Worker-Previews (`<alias>-motivo-web.<subdomain>.workers.dev`), lokale Server und später die workers.dev-URL, sobald eine eigene Domain kanonisch ist, ohne Build-Flag pro Umgebung. Die Regel greift auch für vorgerenderte Seiten, Sitemap und Robots (mit OpenNext in workerd geprüft). Bewusst kein `Disallow` in `robots.txt`, sonst sähen Crawler den Header nicht. Tests: `lib/seo/indexing.test.ts`, `e2e/seo.spec.ts`.
+- **Startseite** (seit M2-AP09, `app/[locale]/page.tsx`, statisch): Hero mit drei Motiven der Tools selbst (`/motifs/...`, das grosse Motiv mit `fetchpriority=high`, sanfte Bewegung nur mit `motion-safe`), Nutzenversprechen (gratis, alles im Browser, Lifetime-Lizenz *geplant*, ohne Preise), Kategorien aus `populatedCategories()`, ausgewählte Tools, "So funktioniert's", FAQ (mit `FAQPage`-JSON-LD) und Abschluss-CTA. Die Tool-Auswahl steht in `lib/home.ts`; `home.test.ts` verlangt, dass jede ID registriert und statisch renderbar ist.
+- **Rechtliche Seiten** (`app/[locale]/imprint`, `app/[locale]/privacy`, `components/legal/legal-page.tsx`): Slugs über `SECTION_SLUGS` (`impressum`/`imprint`, `datenschutz`/`privacy`, Vertragstest in `slugs.test.ts`), fremde Schreibweisen leitet `legacy.ts` um. Betreiberangaben stehen einmal in `lib/legal/config.ts` (`LEGAL_CONFIG.operator`, Platzhalter in eckigen Klammern), Texte in `messages/*.json` unter `Legal`. Solange `legalReviewed` false ist, zeigen beide Seiten das Banner "Entwurf, juristisch zu prüfen", haben `robots: noindex` und fehlen in der Sitemap.
+- **Client-Messages**: `NextIntlClientProvider` ohne `messages` serialisiert alle Texte in jede Seite (rund 60 KB pro Sprache inklusive SEO- und Rechtstexte). `lib/client-messages.ts` gibt dem Layout nur `Layout` und `Theme`, Konverter-Seiten zusätzlich `Converters`, Editor-Seiten `ToolPage`, `Editor`, `sizes` und `tools` (ohne `tools.*.seo`). Das HTML der Startseite sank dadurch von 138 auf 75 KB.
 - Share-Links: Params im URL-Hash komprimiert (z. B. `lz-string`), damit ein Design ohne Account teilbar ist.
 
 ## 8. Öffentliche API (P2)
@@ -280,3 +285,22 @@ GET  /api/v1/tools/{toolId}/schema
 - **Schema-Tests**: `defaults` und alle `presets` müssen `schema.parse` bestehen.
 - **Barrierefreiheit**: axe-Checks in CI, alle Controls per Tastatur bedienbar.
 - **Sicherheit**: SVG-Sanitizer mit bekannten XSS-Payloads testen; RLS-Policies mit Tests (pgTAP oder Supabase-Testhelper).
+
+## 13. Statistik und Fehler-Monitoring (seit M2-AP09)
+
+Beide Dienste sind **aus**, solange ihre öffentliche Umgebungsvariable beim Build fehlt, und in `next dev` immer aus. Eine Quelle entscheidet über CSP, `public/_headers` und Laden im Browser: `apps/web/lib/telemetry/config.ts`. `next.config.ts` setzt beide Variablen per `env` immer (leer, wenn nicht gesetzt), damit Next sie inline einsetzt und Builds ohne Variable den Code gar nicht enthalten.
+
+| Variable | Dienst | Format |
+|---|---|---|
+| `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` | Cloudflare Web Analytics (Site-Token, manuelles JS-Snippet für nicht über Cloudflare geproxte Sites) | 32 Hex-Zeichen |
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry, Datenregion EU | DSN mit Host `o<org>.ingest.de.sentry.io`; DSNs anderer Regionen werden verworfen |
+
+**Cloudflare Web Analytics**: `components/telemetry/telemetry.tsx` fügt `https://static.cloudflareinsights.com/beacon.min.js` mit `data-cf-beacon='{"token":…,"spa":true}'` ein, sobald der Browser untätig ist, und nur auf dem Produktions-Host (gleiche Regel wie `X-Robots-Tag`, `lib/seo/indexing.ts`). Grund für die Host-Prüfung: Cloudflare prüft Hostnamen per Postfix-Match, ein Token für die workers.dev-Produktion würde auch Preview-Aliase (`<alias>-motivo-web…`) zählen. Der Beacon sendet an `https://cloudflareinsights.com/cdn-cgi/rum`. Keine Cookies, kein localStorage; Cloudflare speichert keine Query-Strings.
+
+**Sentry**: nur clientseitige Fehler, kein Tracing, kein Session Replay, keine Breadcrumbs, keine Sessions. Seite und Bundle enthalten nur einen winzigen Reporter (`lib/telemetry/reporter.ts`: `ErrorReporter`-Interface, globale Handler für `error` und `unhandledrejection`, Warteschlange); `@sentry/browser` (11.9.0, MIT) wird erst beim ersten Fehler per `import()` geladen (`lib/telemetry/sentry.ts`). Gemessen: Sentry-Chunk 57,9 KB roh, **19,8 KB gzip**, nicht im initialen Laden. Konfiguration: manueller `BrowserClient` mit `linkedErrors` und `dedupe`; `dataCollection` schaltet Nutzerdaten (damit `infer_ip: "never"`, Sentry leitet keine IP ab), Cookies, Header, Query-Parameter, Bodies und Stack-Variablen ab (ersetzt `sendDefaultPii` ab SDK v11); `beforeSend` (`lib/telemetry/scrub.ts`) entfernt Query-Strings und Fragmente (`#d=`) aus allen URLs, Meldungen und Stack-Frames. Höchstens 25 Ereignisse pro Seitenaufruf (Gratis-Kontingent). Umgebung `production` auf dem Produktions-Host, sonst `preview`. Serverseitiges Sentry auf Workers ist nicht umgesetzt.
+
+**Deploy**: Die Variablen nur für den Produktions-Build setzen (GitHub Actions, Schritt "Build for Cloudflare" bei `push` auf `main`), nicht für PR-Previews. Ohne Variable erzeugt `scripts/headers.mjs` die strikte CSP. Im Sentry-Projekt zusätzlich "Prevent Storing of IP Addresses" und Data Scrubbing aktivieren.
+
+**Tests**: `lib/telemetry/telemetry.test.ts` (Konfiguration, Host-Regel, Lazy-Loading, Scrubbing), `lib/security-headers.test.ts` (CSP nur mit aktivierten Diensten), `e2e/home-legal.spec.ts` (ohne Variablen keine Anfragen an Cloudflare oder Sentry, kein Sentry-Chunk, keine Cookies, CSP ohne fremde Ursprünge).
+
+**Cookies**: Das Sprach-Cookie von next-intl ist aus (`localeCookie: false`); `/` wählt die Sprache nur nach `Accept-Language`. Lokal gespeichert werden nur Design (Theme) und zuletzt genutztes Exportformat im localStorage.

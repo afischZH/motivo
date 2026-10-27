@@ -13,6 +13,7 @@ import type { AppRoute } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { libraryPatterns } from "@/lib/css-patterns";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { legalPagesIndexable } from "@/lib/legal/config";
 import { registry } from "@motivo/tool-registry";
 
 import { pageAlternates } from "./alternates";
@@ -29,6 +30,8 @@ export function sitemapRoutes(): AppRoute[] {
     ...libraryPatterns().map((spec): AppRoute => ({ page: "pattern", patternId: spec.id })),
     { page: "convert" },
     ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
+    // Draft legal pages are noindex and stay out until the legal review.
+    ...(legalPagesIndexable() ? [{ page: "imprint" } as const, { page: "privacy" } as const] : []),
   ];
 }
 

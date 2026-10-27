@@ -48,6 +48,13 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/css-muster/nope")).toBeNull();
   });
 
+  it("redirects legal pages to this locale's slug", () => {
+    expect(canonicalRedirect("/de/imprint")).toBe("/de/impressum");
+    expect(canonicalRedirect("/en/datenschutz")).toBe("/en/privacy");
+    expect(canonicalRedirect("/de/impressum")).toBeNull();
+    expect(canonicalRedirect("/de/impressum/svg-to-css")).toBeNull();
+  });
+
   it("leaves canonical, unknown and unrelated paths alone", () => {
     expect(canonicalRedirect("/en/tools/blob-generator")).toBeNull();
     expect(canonicalRedirect("/de/konverter/svg-zu-css")).toBeNull();
@@ -62,6 +69,8 @@ describe("canonicalRedirect", () => {
     const routes: AppRoute[] = [
       { page: "tools" },
       { page: "convert" },
+      { page: "imprint" },
+      { page: "privacy" },
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
       ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),

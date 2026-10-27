@@ -4,10 +4,14 @@ import { NextResponse, type NextRequest } from "next/server";
 import { canonicalRedirect } from "./i18n/legacy";
 import { routing } from "./i18n/routing";
 import { securityHeaders } from "./lib/security-headers";
+import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
 const intlMiddleware = createMiddleware(routing);
 
-const SECURITY_HEADERS = securityHeaders({ dev: process.env.NODE_ENV === "development" });
+const SECURITY_HEADERS = securityHeaders({
+  dev: process.env.NODE_ENV === "development",
+  services: externalServices(telemetryEnv()),
+});
 
 /**
  * OpenNext on Cloudflare returns proxy redirects without the next.config
@@ -23,7 +27,7 @@ function withSecurityHeaders(response: Response): Response {
 
 // Next 16 renamed `middleware` to `proxy`. Old tool ids and foreign slugs get
 // one permanent redirect to the localized URL first; next-intl then handles
-// locale detection (cookie, then Accept-Language, default "de"), localized
+// locale detection (Accept-Language, default "de"; no cookie), localized
 // pathnames and redirects.
 export default function proxy(request: NextRequest) {
   const target = canonicalRedirect(request.nextUrl.pathname);
