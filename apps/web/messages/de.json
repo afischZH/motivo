@@ -973,7 +973,7 @@
         },
         "harmony": {
           "label": "Harmonie",
-          "description": "Gilt für die nächste Palette. Drück die Leertaste.",
+          "description": "Färbt alle nicht gesperrten Farben sofort neu ein. Mit der Leertaste kommt eine neue Palette in derselben Harmonie.",
           "options": {
             "auto": "Überrasch mich",
             "analogous": "Analog",

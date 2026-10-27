@@ -406,8 +406,14 @@ function PreviewSection(props: {
       </h2>
       <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-border px-4 py-2">
         <SizePicker size={liveSize} onChange={setSize} />
-        <div className="flex min-w-0 items-center gap-2">
-          <div role="group" aria-label={t("Editor.shell.zoom")} className="flex gap-1">
+        {/*
+          Wraps instead of overflowing: at 375 px the zoom buttons plus the
+          scale readout are wider than the row (font metrics differ per
+          browser, and the readout only fills in after hydration), which
+          pushed the page 1 px wide in Firefox.
+        */}
+        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+          <div role="group" aria-label={t("Editor.shell.zoom")} className="flex flex-wrap gap-1">
             {zoomButtons.map((b) => (
               <button
                 key={String(b.zoom)}

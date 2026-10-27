@@ -4,14 +4,15 @@
  * (tool SEO texts, legal texts: about 60 KB per locale). Client components
  * only need a few namespaces, so each provider passes exactly those.
  * Server components keep full access through `getTranslations`.
+ *
+ * The shared layout has no provider at all: language switch and theme
+ * toggle get their texts as props from server components, so landing pages
+ * load no client message formatter (about 19 KB gzip).
  */
 type Messages = Record<string, unknown>;
 
-/** Namespaces of the client components in the shared layout (language switch, theme). */
-export const LAYOUT_CLIENT_NAMESPACES = ["Layout", "Theme"] as const;
-
-/** Converter pages: layout plus the converter UI. */
-export const CONVERTER_CLIENT_NAMESPACES = [...LAYOUT_CLIENT_NAMESPACES, "Converters"] as const;
+/** Converter pages: the converter UI. */
+export const CONVERTER_CLIENT_NAMESPACES = ["Converters"] as const;
 
 /** Founders waitlist form (home page, Founders page): only its own texts. */
 export const WAITLIST_CLIENT_NAMESPACES = ["Waitlist"] as const;
@@ -19,14 +20,8 @@ export const WAITLIST_CLIENT_NAMESPACES = ["Waitlist"] as const;
 /** Waitlist confirm and unsubscribe pages: only the result texts. */
 export const WAITLIST_RESULT_CLIENT_NAMESPACES = ["WaitlistResult"] as const;
 
-/** Editor pages: layout, page chrome, editor shell and tool texts (`tools.*`). */
-export const EDITOR_CLIENT_NAMESPACES = [
-  ...LAYOUT_CLIENT_NAMESPACES,
-  "ToolPage",
-  "Editor",
-  "sizes",
-  "tools",
-] as const;
+/** Editor pages: page chrome, editor shell and tool texts (`tools.*`). */
+export const EDITOR_CLIENT_NAMESPACES = ["ToolPage", "Editor", "sizes", "tools"] as const;
 
 /** The given top-level namespaces; missing ones are skipped. */
 export function pickMessages(messages: Messages, namespaces: readonly string[]): Messages {

@@ -3,7 +3,7 @@
 import { EditorShell, EditorStoreProvider } from "@motivo/editor-ui";
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/i18n/navigation";
+import { Link } from "@/i18n/client-navigation";
 
 /**
  * Client entry of the editor page. Tool definitions hold functions and

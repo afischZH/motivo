@@ -82,6 +82,28 @@ test.describe("responsive layout", () => {
       });
     }
   }
+
+  // The root cause of a 1 px page overflow seen once in Firefox: the zoom
+  // row was wider than its box at 375 px, which only shows as page overflow
+  // when a browser's font metrics add a few pixels. Check the row itself,
+  // after hydration has filled in the scale readout.
+  for (const path of ["/de/tools/css-verlauf-generator", "/en/tools/svg-wave-generator"]) {
+    test(`${path} keeps the zoom row inside its box at 375 px`, async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 800 });
+      await page.goto(path);
+      const row = page.getByRole("group", { name: /^Zoom$/ }).locator("xpath=..");
+      await expect(row.locator("output")).toHaveText(/\d/);
+      const excess = await row.evaluate((el) => {
+        const box = el.getBoundingClientRect();
+        let right = box.right;
+        for (const child of el.querySelectorAll("*")) {
+          right = Math.max(right, child.getBoundingClientRect().right);
+        }
+        return right - box.right;
+      });
+      expect(excess).toBeLessThanOrEqual(0);
+    });
+  }
 });
 
 test.describe("flows not covered by the feature specs", () => {

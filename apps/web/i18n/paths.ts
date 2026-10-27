@@ -9,7 +9,7 @@ import type { ToolCategory } from "@motivo/tool-registry";
 import { isConverterId, type ConverterId } from "@/lib/convert/ids";
 
 import { ENABLED_LOCALES, type AnyLocale, type EnabledLocale } from "./locales";
-import { getPathname } from "./navigation";
+import { routing } from "./routing";
 import {
   categoryIdFromSlug,
   categorySlug,
@@ -93,7 +93,27 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
 
 /** Locale-prefixed path, e.g. `/de/konverter/svg-zu-css`. */
 export function routePath(route: AppRoute, locale: EnabledLocale): string {
-  return getPathname({ href: routeHref(route, locale), locale });
+  return compilePath(routeHref(route, locale), locale);
+}
+
+/**
+ * next-intl's `getPathname` for the hrefs `routeHref` builds (no query,
+ * `localePrefix: "always"`), without next-intl's navigation runtime: the
+ * language switch runs in the browser, and the navigation helpers would pull
+ * next-intl's client (with its message formatter, about 19 KB gzip) into
+ * every page; `Link` in `navigation.tsx` uses it on the server for the same
+ * reason. `paths.test.ts` checks both agree for every route.
+ */
+export type RouteHref = ReturnType<typeof routeHref>;
+
+export function compilePath(href: RouteHref, locale: EnabledLocale): string {
+  const { pathname, params } = typeof href === "string" ? { pathname: href, params: {} } : href;
+  const localized: string | Readonly<Record<EnabledLocale, string>> = routing.pathnames[pathname];
+  const template = typeof localized === "string" ? localized : localized[locale];
+  const path = template.replace(/\[(\w+)\]/g, (_, key: string) =>
+    encodeURIComponent((params as Readonly<Record<string, string>>)[key] ?? ""),
+  );
+  return path === "/" ? `/${locale}` : `/${locale}${path}`;
 }
 
 /** The page's path in every enabled locale. */

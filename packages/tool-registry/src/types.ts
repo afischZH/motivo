@@ -389,6 +389,13 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * (`ItemLockKey`; `keepLocked` handles both).
    */
   randomize(rng: Rng, current: Params<S>, locks: ReadonlySet<LockKey<Params<S>>>): Params<S>;
+  /**
+   * Params that steer `randomize` (e.g. a palette harmony). Changing one of
+   * them in the editor re-runs `randomize` with the current seed (same salted
+   * rng as the variant), so the change shows at once and stays deterministic;
+   * locked keys and the changed param itself are kept.
+   */
+  regenerateOn?: readonly (keyof Params<S> & string)[];
   /** The single render path for preview and export. `render.kind` is the render kind. */
   render: Renderer<Params<S>>;
   exports: readonly ExportFormat[];

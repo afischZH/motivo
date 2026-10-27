@@ -13,7 +13,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import { Link } from "@/i18n/client-navigation";
 import { TURNSTILE_SCRIPT } from "@/lib/telemetry/config";
 import {
   fetchAvailability,

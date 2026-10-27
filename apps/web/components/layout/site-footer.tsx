@@ -2,7 +2,9 @@ import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 
-import { LocaleSwitcher } from "./locale-switcher";
+import { routing } from "@/i18n/routing";
+
+import { LocaleSwitcher, type LocaleSwitcherLabels } from "./locale-switcher";
 
 const LINK_CLASS =
   "rounded-control text-muted-foreground underline-offset-4 hover:text-foreground hover:underline";
@@ -16,7 +18,14 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 text-sm sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-3">
           <p className="text-muted-foreground">{t("footerTagline")}</p>
-          <LocaleSwitcher />
+          <LocaleSwitcher
+            labels={{
+              nav: t("languageNav"),
+              languages: Object.fromEntries(
+                routing.locales.map((locale) => [locale, t(`languages.${locale}`)]),
+              ) as LocaleSwitcherLabels["languages"],
+            }}
+          />
         </div>
         <nav aria-label={tFooter("nav")} className="flex flex-wrap gap-x-12 gap-y-6">
           <div className="flex flex-col gap-2">

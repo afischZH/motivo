@@ -62,6 +62,34 @@ test.describe("palette from image", () => {
     });
   });
 
+  test("extracts the colours of an SVG without running its scripts", async ({ page }) => {
+    await openTool(page, "en");
+    const count = page.getByRole("textbox", { name: "Number of colors" });
+    await count.fill("3");
+    await count.press("Enter");
+    // No width/height (viewBox only), a script and an event handler.
+    const svg = [
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10" onload="window.__pwned = 2">',
+      "<script>window.__pwned = 1</script>",
+      '<rect width="12" height="6" fill="#1d3557"/>',
+      '<rect y="6" width="12" height="3" fill="#e63946"/>',
+      '<rect y="9" width="12" height="1" fill="#f1faee"/>',
+      "</svg>",
+    ].join("");
+    await page.getByLabel("Choose image").setInputFiles({
+      name: "flag.svg",
+      mimeType: "image/svg+xml",
+      buffer: Buffer.from(svg),
+    });
+    await expect(page.getByTestId("image-input-source")).toHaveText("flag.svg");
+    await expect.poll(() => previewSvg(page)).toContain(">#1d3557</text>");
+    const preview = await previewSvg(page);
+    for (const text of [">#e63946</text>", ">#f1faee</text>", ">60%</text>", ">30%</text>"]) {
+      expect(preview).toContain(text);
+    }
+    expect(await page.evaluate(() => (window as { __pwned?: number }).__pwned)).toBeUndefined();
+  });
+
   test("reports files that are not images", async ({ page }) => {
     await openTool(page, "de");
     await page.getByLabel("Bild wählen").setInputFiles({

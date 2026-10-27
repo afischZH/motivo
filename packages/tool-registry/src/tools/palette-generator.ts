@@ -5,7 +5,9 @@
  * Per-colour locks use the generic lock system: every colour is its own
  * param (`color1` ... `color8`), so each swatch gets the standard lock
  * button and `keepLocked` without any palette-specific code in the shell.
- * `count` decides how many slots are shown and rendered.
+ * `count` decides how many slots are shown and rendered. Changing the
+ * harmony regenerates the unlocked colours from the current seed
+ * (`regenerateOn`), Space rolls a new seed.
  */
 import {
   HARMONIES,
@@ -176,6 +178,8 @@ export const paletteGeneratorTool = defineTool({
     });
     return keepLocked(next, current, locks);
   },
+  // A new harmony shows at once: unlocked colours follow from the current seed.
+  regenerateOn: ["harmony"],
   render: {
     kind: "svg",
     render(p, { width, height }) {
