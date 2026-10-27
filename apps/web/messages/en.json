@@ -274,6 +274,253 @@
         "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
         "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
       }
+    },
+    "grid-patterns": {
+      "name": "Grid Patterns",
+      "description": "Grid lines, dot grids, crosses or tiles with major and minor grids. Export as SVG or image.",
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "lines": "Lines",
+            "dots": "Dots",
+            "crosses": "Crosses",
+            "squares": "Tiles"
+          }
+        },
+        "cellSize": {
+          "label": "Cell size"
+        },
+        "majorEvery": {
+          "label": "Major grid every"
+        },
+        "fade": {
+          "label": "Fade",
+          "options": {
+            "none": "Off",
+            "radial": "To center",
+            "edges": "At edges"
+          }
+        },
+        "weight": {
+          "label": "Weight"
+        },
+        "lineStyle": {
+          "label": "Line style",
+          "options": {
+            "solid": "Solid",
+            "dashed": "Dashed",
+            "dotted": "Dotted"
+          }
+        }
+      },
+      "presets": {
+        "blueprint": "Blueprint",
+        "notebook": "Notebook",
+        "spotlight": "Spotlight",
+        "marks": "Marks",
+        "tiles": "Tiles",
+        "stitches": "Stitches",
+        "terminal": "Terminal"
+      },
+      "seo": {
+        "whatIs": "Grid patterns are regular grids of lines, dots, crosses or tiles. They evoke graph paper, blueprints or dotted notebooks and make a calm background for websites, slides and product shots.",
+        "howTo": "Pick a style, set the cell size and weight, and choose whether every n-th line is highlighted as a major grid. Use the fade to soften the grid towards the center or the edges. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Does the grid keep its look when I resize?",
+            "answer": "Yes. The cell size is a percentage of the shorter edge, so the grid looks equally dense in every format."
+          },
+          "q2": {
+            "question": "What is the major grid?",
+            "answer": "Every n-th line (or dot) is drawn thicker and in the second color, just like graph paper. Set it to 0 to turn it off."
+          },
+          "q3": {
+            "question": "Can I tile the grid seamlessly?",
+            "answer": "The grid is centered on the canvas. For seamless tiles, use a size that is a multiple of the cell size and turn off the fade."
+          },
+          "q4": {
+            "question": "Does the SVG work in Figma and Illustrator?",
+            "answer": "Yes. Lines are stored as paths and the fade uses a standard SVG mask that both apps can read."
+          }
+        }
+      }
+    },
+    "confetti": {
+      "name": "Confetti",
+      "description": "Confetti made of strips, circles, triangles and squiggles, evenly spread. Export as SVG or image.",
+      "params": {
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "mixed": "Mixed",
+            "rect": "Strips",
+            "circle": "Circles",
+            "triangle": "Triangles",
+            "squiggle": "Squiggles"
+          }
+        },
+        "spacing": {
+          "label": "Spacing"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "rotation": {
+          "label": "Rotation"
+        }
+      },
+      "presets": {
+        "party": "Party",
+        "pastel": "Pastel",
+        "gilded": "Gilded",
+        "streamers": "Streamers",
+        "sprinkles": "Sprinkles",
+        "prism": "Prism",
+        "parade": "Parade"
+      },
+      "seo": {
+        "whatIs": "The confetti generator spreads colorful shapes evenly yet naturally across the canvas. Great for invitations, birthday graphics, social posts and festive backgrounds.",
+        "howTo": "Pick a shape or a mix, set spacing, size and rotation, and choose your colors. Press Space for new variations. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Why don't the pieces overlap?",
+            "answer": "Positions come from Poisson-disk sampling: every piece keeps a minimum distance, so the spread looks even but still random."
+          },
+          "q2": {
+            "question": "How do I get a different arrangement with the same settings?",
+            "answer": "Press Space or change the seed. Your settings stay, only positions, shapes and colors are reshuffled."
+          },
+          "q3": {
+            "question": "Can I use a single shape?",
+            "answer": "Yes. Choose only circles or only squiggles instead of the mix."
+          },
+          "q4": {
+            "question": "Is the SVG editable?",
+            "answer": "Yes. Every piece is a plain path or circle without transforms, grouped by color."
+          }
+        }
+      }
+    },
+    "starry-sky": {
+      "name": "Starry Sky",
+      "description": "A starry night sky with a color gradient, twinkling stars and sparkles. Export as SVG or image.",
+      "params": {
+        "palette": {
+          "label": "Sky"
+        },
+        "starColor": {
+          "label": "Star color"
+        },
+        "density": {
+          "label": "Star spacing"
+        },
+        "sparkles": {
+          "label": "Sparkles"
+        },
+        "size": {
+          "label": "Star size"
+        },
+        "twinkle": {
+          "label": "Brightness variation"
+        },
+        "glow": {
+          "label": "Glow"
+        }
+      },
+      "presets": {
+        "midnight": "Midnight",
+        "dusk": "Dusk",
+        "milky-way": "Milky Way",
+        "polar": "Polar night",
+        "lullaby": "Lullaby",
+        "daybreak": "Daybreak",
+        "cosmic": "Cosmic"
+      },
+      "seo": {
+        "whatIs": "The starry sky generator creates a night sky from a color gradient and many stars of different size and brightness. Perfect for backgrounds, picture book art, event graphics and wallpapers.",
+        "howTo": "Set the sky colors from top to bottom, adjust star spacing, size and brightness variation, and add glow and a few sparkles if you like. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "How are the stars distributed?",
+            "answer": "With Poisson-disk sampling. Stars keep a minimum distance, so the sky looks natural without clumps or gaps."
+          },
+          "q2": {
+            "question": "Why are there more small stars than large ones?",
+            "answer": "Star sizes are drawn so that small stars are more common, which matches how a real night sky looks."
+          },
+          "q3": {
+            "question": "What are sparkles?",
+            "answer": "A few larger four-pointed stars that act as highlights. Set them to 0 to turn them off."
+          },
+          "q4": {
+            "question": "Can I use it as a desktop wallpaper?",
+            "answer": "Yes. Pick a desktop size such as Full HD or 4K and export as PNG."
+          }
+        }
+      }
+    },
+    "dieter-dots": {
+      "name": "Dieter Dots",
+      "description": "Concentric rings of dots, like a perforated speaker grille. Export as SVG or image.",
+      "params": {
+        "rings": {
+          "label": "Rings"
+        },
+        "dotsPerRing": {
+          "label": "Dots in first ring"
+        },
+        "ringSpacing": {
+          "label": "Ring spacing"
+        },
+        "twist": {
+          "label": "Twist"
+        },
+        "scale": {
+          "label": "Dot size"
+        },
+        "falloff": {
+          "label": "Shrink outwards"
+        },
+        "colorMode": {
+          "label": "Color mode",
+          "options": {
+            "single": "Single",
+            "alternate": "Alternate rings",
+            "gradient": "Gradient"
+          }
+        }
+      },
+      "presets": {
+        "grille": "Grille",
+        "radar": "Radar",
+        "swirl": "Swirl",
+        "target": "Target",
+        "ripple": "Ripple",
+        "sunburst": "Sunburst",
+        "mono": "Mono"
+      },
+      "seo": {
+        "whatIs": "Dieter Dots are dots arranged in concentric rings around the center, inspired by perforated speaker grilles in industrial design. The pattern feels technical and calm and suits posters, covers and product graphics.",
+        "howTo": "Set the number of rings, the dots in the first ring and the ring spacing. Twist turns the rings into a spiral, shrink outwards fades the dots towards the edge. Choose one color, alternating rings or a gradient, then export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Why do outer rings have more dots?",
+            "answer": "Each ring gets as many dots as needed to keep the spacing along the ring equal to the first ring. Ring 3 has three times as many dots as ring 1."
+          },
+          "q2": {
+            "question": "Why do I see fewer rings than I set?",
+            "answer": "Rings outside the canvas are skipped, and we draw at most 10,000 dots per image to keep the browser responsive."
+          },
+          "q3": {
+            "question": "Can I make a spiral?",
+            "answer": "Yes. Increase the twist and each ring is rotated a bit further than the previous one."
+          }
+        }
+      }
     }
   },
   "Converters": {

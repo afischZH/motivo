@@ -9,3 +9,7 @@ export * from "./tools/css-gradient";
 export * from "./tools/blob";
 export * from "./tools/svg-waves";
 export * from "./tools/polka-dots";
+export * from "./tools/grid-patterns";
+export * from "./tools/confetti";
+export * from "./tools/starry-sky";
+export * from "./tools/dieter-dots";
