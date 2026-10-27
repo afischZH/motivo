@@ -55,6 +55,9 @@ const CASES: Case[] = [
   // (SVG has no conic paint), so every pixel is slightly off, none visibly
   // (no pixel beyond CHANNEL_TOLERANCE; Chromium mean about 2.2).
   { toolId: "css-gradient", preset: "Prism", css: true, maxMeanDiff: 4 },
+  // Stacked pattern layers (M2-AP04): one and three layers, partly translucent.
+  { toolId: "css-patterns", css: true },
+  { toolId: "css-patterns", preset: "Highland", css: true },
   { toolId: "blob" },
   { toolId: "blob", preset: "Lava" },
   { toolId: "svg-waves" },

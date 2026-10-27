@@ -131,9 +131,76 @@ export const otherTool = defineTool({
   gating: {},
 });
 
+/** Tool with a list param (generic list control and thumbnail picker). */
+const KINDS = ["a", "b", "c", "d", "e", "f", "g"] as const;
+const itemSchema = z.object({
+  kind: z.enum(KINDS),
+  size: z.int().min(1).max(10),
+  on: z.boolean(),
+});
+const listSchema = z.object({
+  background: colorSchema,
+  items: z.array(itemSchema).min(1).max(4),
+});
+export type ListFixtureParams = z.output<typeof listSchema>;
+export const listFixtureDefaults: ListFixtureParams = {
+  background: "#ffffff",
+  items: [
+    { kind: "a", size: 1, on: true },
+    { kind: "b", size: 2, on: true },
+  ],
+};
+
+export const listTool = defineTool({
+  id: "test-list",
+  version: 1,
+  category: ["patterns"],
+  schema: listSchema,
+  defaults: listFixtureDefaults,
+  presets: [],
+  controls: {
+    params: {
+      items: {
+        kind: "list",
+        list: {
+          item: {
+            params: {
+              kind: {
+                kind: "thumbnails",
+                optionPreview: (value, item, root) => ({
+                  css: `background-color: ${String(root.background)};\nborder-width: ${item.size}px;\n--kind: ${String(value)};`,
+                }),
+              },
+              on: { kind: "hidden" },
+            },
+          },
+          visibilityField: "on",
+          titleField: "kind",
+          itemLabelKey: "tools.test-list.item",
+          newItem: (items) => ({
+            kind: KINDS[items.length % KINDS.length] ?? "a",
+            size: 5,
+            on: true,
+          }),
+        },
+      },
+    },
+  },
+  randomize: (rng, current, locks) =>
+    keepLocked(
+      { ...current, items: current.items.map((i) => ({ ...i, size: rng.int(1, 10) })) },
+      current,
+      locks,
+    ),
+  render: { kind: "svg", render: () => "<svg/>" },
+  exports: ["svg"],
+  gating: {},
+});
+
 export function createFixtureRegistry() {
   const registry = createRegistry();
   registry.register(fixtureTool);
   registry.register(otherTool);
+  registry.register(listTool);
   return registry;
 }

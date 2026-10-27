@@ -8,8 +8,8 @@ import {
   CSS_PATTERNS,
   CSS_PATTERN_SIZE_MAX,
   PATTERN_CATEGORIES,
-  cssPattern,
-  cssPatternDeclarations,
+  cssPatternStack,
+  cssPatternStackDeclarations,
   declarationsToCss,
   declarationsToTailwind,
   getCssPattern,
@@ -65,7 +65,7 @@ export interface PatternShowcase {
 
 export function patternShowcase(spec: PatternSpec): PatternShowcase {
   const params = cssPatternShowcase(spec.id);
-  const declarations = cssPatternDeclarations(params);
+  const declarations = cssPatternStackDeclarations(params);
   return {
     params,
     declarations,
@@ -78,12 +78,16 @@ export function patternShowcase(spec: PatternSpec): PatternShowcase {
 /** Params of the OG image: the showcase at twice its size, so it reads in a small card. */
 export function patternOgParams(spec: PatternSpec): PatternShowcase["params"] {
   const params = cssPatternShowcase(spec.id);
-  return { ...params, size: Math.min(params.size * 2, CSS_PATTERN_SIZE_MAX) };
+  return {
+    ...params,
+    layers: params.layers.map((l) => ({ ...l, size: Math.min(l.size * 2, CSS_PATTERN_SIZE_MAX) })),
+  };
 }
 
 /** SVG of the OG image motif (for the OG image build script). */
 export function patternOgSvg(spec: PatternSpec): string {
-  return cssPattern({ ...patternOgParams(spec), width: OG_SIZE.width, height: OG_SIZE.height }).svg;
+  return cssPatternStack({ ...patternOgParams(spec), width: OG_SIZE.width, height: OG_SIZE.height })
+    .svg;
 }
 
 /** OG image key below `/og/<locale>/` (see `ogImagePath`). */

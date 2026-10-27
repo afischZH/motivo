@@ -6,6 +6,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { CSS_PATTERNS, PATTERN_LOOKS, cssPattern } from "@motivo/engine";
 import { expect, test, type Page } from "@playwright/test";
+import { deflateRawSync } from "node:zlib";
 
 import { FALLBACK_SITE_URL, resolveSiteUrl } from "../lib/seo/site-url";
 
@@ -109,7 +110,12 @@ test.describe("CSS pattern page", () => {
     await page.goto("/en/css-patterns/gingham");
     await page.getByRole("link", { name: "Customize in the editor" }).click();
     await expect(page).toHaveURL(/\/en\/tools\/css-pattern-generator#d=/);
-    await expect(page.getByLabel("Pattern", { exact: true })).toHaveValue("gingham");
+    const picker = page.getByRole("radiogroup", { name: "Pattern" });
+    await expect(picker.getByRole("radio", { name: "Gingham", exact: true })).toHaveAttribute(
+      "aria-checked",
+      "true",
+    );
+    await expect(page.getByRole("list", { name: "Layers" }).getByRole("listitem")).toHaveCount(1);
   });
 
   test("redirects other locales' slugs and ids", async ({ page }) => {
@@ -130,6 +136,123 @@ test.describe("CSS pattern page", () => {
     await page.goto("/de/css-muster/argyle");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Argyle als CSS-Muster");
     await expectNoAxeViolations(page);
+  });
+});
+
+/** A share code as an M2-AP03 link carried it: one pattern, no layer list. */
+function legacyHash(params: Record<string, unknown>): string {
+  const json = JSON.stringify(["css-patterns", 1, 1, 1080, 1080, params]);
+  const bytes = Buffer.concat([Buffer.from([1]), deflateRawSync(Buffer.from(json))]);
+  return `#d=${bytes.toString("base64url")}`;
+}
+
+test.describe("CSS pattern layers", () => {
+  const layerList = (page: Page) => page.getByRole("list", { name: "Ebenen" });
+  /** The select button of each layer row (the eye button follows it). */
+  const rows = (page: Page) => layerList(page).locator("li > button:first-child");
+  const css = (page: Page) =>
+    page
+      .getByTestId("preview")
+      .locator(":scope > div[aria-hidden='true'] > div")
+      .evaluate((el) => getComputedStyle(el).backgroundImage);
+
+  async function openPreset(page: Page, preset: string) {
+    await page.goto("/de/tools/css-muster-generator");
+    await expect(page.getByRole("button", { name: "Teilen" })).toBeEnabled();
+    const button = page.getByRole("button", { name: preset, exact: true });
+    await button.click();
+    await expect(button).toHaveAttribute("aria-pressed", "true");
+  }
+
+  test("edits three layers with the keyboard and passes axe", async ({ page }) => {
+    await openPreset(page, "Highland");
+    await expect(rows(page)).toHaveCount(3);
+    await expect(rows(page).first()).toHaveAccessibleName("Ebene 1 Nadelstreifen");
+
+    // Alt+Down moves the top layer: focus follows it, the change is announced once.
+    await rows(page).first().focus();
+    await page.keyboard.press("Alt+ArrowDown");
+    await expect(rows(page).nth(1)).toBeFocused();
+    await expect(rows(page).nth(1)).toHaveAccessibleName("Ebene 2 Nadelstreifen");
+    await expect(
+      page
+        .getByRole("status")
+        .filter({ hasText: "Nadelstreifen verschoben, jetzt Position 2 von 3." }),
+    ).toHaveCount(1);
+
+    // Hiding a layer changes the preview.
+    const before = await css(page);
+    expect(before).toContain("gradient(");
+    const eye = page.getByRole("button", { name: "Ebene 2 sichtbar" });
+    await eye.click();
+    await expect(eye).toHaveAttribute("aria-pressed", "false");
+    await expect.poll(() => css(page)).not.toBe(before);
+
+    // The selected layer's pattern is edited with the thumbnail picker.
+    const form = page.getByRole("group", { name: "Ebene 2 bearbeiten" });
+    const picker = form.getByRole("radiogroup", { name: "Muster" });
+    await picker.getByRole("radio", { checked: true }).focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(rows(page).nth(1)).not.toHaveAccessibleName(/Nadelstreifen/);
+
+    await expectNoAxeViolations(page);
+
+    // Delete removes the row, focus lands on its neighbour; undo restores it.
+    await rows(page).nth(1).focus();
+    await page.keyboard.press("Delete");
+    await expect(rows(page)).toHaveCount(2);
+    await expect(rows(page).nth(1)).toBeFocused();
+    await page.keyboard.press("ControlOrMeta+Z");
+    await expect(rows(page)).toHaveCount(3);
+  });
+
+  test("adds up to five layers and shares them in a link", async ({
+    page,
+    context,
+    browserName,
+  }) => {
+    test.skip(browserName !== "chromium", "clipboard permissions are Chromium-only in Playwright");
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await openPreset(page, "Highland");
+    const add = page.getByRole("button", { name: "Neu hinzufügen" });
+    await add.click();
+    await expect(rows(page).first()).toBeFocused();
+    await add.click();
+    await expect(rows(page)).toHaveCount(5);
+    await expect(add).toBeDisabled();
+    await expect(page.getByText("5 von 5")).toBeVisible();
+    const shown = await css(page);
+    expect(shown).toContain("gradient(");
+
+    const flash = page.getByTestId("shell-flash");
+    await expect(async () => {
+      await page.getByRole("button", { name: "Teilen" }).click();
+      await expect(flash).toHaveText(/^Link kopiert!/, { timeout: 1000 });
+    }).toPass();
+    const link = await page.evaluate(() => navigator.clipboard.readText());
+    expect(link).toMatch(/\/de\/tools\/css-muster-generator#d=[\w-]+$/);
+
+    const other = await context.newPage();
+    await other.goto(link);
+    await expect(rows(other)).toHaveCount(5);
+    await expect.poll(() => css(other)).toBe(shown);
+    await expect(other.getByTestId("shell-notice")).toHaveCount(0);
+  });
+
+  test("opens an old single-pattern link as one layer", async ({ page }) => {
+    const hash = legacyHash({
+      background: "#fffaf5",
+      pattern: "gingham",
+      color: "#d62839",
+      accent: "#e07a5f",
+      size: 28,
+      angle: 0,
+      opacity: 90,
+    });
+    await page.goto(`/en/tools/css-pattern-generator${hash}`);
+    const list = page.getByRole("list", { name: "Layers" });
+    await expect(list.getByRole("button", { name: "Layer 1 Gingham", exact: true })).toBeVisible();
+    await expect(list.getByRole("listitem")).toHaveCount(1);
   });
 });
 

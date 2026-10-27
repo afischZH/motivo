@@ -44,6 +44,10 @@ const strings = (node: unknown): string[] =>
       ? Object.values(node).flatMap(strings)
       : [];
 
+/** A layer in the single-pattern shape of M2-AP03 (no `visible`). */
+const withoutVisible = (layer: object): Record<string, unknown> =>
+  Object.fromEntries(Object.entries(layer).filter(([key]) => key !== "visible"));
+
 /** A share code as an attacker would craft it: format byte 1 + raw DEFLATE of the JSON. */
 function craftedHash(params: Record<string, unknown>): string {
   const json = JSON.stringify([PATTERN_TOOL_ID, 1, 1, 1080, 1080, params]);
@@ -73,18 +77,33 @@ describe("CSS pattern library pages", () => {
 
   it("rejects crafted share links with CSS in a colour or pattern", () => {
     const valid = patternShowcase(required(libraryPatterns()[0], "pattern")).params;
+    const layer = required(valid.layers[0], "layer");
+    // The single-pattern shape of M2-AP03 links.
+    const single = withoutVisible(layer);
+    const legacy = { background: valid.background, ...single };
     expect(designFromHash(craftedHash(valid)).ok).toBe(true);
+    expect(designFromHash(craftedHash(legacy)).ok).toBe(true);
+    const rejected = { ok: false, error: "invalid-params" };
     for (const attack of [
       { color: "#fff;background:url(https://evil.example/leak)" },
       { accent: "red" },
-      { background: "#000}body{display:none" },
       { pattern: "polka,url(x)" },
     ]) {
-      expect(designFromHash(craftedHash({ ...valid, ...attack }))).toEqual({
-        ok: false,
-        error: "invalid-params",
-      });
+      expect(designFromHash(craftedHash({ ...valid, layers: [{ ...layer, ...attack }] }))).toEqual(
+        rejected,
+      );
+      expect(designFromHash(craftedHash({ ...legacy, ...attack }))).toEqual(rejected);
     }
+    const background = { background: "#000}body{display:none" };
+    expect(designFromHash(craftedHash({ ...valid, ...background }))).toEqual(rejected);
+    expect(designFromHash(craftedHash({ ...legacy, ...background }))).toEqual(rejected);
+  });
+
+  it("opens old single-pattern links as a stack of one", () => {
+    const valid = patternShowcase(required(libraryPatterns()[0], "pattern")).params;
+    const single = withoutVisible(required(valid.layers[0], "layer"));
+    const decoded = designFromHash(craftedHash({ background: valid.background, ...single }));
+    expect(decoded.ok && decoded.design.params).toEqual(valid);
   });
 
   it("relates patterns of the same category first, never the pattern itself", () => {

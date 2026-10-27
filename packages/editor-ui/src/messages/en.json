@@ -7,6 +7,27 @@
       "advanced": "Advanced",
       "moreSettings": "More settings"
     },
+    "list": {
+      "item": "Item {index}",
+      "add": "Add new",
+      "duplicate": "Duplicate {item}",
+      "moveUp": "Move {item} up",
+      "moveDown": "Move {item} down",
+      "remove": "Remove {item}",
+      "visible": "{item} visible",
+      "visibleHint": "Show or hide",
+      "isHidden": "hidden",
+      "actions": "Actions for {item}",
+      "editing": "Edit {item}",
+      "count": "{count} of {max}",
+      "keyboardHint": "Arrow keys select, add Alt to move, Delete removes.",
+      "added": "{item} added.",
+      "duplicated": "{item} duplicated as {copy}.",
+      "moved": "{item} moved, now position {position} of {count}.",
+      "removed": "{item} removed.",
+      "shown": "{item} shown.",
+      "hidden": "{item} hidden."
+    },
     "color": {
       "picker": "Pick a color",
       "hex": "Hex value",

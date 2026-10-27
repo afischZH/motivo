@@ -4,6 +4,7 @@ import {
   CSS_PATTERN_IDS,
   CSS_PATTERN_SIZE_MAX,
   CSS_PATTERN_SIZE_MIN,
+  CSS_PATTERN_STACK_MAX,
   MAX_PATTERN_LAYERS,
   PATTERN_CATEGORIES,
   PATTERN_LOOKS,
@@ -11,12 +12,18 @@ import {
   cssPattern,
   cssPatternDeclarations,
   cssPatternLayers,
+  cssPatternStack,
+  cssPatternStackDeclarations,
+  cssPatternStackTailwind,
   cssPatternTailwind,
   declarationsToCss,
   getCssPattern,
   patternDeclarations,
   patternSvg,
   patternUsesAccent,
+  stackDeclarations,
+  stackSvg,
+  type CssPatternInstance,
   type CssPatternOptions,
   type PatternSpec,
   type PatternLayer,
@@ -370,5 +377,90 @@ describe("bandStops", () => {
 
   it("returns nothing for no bands", () => {
     expect(bandStops([], true)).toEqual([]);
+  });
+});
+
+describe("pattern stacks", () => {
+  const top: CssPatternInstance = {
+    pattern: "polka",
+    color: "#112233",
+    accent: "#445566",
+    size: 20,
+    angle: 0,
+    opacity: 50,
+  };
+  const bottom: CssPatternInstance = { ...top, pattern: "stripes", color: "#aa0000", angle: 45 };
+
+  it("is the single-pattern output for a stack of one", () => {
+    const one = { ...base, pattern: "zigzag" };
+    const stacked = cssPatternStack({
+      background: one.background,
+      layers: [one],
+      width: 200,
+      height: 100,
+    });
+    expect(stacked).toEqual(cssPattern({ ...one, width: 200, height: 100 }));
+    expect(cssPatternStackTailwind({ background: one.background, layers: [one] })).toBe(
+      cssPatternTailwind(one),
+    );
+  });
+
+  it("concatenates the layers top first, each with its own inks", () => {
+    const d = cssPatternStackDeclarations({ background: "#ffffff", layers: [top, bottom] });
+    const a = cssPatternDeclarations({ ...top, background: "#ffffff" });
+    const b = cssPatternDeclarations({ ...bottom, background: "#ffffff" });
+    expect(d.backgroundImage).toBe(`${a.backgroundImage}, ${b.backgroundImage}`);
+    expect(d.backgroundSize).toBe(`${a.backgroundSize}, ${b.backgroundSize}`);
+    expect(d.backgroundPosition).toBe(`${a.backgroundPosition}, ${b.backgroundPosition}`);
+    expect(d.backgroundImage).toContain("#11223380");
+    expect(d.backgroundImage).toContain("#aa000080");
+  });
+
+  it("draws the bottom pattern first in SVG", () => {
+    const { svg } = cssPatternStack({
+      background: "#ffffff",
+      layers: [top, bottom],
+      width: 100,
+      height: 100,
+    });
+    // The stripes (bottom) are painted before the dots (top).
+    expect(svg.indexOf('stop-color="#aa0000"')).toBeGreaterThan(-1);
+    const rects = [...svg.matchAll(/<rect width="100" height="100" fill="url\(#(\w+)\)"\/>/g)];
+    expect(rects.length).toBeGreaterThanOrEqual(2);
+    expect(svg).toBe(
+      cssPatternStack({ background: "#ffffff", layers: [top, bottom], width: 100, height: 100 })
+        .svg,
+    );
+  });
+
+  it("paints only the background for an empty stack", () => {
+    const out = cssPatternStack({ background: "#123456", layers: [], width: 40, height: 30 });
+    expect(out.css).toBe(
+      "background-color: #123456;\nbackground-image: none;\nbackground-size: auto;\nbackground-position: 0 0;",
+    );
+    expect(out.svg).not.toContain("<defs>");
+    expect(out.svg).toContain('fill="#123456"');
+    expect(stackDeclarations([], "transparent")).toEqual({
+      backgroundImage: "none",
+      backgroundSize: "auto",
+      backgroundPosition: "0 0",
+    });
+    expect(stackSvg([], "transparent", 10, 10)).not.toContain("<rect");
+  });
+
+  it("limits the stack and validates every instance", () => {
+    const many = Array.from({ length: CSS_PATTERN_STACK_MAX + 1 }, () => top);
+    expect(() => cssPatternStackDeclarations({ background: "#fff", layers: many })).toThrow(
+      RangeError,
+    );
+    expect(() =>
+      cssPatternStackDeclarations({
+        background: "#fff",
+        layers: [top, { ...bottom, color: "red" }],
+      }),
+    ).toThrow(RangeError);
+    expect(() =>
+      cssPatternStackDeclarations({ background: "#fff", layers: [{ ...top, pattern: "nope" }] }),
+    ).toThrow(RangeError);
   });
 });
