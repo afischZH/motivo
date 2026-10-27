@@ -3,8 +3,9 @@
  * input): a base (solid colour, linear or radial gradient, or transparent)
  * with a seeded grain tile on top, blended with a CSS/SVG blend mode.
  *
- * The grain itself is a raster tile computed by `@motivo/effects` and passed
- * in as a data URI; this module only builds the SVG around it, so preview
+ * The grain itself is a raster tile (`grainTile` in `./tile`, encoded by the
+ * tool as a PNG data URI) passed in as `tileHref`; this function only builds
+ * the SVG around it, so preview
  * and export share one document and every browser shows the same pixels.
  */
 import { formatNumber } from "../../curves";

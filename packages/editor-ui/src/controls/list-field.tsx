@@ -281,12 +281,7 @@ export function ListField(props: ListFieldProps) {
 
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-2" data-list={control.key}>
-      <ol
-        id={listId}
-        aria-labelledby={props.labelId}
-        aria-describedby={hintId}
-        className="grid gap-1"
-      >
+      <ol id={listId} aria-labelledby={props.labelId} className="grid gap-1">
         {items.map((it, i) => {
           const { name, preview } = title(it);
           const hidden = visibility !== undefined && it[visibility] === false;
@@ -311,6 +306,9 @@ export function ListField(props: ListFieldProps) {
                   FOCUS_RING,
                 )}
                 aria-current={i === selected ? "true" : undefined}
+                // On the focusable row, not the list: screen readers read a
+                // description when the element itself gets focus.
+                aria-describedby={hintId}
                 tabIndex={i === selected ? 0 : -1}
                 onClick={() => setSelected(i)}
                 onKeyDown={onRowKeyDown(i)}

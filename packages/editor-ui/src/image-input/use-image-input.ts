@@ -14,7 +14,7 @@ import type { AnyToolDefinition, PixelBuffer } from "@motivo/tool-registry";
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import type { EditorState, EditorStoreApi } from "../store/editor-store";
 import type { ImageInputError } from "./check";
-import type { ImageInputServices } from "./services";
+import type { ImageDecodeResult, ImageDeriveResult, ImageInputServices } from "./services";
 
 export type ImageSource = { kind: "sample" } | { kind: "user"; name: string };
 
@@ -92,26 +92,30 @@ export function createImageInputController(
     const state = store.getState();
     const key = deriveKey(tool, state);
     if (view.status !== "loading") update({ status: "analysing" });
-    void services.derive(tool, pixels, state.params, state.seed).then((result) => {
-      if (gen !== generation) return;
-      busy = false;
-      const current = store.getState();
-      const stale = view.pixels !== pixels || deriveKey(tool, current) !== key;
-      if (stale || queued) {
-        queued = false;
-        runDerive();
-        return;
-      }
-      if (result.ok) current.applyDerived(result.patch);
-      const announced = announce && result.ok;
-      announce = false;
-      update({
-        status: "idle",
-        // The sample always has a result; errors only concern the user's image.
-        error: result.ok || view.source.kind === "sample" ? view.error : result.error,
-        loadedCount: announced ? view.loadedCount + 1 : view.loadedCount,
+    void services
+      .derive(tool, pixels, state.params, state.seed)
+      // A throwing derive must not leave `busy` set forever (no further derives).
+      .catch((): ImageDeriveResult => ({ ok: false, error: "no-result" }))
+      .then((result) => {
+        if (gen !== generation) return;
+        busy = false;
+        const current = store.getState();
+        const stale = view.pixels !== pixels || deriveKey(tool, current) !== key;
+        if (stale || queued) {
+          queued = false;
+          runDerive();
+          return;
+        }
+        if (result.ok) current.applyDerived(result.patch);
+        const announced = announce && result.ok;
+        announce = false;
+        update({
+          status: "idle",
+          // The sample always has a result; errors only concern the user's image.
+          error: result.ok || view.source.kind === "sample" ? view.error : result.error,
+          loadedCount: announced ? view.loadedCount + 1 : view.loadedCount,
+        });
       });
-    });
   };
 
   const activate = (pixels: PixelBuffer, source: ImageSource) => {
@@ -151,15 +155,19 @@ export function createImageInputController(
       if (!input || !running) return;
       const gen = generation;
       update({ status: "loading", error: null });
-      void services.decode(file, input.maxEdge).then((result) => {
-        if (gen !== generation) return;
-        if (!result.ok) {
-          update({ status: "idle", error: result.error });
-          return;
-        }
-        announce = true;
-        activate(result.pixels, { kind: "user", name: file.name ?? "" });
-      });
+      void services
+        .decode(file, input.maxEdge)
+        // A rejected decode must not leave the view in "loading".
+        .catch((): ImageDecodeResult => ({ ok: false, error: "decode-failed" }))
+        .then((result) => {
+          if (gen !== generation) return;
+          if (!result.ok) {
+            update({ status: "idle", error: result.error });
+            return;
+          }
+          announce = true;
+          activate(result.pixels, { kind: "user", name: file.name ?? "" });
+        });
     },
 
     resetToSample() {

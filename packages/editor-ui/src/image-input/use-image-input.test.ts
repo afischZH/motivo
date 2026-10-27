@@ -116,6 +116,23 @@ describe("image input controller", () => {
     expect(params().colors).toEqual(tool.defaults.colors);
   });
 
+  it("recovers from rejected service calls instead of hanging", async () => {
+    const { controller, params, store, services } = setup();
+    controller.start();
+    await settle();
+    vi.mocked(services.decode).mockRejectedValueOnce(new Error("boom"));
+    controller.loadFile(new Blob(["x"]));
+    await vi.waitFor(() => expect(controller.getView().error).toBe("decode-failed"));
+    expect(controller.getView().status).toBe("idle");
+    // A derive that throws once must not block every later derive.
+    vi.mocked(services.derive).mockRejectedValueOnce(new Error("boom"));
+    store.getState().setParam("count", 3);
+    await settle();
+    expect(controller.getView().status).toBe("idle");
+    store.getState().setParam("count", 4);
+    await vi.waitFor(() => expect(params().colors).toHaveLength(4));
+  });
+
   it("applies only the newest result when changes overlap", async () => {
     const { controller, params, store, services } = setup();
     controller.start();

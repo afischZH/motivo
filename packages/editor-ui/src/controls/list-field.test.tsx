@@ -39,6 +39,10 @@ describe("list control", () => {
     // Browsers put a space between the two text lines; jsdom has no layout.
     expect(screen.getByRole("button", { name: /^Ebene 2 ?b$/ })).toBe(rows()[1]);
     expect(rows().map((r) => r.tabIndex)).toEqual([0, -1]);
+    // The keyboard hint describes the focusable rows (a description on the list is not read).
+    const hintId = rows()[0]?.getAttribute("aria-describedby") ?? "";
+    expect(document.getElementById(hintId)?.textContent).toMatch(/Pfeiltasten/);
+    expect(list().hasAttribute("aria-describedby")).toBe(false);
     const form = screen.getByRole("group", { name: "Ebene 1 bearbeiten" });
     expect(within(form).getByRole("slider", { name: "Grösse" }).getAttribute("aria-valuenow")).toBe(
       "1",
