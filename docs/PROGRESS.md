@@ -21,7 +21,7 @@
 | M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | geplant | AP03 | Neuer Control-Typ Ebenenliste |
 | M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | – | Ohne Shell-Erweiterung: Farben als Einzel-Params (color1 bis color8), Schloss pro Farbe; Harmonie-Wechsel wirkt erst bei nächster Leertaste (UX in AP12 prüfen); Code-Exporte statt CSS |
 | M2-AP06 | **Palette aus Bild** | engine-dev | geplant | AP05 | k-means in OKLab im Worker, Bild bleibt im Browser |
-| M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | geplant | – | FR/IT nur Struktur, Texte später |
+| M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | erledigt | – | Slugs zentral in `apps/web/i18n/slugs.ts` (Contract-Test), alte Pfade per 308; Basis-URL aus `NEXT_PUBLIC_SITE_URL`; x-default zeigt auf DE (in AP08 nochmals prüfen, ggf. EN) |
 | M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, dynamische OG-Bilder | ui-dev | geplant | AP07 | OG-Bilder zur Build-Zeit oder im Worker, keine laufenden Kosten |
 | M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | geplant | AP08 | Rechtstexte "juristisch zu prüfen"; Analytics/Sentry nach Entscheid Andreas |
 | M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | geplant, Entscheid offen | – | Neue Tabelle (Supabase EU, RLS) und E-Mail-Versand: Stopp-Punkte |
