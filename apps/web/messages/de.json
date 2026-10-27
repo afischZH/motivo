@@ -274,6 +274,71 @@
         "whatIs": "Polka Dots sind regelmässige oder verstreute Punktmuster, ein Klassiker für Hintergründe, Verpackungen und Textilien.",
         "howTo": "Wähle Anordnung, Abstand und Punktgrösse, mische deine Farben und exportiere als SVG oder PNG."
       }
+    },
+    "noise-grain": {
+      "name": "Noise und Grain",
+      "description": "Körnige Texturen und Hintergründe mit feinem Rauschen über Farbe oder Verlauf. Als PNG, JPG, WebP oder SVG exportieren.",
+      "groups": {
+        "grain": "Körnung",
+        "base": "Grundfläche"
+      },
+      "params": {
+        "amount": {
+          "label": "Stärke"
+        },
+        "size": {
+          "label": "Korngrösse"
+        },
+        "blend": {
+          "label": "Mischmodus",
+          "options": {
+            "overlay": "Ineinanderkopieren",
+            "soft-light": "Weiches Licht",
+            "multiply": "Multiplizieren"
+          }
+        },
+        "mono": {
+          "label": "Monochrom"
+        },
+        "base": {
+          "label": "Grundfläche",
+          "options": {
+            "solid": "Farbe",
+            "linear": "Linear",
+            "radial": "Radial",
+            "none": "Transparent"
+          }
+        },
+        "color": {
+          "label": "Farbe"
+        },
+        "angle": {
+          "label": "Winkel"
+        }
+      },
+      "presets": {
+        "film": "Film",
+        "paper": "Papier",
+        "riso": "Riso",
+        "midnight": "Mitternacht",
+        "aurora": "Polarlicht",
+        "sand": "Sand",
+        "overlay": "Overlay"
+      },
+      "seo": {
+        "whatIs": "Grain ist feines, zufälliges Rauschen über einer Fläche. Es nimmt digitalen Farben und Verläufen die sterile Glätte, verhindert Banding in Verläufen und erinnert an analogen Film oder Papier.",
+        "howTo": "Wähle eine Farbe oder einen Verlauf als Grundfläche, stelle Stärke, Korngrösse und Mischmodus ein und drücke die Leertaste für eine neue Variante. Exportiere danach als PNG, JPG, WebP oder SVG in der gewünschten Grösse.",
+        "faq": {
+          "q1": "Welcher Mischmodus passt wofür?",
+          "a1": "Ineinanderkopieren hellt helle Stellen auf und dunkelt dunkle ab, das ergibt kräftiges Korn. Weiches Licht wirkt sanfter. Multiplizieren dunkelt nur ab und passt zu Papier und hellen Flächen.",
+          "q2": "Wie bekomme ich eine transparente Grain-Textur?",
+          "a2": "Wähle als Grundfläche Transparent und exportiere als PNG oder WebP. Die Datei enthält nur das Korn und lässt sich in anderen Programmen über Bilder legen.",
+          "q3": "Sieht das Korn im Export gleich aus wie in der Vorschau?",
+          "a3": "Ja. Vorschau und Export verwenden dieselbe Grafik, und das Rauschen wird aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer dasselbe Korn, in jedem Browser.",
+          "q4": "Wiederholt sich das Muster?",
+          "a4": "Das Korn ist eine nahtlose Kachel von 256 Pixeln. Bei feinem Korn fällt die Wiederholung praktisch nicht auf, und die Datei bleibt klein."
+        }
+      }
     }
   },
   "Converters": {

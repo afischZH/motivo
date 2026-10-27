@@ -101,6 +101,15 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 - Upload: max. 20 MB, wird clientseitig auf Arbeitsauflösung skaliert; Original nur lokal, nicht hochgeladen (Datenschutz-Pluspunkt, kommunizieren!).
 
+**E1 in M2 umgesetzt (M2-AP02, Tool-ID `noise-grain`)**: eigenständige Grain-Textur ohne Bild-Upload (der kommt mit den Bildeffekten).
+- Grundfläche `base`: Farbe, linearer oder radialer Verlauf (2 bis 3 Stopps, `palette`, `angle`) oder transparent (reine Grain-Ebene als PNG/WebP).
+- Parameter `amount` (0 bis 100 %, Deckkraft der Grain-Ebene), `size` (1 bis 8 px), `blend` (overlay, soft-light, multiply), `mono`.
+- Algorithmus: nahtlose Kachel von 256 × 256 px mit Gauss-Rauschen aus dem Seed (`grainTile` in `packages/engine`). Bei `size` > 1 ein periodisches Gitter aus Gauss-Werten, bilinear interpoliert und pro Pixel auf Varianz 1 normiert. Neutralwert 128 für overlay/soft-light, 255 für multiply (dunkelt nur ab).
+- Render-Art `svg`: Die Kachel steckt als PNG-data-URI (eigener PNG-Encoder ohne Kompression, Graustufen bei mono, sonst RGB) in einem `<pattern>`, gemischt per `mix-blend-mode`, skaliert mit `image-rendering: pixelated`. Kein `feTurbulence`, weil das kein Gauss-Rauschen ist und die Browser es nicht pixelgleich rendern. So bleiben Vorschau und Export identisch.
+- Aufwand pro Render ist durch die Kachelgrösse begrenzt, unabhängig von Canvas-Grösse und Params (getestet mit 8192 × 8192 und 8192 × 16). Die Kachel wird pro (Seed, size, mono, blend) zwischengespeichert, Farb- und Stärke-Änderungen sind sofort da.
+- Exporte: PNG, JPG, WebP, SVG, CSS (SVG als data-URI, ca. 90 KB mono bzw. 260 KB farbig).
+- Später (Bildeffekte): dieselbe Kachel per Blend-Formeln auf `ImageData` im Worker in `packages/effects` anwenden.
+
 ## F. Colors
 
 | Tool | Funktion | Phase |
