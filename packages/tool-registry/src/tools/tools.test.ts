@@ -32,6 +32,14 @@ describe("built-in tool registration", () => {
       "blob",
       "svg-waves",
       "polka-dots",
+      "palette-generator",
+      "tints-shades",
+      "tailwind-palette",
+    ]);
+    expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
+      "palette-generator",
+      "tints-shades",
+      "tailwind-palette",
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual(["polka-dots"]);
@@ -119,10 +127,13 @@ describe("extra exports", () => {
     expect(css).toContain("width: 300px;");
   });
 
-  it("only css-gradient and blob declare extras so far", () => {
+  it("only css-gradient, blob and the colour tools declare extras so far", () => {
     expect(builtInTools.filter((t) => t.extraExports?.length).map((t) => t.id)).toEqual([
       "css-gradient",
       "blob",
+      "palette-generator",
+      "tints-shades",
+      "tailwind-palette",
     ]);
   });
 });

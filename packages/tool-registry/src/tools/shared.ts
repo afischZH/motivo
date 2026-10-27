@@ -39,4 +39,11 @@ export const COMMON_GROUPS = {
 export const EXTRA_EXPORT_LABELS = {
   tailwind: "Editor.export.extras.tailwind",
   clipPath: "Editor.export.extras.clipPath",
+  cssVariables: "Editor.export.extras.cssVariables",
+  cssVariablesOklch: "Editor.export.extras.cssVariablesOklch",
+  hexList: "Editor.export.extras.hexList",
+  rgbList: "Editor.export.extras.rgbList",
+  hslList: "Editor.export.extras.hslList",
+  tailwindConfig: "Editor.export.extras.tailwindConfig",
+  tailwindTheme: "Editor.export.extras.tailwindTheme",
 } as const;

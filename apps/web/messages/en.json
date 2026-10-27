@@ -48,12 +48,31 @@
         },
         "palette": {
           "label": "Colors"
+        },
+        "labels": {
+          "label": "Labels",
+          "options": {
+            "none": "None",
+            "hex": "HEX",
+            "rgb": "RGB",
+            "hsl": "HSL",
+            "oklch": "OKLCH"
+          }
+        },
+        "contrast": {
+          "label": "Show contrast",
+          "description": "Shows the WCAG contrast ratio of the label on each color, AA from 4.5:1, AAA from 7:1."
+        },
+        "name": {
+          "label": "Name in code",
+          "description": "Used for CSS variables and Tailwind, for example brand."
         }
       },
       "groups": {
         "colors": "Colors",
         "shape": "Shape",
-        "layout": "Layout"
+        "layout": "Layout",
+        "display": "Display"
       }
     },
     "css-gradient": {
@@ -273,6 +292,180 @@
         "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
         "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
         "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
+      }
+    },
+    "palette-generator": {
+      "name": "Color Palette Generator",
+      "description": "Harmonious color palettes at the press of the space bar. Lock colors, pick a harmony, check contrast and export as CSS.",
+      "params": {
+        "count": {
+          "label": "Number of colors"
+        },
+        "harmony": {
+          "label": "Harmony",
+          "description": "Applies to the next palette. Press the space bar.",
+          "options": {
+            "auto": "Surprise me",
+            "analogous": "Analogous",
+            "complementary": "Complementary",
+            "triadic": "Triadic",
+            "split": "Split complementary",
+            "tetradic": "Tetradic"
+          }
+        },
+        "color1": {
+          "label": "Color 1"
+        },
+        "color2": {
+          "label": "Color 2"
+        },
+        "color3": {
+          "label": "Color 3"
+        },
+        "color4": {
+          "label": "Color 4"
+        },
+        "color5": {
+          "label": "Color 5"
+        },
+        "color6": {
+          "label": "Color 6"
+        },
+        "color7": {
+          "label": "Color 7"
+        },
+        "color8": {
+          "label": "Color 8"
+        },
+        "matrix": {
+          "label": "Contrast matrix",
+          "description": "Shows every color as text on every other color with its contrast ratio."
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "terracotta": "Terracotta",
+        "fjord": "Fjord",
+        "citrus": "Citrus",
+        "moss": "Moss",
+        "harbour": "Harbour",
+        "berry": "Berry",
+        "primaries": "Primaries"
+      },
+      "seo": {
+        "whatIs": "A color palette generator puts together colors that work well with each other. Motivo works in the OKLCH color space, so lightness and hue steps look even to the eye.",
+        "howTo": "Press the space bar for a new palette. Lock the colors you like, choose a harmony and export the palette as CSS variables, a HEX list or an image.",
+        "faq": {
+          "q1": "What do the harmonies mean?",
+          "a1": "Analogous uses neighboring hues, complementary uses opposite ones. Triadic spreads three hues evenly, split complementary pairs a hue with the neighbors of its opposite, and tetradic uses four hues in a square.",
+          "q2": "What happens to locked colors?",
+          "a2": "Locked colors stay when you shuffle. The first locked color acts as the anchor, and the new palette is built around it in the chosen harmony.",
+          "q3": "What does the contrast display show?",
+          "a3": "The WCAG 2 contrast ratio between each color and its label. AA means at least 4.5:1, AAA at least 7:1 for normal text.",
+          "q4": "Can I use the palette in Figma or in code?",
+          "a4": "Yes. Copy the HEX list or the CSS variables, or export the palette as SVG or PNG."
+        }
+      }
+    },
+    "tints-shades": {
+      "name": "Tints & Shades",
+      "description": "Lighter and darker steps of a color. Export as HEX, RGB, HSL or CSS variables.",
+      "params": {
+        "base": {
+          "label": "Base color"
+        },
+        "tints": {
+          "label": "Tints"
+        },
+        "shades": {
+          "label": "Shades"
+        },
+        "range": {
+          "label": "Range"
+        },
+        "method": {
+          "label": "Method",
+          "description": "OKLCH keeps the colorfulness, mixing moves evenly towards white or black.",
+          "options": {
+            "oklch": "Lightness (OKLCH)",
+            "oklab": "Mix (OKLab)",
+            "srgb": "Mix (sRGB)"
+          }
+        }
+      },
+      "groups": {
+        "scale": "Scale"
+      },
+      "presets": {
+        "lagoon": "Lagoon",
+        "tomato": "Tomato",
+        "indigo": "Indigo",
+        "sand": "Sand",
+        "forest": "Forest",
+        "slate": "Slate",
+        "sunflower": "Sunflower"
+      },
+      "seo": {
+        "whatIs": "Tints are lighter versions of a color, shades are darker ones. Together they form a scale for hover states, backgrounds and borders.",
+        "howTo": "Pick a base color, set the number of tints and shades and copy the values as HEX, RGB, HSL or CSS variables.",
+        "faq": {
+          "q1": "What is the difference between a tint and a shade?",
+          "a1": "A tint is a color mixed with white, a shade is a color mixed with black.",
+          "q2": "Which method should I choose?",
+          "a2": "The OKLCH method only changes lightness and keeps the colorfulness, so steps stay vivid. Mixing in OKLab looks even, mixing in sRGB matches classic tools like Sass.",
+          "q3": "How do I use the CSS variables?",
+          "a3": "Paste the block into your stylesheet and use the colors with var(), for example var(--primary-tint-2)."
+        }
+      }
+    },
+    "tailwind-palette": {
+      "name": "Tailwind Color Palette",
+      "description": "The eleven Tailwind steps 50 to 950 from one color. Export for tailwind.config.js, @theme, OKLCH and HEX.",
+      "params": {
+        "base": {
+          "label": "Base color",
+          "description": "Sits exactly on step 500."
+        },
+        "lightest": {
+          "label": "Lightest step (50)"
+        },
+        "darkest": {
+          "label": "Darkest step (950)"
+        },
+        "chromaFalloff": {
+          "label": "Reduce saturation at the ends"
+        },
+        "hueShift": {
+          "label": "Hue shift"
+        }
+      },
+      "groups": {
+        "scale": "Scale"
+      },
+      "presets": {
+        "ocean": "Ocean",
+        "coral": "Coral",
+        "emerald": "Emerald",
+        "amber": "Amber",
+        "grape": "Grape",
+        "stone": "Stone",
+        "rose": "Rose"
+      },
+      "seo": {
+        "whatIs": "Tailwind CSS arranges every color in eleven steps from 50 (very light) to 950 (very dark). This generator builds such a scale from your brand color, with the color itself exactly on 500.",
+        "howTo": "Pick your base color, give the palette a name and copy the code for tailwind.config.js or the @theme block for Tailwind v4.",
+        "faq": {
+          "q1": "Does it work with Tailwind v4?",
+          "a1": "Yes. The @theme export creates variables like --color-brand-500 in OKLCH, just like Tailwind v4 uses them. For older versions there is the tailwind.config.js export.",
+          "q2": "Why is my color on 500?",
+          "a2": "Step 500 is the main color in Tailwind. The lighter and darker steps follow a lightness curve modeled on well-known UI palettes.",
+          "q3": "Why are the ends less saturated?",
+          "a3": "Very light and very dark colors quickly look garish or muddy at full saturation. The slider sets how much the saturation drops.",
+          "q4": "What does OKLCH mean?",
+          "a4": "OKLCH describes colors by lightness, chroma and hue the way the eye perceives them. Modern browsers understand OKLCH directly in CSS."
+        }
       }
     }
   },
