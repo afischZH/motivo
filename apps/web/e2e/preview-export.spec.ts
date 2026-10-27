@@ -64,6 +64,13 @@ const CASES: Case[] = [
   { toolId: "svg-waves", preset: "Dunes" },
   { toolId: "polka-dots" },
   { toolId: "polka-dots", preset: "Retro" },
+  // M3-AP08: layered blobs (partly translucent, gradients), many thin strokes, charts.
+  { toolId: "blob-composition" },
+  { toolId: "blob-composition", preset: "Dusk" },
+  { toolId: "doodles" },
+  { toolId: "doodles", preset: "Chalkboard" },
+  { toolId: "svg-charts" },
+  { toolId: "svg-charts", preset: "Quarterly" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

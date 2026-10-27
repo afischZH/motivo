@@ -964,6 +964,252 @@
         }
       }
     },
+    "blob-composition": {
+      "name": "Blob Composition",
+      "description": "Several blobs at corners and edges that adapt to any canvas size. Export as SVG or image.",
+      "blob": "Blob {index}",
+      "params": {
+        "blobs": {
+          "label": "Blobs"
+        },
+        "anchor": {
+          "label": "Position",
+          "options": {
+            "top-left": "Top left",
+            "top": "Top",
+            "top-right": "Top right",
+            "left": "Left",
+            "center": "Center",
+            "right": "Right",
+            "bottom-left": "Bottom left",
+            "bottom": "Bottom",
+            "bottom-right": "Bottom right"
+          }
+        },
+        "offsetX": {
+          "label": "Horizontal offset"
+        },
+        "offsetY": {
+          "label": "Vertical offset"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "complexity": {
+          "label": "Complexity"
+        },
+        "randomness": {
+          "label": "Randomness"
+        },
+        "variant": {
+          "label": "Shape variant"
+        },
+        "opacity": {
+          "label": "Opacity"
+        },
+        "fillStyle": {
+          "label": "Fill",
+          "options": {
+            "solid": "Color",
+            "outline": "Outline",
+            "gradient": "Gradient"
+          }
+        },
+        "strokeWidth": {
+          "label": "Stroke width"
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        }
+      },
+      "presets": {
+        "corners": "Corners",
+        "sunrise": "Sunrise",
+        "mint": "Mint",
+        "outline": "Outlines",
+        "dusk": "Dusk",
+        "paper": "Paper",
+        "pop": "Pop"
+      },
+      "seo": {
+        "whatIs": "A blob composition arranges several organic shapes as layers at the corners and edges of a canvas. The result is a calm background for websites, slides and social posts that keeps the center free for text.",
+        "howTo": "Pick a preset or press Space for new arrangements. For each blob, set position, offset, size and shape, move layers up or down and hide them. Colors are taken from your palette in order. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "What happens when I change the canvas size?",
+            "answer": "Positions are stored relative to the corners and edges, sizes relative to the shorter side. The composition adapts to every format, from square to wide banner."
+          },
+          "q2": {
+            "question": "How do I change the color of a single blob?",
+            "answer": "The top blob uses the first palette color, the second blob the second color and so on. Change the palette or reorder the blobs."
+          },
+          "q3": {
+            "question": "Does a blob keep its shape when I change the others?",
+            "answer": "Yes. Each shape depends only on its own shape variant, complexity and randomness. Use the lock to keep single values when you randomize."
+          },
+          "q4": {
+            "question": "How many blobs can I add?",
+            "answer": "Up to eight layers. Two to four usually make the calmest backgrounds."
+          }
+        }
+      }
+    },
+    "doodles": {
+      "name": "Doodle Backgrounds",
+      "description": "Hand-drawn looking squiggles, spirals, stars and zigzags as a background. Export as SVG or image.",
+      "params": {
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "mixed": "Mixed",
+            "squiggle": "Squiggles",
+            "zigzag": "Zigzags",
+            "spiral": "Spirals",
+            "loop": "Loops",
+            "triangle": "Triangles",
+            "star": "Stars",
+            "cross": "Crosses",
+            "arc": "Arcs"
+          }
+        },
+        "spacing": {
+          "label": "Spacing"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "wobble": {
+          "label": "Wobble"
+        },
+        "strokeWidth": {
+          "label": "Stroke width"
+        }
+      },
+      "presets": {
+        "notebook": "Notebook",
+        "chalkboard": "Chalkboard",
+        "party": "Party",
+        "stars": "Stars",
+        "spirals": "Spirals",
+        "blueprint": "Blueprint",
+        "bold": "Bold"
+      },
+      "seo": {
+        "whatIs": "Doodle backgrounds are made of small shapes that look drawn by hand: squiggles, spirals, stars, crosses and zigzags. They feel playful and personal and work well for invitations, school and kids themes, social posts and packaging.",
+        "howTo": "Pick a shape or the mix, set spacing, size and stroke width, and use wobble to decide how hand-drawn the lines look. Press Space for new variations and export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Why do the lines look hand-drawn?",
+            "answer": "Every point of a shape is shifted slightly with smooth noise, then the points are joined with soft curves and drawn with round line caps."
+          },
+          "q2": {
+            "question": "Where do the shapes come from?",
+            "answer": "All shapes are generated in your browser from simple geometric rules. There are no image templates, every variation is new."
+          },
+          "q3": {
+            "question": "Why don't the doodles overlap?",
+            "answer": "Positions come from Poisson-disk sampling. Every shape keeps a minimum distance, so the spread looks even yet random."
+          },
+          "q4": {
+            "question": "Can I edit the SVG?",
+            "answer": "Yes. All strokes of one color sit in a single stroked path without transforms, easy to recolor in Figma or Illustrator."
+          }
+        }
+      }
+    },
+    "svg-charts": {
+      "name": "SVG Charts",
+      "description": "Placeholder charts with random data for mockups: lines, areas and bars. Export as SVG or image.",
+      "groups": {
+        "data": "Data"
+      },
+      "params": {
+        "type": {
+          "label": "Chart type",
+          "options": {
+            "line": "Line",
+            "area": "Area",
+            "bar": "Bars"
+          }
+        },
+        "series": {
+          "label": "Series"
+        },
+        "points": {
+          "label": "Data points"
+        },
+        "trend": {
+          "label": "Trend"
+        },
+        "volatility": {
+          "label": "Volatility"
+        },
+        "smoothing": {
+          "label": "Smoothing"
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "markers": {
+          "label": "Mark points"
+        },
+        "barGap": {
+          "label": "Gap between bars"
+        },
+        "barRadius": {
+          "label": "Corner radius"
+        },
+        "axes": {
+          "label": "Axes"
+        },
+        "grid": {
+          "label": "Grid lines"
+        },
+        "axisColor": {
+          "label": "Axis color"
+        },
+        "margin": {
+          "label": "Margin"
+        }
+      },
+      "presets": {
+        "growth": "Growth",
+        "dashboard": "Dashboard",
+        "quarterly": "Quarterly",
+        "monthly": "Monthly",
+        "sparkline": "Sparkline",
+        "minimal": "Minimal",
+        "stacked-waves": "Waves"
+      },
+      "seo": {
+        "whatIs": "SVG charts are placeholder charts with random data. Use them in mockups, slides, landing pages and app designs when real numbers are missing or must not be shown.",
+        "howTo": "Choose line, area or bars, set the number of series and data points, and adjust trend and volatility. Turn axes and grid lines on or off. Press Space for new data. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Can I enter my own data?",
+            "answer": "No, the tool generates random data for drafts on purpose. Trend and volatility control whether the curve rises, falls or swings."
+          },
+          "q2": {
+            "question": "Why are there no labels?",
+            "answer": "Without text the SVG looks the same in every app and needs no fonts. Add labels in your layout, for example in Figma."
+          },
+          "q3": {
+            "question": "Does the data stay when I change the style?",
+            "answer": "Yes. The data depends on the seed. You can change chart type, colors, axes and smoothing without changing the values."
+          },
+          "q4": {
+            "question": "How do I get new random data?",
+            "answer": "Press Space. Type, series and style stay, data, trend and colors are reshuffled. Use the lock to keep single values."
+          }
+        }
+      }
+    },
     "palette-generator": {
       "name": "Color Palette Generator",
       "description": "Harmonious color palettes at the press of the space bar. Lock colors, pick a harmony, check contrast and export as CSS.",

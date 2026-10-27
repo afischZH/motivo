@@ -81,6 +81,9 @@ describe("built-in tool registration", () => {
       "css-patterns",
       "blob",
       "svg-waves",
+      "blob-composition",
+      "doodles",
+      "svg-charts",
       "polka-dots",
       "noise-grain",
       "grid-patterns",
@@ -101,6 +104,7 @@ describe("built-in tool registration", () => {
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
+      "doodles",
       "polka-dots",
       "grid-patterns",
       "confetti",
