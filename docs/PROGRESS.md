@@ -24,7 +24,7 @@
 | M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | erledigt | – | Slugs zentral in `apps/web/i18n/slugs.ts` (Contract-Test), alte Pfade per 308; Basis-URL aus `NEXT_PUBLIC_SITE_URL`; x-default zeigt auf DE (in AP08 nochmals prüfen, ggf. EN) |
 | M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, OG-Bilder | ui-dev | erledigt (Lighthouse in AP12) | AP07 | OG-Bilder beim Build (Worker 1.8 MiB gzip); x-default EN; noindex ausser Produktions-Host; echte SEO-Texte für M1-Tools; Editor-Seiten nicht in der Sitemap |
 | M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | erledigt bis auf Lighthouse-Performance (AP12) | AP08 | Rechtstexte als Entwurf mit Banner und noindex, Platzhalter in `lib/legal/config.ts`, "juristisch zu prüfen"; Analytics und Sentry nur mit Repo-Variablen und nur in Production (deploy.yml); @sentry/browser 11.9.0 MIT, 19.8 KB gzip, erst beim ersten Fehler geladen; Locale-Cookie abgeschaltet (keine Cookies); Lighthouse mobil Performance 75 bis 87 (Ziel 95), Rest 100; csp.spec unter Volllast einmal instabil |
-| M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | pausiert (`wip/m2-ap10`) | – | Neue Tabelle (Supabase EU, RLS) und E-Mail-Versand: Stopp-Punkte |
+| M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | erledigt im Code, aus bis zum Owner-Setup (Security-Review in AP12) | – | Supabase und Resend per fetch; RLS ohne Policies, nur SECURITY-DEFINER-Funktionen; Migration und RLS mit PGlite getestet (Docker lief nicht, vor Deploy `supabase db reset`); aus ohne Secrets ("bald verfügbar"); Turnstile optional; Texte juristisch zu prüfen; Einrichtung: `docs/SETUP-WAITLIST.md` |
 | M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | erledigt (Security-Review in AP12) | – | CSP erzwungen, aber `unsafe-inline` für Scripts (Next setzt pro Seite Inline-Scripts, Nonces würden statische Seiten verhindern); HSTS ohne preload; zod `jitless` gegen eval |
 | M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | geplant | alle | Domain, DNS, Search Console durch Andreas |
 
@@ -75,6 +75,7 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 
 | Datum | Feature | Laufende Kosten (Schätzung) | Lösung (clientseitig / Credits / Fair Use) |
 |---|---|---|---|
+| 2026-10-27 | Founders-Warteliste (M2-AP10) | 0 CHF: Supabase Free (500 MB), Resend Free (100 Mails/Tag, 3000/Monat), Turnstile gratis | Höchstens 90 Bestätigungsmails pro Tag, 5 pro Adresse, 10 Anfragen pro Stunde und IP-Hash; Supabase Free pausiert nach 7 Tagen ohne Aktivität (Owner prüfen) |
 
 ## Werkzeug-Status
 
