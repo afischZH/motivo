@@ -1,0 +1,17 @@
+{
+  "name": "@motivo/shaders",
+  "version": "0.0.0",
+  "private": true,
+  "description": "GLSL sources and uniform schemas",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@motivo/config": "workspace:*"
+  }
+}

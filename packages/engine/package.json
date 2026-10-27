@@ -1,0 +1,17 @@
+{
+  "name": "@motivo/engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pure, deterministic generators per tool, PRNG, geometry, color",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@motivo/config": "workspace:*"
+  }
+}
