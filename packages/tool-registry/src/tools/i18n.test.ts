@@ -24,12 +24,16 @@ function lookup(messages: Messages, key: string): unknown {
   return node;
 }
 
-function referencedKeys(tool: AnyToolDefinition): string[] {
-  const keys = [`tools.${tool.id}.name`, `tools.${tool.id}.description`];
-  const hints = tool.controls?.params ?? {};
-  for (const [param, schema] of Object.entries(tool.schema.shape)) {
+type Hints = NonNullable<AnyToolDefinition["controls"]>;
+
+/** Label keys of the params of one object schema (the tool, or the item of a list param). */
+function paramKeys(toolId: string, shape: z.ZodRawShape, controls: Hints | undefined): string[] {
+  const keys: string[] = [];
+  const hints = (controls?.params ?? {}) as NonNullable<Hints["params"]>;
+  for (const [param, schema] of Object.entries(shape)) {
     const hint = hints[param];
-    keys.push(hint?.labelKey ?? `tools.${tool.id}.params.${param}.label`);
+    if (hint?.kind === "hidden") continue;
+    keys.push(hint?.labelKey ?? `tools.${toolId}.params.${param}.label`);
     if (schema instanceof z.ZodEnum) {
       const labels = hint?.optionLabelKeys ?? {};
       for (const option of schema.options) {
@@ -38,8 +42,19 @@ function referencedKeys(tool: AnyToolDefinition): string[] {
         );
       }
     }
+    if (schema instanceof z.ZodArray && schema.element instanceof z.ZodObject) {
+      const list = hint?.list;
+      if (list?.itemLabelKey) keys.push(list.itemLabelKey);
+      keys.push(...paramKeys(toolId, schema.element.shape, list?.item as Hints | undefined));
+    }
   }
-  for (const group of tool.controls?.groups ?? []) keys.push(group.labelKey);
+  for (const group of controls?.groups ?? []) keys.push(group.labelKey);
+  return keys;
+}
+
+function referencedKeys(tool: AnyToolDefinition): string[] {
+  const keys = [`tools.${tool.id}.name`, `tools.${tool.id}.description`];
+  keys.push(...paramKeys(tool.id, tool.schema.shape, tool.controls));
   for (const preset of tool.presets) keys.push(preset.nameKey);
   return keys;
 }

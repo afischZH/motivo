@@ -23,7 +23,89 @@
   "Home": {
     "title": "Motive per Klick",
     "lead": "Muster, Verläufe und Hintergründe, direkt in deinem Browser gerendert. Die ersten Generatoren sind bald da.",
-    "engineCheck": "Engine-Check:"
+    "engineCheck": "Engine-Check:",
+    "metaTitle": "Motivo: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
+    "metaDescription": "Gratis Generatoren für Muster, Verläufe, Hintergründe und Farbpaletten. Alles läuft in deinem Browser, Export als SVG, PNG oder CSS. Ohne Konto.",
+    "hero": {
+      "eyebrow": "Gratis Generatoren für Grafiken",
+      "title": "Motive per Klick",
+      "lead": "Muster, Verläufe, Hintergründe und Farbpaletten für Websites, Slides und Social Media. Leertaste drücken, neue Variante bekommen, als SVG, PNG oder CSS exportieren.",
+      "ctaPrimary": "Alle Tools entdecken",
+      "ctaSecondary": "Mit {tool} starten",
+      "hint": "Kein Konto nötig. Deine Motive entstehen direkt auf deinem Gerät.",
+      "showcaseLabel": "Beispielmotive",
+      "showcaseLink": "{tool} öffnen",
+      "spaceHint": "Leertaste",
+      "spaceHintText": "neue Variante"
+    },
+    "values": {
+      "heading": "Warum Motivo",
+      "free": {
+        "title": "Gratis Generatoren",
+        "text": "Alle Generatoren und Konverter sind gratis nutzbar, ohne Anmeldung und ohne Wasserzeichen auf deinen Mustern."
+      },
+      "local": {
+        "title": "Alles in deinem Browser",
+        "text": "Motive werden auf deinem Gerät berechnet. Bilder, die du in Konverter lädst, verlassen deinen Browser nicht."
+      },
+      "lifetime": {
+        "title": "Lifetime statt Abo",
+        "text": "Für spätere Profi-Funktionen ist eine Lifetime-Lizenz geplant: einmal zahlen statt monatlich. Umfang und Preise stehen noch nicht fest."
+      }
+    },
+    "categories": {
+      "heading": "Tools nach Kategorie",
+      "lead": "Such dir einen Bereich aus oder stöbere im ganzen Katalog.",
+      "converters": "SVG, CSS, Base64 und Bilder umwandeln.",
+      "all": "Zum ganzen Katalog"
+    },
+    "featured": {
+      "heading": "Beliebte Generatoren",
+      "lead": "Ein guter Start, falls du gleich loslegen willst."
+    },
+    "how": {
+      "heading": "So funktioniert's",
+      "step1": {
+        "title": "Tool wählen",
+        "text": "Jedes Tool startet mit einem fertigen Motiv. Du musst nie bei null beginnen."
+      },
+      "step2": {
+        "title": "Variieren",
+        "text": "Drück die Leertaste für eine neue Variante oder stell Farben, Formen und Dichte selbst ein."
+      },
+      "step3": {
+        "title": "Exportieren",
+        "text": "Lade dein Motiv als SVG, PNG, JPG oder WebP herunter oder kopier den CSS-Code direkt in dein Projekt."
+      }
+    },
+    "faq": {
+      "heading": "Häufige Fragen",
+      "q1": {
+        "question": "Kostet Motivo etwas?",
+        "answer": "Nein. Alle Generatoren und Konverter, die du hier findest, sind gratis. Für spätere Profi-Funktionen wie sehr grosse Exporte ist eine Lifetime-Lizenz geplant, ohne Abo."
+      },
+      "q2": {
+        "question": "Brauche ich ein Konto?",
+        "answer": "Nein. Du kannst sofort loslegen. Teilen geht über einen Link, der deine Einstellungen enthält."
+      },
+      "q3": {
+        "question": "Werden meine Bilder hochgeladen?",
+        "answer": "Nein. Motive, Konverter und die Farbpalette aus einem Bild laufen vollständig in deinem Browser. Deine Dateien werden nicht an einen Server gesendet."
+      },
+      "q4": {
+        "question": "Darf ich die Motive kommerziell nutzen?",
+        "answer": "Die Lizenzbedingungen für Exporte legen wir vor dem Bezahl-Launch fest und veröffentlichen sie auf dieser Website."
+      },
+      "q5": {
+        "question": "Welche Formate kann ich exportieren?",
+        "answer": "Je nach Tool SVG, PNG, JPG, WebP und CSS. Farbtools liefern zusätzlich Tailwind-Konfiguration und CSS-Variablen."
+      }
+    },
+    "cta": {
+      "heading": "Bereit für dein erstes Motiv?",
+      "text": "In zehn Sekunden vom Klick zum fertigen Hintergrund.",
+      "button": "Jetzt ausprobieren"
+    }
   },
   "NotFound": {
     "title": "Seite nicht gefunden",
@@ -48,12 +130,31 @@
         },
         "palette": {
           "label": "Farben"
+        },
+        "labels": {
+          "label": "Beschriftung",
+          "options": {
+            "none": "Keine",
+            "hex": "HEX",
+            "rgb": "RGB",
+            "hsl": "HSL",
+            "oklch": "OKLCH"
+          }
+        },
+        "contrast": {
+          "label": "Kontrast anzeigen",
+          "description": "Zeigt das WCAG-Kontrastverhältnis der Beschriftung zur Farbe, AA ab 4.5:1, AAA ab 7:1."
+        },
+        "name": {
+          "label": "Name im Code",
+          "description": "Wird für CSS-Variablen und Tailwind verwendet, zum Beispiel brand."
         }
       },
       "groups": {
         "colors": "Farben",
         "shape": "Form",
-        "layout": "Anordnung"
+        "layout": "Anordnung",
+        "display": "Anzeige"
       }
     },
     "css-gradient": {
@@ -129,9 +230,234 @@
         "citrus": "Zitrus"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei und bleibt in jeder Grösse scharf.",
-        "howTo": "Wähle Farben und Typ, passe Winkel und Übergang an und kopiere das CSS. Mit der Leertaste würfelst du neue Varianten."
+        "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei, lädt sofort und bleibt in jeder Grösse scharf. Der Generator mischt die Farben im Farbraum OKLCH, darum wirken Übergänge gleichmässig und ohne graue Mitte.",
+        "howTo": "Wähle linear, radial oder konisch, lege deine Farben fest und stelle Winkel, Mittelpunkt und Übergang ein. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Warum OKLCH statt sRGB?",
+            "answer": "In sRGB laufen viele Farbpaare durch eine trübe, graue Mitte. OKLCH mischt nach wahrgenommener Helligkeit und Buntheit, darum bleiben Übergänge frisch. Für ältere Browser liefert das CSS zusätzlich einen sRGB-Verlauf als Rückfall."
+          },
+          "q2": {
+            "question": "Was machen die zusätzlichen Stopps?",
+            "answer": "Sie setzen Zwischenfarben entlang des Übergangs. So folgt der Verlauf der gewählten Kurve, etwa sanft hinein und heraus, statt linear zu laufen."
+          },
+          "q3": {
+            "question": "Kann ich den Verlauf in Tailwind verwenden?",
+            "answer": "Ja. Im Export findest du neben dem CSS auch fertige Tailwind-Klassen, die du direkt in dein Markup kopierst."
+          },
+          "q4": {
+            "question": "Sieht das exportierte Bild aus wie die Vorschau?",
+            "answer": "Ja. Für SVG und Bilder wird derselbe Verlauf als Vektorgrafik gezeichnet, in der Grösse, die du im Export wählst."
+          }
+        }
+      }
+    },
+    "css-patterns": {
+      "name": "CSS-Muster",
+      "description": "Über 30 Muster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Als CSS, Tailwind, SVG oder Bild exportieren.",
+      "params": {
+        "layers": {
+          "label": "Ebenen"
+        },
+        "pattern": {
+          "label": "Muster"
+        },
+        "color": {
+          "label": "Farbe"
+        },
+        "accent": {
+          "label": "Akzentfarbe"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        }
+      },
+      "layer": "Ebene {index}",
+      "presets": {
+        "picnic": "Picknick",
+        "blueprint": "Bauplan",
+        "candy-shop": "Süsswaren",
+        "seventies": "Siebziger",
+        "seaside": "Meeresbrise",
+        "highland": "Highland",
+        "night-dots": "Nachtpunkte"
+      },
+      "categories": {
+        "dots": "Punkte",
+        "grid": "Raster",
+        "stripes": "Streifen",
+        "waves": "Wellen",
+        "geometric": "Geometrisch"
+      },
+      "seo": {
+        "whatIs": "CSS-Muster sind Hintergründe, die der Browser selbst aus Verläufen zeichnet. Sie brauchen keine Bilddatei, laden sofort, bleiben in jeder Grösse scharf und lassen sich mit ein paar Zeichen CSS umfärben. Die Bibliothek enthält über 30 eigene Muster in fünf Kategorien.",
+        "howTo": "Wähle ein Muster, stelle Grösse, Farben und Deckkraft ein und drehe Streifen oder Raster in den passenden Winkel. Staple bis zu fünf Muster als Ebenen übereinander, blende sie ein und aus oder ändere ihre Reihenfolge. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Brauche ich für die Muster ein Bild?",
+            "answer": "Nein. Jedes Muster besteht nur aus CSS-Verläufen in background-image. Das spart Ladezeit und bleibt auf jedem Bildschirm scharf."
+          },
+          "q2": {
+            "question": "In welchen Browsern funktionieren die Muster?",
+            "answer": "In allen aktuellen Browsern, also Chrome, Edge, Firefox und Safari. Die Muster nutzen lineare, radiale und konische Verläufe, die seit Jahren breit unterstützt werden."
+          },
+          "q3": {
+            "question": "Wie genau ist der SVG-Export?",
+            "answer": "Das SVG zeichnet dieselbe Geometrie mit SVG-Verläufen und Kacheln nach. Unterschiede gibt es höchstens bei der Kantenglättung einzelner Pixel. Für ein Bild ohne jede Abweichung nimm den PNG-Export."
+          },
+          "q4": {
+            "question": "Kann ich die Muster mit Tailwind verwenden?",
+            "answer": "Ja. Der Export liefert Tailwind-Klassen mit beliebigen Werten, die du direkt in dein HTML kopierst. Sie funktionieren mit Tailwind 3 und 4."
+          },
+          "q5": {
+            "question": "Darf ich die Muster kommerziell nutzen?",
+            "answer": "Ja. Was du mit Motivo erstellst, gehört dir und darf in eigenen und kommerziellen Projekten verwendet werden."
+          }
+        }
+      },
+      "patterns": {
+        "polka": {
+          "name": "Punkte",
+          "description": "Gleichmässige Punkte in einem Raster, der Klassiker für verspielte Flächen."
+        },
+        "polka-staggered": {
+          "name": "Versetzte Punkte",
+          "description": "Punkte in versetzten Reihen, dichter und ruhiger als ein gerades Raster."
+        },
+        "dots-duo": {
+          "name": "Zweifarbige Punkte",
+          "description": "Versetzte Punkte im Wechsel zweier Farben."
+        },
+        "dots-mixed": {
+          "name": "Gemischte Punkte",
+          "description": "Grosse und kleine Punkte in zwei Farben, locker im Wechsel."
+        },
+        "rings": {
+          "name": "Ringe",
+          "description": "Kreisringe in einem Raster, leicht und luftig."
+        },
+        "target": {
+          "name": "Zielscheiben",
+          "description": "Konzentrische Ringe in zwei Farben, wie kleine Zielscheiben."
+        },
+        "grid-lines": {
+          "name": "Rasterlinien",
+          "description": "Feine Linien im Quadratraster, frei drehbar."
+        },
+        "graph-paper": {
+          "name": "Millimeterpapier",
+          "description": "Feines Nebenraster mit kräftigem Hauptraster alle fünf Felder."
+        },
+        "dotted-grid": {
+          "name": "Raster mit Knoten",
+          "description": "Rasterlinien mit Punkten auf jeder Kreuzung."
+        },
+        "crosshatch": {
+          "name": "Kreuzschraffur",
+          "description": "Diagonale Linien in beide Richtungen, wie ein Gitter oder eine Schraffur."
+        },
+        "bricks": {
+          "name": "Backsteine",
+          "description": "Mauerwerk im Läuferverband, gezeichnet als Fugen."
+        },
+        "tiles": {
+          "name": "Fliesen",
+          "description": "Quadratische Fliesen in zwei Farben mit schmalen Fugen."
+        },
+        "stripes": {
+          "name": "Streifen",
+          "description": "Breite Streifen in einem frei wählbaren Winkel."
+        },
+        "candy": {
+          "name": "Zuckerstange",
+          "description": "Zwei Farben mit schmalen Abständen, wie eine Zuckerstange."
+        },
+        "pinstripes": {
+          "name": "Nadelstreifen",
+          "description": "Feine Linien mit viel Abstand, elegant und zurückhaltend."
+        },
+        "tricolor": {
+          "name": "Dreifarbige Streifen",
+          "description": "Gleich breite Streifen in zwei Farben und dem Hintergrund."
+        },
+        "gingham": {
+          "name": "Vichy-Karo",
+          "description": "Halbtransparente Streifen in beide Richtungen ergeben das typische Karo."
+        },
+        "plaid": {
+          "name": "Schottenkaro",
+          "description": "Breite und schmale Streifen in zwei Farben, gekreuzt wie ein Karostoff."
+        },
+        "barcode": {
+          "name": "Strichcode",
+          "description": "Unregelmässige Linien wie ein Strichcode, dekorativ und nicht lesbar."
+        },
+        "ripples": {
+          "name": "Wellenringe",
+          "description": "Konzentrische Ringe von der Mitte aus, wie Wellen im Wasser."
+        },
+        "sunrise": {
+          "name": "Sonnenaufgang",
+          "description": "Breite Bögen in zwei Farben, die vom unteren Rand aufsteigen."
+        },
+        "wavy-lines": {
+          "name": "Wellenlinien",
+          "description": "Weiche Wellenlinien aus Halbkreisen, Reihe um Reihe."
+        },
+        "scallops": {
+          "name": "Bogenkante",
+          "description": "Halbkreise in Reihen mit kleinem Akzent, wie eine Bogenkante."
+        },
+        "scales": {
+          "name": "Schuppen",
+          "description": "Überlappende Bögen wie Fischschuppen oder Dachziegel."
+        },
+        "rainbow": {
+          "name": "Regenbogen",
+          "description": "Kleine Regenbögen aus drei Bändern, Reihe für Reihe."
+        },
+        "checkerboard": {
+          "name": "Schachbrett",
+          "description": "Quadrate im Wechsel, so klar wie ein Schachbrett."
+        },
+        "diamonds": {
+          "name": "Rauten",
+          "description": "Auf die Spitze gestellte Quadrate in einem dichten Raster."
+        },
+        "argyle": {
+          "name": "Argyle",
+          "description": "Rauten mit feinen Diagonalen, bekannt von Socken und Pullovern."
+        },
+        "zigzag": {
+          "name": "Zickzack",
+          "description": "Kräftige Zickzackbänder, die quer über die Fläche laufen."
+        },
+        "chevron": {
+          "name": "Chevron",
+          "description": "Zickzackbänder in zwei Farben und dem Hintergrund, im Stil der Siebziger."
+        },
+        "triangles": {
+          "name": "Dreiecke",
+          "description": "Jede Kachel diagonal geteilt, das ergibt Reihen aus Dreiecken."
+        },
+        "pinwheel": {
+          "name": "Windrad",
+          "description": "Vier Flügel pro Kachel, die sich zu Windrädern drehen."
+        },
+        "crosses": {
+          "name": "Kreuze",
+          "description": "Pluszeichen in einem regelmässigen Raster."
+        },
+        "squares": {
+          "name": "Quadrate",
+          "description": "Kleine Quadrate mit Abstand, ruhig und geordnet."
+        }
       }
     },
     "blob": {
@@ -172,9 +498,26 @@
         "sticker": "Sticker"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "Blobs sind weiche, organische Formen für Hintergründe, Illustrationen und Akzente auf Websites.",
-        "howTo": "Stelle Komplexität und Zufälligkeit ein, wähle eine Füllung und lade dein SVG herunter."
+        "whatIs": "Blobs sind weiche, organische Formen. Sie lockern strenge Layouts auf und eignen sich als Hintergrund, als Rahmen für Fotos oder als Akzent hinter Text. Jede Form entsteht aus wenigen Punkten auf einem Kreis, die zufällig verschoben und mit glatten Kurven verbunden werden.",
+        "howTo": "Stelle Komplexität, Zufälligkeit und Grösse ein und wähle eine Füllung: Fläche, Kontur oder Verlauf. Drücke die Leertaste, bis dir eine Form gefällt. Exportiere als SVG, als Bild oder als CSS-clip-path, um Fotos in Blob-Form zuzuschneiden.",
+        "faq": {
+          "q1": {
+            "question": "Wie bekomme ich die gleiche Form wieder?",
+            "answer": "Jede Form hängt vom Seed und den Einstellungen ab. Teile den Link aus dem Editor oder speichere ihn, dann entsteht beim Öffnen genau dieselbe Form."
+          },
+          "q2": {
+            "question": "Kann ich ein Foto in Blob-Form zuschneiden?",
+            "answer": "Ja. Exportiere die Form als clip-path und wende das CSS auf dein Bild an. Die Form passt sich der Grösse des Elements an."
+          },
+          "q3": {
+            "question": "Hat das SVG einen Hintergrund?",
+            "answer": "Nein, standardmässig ist der Hintergrund transparent. So setzt du den Blob auf jede Fläche, ohne störende Kanten."
+          },
+          "q4": {
+            "question": "Wie viele Punkte hat ein Blob?",
+            "answer": "Das bestimmt die Komplexität. Wenige Punkte ergeben ruhige, runde Formen, viele Punkte lebendige, verspielte Umrisse."
+          }
+        }
       }
     },
     "svg-waves": {
@@ -214,9 +557,26 @@
         "ribbon": "Band"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst.",
-        "howTo": "Wähle Anzahl Ebenen, Wellenhöhe und Richtung, dann exportiere als SVG oder CSS."
+        "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst. Statt einer harten Kante läuft eine Fläche in Wellen aus. Mehrere Ebenen in abgestuften Farben erzeugen Tiefe, die Datei bleibt trotzdem nur wenige Kilobyte gross.",
+        "howTo": "Wähle die Anzahl Ebenen und Punkte, stelle Höhe, Glätte und Abdeckung ein und lege fest, ob die Wellen von unten oder von oben kommen. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, CSS-Hintergrund oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Wie setze ich die Welle zwischen zwei Abschnitte?",
+            "answer": "Lade das SVG herunter und platziere es am unteren Rand des oberen Abschnitts. Wähle als Wellenfarbe die Hintergrundfarbe des nächsten Abschnitts, dann gehen beide nahtlos ineinander über."
+          },
+          "q2": {
+            "question": "Bleibt die Welle auf breiten Bildschirmen scharf?",
+            "answer": "Ja. Als Vektorgrafik skaliert sie ohne Qualitätsverlust. Stelle die Breite im CSS auf 100 Prozent und lass die Höhe mitwachsen."
+          },
+          "q3": {
+            "question": "Was bewirkt die Glätte?",
+            "answer": "Sie bestimmt, wie weich die Kurven zwischen den Punkten verlaufen. Wenig Glätte ergibt kantige, bergige Formen, viel Glätte ruhige, runde Wellen."
+          },
+          "q4": {
+            "question": "Kann ich die Wellen umdrehen?",
+            "answer": "Ja. Mit der Richtung wählst du, ob die Wellen von unten oder von oben in die Fläche ragen."
+          }
+        }
       }
     },
     "polka-dots": {
@@ -270,9 +630,564 @@
         "speckle": "Sprenkel"
       },
       "seo": {
-        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
-        "whatIs": "Polka Dots sind regelmässige oder verstreute Punktmuster, ein Klassiker für Hintergründe, Verpackungen und Textilien.",
-        "howTo": "Wähle Anordnung, Abstand und Punktgrösse, mische deine Farben und exportiere als SVG oder PNG."
+        "whatIs": "Polka Dots sind Punktmuster in regelmässigem Abstand oder frei verstreut. Sie wirken verspielt oder ruhig, je nach Grösse und Farbe, und passen als Hintergrund für Websites, Verpackungen, Karten und Stoffe. Neben Kreisen kannst du auch Ringe und Quadrate verwenden.",
+        "howTo": "Wähle die Anordnung (Raster, versetzt oder verstreut), stelle Abstand und Punktgrösse ein und bestimme, ob die Punkte eine Farbe haben, sich abwechseln oder zufällig gefärbt sind. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Was ist der Unterschied zwischen Raster und versetzt?",
+            "answer": "Im Raster liegen die Punkte in geraden Reihen und Spalten. Versetzt verschiebt jede zweite Reihe um einen halben Abstand, das wirkt dichter und klassischer."
+          },
+          "q2": {
+            "question": "Wie verhindere ich, dass sich verstreute Punkte überlappen?",
+            "answer": "Bei der Anordnung verstreut halten die Punkte automatisch einen Mindestabstand ein, der sich nach dem Abstand richtet. Mit der Grössenvariation bringst du zusätzlich Abwechslung hinein."
+          },
+          "q3": {
+            "question": "Kann ich das Muster als CSS-Hintergrund verwenden?",
+            "answer": "Ja. Der CSS-Export bettet das Muster als SVG ein, sodass du es direkt als background-image einsetzen kannst."
+          },
+          "q4": {
+            "question": "Welche Formen gibt es?",
+            "answer": "Kreise, Ringe und Quadrate. Ringe wirken leichter und eignen sich gut für helle, luftige Hintergründe."
+          }
+        }
+      }
+    },
+    "noise-grain": {
+      "name": "Noise und Grain",
+      "description": "Körnige Texturen und Hintergründe mit feinem Rauschen über Farbe oder Verlauf. Als PNG, JPG, WebP oder SVG exportieren.",
+      "groups": {
+        "grain": "Körnung",
+        "base": "Grundfläche"
+      },
+      "params": {
+        "amount": {
+          "label": "Stärke"
+        },
+        "size": {
+          "label": "Korngrösse"
+        },
+        "blend": {
+          "label": "Mischmodus",
+          "options": {
+            "overlay": "Ineinanderkopieren",
+            "soft-light": "Weiches Licht",
+            "multiply": "Multiplizieren"
+          }
+        },
+        "mono": {
+          "label": "Monochrom"
+        },
+        "base": {
+          "label": "Grundfläche",
+          "options": {
+            "solid": "Farbe",
+            "linear": "Linear",
+            "radial": "Radial",
+            "none": "Transparent"
+          }
+        },
+        "color": {
+          "label": "Farbe"
+        },
+        "angle": {
+          "label": "Winkel"
+        }
+      },
+      "presets": {
+        "film": "Film",
+        "paper": "Papier",
+        "riso": "Riso",
+        "midnight": "Mitternacht",
+        "aurora": "Polarlicht",
+        "sand": "Sand",
+        "overlay": "Overlay"
+      },
+      "seo": {
+        "whatIs": "Grain ist feines, zufälliges Rauschen über einer Fläche. Es nimmt digitalen Farben und Verläufen die sterile Glätte, verhindert Banding in Verläufen und erinnert an analogen Film oder Papier.",
+        "howTo": "Wähle eine Farbe oder einen Verlauf als Grundfläche, stelle Stärke, Korngrösse und Mischmodus ein und drücke die Leertaste für eine neue Variante. Exportiere danach als PNG, JPG, WebP oder SVG in der gewünschten Grösse.",
+        "faq": {
+          "q1": "Welcher Mischmodus passt wofür?",
+          "a1": "Ineinanderkopieren hellt helle Stellen auf und dunkelt dunkle ab, das ergibt kräftiges Korn. Weiches Licht wirkt sanfter. Multiplizieren dunkelt nur ab und passt zu Papier und hellen Flächen.",
+          "q2": "Wie bekomme ich eine transparente Grain-Textur?",
+          "a2": "Wähle als Grundfläche Transparent und exportiere als PNG oder WebP. Die Datei enthält nur das Korn und lässt sich in anderen Programmen über Bilder legen.",
+          "q3": "Sieht das Korn im Export gleich aus wie in der Vorschau?",
+          "a3": "Ja. Vorschau und Export verwenden dieselbe Grafik, und das Rauschen wird aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer dasselbe Korn, in jedem Browser.",
+          "q4": "Wiederholt sich das Muster?",
+          "a4": "Das Korn ist eine nahtlose Kachel von 256 Pixeln. Bei feinem Korn fällt die Wiederholung praktisch nicht auf, und die Datei bleibt klein."
+        }
+      }
+    },
+    "grid-patterns": {
+      "name": "Grid Patterns",
+      "description": "Rasterlinien, Punktraster, Kreuze oder Kacheln mit Haupt- und Nebenraster. Als SVG oder Bild exportieren.",
+      "params": {
+        "style": {
+          "label": "Stil",
+          "options": {
+            "lines": "Linien",
+            "dots": "Punkte",
+            "crosses": "Kreuze",
+            "squares": "Kacheln"
+          }
+        },
+        "cellSize": {
+          "label": "Zellgrösse"
+        },
+        "majorEvery": {
+          "label": "Hauptraster alle"
+        },
+        "fade": {
+          "label": "Ausblenden",
+          "options": {
+            "none": "Aus",
+            "radial": "Zur Mitte",
+            "edges": "An den Rändern"
+          }
+        },
+        "weight": {
+          "label": "Strichstärke"
+        },
+        "lineStyle": {
+          "label": "Linienart",
+          "options": {
+            "solid": "Durchgezogen",
+            "dashed": "Gestrichelt",
+            "dotted": "Gepunktet"
+          }
+        }
+      },
+      "presets": {
+        "blueprint": "Bauplan",
+        "notebook": "Notizheft",
+        "spotlight": "Scheinwerfer",
+        "marks": "Passkreuze",
+        "tiles": "Fliesen",
+        "stitches": "Steppnaht",
+        "terminal": "Terminal"
+      },
+      "seo": {
+        "whatIs": "Grid Patterns sind regelmässige Raster aus Linien, Punkten, Kreuzen oder Kacheln. Sie wirken wie Millimeterpapier, Bauplan oder Notizheft und eignen sich als ruhiger Hintergrund für Websites, Präsentationen und Produktbilder.",
+        "howTo": "Wähle einen Stil, stelle Zellgrösse und Strichstärke ein und lege fest, ob jede n-te Linie als Hauptraster hervorgehoben wird. Mit der Ausblendung läuft das Raster zur Mitte oder zu den Rändern weich aus. Exportiere das Ergebnis als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Bleibt das Raster beim Ändern der Grösse gleich?",
+            "answer": "Ja. Die Zellgrösse wird in Prozent der kürzeren Kante angegeben, deshalb sieht das Raster in jedem Format gleich dicht aus."
+          },
+          "q2": {
+            "question": "Was ist das Hauptraster?",
+            "answer": "Jede n-te Linie (oder jeder n-te Punkt) wird dicker und in der zweiten Farbe gezeichnet, wie bei Millimeterpapier. Mit 0 schaltest du es aus."
+          },
+          "q3": {
+            "question": "Kann ich das Raster nahtlos kacheln?",
+            "answer": "Das Raster ist auf die Bildmitte ausgerichtet. Für nahtlose Kacheln wähle eine Grösse, die ein Vielfaches der Zellgrösse ist, und verzichte auf die Ausblendung."
+          },
+          "q4": {
+            "question": "Funktioniert der SVG-Export in Figma und Illustrator?",
+            "answer": "Ja. Linien sind als Pfade gespeichert, die Ausblendung nutzt eine SVG-Maske, die beide Programme lesen können."
+          }
+        }
+      }
+    },
+    "confetti": {
+      "name": "Confetti",
+      "description": "Konfetti aus Rechtecken, Kreisen, Dreiecken und Kringeln, gleichmässig verteilt. Als SVG oder Bild exportieren.",
+      "params": {
+        "shape": {
+          "label": "Form",
+          "options": {
+            "mixed": "Gemischt",
+            "rect": "Streifen",
+            "circle": "Kreis",
+            "triangle": "Dreieck",
+            "squiggle": "Kringel"
+          }
+        },
+        "spacing": {
+          "label": "Abstand"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "rotation": {
+          "label": "Drehung"
+        }
+      },
+      "presets": {
+        "party": "Party",
+        "pastel": "Pastell",
+        "gilded": "Goldregen",
+        "streamers": "Luftschlangen",
+        "sprinkles": "Zuckerstreusel",
+        "prism": "Prisma",
+        "parade": "Umzug"
+      },
+      "seo": {
+        "whatIs": "Der Confetti Generator verteilt bunte Formen gleichmässig, aber natürlich über die Fläche. Ideal für Einladungen, Geburtstagsgrafiken, Social-Media-Posts und festliche Hintergründe.",
+        "howTo": "Wähle eine Form oder eine Mischung, stelle Abstand, Grösse und Drehung ein und gib deine Farben vor. Mit der Leertaste erzeugst du neue Varianten. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Warum überlappen sich die Konfetti nicht?",
+            "answer": "Die Positionen entstehen per Poisson-Disk-Sampling: Jedes Stück hält einen Mindestabstand ein, so wirkt die Verteilung gleichmässig und trotzdem zufällig."
+          },
+          "q2": {
+            "question": "Wie bekomme ich eine andere Anordnung mit denselben Einstellungen?",
+            "answer": "Drücke die Leertaste oder ändere den Seed. Die Einstellungen bleiben, nur Positionen, Formen und Farben werden neu gewürfelt."
+          },
+          "q3": {
+            "question": "Kann ich nur eine Form verwenden?",
+            "answer": "Ja. Wähle bei Form zum Beispiel nur Kreise oder nur Kringel statt der Mischung."
+          },
+          "q4": {
+            "question": "Ist das SVG bearbeitbar?",
+            "answer": "Ja. Jedes Stück ist ein einfacher Pfad oder Kreis ohne Transformationen, nach Farbe gruppiert."
+          }
+        }
+      }
+    },
+    "starry-sky": {
+      "name": "Starry Sky",
+      "description": "Sternenhimmel mit Farbverlauf, funkelnden Sternen und Glanzlichtern. Als SVG oder Bild exportieren.",
+      "params": {
+        "palette": {
+          "label": "Himmel"
+        },
+        "starColor": {
+          "label": "Sternfarbe"
+        },
+        "density": {
+          "label": "Sternabstand"
+        },
+        "sparkles": {
+          "label": "Glanzsterne"
+        },
+        "size": {
+          "label": "Sterngrösse"
+        },
+        "twinkle": {
+          "label": "Helligkeitsvariation"
+        },
+        "glow": {
+          "label": "Leuchten"
+        }
+      },
+      "presets": {
+        "midnight": "Mitternacht",
+        "dusk": "Abenddämmerung",
+        "milky-way": "Milchstrasse",
+        "polar": "Polarnacht",
+        "lullaby": "Schlaflied",
+        "daybreak": "Morgengrauen",
+        "cosmic": "Kosmos"
+      },
+      "seo": {
+        "whatIs": "Der Starry Sky Generator erzeugt einen Nachthimmel aus einem Farbverlauf und vielen Sternen in unterschiedlicher Grösse und Helligkeit. Passend für Hintergründe, Kinderbuch-Illustrationen, Event-Grafiken und Wallpapers.",
+        "howTo": "Lege die Farben des Himmels von oben nach unten fest, stelle Sternabstand, Grösse und Helligkeitsvariation ein und füge bei Bedarf Leuchten und einige Glanzsterne hinzu. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Wie werden die Sterne verteilt?",
+            "answer": "Per Poisson-Disk-Sampling. Die Sterne halten einen Mindestabstand ein und wirken so natürlich, ohne Klumpen oder Lücken."
+          },
+          "q2": {
+            "question": "Warum gibt es mehr kleine als grosse Sterne?",
+            "answer": "Die Grösse wird so gewürfelt, dass kleine Sterne häufiger sind. Das entspricht dem Eindruck eines echten Nachthimmels."
+          },
+          "q3": {
+            "question": "Was sind Glanzsterne?",
+            "answer": "Einige grössere vierzackige Sterne, die als Blickfang dienen. Mit 0 schaltest du sie aus."
+          },
+          "q4": {
+            "question": "Eignet sich das Bild als Desktop-Hintergrund?",
+            "answer": "Ja. Wähle oben eine Desktop-Grösse wie Full HD oder 4K und exportiere als PNG."
+          }
+        }
+      }
+    },
+    "dieter-dots": {
+      "name": "Dieter Dots",
+      "description": "Konzentrische Punktringe wie bei einem gelochten Lautsprechergitter. Als SVG oder Bild exportieren.",
+      "params": {
+        "rings": {
+          "label": "Ringe"
+        },
+        "dotsPerRing": {
+          "label": "Punkte im ersten Ring"
+        },
+        "ringSpacing": {
+          "label": "Ringabstand"
+        },
+        "twist": {
+          "label": "Verdrehung"
+        },
+        "scale": {
+          "label": "Punktgrösse"
+        },
+        "falloff": {
+          "label": "Verkleinerung nach aussen"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "single": "Eine Farbe",
+            "alternate": "Pro Ring abwechselnd",
+            "gradient": "Verlauf"
+          }
+        }
+      },
+      "presets": {
+        "grille": "Lautsprecher",
+        "radar": "Radar",
+        "swirl": "Wirbel",
+        "target": "Zielscheibe",
+        "ripple": "Wellenkreis",
+        "sunburst": "Sonnenrad",
+        "mono": "Mono"
+      },
+      "seo": {
+        "whatIs": "Dieter Dots sind Punkte, die in konzentrischen Ringen um die Bildmitte angeordnet sind, inspiriert von gelochten Lautsprechergittern im Industriedesign. Das Muster wirkt technisch, ruhig und eignet sich für Poster, Cover und Produktgrafiken.",
+        "howTo": "Bestimme Anzahl Ringe, Punkte im ersten Ring und Ringabstand. Mit Verdrehung entsteht eine Spirale, mit der Verkleinerung laufen die Punkte nach aussen aus. Wähle eine Farbe, abwechselnde Ringe oder einen Verlauf und exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Warum haben äussere Ringe mehr Punkte?",
+            "answer": "Jeder Ring erhält so viele Punkte, dass der Abstand entlang des Rings gleich bleibt wie im ersten Ring. Ring 3 hat also dreimal so viele Punkte wie Ring 1."
+          },
+          "q2": {
+            "question": "Warum sehe ich weniger Ringe als eingestellt?",
+            "answer": "Ringe ausserhalb des Bildes werden weggelassen, und pro Bild zeichnen wir höchstens 10 000 Punkte, damit der Browser flüssig bleibt."
+          },
+          "q3": {
+            "question": "Kann ich ein Spiralmuster erzeugen?",
+            "answer": "Ja. Erhöhe die Verdrehung, dann wird jeder Ring etwas weiter gedreht als der vorherige."
+          }
+        }
+      }
+    },
+    "palette-generator": {
+      "name": "Farbpaletten-Generator",
+      "description": "Harmonische Farbpaletten per Leertaste. Farben sperren, Harmonie wählen, Kontrast prüfen und als CSS exportieren.",
+      "params": {
+        "count": {
+          "label": "Anzahl Farben"
+        },
+        "harmony": {
+          "label": "Harmonie",
+          "description": "Färbt alle nicht gesperrten Farben sofort neu ein. Mit der Leertaste kommt eine neue Palette in derselben Harmonie.",
+          "options": {
+            "auto": "Überrasch mich",
+            "analogous": "Analog",
+            "complementary": "Komplementär",
+            "triadic": "Triadisch",
+            "split": "Split-komplementär",
+            "tetradic": "Tetradisch"
+          }
+        },
+        "color1": {
+          "label": "Farbe 1"
+        },
+        "color2": {
+          "label": "Farbe 2"
+        },
+        "color3": {
+          "label": "Farbe 3"
+        },
+        "color4": {
+          "label": "Farbe 4"
+        },
+        "color5": {
+          "label": "Farbe 5"
+        },
+        "color6": {
+          "label": "Farbe 6"
+        },
+        "color7": {
+          "label": "Farbe 7"
+        },
+        "color8": {
+          "label": "Farbe 8"
+        },
+        "matrix": {
+          "label": "Kontrastmatrix",
+          "description": "Zeigt jede Farbe als Text auf jeder anderen Farbe mit ihrem Kontrastverhältnis."
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "terracotta": "Terrakotta",
+        "fjord": "Fjord",
+        "citrus": "Zitrus",
+        "moss": "Moos",
+        "harbour": "Hafen",
+        "berry": "Beeren",
+        "primaries": "Grundfarben"
+      },
+      "seo": {
+        "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Motivo rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
+        "howTo": "Drück die Leertaste für eine neue Palette. Sperr Farben, die dir gefallen, mit dem Schloss, wähl eine Harmonie und exportier die Palette als CSS-Variablen, HEX-Liste oder Bild.",
+        "faq": {
+          "q1": "Was bedeuten die Harmonien?",
+          "a1": "Analog nutzt benachbarte Farbtöne, komplementär gegenüberliegende. Triadisch verteilt drei Töne gleichmässig, split-komplementär kombiniert einen Ton mit den Nachbarn seines Gegenstücks, tetradisch nutzt vier Töne im Quadrat.",
+          "q2": "Was passiert mit gesperrten Farben?",
+          "a2": "Gesperrte Farben bleiben beim Würfeln erhalten. Die erste gesperrte Farbe dient als Anker, die neue Palette wird in der gewählten Harmonie um sie herum aufgebaut.",
+          "q3": "Was zeigt die Kontrastanzeige?",
+          "a3": "Das Kontrastverhältnis nach WCAG 2 zwischen Farbe und Beschriftung. AA steht für mindestens 4.5:1, AAA für mindestens 7:1 bei normalem Text.",
+          "q4": "Kann ich die Palette in Figma oder im Code verwenden?",
+          "a4": "Ja. Kopier die HEX-Liste oder die CSS-Variablen, oder exportier die Palette als SVG oder PNG."
+        }
+      }
+    },
+    "tints-shades": {
+      "name": "Tints & Shades",
+      "description": "Hellere und dunklere Abstufungen einer Farbe. Export als HEX, RGB, HSL oder CSS-Variablen.",
+      "params": {
+        "base": {
+          "label": "Grundfarbe"
+        },
+        "tints": {
+          "label": "Aufhellungen"
+        },
+        "shades": {
+          "label": "Abdunklungen"
+        },
+        "range": {
+          "label": "Spannweite"
+        },
+        "method": {
+          "label": "Methode",
+          "description": "OKLCH hält die Sättigung, Mischen geht gleichmässig Richtung Weiss oder Schwarz.",
+          "options": {
+            "oklch": "Helligkeit (OKLCH)",
+            "oklab": "Mischen (OKLab)",
+            "srgb": "Mischen (sRGB)"
+          }
+        }
+      },
+      "groups": {
+        "scale": "Abstufung"
+      },
+      "presets": {
+        "lagoon": "Lagune",
+        "tomato": "Tomate",
+        "indigo": "Indigo",
+        "sand": "Sand",
+        "forest": "Wald",
+        "slate": "Schiefer",
+        "sunflower": "Sonnenblume"
+      },
+      "seo": {
+        "whatIs": "Tints sind Aufhellungen einer Farbe, Shades sind Abdunklungen. Zusammen ergeben sie eine Abstufung für Hover-Zustände, Hintergründe und Rahmen.",
+        "howTo": "Wähl eine Grundfarbe, leg die Anzahl Aufhellungen und Abdunklungen fest und kopier die Werte als HEX, RGB, HSL oder CSS-Variablen.",
+        "faq": {
+          "q1": "Was ist der Unterschied zwischen Tint und Shade?",
+          "a1": "Ein Tint entsteht, wenn du eine Farbe mit Weiss mischst, ein Shade, wenn du sie mit Schwarz mischst.",
+          "q2": "Welche Methode soll ich wählen?",
+          "a2": "Die OKLCH-Methode ändert nur die Helligkeit und behält die Farbigkeit, so bleiben Abstufungen lebendig. Mischen in OKLab wirkt gleichmässig, Mischen in sRGB entspricht klassischen Werkzeugen wie Sass.",
+          "q3": "Wie verwende ich die CSS-Variablen?",
+          "a3": "Kopier den Block in dein Stylesheet und nutz die Farben mit var(), zum Beispiel var(--primary-tint-2)."
+        }
+      }
+    },
+    "tailwind-palette": {
+      "name": "Tailwind-Farbpalette",
+      "description": "Aus einer Farbe die elf Tailwind-Stufen 50 bis 950. Export für tailwind.config.js, @theme, OKLCH und HEX.",
+      "params": {
+        "base": {
+          "label": "Grundfarbe",
+          "description": "Liegt genau auf Stufe 500."
+        },
+        "lightest": {
+          "label": "Hellste Stufe (50)"
+        },
+        "darkest": {
+          "label": "Dunkelste Stufe (950)"
+        },
+        "chromaFalloff": {
+          "label": "Sättigung an den Enden reduzieren"
+        },
+        "hueShift": {
+          "label": "Farbton verschieben"
+        }
+      },
+      "groups": {
+        "scale": "Skala"
+      },
+      "presets": {
+        "ocean": "Ozean",
+        "coral": "Koralle",
+        "emerald": "Smaragd",
+        "amber": "Bernstein",
+        "grape": "Traube",
+        "stone": "Stein",
+        "rose": "Rose"
+      },
+      "seo": {
+        "whatIs": "Tailwind CSS ordnet jede Farbe in elf Stufen von 50 (sehr hell) bis 950 (sehr dunkel). Dieser Generator berechnet eine solche Skala aus deiner Markenfarbe, die Farbe selbst liegt genau auf 500.",
+        "howTo": "Wähl deine Grundfarbe, gib der Palette einen Namen und kopier den Code für tailwind.config.js oder den @theme-Block für Tailwind v4.",
+        "faq": {
+          "q1": "Funktioniert das mit Tailwind v4?",
+          "a1": "Ja. Der @theme-Export erzeugt Variablen wie --color-brand-500 in OKLCH, so wie Tailwind v4 sie verwendet. Für ältere Versionen gibt es den Export für tailwind.config.js.",
+          "q2": "Warum liegt meine Farbe auf 500?",
+          "a2": "Stufe 500 ist in Tailwind die Hauptfarbe. Die helleren und dunkleren Stufen folgen einer Helligkeitskurve, die sich an bekannten UI-Paletten orientiert.",
+          "q3": "Warum werden die Enden weniger gesättigt?",
+          "a3": "Sehr helle und sehr dunkle Farben wirken mit voller Sättigung schnell grell oder schmutzig. Mit dem Regler bestimmst du, wie stark die Sättigung abnimmt.",
+          "q4": "Was bedeutet OKLCH?",
+          "a4": "OKLCH beschreibt Farben über Helligkeit, Buntheit und Farbton so, wie das Auge sie wahrnimmt. Moderne Browser verstehen OKLCH direkt in CSS."
+        }
+      }
+    },
+    "palette-from-image": {
+      "name": "Palette aus Bild",
+      "description": "Zieh ein Foto hinein und erhalte seine wichtigsten Farben mit Anteil in Prozent. Das Bild bleibt in deinem Browser.",
+      "params": {
+        "count": {
+          "label": "Anzahl Farben",
+          "description": "Wie viele Hauptfarben im Bild gesucht werden."
+        },
+        "sort": {
+          "label": "Reihenfolge",
+          "options": {
+            "share": "Anteil",
+            "lightness": "Helligkeit",
+            "hue": "Farbton"
+          }
+        },
+        "colors": {
+          "label": "Gefundene Farben"
+        },
+        "shares": {
+          "label": "Anteil anzeigen"
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "dominant": "Hauptfarben",
+        "trio": "Trio",
+        "light-to-dark": "Hell zu dunkel",
+        "color-wheel": "Farbkreis",
+        "full-spectrum": "Alle zehn",
+        "quiet": "Schlicht",
+        "contrast-check": "Kontrastcheck"
+      },
+      "seo": {
+        "whatIs": "Palette aus Bild findet die Farben, die ein Foto oder eine Grafik prägen, und zeigt, wie viel Fläche jede davon einnimmt. Die Analyse läuft komplett in deinem Browser: Dein Bild wird nicht hochgeladen und nirgends gespeichert.",
+        "howTo": "Zieh ein Bild auf die Ablage, füg es mit Ctrl+V ein oder wähl eine Datei aus (PNG, JPG, WebP, GIF oder SVG bis 5 MB). Stell die Anzahl Farben ein, drück die Leertaste für eine andere Gruppierung und exportier die Palette als HEX-Liste, CSS-Variablen, Tailwind oder Bild.",
+        "faq": {
+          "q1": "Wird mein Bild hochgeladen?",
+          "a1": "Nein. Das Bild wird in deinem Browser verkleinert und ausgewertet. Es verlässt dein Gerät nicht, landet nicht in geteilten Links und wird nicht gespeichert.",
+          "q2": "Wie werden die Farben gefunden?",
+          "a2": "Motivo gruppiert die Pixel mit k-Means im OKLab-Farbraum, der Farbunterschiede so misst, wie das Auge sie wahrnimmt. Jede Gruppe ergibt eine Farbe, ihr Anteil ist die Fläche, die sie im Bild einnimmt.",
+          "q3": "Warum ändert die Leertaste die Palette?",
+          "a3": "k-Means startet mit zufällig gewählten Farben und kann je nach Start bei leicht anderen Gruppen landen. Mit der Leertaste probierst du einen neuen Start aus und behältst die Variante, die dir am besten gefällt.",
+          "q4": "Warum zeigt ein geteilter Link das Beispielbild?",
+          "a4": "Geteilte Links enthalten nur die Einstellungen, nie dein Bild oder die daraus gewonnenen Farben. Wer den Link öffnet, sieht deshalb das Beispielbild und kann ein eigenes Bild hineinziehen. Willst du die Farben weitergeben, exportier sie als HEX-Liste oder Bild.",
+          "q5": "Welche Bilder funktionieren?",
+          "a5": "PNG, JPG, WebP, GIF (erstes Bild einer Animation) und SVG bis 5 MB. Durchsichtige Pixel zählen nicht mit."
+        }
       }
     }
   },
@@ -444,5 +1359,379 @@
         }
       }
     }
+  },
+  "Seo": {
+    "home": "Start",
+    "breadcrumbLabel": "Pfad"
+  },
+  "Landing": {
+    "metaTitle": "{tool} online | Motivo",
+    "cta": "Generator öffnen",
+    "ctaSecondary": "{tool} jetzt ausprobieren",
+    "ctaHint": "Läuft direkt in deinem Browser. Deine Grafiken entstehen auf deinem Gerät.",
+    "previewAlt": "Beispielmotiv aus dem {tool}",
+    "ogAlt": "{tool} von Motivo mit einem Beispielmotiv",
+    "presetsHeading": "Mit einem Preset starten",
+    "presetsLead": "Wähle ein Preset, es öffnet sich direkt im Editor. Dort passt du alles an.",
+    "presetLink": "{preset}, im Editor öffnen",
+    "categoriesLabel": "Kategorien",
+    "whatIsHeading": "Worum geht’s?",
+    "howToHeading": "So geht’s",
+    "faqHeading": "Häufige Fragen",
+    "relatedHeading": "Passende Generatoren",
+    "moreInCategory": "Alle Generatoren in {category}"
+  },
+  "Catalogue": {
+    "categoryNav": "Kategorien",
+    "openEditor": "Im Editor öffnen",
+    "openEditorFor": "{tool}: im Editor öffnen",
+    "toolCount": "{count, plural, one {# Generator} other {# Generatoren}}",
+    "showCategory": "Kategorie ansehen",
+    "convertersLead": "Code und Bilder umwandeln, direkt im Browser.",
+    "allConverters": "Alle Konverter"
+  },
+  "CategoryPage": {
+    "metaTitle": "{category}: Generatoren | Motivo",
+    "otherCategories": "Weitere Kategorien",
+    "backToCatalogue": "Alle Generatoren"
+  },
+  "Categories": {
+    "patterns": {
+      "name": "Muster",
+      "description": "Wiederholbare Muster aus Punkten, Linien und Formen für Websites, Präsentationen und Drucksachen."
+    },
+    "css-patterns": {
+      "name": "CSS-Muster",
+      "description": "Muster und Verläufe, die der Browser selbst zeichnet. Kopiere einfach das CSS, ganz ohne Bilddatei."
+    },
+    "gradients": {
+      "name": "Verläufe",
+      "description": "Weiche Farbübergänge für Hintergründe, Buttons und Titelbilder."
+    },
+    "backgrounds": {
+      "name": "Hintergründe",
+      "description": "Flächen, Formen und Texturen, die Websites, Slides und Social-Media-Posts einen Rahmen geben."
+    },
+    "image-effects": {
+      "name": "Bildeffekte",
+      "description": "Körnung, Raster und andere Effekte für Flächen und Bilder."
+    },
+    "colors": {
+      "name": "Farben",
+      "description": "Paletten, Abstufungen und Farbskalen, gut lesbar und bereit für dein Design-System."
+    },
+    "converters": {
+      "name": "Konverter",
+      "description": "SVG, CSS, Base64 und Bilder umwandeln, direkt in deinem Browser."
+    },
+    "social": {
+      "name": "Social Media",
+      "description": "Grafiken in den passenden Formaten für deine Kanäle."
+    },
+    "composer": {
+      "name": "Composer",
+      "description": "Mehrere Motive zu einer Grafik kombinieren."
+    }
+  },
+  "PatternLibrary": {
+    "metaTitle": "CSS-Muster zum Kopieren: {count} Muster | Motivo",
+    "metaDescription": "{count} Hintergrundmuster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Kopieren, einfügen, fertig.",
+    "title": "CSS-Muster",
+    "lead": "Hintergründe aus reinem CSS, ganz ohne Bilddatei. Such dir ein Muster aus, kopiere den Code oder pass Farben und Grösse im Editor an.",
+    "filterLabel": "Nach Kategorie filtern",
+    "all": "Alle",
+    "count": "{count, plural, one {# Muster} other {# Muster}}",
+    "openGenerator": "Eigenes Muster im Editor gestalten",
+    "ogAlt": "Auswahl an CSS-Mustern von Motivo",
+    "nav": "CSS-Muster"
+  },
+  "PatternPage": {
+    "metaTitle": "{pattern}: CSS-Muster zum Kopieren | Motivo",
+    "metaDescription": "{description} Reines CSS, bereit zum Kopieren, mit Tailwind-Klassen und SVG-Export.",
+    "heading": "{pattern} als CSS-Muster",
+    "previewLabel": "Vorschau des Musters {pattern}",
+    "codeHeading": "Code",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "cssLead": "Füge die Zeilen in die Regel deines Elements ein. Das Muster wiederholt sich von selbst und passt sich jeder Grösse an.",
+    "copy": "Kopieren",
+    "copyLabel": "{format} kopieren",
+    "copied": "Kopiert! Ab ins Projekt damit.",
+    "copyFailed": "Das hat nicht geklappt. Markiere den Code und kopiere ihn von Hand.",
+    "openEditor": "Im Editor anpassen",
+    "openEditorHint": "Farben, Grösse und Deckkraft ändern, dann als CSS, SVG oder PNG exportieren.",
+    "howToHeading": "So verwendest du das Muster",
+    "howTo": "Kopiere das CSS in die Regel des Elements, das das Muster tragen soll, zum Beispiel einen Abschnitt, eine Karte oder den body. Die Farben stehen als Hex-Werte im Code und lassen sich direkt austauschen. Im Editor änderst du alles mit Reglern und exportierst das Muster auch als SVG oder PNG.",
+    "relatedHeading": "Ähnliche Muster",
+    "backToLibrary": "Alle CSS-Muster",
+    "ogAlt": "{pattern}, ein CSS-Muster von Motivo"
+  },
+  "Footer": {
+    "nav": "Fusszeile",
+    "productHeading": "Motivo",
+    "legalHeading": "Rechtliches",
+    "catalogue": "Alle Tools",
+    "converters": "Konverter",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "founders": "Founders-Warteliste"
+  },
+  "Legal": {
+    "draftBanner": {
+      "title": "Entwurf, juristisch zu prüfen",
+      "text": "Dieser Text ist ein Entwurf und wurde noch nicht juristisch geprüft. Angaben in eckigen Klammern werden vor der Veröffentlichung ergänzt."
+    },
+    "lastUpdated": "Stand: {date}",
+    "operator": {
+      "heading": "Betreiber",
+      "email": "E-Mail",
+      "register": "Handelsregister / UID",
+      "vat": "MWST-Nummer"
+    },
+    "imprint": {
+      "metaTitle": "Impressum",
+      "metaDescription": "Impressum von Motivo: Betreiber, Kontakt und rechtliche Hinweise.",
+      "title": "Impressum",
+      "sections": {
+        "contact": {
+          "heading": "Kontakt",
+          "paragraphs": ["Am schnellsten erreichst du uns per E-Mail an die oben genannte Adresse."]
+        },
+        "responsible": {
+          "heading": "Verantwortlich für den Inhalt",
+          "paragraphs": [
+            "Verantwortlich für den Inhalt dieser Website ist die oben genannte Person bzw. Firma."
+          ]
+        },
+        "liability": {
+          "heading": "Haftung für Inhalte",
+          "paragraphs": [
+            "Wir erstellen die Inhalte dieser Website mit Sorgfalt. Für Richtigkeit, Vollständigkeit und Aktualität können wir trotzdem keine Gewähr übernehmen.",
+            "Die Generatoren erzeugen Grafiken nach deinen Einstellungen. Prüfe vor einer Verwendung selbst, ob das Ergebnis deinen Zwecken entspricht, etwa bei Farbkontrasten oder Druckvorgaben."
+          ]
+        },
+        "links": {
+          "heading": "Haftung für Links",
+          "paragraphs": [
+            "Diese Website kann Links zu Websites Dritter enthalten. Auf deren Inhalte haben wir keinen Einfluss, dafür ist der jeweilige Anbieter verantwortlich. Werden uns Rechtsverletzungen bekannt, entfernen wir den Link umgehend."
+          ]
+        },
+        "copyright": {
+          "heading": "Urheberrecht",
+          "paragraphs": [
+            "Texte, Gestaltung und Programmcode dieser Website sind urheberrechtlich geschützt. Die Nutzungsrechte an den Motiven, die du mit den Generatoren erstellst, regeln die künftigen Nutzungsbedingungen."
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "metaTitle": "Datenschutzerklärung",
+      "metaDescription": "Wie Motivo mit Daten umgeht: keine Cookies, Bilder bleiben im Browser, cookiefreie Statistik und Fehlerberichte.",
+      "title": "Datenschutzerklärung",
+      "intro": "Motivo ist so gebaut, dass möglichst wenige Daten anfallen. Es gibt kein Konto, keine Cookies und kein Tracking über Websites hinweg. Motive und Bilder werden in deinem Browser berechnet. Hier erfährst du, welche Daten trotzdem anfallen und wofür.",
+      "sections": {
+        "controller": {
+          "heading": "Verantwortliche Stelle",
+          "paragraphs": [
+            "Verantwortlich für die Bearbeitung deiner Personendaten auf dieser Website ist der unten genannte Betreiber. Für Fragen zum Datenschutz und für deine Anfragen erreichst du ihn per E-Mail."
+          ]
+        },
+        "law": {
+          "heading": "Geltendes Recht",
+          "paragraphs": [
+            "Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit die Datenschutz-Grundverordnung der EU (DSGVO) anwendbar ist, etwa weil du die Website aus der EU oder dem EWR besuchst, gelten zusätzlich deren Vorgaben.",
+            "Wo die DSGVO eine Rechtsgrundlage verlangt, bearbeiten wir Daten gestützt auf unser berechtigtes Interesse an einem sicheren, stabilen und fehlerfreien Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO). Wenn du uns schreibst, ist die Rechtsgrundlage die Beantwortung deiner Anfrage (Art. 6 Abs. 1 lit. b oder f DSGVO)."
+          ]
+        },
+        "hosting": {
+          "heading": "Hosting bei Cloudflare",
+          "paragraphs": [
+            "Die Website läuft auf Cloudflare Workers, einem Dienst der Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA. Cloudflare liefert die Seiten über ein weltweites Netz von Rechenzentren aus und schützt sie vor Angriffen.",
+            "Beim Aufruf einer Seite verarbeitet Cloudflare technisch notwendige Daten: deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Adresse, die zuvor besuchte Seite (Referrer) sowie Browser und Betriebssystem (User Agent). Diese Daten dienen der Auslieferung, der Sicherheit und der Fehlersuche. Wir werten sie nicht aus, um dich zu identifizieren.",
+            "Dabei können Daten in die USA und in andere Länder übermittelt werden, siehe Abschnitt «Bekanntgabe ins Ausland»."
+          ]
+        },
+        "analytics": {
+          "heading": "Statistik mit Cloudflare Web Analytics",
+          "paragraphs": [
+            "Um zu verstehen, welche Seiten genutzt werden und wie schnell sie laden, verwenden wir Cloudflare Web Analytics. Der Dienst arbeitet ohne Cookies und ohne lokalen Speicher in deinem Browser und erstellt nach Angaben von Cloudflare keine Profile und keinen Fingerabdruck deines Geräts.",
+            "Ein kleines Script von static.cloudflareinsights.com sendet beim Seitenaufruf folgende Angaben an Cloudflare: die Adresse der Seite ohne Abfrageparameter, die zuvor besuchte Seite, Browser, Betriebssystem und Gerätetyp, das Land (aus der IP-Adresse abgeleitet) sowie Ladezeiten und Messwerte zur Seitengeschwindigkeit. Wir sehen nur zusammengefasste Zahlen, keine einzelnen Besuche.",
+            "Das Script läuft nur auf der öffentlichen Website, nicht auf Vorschau- oder Testumgebungen."
+          ]
+        },
+        "errors": {
+          "heading": "Fehlerberichte mit Sentry",
+          "paragraphs": [
+            "Damit wir Programmfehler finden und beheben können, nutzen wir Sentry, einen Dienst der Functional Software, Inc., 45 Fremont Street, 8th Floor, San Francisco, CA 94105, USA. Wir haben die Datenregion EU gewählt: Fehlerberichte werden in Rechenzentren in der EU (Deutschland) gespeichert.",
+            "Sentry wird erst geladen, wenn auf einer Seite ein Fehler auftritt. Ein Fehlerbericht enthält die Fehlermeldung, die Stelle im Programmcode, Browser und Betriebssystem, die Adresse der Seite ohne Abfrageparameter und ohne den Teil nach dem #-Zeichen sowie den Zeitpunkt. Es gibt keine Cookies, keine Aufzeichnung deiner Sitzung und keine Leistungsmessung.",
+            "Für die Übertragung muss deine IP-Adresse technisch verarbeitet werden. Wir haben Sentry so eingestellt, dass keine IP-Adressen und keine weiteren persönlichen Angaben gespeichert werden. Fehlerberichte werden nach Ablauf der Aufbewahrungsfrist unseres Sentry-Tarifs automatisch gelöscht."
+          ]
+        },
+        "cookies": {
+          "heading": "Keine Cookies, nur lokale Einstellungen",
+          "paragraphs": [
+            "Motivo setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen."
+          ]
+        },
+        "local": {
+          "heading": "Bilder bleiben in deinem Browser",
+          "paragraphs": [
+            "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst."
+          ]
+        },
+        "share": {
+          "heading": "Teilen-Links",
+          "paragraphs": [
+            "Ein Teilen-Link enthält die Einstellungen deines Motivs im Teil der Adresse nach dem #-Zeichen. Diesen Teil sendet dein Browser nicht an unseren Server. Wer den Link hat, sieht das Motiv. Aus einem Bild abgeleitete Farben werden nicht in den Link übernommen."
+          ]
+        },
+        "contact": {
+          "heading": "Kontakt per E-Mail",
+          "paragraphs": [
+            "Wenn du uns schreibst, bearbeiten wir deine E-Mail-Adresse und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Wir löschen die Nachricht, sobald sie erledigt ist und keine gesetzliche Aufbewahrungspflicht besteht."
+          ]
+        },
+        "waitlist": {
+          "heading": "Founders-Warteliste",
+          "paragraphs": [
+            "Wenn du dich für die Founders-Warteliste einträgst, bearbeiten wir deine E-Mail-Adresse, die Sprache der Website, den Zeitpunkt der Anmeldung und der Bestätigung sowie die Version des Einwilligungstexts. Wir nutzen diese Daten nur, um dich über den Verkaufsstart der Lifetime-Lizenzen zum Founders-Preis zu informieren. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du jederzeit widerrufen kannst.",
+            "Die Anmeldung läuft im Double-Opt-in-Verfahren: Eingetragen bist du erst, wenn du den Link in unserer Bestätigungs-E-Mail öffnest. Der Link ist 48 Stunden gültig. Unbestätigte Anmeldungen löschen wir spätestens 30 Tage nach der letzten E-Mail. Jede E-Mail enthält einen Abmeldelink. Meldest du dich ab, löschen wir deine E-Mail-Adresse sofort.",
+            "Die Daten speichern wir bei Supabase (Supabase, Inc., USA) in einem Rechenzentrum in Zürich (Region eu-central-2). Die Bestätigungs-E-Mail verschicken wir über den E-Mail-Dienst Resend mit Sitz in den USA. Unsere E-Mails enthalten keine Zählpixel und keine umgeleiteten Links.",
+            "Zum Schutz vor Missbrauch begrenzen wir die Anzahl Anmeldungen. Dafür bilden wir aus deiner IP-Adresse einen täglich wechselnden, nicht umkehrbaren Prüfwert und löschen ihn nach spätestens einem Tag. Deine IP-Adresse selbst speichern wir nicht. Ist die Sicherheitsprüfung Cloudflare Turnstile aktiv, verarbeitet Cloudflare beim Absenden technische Angaben zu deinem Browser und deine IP-Adresse, um automatisierte Anmeldungen zu erkennen."
+          ]
+        },
+        "transfer": {
+          "heading": "Bekanntgabe ins Ausland",
+          "paragraphs": [
+            "Cloudflare, Sentry, Supabase und Resend haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
+            "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen."
+          ]
+        },
+        "retention": {
+          "heading": "Aufbewahrung",
+          "paragraphs": [
+            "Wir bewahren Personendaten nur so lange auf, wie es für den jeweiligen Zweck nötig ist oder das Gesetz es verlangt. Statistikdaten sehen wir nur zusammengefasst. Technische Protokolle und Fehlerberichte löschen die Anbieter nach ihren Fristen automatisch.",
+            "Für die Founders-Warteliste gelten die Fristen im Abschnitt «Founders-Warteliste»."
+          ]
+        },
+        "rights": {
+          "heading": "Deine Rechte",
+          "paragraphs": [
+            "Du hast das Recht, Auskunft über deine Personendaten zu verlangen und unrichtige Daten berichtigen zu lassen. Du kannst verlangen, dass wir Daten löschen oder ihre Bearbeitung einschränken, und du kannst einer Bearbeitung widersprechen. Soweit anwendbar, hast du ausserdem das Recht auf Herausgabe deiner Daten in einem gängigen Format.",
+            "Schreib uns dafür an die oben genannte E-Mail-Adresse. Wir können einen Nachweis deiner Identität verlangen.",
+            "Du kannst dich ausserdem bei einer Aufsichtsbehörde beschweren: in der Schweiz beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB), in der EU bei der Behörde deines Wohnsitzlandes."
+          ]
+        },
+        "changes": {
+          "heading": "Änderungen",
+          "paragraphs": [
+            "Wir passen diese Erklärung an, wenn sich die Website oder die eingesetzten Dienste ändern. Es gilt die Fassung, die auf dieser Seite veröffentlicht ist."
+          ]
+        }
+      }
+    }
+  },
+  "Waitlist": {
+    "eyebrow": "Founders-Warteliste",
+    "heading": "Sichere dir den Founders-Preis",
+    "lead": "Die ersten {seats} Lifetime-Lizenzen gibt es zum Founders-Preis. Trag dich ein, und wir sagen dir Bescheid, sobald du kaufen kannst. Einmal zahlen, kein Abo.",
+    "price": "Lifetime-Lizenz ab {price} CHF oder EUR",
+    "priceNote": "Unverbindlicher Richtwert, kein Angebot. Preise und Umfang legen wir vor dem Verkaufsstart fest.",
+    "count": "{count} von {seats} Founders-Plätzen vorgemerkt",
+    "countFull": "Alle {seats} Founders-Plätze sind vorgemerkt. Trag dich trotzdem ein, falls jemand abspringt.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "du@beispiel.ch",
+    "consent": "Ich bin einverstanden, dass Motivo meine E-Mail-Adresse speichert, um mich über den Verkaufsstart der Founders-Lizenzen zu informieren. Ich kann mich jederzeit abmelden. Mehr dazu in der <link>Datenschutzerklärung</link>.",
+    "submit": "Eintragen",
+    "submitting": "Wird gesendet …",
+    "captchaLoading": "Sicherheitsprüfung wird geladen …",
+    "honeypotLabel": "Website (bitte leer lassen)",
+    "successTitle": "Fast geschafft!",
+    "success": "Wir haben dir eine E-Mail geschickt. Bitte bestätige deine Anmeldung über den Link darin. Der Link ist {hours} Stunden gültig.",
+    "successHint": "Keine E-Mail erhalten? Schau im Spam-Ordner nach oder versuch es in {minutes} Minuten nochmals.",
+    "errors": {
+      "email": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "consent": "Bitte bestätige die Einwilligung.",
+      "invalid": "Bitte prüf deine Angaben und versuch es nochmals.",
+      "captcha": "Die Sicherheitsprüfung hat nicht geklappt. Bitte versuch es nochmals.",
+      "rate_limited": "Gerade sind sehr viele Anmeldungen eingegangen. Bitte versuch es später nochmals.",
+      "unavailable": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
+      "disabled": "Die Warteliste ist noch nicht geöffnet."
+    },
+    "comingSoon": "Die Warteliste öffnet bald. Schau in ein paar Tagen wieder vorbei.",
+    "loading": "Warteliste wird geladen …",
+    "noscript": "Für die Anmeldung braucht es JavaScript.",
+    "learnMore": "Mehr zur Founders-Lizenz"
+  },
+  "Founders": {
+    "metaTitle": "Founders-Warteliste: Lifetime-Lizenz zum Founders-Preis",
+    "metaDescription": "Trag dich auf die Warteliste ein und sichere dir einen der ersten {seats} Founders-Plätze für die Motivo-Lifetime-Lizenz. Einmal zahlen, kein Abo.",
+    "title": "Founders-Warteliste",
+    "lead": "Motivo bleibt gratis nutzbar. Für Profi-Funktionen kommt eine Lifetime-Lizenz: einmal zahlen statt monatlich. Die ersten {seats} Lizenzen gibt es zum tiefsten Preis.",
+    "points": {
+      "once": {
+        "title": "Einmal zahlen",
+        "text": "Kein Abo und keine Verlängerung. Die Lizenz gilt, solange es Motivo gibt."
+      },
+      "future": {
+        "title": "Künftige Tools inklusive",
+        "text": "Neue Generatoren und Exporte kommen laufend dazu, ohne Aufpreis."
+      },
+      "honest": {
+        "title": "Ehrlicher Zähler",
+        "text": "Der Zähler zeigt bestätigte Anmeldungen, direkt aus der Datenbank. Keine künstliche Verknappung."
+      }
+    }
+  },
+  "WaitlistResult": {
+    "backHome": "Zur Startseite",
+    "backFounders": "Zur Founders-Warteliste",
+    "confirm": {
+      "metaTitle": "Anmeldung bestätigen",
+      "title": "Anmeldung bestätigen",
+      "text": "Bestätige mit einem Klick, dass du auf die Founders-Warteliste möchtest.",
+      "button": "Anmeldung bestätigen",
+      "working": "Wird bestätigt …",
+      "error": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
+      "noToken": "Öffne diese Seite über den Bestätigungslink in unserer E-Mail."
+    },
+    "confirmed": {
+      "metaTitle": "Anmeldung bestätigt",
+      "title": "Du bist auf der Warteliste",
+      "text": "Danke für deine Bestätigung. Wir melden uns per E-Mail, sobald die Founders-Lizenzen erhältlich sind. Abmelden kannst du dich jederzeit über den Link in unserer E-Mail."
+    },
+    "invalid": {
+      "metaTitle": "Link ungültig",
+      "title": "Dieser Link funktioniert nicht mehr",
+      "text": "Der Bestätigungslink ist abgelaufen oder wurde schon verwendet. Falls du bereits bestätigt hast, ist alles in Ordnung. Sonst trag dich einfach nochmals ein."
+    },
+    "error": {
+      "metaTitle": "Fehler",
+      "title": "Das hat nicht geklappt",
+      "text": "Wir konnten deine Anfrage gerade nicht bearbeiten. Bitte öffne den Link in ein paar Minuten nochmals."
+    },
+    "unsubscribe": {
+      "metaTitle": "Von der Warteliste abmelden",
+      "title": "Von der Warteliste abmelden",
+      "text": "Nach der Abmeldung löschen wir deine E-Mail-Adresse und schreiben dir nicht mehr.",
+      "button": "Jetzt abmelden",
+      "working": "Wird abgemeldet …",
+      "done": "Du bist abgemeldet. Wir haben deine E-Mail-Adresse gelöscht.",
+      "invalid": "Dieser Abmeldelink ist ungültig oder wurde schon verwendet. Falls du dich bereits abgemeldet hast, musst du nichts mehr tun.",
+      "error": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
+      "noToken": "Öffne diese Seite über den Abmeldelink in unserer E-Mail."
+    }
+  },
+  "WaitlistEmail": {
+    "subject": "Bitte bestätige deine Anmeldung zur Founders-Warteliste",
+    "heading": "Fast geschafft",
+    "intro": "Du hast dich mit dieser E-Mail-Adresse für die Founders-Warteliste von Motivo eingetragen. Bitte bestätige deine Anmeldung mit einem Klick:",
+    "button": "Anmeldung bestätigen",
+    "fallback": "Falls der Knopf nicht funktioniert, kopiere diesen Link in deinen Browser:",
+    "expiry": "Der Link ist {hours} Stunden gültig und funktioniert nur einmal.",
+    "what": "Wir informieren dich per E-Mail, sobald die Lifetime-Lizenzen zum Founders-Preis erhältlich sind (geplant ab {price} CHF oder EUR, unverbindlich). Sonst schreiben wir dir nichts, und wir geben deine Adresse nicht weiter.",
+    "ignore": "Du hast dich nicht angemeldet? Dann ignoriere diese E-Mail einfach. Ohne Bestätigung löschen wir deine Adresse nach spätestens {days} Tagen.",
+    "unsubscribe": "Abmelden",
+    "privacy": "Datenschutz"
   }
 }

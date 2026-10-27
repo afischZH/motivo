@@ -9,10 +9,29 @@ import {
   controlKindRegistry,
   type AnyToolDefinition,
   type ControlHint,
+  type ControlHints,
   type ControlKind,
+  type ListHint,
+  type OptionPreview,
 } from "@motivo/tool-registry";
 import * as z from "zod";
 import type { ParamValues } from "../store/editor-store";
+import { LIST_DEFAULT_MAX, lengthBounds, type ListItem } from "../store/list";
+
+/**
+ * What the panel is built from: a tool, or the item schema of a list param
+ * (sub-form of the selected item). `AnyToolDefinition` satisfies it.
+ */
+export interface ControlSource {
+  /** Tool id: default label keys are `tools.<id>.params.<key>.label`. */
+  id: string;
+  schema: z.ZodObject;
+  defaults: ParamValues;
+  controls?: ControlHints<ParamValues> | undefined;
+}
+
+/** A param hint as the panel reads it (type-erased). */
+type AnyHint = ControlHint<ParamValues> & { list?: ListHint<ListItem> };
 
 /** Enums with at most this many options become a segmented control, larger ones a select. */
 export const SEGMENTED_MAX_OPTIONS = 5;
@@ -58,6 +77,31 @@ export interface ChoiceControl extends ControlBase {
   options: ControlOption[];
 }
 
+/** A choice shown as a grid of previews (radio group). */
+export interface ThumbnailControl extends ControlBase {
+  kind: "thumbnails";
+  options: ControlOption[];
+  /** Preview of one option for the current params; cheap, called lazily per visible tile. */
+  preview(value: OptionValue): OptionPreview;
+}
+
+/** An array of objects: item list plus a sub-form for the selected item. */
+export interface ListControl extends ControlBase {
+  kind: "list";
+  minItems: number;
+  maxItems: number;
+  /** Source of the sub-form (item schema and hints). */
+  item: ControlSource;
+  /** Boolean item field behind the show/hide button. */
+  visibilityField?: string;
+  /** Choice field that names (and previews) an item in the list. */
+  titleField?: string;
+  /** i18n key of the item noun with `{index}` (1-based). */
+  itemLabelKey: string;
+  /** The item "add" inserts (`ListHint.newItem`, else the first default item). */
+  newItem(items: readonly ListItem[]): ListItem | undefined;
+}
+
 export interface TextControl extends ControlBase {
   kind: "text";
   maxLength?: number;
@@ -82,6 +126,8 @@ export type ResolvedControl =
   | RangeControl
   | NumberControl
   | ChoiceControl
+  | ThumbnailControl
+  | ListControl
   | TextControl
   | PaletteControl
   | SimpleControl
@@ -168,16 +214,6 @@ function numberBounds(schema: AnySchema): NumberBounds | undefined {
   return out;
 }
 
-function lengthBounds(schema: AnySchema): { min?: number; max?: number } {
-  const out: { min?: number; max?: number } = {};
-  for (const check of schema._zod.def.checks ?? []) {
-    const def = check._zod.def as { check: string; minimum?: number; maximum?: number };
-    if (def.check === "min_length" && def.minimum !== undefined) out.min = def.minimum;
-    if (def.check === "max_length" && def.maximum !== undefined) out.max = def.maximum;
-  }
-  return out;
-}
-
 /** The control kind for a param schema without hints (docs/DESIGN.md section 3). */
 export function deriveControlKind(schema: AnySchema): ControlKind {
   const registered = registeredKind(schema);
@@ -190,6 +226,9 @@ export function deriveControlKind(schema: AnySchema): ControlKind {
   const type = inner._zod.def.type;
   if (type === "boolean") return "switch";
   if (type === "string") return "text";
+  if (inner instanceof z.ZodArray && unwrap(inner.element as AnySchema) instanceof z.ZodObject) {
+    return "list";
+  }
   // Unknown shapes (objects, records, ...) need an explicit hint.
   return "hidden";
 }
@@ -204,11 +243,21 @@ export function optionLabelKey(toolId: string, key: string, value: OptionValue):
   return `tools.${toolId}.params.${key}.options.${String(value)}`;
 }
 
+/** Generic i18n key of a list item ("Item {index}"). */
+export const LIST_ITEM_LABEL_KEY = "Editor.list.item";
+
+/** Params the control is shown for: `params` (or the list item) and the whole tool params. */
+export interface ResolveContext {
+  params: ParamValues;
+  root: ParamValues;
+}
+
 /** Resolves one param. Returns `null` for hidden params or ones the schema cannot drive. */
 export function resolveControl(
-  tool: AnyToolDefinition,
+  tool: ControlSource | AnyToolDefinition,
   key: string,
-  hint: ControlHint<ParamValues> = {},
+  hint: AnyHint = {},
+  context?: ResolveContext,
 ): ResolvedControl | null {
   const schema = (tool.schema.shape as Record<string, AnySchema | undefined>)[key];
   if (!schema) return null;
@@ -258,14 +307,46 @@ export function resolveControl(
       return withUnit(c);
     }
     case "segmented":
-    case "select": {
+    case "select":
+    case "thumbnails": {
       const values = choiceValues(inner);
       if (!values) return null;
       const options = values.map((value) => ({
         value,
         labelKey: hint.optionLabelKeys?.[String(value)] ?? optionLabelKey(tool.id, key, value),
       }));
-      return { ...base, kind, options };
+      const optionPreview = hint.optionPreview;
+      if (kind !== "thumbnails") return { ...base, kind, options };
+      // Without a preview (or params to draw it with) a grid would be blank: use a select.
+      if (!optionPreview || !context) return { ...base, kind: "select", options };
+      const { params, root } = context;
+      return { ...base, kind, options, preview: (value) => optionPreview(value, params, root) };
+    }
+    case "list": {
+      if (!(inner instanceof z.ZodArray)) return null;
+      const element = unwrap(inner.element as AnySchema);
+      if (!(element instanceof z.ZodObject)) return null;
+      const { min, max } = lengthBounds(inner);
+      const list = hint.list ?? {};
+      const defaults = (tool.defaults as ParamValues)[key];
+      const first = Array.isArray(defaults) ? (defaults[0] as ListItem | undefined) : undefined;
+      const c: ListControl = {
+        ...base,
+        kind,
+        minItems: Math.max(0, min ?? 0),
+        maxItems: max ?? LIST_DEFAULT_MAX,
+        item: {
+          id: tool.id,
+          schema: element,
+          defaults: first ?? {},
+          controls: list.item as ControlHints<ParamValues> | undefined,
+        },
+        itemLabelKey: list.itemLabelKey ?? LIST_ITEM_LABEL_KEY,
+        newItem: (items) => (list.newItem ? list.newItem(items) : first),
+      };
+      if (list.visibilityField !== undefined) c.visibilityField = list.visibilityField;
+      if (list.titleField !== undefined) c.titleField = list.titleField;
+      return c;
     }
     case "text": {
       const c: TextControl = { ...base, kind };
@@ -288,7 +369,7 @@ export function resolveControl(
 }
 
 /** Param keys in display order: `controls.order` first, then schema order. */
-export function orderedParamKeys(tool: AnyToolDefinition): string[] {
+export function orderedParamKeys(tool: ControlSource | AnyToolDefinition): string[] {
   const schemaKeys = Object.keys(tool.schema.shape);
   const order = (tool.controls?.order ?? []).filter((k) => schemaKeys.includes(k));
   return [...new Set([...order, ...schemaKeys])];
@@ -299,11 +380,12 @@ export function orderedParamKeys(tool: AnyToolDefinition): string[] {
  * grouped as declared. Empty groups are dropped; ungrouped params form a
  * trailing group with `id: null`.
  */
-export function resolveControls(tool: AnyToolDefinition, params: ParamValues): ResolvedGroup[] {
-  const hints = (tool.controls?.params ?? {}) as Record<
-    string,
-    ControlHint<ParamValues> | undefined
-  >;
+export function resolveControls(
+  tool: ControlSource | AnyToolDefinition,
+  params: ParamValues,
+  root: ParamValues = params,
+): ResolvedGroup[] {
+  const hints = (tool.controls?.params ?? {}) as Record<string, AnyHint | undefined>;
   const declared = tool.controls?.groups ?? [];
   const groups = new Map<string | null, ResolvedGroup>();
   for (const g of declared) {
@@ -320,7 +402,7 @@ export function resolveControls(tool: AnyToolDefinition, params: ParamValues): R
   for (const key of orderedParamKeys(tool)) {
     const hint = hints[key] ?? {};
     if (hint.visibleWhen && !hint.visibleWhen(params)) continue;
-    const control = resolveControl(tool, key, hint);
+    const control = resolveControl(tool, key, hint, { params, root });
     if (!control) continue;
     const group = (hint.group !== undefined ? groups.get(hint.group) : undefined) ?? ungrouped;
     (control.advanced ? group.advanced : group.controls).push(control);

@@ -20,6 +20,7 @@ import {
   DEFAULT_CANVAS_SIZE,
   canvasSizeSchema,
   keepLocked,
+  parseToolParams,
   registry as defaultRegistry,
   seedSchema,
   type AnyToolDefinition,
@@ -27,6 +28,16 @@ import {
   type ToolRegistry,
 } from "@motivo/tool-registry";
 import { createStore, type StoreApi } from "zustand/vanilla";
+import {
+  applyListOp,
+  isItemLockable,
+  listSpec,
+  newListItem,
+  pruneItemLocks,
+  remapLocks,
+  type ListItem,
+  type ListOp,
+} from "./list";
 import { valuesEqual } from "./values";
 
 /** Parameter object of the current tool, erased to its runtime shape. */
@@ -87,8 +98,23 @@ export interface EditorActions {
   loadDesign(design: Partial<Design> & Pick<Design, "params">): LoadDesignResult;
   /** Sets one param. Consecutive changes of the same key are coalesced into one undo step. */
   setParam(key: string, value: unknown): void;
+  /**
+   * Changes a list param (array of objects): add, remove, duplicate, move or
+   * set one field of one item. Structural ops are one undo step each and
+   * carry item locks along; consecutive "set"s of the same item field are
+   * coalesced like `setParam`. Returns false when the op does not apply
+   * (limits, out of range, invalid value).
+   */
+  listOp(key: string, op: ListOp): boolean;
   /** Sets several params as one undo step. */
   setParams(patch: ParamValues): void;
+  /**
+   * Merges params derived from an image input (`tool.imageInput`) into the
+   * current design and its filmstrip entry, without an undo step: they follow
+   * from the image and the seed, and the seed is already in the history.
+   * Unknown keys are ignored.
+   */
+  applyDerived(patch: ParamValues): void;
   /** Resets one param to the tool default (double-click on a control). */
   resetParam(key: string): void;
   /** Resets all params to the tool defaults. */
@@ -168,9 +194,14 @@ function initialSize(tool: AnyToolDefinition): CanvasSize {
   return { width: size.width, height: size.height };
 }
 
-/** Whether `key` is a top-level param of the tool that may be locked. */
+/**
+ * Whether `key` may be locked: a top-level param of the tool, or a field of
+ * a list item (`<list>.<index>.<field>`).
+ */
 export function isLockable(tool: AnyToolDefinition, key: string): boolean {
-  if (!Object.prototype.hasOwnProperty.call(tool.schema.shape, key)) return false;
+  if (!Object.prototype.hasOwnProperty.call(tool.schema.shape, key)) {
+    return isItemLockable(tool, key);
+  }
   const hint = (
     tool.controls?.params as Record<string, { lockable?: boolean } | undefined> | undefined
   )?.[key];
@@ -196,6 +227,35 @@ function freshState(
     coalesce: null,
     nextVariantId: 1,
   };
+}
+
+/** `params` with the known, changed keys of `patch` applied, or `null` if nothing changes. */
+function mergePatch(s: EditorState, patch: ParamValues): ParamValues | null {
+  const shape = s.tool.schema.shape;
+  let next: Record<string, unknown> | null = null;
+  for (const [key, value] of Object.entries(patch)) {
+    if (!Object.prototype.hasOwnProperty.call(shape, key)) continue;
+    if (valuesEqual((next ?? s.params)[key], value)) continue;
+    next ??= { ...s.params };
+    next[key] = value;
+  }
+  return next;
+}
+
+/** The randomize rng of a variant with this seed (`newVariant`, `regenerateOn`). */
+function randomizeRng(seed: number) {
+  return createRng((seed ^ RANDOMIZE_SALT) >>> 0);
+}
+
+/**
+ * `next` (with `key` changed) after the tool's `regenerateOn` rule: when
+ * `key` steers `randomize`, the unlocked params are regenerated from the
+ * current seed; locked keys and `key` itself keep their values.
+ */
+function regenerated(s: EditorState, key: string, next: ParamValues): ParamValues {
+  if (!s.tool.regenerateOn?.includes(key)) return next;
+  const params = keepLocked(s.tool.randomize(randomizeRng(s.seed), next, s.locks), next, s.locks);
+  return { ...params, [key]: next[key] };
 }
 
 export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
@@ -230,7 +290,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
      * of the same key inside the window extends the previous step instead.
      */
     const change = (
-      next: { params?: ParamValues; seed?: number; size?: CanvasSize },
+      next: { params?: ParamValues; seed?: number; size?: CanvasSize; locks?: ReadonlySet<string> },
       coalesceKey?: string,
     ): void => {
       const s = get();
@@ -253,6 +313,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         params,
         seed,
         size,
+        locks: pruneItemLocks(next.locks ?? s.locks, params),
         past: merge ? s.past : [...s.past, snapshot(s)].slice(-historyLimit),
         future: [],
         variants: syncVariants(s.variants, s.activeVariantId, params, seed),
@@ -267,6 +328,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
       set({
         params,
         seed,
+        locks: pruneItemLocks(s.locks, params),
         past: [...s.past, snapshot(s)].slice(-historyLimit),
         future: [],
         variants: [...s.variants, { id, params, seed }].slice(-variantLimit),
@@ -287,6 +349,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         params: entry.params,
         seed: entry.seed,
         size: entry.size,
+        locks: pruneItemLocks(s.locks, entry.params),
         activeVariantId: variantId,
         variants: syncVariants(s.variants, variantId, entry.params, entry.seed),
         coalesce: null,
@@ -328,7 +391,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         } catch (error) {
           return { ok: false, error: (error as Error).message };
         }
-        const params = tool.schema.safeParse(design.params);
+        const params = parseToolParams(tool, design.params);
         if (!params.success) return { ok: false, error: params.error.message };
         const seed = seedSchema.safeParse(design.seed ?? get().seed);
         if (!seed.success) return { ok: false, error: seed.error.message };
@@ -337,29 +400,52 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const keepLocks = tool.id === get().toolId;
         set({
           ...freshState(tool, params.data, seed.data, size.data),
-          locks: keepLocks ? get().locks : new Set<string>(),
+          locks: keepLocks ? pruneItemLocks(get().locks, params.data) : new Set<string>(),
         });
         return { ok: true };
+      },
+
+      listOp(key, op) {
+        const s = get();
+        const spec = listSpec(s.tool, key);
+        const items = s.params[key];
+        if (!spec || !Array.isArray(items)) return false;
+        const list = items as readonly ListItem[];
+        const item = op.type === "add" ? newListItem(s.tool, spec, key, list) : undefined;
+        const next = applyListOp(list, op, spec, item);
+        if (!next) return false;
+        // The schema is the only judge (item values, length); invalid ops change nothing.
+        const parsed = spec.schema.safeParse(next);
+        if (!parsed.success) return false;
+        const params = { ...s.params, [key]: parsed.data };
+        if (op.type === "set") {
+          change({ params }, `${key}.${op.index}.${op.field}`);
+        } else {
+          change({ params, locks: remapLocks(s.locks, key, op) });
+        }
+        return true;
       },
 
       setParam(key, value) {
         const s = get();
         if (!Object.prototype.hasOwnProperty.call(s.tool.schema.shape, key)) return;
         if (valuesEqual(s.params[key], value)) return;
-        change({ params: { ...s.params, [key]: value } }, key);
+        change({ params: regenerated(s, key, { ...s.params, [key]: value }) }, key);
       },
 
       setParams(patch) {
-        const s = get();
-        const shape = s.tool.schema.shape;
-        let next: Record<string, unknown> | null = null;
-        for (const [key, value] of Object.entries(patch)) {
-          if (!Object.prototype.hasOwnProperty.call(shape, key)) continue;
-          if (valuesEqual((next ?? s.params)[key], value)) continue;
-          next ??= { ...s.params };
-          next[key] = value;
-        }
+        const next = mergePatch(get(), patch);
         if (next) change({ params: next });
+      },
+
+      applyDerived(patch) {
+        const s = get();
+        const next = mergePatch(s, patch);
+        if (!next) return;
+        set({
+          params: next,
+          variants: syncVariants(s.variants, s.activeVariantId, next, s.seed),
+        });
       },
 
       resetParam(key) {
@@ -367,7 +453,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const defaults = s.tool.defaults as ParamValues;
         if (!Object.prototype.hasOwnProperty.call(defaults, key)) return;
         if (valuesEqual(s.params[key], defaults[key])) return;
-        change({ params: { ...s.params, [key]: defaults[key] } });
+        change({ params: regenerated(s, key, { ...s.params, [key]: defaults[key] }) });
       },
 
       resetParams() {
@@ -406,7 +492,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
       newVariant() {
         const s = get();
         const seed = toUint32(randomSeed());
-        const rng = createRng((seed ^ RANDOMIZE_SALT) >>> 0);
+        const rng = randomizeRng(seed);
         // Re-applying the locks guards against a tool that forgets keepLocked.
         const params = keepLocked(s.tool.randomize(rng, s.params, s.locks), s.params, s.locks);
         pushVariant(params, seed);
@@ -427,6 +513,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         set({
           params: target.params,
           seed: target.seed,
+          locks: pruneItemLocks(s.locks, target.params),
           activeVariantId: id,
           past: [...s.past, snapshot(s)].slice(-historyLimit),
           future: [],

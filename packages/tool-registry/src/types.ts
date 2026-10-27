@@ -40,6 +40,20 @@ export type Params<S extends ParamsSchema> = z.output<S>;
 /** Top-level parameter keys of a parameter object. */
 export type ParamKey<P> = keyof P & string;
 
+/**
+ * Lock key of one field of one item of a list param (array of objects):
+ * `<listKey>.<index>.<field>`, e.g. `"layers.1.color"`. See `ListHint`.
+ */
+export type ItemLockKey = `${string}.${number}.${string}`;
+
+/** What `randomize` may find in its lock set: whole params or single item fields. */
+export type LockKey<P> = ParamKey<P> | ItemLockKey;
+
+/** Item type of a list param (array of objects); a plain record for anything else. */
+export type ItemOf<T> = T extends readonly (infer I extends object)[]
+  ? I
+  : Readonly<Record<string, unknown>>;
+
 /** A named starting point shown in the preset strip. */
 export interface Preset<P> {
   /** Stable id, unique within the tool, kebab-case (e.g. "sunset"). */
@@ -79,9 +93,18 @@ export type ControlKind =
   | "palette"
   | "background"
   | "angle"
+  | "thumbnails"
+  | "list"
   | "shape"
   | "image"
   | "hidden";
+
+/**
+ * A small preview of one option of a choice param (thumbnail picker). CSS
+ * declarations (as in `CssOutput.css`) are applied as an inline style to a
+ * small box; SVG is shown through `<img>`, never as inline markup.
+ */
+export type OptionPreview = { readonly css: string } | { readonly svg: string };
 
 /** Presentation hints for one parameter. Everything is optional. */
 export interface ControlHint<P> {
@@ -103,9 +126,52 @@ export interface ControlHint<P> {
   advanced?: boolean;
   /** Whether the param gets a lock. Default true. */
   lockable?: boolean;
-  /** Hides the control when this returns false. Must be pure. */
+  /**
+   * Hides the control when this returns false. Must be pure. In a list item
+   * sub-form, `params` is the item.
+   */
   visibleWhen?(params: P): boolean;
+  /**
+   * For `kind: "thumbnails"`: preview of one option, drawn small (about
+   * 56 px) in a radio grid. Pure and cheap (well under 1 ms per option); the
+   * editor renders previews lazily as tiles scroll into view. `params` is the
+   * param object (or the list item in a sub-form), `root` the whole param
+   * object of the tool. Without it the control falls back to a select.
+   */
+  optionPreview?(
+    value: string | number,
+    params: P,
+    root: Readonly<Record<string, unknown>>,
+  ): OptionPreview;
 }
+
+/**
+ * Hints for a list param: an array of objects with `min`/`max` length,
+ * edited as a list (add, duplicate, remove, reorder, show/hide, select) plus
+ * a sub-form for the selected item, built from the item schema like the main
+ * panel. Locks on item fields use `ItemLockKey`s; the editor shifts them
+ * along when items move.
+ */
+export interface ListHint<I> {
+  /** Controls of the item fields; `visibleWhen` and `optionPreview` receive the item. */
+  item?: ControlHints<I>;
+  /** Boolean item field toggled by the visibility button (hidden items stay in the list). */
+  visibilityField?: ParamKey<I>;
+  /** Choice field whose option label and preview name an item in the list. */
+  titleField?: ParamKey<I>;
+  /**
+   * The item "Add" inserts. Pure; must pass the item schema. Default: a copy
+   * of the first item of the tool defaults.
+   */
+  newItem?(items: readonly I[]): I;
+  /** i18n key of the item noun with an `{index}` placeholder, e.g. "Layer {index}". */
+  itemLabelKey?: string;
+}
+
+/** The hint of one param; list params may carry `list`. */
+export type ParamHint<P, K extends ParamKey<P>> = ControlHint<P> & {
+  list?: ListHint<ItemOf<P[K]>>;
+};
 
 /** A labelled section of controls in the panel. */
 export interface ControlGroup {
@@ -122,7 +188,7 @@ export interface ControlHints<P> {
   /** Display order of params; keys not listed follow in schema order. */
   order?: readonly ParamKey<P>[];
   /** Per-param hints. */
-  params?: { readonly [K in ParamKey<P>]?: ControlHint<P> };
+  params?: { readonly [K in ParamKey<P>]?: ParamHint<P, K> };
 }
 
 // ---------------------------------------------------------------------------
@@ -253,6 +319,43 @@ export interface ExtraExport<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Image input
+// ---------------------------------------------------------------------------
+
+/**
+ * A tool that analyses a user image (e.g. "Palette from image"). The editor
+ * shows a generic image picker; the image is decoded and downsampled in the
+ * browser (never uploaded, never stored, never in share links) and handed to
+ * `derive`, which turns it into ordinary params. `render` therefore stays a
+ * pure function of params and seed: preview and export are unchanged.
+ *
+ * `derive` runs again whenever the image, the seed (Space) or one of
+ * `deriveOn` changes.
+ */
+export interface ImageInput<P> {
+  /**
+   * Params computed by `derive`. They describe the user's image, so share
+   * links never carry them: they are reset to the defaults on encode and
+   * decode, and the opened link shows the sample state.
+   */
+  derivedKeys: readonly ParamKey<P>[];
+  /** Params that feed `derive` (e.g. a colour count). */
+  deriveOn: readonly ParamKey<P>[];
+  /** Longest edge in pixels of the buffer `derive` receives (downsampled before). */
+  maxEdge: number;
+  /**
+   * Built-in picture used until the user picks one, so the tool never starts
+   * empty. `defaults` should equal `derive(sample(), defaults, rng(seed 1))`.
+   */
+  sample(): PixelBuffer;
+  /**
+   * Pure and deterministic: same pixels, params and rng state give the same
+   * patch. Must return values that pass the schema.
+   */
+  derive(pixels: PixelBuffer, params: P, rng: Rng): Partial<P>;
+}
+
+// ---------------------------------------------------------------------------
 // Tool definition
 // ---------------------------------------------------------------------------
 
@@ -266,6 +369,14 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   /** Zod schema of all params (without size and seed, see `RenderContext`). */
   schema: S;
   defaults: Params<S>;
+  /**
+   * Upgrades params stored by an older shape of this tool (share links, saved
+   * designs) before schema validation, e.g. a single pattern to a list of
+   * layers. Receives untrusted input: pure, must not throw, returns the
+   * input unchanged when there is nothing to upgrade. The schema still
+   * validates the result.
+   */
+  migrateParams?(raw: Readonly<Record<string, unknown>>): unknown;
   /** At least 6 presets with unique ids. */
   presets: readonly Preset<Params<S>>[];
   /** Initial canvas size. Default: `DEFAULT_CANVAS_SIZE`. */
@@ -274,17 +385,27 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   /**
    * Returns a new param set for "new variant". Must be deterministic for a
    * given rng state, must not mutate `current`, and must copy every locked key
-   * from `current` unchanged.
+   * from `current` unchanged, including locked list item fields
+   * (`ItemLockKey`; `keepLocked` handles both).
    */
-  randomize(rng: Rng, current: Params<S>, locks: ReadonlySet<ParamKey<Params<S>>>): Params<S>;
+  randomize(rng: Rng, current: Params<S>, locks: ReadonlySet<LockKey<Params<S>>>): Params<S>;
+  /**
+   * Params that steer `randomize` (e.g. a palette harmony). Changing one of
+   * them in the editor re-runs `randomize` with the current seed (same salted
+   * rng as the variant), so the change shows at once and stays deterministic;
+   * locked keys and the changed param itself are kept.
+   */
+  regenerateOn?: readonly (keyof Params<S> & string)[];
   /** The single render path for preview and export. `render.kind` is the render kind. */
   render: Renderer<Params<S>>;
   exports: readonly ExportFormat[];
   /** Tool-specific text outputs, offered next to `exports`. */
   extraExports?: readonly ExtraExport<Params<S>>[];
   gating: Gating<Params<S>>;
-  /** Needs an uploaded image (halftone, dither, ...). */
+  /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
+  /** Derives params from a user image; see `ImageInput`. */
+  imageInput?: ImageInput<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
 }

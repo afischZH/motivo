@@ -4,15 +4,33 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M1 (freigegeben 2026-10-27, umgesetzt, Abnahme offen). M0 abgenommen und live seit 2026-10-27.
-- **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: M1-Abnahme durch Andreas (PR #2 mergen = Production-Deploy).
-- Reviews 2026-10-27: Code-Review (keine kritischen Befunde, 2 mittel, 5 tief) und Security-Review (PASS WITH NOTES: Polka-Dots-Link konnte Tab einfrieren) alle behoben. Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben).
-- Offene Kleinfragen (Orchestrator entschieden, bei Abnahme nennen): Link eines anderen Tools zeigt Hinweis statt Weiterleitung; Teilen kopiert nur, ändert die Adresszeile nicht; ⌘⇧C kollidiert unter Windows/Linux evtl. mit DevTools.
+- **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
+- **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
+- **Nächster Schritt**: M2 im Code abgeschlossen (2026-10-27): alle 12 APs zusammengeführt, CI auf 3678eb8 grün in Chromium, Firefox und WebKit. Wartet auf Andreas: Meilenstein-Abnahme und Merge von PR #3 (Produktions-Deploy), Impressum-Angaben, Domain, Analytics-Token, Sentry-DSN, Supabase-Projekt, Resend, Turnstile, Entscheid zum Mail-Tagesbudget der Warteliste, juristische Prüfung der Rechtstexte. Danach M3-Plan.
+- Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M1: Editor-Shell + erste Tools
+### M2: SEO-Seiten, mehr Tools, Beta (freigegeben 2026-10-27)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M2-AP01 | Tools **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots** | engine-dev | erledigt (Cross-Browser in AP12) | – | Je 7 Presets; Limits wie Polka Dots (≥ 4 px, ≤ 10 000 Elemente); Grid und Dieter Dots ohne Seed-Einfluss; Changelog-Format: eine Datei pro Sprache (Orchestrator-Entscheid) |
+| M2-AP02 | Tool **Noise/Grain** | engine-dev | erledigt (Cross-Browser in AP12) | – | Gauss-Kachel 256 px als PNG im SVG-Pattern (kein feTurbulence, rendert je Browser anders); Code in engine statt effects; SVG 90 bis 260 KB |
+| M2-AP03 | **CSS Pattern Library** (Dots, Grid, Stripes, Waves, Geometric) inkl. eigener Seite pro Muster | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | AP08 | 34 eigene Muster als Gradient-Ebenen; SVG-Fallback ohne foreignObject (< 1 % Pixel-Abweichung); Muster-Auswahl vorerst als Select; Worker +93 KiB gzip (Texte DE/EN liegen 3-fach im Bundle, in AP12 prüfen) |
+| M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev + engine-dev | erledigt (Cross-Browser in AP12) | AP03 | Generisches Listen-Control (`kind: "list"`, Item-Locks, `listOp` mit Undo) und Thumbnail-Picker (`optionPreview`); 1 bis 5 Ebenen, alte Einzelmuster-Links per `migrateParams`; Teilen-Link mit 5 Ebenen 388 Zeichen; Leertaste würfelt alle Ebenen (Locks pro Feld und Ebene); Ziehen zum Umsortieren nicht umgesetzt |
+| M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | – | Ohne Shell-Erweiterung: Farben als Einzel-Params (color1 bis color8), Schloss pro Farbe; Harmonie-Wechsel wirkt erst bei nächster Leertaste (UX in AP12 prüfen); Code-Exporte statt CSS |
+| M2-AP06 | **Palette aus Bild** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | AP05 | Generischer Bild-Eingang in der Shell (`imageInput` in der ToolDefinition, Worker, 5 MB, Magic Bytes); abgeleitete Farben nie im Teilen-Link; SVG wird im Haupt-Thread gerastert (kann > 50 ms dauern, in AP12 prüfen) |
+| M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | erledigt | – | Slugs zentral in `apps/web/i18n/slugs.ts` (Contract-Test), alte Pfade per 308; Basis-URL aus `NEXT_PUBLIC_SITE_URL`; x-default zeigt auf DE (in AP08 nochmals prüfen, ggf. EN) |
+| M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, OG-Bilder | ui-dev | erledigt (Lighthouse in AP12) | AP07 | OG-Bilder beim Build (Worker 1.8 MiB gzip); x-default EN; noindex ausser Produktions-Host; echte SEO-Texte für M1-Tools; Editor-Seiten nicht in der Sitemap |
+| M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | erledigt bis auf Lighthouse-Performance (AP12) | AP08 | Rechtstexte als Entwurf mit Banner und noindex, Platzhalter in `lib/legal/config.ts`, "juristisch zu prüfen"; Analytics und Sentry nur mit Repo-Variablen und nur in Production (deploy.yml); @sentry/browser 11.9.0 MIT, 19.8 KB gzip, erst beim ersten Fehler geladen; Locale-Cookie abgeschaltet (keine Cookies); Lighthouse mobil Performance 75 bis 87 (Ziel 95), Rest 100; csp.spec unter Volllast einmal instabil |
+| M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | erledigt im Code, aus bis zum Owner-Setup; Security-Review bestanden mit Hinweisen (AP12) | – | Supabase und Resend per fetch; RLS ohne Policies, nur SECURITY-DEFINER-Funktionen; Migration und RLS mit PGlite getestet (Docker lief nicht, vor Deploy `supabase db reset`); aus ohne Secrets ("bald verfügbar"); Turnstile optional; Texte juristisch zu prüfen; Einrichtung: `docs/SETUP-WAITLIST.md`; AP12: Bestätigung nur per Knopf (POST), Rate-Limit je IPv6-/64, Body-Limit beim Streamen; offen für Andreas: Tagesbudget von 90 Mails kann aufgebraucht werden (Empfehlung: Turnstile in Produktion Pflicht plus WAF-Regel oder Tageslimit pro IP), Datenschutz-Satz zu Turnstile-Cookies |
+| M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | erledigt; Security-Review bestanden (AP12: lokale Header nie hinter Cloudflare) | – | CSP erzwungen, aber `unsafe-inline` für Scripts (Next setzt pro Seite Inline-Scripts, Nonces würden statische Seiten verhindern); HSTS ohne preload; zod `jitless` gegen eval |
+| M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | erledigt (SEO-Lighthouse erst auf Produktion) | alle | Domain, DNS, Search Console durch Andreas; Performance (Branch `m2/ap12-perf`): Lighthouse mobil gegen `next start`, Median aus 6 Läufen, vorher und nachher abwechselnd auf ruhiger Maschine. Performance vorher/nachher: `/de` 96/96, `/en` 96/96, `/de/punktmuster-generator` 98/98, `/en/polka-dot-pattern-generator` 98/98, `/de/tools` 94/96, `/de/tools/kategorie/muster` 98/99, `/de/css-muster/punkte` 97/95 (Streuung 89 bis 99, im Rauschen); Accessibility überall 100. SEO lokal 66 bis 69 nur wegen `X-Robots-Tag: noindex` ausserhalb des Produktions-Hosts (gewollt), alle übrigen SEO-Audits bestanden. Die früheren 75 bis 87 waren Messrauschen: Unter Last (Benchmark-Index unter 1100, parallele Builds) fallen dieselben Seiten auf 60 bis 85. Umgesetzt: Prefetch erst bei Absicht (Katalog ohne ein Dutzend RSC- und Editor-Chunk-Anfragen nach dem Laden), kein next-intl im Browser auf Landingpages (Layout ohne Provider, Links serverseitig aufgelöst; 43 KB roh, 13 KB gzip weniger JS; Startseite lädt ihn weiter für die Warteliste). SVG aus Bild: bleibt im Hauptthread (kein Browser rendert SVG im Worker; Pixel im Worker lesen brachte bei einem 1,2-MB-SVG nichts Messbares, verworfen), neuer E2E-Test mit Script im SVG. Harmonie wirkt sofort (`regenerateOn`). Firefox-Überlauf 375 px: Zoom-Zeile war 11 px zu breit, bricht jetzt um, E2E prüft die Zeile. Preset-Thumbnails sind seit AP08 Dateien. Worker 2003.6 KiB gzip; DE/EN-Texte liegen 2-fach im Worker (RSC- und SSR-Schicht), nicht weiter verfolgt. |
+
+Reihenfolge: zuerst parallel Tool-Strang (AP01, AP02, AP05, AP06) und Seiten-Strang (AP07, dann AP08, dann AP03/AP04 und AP09); AP10 und AP11 parallel, sobald entschieden; zum Schluss AP12.
+
+### M1: Editor-Shell + erste Tools (abgeschlossen)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
@@ -57,6 +75,7 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 
 | Datum | Feature | Laufende Kosten (Schätzung) | Lösung (clientseitig / Credits / Fair Use) |
 |---|---|---|---|
+| 2026-10-27 | Founders-Warteliste (M2-AP10) | 0 CHF: Supabase Free (500 MB), Resend Free (100 Mails/Tag, 3000/Monat), Turnstile gratis | Höchstens 90 Bestätigungsmails pro Tag, 5 pro Adresse, 10 Anfragen pro Stunde und IP-Hash; Supabase Free pausiert nach 7 Tagen ohne Aktivität (Owner prüfen) |
 
 ## Werkzeug-Status
 

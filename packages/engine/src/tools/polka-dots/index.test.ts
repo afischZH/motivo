@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createRng } from "../../rng";
+import { GENERATOR_BUDGET_MS, fastest } from "../../testing/timing";
 import { distance } from "../../vec";
 import {
   DOT_LAYOUTS,
@@ -10,20 +11,6 @@ import {
   effectiveDotSpacing,
   polkaDotsSvg,
 } from "./index";
-
-// Wall-clock timing for performance budgets in tests only; product code stays deterministic.
-const clock = (globalThis as unknown as { performance: { now(): number } }).performance;
-/** Runs `fn` three times and returns the fastest run in ms plus its result (ignores JIT warm-up and CI noise). */
-function fastest<T>(fn: () => T): { ms: number; value: T } {
-  let best = Infinity;
-  let value = fn();
-  for (let i = 0; i < 3; i++) {
-    const start = clock.now();
-    value = fn();
-    best = Math.min(best, clock.now() - start);
-  }
-  return { ms: best, value };
-}
 
 describe("dotSites", () => {
   it("centres a square grid on the canvas and covers the edges", () => {
@@ -183,7 +170,8 @@ describe("polkaDotsSvg size guard", () => {
       };
       expect(dotSites({ ...o, rng: createRng(1) }).length).toBeLessThanOrEqual(MAX_DOT_SITES);
       const { ms, value: svg } = fastest(() => polkaDotsSvg({ ...o, rng: createRng(1) }));
-      expect(ms).toBeLessThan(200);
+      // Unguarded this took seconds; CI measured 230 ms for scatter (see testing/timing).
+      expect(ms).toBeLessThan(GENERATOR_BUDGET_MS);
       expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES);
       expect(svg.length).toBeLessThan(1_000_000);
     });

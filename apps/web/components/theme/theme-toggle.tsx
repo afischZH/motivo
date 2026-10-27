@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -11,9 +10,10 @@ import { useTheme } from "./use-theme";
 /**
  * Two-state toggle button: the label stays constant ("Dark theme") and
  * `aria-pressed` carries the state, as recommended for toggle buttons.
+ * Texts come translated from the server component around it, so pages
+ * without other translated client components ship no message formatter.
  */
-export function ThemeToggle() {
-  const t = useTranslations("Theme");
+export function ThemeToggle({ label, hint }: { label: string; hint: string }) {
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -26,16 +26,13 @@ export function ThemeToggle() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [toggleTheme]);
 
-  // The visible hint uses the generic form; macOS users read ⌘ for Ctrl.
-  const hint = t("hint", { shortcut: "⌘/Ctrl+⇧+K" });
-
   return (
     <Button
       type="button"
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      aria-label={t("toggle")}
+      aria-label={label}
       aria-pressed={theme === "dark"}
       aria-keyshortcuts="Meta+Shift+K Control+Shift+K"
       title={hint}

@@ -23,7 +23,89 @@
   "Home": {
     "title": "Motifs in one click",
     "lead": "Patterns, gradients and backgrounds, rendered right in your browser. The first generators are coming soon.",
-    "engineCheck": "Engine check:"
+    "engineCheck": "Engine check:",
+    "metaTitle": "Motivo: free pattern, gradient and background generators in your browser",
+    "metaDescription": "Free generators for patterns, gradients, backgrounds and color palettes. Everything runs in your browser, export as SVG, PNG or CSS. No account needed.",
+    "hero": {
+      "eyebrow": "Free generators for graphics",
+      "title": "Motifs in one click",
+      "lead": "Patterns, gradients, backgrounds and color palettes for websites, slides and social media. Press the space bar for a new variant, then export as SVG, PNG or CSS.",
+      "ctaPrimary": "Explore all tools",
+      "ctaSecondary": "Start with {tool}",
+      "hint": "No account needed. Your motifs are created right on your device.",
+      "showcaseLabel": "Sample motifs",
+      "showcaseLink": "Open {tool}",
+      "spaceHint": "Space",
+      "spaceHintText": "new variant"
+    },
+    "values": {
+      "heading": "Why Motivo",
+      "free": {
+        "title": "Free generators",
+        "text": "Every generator and converter is free to use, without signing up and without watermarks on your patterns."
+      },
+      "local": {
+        "title": "Everything in your browser",
+        "text": "Motifs are computed on your device. Images you load into a converter never leave your browser."
+      },
+      "lifetime": {
+        "title": "Lifetime instead of subscription",
+        "text": "A lifetime license is planned for future pro features: pay once instead of every month. Scope and prices are not set yet."
+      }
+    },
+    "categories": {
+      "heading": "Tools by category",
+      "lead": "Pick an area or browse the whole catalogue.",
+      "converters": "Convert SVG, CSS, Base64 and images.",
+      "all": "Go to the full catalogue"
+    },
+    "featured": {
+      "heading": "Popular generators",
+      "lead": "A good place to start if you want to dive right in."
+    },
+    "how": {
+      "heading": "How it works",
+      "step1": {
+        "title": "Pick a tool",
+        "text": "Every tool starts with a finished motif. You never start from a blank canvas."
+      },
+      "step2": {
+        "title": "Vary it",
+        "text": "Press the space bar for a new variant, or tune colors, shapes and density yourself."
+      },
+      "step3": {
+        "title": "Export",
+        "text": "Download your motif as SVG, PNG, JPG or WebP, or copy the CSS straight into your project."
+      }
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "q1": {
+        "question": "Does Motivo cost anything?",
+        "answer": "No. Every generator and converter you find here is free. A lifetime license without a subscription is planned for future pro features such as very large exports."
+      },
+      "q2": {
+        "question": "Do I need an account?",
+        "answer": "No. You can start right away. Sharing works with a link that contains your settings."
+      },
+      "q3": {
+        "question": "Are my images uploaded?",
+        "answer": "No. Motifs, converters and the palette from an image run entirely in your browser. Your files are not sent to a server."
+      },
+      "q4": {
+        "question": "Can I use the motifs commercially?",
+        "answer": "We will set the license terms for exports before the paid launch and publish them on this website."
+      },
+      "q5": {
+        "question": "Which formats can I export?",
+        "answer": "Depending on the tool, SVG, PNG, JPG, WebP and CSS. Color tools also give you a Tailwind config and CSS variables."
+      }
+    },
+    "cta": {
+      "heading": "Ready for your first motif?",
+      "text": "Ten seconds from click to finished background.",
+      "button": "Try it now"
+    }
   },
   "NotFound": {
     "title": "Page not found",
@@ -48,12 +130,31 @@
         },
         "palette": {
           "label": "Colors"
+        },
+        "labels": {
+          "label": "Labels",
+          "options": {
+            "none": "None",
+            "hex": "HEX",
+            "rgb": "RGB",
+            "hsl": "HSL",
+            "oklch": "OKLCH"
+          }
+        },
+        "contrast": {
+          "label": "Show contrast",
+          "description": "Shows the WCAG contrast ratio of the label on each color, AA from 4.5:1, AAA from 7:1."
+        },
+        "name": {
+          "label": "Name in code",
+          "description": "Used for CSS variables and Tailwind, for example brand."
         }
       },
       "groups": {
         "colors": "Colors",
         "shape": "Shape",
-        "layout": "Layout"
+        "layout": "Layout",
+        "display": "Display"
       }
     },
     "css-gradient": {
@@ -129,9 +230,234 @@
         "citrus": "Citrus"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "A CSS gradient is a color transition drawn by the browser itself. It needs no image file and stays sharp at any size.",
-        "howTo": "Pick colors and a type, adjust angle and easing, then copy the CSS. Press the space bar for new variations."
+        "whatIs": "A CSS gradient is a color transition the browser draws itself. It needs no image file, loads instantly and stays sharp at any size. This generator mixes colors in the OKLCH color space, so transitions look even and avoid a muddy gray middle.",
+        "howTo": "Choose linear, radial or conic, set your colors and adjust angle, center and easing. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Why OKLCH instead of sRGB?",
+            "answer": "In sRGB many color pairs pass through a dull, gray middle. OKLCH blends by perceived lightness and chroma, so transitions stay vivid. For older browsers the CSS also contains an sRGB gradient as a fallback."
+          },
+          "q2": {
+            "question": "What do the extra stops do?",
+            "answer": "They add intermediate colors along the transition, so the gradient follows the chosen easing curve, such as ease in and out, instead of running linearly."
+          },
+          "q3": {
+            "question": "Can I use the gradient with Tailwind?",
+            "answer": "Yes. Next to the CSS, the export offers ready-made Tailwind classes you can paste straight into your markup."
+          },
+          "q4": {
+            "question": "Does the exported image match the preview?",
+            "answer": "Yes. For SVG and images the same gradient is drawn as a vector graphic, at the size you choose in the export dialog."
+          }
+        }
+      }
+    },
+    "css-patterns": {
+      "name": "CSS Patterns",
+      "description": "Over 30 pure CSS patterns: dots, grids, stripes, waves and geometric shapes. Export as CSS, Tailwind, SVG or image.",
+      "params": {
+        "layers": {
+          "label": "Layers"
+        },
+        "pattern": {
+          "label": "Pattern"
+        },
+        "color": {
+          "label": "Color"
+        },
+        "accent": {
+          "label": "Accent color"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "opacity": {
+          "label": "Opacity"
+        }
+      },
+      "layer": "Layer {index}",
+      "presets": {
+        "picnic": "Picnic",
+        "blueprint": "Blueprint",
+        "candy-shop": "Candy Shop",
+        "seventies": "Seventies",
+        "seaside": "Seaside",
+        "highland": "Highland",
+        "night-dots": "Night Dots"
+      },
+      "categories": {
+        "dots": "Dots",
+        "grid": "Grid",
+        "stripes": "Stripes",
+        "waves": "Waves",
+        "geometric": "Geometric"
+      },
+      "seo": {
+        "whatIs": "CSS patterns are backgrounds the browser draws itself from gradients. They need no image file, load instantly, stay sharp at any size and can be recolored with a few characters of CSS. The library contains over 30 original patterns in five categories.",
+        "howTo": "Pick a pattern, set size, colors and opacity, and rotate stripes or grids to the angle you need. Stack up to five patterns as layers, show or hide them and change their order. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Do the patterns need an image?",
+            "answer": "No. Every pattern is made only of CSS gradients in background-image. That saves loading time and stays sharp on every screen."
+          },
+          "q2": {
+            "question": "Which browsers support the patterns?",
+            "answer": "All current browsers: Chrome, Edge, Firefox and Safari. The patterns use linear, radial and conic gradients, which have been widely supported for years."
+          },
+          "q3": {
+            "question": "How exact is the SVG export?",
+            "answer": "The SVG redraws the same geometry with SVG gradients and tiles. At most, antialiasing of single pixels may differ. For an image without any deviation, use the PNG export."
+          },
+          "q4": {
+            "question": "Can I use the patterns with Tailwind?",
+            "answer": "Yes. The export gives you Tailwind classes with arbitrary values that you paste straight into your HTML. They work with Tailwind 3 and 4."
+          },
+          "q5": {
+            "question": "May I use the patterns commercially?",
+            "answer": "Yes. What you create with Motivo is yours and may be used in personal and commercial projects."
+          }
+        }
+      },
+      "patterns": {
+        "polka": {
+          "name": "Polka Dots",
+          "description": "Evenly spaced dots on a square grid, the classic for playful surfaces."
+        },
+        "polka-staggered": {
+          "name": "Staggered Dots",
+          "description": "Dots in offset rows, denser and calmer than a straight grid."
+        },
+        "dots-duo": {
+          "name": "Two-Tone Dots",
+          "description": "Staggered dots that alternate between two colors."
+        },
+        "dots-mixed": {
+          "name": "Mixed Dots",
+          "description": "Large and small dots in two colors, alternating in a relaxed rhythm."
+        },
+        "rings": {
+          "name": "Rings",
+          "description": "Circle outlines on a grid, light and airy."
+        },
+        "target": {
+          "name": "Targets",
+          "description": "Concentric rings in two colors, like tiny targets."
+        },
+        "grid-lines": {
+          "name": "Grid Lines",
+          "description": "Thin lines on a square grid, rotatable to any angle."
+        },
+        "graph-paper": {
+          "name": "Graph Paper",
+          "description": "A fine minor grid with a bold major line every five cells."
+        },
+        "dotted-grid": {
+          "name": "Dotted Grid",
+          "description": "Grid lines with a dot on every crossing."
+        },
+        "crosshatch": {
+          "name": "Crosshatch",
+          "description": "Diagonal lines in both directions, like a lattice or hatching."
+        },
+        "bricks": {
+          "name": "Bricks",
+          "description": "A running bond brick wall drawn as mortar lines."
+        },
+        "tiles": {
+          "name": "Tiles",
+          "description": "Square tiles in two colors with narrow grout lines."
+        },
+        "stripes": {
+          "name": "Stripes",
+          "description": "Wide stripes at any angle you like."
+        },
+        "candy": {
+          "name": "Candy Stripes",
+          "description": "Two colors with narrow gaps, like a candy cane."
+        },
+        "pinstripes": {
+          "name": "Pinstripes",
+          "description": "Fine lines with lots of space, elegant and understated."
+        },
+        "tricolor": {
+          "name": "Tricolor Stripes",
+          "description": "Equal stripes in two colors plus the background."
+        },
+        "gingham": {
+          "name": "Gingham",
+          "description": "Translucent stripes in both directions create the classic check."
+        },
+        "plaid": {
+          "name": "Plaid",
+          "description": "Wide and narrow stripes in two colors, crossed like woven tartan."
+        },
+        "barcode": {
+          "name": "Barcode",
+          "description": "Irregular lines like a barcode, decorative and not machine readable."
+        },
+        "ripples": {
+          "name": "Ripples",
+          "description": "Concentric rings from the center, like ripples on water."
+        },
+        "sunrise": {
+          "name": "Sunrise",
+          "description": "Wide arcs in two colors rising from the bottom edge."
+        },
+        "wavy-lines": {
+          "name": "Wavy Lines",
+          "description": "Smooth wavy lines built from half circles, row after row."
+        },
+        "scallops": {
+          "name": "Scallops",
+          "description": "Rows of half circles with a small accent, like a scalloped edge."
+        },
+        "scales": {
+          "name": "Scales",
+          "description": "Overlapping arcs like fish scales or roof tiles."
+        },
+        "rainbow": {
+          "name": "Rainbows",
+          "description": "Little three-band rainbows, row after row."
+        },
+        "checkerboard": {
+          "name": "Checkerboard",
+          "description": "Alternating squares, as crisp as a chessboard."
+        },
+        "diamonds": {
+          "name": "Diamonds",
+          "description": "Squares standing on their tips in a dense grid."
+        },
+        "argyle": {
+          "name": "Argyle",
+          "description": "Diamonds with fine diagonal lines, known from socks and sweaters."
+        },
+        "zigzag": {
+          "name": "Zigzag",
+          "description": "Bold zigzag bands running across the surface."
+        },
+        "chevron": {
+          "name": "Chevron",
+          "description": "Zigzag bands in two colors plus the background, with a seventies feel."
+        },
+        "triangles": {
+          "name": "Triangles",
+          "description": "Every tile split along its diagonal, forming rows of triangles."
+        },
+        "pinwheel": {
+          "name": "Pinwheel",
+          "description": "Four blades per tile that turn into pinwheels."
+        },
+        "crosses": {
+          "name": "Crosses",
+          "description": "Plus signs on a regular grid."
+        },
+        "squares": {
+          "name": "Squares",
+          "description": "Small squares with space around them, calm and orderly."
+        }
       }
     },
     "blob": {
@@ -172,9 +498,26 @@
         "sticker": "Sticker"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "Blobs are soft, organic shapes for backgrounds, illustrations and accents on websites.",
-        "howTo": "Set complexity and randomness, choose a fill and download your SVG."
+        "whatIs": "Blobs are soft, organic shapes. They loosen up strict layouts and work as backgrounds, photo frames or accents behind text. Each shape starts as a few points on a circle that are nudged at random and joined with smooth curves.",
+        "howTo": "Set complexity, randomness and size, then pick a fill: solid, outline or gradient. Press Space until you like the shape. Export as SVG, as an image or as a CSS clip-path to crop photos into a blob.",
+        "faq": {
+          "q1": {
+            "question": "How do I get the same shape again?",
+            "answer": "Every shape depends on the seed and the settings. Share or bookmark the link from the editor and the exact same shape appears when you open it."
+          },
+          "q2": {
+            "question": "Can I crop a photo into a blob shape?",
+            "answer": "Yes. Export the shape as a clip-path and apply the CSS to your image. The shape scales with the element."
+          },
+          "q3": {
+            "question": "Does the SVG have a background?",
+            "answer": "No, the background is transparent by default, so the blob sits on any surface without visible edges."
+          },
+          "q4": {
+            "question": "How many points does a blob have?",
+            "answer": "That is what complexity controls. Few points give calm, round shapes, many points give lively, playful outlines."
+          }
+        }
       }
     },
     "svg-waves": {
@@ -214,9 +557,26 @@
         "ribbon": "Ribbon"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "SVG waves are lightweight vector graphics that softly separate sections of a website.",
-        "howTo": "Choose the number of layers, amplitude and direction, then export as SVG or CSS."
+        "whatIs": "SVG waves are lightweight vector graphics that softly separate the sections of a website. Instead of a hard edge, one surface flows into the next. Several layers in graded colors add depth while the file stays just a few kilobytes.",
+        "howTo": "Choose the number of layers and points, set amplitude, smoothness and coverage, and decide whether the waves rise from the bottom or hang from the top. Press Space for new variations. Export as SVG, CSS background or image.",
+        "faq": {
+          "q1": {
+            "question": "How do I place a wave between two sections?",
+            "answer": "Download the SVG and put it at the bottom of the upper section. Use the background color of the next section as the wave color and both blend seamlessly."
+          },
+          "q2": {
+            "question": "Does the wave stay sharp on wide screens?",
+            "answer": "Yes. As a vector graphic it scales without losing quality. Set its width to 100 percent in CSS and let the height follow."
+          },
+          "q3": {
+            "question": "What does smoothness do?",
+            "answer": "It sets how softly the curve runs between points. Low smoothness gives jagged, mountain-like shapes, high smoothness calm, rounded waves."
+          },
+          "q4": {
+            "question": "Can I flip the waves?",
+            "answer": "Yes. The direction setting decides whether the waves rise from the bottom or come down from the top."
+          }
+        }
       }
     },
     "polka-dots": {
@@ -270,9 +630,564 @@
         "speckle": "Speckle"
       },
       "seo": {
-        "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
-        "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
-        "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
+        "whatIs": "Polka dots are dot patterns, evenly spaced or freely scattered. Depending on size and color they look playful or calm, and they suit backgrounds for websites, packaging, cards and fabrics. Besides circles you can use rings and squares.",
+        "howTo": "Pick a layout (grid, offset or scatter), set spacing and dot size, and choose whether dots share one color, alternate or get random colors. Press Space for new variations. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "What is the difference between grid and offset?",
+            "answer": "In a grid the dots sit in straight rows and columns. Offset shifts every other row by half a step, which looks denser and more classic."
+          },
+          "q2": {
+            "question": "How do I keep scattered dots from overlapping?",
+            "answer": "With the scatter layout the dots keep a minimum distance based on the spacing. Add size variation for extra variety."
+          },
+          "q3": {
+            "question": "Can I use the pattern as a CSS background?",
+            "answer": "Yes. The CSS export embeds the pattern as SVG, so you can use it directly as a background-image."
+          },
+          "q4": {
+            "question": "Which shapes are available?",
+            "answer": "Circles, rings and squares. Rings feel lighter and work well for bright, airy backgrounds."
+          }
+        }
+      }
+    },
+    "noise-grain": {
+      "name": "Noise and Grain",
+      "description": "Grainy textures and backgrounds with fine noise over a color or gradient. Export as PNG, JPG, WebP or SVG.",
+      "groups": {
+        "grain": "Grain",
+        "base": "Base"
+      },
+      "params": {
+        "amount": {
+          "label": "Amount"
+        },
+        "size": {
+          "label": "Grain size"
+        },
+        "blend": {
+          "label": "Blend mode",
+          "options": {
+            "overlay": "Overlay",
+            "soft-light": "Soft light",
+            "multiply": "Multiply"
+          }
+        },
+        "mono": {
+          "label": "Monochrome"
+        },
+        "base": {
+          "label": "Base",
+          "options": {
+            "solid": "Color",
+            "linear": "Linear",
+            "radial": "Radial",
+            "none": "Transparent"
+          }
+        },
+        "color": {
+          "label": "Color"
+        },
+        "angle": {
+          "label": "Angle"
+        }
+      },
+      "presets": {
+        "film": "Film",
+        "paper": "Paper",
+        "riso": "Riso",
+        "midnight": "Midnight",
+        "aurora": "Aurora",
+        "sand": "Sand",
+        "overlay": "Overlay"
+      },
+      "seo": {
+        "whatIs": "Grain is fine random noise on top of a surface. It takes the sterile smoothness out of digital colors and gradients, hides banding in gradients and evokes analog film or paper.",
+        "howTo": "Pick a color or gradient as the base, adjust amount, grain size and blend mode, and press Space for a new variant. Then export as PNG, JPG, WebP or SVG at the size you need.",
+        "faq": {
+          "q1": "Which blend mode should I use?",
+          "a1": "Overlay brightens light areas and darkens dark ones for a punchy grain. Soft light is gentler. Multiply only darkens and suits paper looks and light surfaces.",
+          "q2": "How do I get a transparent grain texture?",
+          "a2": "Set the base to Transparent and export as PNG or WebP. The file then holds only the grain, ready to place over images in other apps.",
+          "q3": "Does the export look the same as the preview?",
+          "a3": "Yes. Preview and export use the same graphic, and the noise is computed from the seed. The same settings and seed always give the same grain, in every browser.",
+          "q4": "Does the pattern repeat?",
+          "a4": "The grain is a seamless 256 pixel tile. With fine grain the repeat is practically invisible, and the file stays small."
+        }
+      }
+    },
+    "grid-patterns": {
+      "name": "Grid Patterns",
+      "description": "Grid lines, dot grids, crosses or tiles with major and minor grids. Export as SVG or image.",
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "lines": "Lines",
+            "dots": "Dots",
+            "crosses": "Crosses",
+            "squares": "Tiles"
+          }
+        },
+        "cellSize": {
+          "label": "Cell size"
+        },
+        "majorEvery": {
+          "label": "Major grid every"
+        },
+        "fade": {
+          "label": "Fade",
+          "options": {
+            "none": "Off",
+            "radial": "To center",
+            "edges": "At edges"
+          }
+        },
+        "weight": {
+          "label": "Weight"
+        },
+        "lineStyle": {
+          "label": "Line style",
+          "options": {
+            "solid": "Solid",
+            "dashed": "Dashed",
+            "dotted": "Dotted"
+          }
+        }
+      },
+      "presets": {
+        "blueprint": "Blueprint",
+        "notebook": "Notebook",
+        "spotlight": "Spotlight",
+        "marks": "Marks",
+        "tiles": "Tiles",
+        "stitches": "Stitches",
+        "terminal": "Terminal"
+      },
+      "seo": {
+        "whatIs": "Grid patterns are regular grids of lines, dots, crosses or tiles. They evoke graph paper, blueprints or dotted notebooks and make a calm background for websites, slides and product shots.",
+        "howTo": "Pick a style, set the cell size and weight, and choose whether every n-th line is highlighted as a major grid. Use the fade to soften the grid towards the center or the edges. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Does the grid keep its look when I resize?",
+            "answer": "Yes. The cell size is a percentage of the shorter edge, so the grid looks equally dense in every format."
+          },
+          "q2": {
+            "question": "What is the major grid?",
+            "answer": "Every n-th line (or dot) is drawn thicker and in the second color, just like graph paper. Set it to 0 to turn it off."
+          },
+          "q3": {
+            "question": "Can I tile the grid seamlessly?",
+            "answer": "The grid is centered on the canvas. For seamless tiles, use a size that is a multiple of the cell size and turn off the fade."
+          },
+          "q4": {
+            "question": "Does the SVG work in Figma and Illustrator?",
+            "answer": "Yes. Lines are stored as paths and the fade uses a standard SVG mask that both apps can read."
+          }
+        }
+      }
+    },
+    "confetti": {
+      "name": "Confetti",
+      "description": "Confetti made of strips, circles, triangles and squiggles, evenly spread. Export as SVG or image.",
+      "params": {
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "mixed": "Mixed",
+            "rect": "Strips",
+            "circle": "Circles",
+            "triangle": "Triangles",
+            "squiggle": "Squiggles"
+          }
+        },
+        "spacing": {
+          "label": "Spacing"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "rotation": {
+          "label": "Rotation"
+        }
+      },
+      "presets": {
+        "party": "Party",
+        "pastel": "Pastel",
+        "gilded": "Gilded",
+        "streamers": "Streamers",
+        "sprinkles": "Sprinkles",
+        "prism": "Prism",
+        "parade": "Parade"
+      },
+      "seo": {
+        "whatIs": "The confetti generator spreads colorful shapes evenly yet naturally across the canvas. Great for invitations, birthday graphics, social posts and festive backgrounds.",
+        "howTo": "Pick a shape or a mix, set spacing, size and rotation, and choose your colors. Press Space for new variations. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Why don't the pieces overlap?",
+            "answer": "Positions come from Poisson-disk sampling: every piece keeps a minimum distance, so the spread looks even but still random."
+          },
+          "q2": {
+            "question": "How do I get a different arrangement with the same settings?",
+            "answer": "Press Space or change the seed. Your settings stay, only positions, shapes and colors are reshuffled."
+          },
+          "q3": {
+            "question": "Can I use a single shape?",
+            "answer": "Yes. Choose only circles or only squiggles instead of the mix."
+          },
+          "q4": {
+            "question": "Is the SVG editable?",
+            "answer": "Yes. Every piece is a plain path or circle without transforms, grouped by color."
+          }
+        }
+      }
+    },
+    "starry-sky": {
+      "name": "Starry Sky",
+      "description": "A starry night sky with a color gradient, twinkling stars and sparkles. Export as SVG or image.",
+      "params": {
+        "palette": {
+          "label": "Sky"
+        },
+        "starColor": {
+          "label": "Star color"
+        },
+        "density": {
+          "label": "Star spacing"
+        },
+        "sparkles": {
+          "label": "Sparkles"
+        },
+        "size": {
+          "label": "Star size"
+        },
+        "twinkle": {
+          "label": "Brightness variation"
+        },
+        "glow": {
+          "label": "Glow"
+        }
+      },
+      "presets": {
+        "midnight": "Midnight",
+        "dusk": "Dusk",
+        "milky-way": "Milky Way",
+        "polar": "Polar night",
+        "lullaby": "Lullaby",
+        "daybreak": "Daybreak",
+        "cosmic": "Cosmic"
+      },
+      "seo": {
+        "whatIs": "The starry sky generator creates a night sky from a color gradient and many stars of different size and brightness. Perfect for backgrounds, picture book art, event graphics and wallpapers.",
+        "howTo": "Set the sky colors from top to bottom, adjust star spacing, size and brightness variation, and add glow and a few sparkles if you like. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "How are the stars distributed?",
+            "answer": "With Poisson-disk sampling. Stars keep a minimum distance, so the sky looks natural without clumps or gaps."
+          },
+          "q2": {
+            "question": "Why are there more small stars than large ones?",
+            "answer": "Star sizes are drawn so that small stars are more common, which matches how a real night sky looks."
+          },
+          "q3": {
+            "question": "What are sparkles?",
+            "answer": "A few larger four-pointed stars that act as highlights. Set them to 0 to turn them off."
+          },
+          "q4": {
+            "question": "Can I use it as a desktop wallpaper?",
+            "answer": "Yes. Pick a desktop size such as Full HD or 4K and export as PNG."
+          }
+        }
+      }
+    },
+    "dieter-dots": {
+      "name": "Dieter Dots",
+      "description": "Concentric rings of dots, like a perforated speaker grille. Export as SVG or image.",
+      "params": {
+        "rings": {
+          "label": "Rings"
+        },
+        "dotsPerRing": {
+          "label": "Dots in first ring"
+        },
+        "ringSpacing": {
+          "label": "Ring spacing"
+        },
+        "twist": {
+          "label": "Twist"
+        },
+        "scale": {
+          "label": "Dot size"
+        },
+        "falloff": {
+          "label": "Shrink outwards"
+        },
+        "colorMode": {
+          "label": "Color mode",
+          "options": {
+            "single": "Single",
+            "alternate": "Alternate rings",
+            "gradient": "Gradient"
+          }
+        }
+      },
+      "presets": {
+        "grille": "Grille",
+        "radar": "Radar",
+        "swirl": "Swirl",
+        "target": "Target",
+        "ripple": "Ripple",
+        "sunburst": "Sunburst",
+        "mono": "Mono"
+      },
+      "seo": {
+        "whatIs": "Dieter Dots are dots arranged in concentric rings around the center, inspired by perforated speaker grilles in industrial design. The pattern feels technical and calm and suits posters, covers and product graphics.",
+        "howTo": "Set the number of rings, the dots in the first ring and the ring spacing. Twist turns the rings into a spiral, shrink outwards fades the dots towards the edge. Choose one color, alternating rings or a gradient, then export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Why do outer rings have more dots?",
+            "answer": "Each ring gets as many dots as needed to keep the spacing along the ring equal to the first ring. Ring 3 has three times as many dots as ring 1."
+          },
+          "q2": {
+            "question": "Why do I see fewer rings than I set?",
+            "answer": "Rings outside the canvas are skipped, and we draw at most 10,000 dots per image to keep the browser responsive."
+          },
+          "q3": {
+            "question": "Can I make a spiral?",
+            "answer": "Yes. Increase the twist and each ring is rotated a bit further than the previous one."
+          }
+        }
+      }
+    },
+    "palette-generator": {
+      "name": "Color Palette Generator",
+      "description": "Harmonious color palettes at the press of the space bar. Lock colors, pick a harmony, check contrast and export as CSS.",
+      "params": {
+        "count": {
+          "label": "Number of colors"
+        },
+        "harmony": {
+          "label": "Harmony",
+          "description": "Recolours all unlocked colours right away. Press the space bar for a new palette in the same harmony.",
+          "options": {
+            "auto": "Surprise me",
+            "analogous": "Analogous",
+            "complementary": "Complementary",
+            "triadic": "Triadic",
+            "split": "Split complementary",
+            "tetradic": "Tetradic"
+          }
+        },
+        "color1": {
+          "label": "Color 1"
+        },
+        "color2": {
+          "label": "Color 2"
+        },
+        "color3": {
+          "label": "Color 3"
+        },
+        "color4": {
+          "label": "Color 4"
+        },
+        "color5": {
+          "label": "Color 5"
+        },
+        "color6": {
+          "label": "Color 6"
+        },
+        "color7": {
+          "label": "Color 7"
+        },
+        "color8": {
+          "label": "Color 8"
+        },
+        "matrix": {
+          "label": "Contrast matrix",
+          "description": "Shows every color as text on every other color with its contrast ratio."
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "terracotta": "Terracotta",
+        "fjord": "Fjord",
+        "citrus": "Citrus",
+        "moss": "Moss",
+        "harbour": "Harbour",
+        "berry": "Berry",
+        "primaries": "Primaries"
+      },
+      "seo": {
+        "whatIs": "A color palette generator puts together colors that work well with each other. Motivo works in the OKLCH color space, so lightness and hue steps look even to the eye.",
+        "howTo": "Press the space bar for a new palette. Lock the colors you like, choose a harmony and export the palette as CSS variables, a HEX list or an image.",
+        "faq": {
+          "q1": "What do the harmonies mean?",
+          "a1": "Analogous uses neighboring hues, complementary uses opposite ones. Triadic spreads three hues evenly, split complementary pairs a hue with the neighbors of its opposite, and tetradic uses four hues in a square.",
+          "q2": "What happens to locked colors?",
+          "a2": "Locked colors stay when you shuffle. The first locked color acts as the anchor, and the new palette is built around it in the chosen harmony.",
+          "q3": "What does the contrast display show?",
+          "a3": "The WCAG 2 contrast ratio between each color and its label. AA means at least 4.5:1, AAA at least 7:1 for normal text.",
+          "q4": "Can I use the palette in Figma or in code?",
+          "a4": "Yes. Copy the HEX list or the CSS variables, or export the palette as SVG or PNG."
+        }
+      }
+    },
+    "tints-shades": {
+      "name": "Tints & Shades",
+      "description": "Lighter and darker steps of a color. Export as HEX, RGB, HSL or CSS variables.",
+      "params": {
+        "base": {
+          "label": "Base color"
+        },
+        "tints": {
+          "label": "Tints"
+        },
+        "shades": {
+          "label": "Shades"
+        },
+        "range": {
+          "label": "Range"
+        },
+        "method": {
+          "label": "Method",
+          "description": "OKLCH keeps the colorfulness, mixing moves evenly towards white or black.",
+          "options": {
+            "oklch": "Lightness (OKLCH)",
+            "oklab": "Mix (OKLab)",
+            "srgb": "Mix (sRGB)"
+          }
+        }
+      },
+      "groups": {
+        "scale": "Scale"
+      },
+      "presets": {
+        "lagoon": "Lagoon",
+        "tomato": "Tomato",
+        "indigo": "Indigo",
+        "sand": "Sand",
+        "forest": "Forest",
+        "slate": "Slate",
+        "sunflower": "Sunflower"
+      },
+      "seo": {
+        "whatIs": "Tints are lighter versions of a color, shades are darker ones. Together they form a scale for hover states, backgrounds and borders.",
+        "howTo": "Pick a base color, set the number of tints and shades and copy the values as HEX, RGB, HSL or CSS variables.",
+        "faq": {
+          "q1": "What is the difference between a tint and a shade?",
+          "a1": "A tint is a color mixed with white, a shade is a color mixed with black.",
+          "q2": "Which method should I choose?",
+          "a2": "The OKLCH method only changes lightness and keeps the colorfulness, so steps stay vivid. Mixing in OKLab looks even, mixing in sRGB matches classic tools like Sass.",
+          "q3": "How do I use the CSS variables?",
+          "a3": "Paste the block into your stylesheet and use the colors with var(), for example var(--primary-tint-2)."
+        }
+      }
+    },
+    "tailwind-palette": {
+      "name": "Tailwind Color Palette",
+      "description": "The eleven Tailwind steps 50 to 950 from one color. Export for tailwind.config.js, @theme, OKLCH and HEX.",
+      "params": {
+        "base": {
+          "label": "Base color",
+          "description": "Sits exactly on step 500."
+        },
+        "lightest": {
+          "label": "Lightest step (50)"
+        },
+        "darkest": {
+          "label": "Darkest step (950)"
+        },
+        "chromaFalloff": {
+          "label": "Reduce saturation at the ends"
+        },
+        "hueShift": {
+          "label": "Hue shift"
+        }
+      },
+      "groups": {
+        "scale": "Scale"
+      },
+      "presets": {
+        "ocean": "Ocean",
+        "coral": "Coral",
+        "emerald": "Emerald",
+        "amber": "Amber",
+        "grape": "Grape",
+        "stone": "Stone",
+        "rose": "Rose"
+      },
+      "seo": {
+        "whatIs": "Tailwind CSS arranges every color in eleven steps from 50 (very light) to 950 (very dark). This generator builds such a scale from your brand color, with the color itself exactly on 500.",
+        "howTo": "Pick your base color, give the palette a name and copy the code for tailwind.config.js or the @theme block for Tailwind v4.",
+        "faq": {
+          "q1": "Does it work with Tailwind v4?",
+          "a1": "Yes. The @theme export creates variables like --color-brand-500 in OKLCH, just like Tailwind v4 uses them. For older versions there is the tailwind.config.js export.",
+          "q2": "Why is my color on 500?",
+          "a2": "Step 500 is the main color in Tailwind. The lighter and darker steps follow a lightness curve modeled on well-known UI palettes.",
+          "q3": "Why are the ends less saturated?",
+          "a3": "Very light and very dark colors quickly look garish or muddy at full saturation. The slider sets how much the saturation drops.",
+          "q4": "What does OKLCH mean?",
+          "a4": "OKLCH describes colors by lightness, chroma and hue the way the eye perceives them. Modern browsers understand OKLCH directly in CSS."
+        }
+      }
+    },
+    "palette-from-image": {
+      "name": "Palette from Image",
+      "description": "Drop in a photo and get its main colors with their share in percent. The image stays in your browser.",
+      "params": {
+        "count": {
+          "label": "Number of colors",
+          "description": "How many main colors to look for in the image."
+        },
+        "sort": {
+          "label": "Order",
+          "options": {
+            "share": "Share",
+            "lightness": "Lightness",
+            "hue": "Hue"
+          }
+        },
+        "colors": {
+          "label": "Colors found"
+        },
+        "shares": {
+          "label": "Show share"
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "dominant": "Main colors",
+        "trio": "Trio",
+        "light-to-dark": "Light to dark",
+        "color-wheel": "Color wheel",
+        "full-spectrum": "All ten",
+        "quiet": "Quiet",
+        "contrast-check": "Contrast check"
+      },
+      "seo": {
+        "whatIs": "Palette from Image finds the colors that define a photo or graphic and shows how much of the area each one covers. The analysis runs entirely in your browser: your image is never uploaded and never stored.",
+        "howTo": "Drop an image onto the drop zone, paste it with Ctrl+V or choose a file (PNG, JPG, WebP, GIF or SVG up to 5 MB). Set the number of colors, press the space bar for another grouping and export the palette as a HEX list, CSS variables, Tailwind or an image.",
+        "faq": {
+          "q1": "Is my image uploaded?",
+          "a1": "No. The image is scaled down and analyzed in your browser. It never leaves your device, is not part of shared links and is not stored.",
+          "q2": "How are the colors found?",
+          "a2": "Motivo groups the pixels with k-means in the OKLab color space, which measures color differences the way the eye sees them. Each group becomes one color, and its share is the area it covers in the image.",
+          "q3": "Why does the space bar change the palette?",
+          "a3": "k-means starts from randomly chosen colors and can settle on slightly different groups depending on the start. The space bar tries a new start, so you can keep the variant you like best.",
+          "q4": "Why does a shared link show the sample image?",
+          "a4": "Shared links contain only the settings, never your image or the colors taken from it. Whoever opens the link sees the sample image and can drop in their own. To pass on the colors, export them as a HEX list or an image.",
+          "q5": "Which images work?",
+          "a5": "PNG, JPG, WebP, GIF (first frame of an animation) and SVG up to 5 MB. Transparent pixels are not counted."
+        }
       }
     }
   },
@@ -444,5 +1359,379 @@
         }
       }
     }
+  },
+  "Seo": {
+    "home": "Home",
+    "breadcrumbLabel": "Breadcrumb"
+  },
+  "Landing": {
+    "metaTitle": "{tool} online | Motivo",
+    "cta": "Open the generator",
+    "ctaSecondary": "Try the {tool} now",
+    "ctaHint": "Runs right in your browser. Your graphics are made on your device.",
+    "previewAlt": "Example motif made with the {tool}",
+    "ogAlt": "{tool} by Motivo with an example motif",
+    "presetsHeading": "Start from a preset",
+    "presetsLead": "Pick a preset and it opens right in the editor, ready to adjust.",
+    "presetLink": "{preset}, open in the editor",
+    "categoriesLabel": "Categories",
+    "whatIsHeading": "What is it?",
+    "howToHeading": "How it works",
+    "faqHeading": "FAQ",
+    "relatedHeading": "Related generators",
+    "moreInCategory": "All generators in {category}"
+  },
+  "Catalogue": {
+    "categoryNav": "Categories",
+    "openEditor": "Open in editor",
+    "openEditorFor": "{tool}: open in editor",
+    "toolCount": "{count, plural, one {# generator} other {# generators}}",
+    "showCategory": "View category",
+    "convertersLead": "Convert code and images, right in your browser.",
+    "allConverters": "All converters"
+  },
+  "CategoryPage": {
+    "metaTitle": "{category} generators | Motivo",
+    "otherCategories": "More categories",
+    "backToCatalogue": "All generators"
+  },
+  "Categories": {
+    "patterns": {
+      "name": "Patterns",
+      "description": "Repeatable patterns made of dots, lines and shapes for websites, slides and print."
+    },
+    "css-patterns": {
+      "name": "CSS patterns",
+      "description": "Patterns and gradients the browser draws itself. Copy the CSS, no image file needed."
+    },
+    "gradients": {
+      "name": "Gradients",
+      "description": "Smooth color transitions for backgrounds, buttons and hero images."
+    },
+    "backgrounds": {
+      "name": "Backgrounds",
+      "description": "Surfaces, shapes and textures that frame websites, slides and social posts."
+    },
+    "image-effects": {
+      "name": "Image effects",
+      "description": "Grain, halftone and other effects for surfaces and images."
+    },
+    "colors": {
+      "name": "Colors",
+      "description": "Palettes, tints and color scales that stay readable and fit your design system."
+    },
+    "converters": {
+      "name": "Converters",
+      "description": "Convert SVG, CSS, Base64 and images, right in your browser."
+    },
+    "social": {
+      "name": "Social media",
+      "description": "Graphics in the right formats for your channels."
+    },
+    "composer": {
+      "name": "Composer",
+      "description": "Combine several motifs into one graphic."
+    }
+  },
+  "PatternLibrary": {
+    "metaTitle": "CSS patterns to copy: {count} patterns | Motivo",
+    "metaDescription": "{count} background patterns in pure CSS: dots, grids, stripes, waves and geometric shapes. Copy, paste, done.",
+    "title": "CSS Patterns",
+    "lead": "Backgrounds in pure CSS, no image file needed. Pick a pattern, copy the code or adjust colors and size in the editor.",
+    "filterLabel": "Filter by category",
+    "all": "All",
+    "count": "{count, plural, one {# pattern} other {# patterns}}",
+    "openGenerator": "Design your own in the editor",
+    "ogAlt": "A selection of CSS patterns by Motivo",
+    "nav": "CSS Patterns"
+  },
+  "PatternPage": {
+    "metaTitle": "{pattern} CSS pattern to copy | Motivo",
+    "metaDescription": "{description} Pure CSS, ready to copy, with Tailwind classes and SVG export.",
+    "heading": "{pattern} CSS pattern",
+    "previewLabel": "Preview of the {pattern} pattern",
+    "codeHeading": "Code",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "cssLead": "Paste the lines into your element's rule. The pattern repeats by itself and adapts to any size.",
+    "copy": "Copy",
+    "copyLabel": "Copy {format}",
+    "copied": "Copied! Off to your project.",
+    "copyFailed": "That did not work. Select the code and copy it by hand.",
+    "openEditor": "Customize in the editor",
+    "openEditorHint": "Change colors, size and opacity, then export as CSS, SVG or PNG.",
+    "howToHeading": "How to use this pattern",
+    "howTo": "Copy the CSS into the rule of the element that should carry the pattern, for example a section, a card or the body. The colors are hex values in the code and can be swapped directly. In the editor you change everything with sliders and can also export the pattern as SVG or PNG.",
+    "relatedHeading": "Related patterns",
+    "backToLibrary": "All CSS patterns",
+    "ogAlt": "{pattern}, a CSS pattern by Motivo"
+  },
+  "Footer": {
+    "nav": "Footer",
+    "productHeading": "Motivo",
+    "legalHeading": "Legal",
+    "catalogue": "All tools",
+    "converters": "Converters",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "founders": "Founders waitlist"
+  },
+  "Legal": {
+    "draftBanner": {
+      "title": "Draft, pending legal review",
+      "text": "This text is a draft and has not been reviewed by a lawyer yet. Details in square brackets will be filled in before publication."
+    },
+    "lastUpdated": "Last updated: {date}",
+    "operator": {
+      "heading": "Operator",
+      "email": "Email",
+      "register": "Commercial register / UID",
+      "vat": "VAT number"
+    },
+    "imprint": {
+      "metaTitle": "Imprint",
+      "metaDescription": "Imprint of Motivo: operator, contact and legal notes.",
+      "title": "Imprint",
+      "sections": {
+        "contact": {
+          "heading": "Contact",
+          "paragraphs": ["The quickest way to reach us is by email at the address above."]
+        },
+        "responsible": {
+          "heading": "Responsible for the content",
+          "paragraphs": [
+            "The person or company named above is responsible for the content of this website."
+          ]
+        },
+        "liability": {
+          "heading": "Liability for content",
+          "paragraphs": [
+            "We create the content of this website with care. We cannot, however, guarantee that it is correct, complete and up to date.",
+            "The generators create graphics from your settings. Before you use a result, check that it fits your purpose, for example color contrast or print requirements."
+          ]
+        },
+        "links": {
+          "heading": "Liability for links",
+          "paragraphs": [
+            "This website may link to third-party websites. We have no influence on their content; the respective provider is responsible for it. If we learn of any legal violation, we remove the link right away."
+          ]
+        },
+        "copyright": {
+          "heading": "Copyright",
+          "paragraphs": [
+            "The texts, design and program code of this website are protected by copyright. The rights to use the motifs you create with the generators will be set out in the upcoming terms of use."
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "metaTitle": "Privacy policy",
+      "metaDescription": "How Motivo handles data: no cookies, images stay in your browser, cookie-free statistics and error reports.",
+      "title": "Privacy policy",
+      "intro": "Motivo is built to collect as little data as possible. There is no account, no cookies and no cross-site tracking. Motifs and images are computed in your browser. Here you can find out which data is still processed, and why.",
+      "sections": {
+        "controller": {
+          "heading": "Controller",
+          "paragraphs": [
+            "The operator named below is responsible for processing your personal data on this website. You can reach them by email with questions about privacy and with your requests."
+          ]
+        },
+        "law": {
+          "heading": "Applicable law",
+          "paragraphs": [
+            "This policy follows the Swiss Federal Act on Data Protection (FADP). Where the EU General Data Protection Regulation (GDPR) applies, for example because you visit the website from the EU or EEA, its requirements apply as well.",
+            "Where the GDPR requires a legal basis, we process data based on our legitimate interest in running the website securely, reliably and without errors (Art. 6(1)(f) GDPR). If you write to us, the legal basis is answering your request (Art. 6(1)(b) or (f) GDPR)."
+          ]
+        },
+        "hosting": {
+          "heading": "Hosting with Cloudflare",
+          "paragraphs": [
+            "The website runs on Cloudflare Workers, a service of Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA. Cloudflare delivers the pages through a worldwide network of data centers and protects them against attacks.",
+            "When you open a page, Cloudflare processes technically necessary data: your IP address, date and time, the requested address, the previously visited page (referrer), and your browser and operating system (user agent). This data is used for delivery, security and troubleshooting. We do not analyze it to identify you.",
+            "Data may be transferred to the USA and other countries in the process; see the section “Transfers abroad”."
+          ]
+        },
+        "analytics": {
+          "heading": "Statistics with Cloudflare Web Analytics",
+          "paragraphs": [
+            "To understand which pages are used and how fast they load, we use Cloudflare Web Analytics. The service works without cookies and without local storage in your browser and, according to Cloudflare, creates no profiles and no fingerprint of your device.",
+            "A small script from static.cloudflareinsights.com sends the following to Cloudflare when a page is opened: the page address without query parameters, the previously visited page, browser, operating system and device type, the country (derived from the IP address), and load times and page speed metrics. We only see aggregated numbers, never individual visits.",
+            "The script only runs on the public website, not on preview or test environments."
+          ]
+        },
+        "errors": {
+          "heading": "Error reports with Sentry",
+          "paragraphs": [
+            "To find and fix bugs, we use Sentry, a service of Functional Software, Inc., 45 Fremont Street, 8th Floor, San Francisco, CA 94105, USA. We chose the EU data region: error reports are stored in data centers in the EU (Germany).",
+            "Sentry is only loaded when an error occurs on a page. An error report contains the error message, the location in the program code, browser and operating system, the page address without query parameters and without the part after the # sign, and the time. There are no cookies, no recording of your session and no performance tracking.",
+            "Your IP address has to be processed technically for the transfer. We configured Sentry not to store IP addresses or any other personal details. Error reports are deleted automatically when the retention period of our Sentry plan ends."
+          ]
+        },
+        "cookies": {
+          "heading": "No cookies, only local settings",
+          "paragraphs": [
+            "Motivo sets no cookies. So you don’t have to pick your theme and your preferred export format every time, your browser keeps these two settings in local storage (localStorage). They stay on your device, are not sent to us, and you can delete them at any time in your browser settings."
+          ]
+        },
+        "local": {
+          "heading": "Images stay in your browser",
+          "paragraphs": [
+            "When you load an image or file into a converter or create a color palette from an image, the file is processed only in your browser. It is neither uploaded nor stored, and it is gone as soon as you close the tab."
+          ]
+        },
+        "share": {
+          "heading": "Share links",
+          "paragraphs": [
+            "A share link holds your motif’s settings in the part of the address after the # sign. Your browser does not send this part to our server. Anyone with the link can see the motif. Colors derived from an image are not included in the link."
+          ]
+        },
+        "contact": {
+          "heading": "Contact by email",
+          "paragraphs": [
+            "If you write to us, we process your email address and the content of your message to answer your request. We delete the message once it is resolved and no legal retention obligation applies."
+          ]
+        },
+        "waitlist": {
+          "heading": "Founders waitlist",
+          "paragraphs": [
+            "When you join the Founders waitlist, we process your email address, the language of the website, the time of sign-up and confirmation, and the version of the consent text. We use this data only to tell you when the lifetime licenses go on sale at the Founders price. The legal basis is your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time.",
+            "Sign-up uses double opt-in: you are only on the list once you open the link in our confirmation email. The link is valid for 48 hours. We delete unconfirmed sign-ups at the latest 30 days after the last email. Every email contains an unsubscribe link. If you unsubscribe, we delete your email address immediately.",
+            "We store the data with Supabase (Supabase, Inc., USA) in a data center in Zurich (region eu-central-2). We send the confirmation email through the email service Resend, based in the USA. Our emails contain no tracking pixels and no redirected links.",
+            "To prevent abuse, we limit the number of sign-ups. For this we derive a value from your IP address that changes daily and cannot be reversed, and delete it after one day at the latest. We do not store your IP address itself. If the Cloudflare Turnstile security check is active, Cloudflare processes technical details of your browser and your IP address when you submit the form, to detect automated sign-ups."
+          ]
+        },
+        "transfer": {
+          "heading": "Transfers abroad",
+          "paragraphs": [
+            "Cloudflare, Sentry, Supabase and Resend are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
+            "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out."
+          ]
+        },
+        "retention": {
+          "heading": "Retention",
+          "paragraphs": [
+            "We keep personal data only as long as needed for its purpose or required by law. We only see statistics in aggregated form. The providers delete technical logs and error reports automatically according to their retention periods.",
+            "For the Founders waitlist, the periods in the section “Founders waitlist” apply."
+          ]
+        },
+        "rights": {
+          "heading": "Your rights",
+          "paragraphs": [
+            "You have the right to access your personal data and to have incorrect data corrected. You can ask us to delete data or restrict its processing, and you can object to processing. Where applicable, you also have the right to receive your data in a common format.",
+            "To do so, write to us at the email address above. We may ask for proof of your identity.",
+            "You can also lodge a complaint with a supervisory authority: in Switzerland the Federal Data Protection and Information Commissioner (FDPIC), in the EU the authority of your country of residence."
+          ]
+        },
+        "changes": {
+          "heading": "Changes",
+          "paragraphs": [
+            "We update this policy when the website or the services we use change. The version published on this page applies."
+          ]
+        }
+      }
+    }
+  },
+  "Waitlist": {
+    "eyebrow": "Founders waitlist",
+    "heading": "Lock in the Founders price",
+    "lead": "The first {seats} lifetime licenses come at the Founders price. Join the list and we will let you know as soon as you can buy. Pay once, no subscription.",
+    "price": "Lifetime license from {price} CHF or EUR",
+    "priceNote": "Non-binding guide price, not an offer. We will set prices and scope before sales start.",
+    "count": "{count} of {seats} Founders spots reserved",
+    "countFull": "All {seats} Founders spots are reserved. Join anyway in case someone drops out.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "consent": "I agree that Motivo stores my email address to tell me when the Founders licenses go on sale. I can unsubscribe at any time. See the <link>privacy policy</link>.",
+    "submit": "Join the list",
+    "submitting": "Sending …",
+    "captchaLoading": "Loading security check …",
+    "honeypotLabel": "Website (leave empty)",
+    "successTitle": "Almost done!",
+    "success": "We have sent you an email. Please confirm your sign-up with the link in it. The link is valid for {hours} hours.",
+    "successHint": "No email? Check your spam folder or try again in {minutes} minutes.",
+    "errors": {
+      "email": "Please enter a valid email address.",
+      "consent": "Please confirm your consent.",
+      "invalid": "Please check your details and try again.",
+      "captcha": "The security check failed. Please try again.",
+      "rate_limited": "We are receiving a lot of sign-ups right now. Please try again later.",
+      "unavailable": "That did not work. Please try again in a few minutes.",
+      "disabled": "The waitlist is not open yet."
+    },
+    "comingSoon": "The waitlist opens soon. Check back in a few days.",
+    "loading": "Loading the waitlist …",
+    "noscript": "Signing up requires JavaScript.",
+    "learnMore": "More about the Founders license"
+  },
+  "Founders": {
+    "metaTitle": "Founders waitlist: lifetime license at the Founders price",
+    "metaDescription": "Join the waitlist and claim one of the first {seats} Founders spots for the Motivo lifetime license. Pay once, no subscription.",
+    "title": "Founders waitlist",
+    "lead": "Motivo stays free to use. A lifetime license for pro features is coming: pay once instead of every month. The first {seats} licenses come at the lowest price.",
+    "points": {
+      "once": {
+        "title": "Pay once",
+        "text": "No subscription, no renewal. The license is valid for as long as Motivo exists."
+      },
+      "future": {
+        "title": "Future tools included",
+        "text": "New generators and exports keep coming, at no extra cost."
+      },
+      "honest": {
+        "title": "Honest counter",
+        "text": "The counter shows confirmed sign-ups, straight from the database. No artificial scarcity."
+      }
+    }
+  },
+  "WaitlistResult": {
+    "backHome": "Go to the home page",
+    "backFounders": "Go to the Founders waitlist",
+    "confirm": {
+      "metaTitle": "Confirm your sign-up",
+      "title": "Confirm your sign-up",
+      "text": "Confirm with one click that you want to join the Founders waitlist.",
+      "button": "Confirm sign-up",
+      "working": "Confirming …",
+      "error": "That did not work. Please try again in a few minutes.",
+      "noToken": "Open this page with the confirmation link in our email."
+    },
+    "confirmed": {
+      "metaTitle": "Sign-up confirmed",
+      "title": "You are on the waitlist",
+      "text": "Thanks for confirming. We will email you as soon as the Founders licenses are available. You can unsubscribe at any time with the link in our email."
+    },
+    "invalid": {
+      "metaTitle": "Invalid link",
+      "title": "This link no longer works",
+      "text": "The confirmation link has expired or was already used. If you have already confirmed, you are all set. Otherwise, simply sign up again."
+    },
+    "error": {
+      "metaTitle": "Error",
+      "title": "That did not work",
+      "text": "We could not process your request right now. Please open the link again in a few minutes."
+    },
+    "unsubscribe": {
+      "metaTitle": "Unsubscribe from the waitlist",
+      "title": "Unsubscribe from the waitlist",
+      "text": "When you unsubscribe, we delete your email address and will not write to you again.",
+      "button": "Unsubscribe now",
+      "working": "Unsubscribing …",
+      "done": "You are unsubscribed. We have deleted your email address.",
+      "invalid": "This unsubscribe link is invalid or was already used. If you have already unsubscribed, there is nothing left to do.",
+      "error": "That did not work. Please try again in a few minutes.",
+      "noToken": "Open this page with the unsubscribe link in our email."
+    }
+  },
+  "WaitlistEmail": {
+    "subject": "Please confirm your Founders waitlist sign-up",
+    "heading": "Almost done",
+    "intro": "You signed up for the Motivo Founders waitlist with this email address. Please confirm with one click:",
+    "button": "Confirm sign-up",
+    "fallback": "If the button does not work, copy this link into your browser:",
+    "expiry": "The link is valid for {hours} hours and works only once.",
+    "what": "We will email you as soon as the lifetime licenses are available at the Founders price (planned from {price} CHF or EUR, non-binding). Other than that we will not write to you, and we do not share your address.",
+    "ignore": "Did not sign up? Then simply ignore this email. Without confirmation we delete your address after {days} days at the latest.",
+    "unsubscribe": "Unsubscribe",
+    "privacy": "Privacy"
   }
 }

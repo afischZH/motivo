@@ -3,9 +3,12 @@ import {
   builtInTools,
   createRegistry,
   cssGradientTool,
+  cssPatternsTool,
+  paletteFromImageTool,
+  withoutDerivedParams,
   type AnyToolDefinition,
 } from "@motivo/tool-registry";
-import { deflateSync } from "fflate";
+import { deflateSync, inflateSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import { createEditorStore, selectDesign, type Design } from "../store/editor-store";
 import {
@@ -24,6 +27,9 @@ const base64url = (bytes: Uint8Array): string =>
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+
+const base64urlDecode = (text: string): Uint8Array =>
+  Uint8Array.from(atob(text.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 
 /** Builds a code from arbitrary bytes after the version byte. */
 function packRaw(payload: Uint8Array, version = SHARE_FORMAT_VERSION): string {
@@ -69,7 +75,9 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("round trip: %s", (_,
     const code = encodeOk(d);
     expect(code).toMatch(/^[A-Za-z0-9_-]+$/);
     const r = decodeDesign(code);
-    expect(r).toEqual({ ok: true, design: d, toolVersion: tool.version, outdated: false });
+    // Image-derived params never travel in a link; they come back as defaults.
+    const expected = { ...d, params: withoutDerivedParams(tool, d.params) };
+    expect(r).toEqual({ ok: true, design: expected, toolVersion: tool.version, outdated: false });
   });
 
   it("stays short (defaults under 400 characters)", () => {
@@ -317,5 +325,115 @@ describe("hash helpers", () => {
     if (!r.ok) throw new Error(r.error);
     expect(store.getState().loadDesign(r.design)).toEqual({ ok: true });
     expect(selectDesign(store.getState())).toEqual(d);
+  });
+});
+
+describe("image-derived params", () => {
+  const tool = paletteFromImageTool;
+  const userColors = [{ color: "#123456", share: 1 }];
+
+  it("are left out when encoding, so nothing from the user's image is in the link", () => {
+    const code = encodeOk(
+      design(tool, { params: { ...tool.defaults, count: 7, colors: userColors } }),
+    );
+    const json = new TextDecoder().decode(inflateSync(base64urlDecode(code).subarray(1)));
+    expect(json).not.toContain("#123456");
+    expect(decodeDesign(code)).toMatchObject({
+      ok: true,
+      design: { params: { ...tool.defaults, count: 7 } },
+    });
+  });
+
+  it("are reset when decoding a crafted link that carries them", () => {
+    const params = { ...tool.defaults, colors: userColors };
+    const code = packJson([tool.id, tool.version, 1, 1920, 1080, params]);
+    expect(decodeDesign(code)).toMatchObject({ ok: true, design: { params: tool.defaults } });
+  });
+});
+
+describe("CSS pattern layers", () => {
+  const tool = cssPatternsTool;
+  const ids = tool.schema.shape.layers.element.shape.pattern.options;
+
+  /** The largest design the schema allows: five distinct layers, long numbers everywhere. */
+  function maxDesign(): Design {
+    const layers = Array.from({ length: 5 }, (_, i) => ({
+      pattern: ids[(i * 7) % ids.length] as (typeof ids)[number],
+      color: `#${(0x123456 + i * 0x111111).toString(16).slice(-6)}`,
+      accent: `#${(0xfedcba - i * 0x101010).toString(16).slice(-6)}`,
+      size: 200 - i * 2,
+      angle: 359.99999999999994 - i / 3,
+      opacity: 99.99999999999999 - i / 7,
+      visible: i % 2 === 0,
+    }));
+    return design(tool, {
+      params: { background: "#abcdef", layers },
+      seed: 0xffffffff,
+      size: { width: 8192, height: 8192 },
+    });
+  }
+
+  it("fits a five-layer design with maximal values into the codec limits", () => {
+    const d = maxDesign();
+    expect(tool.schema.safeParse(d.params).success).toBe(true);
+    const code = encodeOk(d);
+    expect(code.length).toBeLessThan(SHARE_MAX_ENCODED_LENGTH / 4);
+    expect(decodeDesign(code)).toEqual({
+      ok: true,
+      design: d,
+      toolVersion: tool.version,
+      outdated: false,
+    });
+  });
+
+  it("rejects a sixth layer and broken layers", () => {
+    const d = maxDesign();
+    const layers = d.params.layers as Record<string, unknown>[];
+    const first = layers[0] as Record<string, unknown>;
+    for (const params of [
+      { ...d.params, layers: [...layers, first] },
+      { ...d.params, layers: [] },
+      { ...d.params, layers: [{ ...first, color: "red" }] },
+      { ...d.params, layers: [{ ...first, pattern: "polka;}" }] },
+      { ...d.params, layers: "polka" },
+    ]) {
+      const code = packJson([tool.id, tool.version, 1, 1080, 1080, params]);
+      expect(errorOf(decodeDesign(code))).toBe("invalid-params");
+    }
+  });
+
+  it("opens old single-pattern links as a stack of one", () => {
+    const old = {
+      background: "#fffaf5",
+      pattern: "gingham",
+      color: "#d62839",
+      accent: "#e07a5f",
+      size: 28,
+      angle: 0,
+      opacity: 90,
+    };
+    const code = packJson([tool.id, 1, 1, 1080, 1080, old]);
+    const r = decodeDesign(code);
+    expect(r).toMatchObject({
+      ok: true,
+      design: {
+        params: {
+          background: "#fffaf5",
+          layers: [
+            {
+              pattern: "gingham",
+              color: "#d62839",
+              accent: "#e07a5f",
+              size: 28,
+              angle: 0,
+              opacity: 90,
+              visible: true,
+            },
+          ],
+        },
+      },
+    });
+    const bad = packJson([tool.id, 1, 1, 1080, 1080, { ...old, color: "#fff;x" }]);
+    expect(errorOf(decodeDesign(bad))).toBe("invalid-params");
   });
 });

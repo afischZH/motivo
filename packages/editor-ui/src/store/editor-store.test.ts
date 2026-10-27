@@ -1,5 +1,5 @@
 import { createRng } from "@motivo/engine";
-import { DEFAULT_CANVAS_SIZE } from "@motivo/tool-registry";
+import { DEFAULT_CANVAS_SIZE, cssPatternsTool, registry } from "@motivo/tool-registry";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fixture-tool";
 import {
@@ -170,6 +170,22 @@ describe("setParams, resetParam, resetParams", () => {
     expect(store.getState().past).toHaveLength(2);
   });
 
+  it("applyDerived merges image-derived params into the design and variant, without an undo step", () => {
+    const store = setup();
+    store.getState().setParam("count", 3);
+    store.getState().applyDerived({ count: 4, opacity: 0.2, nope: 1 });
+    const s = store.getState();
+    expect(s.params).toMatchObject({ count: 4, opacity: 0.2 });
+    expect("nope" in s.params).toBe(false);
+    expect(s.past).toHaveLength(1);
+    expect(s.variants.find((v) => v.id === s.activeVariantId)?.params).toBe(s.params);
+    const before = s.params;
+    store.getState().applyDerived({ count: 4 });
+    expect(store.getState().params).toBe(before);
+    store.getState().undo();
+    expect(store.getState().params).toEqual(fixtureDefaults);
+  });
+
   it("resetParams restores all defaults and is a no-op on defaults", () => {
     const store = setup();
     store.getState().resetParams();
@@ -247,6 +263,66 @@ describe("locks", () => {
     expect(isLockable(fixtureTool, "count")).toBe(true);
     expect(isLockable(fixtureTool, "fixed")).toBe(false);
     expect(isLockable(fixtureTool, "nope")).toBe(false);
+  });
+});
+
+describe("regenerateOn", () => {
+  const palette = () => {
+    const tool = registry.get("palette-generator");
+    if (!tool) throw new Error("palette-generator missing");
+    return tool;
+  };
+  const colors = (params: Readonly<Record<string, unknown>>) =>
+    ["color1", "color2", "color3", "color4", "color5"].map((k) => params[k]);
+
+  it("regenerates unlocked colours from the current seed when the harmony changes", () => {
+    const tool = palette();
+    const store = setup({ toolId: tool.id, registry, seed: 777 });
+    const before = store.getState().params;
+    store.getState().setParam("harmony", "triadic");
+    const s = store.getState();
+    const expected = tool.randomize(
+      createRng((777 ^ RANDOMIZE_SALT) >>> 0),
+      { ...before, harmony: "triadic" },
+      new Set(),
+    );
+    expect(s.params).toEqual({ ...expected, harmony: "triadic" });
+    expect(colors(s.params)).not.toEqual(colors(before));
+    expect(s.seed).toBe(777);
+    expect(s.past).toHaveLength(1);
+    // Undo restores the old harmony and colours in one step.
+    store.getState().undo();
+    expect(store.getState().params).toEqual(before);
+  });
+
+  it("is deterministic and matches Space with the same seed", () => {
+    const tool = palette();
+    const viaSpace = setup({ toolId: tool.id, registry, randomSeed: () => 4242 });
+    viaSpace.getState().setParams({ harmony: "analogous" });
+    viaSpace.getState().newVariant();
+    const viaHarmony = setup({ toolId: tool.id, registry, seed: 4242 });
+    viaHarmony.getState().setParam("harmony", "analogous");
+    expect(viaHarmony.getState().params).toEqual(viaSpace.getState().params);
+  });
+
+  it("keeps locked colours", () => {
+    const tool = palette();
+    const store = setup({ toolId: tool.id, registry, seed: 9 });
+    const locked = store.getState().params.color2;
+    store.getState().setLocked("color2", true);
+    store.getState().setParam("harmony", "complementary");
+    expect(store.getState().params.color2).toBe(locked);
+    store.getState().resetParam("harmony");
+    expect(store.getState().params.harmony).toBe("auto");
+    expect(store.getState().params.color2).toBe(locked);
+  });
+
+  it("leaves other params alone", () => {
+    const tool = palette();
+    const store = setup({ toolId: tool.id, registry, seed: 9 });
+    const before = store.getState().params;
+    store.getState().setParam("matrix", true);
+    expect(colors(store.getState().params)).toEqual(colors(before));
   });
 });
 
@@ -561,5 +637,118 @@ describe("setTool and loadDesign", () => {
     expect(ok.ok).toBe(true);
     expect(store.getState().toolId).toBe("test-other");
     expect(store.getState().size).toEqual({ width: 1920, height: 1080 });
+  });
+});
+
+describe("list params (layers)", () => {
+  type Layer = { pattern: string; color: string; opacity: number; visible: boolean };
+  const layersOf = (store: EditorStoreApi) => store.getState().params.layers as Layer[];
+  const patterns = (store: EditorStoreApi) => layersOf(store).map((l) => l.pattern);
+
+  function layered(): EditorStoreApi {
+    const preset = cssPatternsTool.presets.find((p) => p.id === "highland");
+    if (!preset) throw new Error("missing preset");
+    return setup({
+      toolId: cssPatternsTool.id,
+      registry,
+      params: preset.params,
+    });
+  }
+
+  it("adds, duplicates, moves and removes items as one undo step each", () => {
+    const store = layered();
+    const start = patterns(store);
+    expect(start).toEqual(["pinstripes", "argyle", "plaid"]);
+    const { listOp, undo, redo } = store.getState();
+    expect(listOp("layers", { type: "move", from: 0, to: 2 })).toBe(true);
+    expect(patterns(store)).toEqual(["argyle", "plaid", "pinstripes"]);
+    expect(listOp("layers", { type: "duplicate", index: 0 })).toBe(true);
+    expect(patterns(store)).toEqual(["argyle", "argyle", "plaid", "pinstripes"]);
+    expect(listOp("layers", { type: "add", at: 0 })).toBe(true);
+    expect(layersOf(store)).toHaveLength(5);
+    // The schema caps the list at five.
+    expect(listOp("layers", { type: "add" })).toBe(false);
+    expect(listOp("layers", { type: "duplicate", index: 0 })).toBe(false);
+    expect(listOp("layers", { type: "remove", index: 0 })).toBe(true);
+    expect(store.getState().past).toHaveLength(4);
+    undo();
+    undo();
+    expect(patterns(store)).toEqual(["argyle", "argyle", "plaid", "pinstripes"]);
+    undo();
+    undo();
+    expect(patterns(store)).toEqual(start);
+    redo();
+    expect(patterns(store)).toEqual(["argyle", "plaid", "pinstripes"]);
+  });
+
+  it("never removes the last item and refuses invalid values", () => {
+    const store = layered();
+    const { listOp } = store.getState();
+    expect(listOp("layers", { type: "remove", index: 0 })).toBe(true);
+    expect(listOp("layers", { type: "remove", index: 0 })).toBe(true);
+    expect(listOp("layers", { type: "remove", index: 0 })).toBe(false);
+    expect(layersOf(store)).toHaveLength(1);
+    const before = store.getState().params;
+    expect(listOp("layers", { type: "set", index: 0, field: "color", value: "red" })).toBe(false);
+    expect(listOp("layers", { type: "set", index: 0, field: "pattern", value: "nope" })).toBe(
+      false,
+    );
+    expect(listOp("layers", { type: "set", index: 3, field: "opacity", value: 10 })).toBe(false);
+    expect(listOp("nope", { type: "add" })).toBe(false);
+    expect(store.getState().params).toBe(before);
+  });
+
+  it("coalesces consecutive edits of one item field", () => {
+    const store = layered();
+    const { listOp } = store.getState();
+    listOp("layers", { type: "set", index: 1, field: "opacity", value: 40 });
+    clock += 100;
+    listOp("layers", { type: "set", index: 1, field: "opacity", value: 30 });
+    expect(store.getState().past).toHaveLength(1);
+    clock += 100;
+    listOp("layers", { type: "set", index: 2, field: "opacity", value: 20 });
+    expect(store.getState().past).toHaveLength(2);
+    store.getState().undo();
+    store.getState().undo();
+    expect(layersOf(store)[1]?.opacity).toBe(100);
+  });
+
+  it("moves item locks along with their item and drops them with it", () => {
+    const store = layered();
+    const { listOp, toggleLock } = store.getState();
+    expect(isLockable(cssPatternsTool, "layers.2.color")).toBe(true);
+    expect(isLockable(cssPatternsTool, "layers.2.visible")).toBe(false);
+    expect(isLockable(cssPatternsTool, "layers.9.color")).toBe(false);
+    toggleLock("layers.2.color");
+    listOp("layers", { type: "move", from: 2, to: 0 });
+    expect([...store.getState().locks]).toEqual(["layers.0.color"]);
+    listOp("layers", { type: "duplicate", index: 0 });
+    expect([...store.getState().locks].sort()).toEqual(["layers.0.color", "layers.1.color"]);
+    listOp("layers", { type: "remove", index: 0 });
+    expect([...store.getState().locks]).toEqual(["layers.0.color"]);
+  });
+
+  it("keeps locked item fields on Space and re-rolls the rest", () => {
+    const store = layered();
+    const before = layersOf(store);
+    store.getState().toggleLock("layers.1.pattern");
+    store.getState().toggleLock("layers.1.color");
+    store.getState().newVariant();
+    const after = layersOf(store);
+    expect(after).toHaveLength(3);
+    expect(after[1]?.pattern).toBe(before[1]?.pattern);
+    expect(after[1]?.color).toBe(before[1]?.color);
+    expect(after).not.toEqual(before);
+    store.getState().undo();
+    expect(layersOf(store)).toEqual(before);
+  });
+
+  it("drops item locks whose item disappears through undo", () => {
+    const store = layered();
+    store.getState().listOp("layers", { type: "add" });
+    store.getState().toggleLock("layers.3.opacity");
+    expect(store.getState().locks.has("layers.3.opacity")).toBe(true);
+    store.getState().undo();
+    expect(store.getState().locks.size).toBe(0);
   });
 });

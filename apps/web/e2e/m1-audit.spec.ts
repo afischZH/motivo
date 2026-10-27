@@ -9,6 +9,8 @@ import { readFile } from "node:fs/promises";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
+import { toolSlug } from "../i18n/slugs";
+
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
 const TOOL_IDS = ["css-gradient", "blob", "svg-waves", "polka-dots"] as const;
@@ -41,13 +43,17 @@ test.describe("axe on every M1 page", () => {
       for (const toolId of TOOL_IDS) {
         // EN blob is covered in editor.spec.ts; check every tool in German here.
         test(`/de/tools/${toolId}`, async ({ page }) => {
-          await openEditor(page, `/de/tools/${toolId}`);
+          await openEditor(page, `/de/tools/${toolSlug(toolId, "de")}`);
           if (scheme === "dark") await expect(page.locator("html")).toHaveClass(/\bdark\b/);
           await expectNoAxeViolations(page);
         });
       }
 
-      for (const path of ["/de/convert", ...CONVERTER_IDS.map((id) => `/en/convert/${id}`)]) {
+      for (const path of [
+        "/de/konverter",
+        ...CONVERTER_IDS.map((id) => `/en/convert/${id}`),
+        "/de/konverter/bild-zu-base64",
+      ]) {
         test(path, async ({ page }) => {
           await page.goto(path);
           await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -61,8 +67,8 @@ test.describe("axe on every M1 page", () => {
 test.describe("responsive layout", () => {
   for (const width of [375, 768, 1280]) {
     for (const path of [
-      "/en/tools/svg-waves",
-      "/de/tools/css-gradient",
+      "/en/tools/svg-wave-generator",
+      "/de/tools/css-verlauf-generator",
       "/en/convert/svg-to-css",
     ]) {
       test(`${path} has no horizontal overflow at ${width} px`, async ({ page }) => {
@@ -76,11 +82,33 @@ test.describe("responsive layout", () => {
       });
     }
   }
+
+  // The root cause of a 1 px page overflow seen once in Firefox: the zoom
+  // row was wider than its box at 375 px, which only shows as page overflow
+  // when a browser's font metrics add a few pixels. Check the row itself,
+  // after hydration has filled in the scale readout.
+  for (const path of ["/de/tools/css-verlauf-generator", "/en/tools/svg-wave-generator"]) {
+    test(`${path} keeps the zoom row inside its box at 375 px`, async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 800 });
+      await page.goto(path);
+      const row = page.getByRole("group", { name: /^Zoom$/ }).locator("xpath=..");
+      await expect(row.locator("output")).toHaveText(/\d/);
+      const excess = await row.evaluate((el) => {
+        const box = el.getBoundingClientRect();
+        let right = box.right;
+        for (const child of el.querySelectorAll("*")) {
+          right = Math.max(right, child.getBoundingClientRect().right);
+        }
+        return right - box.right;
+      });
+      expect(excess).toBeLessThanOrEqual(0);
+    });
+  }
 });
 
 test.describe("flows not covered by the feature specs", () => {
   test("a locked control keeps its value when shuffling", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const slider = page.getByRole("slider", { name: "Complexity" });
     const before = await slider.getAttribute("aria-valuenow");
     const motifSrc = () => page.getByTestId("preview").locator("img").getAttribute("src");
@@ -117,13 +145,13 @@ test.describe("flows not covered by the feature specs", () => {
   }
 
   test("downloads JPG", async ({ page }) => {
-    await openEditor(page, "/en/tools/svg-waves");
+    await openEditor(page, "/en/tools/svg-wave-generator");
     const { bytes } = await exportAs(page, "JPG");
     expect(bytes?.subarray(0, 3)).toEqual(Buffer.from([0xff, 0xd8, 0xff]));
   });
 
   test("downloads WebP or explains that the browser cannot encode it", async ({ page }) => {
-    await openEditor(page, "/en/tools/polka-dots");
+    await openEditor(page, "/en/tools/polka-dot-pattern-generator");
     const { dialog, bytes } = await exportAs(page, "WebP");
     if (bytes) {
       expect(bytes.subarray(0, 4).toString("ascii")).toBe("RIFF");
@@ -137,7 +165,7 @@ test.describe("flows not covered by the feature specs", () => {
 
 test.describe("keyboard only", () => {
   test("a preset can be reached with Tab and applied with Enter", async ({ page }) => {
-    await openEditor(page, "/en/tools/polka-dots");
+    await openEditor(page, "/en/tools/polka-dot-pattern-generator");
     const preset = page.getByRole("button", { name: "Retro", exact: true });
     await expect(preset).toHaveAttribute("aria-pressed", "false");
     let reached = false;
@@ -181,7 +209,7 @@ test.describe("main-thread budget", () => {
     const all: string[] = [];
     let worst = 0;
     for (const toolId of TOOL_IDS) {
-      await openEditor(page, `/en/tools/${toolId}`);
+      await openEditor(page, `/en/tools/${toolSlug(toolId, "en")}`);
       // Let hydration and preset thumbnails settle, then measure edits only.
       await page.waitForTimeout(500);
       await page.evaluate(() => {

@@ -68,7 +68,8 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
     expect(svg).toContain('width="320" height="240"');
   });
 
-  it("exports CSS declarations", () => {
+  // Colour tools offer code via extra exports instead of an SVG background.
+  it.runIf(supportsExport(tool, "css"))("exports CSS declarations", () => {
     const css = exportCss(tool, tool.defaults, ctx());
     expect(css).toMatch(/background-image: /);
     expect(css).not.toMatch(/\b(?:NaN|undefined)\b/);

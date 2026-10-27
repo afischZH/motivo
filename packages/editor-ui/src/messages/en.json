@@ -7,6 +7,27 @@
       "advanced": "Advanced",
       "moreSettings": "More settings"
     },
+    "list": {
+      "item": "Item {index}",
+      "add": "Add new",
+      "duplicate": "Duplicate {item}",
+      "moveUp": "Move {item} up",
+      "moveDown": "Move {item} down",
+      "remove": "Remove {item}",
+      "visible": "{item} visible",
+      "visibleHint": "Show or hide",
+      "isHidden": "hidden",
+      "actions": "Actions for {item}",
+      "editing": "Edit {item}",
+      "count": "{count} of {max}",
+      "keyboardHint": "Arrow keys select, add Alt to move, Delete removes.",
+      "added": "{item} added.",
+      "duplicated": "{item} duplicated as {copy}.",
+      "moved": "{item} moved, now position {position} of {count}.",
+      "removed": "{item} removed.",
+      "shown": "{item} shown.",
+      "hidden": "{item} hidden."
+    },
     "color": {
       "picker": "Pick a color",
       "hex": "Hex value",
@@ -145,7 +166,14 @@
       },
       "extras": {
         "tailwind": "Tailwind classes",
-        "clipPath": "CSS clip-path"
+        "clipPath": "CSS clip-path",
+        "cssVariables": "CSS variables",
+        "cssVariablesOklch": "CSS variables (OKLCH)",
+        "hexList": "HEX list",
+        "rgbList": "RGB list",
+        "hslList": "HSL list",
+        "tailwindConfig": "tailwind.config.js",
+        "tailwindTheme": "Tailwind v4 @theme"
       }
     },
     "share": {
@@ -172,6 +200,30 @@
         "invalid-size": "The size in the link is invalid. You are seeing the default settings.",
         "other-tool": "This link belongs to another tool. You are seeing the default settings.",
         "outdated": "This link comes from an older version. The design may look slightly different."
+      }
+    },
+    "imageInput": {
+      "title": "Image",
+      "sample": "Sample image",
+      "yourImage": "Your image",
+      "choose": "Choose image",
+      "useSample": "Use sample image",
+      "dropNow": "Release to load the image",
+      "hint": "Drag an image here, paste it with Ctrl+V or choose a file: PNG, JPG, WebP, GIF or SVG up to 5 MB. Your image stays on your device and is never uploaded.",
+      "thumbnailSample": "Sample image: sunset over a lake",
+      "thumbnailUser": "Your image: {name}",
+      "loading": "Reading image …",
+      "analysing": "Analyzing image …",
+      "ready": "{name} is analyzed. The preview shows the result.",
+      "dismiss": "Dismiss message",
+      "errors": {
+        "too-large": "The image is larger than 5 MB. Make it smaller and try again.",
+        "unsupported-type": "Motivo does not know this format. Use a PNG, JPG, WebP, GIF or SVG.",
+        "too-many-pixels": "The image has too many pixels (over 64 megapixels). Make it smaller and try again.",
+        "read-failed": "The file could not be read. Please try again.",
+        "decode-failed": "The image could not be opened. The file may be damaged.",
+        "timeout": "Analyzing took too long and was stopped. Try a smaller image.",
+        "no-result": "There is nothing to analyze in this image, for example because it is fully transparent."
       }
     }
   },

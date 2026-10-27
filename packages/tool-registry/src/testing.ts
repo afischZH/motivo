@@ -5,7 +5,9 @@
  */
 import { createRng } from "@motivo/engine";
 import { describe, expect, it } from "vitest";
+import * as z from "zod";
 import { DEFAULT_CANVAS_SIZE } from "./common";
+import { itemLockKey, parseItemLockKey } from "./randomize";
 import { TOOL_ID_PATTERN } from "./registry";
 import { createRenderContext } from "./render";
 import type {
@@ -75,8 +77,10 @@ export function checkSvg(svg: string): string[] {
   const hasSize = /\swidth="[^"]+"/.test(rootAttrs) && /\sheight="[^"]+"/.test(rootAttrs);
   if (!hasViewBox && !hasSize) problems.push("root <svg> has neither viewBox nor width/height");
 
+  // Base64 payloads (embedded raster tiles) may contain these words by chance.
+  const text = src.replace(/data:[\w/+.-]+;base64,[A-Za-z0-9+/=]*/g, "data:");
   for (const bad of ["NaN", "undefined", "Infinity", "null"]) {
-    if (new RegExp(`\\b${bad}\\b`).test(src)) problems.push(`contains "${bad}"`);
+    if (new RegExp(`\\b${bad}\\b`).test(text)) problems.push(`contains "${bad}"`);
   }
 
   const stack: string[] = [];
@@ -116,6 +120,24 @@ function schemaKeys(tool: AnyToolDefinition): Set<string> {
   return new Set(Object.keys(tool.schema.shape));
 }
 
+/** List params (arrays of objects) and their item schemas. */
+function listParams(tool: AnyToolDefinition): { key: string; item: z.ZodObject }[] {
+  return Object.entries(tool.schema.shape).flatMap(([key, schema]) =>
+    schema instanceof z.ZodArray && schema.element instanceof z.ZodObject
+      ? [{ key, item: schema.element }]
+      : [],
+  );
+}
+
+/** Lock keys of every field of the first two items of every list param. */
+function itemLockKeys(tool: AnyToolDefinition): string[] {
+  return listParams(tool).flatMap(({ key, item }) =>
+    [0, 1].flatMap((index) =>
+      Object.keys(item.shape).map((field) => itemLockKey(key, index, field)),
+    ),
+  );
+}
+
 /**
  * Registers the generic contract suite for a tool:
  * metadata, defaults and presets vs. schema, randomize (schema, locks,
@@ -151,6 +173,7 @@ export function describeToolContract<S extends ParamsSchema>(
           ...Object.keys(tool.controls?.params ?? {}),
           ...(tool.controls?.order ?? []),
           ...Object.keys(tool.gating.params ?? {}),
+          ...(anyTool.regenerateOn ?? []),
         ];
         expect(referenced.filter((k) => !known.has(k))).toEqual([]);
         const groups = new Set((tool.controls?.groups ?? []).map((g) => g.id));
@@ -159,6 +182,23 @@ export function describeToolContract<S extends ParamsSchema>(
           h?.group !== undefined && !groups.has(h.group) ? [h.group] : [],
         );
         expect(unknownGroups).toEqual([]);
+      });
+
+      it.runIf(listParams(anyTool).length > 0)("only references existing item fields", () => {
+        for (const { key, item } of listParams(anyTool)) {
+          const fields = new Set(Object.keys(item.shape));
+          const list = anyTool.controls?.params?.[key]?.list;
+          const referenced = [
+            ...Object.keys(list?.item?.params ?? {}),
+            ...(list?.item?.order ?? []),
+            ...(list?.visibilityField !== undefined ? [list.visibilityField] : []),
+            ...(list?.titleField !== undefined ? [list.titleField] : []),
+          ];
+          expect(referenced.filter((k) => !fields.has(k))).toEqual([]);
+          const items = (tool.defaults as Record<string, Record<string, unknown>[]>)[key] ?? [];
+          const added = list?.newItem?.(items) ?? items[0];
+          expect(item.safeParse(added).success).toBe(true);
+        }
       });
     });
 
@@ -221,6 +261,20 @@ export function describeToolContract<S extends ParamsSchema>(
           for (let s = 0; s < 5; s++) {
             const out = anyTool.randomize(createRng(s), start, locks);
             expect(out[key]).toEqual(start[key]);
+          }
+        }
+      });
+
+      it.each(itemLockKeys(anyTool))("keeps locked list item field %s unchanged", (key) => {
+        const path = parseItemLockKey(key);
+        if (!path) throw new Error(`not an item lock: ${key}`);
+        for (const start of starts) {
+          const before = (start[path.list] as Record<string, unknown>[])[path.index];
+          if (!before) continue;
+          for (let s = 0; s < 5; s++) {
+            const out = anyTool.randomize(createRng(s), start, new Set([key]));
+            const after = (out[path.list] as Record<string, unknown>[])[path.index];
+            expect(after?.[path.field]).toEqual(before[path.field]);
           }
         }
       });
@@ -296,23 +350,33 @@ export function describeToolContract<S extends ParamsSchema>(
   });
 }
 
+export interface SnapshotOptions extends Pick<ContractOptions, "seed" | "size"> {
+  /**
+   * Shortens the output before snapshotting, e.g. replaces an embedded
+   * raster data URI by its checksum. Must stay deterministic and must not
+   * hide changes (keep a digest of what it removes).
+   */
+  normalize?(output: StaticRenderOutput): StaticRenderOutput;
+}
+
 /**
  * Snapshots the static output of every preset, rendered with `seed`
  * (default 1, as required by CLAUDE.md) unless the preset pins its own seed.
  */
 export function describePresetSnapshots<S extends ParamsSchema>(
   tool: ToolDefinition<S>,
-  options: Pick<ContractOptions, "seed" | "size"> = {},
+  options: SnapshotOptions = {},
 ): void {
   const anyTool: AnyToolDefinition = tool;
   const seed = options.seed ?? 1;
   const size = options.size ?? tool.defaultSize ?? DEFAULT_CANVAS_SIZE;
+  const normalize = options.normalize ?? ((out: StaticRenderOutput) => out);
 
   describe(`preset snapshots: ${tool.id}`, () => {
     it.each(tool.presets.map((p) => [p.id, p] as const))("%s", (_, p) => {
       const out = renderStatic(anyTool, p.params, p.seed ?? seed, size);
       expect(out, `${tool.render.kind} tools cannot be snapshotted statically`).toBeDefined();
-      expect(out).toMatchSnapshot();
+      expect(out === undefined ? out : normalize(out)).toMatchSnapshot();
     });
 
     const extras = anyTool.extraExports ?? [];

@@ -8,3 +8,9 @@ next-env.d.ts
 .open-next/
 .wrangler/
 .dev.vars*
+
+# Generated at build time by scripts/og-images.mjs
+/public/og/
+
+# Generated at build time by scripts/headers.mjs (depends on the build env)
+/public/_headers

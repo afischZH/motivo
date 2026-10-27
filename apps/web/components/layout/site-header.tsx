@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 export function SiteHeader() {
   const t = useTranslations("Layout");
   const tConvert = useTranslations("Converters");
+  const tPatterns = useTranslations("PatternLibrary");
+  const tTheme = useTranslations("Theme");
 
   return (
     <header className="border-b border-border">
@@ -26,13 +28,20 @@ export function SiteHeader() {
               {t("toolsNav")}
             </Link>
             <Link
+              href="/css-patterns"
+              className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              {tPatterns("nav")}
+            </Link>
+            <Link
               href="/convert"
               className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               {tConvert("nav")}
             </Link>
           </nav>
-          <ThemeToggle />
+          {/* The visible hint uses the generic form; macOS users read ⌘ for Ctrl. */}
+          <ThemeToggle label={tTheme("toggle")} hint={tTheme("hint", { shortcut: "⌘/Ctrl+⇧+K" })} />
         </div>
       </div>
     </header>
