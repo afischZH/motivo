@@ -1,0 +1,31 @@
+{
+  "Metadata": {
+    "title": "Motivo",
+    "description": "Generatoren für Muster, Verläufe und Hintergründe, direkt im Browser."
+  },
+  "Layout": {
+    "skipToContent": "Zum Inhalt springen",
+    "homeLink": "Motivo, zur Startseite",
+    "brand": "Motivo",
+    "footerTagline": "Grafiken für deine Projekte, gerendert auf deinem Gerät.",
+    "languageNav": "Sprache",
+    "languages": {
+      "de": "Deutsch",
+      "en": "English"
+    }
+  },
+  "Theme": {
+    "toggle": "Dunkles Design",
+    "hint": "Hell und Dunkel wechseln ({shortcut})"
+  },
+  "Home": {
+    "title": "Motive per Klick",
+    "lead": "Muster, Verläufe und Hintergründe, direkt in deinem Browser gerendert. Die ersten Generatoren sind bald da.",
+    "engineCheck": "Engine-Check:"
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "body": "Diese Seite gibt es nicht oder nicht mehr.",
+    "home": "Zur Startseite"
+  }
+}

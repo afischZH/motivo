@@ -1,0 +1,31 @@
+{
+  "Metadata": {
+    "title": "Motivo",
+    "description": "Generators for patterns, gradients and backgrounds, right in your browser."
+  },
+  "Layout": {
+    "skipToContent": "Skip to content",
+    "homeLink": "Motivo, go to home page",
+    "brand": "Motivo",
+    "footerTagline": "Graphics for your projects, rendered on your device.",
+    "languageNav": "Language",
+    "languages": {
+      "de": "Deutsch",
+      "en": "English"
+    }
+  },
+  "Theme": {
+    "toggle": "Dark theme",
+    "hint": "Switch light and dark ({shortcut})"
+  },
+  "Home": {
+    "title": "Motifs in one click",
+    "lead": "Patterns, gradients and backgrounds, rendered right in your browser. The first generators are coming soon.",
+    "engineCheck": "Engine check:"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "This page does not exist or no longer exists.",
+    "home": "Go to home page"
+  }
+}

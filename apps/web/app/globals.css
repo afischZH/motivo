@@ -2,7 +2,135 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/*
+ * Motivo design tokens (docs/DESIGN.md section 5).
+ *
+ * Layers:
+ *  1. Raw scales: a 12-step neutral gray (--gray-1 .. --gray-12) and ONE accent
+ *     ("brand") used only for primary actions and focus. Steps follow the usual
+ *     12-step convention: 1-2 app backgrounds, 3-5 component backgrounds,
+ *     6-8 borders, 9-10 solid fills, 11 low-contrast text, 12 high-contrast text.
+ *  2. Semantic tokens (shadcn/ui names) that components use. Never use raw
+ *     scales or literal colors in components.
+ *  3. `@theme inline` maps the semantic tokens into Tailwind utilities.
+ *
+ * Contrast (WCAG 2.2 AA) was checked for both themes: body text >= 16:1,
+ * muted text >= 5.2:1 on muted surfaces, primary button text >= 5.7:1,
+ * input borders and focus ring >= 3:1 against their backgrounds.
+ */
+
 @custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: light;
+
+  /* Neutral gray, light */
+  --gray-1: oklch(0.991 0 0);
+  --gray-2: oklch(0.979 0 0);
+  --gray-3: oklch(0.955 0 0);
+  --gray-4: oklch(0.935 0 0);
+  --gray-5: oklch(0.915 0 0);
+  --gray-6: oklch(0.893 0 0);
+  --gray-7: oklch(0.86 0 0);
+  --gray-8: oklch(0.8 0 0);
+  --gray-9: oklch(0.64 0 0);
+  --gray-10: oklch(0.6 0 0);
+  --gray-11: oklch(0.5 0 0);
+  --gray-12: oklch(0.21 0 0);
+
+  /* Accent (indigo-violet), light */
+  --brand-3: oklch(0.95 0.02 275);
+  --brand-9: oklch(0.52 0.2 275);
+  --brand-10: oklch(0.47 0.19 275);
+  --brand-11: oklch(0.45 0.17 275);
+  --brand-contrast: oklch(0.99 0 0);
+
+  --danger-9: oklch(0.53 0.2 27);
+  --danger-contrast: oklch(0.99 0 0);
+
+  /* Semantic */
+  --background: var(--gray-1);
+  --foreground: var(--gray-12);
+  --card: var(--gray-1);
+  --card-foreground: var(--gray-12);
+  --popover: var(--gray-1);
+  --popover-foreground: var(--gray-12);
+  --primary: var(--brand-9);
+  --primary-hover: var(--brand-10);
+  --primary-foreground: var(--brand-contrast);
+  --secondary: var(--gray-3);
+  --secondary-foreground: var(--gray-12);
+  --muted: var(--gray-3);
+  --muted-foreground: var(--gray-11);
+  --accent: var(--gray-4);
+  --accent-foreground: var(--gray-12);
+  --destructive: var(--danger-9);
+  --destructive-foreground: var(--danger-contrast);
+  --border: var(--gray-6);
+  --input: var(--gray-9);
+  --ring: var(--brand-9);
+  --link: var(--brand-11);
+  --highlight: var(--brand-3);
+  /* Neutral stage behind generated motifs (preview area). */
+  --canvas: var(--gray-5);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  --sidebar: var(--gray-2);
+  --sidebar-foreground: var(--gray-12);
+  --sidebar-primary: var(--brand-9);
+  --sidebar-primary-foreground: var(--brand-contrast);
+  --sidebar-accent: var(--gray-4);
+  --sidebar-accent-foreground: var(--gray-12);
+  --sidebar-border: var(--gray-6);
+  --sidebar-ring: var(--brand-9);
+
+  /* Kept for shadcn components that compute from it. */
+  --radius: 0.625rem;
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Neutral gray, dark */
+  --gray-1: oklch(0.165 0 0);
+  --gray-2: oklch(0.195 0 0);
+  --gray-3: oklch(0.235 0 0);
+  --gray-4: oklch(0.26 0 0);
+  --gray-5: oklch(0.285 0 0);
+  --gray-6: oklch(0.315 0 0);
+  --gray-7: oklch(0.36 0 0);
+  --gray-8: oklch(0.44 0 0);
+  --gray-9: oklch(0.56 0 0);
+  --gray-10: oklch(0.61 0 0);
+  --gray-11: oklch(0.75 0 0);
+  --gray-12: oklch(0.955 0 0);
+
+  /* Accent, dark: lighter fill with dark text keeps contrast high. */
+  --brand-3: oklch(0.27 0.05 275);
+  --brand-9: oklch(0.72 0.14 275);
+  --brand-10: oklch(0.78 0.1 275);
+  --brand-11: oklch(0.8 0.09 275);
+  --brand-contrast: oklch(0.165 0 0);
+
+  --danger-9: oklch(0.7 0.17 25);
+  --danger-contrast: oklch(0.165 0 0);
+
+  --card: var(--gray-2);
+  --popover: var(--gray-2);
+  --canvas: var(--gray-3);
+  --sidebar: var(--gray-2);
+
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -12,6 +140,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -24,18 +153,14 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-link: var(--link);
+  --color-highlight: var(--highlight);
+  --color-canvas: var(--canvas);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -46,80 +171,67 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+@theme {
+  /*
+   * Typography: system sans until a licensed (OFL) webfont is chosen.
+   * Scale 12/14/16/20/24/32/48 = text-xs/sm/base/xl/2xl/3xl/4xl.
+   */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 1.1;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /*
+   * Radius: 6 controls, 10 cards, 16 sheets. shadcn components use rounded-md
+   * for controls and rounded-xl for cards, so those aliases match.
+   */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 1rem;
+  --radius-control: 0.375rem;
+  --radius-card: 0.625rem;
+  --radius-sheet: 1rem;
+
+  /* Spacing stays on Tailwind's 4 px grid (--spacing: 0.25rem). */
+
+  /* Motion: 150 to 250 ms, ease-out */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --default-transition-duration: var(--duration-fast);
+  --default-transition-timing-function: var(--ease-out);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground;
+  }
+  /* Visible focus in both themes, for every focusable element. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
