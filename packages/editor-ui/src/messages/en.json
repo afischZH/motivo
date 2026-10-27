@@ -1,0 +1,192 @@
+{
+  "Editor": {
+    "controls": {
+      "lock": "Lock {label}",
+      "lockHint": "Locked values stay the same when you shuffle",
+      "resetHint": "Double-click to reset to the default",
+      "advanced": "Advanced",
+      "moreSettings": "More settings"
+    },
+    "color": {
+      "picker": "Pick a color",
+      "hex": "Hex value",
+      "invalid": "Enter a hex value like #1e90ff.",
+      "eyedropper": "Pick a color from the screen"
+    },
+    "background": {
+      "transparent": "Transparent"
+    },
+    "palette": {
+      "swatch": "Color {index} of {count}, {value}",
+      "add": "Add color",
+      "remove": "Remove color",
+      "moveLeft": "Move left",
+      "moveRight": "Move right"
+    },
+    "shell": {
+      "history": "History",
+      "undo": "Undo",
+      "redo": "Redo",
+      "undone": "Undone",
+      "redone": "Redone",
+      "newVariant": "Shuffle",
+      "newVariantHint": "new variant",
+      "export": "Export",
+      "preview": "Preview",
+      "previewAlt": "Preview: {tool}, {width} × {height} px",
+      "unsupported": "There is no preview for this tool yet.",
+      "zoom": "Zoom",
+      "zoomFit": "Fit",
+      "zoomPercent": "{percent}%",
+      "zoomCurrent": "Current zoom",
+      "presets": "Presets",
+      "settings": "Settings",
+      "variants": "Variants",
+      "variantLabel": "Variant {index}",
+      "variantAnnouncement": "Variant {index} of {count}",
+      "previousVariant": "Previous variant",
+      "nextVariant": "Next variant"
+    },
+    "size": {
+      "label": "Size",
+      "custom": "Custom size",
+      "width": "Width",
+      "height": "Height",
+      "option": "{name} ({width} × {height})",
+      "invalid": "Use a whole number from {min} to {max} px.",
+      "groups": {
+        "social": "Social media",
+        "desktop": "Desktop",
+        "mobile": "Mobile",
+        "print": "Print"
+      }
+    },
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "close": "Close",
+      "keysColumn": "Keys",
+      "actionColumn": "Action",
+      "or": "or",
+      "focusHint": "Shortcuts pause while you type in a field.",
+      "keys": {
+        "space": "Space"
+      },
+      "actions": {
+        "newVariant": "New variant",
+        "undo": "Undo",
+        "redo": "Redo",
+        "previousVariant": "Previous variant",
+        "nextVariant": "Next variant",
+        "zoomFit": "Zoom to fit",
+        "zoom100": "Zoom to 100%",
+        "theme": "Switch light and dark",
+        "help": "This overview",
+        "export": "Open export",
+        "copyImage": "Copy as PNG"
+      }
+    },
+    "export": {
+      "title": "Export",
+      "close": "Close",
+      "noFormats": "This tool has no export yet.",
+      "format": "Format",
+      "categories": {
+        "image": "Image",
+        "vector": "Vector",
+        "code": "Code"
+      },
+      "formats": {
+        "png": "PNG",
+        "jpg": "JPG",
+        "webp": "WebP",
+        "svg": "SVG",
+        "css": "CSS"
+      },
+      "size": "Size",
+      "scale": "{scale}× ({width} × {height})",
+      "customSize": "Custom size",
+      "outputSize": "Result: {width} × {height} px.",
+      "recomposed": "Different aspect ratio: the design is recomposed for this format.",
+      "clamped": "Scaled down to at most {max} px per side.",
+      "quality": "Quality",
+      "background": "Background",
+      "backgroundHint": "JPG has no transparency, so it needs a color.",
+      "code": "Code",
+      "fileSize": "{value} {unit}",
+      "codeTruncated": "Shortened here. Copy and download contain everything.",
+      "progress": "Export progress",
+      "cancel": "Cancel",
+      "cancelled": "Export cancelled.",
+      "working": "Exporting…",
+      "copying": "Copying…",
+      "downloaded": "Downloaded.",
+      "copied": "Copied! Off to your project.",
+      "copiedPng": "Copied as PNG! Off to your project.",
+      "copyText": "Copy",
+      "copyImage": "Copy image",
+      "download": "Download",
+      "copyOnlyPng": "Images can only be copied as PNG.",
+      "copyUnavailableText": "Your browser cannot copy directly. Download the file instead.",
+      "copyUnavailableImage": "Your browser cannot put images on the clipboard. Download the PNG instead.",
+      "errors": {
+        "unsupportedFormat": "This tool does not offer that format.",
+        "decodeFailed": "The design could not be turned into an image. Try again or export as SVG.",
+        "encodeUnsupported": "Your browser cannot save this format. Use PNG or JPG.",
+        "encodeFailed": "The image is too large for this device.",
+        "encodeFailedHint": "Choose a smaller size, for example 1× or 2×.",
+        "unavailable": "Your browser does not support this export. Try a current browser.",
+        "aborted": "Export cancelled.",
+        "unknown": "Something went wrong. Please try again."
+      },
+      "copyErrors": {
+        "unsupported": "Your browser cannot put this on the clipboard.",
+        "denied": "The browser blocked clipboard access. Download the file instead.",
+        "failed": "Copying did not work. Please try again."
+      },
+      "extras": {
+        "tailwind": "Tailwind classes",
+        "clipPath": "CSS clip-path"
+      }
+    },
+    "share": {
+      "button": "Share",
+      "hint": "Copy a link to this design",
+      "copied": "Link copied! Anyone who opens it sees exactly this design.",
+      "copyFailed": "Copying did not work. Select the link and copy it yourself.",
+      "linkLabel": "Link to this design",
+      "dismiss": "Dismiss notice",
+      "encodeErrors": {
+        "unknown-tool": "This design cannot be shared as a link.",
+        "invalid-params": "This design cannot be shared as a link.",
+        "invalid-seed": "This design cannot be shared as a link.",
+        "invalid-size": "This design cannot be shared as a link.",
+        "too-long": "This design is too large for a link."
+      },
+      "notices": {
+        "too-long": "The shared link is too long. You are seeing the default settings.",
+        "malformed": "The shared link is damaged. You are seeing the default settings.",
+        "unsupported-version": "This link comes from an unknown version. You are seeing the default settings.",
+        "unknown-tool": "The tool in this link does not exist. You are seeing the default settings.",
+        "invalid-params": "The settings in the link do not fit this tool. You are seeing the default settings.",
+        "invalid-seed": "The variant in the link is invalid. You are seeing the default settings.",
+        "invalid-size": "The size in the link is invalid. You are seeing the default settings.",
+        "other-tool": "This link belongs to another tool. You are seeing the default settings.",
+        "outdated": "This link comes from an older version. The design may look slightly different."
+      }
+    }
+  },
+  "sizes": {
+    "square": "Square",
+    "portrait": "Portrait",
+    "story": "Story",
+    "landscape": "Landscape (link preview)",
+    "banner": "Banner",
+    "full-hd": "Full HD",
+    "qhd": "QHD",
+    "uhd-4k": "4K UHD",
+    "phone": "Phone",
+    "tablet": "Tablet",
+    "a4-portrait": "A4 portrait",
+    "a4-landscape": "A4 landscape"
+  }
+}

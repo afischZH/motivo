@@ -5,7 +5,12 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   // Workspace packages ship TypeScript source and must be compiled by Next.
-  transpilePackages: ["@motivo/engine"],
+  transpilePackages: [
+    "@motivo/engine",
+    "@motivo/tool-registry",
+    "@motivo/exporters",
+    "@motivo/editor-ui",
+  ],
 };
 
 export default withNextIntl(nextConfig);

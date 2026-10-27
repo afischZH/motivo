@@ -12,7 +12,9 @@
     "languages": {
       "de": "Deutsch",
       "en": "English"
-    }
+    },
+    "mainNav": "Hauptnavigation",
+    "toolsNav": "Tools"
   },
   "Theme": {
     "toggle": "Dunkles Design",
@@ -27,5 +29,420 @@
     "title": "Seite nicht gefunden",
     "body": "Diese Seite gibt es nicht oder nicht mehr.",
     "home": "Zur Startseite"
+  },
+  "ToolsIndex": {
+    "metaTitle": "Generatoren | Motivo",
+    "metaDescription": "Alle Generatoren für Muster, Verläufe und Hintergründe, direkt in deinem Browser.",
+    "title": "Generatoren",
+    "lead": "Such dir einen Generator aus, drück die Leertaste und lass dich überraschen."
+  },
+  "ToolPage": {
+    "metaTitle": "{tool} | Motivo",
+    "allTools": "Alle Generatoren"
+  },
+  "tools": {
+    "common": {
+      "params": {
+        "background": {
+          "label": "Hintergrund"
+        },
+        "palette": {
+          "label": "Farben"
+        }
+      },
+      "groups": {
+        "colors": "Farben",
+        "shape": "Form",
+        "layout": "Anordnung"
+      }
+    },
+    "css-gradient": {
+      "name": "CSS-Verlauf",
+      "description": "Lineare, radiale und konische Verläufe mit sanften Übergängen in OKLCH. Als CSS, SVG oder Bild exportieren.",
+      "groups": {
+        "gradient": "Verlauf",
+        "easing": "Übergang"
+      },
+      "params": {
+        "interpolation": {
+          "label": "Farbraum",
+          "options": {
+            "oklch": "OKLCH",
+            "oklab": "OKLab",
+            "srgb": "sRGB"
+          }
+        },
+        "hue": {
+          "label": "Farbton-Richtung",
+          "options": {
+            "shorter": "Kurzer Weg",
+            "longer": "Langer Weg"
+          }
+        },
+        "type": {
+          "label": "Typ",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "conic": "Konisch"
+          }
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "centerX": {
+          "label": "Mitte horizontal"
+        },
+        "centerY": {
+          "label": "Mitte vertikal"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "ellipse": "Ellipse"
+          }
+        },
+        "loop": {
+          "label": "Zurück zur ersten Farbe"
+        },
+        "easing": {
+          "label": "Übergangskurve",
+          "options": {
+            "linear": "Gleichmässig",
+            "ease-in": "Langsamer Start",
+            "ease-out": "Sanftes Ende",
+            "ease-in-out": "Beidseitig sanft"
+          }
+        },
+        "steps": {
+          "label": "Zwischenstopps"
+        }
+      },
+      "presets": {
+        "dawn": "Morgengrauen",
+        "lagoon": "Lagune",
+        "ember": "Glut",
+        "prism": "Prisma",
+        "meadow": "Wiese",
+        "dusk": "Abenddämmerung",
+        "citrus": "Zitrus"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei und bleibt in jeder Grösse scharf.",
+        "howTo": "Wähle Farben und Typ, passe Winkel und Übergang an und kopiere das CSS. Mit der Leertaste würfelst du neue Varianten."
+      }
+    },
+    "blob": {
+      "name": "Blob-Generator",
+      "description": "Organische Formen per Klick, mit Farbe, Kontur oder Verlauf. Als SVG oder Bild exportieren.",
+      "params": {
+        "complexity": {
+          "label": "Komplexität"
+        },
+        "randomness": {
+          "label": "Zufälligkeit"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "fillStyle": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "outline": "Kontur",
+            "gradient": "Verlauf"
+          }
+        },
+        "strokeWidth": {
+          "label": "Linienstärke"
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        }
+      },
+      "presets": {
+        "pebble": "Kiesel",
+        "splash": "Spritzer",
+        "lava": "Lava",
+        "lasso": "Lasso",
+        "petal": "Blütenblatt",
+        "cumulus": "Quellwolke",
+        "sticker": "Sticker"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "Blobs sind weiche, organische Formen für Hintergründe, Illustrationen und Akzente auf Websites.",
+        "howTo": "Stelle Komplexität und Zufälligkeit ein, wähle eine Füllung und lade dein SVG herunter."
+      }
+    },
+    "svg-waves": {
+      "name": "SVG-Wellen",
+      "description": "Geschichtete Wellen für Abschnitte, Header und Hintergründe. Als SVG, CSS oder Bild exportieren.",
+      "params": {
+        "layers": {
+          "label": "Ebenen"
+        },
+        "points": {
+          "label": "Punkte"
+        },
+        "amplitude": {
+          "label": "Wellenhöhe"
+        },
+        "smoothness": {
+          "label": "Rundung"
+        },
+        "coverage": {
+          "label": "Abdeckung"
+        },
+        "direction": {
+          "label": "Richtung",
+          "options": {
+            "up": "Von unten",
+            "down": "Von oben"
+          }
+        }
+      },
+      "presets": {
+        "tide": "Flut",
+        "dunes": "Dünen",
+        "aurora": "Polarlicht",
+        "shallows": "Untiefe",
+        "ridges": "Bergkämme",
+        "storm": "Sturm",
+        "ribbon": "Band"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst.",
+        "howTo": "Wähle Anzahl Ebenen, Wellenhöhe und Richtung, dann exportiere als SVG oder CSS."
+      }
+    },
+    "polka-dots": {
+      "name": "Polka Dots",
+      "description": "Punktmuster im Raster, versetzt oder frei verstreut. Als SVG oder Bild exportieren.",
+      "params": {
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "grid": "Raster",
+            "offset": "Versetzt",
+            "scatter": "Verstreut"
+          }
+        },
+        "spacing": {
+          "label": "Abstand"
+        },
+        "jitter": {
+          "label": "Zufallsversatz"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "ring": "Ring",
+            "square": "Quadrat"
+          }
+        },
+        "size": {
+          "label": "Punktgrösse"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "single": "Eine Farbe",
+            "alternate": "Abwechselnd",
+            "random": "Zufällig"
+          }
+        }
+      },
+      "presets": {
+        "picnic": "Picknick",
+        "retro": "Retro",
+        "pebbles": "Kieselsteine",
+        "halo": "Lichtringe",
+        "mosaic": "Mosaik",
+        "fizz": "Sprudel",
+        "speckle": "Sprenkel"
+      },
+      "seo": {
+        "todo": "TODO M2: Platzhalter, SEO-Texte finalisieren (3 bis 5 FAQ)",
+        "whatIs": "Polka Dots sind regelmässige oder verstreute Punktmuster, ein Klassiker für Hintergründe, Verpackungen und Textilien.",
+        "howTo": "Wähle Anordnung, Abstand und Punktgrösse, mische deine Farben und exportiere als SVG oder PNG."
+      }
+    }
+  },
+  "Converters": {
+    "nav": "Konverter",
+    "index": {
+      "title": "Konverter",
+      "lead": "Wandle SVG, CSS, Base64 und Bilder in beide Richtungen um. Gratis, schnell und direkt in deinem Browser.",
+      "metaTitle": "Konverter für SVG, CSS, Base64 und Bilder",
+      "metaDescription": "Gratis Konverter für SVG zu CSS, SVG zu Base64, Bild zu Base64 und zurück. Alles läuft in deinem Browser."
+    },
+    "common": {
+      "breadcrumb": "Konverter",
+      "privacy": "Alles passiert in deinem Browser. Deine Daten verlassen dein Gerät nicht.",
+      "input": "Eingabe",
+      "output": "Ergebnis",
+      "outputLabel": "Umgewandelter Code",
+      "preview": "Vorschau",
+      "previewEmpty": "Hier erscheint die Vorschau.",
+      "previewAlt": "Vorschau des umgewandelten Bildes",
+      "chooseFile": "Datei wählen",
+      "dropHint": "Du kannst auch eine Datei ins Feld ziehen.",
+      "dropzone": "Bild wählen oder hierher ziehen",
+      "pasteHint": "Du kannst ein Bild auch mit ⌘/Ctrl+V einfügen.",
+      "selectedFile": "Ausgewählt: {name}",
+      "example": "Beispiel einfügen",
+      "clear": "Leeren",
+      "copy": "Kopieren",
+      "copied": "Kopiert! Ab ins Projekt damit.",
+      "copyFailed": "Kopieren hat nicht geklappt. Markiere den Text und kopiere ihn von Hand.",
+      "download": "Herunterladen",
+      "format": "Ausgabeformat",
+      "formats": {
+        "css": "CSS",
+        "dataUri": "Data-URI",
+        "base64": "Nur Base64",
+        "html": "HTML-Tag"
+      },
+      "working": "Wird umgewandelt …",
+      "inputSize": "Eingabe: {size}",
+      "outputSize": "Ergebnis: {size}",
+      "truncated": "Das Ergebnis ist sehr lang. Hier siehst du nur den Anfang, Kopieren und Herunterladen liefern alles.",
+      "imageType": "Typ",
+      "imageSize": "Grösse",
+      "imageDimensions": "Abmessungen",
+      "dimensions": "{width} × {height} px",
+      "notes": {
+        "addedNamespace": "Der fehlende SVG-Namespace (xmlns) wurde ergänzt, damit das Bild angezeigt wird.",
+        "multipleFound": "{count} Data-URIs gefunden, angezeigt wird das erste SVG.",
+        "typeMismatch": "Die Data-URI nennt einen anderen Typ. Am Inhalt erkannt: {type}."
+      },
+      "errors": {
+        "empty": "Füge etwas ein, um loszulegen.",
+        "tooLarge": "Das ist mehr als {limit}. Bitte nimm eine kleinere Eingabe.",
+        "notSvg": "Das sieht nicht nach SVG aus. SVG-Code braucht ein svg-Wurzelelement, das am Schluss geschlossen wird.",
+        "invalidBase64": "Das ist kein gültiges Base64. Erlaubt sind Buchstaben, Ziffern sowie die Zeichen +, /, = und Leerzeichen.",
+        "invalidDataUri": "Diese Data-URI ist unvollständig. Sie braucht die Form data:typ;base64,inhalt.",
+        "noDataUri": "Keine Data-URI gefunden. Suche in deinem CSS nach url(\"data:image/svg+xml,...\").",
+        "unsupportedType": "Dieser Typ wird nicht unterstützt. Erlaubt sind PNG, JPG, WebP, GIF und SVG.",
+        "notAnImage": "Der Inhalt ist kein unterstütztes Bild (PNG, JPG, WebP, GIF oder SVG).",
+        "readFailed": "Die Datei konnte nicht gelesen werden."
+      },
+      "whatIsHeading": "Worum geht’s?",
+      "howToHeading": "So geht’s",
+      "faqHeading": "Häufige Fragen",
+      "relatedHeading": "Weitere Konverter"
+    },
+    "items": {
+      "svg-to-css": {
+        "name": "SVG zu CSS",
+        "title": "SVG-zu-CSS-Konverter",
+        "description": "Mach aus SVG-Code einen CSS-Hintergrund mit kompakter, URL-kodierter Data-URI.",
+        "inputLabel": "SVG-Code",
+        "placeholder": "Füge hier SVG-Code ein",
+        "whatIs": "Eine Data-URI bettet das SVG direkt in dein Stylesheet ein, der Browser braucht also keine zusätzliche Anfrage. Die URL-Kodierung hält den Code kürzer und lesbarer als Base64. Das ist ideal für Icons, Muster und Hintergründe in CSS.",
+        "howTo": "Füge dein SVG ein oder zieh eine SVG-Datei ins Feld. Wähle das Ausgabeformat, prüfe die Vorschau und kopiere das Ergebnis in dein CSS.",
+        "faq": {
+          "q1": "Warum URL-Kodierung statt Base64?",
+          "a1": "SVG ist Text. Bei der URL-Kodierung werden nur wenige Zeichen umschrieben, darum ist das Ergebnis meist rund ein Drittel kleiner als mit Base64 und lässt sich mit gzip besser komprimieren.",
+          "q2": "Warum wird mein SVG nicht angezeigt?",
+          "a2": "Ein SVG als Bild braucht das Attribut xmlns=\"http://www.w3.org/2000/svg\" im Wurzelelement. Fehlt es, ergänzt der Konverter es automatisch. Externe Bilder und Schriften im SVG lädt der Browser in CSS-Hintergründen nicht.",
+          "q3": "Wird mein SVG hochgeladen?",
+          "a3": "Nein. Die Umwandlung läuft komplett in deinem Browser, es wird nichts an einen Server geschickt."
+        }
+      },
+      "css-to-svg": {
+        "name": "CSS zu SVG",
+        "title": "CSS-zu-SVG-Konverter",
+        "description": "Hol das SVG aus einer Data-URI in deinem CSS, egal ob URL-kodiert oder Base64, und erhalte sauberen SVG-Code.",
+        "inputLabel": "CSS mit Data-URI",
+        "placeholder": "background-image: url(\"data:image/svg+xml,...\");",
+        "whatIs": "Viele Stylesheets enthalten Icons und Muster als eingebettete SVG-Data-URIs. Der Konverter findet die erste SVG-Data-URI in deinem CSS, dekodiert sie und zeigt dir den ursprünglichen SVG-Code, damit du ihn wieder bearbeiten kannst.",
+        "howTo": "Füge eine CSS-Regel, einen url()-Wert oder die nackte Data-URI ein. Daneben erscheint das SVG, bereit zum Kopieren oder als SVG-Datei zum Herunterladen.",
+        "faq": {
+          "q1": "Welche Formate werden erkannt?",
+          "a1": "Data-URIs vom Typ image/svg+xml, URL-kodiert oder in Base64, in doppelten, einfachen oder ganz ohne Anführungszeichen.",
+          "q2": "Mein CSS enthält mehrere Bilder. Welches erhalte ich?",
+          "a2": "Die erste SVG-Data-URI. Willst du eine andere, füge nur die passende Regel ein.",
+          "q3": "Kann ich das SVG bedenkenlos verwenden?",
+          "a3": "Die Vorschau zeigt das SVG als Bild, Scripts darin laufen hier also nie. SVG aus unbekannten Quellen prüfst du am besten, bevor du es direkt in deine Seiten einbaust."
+        }
+      },
+      "svg-to-base64": {
+        "name": "SVG zu Base64",
+        "title": "SVG-zu-Base64-Konverter",
+        "description": "Kodiere SVG als Base64, für Data-URIs, CSS, HTML oder JSON.",
+        "inputLabel": "SVG-Code",
+        "placeholder": "Füge hier SVG-Code ein",
+        "whatIs": "Base64 verwandelt jede Datei in reine Buchstaben und Ziffern. Für SVG ist das praktisch, wo nur Base64 akzeptiert wird, etwa in manchen E-Mail-Programmen, JSON-APIs oder älteren Tools.",
+        "howTo": "Füge dein SVG ein oder wähle eine Datei. Wähle Data-URI, nur Base64, CSS oder ein HTML-Tag und kopiere das Ergebnis.",
+        "faq": {
+          "q1": "Base64 oder URL-Kodierung?",
+          "a1": "Für CSS ist die URL-Kodierung meist kürzer. Base64 ist etwa 33 Prozent grösser als das Original, funktioniert aber überall, wo Data-URIs erlaubt sind.",
+          "q2": "Funktionieren Umlaute und Emoji?",
+          "a2": "Ja. Das SVG wird vor der Base64-Kodierung als UTF-8 umgewandelt, Sonderzeichen bleiben also erhalten.",
+          "q3": "Gibt es eine Grössenbeschränkung?",
+          "a3": "Eingaben bis 5 MB werden direkt in deinem Browser umgewandelt. Grosse Data-URIs bremsen Seiten aus, halte eingebettete Grafiken also möglichst klein."
+        }
+      },
+      "base64-to-svg": {
+        "name": "Base64 zu SVG",
+        "title": "Base64-zu-SVG-Konverter",
+        "description": "Dekodiere Base64 oder eine Data-URI zurück in lesbaren SVG-Code.",
+        "inputLabel": "Base64 oder Data-URI",
+        "placeholder": "data:image/svg+xml;base64,PHN2Zy...",
+        "whatIs": "Eingebettete SVGs sind als Base64 kaum lesbar. Der Konverter dekodiert die Zeichenkette, prüft, ob es wirklich ein SVG ist, und zeigt dir Code und Vorschau.",
+        "howTo": "Füge reines Base64, eine Data-URI oder eine ganze CSS-Zeile ein. Kopiere den SVG-Code oder lade ihn als Datei herunter.",
+        "faq": {
+          "q1": "Brauche ich das Präfix data:image/svg+xml?",
+          "a1": "Nein. Reines Base64 und vollständige Data-URIs funktionieren beide, Zeilenumbrüche und Leerzeichen werden ignoriert.",
+          "q2": "Warum erhalte ich eine Fehlermeldung?",
+          "a2": "Entweder ist die Zeichenkette kein gültiges Base64 oder der Inhalt ist kein SVG. Für PNG, JPG und andere Bilder nimmst du den Konverter Base64 zu Bild.",
+          "q3": "Werden meine Daten irgendwohin geschickt?",
+          "a3": "Nein. Das Dekodieren passiert lokal in deinem Browser."
+        }
+      },
+      "image-to-base64": {
+        "name": "Bild zu Base64",
+        "title": "Bild-zu-Base64-Konverter",
+        "description": "Wandle PNG, JPG, WebP, GIF oder SVG in eine Base64-Data-URI für CSS und HTML um.",
+        "inputLabel": "Bilddatei",
+        "placeholder": "",
+        "whatIs": "Eine Base64-Data-URI enthält das ganze Bild als Text. Du kannst sie direkt in CSS, HTML oder eine E-Mail-Vorlage einfügen, ohne eine separate Datei zu hosten.",
+        "howTo": "Wähle ein Bild, zieh es ins Feld oder füge es aus der Zwischenablage ein. Wähle ein Ausgabeformat und kopiere das Ergebnis.",
+        "faq": {
+          "q1": "Welche Formate werden unterstützt?",
+          "a1": "PNG, JPG, WebP, GIF und SVG bis 5 MB. Der Typ wird am Dateiinhalt erkannt, nicht am Dateinamen.",
+          "q2": "Wann lohnt sich Base64?",
+          "a2": "Bei kleinen Bildern wie Icons oder Platzhaltern. Grössere Bilder lieferst du besser als eigene Datei aus, denn Base64 macht sie rund 33 Prozent grösser und lässt sich nicht separat cachen.",
+          "q3": "Wird mein Bild hochgeladen?",
+          "a3": "Nein. Das Bild bleibt auf deinem Gerät, die Umwandlung läuft in deinem Browser."
+        }
+      },
+      "base64-to-image": {
+        "name": "Base64 zu Bild",
+        "title": "Base64-zu-Bild-Konverter",
+        "description": "Mach aus Base64 oder einer Data-URI wieder eine PNG-, JPG-, WebP-, GIF- oder SVG-Datei.",
+        "inputLabel": "Base64 oder Data-URI",
+        "placeholder": "data:image/png;base64,iVBORw0KGgo...",
+        "whatIs": "Du hast ein Bild als Base64 in CSS, HTML oder einer API-Antwort gefunden? Der Konverter dekodiert es, erkennt den echten Bildtyp am Inhalt und speichert es als Datei.",
+        "howTo": "Füge die Base64-Zeichenkette oder Data-URI ein. Prüfe die Vorschau und lade das Bild herunter.",
+        "faq": {
+          "q1": "Welche Bildtypen werden erkannt?",
+          "a1": "PNG, JPG, WebP, GIF und SVG. Andere Inhalte wie HTML oder Scripts werden abgelehnt.",
+          "q2": "Die Data-URI sagt PNG, ich erhalte aber ein JPG. Warum?",
+          "a2": "Der Konverter vertraut dem Inhalt, nicht der Angabe. Weichen beide ab, erhältst du den Dateityp, der zu den Daten passt.",
+          "q3": "Gibt es eine Grössenbeschränkung?",
+          "a3": "Ja, dekodierte Bilder dürfen bis 5 MB gross sein. Alles läuft in deinem Browser."
+        }
+      }
+    }
   }
 }

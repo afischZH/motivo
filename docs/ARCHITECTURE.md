@@ -17,10 +17,10 @@
 | Monorepo | **pnpm + Turborepo** | Engine, Web-App und Plugins teilen Code |
 | Web-App | **Next.js (App Router) + TypeScript (strict)** | SEO-Seiten statisch/ISR, Editor als Client-Komponenten |
 | UI | **Tailwind CSS + shadcn/ui (Radix)** | Zugängliche Primitives, schnell anpassbar |
-| Editor-State | **Zustand** + `immer`, Undo/Redo via History-Middleware | Leichtgewichtig, gut testbar |
+| Editor-State | **Zustand** (Vanilla-Store pro Editor, ohne `immer` und ohne Middleware); eigene Undo/Redo-History mit Snapshots (Params, Seed, Grösse; max. 100 Schritte, aufeinanderfolgende Änderungen desselben Parameters innerhalb 500 ms zusammengefasst) und Varianten-Filmstreifen (max. 24) im selben Store | Leichtgewichtig, gut testbar, keine Zusatz-Dependency |
 | Validierung | **Zod** | Ein Schema für UI, Speicherung, API und KI-Output |
 | Farben | **culori** | OKLCH, Kontraste, Interpolation |
-| Vektor | eigene SVG-String-Builder, **SVGO** für Export-Optimierung | Schnell, serverfähig |
+| Vektor | eigene SVG-String-Builder mit fester Nachkommastellen-Präzision; kein SVGO (Entscheid 2026-10-27, Neubeurteilung bei Nutzer-Uploads in M4) | Schnell, serverfähig, kein grosses Bundle |
 | Raster/Effekte | Canvas 2D in **OffscreenCanvas + Web Worker** | UI bleibt flüssig |
 | Shader | **WebGL2** (dünner eigener Wrapper oder `twgl.js`), optional **three.js** für 3D-Grid | Volle Kontrolle über Fragment-Shader |
 | GIF | **gifenc** (im Worker) | Klein, schnell |
@@ -109,7 +109,7 @@ export interface ToolDefinition<S extends z.ZodTypeAny> {
 Params + Seed ──► Renderer ──► Vorschau (DOM-SVG / Canvas / WebGL im Viewport)
                       │
                       └──► Exporter(format, size, options)
-                              ├─ SVG: String ► SVGO ► Datei
+                              ├─ SVG: String (bereits kompakt) ► Datei
                               ├─ CSS: data-URI (url-encoded SVG) oder native CSS-Gradients
                               ├─ PNG/JPG/WebP: SVG ► Image ► Canvas ► Blob  |  Canvas/WebGL direkt
                               ├─ GIF: N Frames (Seed-Varianten oder Zeit t) ► gifenc (Worker)

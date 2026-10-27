@@ -31,13 +31,13 @@ Gesamtüberblick:
 
 ## M1: Editor-Shell + erste Tools (Woche 2 bis 4)
 
-- [ ] `ToolDefinition`-Typen und Registry (`packages/tool-registry`)
-- [ ] Editor-Shell: Auto-Controls aus Zod-Schema, Presets-Leiste, Vorschau mit Zoom/Fit, Randomize (Leertaste) mit Locks, Undo/Redo, Varianten-Filmstreifen
-- [ ] Export-Dialog + Exporter: SVG (mit SVGO), CSS, PNG/JPG/WebP (frei wählbare Grösse), Clipboard
-- [ ] Share via URL-Hash (Params komprimiert)
-- [ ] Tools: **CSS Gradient**, **Blob**, **SVG Waves**, **Polka Dots**
-- [ ] Alle 6 **Converters**
-- [ ] Snapshot-Tests für jedes Tool/Preset; visueller Test Vorschau == PNG-Export
+- [x] `ToolDefinition`-Typen und Registry (`packages/tool-registry`)
+- [x] Editor-Shell: Auto-Controls aus Zod-Schema, Presets-Leiste, Vorschau mit Zoom/Fit, Randomize (Leertaste) mit Locks, Undo/Redo, Varianten-Filmstreifen
+- [x] Export-Dialog + Exporter: SVG (kompakt aus dem Generator, ohne SVGO), CSS, PNG/JPG/WebP (frei wählbare Grösse), Clipboard
+- [x] Share via URL-Hash (Params komprimiert)
+- [x] Tools: **CSS Gradient**, **Blob**, **SVG Waves**, **Polka Dots**
+- [x] Alle 6 **Converters**
+- [x] Snapshot-Tests für jedes Tool/Preset; visueller Test Vorschau == PNG-Export
 
 **DoD**: Ein Tool hinzufügen = eine neue Datei in der Registry + Presets, keine Änderung an der Shell. Export in Chrome, Safari, Firefox identisch zur Vorschau.
 

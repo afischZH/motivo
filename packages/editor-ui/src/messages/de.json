@@ -1,0 +1,192 @@
+{
+  "Editor": {
+    "controls": {
+      "lock": "{label} sperren",
+      "lockHint": "Gesperrte Werte bleiben beim Neu würfeln erhalten",
+      "resetHint": "Doppelklick setzt den Standardwert",
+      "advanced": "Erweitert",
+      "moreSettings": "Weitere Einstellungen"
+    },
+    "color": {
+      "picker": "Farbe wählen",
+      "hex": "HEX-Wert",
+      "invalid": "Gib einen HEX-Wert wie #1e90ff ein.",
+      "eyedropper": "Farbe vom Bildschirm aufnehmen"
+    },
+    "background": {
+      "transparent": "Transparent"
+    },
+    "palette": {
+      "swatch": "Farbe {index} von {count}, {value}",
+      "add": "Farbe hinzufügen",
+      "remove": "Farbe entfernen",
+      "moveLeft": "Nach links schieben",
+      "moveRight": "Nach rechts schieben"
+    },
+    "shell": {
+      "history": "Verlauf",
+      "undo": "Rückgängig",
+      "redo": "Wiederholen",
+      "undone": "Rückgängig gemacht",
+      "redone": "Wiederhergestellt",
+      "newVariant": "Neu würfeln",
+      "newVariantHint": "neue Variante",
+      "export": "Exportieren",
+      "preview": "Vorschau",
+      "previewAlt": "Vorschau: {tool}, {width} × {height} px",
+      "unsupported": "Für dieses Werkzeug gibt es noch keine Vorschau.",
+      "zoom": "Zoom",
+      "zoomFit": "Einpassen",
+      "zoomPercent": "{percent} %",
+      "zoomCurrent": "Aktueller Zoom",
+      "presets": "Vorlagen",
+      "settings": "Einstellungen",
+      "variants": "Varianten",
+      "variantLabel": "Variante {index}",
+      "variantAnnouncement": "Variante {index} von {count}",
+      "previousVariant": "Vorherige Variante",
+      "nextVariant": "Nächste Variante"
+    },
+    "size": {
+      "label": "Grösse",
+      "custom": "Eigene Grösse",
+      "width": "Breite",
+      "height": "Höhe",
+      "option": "{name} ({width} × {height})",
+      "invalid": "Erlaubt sind ganze Zahlen von {min} bis {max} px.",
+      "groups": {
+        "social": "Social Media",
+        "desktop": "Desktop",
+        "mobile": "Mobil",
+        "print": "Druck"
+      }
+    },
+    "shortcuts": {
+      "title": "Tastaturkürzel",
+      "close": "Schliessen",
+      "keysColumn": "Tasten",
+      "actionColumn": "Aktion",
+      "or": "oder",
+      "focusHint": "Solange du in einem Eingabefeld tippst, sind die Kürzel aus.",
+      "keys": {
+        "space": "Leertaste"
+      },
+      "actions": {
+        "newVariant": "Neue Variante",
+        "undo": "Rückgängig",
+        "redo": "Wiederholen",
+        "previousVariant": "Vorherige Variante",
+        "nextVariant": "Nächste Variante",
+        "zoomFit": "Ins Fenster einpassen",
+        "zoom100": "Zoom 100 %",
+        "theme": "Hell und Dunkel wechseln",
+        "help": "Diese Übersicht",
+        "export": "Export öffnen",
+        "copyImage": "Als PNG in die Zwischenablage"
+      }
+    },
+    "export": {
+      "title": "Exportieren",
+      "close": "Schliessen",
+      "noFormats": "Für dieses Tool gibt es noch keinen Export.",
+      "format": "Format",
+      "categories": {
+        "image": "Bild",
+        "vector": "Vektor",
+        "code": "Code"
+      },
+      "formats": {
+        "png": "PNG",
+        "jpg": "JPG",
+        "webp": "WebP",
+        "svg": "SVG",
+        "css": "CSS"
+      },
+      "size": "Grösse",
+      "scale": "{scale}× ({width} × {height})",
+      "customSize": "Eigene Grösse",
+      "outputSize": "Ergebnis: {width} × {height} px.",
+      "recomposed": "Anderes Seitenverhältnis: Das Motiv wird für dieses Format neu berechnet.",
+      "clamped": "Auf höchstens {max} px pro Seite verkleinert.",
+      "quality": "Qualität",
+      "background": "Hintergrund",
+      "backgroundHint": "JPG kennt keine Transparenz, darum braucht es eine Farbe.",
+      "code": "Code",
+      "fileSize": "{value} {unit}",
+      "codeTruncated": "Hier gekürzt. Kopieren und Herunterladen enthalten alles.",
+      "progress": "Exportfortschritt",
+      "cancel": "Abbrechen",
+      "cancelled": "Export abgebrochen.",
+      "working": "Wird exportiert …",
+      "copying": "Wird kopiert …",
+      "downloaded": "Heruntergeladen.",
+      "copied": "Kopiert! Ab ins Projekt damit.",
+      "copiedPng": "Als PNG kopiert! Ab ins Projekt damit.",
+      "copyText": "Kopieren",
+      "copyImage": "Bild kopieren",
+      "download": "Herunterladen",
+      "copyOnlyPng": "Bilder lassen sich nur als PNG kopieren.",
+      "copyUnavailableText": "Dein Browser kann nicht direkt kopieren. Lade die Datei herunter.",
+      "copyUnavailableImage": "Dein Browser kann keine Bilder in die Zwischenablage legen. Lade das PNG herunter.",
+      "errors": {
+        "unsupportedFormat": "Dieses Format gibt es für dieses Tool nicht.",
+        "decodeFailed": "Das Motiv liess sich nicht in ein Bild umwandeln. Versuch es nochmals oder exportiere als SVG.",
+        "encodeUnsupported": "Dein Browser kann dieses Format nicht speichern. Nimm PNG oder JPG.",
+        "encodeFailed": "Das Bild ist zu gross für dieses Gerät.",
+        "encodeFailedHint": "Wähle eine kleinere Grösse, zum Beispiel 1× oder 2×.",
+        "unavailable": "Dein Browser unterstützt diesen Export nicht. Versuch es mit einem aktuellen Browser.",
+        "aborted": "Export abgebrochen.",
+        "unknown": "Etwas ist schiefgelaufen. Versuch es nochmals."
+      },
+      "copyErrors": {
+        "unsupported": "Dein Browser kann das nicht in die Zwischenablage legen.",
+        "denied": "Der Browser hat den Zugriff auf die Zwischenablage blockiert. Lade die Datei stattdessen herunter.",
+        "failed": "Kopieren hat nicht geklappt. Versuch es nochmals."
+      },
+      "extras": {
+        "tailwind": "Tailwind-Klassen",
+        "clipPath": "CSS clip-path"
+      }
+    },
+    "share": {
+      "button": "Teilen",
+      "hint": "Link zu diesem Motiv kopieren",
+      "copied": "Link kopiert! Wer ihn öffnet, sieht genau dieses Motiv.",
+      "copyFailed": "Kopieren hat nicht geklappt. Markiere den Link und kopiere ihn selbst.",
+      "linkLabel": "Link zu diesem Motiv",
+      "dismiss": "Hinweis schliessen",
+      "encodeErrors": {
+        "unknown-tool": "Dieses Motiv lässt sich nicht als Link teilen.",
+        "invalid-params": "Dieses Motiv lässt sich nicht als Link teilen.",
+        "invalid-seed": "Dieses Motiv lässt sich nicht als Link teilen.",
+        "invalid-size": "Dieses Motiv lässt sich nicht als Link teilen.",
+        "too-long": "Dieses Motiv ist zu umfangreich für einen Link."
+      },
+      "notices": {
+        "too-long": "Der geteilte Link ist zu lang. Du siehst die Standardeinstellungen.",
+        "malformed": "Der geteilte Link ist beschädigt. Du siehst die Standardeinstellungen.",
+        "unsupported-version": "Dieser Link stammt aus einer unbekannten Version. Du siehst die Standardeinstellungen.",
+        "unknown-tool": "Das Tool aus diesem Link gibt es nicht. Du siehst die Standardeinstellungen.",
+        "invalid-params": "Die Einstellungen im Link passen nicht zu diesem Tool. Du siehst die Standardeinstellungen.",
+        "invalid-seed": "Die Variante im Link ist ungültig. Du siehst die Standardeinstellungen.",
+        "invalid-size": "Die Grösse im Link ist ungültig. Du siehst die Standardeinstellungen.",
+        "other-tool": "Dieser Link gehört zu einem anderen Tool. Du siehst die Standardeinstellungen.",
+        "outdated": "Dieser Link stammt aus einer älteren Version. Das Motiv kann leicht anders aussehen."
+      }
+    }
+  },
+  "sizes": {
+    "square": "Quadrat",
+    "portrait": "Hochformat",
+    "story": "Story",
+    "landscape": "Querformat (Link-Vorschau)",
+    "banner": "Banner",
+    "full-hd": "Full HD",
+    "qhd": "QHD",
+    "uhd-4k": "4K UHD",
+    "phone": "Smartphone",
+    "tablet": "Tablet",
+    "a4-portrait": "A4 hoch",
+    "a4-landscape": "A4 quer"
+  }
+}

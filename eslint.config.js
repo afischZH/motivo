@@ -9,8 +9,16 @@ import tseslint from "typescript-eslint";
 /** The Next.js web app. React and Next rules apply only here. */
 const WEB_APP = ["apps/web/**/*.{ts,tsx,js,mjs}"];
 
+/** Packages with React components: hook rules and browser globals apply. */
+const REACT_PACKAGES = ["packages/editor-ui/**/*.{ts,tsx}", "packages/ui/**/*.{ts,tsx}"];
+
 /** Packages whose output must be reproducible from (params, seed) alone. */
-const DETERMINISTIC_PACKAGES = ["packages/engine/**", "packages/effects/**", "packages/shaders/**"];
+const DETERMINISTIC_PACKAGES = [
+  "packages/engine/**",
+  "packages/effects/**",
+  "packages/shaders/**",
+  "packages/tool-registry/src/**",
+];
 
 const NON_DETERMINISTIC_MESSAGE =
   "Not allowed in deterministic packages: use the injected seeded Rng (see CLAUDE.md).";
@@ -26,6 +34,7 @@ export default tseslint.config(
       "**/.open-next/**",
       "**/.wrangler/**",
       "**/next-env.d.ts",
+      ".claude/worktrees/**",
     ],
   },
   js.configs.recommended,
@@ -72,6 +81,23 @@ export default tseslint.config(
       globals: { ...globals.browser, ...globals.node },
     },
     settings: { next: { rootDir: "apps/web/" } },
+  },
+  {
+    files: REACT_PACKAGES,
+    ...reactHooks.configs.flat.recommended,
+  },
+  {
+    files: REACT_PACKAGES,
+    languageOptions: {
+      globals: { ...globals.browser },
+    },
+  },
+  {
+    // Browser-side exporters (canvas, clipboard, workers); only used inside functions.
+    files: ["packages/exporters/**/*.ts"],
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.worker },
+    },
   },
   prettier,
 );

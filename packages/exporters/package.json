@@ -4,6 +4,7 @@
   "private": true,
   "description": "SVG/CSS/PNG/JPG/WebP/GIF/MP4/React exporters",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./src/index.ts"
   },
@@ -11,7 +12,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests"
   },
+  "dependencies": {
+    "@motivo/tool-registry": "workspace:*"
+  },
   "devDependencies": {
-    "@motivo/config": "workspace:*"
+    "@motivo/config": "workspace:*",
+    "zod": "^4.6.7"
   }
 }
