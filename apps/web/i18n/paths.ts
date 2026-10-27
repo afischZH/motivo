@@ -28,7 +28,9 @@ export type AppRoute =
   | { page: "landing"; toolId: string }
   | { page: "tool"; toolId: string }
   | { page: "convert" }
-  | { page: "converter"; converterId: ConverterId };
+  | { page: "converter"; converterId: ConverterId }
+  | { page: "imprint" }
+  | { page: "privacy" };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
 export function routeHref(route: AppRoute, locale: AnyLocale) {
@@ -39,6 +41,10 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/tools" as const;
     case "convert":
       return "/convert" as const;
+    case "imprint":
+      return "/imprint" as const;
+    case "privacy":
+      return "/privacy" as const;
     case "category":
       return {
         pathname: "/tools/category/[categorySlug]" as const,
@@ -131,6 +137,9 @@ export function routeFromPathname(
     const slug = param(params.toolSlug);
     const toolId = slug ? toolIdFromSlug(slug, locale) : undefined;
     return toolId ? { page: "tool", toolId } : undefined;
+  }
+  if (section === "imprint" || section === "privacy") {
+    return segments.length === 1 ? { page: section } : undefined;
   }
   if (section === "convert") {
     if (segments.length === 1) return { page: "convert" };

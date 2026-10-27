@@ -3,6 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 import { securityHeaders } from "./lib/security-headers";
 import { noindexHeaderRule } from "./lib/seo/indexing";
+import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
@@ -14,6 +15,13 @@ const nextConfig: NextConfig = {
     "@motivo/exporters",
     "@motivo/editor-ui",
   ],
+  // Always defined (empty when unset), so Next inlines them into the client
+  // bundle and drops the analytics and Sentry code paths from builds without
+  // them (lib/telemetry/config.ts).
+  env: {
+    NEXT_PUBLIC_CF_ANALYTICS_TOKEN: process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN ?? "",
+    NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN ?? "",
+  },
   // CSP and friends on every response, including proxy redirects. Static
   // assets on Cloudflare get the same set from public/_headers. Only the
   // production host is indexable; previews and other hosts get
@@ -22,7 +30,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:path*",
-        headers: securityHeaders({ dev: process.env.NODE_ENV === "development" }),
+        headers: securityHeaders({
+          dev: process.env.NODE_ENV === "development",
+          // Analytics and Sentry origins only when their variables are set.
+          services: externalServices(telemetryEnv()),
+        }),
       },
       noindexHeaderRule(),
     ];

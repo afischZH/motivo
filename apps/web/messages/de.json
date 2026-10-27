@@ -16,14 +16,102 @@
     "mainNav": "Hauptnavigation",
     "toolsNav": "Tools"
   },
+  "Footer": {
+    "nav": "Fusszeile",
+    "productHeading": "Motivo",
+    "legalHeading": "Rechtliches",
+    "catalogue": "Alle Tools",
+    "converters": "Konverter",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
+  },
   "Theme": {
     "toggle": "Dunkles Design",
     "hint": "Hell und Dunkel wechseln ({shortcut})"
   },
   "Home": {
-    "title": "Motive per Klick",
-    "lead": "Muster, Verläufe und Hintergründe, direkt in deinem Browser gerendert. Die ersten Generatoren sind bald da.",
-    "engineCheck": "Engine-Check:"
+    "metaTitle": "Motivo: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
+    "metaDescription": "Gratis Generatoren für Muster, Verläufe, Hintergründe und Farbpaletten. Alles läuft in deinem Browser, Export als SVG, PNG oder CSS. Ohne Konto.",
+    "hero": {
+      "eyebrow": "Gratis Generatoren für Grafiken",
+      "title": "Motive per Klick",
+      "lead": "Muster, Verläufe, Hintergründe und Farbpaletten für Websites, Slides und Social Media. Leertaste drücken, neue Variante bekommen, als SVG, PNG oder CSS exportieren.",
+      "ctaPrimary": "Alle Tools entdecken",
+      "ctaSecondary": "Mit {tool} starten",
+      "hint": "Kein Konto nötig. Deine Motive entstehen direkt auf deinem Gerät.",
+      "showcaseLabel": "Beispielmotive",
+      "showcaseLink": "{tool} öffnen",
+      "spaceHint": "Leertaste",
+      "spaceHintText": "neue Variante"
+    },
+    "values": {
+      "heading": "Warum Motivo",
+      "free": {
+        "title": "Gratis Generatoren",
+        "text": "Alle Generatoren und Konverter sind gratis nutzbar, ohne Anmeldung und ohne Wasserzeichen auf deinen Mustern."
+      },
+      "local": {
+        "title": "Alles in deinem Browser",
+        "text": "Motive werden auf deinem Gerät berechnet. Bilder, die du in Konverter lädst, verlassen deinen Browser nicht."
+      },
+      "lifetime": {
+        "title": "Lifetime statt Abo",
+        "text": "Für spätere Profi-Funktionen ist eine Lifetime-Lizenz geplant: einmal zahlen statt monatlich. Umfang und Preise stehen noch nicht fest."
+      }
+    },
+    "categories": {
+      "heading": "Tools nach Kategorie",
+      "lead": "Such dir einen Bereich aus oder stöbere im ganzen Katalog.",
+      "converters": "SVG, CSS, Base64 und Bilder umwandeln.",
+      "all": "Zum ganzen Katalog"
+    },
+    "featured": {
+      "heading": "Beliebte Generatoren",
+      "lead": "Ein guter Start, falls du gleich loslegen willst."
+    },
+    "how": {
+      "heading": "So funktioniert's",
+      "step1": {
+        "title": "Tool wählen",
+        "text": "Jedes Tool startet mit einem fertigen Motiv. Du musst nie bei null beginnen."
+      },
+      "step2": {
+        "title": "Variieren",
+        "text": "Drück die Leertaste für eine neue Variante oder stell Farben, Formen und Dichte selbst ein."
+      },
+      "step3": {
+        "title": "Exportieren",
+        "text": "Lade dein Motiv als SVG, PNG, JPG oder WebP herunter oder kopier den CSS-Code direkt in dein Projekt."
+      }
+    },
+    "faq": {
+      "heading": "Häufige Fragen",
+      "q1": {
+        "question": "Kostet Motivo etwas?",
+        "answer": "Nein. Alle Generatoren und Konverter, die du hier findest, sind gratis. Für spätere Profi-Funktionen wie sehr grosse Exporte ist eine Lifetime-Lizenz geplant, ohne Abo."
+      },
+      "q2": {
+        "question": "Brauche ich ein Konto?",
+        "answer": "Nein. Du kannst sofort loslegen. Teilen geht über einen Link, der deine Einstellungen enthält."
+      },
+      "q3": {
+        "question": "Werden meine Bilder hochgeladen?",
+        "answer": "Nein. Motive, Konverter und die Farbpalette aus einem Bild laufen vollständig in deinem Browser. Deine Dateien werden nicht an einen Server gesendet."
+      },
+      "q4": {
+        "question": "Darf ich die Motive kommerziell nutzen?",
+        "answer": "Die Lizenzbedingungen für Exporte legen wir vor dem Bezahl-Launch fest und veröffentlichen sie auf dieser Website."
+      },
+      "q5": {
+        "question": "Welche Formate kann ich exportieren?",
+        "answer": "Je nach Tool SVG, PNG, JPG, WebP und CSS. Farbtools liefern zusätzlich Tailwind-Konfiguration und CSS-Variablen."
+      }
+    },
+    "cta": {
+      "heading": "Bereit für dein erstes Motiv?",
+      "text": "In zehn Sekunden vom Klick zum fertigen Hintergrund.",
+      "button": "Jetzt ausprobieren"
+    }
   },
   "NotFound": {
     "title": "Seite nicht gefunden",
@@ -1141,6 +1229,151 @@
     "composer": {
       "name": "Composer",
       "description": "Mehrere Motive zu einer Grafik kombinieren."
+    }
+  },
+  "Legal": {
+    "draftBanner": {
+      "title": "Entwurf, juristisch zu prüfen",
+      "text": "Dieser Text ist ein Entwurf und wurde noch nicht juristisch geprüft. Angaben in eckigen Klammern werden vor der Veröffentlichung ergänzt."
+    },
+    "lastUpdated": "Stand: {date}",
+    "operator": {
+      "heading": "Betreiber",
+      "email": "E-Mail",
+      "register": "Handelsregister / UID",
+      "vat": "MWST-Nummer"
+    },
+    "imprint": {
+      "metaTitle": "Impressum",
+      "metaDescription": "Impressum von Motivo: Betreiber, Kontakt und rechtliche Hinweise.",
+      "title": "Impressum",
+      "sections": {
+        "contact": {
+          "heading": "Kontakt",
+          "paragraphs": ["Am schnellsten erreichst du uns per E-Mail an die oben genannte Adresse."]
+        },
+        "responsible": {
+          "heading": "Verantwortlich für den Inhalt",
+          "paragraphs": [
+            "Verantwortlich für den Inhalt dieser Website ist die oben genannte Person bzw. Firma."
+          ]
+        },
+        "liability": {
+          "heading": "Haftung für Inhalte",
+          "paragraphs": [
+            "Wir erstellen die Inhalte dieser Website mit Sorgfalt. Für Richtigkeit, Vollständigkeit und Aktualität können wir trotzdem keine Gewähr übernehmen.",
+            "Die Generatoren erzeugen Grafiken nach deinen Einstellungen. Prüfe vor einer Verwendung selbst, ob das Ergebnis deinen Zwecken entspricht, etwa bei Farbkontrasten oder Druckvorgaben."
+          ]
+        },
+        "links": {
+          "heading": "Haftung für Links",
+          "paragraphs": [
+            "Diese Website kann Links zu Websites Dritter enthalten. Auf deren Inhalte haben wir keinen Einfluss, dafür ist der jeweilige Anbieter verantwortlich. Werden uns Rechtsverletzungen bekannt, entfernen wir den Link umgehend."
+          ]
+        },
+        "copyright": {
+          "heading": "Urheberrecht",
+          "paragraphs": [
+            "Texte, Gestaltung und Programmcode dieser Website sind urheberrechtlich geschützt. Die Nutzungsrechte an den Motiven, die du mit den Generatoren erstellst, regeln die künftigen Nutzungsbedingungen."
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "metaTitle": "Datenschutzerklärung",
+      "metaDescription": "Wie Motivo mit Daten umgeht: keine Cookies, Bilder bleiben im Browser, cookiefreie Statistik und Fehlerberichte.",
+      "title": "Datenschutzerklärung",
+      "intro": "Motivo ist so gebaut, dass möglichst wenige Daten anfallen. Es gibt kein Konto, keine Cookies und kein Tracking über Websites hinweg. Motive und Bilder werden in deinem Browser berechnet. Hier erfährst du, welche Daten trotzdem anfallen und wofür.",
+      "sections": {
+        "controller": {
+          "heading": "Verantwortliche Stelle",
+          "paragraphs": [
+            "Verantwortlich für die Bearbeitung deiner Personendaten auf dieser Website ist der unten genannte Betreiber. Für Fragen zum Datenschutz und für deine Anfragen erreichst du ihn per E-Mail."
+          ]
+        },
+        "law": {
+          "heading": "Geltendes Recht",
+          "paragraphs": [
+            "Diese Erklärung richtet sich nach dem Schweizer Datenschutzgesetz (DSG). Soweit die Datenschutz-Grundverordnung der EU (DSGVO) anwendbar ist, etwa weil du die Website aus der EU oder dem EWR besuchst, gelten zusätzlich deren Vorgaben.",
+            "Wo die DSGVO eine Rechtsgrundlage verlangt, bearbeiten wir Daten gestützt auf unser berechtigtes Interesse an einem sicheren, stabilen und fehlerfreien Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO). Wenn du uns schreibst, ist die Rechtsgrundlage die Beantwortung deiner Anfrage (Art. 6 Abs. 1 lit. b oder f DSGVO)."
+          ]
+        },
+        "hosting": {
+          "heading": "Hosting bei Cloudflare",
+          "paragraphs": [
+            "Die Website läuft auf Cloudflare Workers, einem Dienst der Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA. Cloudflare liefert die Seiten über ein weltweites Netz von Rechenzentren aus und schützt sie vor Angriffen.",
+            "Beim Aufruf einer Seite verarbeitet Cloudflare technisch notwendige Daten: deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Adresse, die zuvor besuchte Seite (Referrer) sowie Browser und Betriebssystem (User Agent). Diese Daten dienen der Auslieferung, der Sicherheit und der Fehlersuche. Wir werten sie nicht aus, um dich zu identifizieren.",
+            "Dabei können Daten in die USA und in andere Länder übermittelt werden, siehe Abschnitt «Bekanntgabe ins Ausland»."
+          ]
+        },
+        "analytics": {
+          "heading": "Statistik mit Cloudflare Web Analytics",
+          "paragraphs": [
+            "Um zu verstehen, welche Seiten genutzt werden und wie schnell sie laden, verwenden wir Cloudflare Web Analytics. Der Dienst arbeitet ohne Cookies und ohne lokalen Speicher in deinem Browser und erstellt nach Angaben von Cloudflare keine Profile und keinen Fingerabdruck deines Geräts.",
+            "Ein kleines Script von static.cloudflareinsights.com sendet beim Seitenaufruf folgende Angaben an Cloudflare: die Adresse der Seite ohne Abfrageparameter, die zuvor besuchte Seite, Browser, Betriebssystem und Gerätetyp, das Land (aus der IP-Adresse abgeleitet) sowie Ladezeiten und Messwerte zur Seitengeschwindigkeit. Wir sehen nur zusammengefasste Zahlen, keine einzelnen Besuche.",
+            "Das Script läuft nur auf der öffentlichen Website, nicht auf Vorschau- oder Testumgebungen."
+          ]
+        },
+        "errors": {
+          "heading": "Fehlerberichte mit Sentry",
+          "paragraphs": [
+            "Damit wir Programmfehler finden und beheben können, nutzen wir Sentry, einen Dienst der Functional Software, Inc., 45 Fremont Street, 8th Floor, San Francisco, CA 94105, USA. Wir haben die Datenregion EU gewählt: Fehlerberichte werden in Rechenzentren in der EU (Deutschland) gespeichert.",
+            "Sentry wird erst geladen, wenn auf einer Seite ein Fehler auftritt. Ein Fehlerbericht enthält die Fehlermeldung, die Stelle im Programmcode, Browser und Betriebssystem, die Adresse der Seite ohne Abfrageparameter und ohne den Teil nach dem #-Zeichen sowie den Zeitpunkt. Es gibt keine Cookies, keine Aufzeichnung deiner Sitzung und keine Leistungsmessung.",
+            "Für die Übertragung muss deine IP-Adresse technisch verarbeitet werden. Wir haben Sentry so eingestellt, dass keine IP-Adressen und keine weiteren persönlichen Angaben gespeichert werden. Fehlerberichte werden nach Ablauf der Aufbewahrungsfrist unseres Sentry-Tarifs automatisch gelöscht."
+          ]
+        },
+        "cookies": {
+          "heading": "Keine Cookies, nur lokale Einstellungen",
+          "paragraphs": [
+            "Motivo setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen."
+          ]
+        },
+        "local": {
+          "heading": "Bilder bleiben in deinem Browser",
+          "paragraphs": [
+            "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst."
+          ]
+        },
+        "share": {
+          "heading": "Teilen-Links",
+          "paragraphs": [
+            "Ein Teilen-Link enthält die Einstellungen deines Motivs im Teil der Adresse nach dem #-Zeichen. Diesen Teil sendet dein Browser nicht an unseren Server. Wer den Link hat, sieht das Motiv. Aus einem Bild abgeleitete Farben werden nicht in den Link übernommen."
+          ]
+        },
+        "contact": {
+          "heading": "Kontakt per E-Mail",
+          "paragraphs": [
+            "Wenn du uns schreibst, bearbeiten wir deine E-Mail-Adresse und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Wir löschen die Nachricht, sobald sie erledigt ist und keine gesetzliche Aufbewahrungspflicht besteht."
+          ]
+        },
+        "transfer": {
+          "heading": "Bekanntgabe ins Ausland",
+          "paragraphs": [
+            "Cloudflare und Sentry haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
+            "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen."
+          ]
+        },
+        "retention": {
+          "heading": "Aufbewahrung",
+          "paragraphs": [
+            "Wir bewahren Personendaten nur so lange auf, wie es für den jeweiligen Zweck nötig ist oder das Gesetz es verlangt. Statistikdaten sehen wir nur zusammengefasst. Technische Protokolle und Fehlerberichte löschen die Anbieter nach ihren Fristen automatisch."
+          ]
+        },
+        "rights": {
+          "heading": "Deine Rechte",
+          "paragraphs": [
+            "Du hast das Recht, Auskunft über deine Personendaten zu verlangen und unrichtige Daten berichtigen zu lassen. Du kannst verlangen, dass wir Daten löschen oder ihre Bearbeitung einschränken, und du kannst einer Bearbeitung widersprechen. Soweit anwendbar, hast du ausserdem das Recht auf Herausgabe deiner Daten in einem gängigen Format.",
+            "Schreib uns dafür an die oben genannte E-Mail-Adresse. Wir können einen Nachweis deiner Identität verlangen.",
+            "Du kannst dich ausserdem bei einer Aufsichtsbehörde beschweren: in der Schweiz beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB), in der EU bei der Behörde deines Wohnsitzlandes."
+          ]
+        },
+        "changes": {
+          "heading": "Änderungen",
+          "paragraphs": [
+            "Wir passen diese Erklärung an, wenn sich die Website oder die eingesetzten Dienste ändern. Es gilt die Fassung, die auf dieser Seite veröffentlicht ist."
+          ]
+        }
+      }
     }
   }
 }

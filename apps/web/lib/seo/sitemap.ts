@@ -12,6 +12,7 @@ import { ENABLED_LOCALES } from "@/i18n/locales";
 import type { AppRoute } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { legalPagesIndexable } from "@/lib/legal/config";
 import { registry } from "@motivo/tool-registry";
 
 import { pageAlternates } from "./alternates";
@@ -26,6 +27,8 @@ export function sitemapRoutes(): AppRoute[] {
     ...registry.list().map((tool): AppRoute => ({ page: "landing", toolId: tool.id })),
     { page: "convert" },
     ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
+    // Draft legal pages are noindex and stay out until the legal review.
+    ...(legalPagesIndexable() ? [{ page: "imprint" } as const, { page: "privacy" } as const] : []),
   ];
 }
 

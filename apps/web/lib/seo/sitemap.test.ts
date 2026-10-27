@@ -5,6 +5,7 @@ import { ENABLED_LOCALES } from "@/i18n/locales";
 import { toolLandingPaths } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { LEGAL_CONFIG } from "@/lib/legal/config";
 
 import { sitemapEntries } from "./sitemap";
 
@@ -16,7 +17,12 @@ describe("sitemap", () => {
 
   it("lists every page once per enabled locale", () => {
     const pages =
-      2 + populatedCategories().length + registry.list().length + 1 + CONVERTER_IDS.length;
+      2 +
+      populatedCategories().length +
+      registry.list().length +
+      1 +
+      CONVERTER_IDS.length +
+      (LEGAL_CONFIG.legalReviewed ? 2 : 0);
     expect(entries).toHaveLength(pages * ENABLED_LOCALES.length);
     expect(new Set(urls).size).toBe(urls.length);
   });
@@ -34,6 +40,11 @@ describe("sitemap", () => {
         });
       }
     }
+  });
+
+  it("leaves out the legal pages while they are drafts", () => {
+    const legal = urls.filter((url) => /\/(impressum|imprint|datenschutz|privacy)$/.test(url));
+    expect(legal).toHaveLength(LEGAL_CONFIG.legalReviewed ? 4 : 0);
   });
 
   it("uses absolute URLs on the site's origin only", () => {

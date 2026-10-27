@@ -11,3 +11,6 @@ next-env.d.ts
 
 # Generated at build time by scripts/og-images.mjs
 /public/og/
+
+# Generated at build time by scripts/headers.mjs (depends on the build env)
+/public/_headers

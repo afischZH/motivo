@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { Converter } from "@/components/convert/converter";
@@ -14,6 +14,7 @@ import { CONVERTER_IDS, FAQ_COUNT, INVERSE_CONVERTER } from "@/lib/convert/ids";
 import { pageAlternates } from "@/lib/seo/alternates";
 import { breadcrumbList, faqPage, webApplication } from "@/lib/seo/json-ld";
 import { pageOpenGraph, SCHEMA_CURRENCY } from "@/lib/seo/page-meta";
+import { CONVERTER_CLIENT_NAMESPACES, pickMessages } from "@/lib/client-messages";
 import { siteUrl } from "@/lib/seo/site-url";
 
 type ConverterPageProps = Readonly<{
@@ -115,7 +116,11 @@ export default async function ConverterPage({ params }: ConverterPageProps) {
         </p>
       </header>
 
-      <Converter id={converterId} />
+      <NextIntlClientProvider
+        messages={pickMessages(await getMessages(), CONVERTER_CLIENT_NAMESPACES)}
+      >
+        <Converter id={converterId} />
+      </NextIntlClientProvider>
 
       <div className="grid gap-10 lg:grid-cols-2">
         <section className="flex flex-col gap-3">

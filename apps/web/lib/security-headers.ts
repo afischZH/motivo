@@ -8,33 +8,49 @@
  *   without the `headers()` set.
  * - `public/_headers`: files that Cloudflare Workers Static Assets serves
  *   directly without running the Worker (`/_next/static/*`, public files).
- *   `security-headers.test.ts` fails when that file drifts from this module.
+ *   Not checked in: `scripts/headers.mjs` writes it before `next build` and
+ *   `next dev` from this module and the same environment variables.
  *
  * Pure strings, safe for the proxy runtime. The theme script hash lives in
  * `csp-hash.ts` (node:crypto) and is not part of the policy yet.
  */
 
+import { NO_EXTERNAL_SERVICES, type ExternalServices } from "./telemetry/config";
+
 /**
- * Third-party origins. Allowing a planned service is a one-line change: move
- * its commented entry into the list.
+ * Third-party origins per service. A service is allowed only when the build
+ * enables it (`telemetry/config.ts`: its environment variable is set), so
+ * previews and local builds keep the strict self-only policy.
  */
-const EXTERNAL = {
-  script: [
-    // "https://static.cloudflareinsights.com", // Cloudflare Web Analytics beacon script
-  ] as string[],
-  connect: [
-    // "https://cloudflareinsights.com", // Cloudflare Web Analytics beacon endpoint
-    // "https://*.ingest.de.sentry.io", // Sentry EU ingest
-  ] as string[],
+const EXTERNAL: Record<keyof ExternalServices, { script: string[]; connect: string[] }> = {
+  // Cloudflare Web Analytics, manual embedding (site not proxied by Cloudflare).
+  analytics: {
+    script: ["https://static.cloudflareinsights.com"],
+    connect: ["https://cloudflareinsights.com"],
+  },
+  // Sentry EU ingest. The SDK itself is bundled and loaded from 'self'.
+  sentry: { script: [], connect: ["https://*.ingest.de.sentry.io"] },
 };
+
+function external(services: ExternalServices, kind: "script" | "connect"): string[] {
+  return (Object.keys(EXTERNAL) as (keyof ExternalServices)[])
+    .filter((service) => services[service])
+    .flatMap((service) => EXTERNAL[service][kind]);
+}
 
 export interface SecurityHeaderOptions {
   /** `next dev`: adds the dev-only allowances below. Never true in a production build. */
   dev: boolean;
+  /** Enabled third-party services (default: none). Ignored in dev. */
+  services?: ExternalServices;
 }
 
 /** The Content-Security-Policy value as a single header line. */
-export function contentSecurityPolicy({ dev }: SecurityHeaderOptions): string {
+export function contentSecurityPolicy({
+  dev,
+  services = NO_EXTERNAL_SERVICES,
+}: SecurityHeaderOptions): string {
+  const enabled = dev ? NO_EXTERNAL_SERVICES : services;
   const directives: Record<string, string[]> = {
     "default-src": ["'self'"],
     // 'unsafe-inline': see THEME_SCRIPT_HASH in csp-hash.ts. Dev only: React and Turbopack
@@ -43,7 +59,7 @@ export function contentSecurityPolicy({ dev }: SecurityHeaderOptions): string {
       "'self'",
       "'unsafe-inline'",
       ...(dev ? ["'unsafe-eval'"] : []),
-      ...EXTERNAL.script,
+      ...external(enabled, "script"),
     ],
     // React renders `style` attributes into the static HTML (preview sizes,
     // CSS tool previews, swatches) and Radix injects <style> for scroll
@@ -54,7 +70,7 @@ export function contentSecurityPolicy({ dev }: SecurityHeaderOptions): string {
     "img-src": ["'self'", "data:", "blob:"],
     "font-src": ["'self'"],
     // Dev only: the HMR websocket (Safari does not match ws: against 'self').
-    "connect-src": ["'self'", ...(dev ? ["ws:"] : []), ...EXTERNAL.connect],
+    "connect-src": ["'self'", ...(dev ? ["ws:"] : []), ...external(enabled, "connect")],
     "worker-src": ["'self'", "blob:"],
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
@@ -101,13 +117,16 @@ export function securityHeaders(options: SecurityHeaderOptions): Header[] {
 
 /**
  * Content of `public/_headers` for Cloudflare Workers Static Assets
- * (production values). The test writes it as a file snapshot; regenerate with
- * `pnpm --filter @motivo/web headers:write`.
+ * (production values for the services this build enables). Written by
+ * `scripts/headers.mjs` before every build from the same environment
+ * variables as `next.config.ts`, so the file and the Worker always agree.
  */
-export function cloudflareHeadersFile(): string {
-  const lines = securityHeaders({ dev: false }).map(({ key, value }) => `  ${key}: ${value}`);
+export function cloudflareHeadersFile(services: ExternalServices = NO_EXTERNAL_SERVICES): string {
+  const lines = securityHeaders({ dev: false, services }).map(
+    ({ key, value }) => `  ${key}: ${value}`,
+  );
   return [
-    "# Generated from lib/security-headers.ts. Do not edit; run `pnpm --filter @motivo/web headers:write`.",
+    "# Generated from lib/security-headers.ts by scripts/headers.mjs at build time. Do not edit.",
     "# Applies to files served by Workers Static Assets; the Worker sets the same headers via next.config.ts.",
     "/*",
     ...lines,

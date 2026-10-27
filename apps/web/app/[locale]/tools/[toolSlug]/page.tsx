@@ -1,13 +1,13 @@
 import { registry } from "@motivo/tool-registry";
 import type { Metadata } from "next";
-import { hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { use } from "react";
 
 import { ToolEditor } from "@/components/editor/tool-editor";
 import type { EnabledLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
+import { editorMessages } from "@/lib/client-messages";
 import { toolIdFromSlug, toolSlug } from "@/i18n/slugs";
 import { pageAlternates } from "@/lib/seo/alternates";
 
@@ -40,15 +40,17 @@ export async function generateMetadata({ params }: ToolPageProps): Promise<Metad
   };
 }
 
-export default function ToolPage({ params }: ToolPageProps) {
-  const { locale, toolSlug: slug } = use(params);
+export default async function ToolPage({ params }: ToolPageProps) {
+  const { locale, toolSlug: slug } = await params;
   const toolId = resolveTool(locale, slug);
   if (!toolId || !hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
   return (
     <div className="flex flex-col lg:h-[calc(100dvh-3.5rem)]">
-      <ToolEditor toolId={toolId} />
+      <NextIntlClientProvider messages={editorMessages(await getMessages())}>
+        <ToolEditor toolId={toolId} />
+      </NextIntlClientProvider>
     </div>
   );
 }

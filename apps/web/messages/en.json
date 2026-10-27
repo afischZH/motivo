@@ -16,14 +16,102 @@
     "mainNav": "Main",
     "toolsNav": "Tools"
   },
+  "Footer": {
+    "nav": "Footer",
+    "productHeading": "Motivo",
+    "legalHeading": "Legal",
+    "catalogue": "All tools",
+    "converters": "Converters",
+    "imprint": "Imprint",
+    "privacy": "Privacy"
+  },
   "Theme": {
     "toggle": "Dark theme",
     "hint": "Switch light and dark ({shortcut})"
   },
   "Home": {
-    "title": "Motifs in one click",
-    "lead": "Patterns, gradients and backgrounds, rendered right in your browser. The first generators are coming soon.",
-    "engineCheck": "Engine check:"
+    "metaTitle": "Motivo: free pattern, gradient and background generators in your browser",
+    "metaDescription": "Free generators for patterns, gradients, backgrounds and color palettes. Everything runs in your browser, export as SVG, PNG or CSS. No account needed.",
+    "hero": {
+      "eyebrow": "Free generators for graphics",
+      "title": "Motifs in one click",
+      "lead": "Patterns, gradients, backgrounds and color palettes for websites, slides and social media. Press the space bar for a new variant, then export as SVG, PNG or CSS.",
+      "ctaPrimary": "Explore all tools",
+      "ctaSecondary": "Start with {tool}",
+      "hint": "No account needed. Your motifs are created right on your device.",
+      "showcaseLabel": "Sample motifs",
+      "showcaseLink": "Open {tool}",
+      "spaceHint": "Space",
+      "spaceHintText": "new variant"
+    },
+    "values": {
+      "heading": "Why Motivo",
+      "free": {
+        "title": "Free generators",
+        "text": "Every generator and converter is free to use, without signing up and without watermarks on your patterns."
+      },
+      "local": {
+        "title": "Everything in your browser",
+        "text": "Motifs are computed on your device. Images you load into a converter never leave your browser."
+      },
+      "lifetime": {
+        "title": "Lifetime instead of subscription",
+        "text": "A lifetime license is planned for future pro features: pay once instead of every month. Scope and prices are not set yet."
+      }
+    },
+    "categories": {
+      "heading": "Tools by category",
+      "lead": "Pick an area or browse the whole catalogue.",
+      "converters": "Convert SVG, CSS, Base64 and images.",
+      "all": "Go to the full catalogue"
+    },
+    "featured": {
+      "heading": "Popular generators",
+      "lead": "A good place to start if you want to dive right in."
+    },
+    "how": {
+      "heading": "How it works",
+      "step1": {
+        "title": "Pick a tool",
+        "text": "Every tool starts with a finished motif. You never start from a blank canvas."
+      },
+      "step2": {
+        "title": "Vary it",
+        "text": "Press the space bar for a new variant, or tune colors, shapes and density yourself."
+      },
+      "step3": {
+        "title": "Export",
+        "text": "Download your motif as SVG, PNG, JPG or WebP, or copy the CSS straight into your project."
+      }
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "q1": {
+        "question": "Does Motivo cost anything?",
+        "answer": "No. Every generator and converter you find here is free. A lifetime license without a subscription is planned for future pro features such as very large exports."
+      },
+      "q2": {
+        "question": "Do I need an account?",
+        "answer": "No. You can start right away. Sharing works with a link that contains your settings."
+      },
+      "q3": {
+        "question": "Are my images uploaded?",
+        "answer": "No. Motifs, converters and the palette from an image run entirely in your browser. Your files are not sent to a server."
+      },
+      "q4": {
+        "question": "Can I use the motifs commercially?",
+        "answer": "We will set the license terms for exports before the paid launch and publish them on this website."
+      },
+      "q5": {
+        "question": "Which formats can I export?",
+        "answer": "Depending on the tool, SVG, PNG, JPG, WebP and CSS. Color tools also give you a Tailwind config and CSS variables."
+      }
+    },
+    "cta": {
+      "heading": "Ready for your first motif?",
+      "text": "Ten seconds from click to finished background.",
+      "button": "Try it now"
+    }
   },
   "NotFound": {
     "title": "Page not found",
@@ -1141,6 +1229,151 @@
     "composer": {
       "name": "Composer",
       "description": "Combine several motifs into one graphic."
+    }
+  },
+  "Legal": {
+    "draftBanner": {
+      "title": "Draft, pending legal review",
+      "text": "This text is a draft and has not been reviewed by a lawyer yet. Details in square brackets will be filled in before publication."
+    },
+    "lastUpdated": "Last updated: {date}",
+    "operator": {
+      "heading": "Operator",
+      "email": "Email",
+      "register": "Commercial register / UID",
+      "vat": "VAT number"
+    },
+    "imprint": {
+      "metaTitle": "Imprint",
+      "metaDescription": "Imprint of Motivo: operator, contact and legal notes.",
+      "title": "Imprint",
+      "sections": {
+        "contact": {
+          "heading": "Contact",
+          "paragraphs": ["The quickest way to reach us is by email at the address above."]
+        },
+        "responsible": {
+          "heading": "Responsible for the content",
+          "paragraphs": [
+            "The person or company named above is responsible for the content of this website."
+          ]
+        },
+        "liability": {
+          "heading": "Liability for content",
+          "paragraphs": [
+            "We create the content of this website with care. We cannot, however, guarantee that it is correct, complete and up to date.",
+            "The generators create graphics from your settings. Before you use a result, check that it fits your purpose, for example color contrast or print requirements."
+          ]
+        },
+        "links": {
+          "heading": "Liability for links",
+          "paragraphs": [
+            "This website may link to third-party websites. We have no influence on their content; the respective provider is responsible for it. If we learn of any legal violation, we remove the link right away."
+          ]
+        },
+        "copyright": {
+          "heading": "Copyright",
+          "paragraphs": [
+            "The texts, design and program code of this website are protected by copyright. The rights to use the motifs you create with the generators will be set out in the upcoming terms of use."
+          ]
+        }
+      }
+    },
+    "privacy": {
+      "metaTitle": "Privacy policy",
+      "metaDescription": "How Motivo handles data: no cookies, images stay in your browser, cookie-free statistics and error reports.",
+      "title": "Privacy policy",
+      "intro": "Motivo is built to collect as little data as possible. There is no account, no cookies and no cross-site tracking. Motifs and images are computed in your browser. Here you can find out which data is still processed, and why.",
+      "sections": {
+        "controller": {
+          "heading": "Controller",
+          "paragraphs": [
+            "The operator named below is responsible for processing your personal data on this website. You can reach them by email with questions about privacy and with your requests."
+          ]
+        },
+        "law": {
+          "heading": "Applicable law",
+          "paragraphs": [
+            "This policy follows the Swiss Federal Act on Data Protection (FADP). Where the EU General Data Protection Regulation (GDPR) applies, for example because you visit the website from the EU or EEA, its requirements apply as well.",
+            "Where the GDPR requires a legal basis, we process data based on our legitimate interest in running the website securely, reliably and without errors (Art. 6(1)(f) GDPR). If you write to us, the legal basis is answering your request (Art. 6(1)(b) or (f) GDPR)."
+          ]
+        },
+        "hosting": {
+          "heading": "Hosting with Cloudflare",
+          "paragraphs": [
+            "The website runs on Cloudflare Workers, a service of Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA. Cloudflare delivers the pages through a worldwide network of data centers and protects them against attacks.",
+            "When you open a page, Cloudflare processes technically necessary data: your IP address, date and time, the requested address, the previously visited page (referrer), and your browser and operating system (user agent). This data is used for delivery, security and troubleshooting. We do not analyze it to identify you.",
+            "Data may be transferred to the USA and other countries in the process; see the section “Transfers abroad”."
+          ]
+        },
+        "analytics": {
+          "heading": "Statistics with Cloudflare Web Analytics",
+          "paragraphs": [
+            "To understand which pages are used and how fast they load, we use Cloudflare Web Analytics. The service works without cookies and without local storage in your browser and, according to Cloudflare, creates no profiles and no fingerprint of your device.",
+            "A small script from static.cloudflareinsights.com sends the following to Cloudflare when a page is opened: the page address without query parameters, the previously visited page, browser, operating system and device type, the country (derived from the IP address), and load times and page speed metrics. We only see aggregated numbers, never individual visits.",
+            "The script only runs on the public website, not on preview or test environments."
+          ]
+        },
+        "errors": {
+          "heading": "Error reports with Sentry",
+          "paragraphs": [
+            "To find and fix bugs, we use Sentry, a service of Functional Software, Inc., 45 Fremont Street, 8th Floor, San Francisco, CA 94105, USA. We chose the EU data region: error reports are stored in data centers in the EU (Germany).",
+            "Sentry is only loaded when an error occurs on a page. An error report contains the error message, the location in the program code, browser and operating system, the page address without query parameters and without the part after the # sign, and the time. There are no cookies, no recording of your session and no performance tracking.",
+            "Your IP address has to be processed technically for the transfer. We configured Sentry not to store IP addresses or any other personal details. Error reports are deleted automatically when the retention period of our Sentry plan ends."
+          ]
+        },
+        "cookies": {
+          "heading": "No cookies, only local settings",
+          "paragraphs": [
+            "Motivo sets no cookies. So you don’t have to pick your theme and your preferred export format every time, your browser keeps these two settings in local storage (localStorage). They stay on your device, are not sent to us, and you can delete them at any time in your browser settings."
+          ]
+        },
+        "local": {
+          "heading": "Images stay in your browser",
+          "paragraphs": [
+            "When you load an image or file into a converter or create a color palette from an image, the file is processed only in your browser. It is neither uploaded nor stored, and it is gone as soon as you close the tab."
+          ]
+        },
+        "share": {
+          "heading": "Share links",
+          "paragraphs": [
+            "A share link holds your motif’s settings in the part of the address after the # sign. Your browser does not send this part to our server. Anyone with the link can see the motif. Colors derived from an image are not included in the link."
+          ]
+        },
+        "contact": {
+          "heading": "Contact by email",
+          "paragraphs": [
+            "If you write to us, we process your email address and the content of your message to answer your request. We delete the message once it is resolved and no legal retention obligation applies."
+          ]
+        },
+        "transfer": {
+          "heading": "Transfers abroad",
+          "paragraphs": [
+            "Cloudflare and Sentry are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
+            "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out."
+          ]
+        },
+        "retention": {
+          "heading": "Retention",
+          "paragraphs": [
+            "We keep personal data only as long as needed for its purpose or required by law. We only see statistics in aggregated form. The providers delete technical logs and error reports automatically according to their retention periods."
+          ]
+        },
+        "rights": {
+          "heading": "Your rights",
+          "paragraphs": [
+            "You have the right to access your personal data and to have incorrect data corrected. You can ask us to delete data or restrict its processing, and you can object to processing. Where applicable, you also have the right to receive your data in a common format.",
+            "To do so, write to us at the email address above. We may ask for proof of your identity.",
+            "You can also lodge a complaint with a supervisory authority: in Switzerland the Federal Data Protection and Information Commissioner (FDPIC), in the EU the authority of your country of residence."
+          ]
+        },
+        "changes": {
+          "heading": "Changes",
+          "paragraphs": [
+            "We update this policy when the website or the services we use change. The version published on this page applies."
+          ]
+        }
+      }
     }
   }
 }
