@@ -7,9 +7,13 @@ import type { AnyToolDefinition, CssOutput } from "../types";
 import {
   blobTool,
   builtInTools,
+  confettiTool,
   cssGradientTool,
+  dieterDotsTool,
+  gridPatternsTool,
   noiseGrainTool,
   polkaDotsTool,
+  starrySkyTool,
   svgWavesTool,
 } from "./index";
 import { noiseGrainTileCacheSize } from "./noise-grain";
@@ -53,13 +57,22 @@ describe("built-in tool registration", () => {
       "svg-waves",
       "polka-dots",
       "noise-grain",
+      "grid-patterns",
+      "confetti",
+      "starry-sky",
+      "dieter-dots",
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
-    expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual(["polka-dots"]);
+    expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
+      "polka-dots",
+      "grid-patterns",
+      "confetti",
+      "dieter-dots",
+    ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });
 
-  it.each(builtInTools.map((t) => [t.id, t] as const))("%s is fully free in M1", (_, tool) => {
+  it.each(builtInTools.map((t) => [t.id, t] as const))("%s is fully free until M4", (_, tool) => {
     expect(tool.gating).toEqual({});
   });
 });
@@ -267,6 +280,63 @@ describe("noise-grain", () => {
         expect(ms).toBeLessThan(150);
         expect(svg.length).toBeLessThan(300_000);
       }
+    }
+  });
+});
+
+describe("M2 SVG generators", () => {
+  const countElements = (svg: string): number => (svg.match(/<(circle|rect|path)\b/g) ?? []).length;
+
+  it("scale with the canvas so the element count is size independent", () => {
+    for (const tool of [gridPatternsTool, confettiTool, starrySkyTool, dieterDotsTool]) {
+      const render = (w: number): string =>
+        renderStatic(tool, tool.defaults, 1, { width: w, height: w }) as string;
+      const small = countElements(render(500));
+      const large = countElements(render(2000));
+      // Poisson-disk counts vary slightly between sizes; grids and rings match exactly.
+      expect(Math.abs(small - large) / large, tool.id).toBeLessThan(0.05);
+    }
+  });
+
+  it("stay fast and bounded on extreme canvases with the densest params (crafted share link)", () => {
+    const cases: [AnyToolDefinition, Record<string, unknown>][] = [
+      [gridPatternsTool, { cellSize: 2, style: "dots" }],
+      [gridPatternsTool, { cellSize: 2, style: "squares" }],
+      [confettiTool, { spacing: 2 }],
+      [starrySkyTool, { density: 1, glow: 1, sparkles: 24 }],
+      [dieterDotsTool, { rings: 40, dotsPerRing: 24, ringSpacing: 1 }],
+    ];
+    for (const [tool, params] of cases) {
+      for (const size of [
+        { width: 8192, height: 16 },
+        { width: 8192, height: 8192 },
+      ]) {
+        const { ms, value: svg } = fastest(
+          () => renderStatic(tool, { ...tool.defaults, ...params }, 1, size) as string,
+        );
+        expect(ms, `${tool.id} ${size.width}x${size.height}`).toBeLessThan(500);
+        // Stars may add a glow per larger star on top of the capped star count.
+        const cap = tool === starrySkyTool ? MAX_DOT_SITES * 1.5 : MAX_DOT_SITES + 2;
+        expect(countElements(svg), tool.id).toBeLessThanOrEqual(cap);
+      }
+    }
+  });
+
+  it("grid patterns and dieter dots ignore the seed", () => {
+    const size = { width: 400, height: 300 };
+    for (const tool of [gridPatternsTool, dieterDotsTool]) {
+      expect(renderStatic(tool, tool.defaults, 1, size)).toBe(
+        renderStatic(tool, tool.defaults, 2, size),
+      );
+    }
+  });
+
+  it("confetti and starry sky change with the seed", () => {
+    const size = { width: 400, height: 300 };
+    for (const tool of [confettiTool, starrySkyTool]) {
+      expect(renderStatic(tool, tool.defaults, 1, size)).not.toBe(
+        renderStatic(tool, tool.defaults, 2, size),
+      );
     }
   });
 });
