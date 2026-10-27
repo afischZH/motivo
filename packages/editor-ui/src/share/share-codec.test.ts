@@ -3,9 +3,11 @@ import {
   builtInTools,
   createRegistry,
   cssGradientTool,
+  paletteFromImageTool,
+  withoutDerivedParams,
   type AnyToolDefinition,
 } from "@motivo/tool-registry";
-import { deflateSync } from "fflate";
+import { deflateSync, inflateSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import { createEditorStore, selectDesign, type Design } from "../store/editor-store";
 import {
@@ -24,6 +26,9 @@ const base64url = (bytes: Uint8Array): string =>
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+
+const base64urlDecode = (text: string): Uint8Array =>
+  Uint8Array.from(atob(text.replace(/-/g, "+").replace(/_/g, "/")), (c) => c.charCodeAt(0));
 
 /** Builds a code from arbitrary bytes after the version byte. */
 function packRaw(payload: Uint8Array, version = SHARE_FORMAT_VERSION): string {
@@ -69,7 +74,9 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("round trip: %s", (_,
     const code = encodeOk(d);
     expect(code).toMatch(/^[A-Za-z0-9_-]+$/);
     const r = decodeDesign(code);
-    expect(r).toEqual({ ok: true, design: d, toolVersion: tool.version, outdated: false });
+    // Image-derived params never travel in a link; they come back as defaults.
+    const expected = { ...d, params: withoutDerivedParams(tool, d.params) };
+    expect(r).toEqual({ ok: true, design: expected, toolVersion: tool.version, outdated: false });
   });
 
   it("stays short (defaults under 400 characters)", () => {
@@ -317,5 +324,28 @@ describe("hash helpers", () => {
     if (!r.ok) throw new Error(r.error);
     expect(store.getState().loadDesign(r.design)).toEqual({ ok: true });
     expect(selectDesign(store.getState())).toEqual(d);
+  });
+});
+
+describe("image-derived params", () => {
+  const tool = paletteFromImageTool;
+  const userColors = [{ color: "#123456", share: 1 }];
+
+  it("are left out when encoding, so nothing from the user's image is in the link", () => {
+    const code = encodeOk(
+      design(tool, { params: { ...tool.defaults, count: 7, colors: userColors } }),
+    );
+    const json = new TextDecoder().decode(inflateSync(base64urlDecode(code).subarray(1)));
+    expect(json).not.toContain("#123456");
+    expect(decodeDesign(code)).toMatchObject({
+      ok: true,
+      design: { params: { ...tool.defaults, count: 7 } },
+    });
+  });
+
+  it("are reset when decoding a crafted link that carries them", () => {
+    const params = { ...tool.defaults, colors: userColors };
+    const code = packJson([tool.id, tool.version, 1, 1920, 1080, params]);
+    expect(decodeDesign(code)).toMatchObject({ ok: true, design: { params: tool.defaults } });
   });
 });

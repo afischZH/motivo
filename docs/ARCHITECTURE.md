@@ -103,6 +103,13 @@ export interface ToolDefinition<S extends z.ZodTypeAny> {
 - **Nie** `Math.random()` in Engine-Code (Lint-Regel).
 - Leertaste = neuer Seed (und optional neue Params via `randomize`).
 
+### 4.2 Bildeingabe (`imageInput`, ab M2-AP06)
+Tools, die Parameter aus einem Nutzerbild ableiten (z. B. Palette aus Bild), deklarieren `imageInput` in ihrer `ToolDefinition`: `derivedKeys` (abgeleitete Params), `deriveOn` (Params, die eine Neuberechnung auslösen), `maxEdge`, `sample()` (eingebautes Beispielbild als Startzustand) und `derive(pixels, params, rng)` (rein, deterministisch). Die Editor-Shell (`packages/editor-ui/src/image-input/`) zeigt dafür generisch Ablage, Dateiwahl, Einfügen aus der Zwischenablage, Vorschaubild und Fehler (aria-live), ohne Tool-spezifischen Code.
+- Ablauf: Grösse (max. 5 MB), Typ per Magic Bytes und Pixelzahl aus dem Header (max. 64 MP, gegen Dekompressionsbomben) prüfen, dann im Worker dekodieren (`createImageBitmap` + `OffscreenCanvas`) und auf `maxEdge` verkleinern. SVG wird nur über `<img>` gerastert (keine Scripts, keine externen Ressourcen). Ohne Worker/OffscreenCanvas Fallback über `<img>` im Hauptthread.
+- `derive` läuft im selben Worker (Timeout 10 s, Dekodieren 20 s; ein hängender Worker wird beendet und beim nächsten Aufruf neu gestartet) und erneut bei neuem Bild, neuem Seed (Leertaste) oder Änderung an `deriveOn`. Das Ergebnis landet per `applyDerived` im Store (ohne eigenen Undo-Schritt, da es aus Bild und Seed folgt), `render` bleibt eine reine Funktion der Params: Vorschau == Export.
+- Datenschutz: Pixel liegen nur im Speicher des Tabs. Teilen-Links setzen `derivedKeys` beim Kodieren und Dekodieren auf die Standardwerte zurück, ein geöffneter Link zeigt also das Beispielbild. Nichts wird an Server gesendet oder gespeichert.
+- Abgrenzung: `needsImageInput` bleibt für Bildeffekte reserviert, deren Renderer das Bild selbst als Eingabe braucht (M4/M5).
+
 ## 5. Render- und Export-Pipeline
 
 ```

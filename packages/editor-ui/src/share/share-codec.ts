@@ -10,11 +10,16 @@
  * Decoding treats the input as hostile: length limits before and after
  * decompression, strict JSON shape, and full validation through the tool's
  * zod schema and the shared seed/size schemas. It never throws.
+ *
+ * Params a tool derives from a user image (`imageInput.derivedKeys`) are
+ * reset to their defaults in both directions, so a link never carries
+ * anything taken from the user's image.
  */
 import {
   canvasSizeSchema,
   registry as defaultRegistry,
   seedSchema,
+  withoutDerivedParams,
   type AnyToolDefinition,
   type ToolRegistry,
 } from "@motivo/tool-registry";
@@ -80,7 +85,13 @@ function validate(
   return {
     ok: true,
     tool,
-    design: { toolId: tool.id, params: p.data as ParamValues, seed: s.data, size: z.data },
+    design: {
+      toolId: tool.id,
+      // Image-derived params describe the user's image: never in a link (privacy, size).
+      params: withoutDerivedParams(tool, p.data as ParamValues),
+      seed: s.data,
+      size: z.data,
+    },
   };
 }
 

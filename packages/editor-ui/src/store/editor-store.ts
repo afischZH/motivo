@@ -89,6 +89,13 @@ export interface EditorActions {
   setParam(key: string, value: unknown): void;
   /** Sets several params as one undo step. */
   setParams(patch: ParamValues): void;
+  /**
+   * Merges params derived from an image input (`tool.imageInput`) into the
+   * current design and its filmstrip entry, without an undo step: they follow
+   * from the image and the seed, and the seed is already in the history.
+   * Unknown keys are ignored.
+   */
+  applyDerived(patch: ParamValues): void;
   /** Resets one param to the tool default (double-click on a control). */
   resetParam(key: string): void;
   /** Resets all params to the tool defaults. */
@@ -196,6 +203,19 @@ function freshState(
     coalesce: null,
     nextVariantId: 1,
   };
+}
+
+/** `params` with the known, changed keys of `patch` applied, or `null` if nothing changes. */
+function mergePatch(s: EditorState, patch: ParamValues): ParamValues | null {
+  const shape = s.tool.schema.shape;
+  let next: Record<string, unknown> | null = null;
+  for (const [key, value] of Object.entries(patch)) {
+    if (!Object.prototype.hasOwnProperty.call(shape, key)) continue;
+    if (valuesEqual((next ?? s.params)[key], value)) continue;
+    next ??= { ...s.params };
+    next[key] = value;
+  }
+  return next;
 }
 
 export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
@@ -350,16 +370,18 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
       },
 
       setParams(patch) {
-        const s = get();
-        const shape = s.tool.schema.shape;
-        let next: Record<string, unknown> | null = null;
-        for (const [key, value] of Object.entries(patch)) {
-          if (!Object.prototype.hasOwnProperty.call(shape, key)) continue;
-          if (valuesEqual((next ?? s.params)[key], value)) continue;
-          next ??= { ...s.params };
-          next[key] = value;
-        }
+        const next = mergePatch(get(), patch);
         if (next) change({ params: next });
+      },
+
+      applyDerived(patch) {
+        const s = get();
+        const next = mergePatch(s, patch);
+        if (!next) return;
+        set({
+          params: next,
+          variants: syncVariants(s.variants, s.activeVariantId, next, s.seed),
+        });
       },
 
       resetParam(key) {

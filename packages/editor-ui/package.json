@@ -8,6 +8,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./share": "./src/share/share-codec.ts",
+    "./image-sniff": "./src/image-input/sniff.ts",
     "./messages/de.json": "./src/messages/de.json",
     "./messages/en.json": "./src/messages/en.json"
   },

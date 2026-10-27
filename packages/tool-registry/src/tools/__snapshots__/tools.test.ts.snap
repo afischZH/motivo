@@ -198,6 +198,336 @@ exports[`preset snapshots: noise-grain > riso 1`] = `"<svg xmlns="http://www.w3.
 
 exports[`preset snapshots: noise-grain > sand 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><defs><pattern id="g1f7s4o0" width="256" height="256" patternUnits="userSpaceOnUse"><image width="256" height="256" style="image-rendering:pixelated" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="png-base64:87820:3731a022"/></pattern></defs><rect width="1080" height="1080" fill="#e9c46a"/><rect width="1080" height="1080" fill="url(#g1f7s4o0)" opacity="0.4" style="mix-blend-mode:multiply"/></svg>"`;
 
+exports[`preset snapshots: palette-from-image > color-wheel 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="240" height="1080" fill="#e89282"/><rect x="240" y="0" width="240" height="1080" fill="#fcc088"/><rect x="480" y="0" width="240" height="1080" fill="#36674d"/><rect x="720" y="0" width="240" height="1080" fill="#244c3c"/><rect x="960" y="0" width="240" height="1080" fill="#233a5b"/><rect x="1200" y="0" width="240" height="1080" fill="#4c4c7d"/><rect x="1440" y="0" width="240" height="1080" fill="#7e5b92"/><rect x="1680" y="0" width="240" height="1080" fill="#ba718f"/></g><g fill="#000000"><text x="19.2" y="1004.64" font-size="49.68" font-weight="700">9%</text><text x="19.2" y="1060.8" font-size="43.2">#e89282</text></g><g fill="#000000"><text x="259.2" y="1004.64" font-size="49.68" font-weight="700">5%</text><text x="259.2" y="1060.8" font-size="43.2">#fcc088</text></g><g fill="#ffffff"><text x="499.2" y="1004.64" font-size="49.68" font-weight="700">10%</text><text x="499.2" y="1060.8" font-size="43.2">#36674d</text></g><g fill="#ffffff"><text x="739.2" y="1004.64" font-size="49.68" font-weight="700">7%</text><text x="739.2" y="1060.8" font-size="43.2">#244c3c</text></g><g fill="#ffffff"><text x="979.2" y="1004.64" font-size="49.68" font-weight="700">25%</text><text x="979.2" y="1060.8" font-size="43.2">#233a5b</text></g><g fill="#ffffff"><text x="1219.2" y="1004.64" font-size="49.68" font-weight="700">18%</text><text x="1219.2" y="1060.8" font-size="43.2">#4c4c7d</text></g><g fill="#ffffff"><text x="1459.2" y="1004.64" font-size="49.68" font-weight="700">19%</text><text x="1459.2" y="1060.8" font-size="43.2">#7e5b92</text></g><g fill="#000000"><text x="1699.2" y="1004.64" font-size="49.68" font-weight="700">7%</text><text x="1699.2" y="1060.8" font-size="43.2">#ba718f</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-from-image > contrast-check 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#e99b86"/><rect x="384" y="0" width="384" height="1080" fill="#865e92"/><rect x="768" y="0" width="384" height="1080" fill="#33634a"/><rect x="1152" y="0" width="384" height="1080" fill="#484b7a"/><rect x="1536" y="0" width="384" height="1080" fill="#203b53"/></g><g fill="#000000"><text x="30.72" y="936.96" font-size="49.68" font-weight="700">17%</text><text x="30.72" y="993.12" font-size="43.2">#e99b86</text><text x="30.72" y="1049.28" font-size="38.88">9.4:1 AAA</text></g><g fill="#ffffff"><text x="414.72" y="936.96" font-size="49.68" font-weight="700">23%</text><text x="414.72" y="993.12" font-size="43.2">#865e92</text><text x="414.72" y="1049.28" font-size="38.88">5.2:1 AA</text></g><g fill="#ffffff"><text x="798.72" y="936.96" font-size="49.68" font-weight="700">13%</text><text x="798.72" y="993.12" font-size="43.2">#33634a</text><text x="798.72" y="1049.28" font-size="38.88">6.9:1 AA</text></g><g fill="#ffffff"><text x="1182.72" y="936.96" font-size="49.68" font-weight="700">21%</text><text x="1182.72" y="993.12" font-size="43.2">#484b7a</text><text x="1182.72" y="1049.28" font-size="38.88">8.1:1 AAA</text></g><g fill="#ffffff"><text x="1566.72" y="936.96" font-size="49.68" font-weight="700">26%</text><text x="1566.72" y="993.12" font-size="43.2">#203b53</text><text x="1566.72" y="1049.28" font-size="38.88">11.5:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-from-image > dominant 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#203b53"/><rect x="384" y="0" width="384" height="1080" fill="#865e92"/><rect x="768" y="0" width="384" height="1080" fill="#484b7a"/><rect x="1152" y="0" width="384" height="1080" fill="#e99b86"/><rect x="1536" y="0" width="384" height="1080" fill="#33634a"/></g><g fill="#ffffff"><text x="30.72" y="993.12" font-size="49.68" font-weight="700">26%</text><text x="30.72" y="1049.28" font-size="43.2">#203b53</text></g><g fill="#ffffff"><text x="414.72" y="993.12" font-size="49.68" font-weight="700">23%</text><text x="414.72" y="1049.28" font-size="43.2">#865e92</text></g><g fill="#ffffff"><text x="798.72" y="993.12" font-size="49.68" font-weight="700">21%</text><text x="798.72" y="1049.28" font-size="43.2">#484b7a</text></g><g fill="#000000"><text x="1182.72" y="993.12" font-size="49.68" font-weight="700">17%</text><text x="1182.72" y="1049.28" font-size="43.2">#e99b86</text></g><g fill="#ffffff"><text x="1566.72" y="993.12" font-size="49.68" font-weight="700">13%</text><text x="1566.72" y="1049.28" font-size="43.2">#33634a</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-from-image > extra exports of every preset 1`] = `
+{
+  "color-wheel": {
+    "css-variables": ":root {
+  --palette-1: #e89282;
+  --palette-2: #fcc088;
+  --palette-3: #36674d;
+  --palette-4: #244c3c;
+  --palette-5: #233a5b;
+  --palette-6: #4c4c7d;
+  --palette-7: #7e5b92;
+  --palette-8: #ba718f;
+}
+",
+    "hex-list": "#e89282
+#fcc088
+#36674d
+#244c3c
+#233a5b
+#4c4c7d
+#7e5b92
+#ba718f
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#e89282',
+          2: '#fcc088',
+          3: '#36674d',
+          4: '#244c3c',
+          5: '#233a5b',
+          6: '#4c4c7d',
+          7: '#7e5b92',
+          8: '#ba718f',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(74.4% 0.108 31.2);
+  --color-palette-2: oklch(85% 0.1 63.9);
+  --color-palette-3: oklch(47.1% 0.069 159);
+  --color-palette-4: oklch(38.2% 0.054 165.5);
+  --color-palette-5: oklch(34.6% 0.065 257.5);
+  --color-palette-6: oklch(43.9% 0.08 282.6);
+  --color-palette-7: oklch(52.9% 0.093 312.6);
+  --color-palette-8: oklch(63.6% 0.099 354.1);
+}
+",
+  },
+  "contrast-check": {
+    "css-variables": ":root {
+  --palette-1: #e99b86;
+  --palette-2: #865e92;
+  --palette-3: #33634a;
+  --palette-4: #484b7a;
+  --palette-5: #203b53;
+}
+",
+    "hex-list": "#e99b86
+#865e92
+#33634a
+#484b7a
+#203b53
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#e99b86',
+          2: '#865e92',
+          3: '#33634a',
+          4: '#484b7a',
+          5: '#203b53',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(76.2% 0.099 35.8);
+  --color-palette-2: oklch(54.3% 0.091 318.2);
+  --color-palette-3: oklch(45.8% 0.067 159.4);
+  --color-palette-4: oklch(43.2% 0.077 279.8);
+  --color-palette-5: oklch(34.3% 0.054 246.9);
+}
+",
+  },
+  "dominant": {
+    "css-variables": ":root {
+  --palette-1: #203b53;
+  --palette-2: #865e92;
+  --palette-3: #484b7a;
+  --palette-4: #e99b86;
+  --palette-5: #33634a;
+}
+",
+    "hex-list": "#203b53
+#865e92
+#484b7a
+#e99b86
+#33634a
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#203b53',
+          2: '#865e92',
+          3: '#484b7a',
+          4: '#e99b86',
+          5: '#33634a',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(34.3% 0.054 246.9);
+  --color-palette-2: oklch(54.3% 0.091 318.2);
+  --color-palette-3: oklch(43.2% 0.077 279.8);
+  --color-palette-4: oklch(76.2% 0.099 35.8);
+  --color-palette-5: oklch(45.8% 0.067 159.4);
+}
+",
+  },
+  "full-spectrum": {
+    "css-variables": ":root {
+  --palette-1: #c7768b;
+  --palette-2: #ea9582;
+  --palette-3: #fcc088;
+  --palette-4: #38694f;
+  --palette-5: #264f3e;
+  --palette-6: #244d6a;
+  --palette-7: #203455;
+  --palette-8: #4b4178;
+  --palette-9: #6f548f;
+  --palette-10: #916393;
+}
+",
+    "hex-list": "#c7768b
+#ea9582
+#fcc088
+#38694f
+#264f3e
+#244d6a
+#203455
+#4b4178
+#6f548f
+#916393
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#c7768b',
+          2: '#ea9582',
+          3: '#fcc088',
+          4: '#38694f',
+          5: '#264f3e',
+          6: '#244d6a',
+          7: '#203455',
+          8: '#4b4178',
+          9: '#6f548f',
+          10: '#916393',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(65.9% 0.104 3.6);
+  --color-palette-2: oklch(75.2% 0.107 33.3);
+  --color-palette-3: oklch(85% 0.1 63.9);
+  --color-palette-4: oklch(47.8% 0.069 159.1);
+  --color-palette-5: oklch(39.2% 0.055 164.7);
+  --color-palette-6: oklch(40.4% 0.067 241.8);
+  --color-palette-7: oklch(32.6% 0.064 260);
+  --color-palette-8: oklch(41.2% 0.09 290.2);
+  --color-palette-9: oklch(49.9% 0.096 304.2);
+  --color-palette-10: oklch(56.5% 0.09 325.3);
+}
+",
+  },
+  "light-to-dark": {
+    "css-variables": ":root {
+  --palette-1: #eb9d85;
+  --palette-2: #906393;
+  --palette-3: #36674d;
+  --palette-4: #564d82;
+  --palette-5: #244c3c;
+  --palette-6: #243b5c;
+}
+",
+    "hex-list": "#eb9d85
+#906393
+#36674d
+#564d82
+#244c3c
+#243b5c
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#eb9d85',
+          2: '#906393',
+          3: '#36674d',
+          4: '#564d82',
+          5: '#244c3c',
+          6: '#243b5c',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(76.7% 0.1 37.8);
+  --color-palette-2: oklch(56.4% 0.089 324.5);
+  --color-palette-3: oklch(47.1% 0.069 159);
+  --color-palette-4: oklch(45.3% 0.085 290.4);
+  --color-palette-5: oklch(38.2% 0.054 165.5);
+  --color-palette-6: oklch(35% 0.065 257.4);
+}
+",
+  },
+  "quiet": {
+    "css-variables": ":root {
+  --palette-1: #e99b86;
+  --palette-2: #855e92;
+  --palette-3: #254f54;
+  --palette-4: #453e73;
+}
+",
+    "hex-list": "#e99b86
+#855e92
+#254f54
+#453e73
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#e99b86',
+          2: '#855e92',
+          3: '#254f54',
+          4: '#453e73',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(76.2% 0.099 35.8);
+  --color-palette-2: oklch(54.2% 0.091 317.5);
+  --color-palette-3: oklch(40% 0.047 205.7);
+  --color-palette-4: oklch(39.7% 0.088 287.8);
+}
+",
+  },
+  "trio": {
+    "css-variables": ":root {
+  --palette-1: #2b495a;
+  --palette-2: #7b598f;
+  --palette-3: #e79986;
+}
+",
+    "hex-list": "#2b495a
+#7b598f
+#e79986
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        palette: {
+          1: '#2b495a',
+          2: '#7b598f',
+          3: '#e79986',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-palette-1: oklch(38.9% 0.046 234.5);
+  --color-palette-2: oklch(52.1% 0.091 312.3);
+  --color-palette-3: oklch(75.6% 0.098 34.3);
+}
+",
+  },
+}
+`;
+
+exports[`preset snapshots: palette-from-image > full-spectrum 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="192" height="1080" fill="#c7768b"/><rect x="192" y="0" width="192" height="1080" fill="#ea9582"/><rect x="384" y="0" width="192" height="1080" fill="#fcc088"/><rect x="576" y="0" width="192" height="1080" fill="#38694f"/><rect x="768" y="0" width="192" height="1080" fill="#264f3e"/><rect x="960" y="0" width="192" height="1080" fill="#244d6a"/><rect x="1152" y="0" width="192" height="1080" fill="#203455"/><rect x="1344" y="0" width="192" height="1080" fill="#4b4178"/><rect x="1536" y="0" width="192" height="1080" fill="#6f548f"/><rect x="1728" y="0" width="192" height="1080" fill="#916393"/></g><g fill="#000000"><text x="15.36" y="1064.64" font-size="37.16">#c7768b</text></g><g fill="#000000"><text x="207.36" y="1064.64" font-size="37.16">#ea9582</text></g><g fill="#000000"><text x="399.36" y="1064.64" font-size="37.16">#fcc088</text></g><g fill="#ffffff"><text x="591.36" y="1064.64" font-size="37.16">#38694f</text></g><g fill="#ffffff"><text x="783.36" y="1064.64" font-size="37.16">#264f3e</text></g><g fill="#ffffff"><text x="975.36" y="1064.64" font-size="37.16">#244d6a</text></g><g fill="#ffffff"><text x="1167.36" y="1064.64" font-size="37.16">#203455</text></g><g fill="#ffffff"><text x="1359.36" y="1064.64" font-size="37.16">#4b4178</text></g><g fill="#ffffff"><text x="1551.36" y="1064.64" font-size="37.16">#6f548f</text></g><g fill="#ffffff"><text x="1743.36" y="1064.64" font-size="37.16">#916393</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-from-image > light-to-dark 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="320" height="1080" fill="#eb9d85"/><rect x="320" y="0" width="320" height="1080" fill="#906393"/><rect x="640" y="0" width="320" height="1080" fill="#36674d"/><rect x="960" y="0" width="320" height="1080" fill="#564d82"/><rect x="1280" y="0" width="320" height="1080" fill="#244c3c"/><rect x="1600" y="0" width="320" height="1080" fill="#243b5c"/></g><g fill="#000000"><text x="25.6" y="998.24" font-size="49.68" font-weight="700">16%</text><text x="25.6" y="1054.4" font-size="43.2">#eb9d85</text></g><g fill="#ffffff"><text x="345.6" y="998.24" font-size="49.68" font-weight="700">19%</text><text x="345.6" y="1054.4" font-size="43.2">#906393</text></g><g fill="#ffffff"><text x="665.6" y="998.24" font-size="49.68" font-weight="700">10%</text><text x="665.6" y="1054.4" font-size="43.2">#36674d</text></g><g fill="#ffffff"><text x="985.6" y="998.24" font-size="49.68" font-weight="700">21%</text><text x="985.6" y="1054.4" font-size="43.2">#564d82</text></g><g fill="#ffffff"><text x="1305.6" y="998.24" font-size="49.68" font-weight="700">7%</text><text x="1305.6" y="1054.4" font-size="43.2">#244c3c</text></g><g fill="#ffffff"><text x="1625.6" y="998.24" font-size="49.68" font-weight="700">26%</text><text x="1625.6" y="1054.4" font-size="43.2">#243b5c</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-from-image > quiet 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="480" height="1080" fill="#e99b86"/><rect x="480" y="0" width="480" height="1080" fill="#855e92"/><rect x="960" y="0" width="480" height="1080" fill="#254f54"/><rect x="1440" y="0" width="480" height="1080" fill="#453e73"/></g></g></svg>"`;
+
+exports[`preset snapshots: palette-from-image > trio 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="640" height="1080" fill="#2b495a"/><rect x="640" y="0" width="640" height="1080" fill="#7b598f"/><rect x="1280" y="0" width="640" height="1080" fill="#e79986"/></g><g fill="#ffffff"><text x="51.2" y="972.64" font-size="49.68" font-weight="700">52%</text><text x="51.2" y="1028.8" font-size="43.2">#2b495a</text></g><g fill="#ffffff"><text x="691.2" y="972.64" font-size="49.68" font-weight="700">30%</text><text x="691.2" y="1028.8" font-size="43.2">#7b598f</text></g><g fill="#000000"><text x="1331.2" y="972.64" font-size="49.68" font-weight="700">17%</text><text x="1331.2" y="1028.8" font-size="43.2">#e79986</text></g></g></svg>"`;
+
 exports[`preset snapshots: palette-generator > berry 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="320" height="432" fill="#ffe5ec"/><rect x="320" y="0" width="320" height="432" fill="#ff8fab"/><rect x="640" y="0" width="320" height="432" fill="#c9184a"/><rect x="960" y="0" width="320" height="432" fill="#590d22"/><rect x="1280" y="0" width="320" height="432" fill="#2d6a4f"/><rect x="1600" y="0" width="320" height="432" fill="#b7e4c7"/></g><g fill="#000000"><text x="25.6" y="406.4" font-size="38.88">17.6:1 AAA</text></g><g fill="#000000"><text x="345.6" y="406.4" font-size="38.88">9.7:1 AAA</text></g><g fill="#ffffff"><text x="665.6" y="406.4" font-size="38.88">5.6:1 AA</text></g><g fill="#ffffff"><text x="985.6" y="406.4" font-size="38.88">13.9:1 AAA</text></g><g fill="#ffffff"><text x="1305.6" y="406.4" font-size="38.88">6.3:1 AA</text></g><g fill="#000000"><text x="1625.6" y="406.4" font-size="38.88">14.9:1 AAA</text></g><g shape-rendering="crispEdges"><rect x="0" y="432" width="1920" height="108" fill="#ffe5ec"/><rect x="0" y="540" width="1920" height="108" fill="#ff8fab"/><rect x="0" y="648" width="1920" height="108" fill="#c9184a"/><rect x="0" y="756" width="1920" height="108" fill="#590d22"/><rect x="0" y="864" width="1920" height="108" fill="#2d6a4f"/><rect x="0" y="972" width="1920" height="108" fill="#b7e4c7"/></g><g font-size="34.56" text-anchor="middle"><text x="480" y="498.1" fill="#ff8fab">1.8:1</text><text x="800" y="498.1" fill="#c9184a">4.7:1 AA</text><text x="1120" y="498.1" fill="#590d22">11.7:1 AAA</text><text x="1440" y="498.1" fill="#2d6a4f">5.3:1 AA</text><text x="1760" y="498.1" fill="#b7e4c7">1.1:1</text><text x="160" y="606.1" fill="#ffe5ec">1.8:1</text><text x="800" y="606.1" fill="#c9184a">2.6:1</text><text x="1120" y="606.1" fill="#590d22">6.4:1 AA</text><text x="1440" y="606.1" fill="#2d6a4f">2.9:1</text><text x="1760" y="606.1" fill="#b7e4c7">1.5:1</text><text x="160" y="714.1" fill="#ffe5ec">4.7:1 AA</text><text x="480" y="714.1" fill="#ff8fab">2.6:1</text><text x="1120" y="714.1" fill="#590d22">2.4:1</text><text x="1440" y="714.1" fill="#2d6a4f">1.1:1</text><text x="1760" y="714.1" fill="#b7e4c7">4.0:1</text><text x="160" y="822.1" fill="#ffe5ec">11.7:1 AAA</text><text x="480" y="822.1" fill="#ff8fab">6.4:1 AA</text><text x="800" y="822.1" fill="#c9184a">2.4:1</text><text x="1440" y="822.1" fill="#2d6a4f">2.1:1</text><text x="1760" y="822.1" fill="#b7e4c7">9.9:1 AAA</text><text x="160" y="930.1" fill="#ffe5ec">5.3:1 AA</text><text x="480" y="930.1" fill="#ff8fab">2.9:1</text><text x="800" y="930.1" fill="#c9184a">1.1:1</text><text x="1120" y="930.1" fill="#590d22">2.1:1</text><text x="1760" y="930.1" fill="#b7e4c7">4.5:1 AA</text><text x="160" y="1038.1" fill="#ffe5ec">1.1:1</text><text x="480" y="1038.1" fill="#ff8fab">1.5:1</text><text x="800" y="1038.1" fill="#c9184a">4.0:1</text><text x="1120" y="1038.1" fill="#590d22">9.9:1 AAA</text><text x="1440" y="1038.1" fill="#2d6a4f">4.5:1 AA</text></g></g></svg>"`;
 
 exports[`preset snapshots: palette-generator > citrus 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#fff8e1"/><rect x="384" y="0" width="384" height="1080" fill="#ffd23f"/><rect x="768" y="0" width="384" height="1080" fill="#ee4266"/><rect x="1152" y="0" width="384" height="1080" fill="#540d6e"/><rect x="1536" y="0" width="384" height="1080" fill="#3bceac"/></g><g fill="#000000"><text x="30.72" y="993.12" font-size="43.2">#fff8e1</text><text x="30.72" y="1049.28" font-size="38.88">19.7:1 AAA</text></g><g fill="#000000"><text x="414.72" y="993.12" font-size="43.2">#ffd23f</text><text x="414.72" y="1049.28" font-size="38.88">14.5:1 AAA</text></g><g fill="#000000"><text x="798.72" y="993.12" font-size="43.2">#ee4266</text><text x="798.72" y="1049.28" font-size="38.88">5.6:1 AA</text></g><g fill="#ffffff"><text x="1182.72" y="993.12" font-size="43.2">#540d6e</text><text x="1182.72" y="1049.28" font-size="38.88">12.6:1 AAA</text></g><g fill="#000000"><text x="1566.72" y="993.12" font-size="43.2">#3bceac</text><text x="1566.72" y="1049.28" font-size="38.88">10.6:1 AAA</text></g></g></svg>"`;

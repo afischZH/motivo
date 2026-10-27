@@ -170,6 +170,22 @@ describe("setParams, resetParam, resetParams", () => {
     expect(store.getState().past).toHaveLength(2);
   });
 
+  it("applyDerived merges image-derived params into the design and variant, without an undo step", () => {
+    const store = setup();
+    store.getState().setParam("count", 3);
+    store.getState().applyDerived({ count: 4, opacity: 0.2, nope: 1 });
+    const s = store.getState();
+    expect(s.params).toMatchObject({ count: 4, opacity: 0.2 });
+    expect("nope" in s.params).toBe(false);
+    expect(s.past).toHaveLength(1);
+    expect(s.variants.find((v) => v.id === s.activeVariantId)?.params).toBe(s.params);
+    const before = s.params;
+    store.getState().applyDerived({ count: 4 });
+    expect(store.getState().params).toBe(before);
+    store.getState().undo();
+    expect(store.getState().params).toEqual(fixtureDefaults);
+  });
+
   it("resetParams restores all defaults and is a no-op on defaults", () => {
     const store = setup();
     store.getState().resetParams();

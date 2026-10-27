@@ -10,6 +10,7 @@ import { cssGradientTool } from "./css-gradient";
 import { dieterDotsTool } from "./dieter-dots";
 import { gridPatternsTool } from "./grid-patterns";
 import { noiseGrainTool } from "./noise-grain";
+import { paletteFromImageTool } from "./palette-from-image";
 import { paletteGeneratorTool } from "./palette-generator";
 import { polkaDotsTool } from "./polka-dots";
 import { starrySkyTool } from "./starry-sky";
@@ -24,6 +25,7 @@ export {
   dieterDotsTool,
   gridPatternsTool,
   noiseGrainTool,
+  paletteFromImageTool,
   paletteGeneratorTool,
   polkaDotsTool,
   starrySkyTool,
@@ -37,6 +39,7 @@ export type { CssGradientParams } from "./css-gradient";
 export type { DieterDotsParams } from "./dieter-dots";
 export type { GridPatternsParams } from "./grid-patterns";
 export type { NoiseGrainParams } from "./noise-grain";
+export type { PaletteFromImageParams } from "./palette-from-image";
 export type { PaletteGeneratorParams } from "./palette-generator";
 export type { PolkaDotsParams } from "./polka-dots";
 export type { StarrySkyParams } from "./starry-sky";
@@ -58,6 +61,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   paletteGeneratorTool,
   tintsShadesTool,
   tailwindPaletteTool,
+  paletteFromImageTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

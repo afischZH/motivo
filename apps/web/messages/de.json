@@ -779,6 +779,58 @@
           "a4": "OKLCH beschreibt Farben über Helligkeit, Buntheit und Farbton so, wie das Auge sie wahrnimmt. Moderne Browser verstehen OKLCH direkt in CSS."
         }
       }
+    },
+    "palette-from-image": {
+      "name": "Palette aus Bild",
+      "description": "Zieh ein Foto hinein und erhalte seine wichtigsten Farben mit Anteil in Prozent. Das Bild bleibt in deinem Browser.",
+      "params": {
+        "count": {
+          "label": "Anzahl Farben",
+          "description": "Wie viele Hauptfarben im Bild gesucht werden."
+        },
+        "sort": {
+          "label": "Reihenfolge",
+          "options": {
+            "share": "Anteil",
+            "lightness": "Helligkeit",
+            "hue": "Farbton"
+          }
+        },
+        "colors": {
+          "label": "Gefundene Farben"
+        },
+        "shares": {
+          "label": "Anteil anzeigen"
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "dominant": "Hauptfarben",
+        "trio": "Trio",
+        "light-to-dark": "Hell zu dunkel",
+        "color-wheel": "Farbkreis",
+        "full-spectrum": "Alle zehn",
+        "quiet": "Schlicht",
+        "contrast-check": "Kontrastcheck"
+      },
+      "seo": {
+        "whatIs": "Palette aus Bild findet die Farben, die ein Foto oder eine Grafik prägen, und zeigt, wie viel Fläche jede davon einnimmt. Die Analyse läuft komplett in deinem Browser: Dein Bild wird nicht hochgeladen und nirgends gespeichert.",
+        "howTo": "Zieh ein Bild auf die Ablage, füg es mit Ctrl+V ein oder wähl eine Datei aus (PNG, JPG, WebP, GIF oder SVG bis 5 MB). Stell die Anzahl Farben ein, drück die Leertaste für eine andere Gruppierung und exportier die Palette als HEX-Liste, CSS-Variablen, Tailwind oder Bild.",
+        "faq": {
+          "q1": "Wird mein Bild hochgeladen?",
+          "a1": "Nein. Das Bild wird in deinem Browser verkleinert und ausgewertet. Es verlässt dein Gerät nicht, landet nicht in geteilten Links und wird nicht gespeichert.",
+          "q2": "Wie werden die Farben gefunden?",
+          "a2": "Motivo gruppiert die Pixel mit k-Means im OKLab-Farbraum, der Farbunterschiede so misst, wie das Auge sie wahrnimmt. Jede Gruppe ergibt eine Farbe, ihr Anteil ist die Fläche, die sie im Bild einnimmt.",
+          "q3": "Warum ändert die Leertaste die Palette?",
+          "a3": "k-Means startet mit zufällig gewählten Farben und kann je nach Start bei leicht anderen Gruppen landen. Mit der Leertaste probierst du einen neuen Start aus und behältst die Variante, die dir am besten gefällt.",
+          "q4": "Warum zeigt ein geteilter Link das Beispielbild?",
+          "a4": "Geteilte Links enthalten nur die Einstellungen, nie dein Bild oder die daraus gewonnenen Farben. Wer den Link öffnet, sieht deshalb das Beispielbild und kann ein eigenes Bild hineinziehen. Willst du die Farben weitergeben, exportier sie als HEX-Liste oder Bild.",
+          "q5": "Welche Bilder funktionieren?",
+          "a5": "PNG, JPG, WebP, GIF (erstes Bild einer Animation) und SVG bis 5 MB. Durchsichtige Pixel zählen nicht mit."
+        }
+      }
     }
   },
   "Converters": {
