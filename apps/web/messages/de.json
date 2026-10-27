@@ -964,6 +964,252 @@
         }
       }
     },
+    "blob-composition": {
+      "name": "Blob-Komposition",
+      "description": "Mehrere Blobs an Ecken und Rändern, die sich jeder Bildgrösse anpassen. Als SVG oder Bild exportieren.",
+      "blob": "Blob {index}",
+      "params": {
+        "blobs": {
+          "label": "Blobs"
+        },
+        "anchor": {
+          "label": "Position",
+          "options": {
+            "top-left": "Oben links",
+            "top": "Oben",
+            "top-right": "Oben rechts",
+            "left": "Links",
+            "center": "Mitte",
+            "right": "Rechts",
+            "bottom-left": "Unten links",
+            "bottom": "Unten",
+            "bottom-right": "Unten rechts"
+          }
+        },
+        "offsetX": {
+          "label": "Verschiebung horizontal"
+        },
+        "offsetY": {
+          "label": "Verschiebung vertikal"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "complexity": {
+          "label": "Komplexität"
+        },
+        "randomness": {
+          "label": "Zufälligkeit"
+        },
+        "variant": {
+          "label": "Formvariante"
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        },
+        "fillStyle": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "outline": "Kontur",
+            "gradient": "Verlauf"
+          }
+        },
+        "strokeWidth": {
+          "label": "Linienstärke"
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        }
+      },
+      "presets": {
+        "corners": "Ecken",
+        "sunrise": "Sonnenaufgang",
+        "mint": "Minze",
+        "outline": "Konturen",
+        "dusk": "Dämmerung",
+        "paper": "Papier",
+        "pop": "Pop"
+      },
+      "seo": {
+        "whatIs": "Eine Blob-Komposition ordnet mehrere organische Formen als Ebenen an den Ecken und Rändern einer Fläche an. So entstehen ruhige Hintergründe für Websites, Präsentationen und Social-Media-Beiträge, bei denen die Mitte frei für Text bleibt.",
+        "howTo": "Wähle eine Vorlage oder drücke die Leertaste für neue Anordnungen. Pro Blob legst du Position, Verschiebung, Grösse und Form fest, ziehst Ebenen nach oben oder unten und blendest sie aus. Die Farben kommen der Reihe nach aus deiner Palette. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Was passiert, wenn ich die Bildgrösse ändere?",
+            "answer": "Positionen werden relativ zu den Ecken und Rändern gespeichert, Grössen relativ zur kürzeren Seite. Die Komposition passt sich deshalb jedem Format an, vom Quadrat bis zum breiten Banner."
+          },
+          "q2": {
+            "question": "Wie ändere ich die Farbe eines einzelnen Blobs?",
+            "answer": "Der oberste Blob nimmt die erste Farbe der Palette, der zweite die zweite und so weiter. Ändere die Palette oder die Reihenfolge der Blobs."
+          },
+          "q3": {
+            "question": "Bleibt die Form eines Blobs gleich, wenn ich andere ändere?",
+            "answer": "Ja. Jede Form hängt nur von ihrer eigenen Formvariante, Komplexität und Zufälligkeit ab. Mit dem Schloss behältst du einzelne Werte beim Würfeln."
+          },
+          "q4": {
+            "question": "Wie viele Blobs sind möglich?",
+            "answer": "Bis zu acht Ebenen. Für ruhige Hintergründe reichen meist zwei bis vier."
+          }
+        }
+      }
+    },
+    "doodles": {
+      "name": "Doodle-Hintergründe",
+      "description": "Handgezeichnet wirkende Kringel, Spiralen, Sterne und Zickzacklinien als Hintergrund. Als SVG oder Bild exportieren.",
+      "params": {
+        "shape": {
+          "label": "Form",
+          "options": {
+            "mixed": "Gemischt",
+            "squiggle": "Kringel",
+            "zigzag": "Zickzack",
+            "spiral": "Spiralen",
+            "loop": "Kreise",
+            "triangle": "Dreiecke",
+            "star": "Sterne",
+            "cross": "Kreuze",
+            "arc": "Bögen"
+          }
+        },
+        "spacing": {
+          "label": "Abstand"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "wobble": {
+          "label": "Zittern"
+        },
+        "strokeWidth": {
+          "label": "Linienstärke"
+        }
+      },
+      "presets": {
+        "notebook": "Notizheft",
+        "chalkboard": "Wandtafel",
+        "party": "Party",
+        "stars": "Sterne",
+        "spirals": "Spiralen",
+        "blueprint": "Bauplan",
+        "bold": "Kräftig"
+      },
+      "seo": {
+        "whatIs": "Doodle-Hintergründe bestehen aus kleinen, wie von Hand gezeichneten Formen: Kringel, Spiralen, Sterne, Kreuze und Zickzacklinien. Sie wirken verspielt und persönlich und eignen sich für Einladungen, Schul- und Kinderthemen, Social-Media-Beiträge und Verpackungen.",
+        "howTo": "Wähle eine Form oder die Mischung, stelle Abstand, Grösse und Linienstärke ein und bestimme mit Zittern, wie handgezeichnet die Linien wirken. Drücke die Leertaste für neue Varianten und exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Warum wirken die Linien handgezeichnet?",
+            "answer": "Jeder Punkt einer Form wird mit sanftem Rauschen leicht verschoben, danach werden die Punkte mit weichen Kurven verbunden und mit runden Linienenden gezeichnet."
+          },
+          "q2": {
+            "question": "Woher stammen die Formen?",
+            "answer": "Alle Formen werden direkt im Browser aus einfachen geometrischen Regeln erzeugt. Es gibt keine Bildvorlagen, jede Variante ist neu."
+          },
+          "q3": {
+            "question": "Warum überlappen sich die Doodles nicht?",
+            "answer": "Die Positionen stammen aus Poisson-Disk-Sampling. Jede Form hält einen Mindestabstand, die Verteilung wirkt gleichmässig und trotzdem zufällig."
+          },
+          "q4": {
+            "question": "Kann ich das SVG weiterbearbeiten?",
+            "answer": "Ja. Alle Linien einer Farbe liegen in einem Pfad mit Kontur, ohne Transformationen, und lassen sich in Figma oder Illustrator umfärben."
+          }
+        }
+      }
+    },
+    "svg-charts": {
+      "name": "SVG-Diagramme",
+      "description": "Platzhalter-Diagramme mit Zufallsdaten für Mockups: Linien, Flächen und Balken. Als SVG oder Bild exportieren.",
+      "groups": {
+        "data": "Daten"
+      },
+      "params": {
+        "type": {
+          "label": "Diagrammtyp",
+          "options": {
+            "line": "Linie",
+            "area": "Fläche",
+            "bar": "Balken"
+          }
+        },
+        "series": {
+          "label": "Datenreihen"
+        },
+        "points": {
+          "label": "Datenpunkte"
+        },
+        "trend": {
+          "label": "Trend"
+        },
+        "volatility": {
+          "label": "Schwankung"
+        },
+        "smoothing": {
+          "label": "Glättung"
+        },
+        "lineWidth": {
+          "label": "Linienstärke"
+        },
+        "markers": {
+          "label": "Punkte markieren"
+        },
+        "barGap": {
+          "label": "Abstand zwischen Balken"
+        },
+        "barRadius": {
+          "label": "Eckenradius"
+        },
+        "axes": {
+          "label": "Achsen"
+        },
+        "grid": {
+          "label": "Hilfslinien"
+        },
+        "axisColor": {
+          "label": "Achsenfarbe"
+        },
+        "margin": {
+          "label": "Rand"
+        }
+      },
+      "presets": {
+        "growth": "Wachstum",
+        "dashboard": "Dashboard",
+        "quarterly": "Quartale",
+        "monthly": "Monate",
+        "sparkline": "Sparkline",
+        "minimal": "Minimal",
+        "stacked-waves": "Wellen"
+      },
+      "seo": {
+        "whatIs": "SVG-Diagramme sind Platzhalter-Charts mit Zufallsdaten. Du brauchst sie für Mockups, Präsentationen, Landingpages und App-Entwürfe, wenn echte Zahlen fehlen oder nicht gezeigt werden sollen.",
+        "howTo": "Wähle Linie, Fläche oder Balken, lege Anzahl Datenreihen und Datenpunkte fest und stelle Trend und Schwankung ein. Achsen und Hilfslinien schaltest du ein oder aus. Mit der Leertaste entstehen neue Daten. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich eigene Daten eingeben?",
+            "answer": "Nein, das Tool erzeugt bewusst Zufallsdaten für Entwürfe. Mit Trend und Schwankung steuerst du, ob die Kurve steigt, fällt oder stark ausschlägt."
+          },
+          "q2": {
+            "question": "Warum hat das Diagramm keine Beschriftungen?",
+            "answer": "Ohne Text sieht das SVG in jedem Programm gleich aus und braucht keine Schriften. Beschriftungen ergänzt du im Layout, zum Beispiel in Figma."
+          },
+          "q3": {
+            "question": "Bleiben die Daten gleich, wenn ich den Stil ändere?",
+            "answer": "Ja. Die Daten hängen vom Seed ab. Diagrammtyp, Farben, Achsen und Glättung kannst du ändern, ohne dass sich die Werte ändern."
+          },
+          "q4": {
+            "question": "Wie bekomme ich neue Zufallsdaten?",
+            "answer": "Drücke die Leertaste. Typ, Datenreihen und Stil bleiben, Daten, Trend und Farben werden neu gewürfelt. Mit dem Schloss hältst du einzelne Werte fest."
+          }
+        }
+      }
+    },
     "palette-generator": {
       "name": "Farbpaletten-Generator",
       "description": "Harmonische Farbpaletten per Leertaste. Farben sperren, Harmonie wählen, Kontrast prüfen und als CSS exportieren.",

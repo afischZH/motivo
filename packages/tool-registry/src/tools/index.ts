@@ -5,48 +5,57 @@
 import { registry } from "../registry";
 import type { AnyToolDefinition } from "../types";
 import { blobTool } from "./blob";
+import { blobCompositionTool } from "./blob-composition";
 import { confettiTool } from "./confetti";
 import { cssGradientTool } from "./css-gradient";
 import { cssPatternsTool } from "./css-patterns";
 import { dieterDotsTool } from "./dieter-dots";
+import { doodlesTool } from "./doodles";
 import { gridPatternsTool } from "./grid-patterns";
 import { noiseGrainTool } from "./noise-grain";
 import { paletteFromImageTool } from "./palette-from-image";
 import { paletteGeneratorTool } from "./palette-generator";
 import { polkaDotsTool } from "./polka-dots";
 import { starrySkyTool } from "./starry-sky";
+import { svgChartsTool } from "./svg-charts";
 import { svgWavesTool } from "./svg-waves";
 import { tailwindPaletteTool } from "./tailwind-palette";
 import { tintsShadesTool } from "./tints-shades";
 
 export {
   blobTool,
+  blobCompositionTool,
   confettiTool,
   cssGradientTool,
   cssPatternsTool,
   dieterDotsTool,
+  doodlesTool,
   gridPatternsTool,
   noiseGrainTool,
   paletteFromImageTool,
   paletteGeneratorTool,
   polkaDotsTool,
   starrySkyTool,
+  svgChartsTool,
   svgWavesTool,
   tailwindPaletteTool,
   tintsShadesTool,
 };
 export type { BlobParams } from "./blob";
+export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
 export type { ConfettiParams } from "./confetti";
 export type { CssGradientParams } from "./css-gradient";
 export type { CssPatternsParams } from "./css-patterns";
 export { cssPatternDescriptionKey, cssPatternNameKey, cssPatternShowcase } from "./css-patterns";
 export type { DieterDotsParams } from "./dieter-dots";
+export type { DoodlesParams } from "./doodles";
 export type { GridPatternsParams } from "./grid-patterns";
 export type { NoiseGrainParams } from "./noise-grain";
 export type { PaletteFromImageParams } from "./palette-from-image";
 export type { PaletteGeneratorParams } from "./palette-generator";
 export type { PolkaDotsParams } from "./polka-dots";
 export type { StarrySkyParams } from "./starry-sky";
+export type { SvgChartsParams } from "./svg-charts";
 export type { SvgWavesParams } from "./svg-waves";
 export type { TailwindPaletteParams } from "./tailwind-palette";
 export type { TintsShadesParams } from "./tints-shades";
@@ -57,6 +66,9 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   cssPatternsTool,
   blobTool,
   svgWavesTool,
+  blobCompositionTool,
+  doodlesTool,
+  svgChartsTool,
   polkaDotsTool,
   noiseGrainTool,
   gridPatternsTool,

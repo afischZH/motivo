@@ -27,6 +27,9 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   confetti: { de: "konfetti-generator", en: "confetti-generator" },
   "starry-sky": { de: "sternenhimmel-generator", en: "starry-sky-generator" },
   "dieter-dots": { de: "dieter-dots-generator", en: "dieter-dots-generator" },
+  "blob-composition": { de: "blob-hintergrund-generator", en: "blob-background-generator" },
+  doodles: { de: "doodle-hintergrund-generator", en: "doodle-background-generator" },
+  "svg-charts": { de: "svg-diagramm-generator", en: "svg-chart-generator" },
   "palette-generator": { de: "farbpaletten-generator", en: "color-palette-generator" },
   "tints-shades": { de: "farbabstufungen-generator", en: "tints-and-shades-generator" },
   "tailwind-palette": {
