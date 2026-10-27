@@ -47,7 +47,7 @@ export interface SecurityHeaderOptions {
    * The request comes from a local host over plain http (`next start` in E2E).
    * Drops the HTTPS-only parts: WebKit, unlike Chromium, applies
    * upgrade-insecure-requests on http://localhost and then cannot load any
-   * script, so pages never hydrate.
+   * script, so pages never hydrate. Also relaxes COOP (see securityHeaders).
    */
   local?: boolean;
 }
@@ -135,22 +135,25 @@ export function securityHeaders(options: SecurityHeaderOptions): Header[] {
     { key: "X-Frame-Options", value: "DENY" },
     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
     { key: "Permissions-Policy", value: PERMISSIONS_POLICY },
-    { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+    // Local: unsafe-none (the browser default). With same-origin, Firefox swaps
+    // the process on the first navigation and Playwright's context-level
+    // colorScheme emulation does not reach the new document.
+    { key: "Cross-Origin-Opener-Policy", value: options.local ? "unsafe-none" : "same-origin" },
   ];
 }
 
 /**
  * next.config `headers()` rule for local hosts. Listed after the main rule:
- * Next lets the last matching rule win for the same header key, so only CSP
- * and HSTS change. Production hosts never match.
+ * Next lets the last matching rule win for the same header key, so only the
+ * headers that differ change. Production hosts never match.
  */
 export function localHostHeaderRule(options: SecurityHeaderOptions) {
-  const local = securityHeaders({ ...options, local: true });
+  const remote = new Map(securityHeaders(options).map(({ key, value }) => [key, value]));
   return {
     source: "/:path*",
     has: [{ type: "host" as const, value: LOCAL_HOST_PATTERN }],
-    headers: local.filter(
-      ({ key }) => key === "Content-Security-Policy" || key === "Strict-Transport-Security",
+    headers: securityHeaders({ ...options, local: true }).filter(
+      ({ key, value }) => remote.get(key) !== value,
     ),
   };
 }

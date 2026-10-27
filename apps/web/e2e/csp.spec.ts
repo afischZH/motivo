@@ -59,10 +59,11 @@ test.describe("content security policy", () => {
     expect(headers["content-security-policy"]).toContain("frame-ancestors 'none'");
     expect(headers["x-content-type-options"]).toBe("nosniff");
     expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
-    expect(headers["cross-origin-opener-policy"]).toBe("same-origin");
     expect(headers["permissions-policy"]).toContain("camera=()");
     // E2E runs on http://localhost, which gets the local variant (no HSTS, no
-    // https upgrade); production values are covered by security-headers.test.ts.
+    // https upgrade, COOP unsafe-none); production values are covered by
+    // security-headers.test.ts.
+    expect(headers["cross-origin-opener-policy"]).toBe("unsafe-none");
     expect(headers["strict-transport-security"]).toBe("max-age=0");
     expect(headers["content-security-policy"]).not.toContain("upgrade-insecure-requests");
 

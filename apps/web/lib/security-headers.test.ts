@@ -171,13 +171,18 @@ describe("local hosts", () => {
     expect(`${local}; upgrade-insecure-requests`).toBe(prod);
   });
 
-  it("overrides only CSP and HSTS, for local hosts only", () => {
+  it("overrides only CSP, HSTS and COOP, for local hosts only", () => {
     const rule = localHostHeaderRule({ dev: false });
     expect(rule.headers.map(({ key }) => key).sort()).toEqual([
       "Content-Security-Policy",
+      "Cross-Origin-Opener-Policy",
       "Strict-Transport-Security",
     ]);
     expect(rule.headers).toContainEqual({ key: "Strict-Transport-Security", value: "max-age=0" });
+    expect(rule.headers).toContainEqual({
+      key: "Cross-Origin-Opener-Policy",
+      value: "unsafe-none",
+    });
     // Next anchors the value as ^value$ and matches the host name without port.
     const matcher = new RegExp(`^${rule.has[0]?.value}$`);
     for (const host of ["localhost", "127.0.0.1"]) expect(matcher.test(host)).toBe(true);
@@ -196,5 +201,6 @@ describe("local hosts", () => {
   it("never reaches public/_headers", () => {
     expect(cloudflareHeadersFile()).toContain("upgrade-insecure-requests");
     expect(cloudflareHeadersFile()).toContain("max-age=63072000");
+    expect(cloudflareHeadersFile()).toContain("Cross-Origin-Opener-Policy: same-origin");
   });
 });
