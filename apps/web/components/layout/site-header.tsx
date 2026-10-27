@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 export function SiteHeader() {
   const t = useTranslations("Layout");
   const tConvert = useTranslations("Converters");
+  const tPatterns = useTranslations("PatternLibrary");
 
   return (
     <header className="border-b border-border">
@@ -24,6 +25,12 @@ export function SiteHeader() {
               className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               {t("toolsNav")}
+            </Link>
+            <Link
+              href="/css-patterns"
+              className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              {tPatterns("nav")}
             </Link>
             <Link
               href="/convert"

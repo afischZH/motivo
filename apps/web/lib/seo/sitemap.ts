@@ -1,8 +1,8 @@
 /**
  * Sitemap entries: every indexable content page in every enabled locale,
  * each with its hreflang alternates (same set as the page's `<link>` tags).
- * Built from the registry, the category list and the converter ids, never
- * from a hand-written list. Editor pages are reachable from every landing
+ * Built from the registry, the category list, the CSS pattern library and
+ * the converter ids, never from a hand-written list. Editor pages are reachable from every landing
  * page and stay indexable, but the sitemap points crawlers at the landing
  * pages, which carry the text.
  */
@@ -11,6 +11,7 @@ import type { MetadataRoute } from "next";
 import { ENABLED_LOCALES } from "@/i18n/locales";
 import type { AppRoute } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
+import { libraryPatterns } from "@/lib/css-patterns";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { registry } from "@motivo/tool-registry";
 
@@ -24,6 +25,8 @@ export function sitemapRoutes(): AppRoute[] {
     { page: "tools" },
     ...populatedCategories().map((category): AppRoute => ({ page: "category", category })),
     ...registry.list().map((tool): AppRoute => ({ page: "landing", toolId: tool.id })),
+    { page: "patterns" },
+    ...libraryPatterns().map((spec): AppRoute => ({ page: "pattern", patternId: spec.id })),
     { page: "convert" },
     ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
   ];

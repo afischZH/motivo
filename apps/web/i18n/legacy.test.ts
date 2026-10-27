@@ -2,6 +2,7 @@ import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { libraryPatterns } from "@/lib/css-patterns";
 
 import { canonicalRedirect } from "./legacy";
 import { ENABLED_LOCALES } from "./locales";
@@ -38,6 +39,15 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/konverter/kategorie/farben")).toBeNull();
   });
 
+  it("redirects CSS pattern pages to this locale's section and slug", () => {
+    expect(canonicalRedirect("/en/css-muster/zickzack")).toBe("/en/css-patterns/zigzag");
+    expect(canonicalRedirect("/de/css-patterns/candy-stripes")).toBe("/de/css-muster/zuckerstange");
+    expect(canonicalRedirect("/de/css-muster/zigzag")).toBe("/de/css-muster/zickzack");
+    expect(canonicalRedirect("/de/css-patterns")).toBe("/de/css-muster");
+    expect(canonicalRedirect("/de/css-muster/zickzack")).toBeNull();
+    expect(canonicalRedirect("/de/css-muster/nope")).toBeNull();
+  });
+
   it("leaves canonical, unknown and unrelated paths alone", () => {
     expect(canonicalRedirect("/en/tools/blob-generator")).toBeNull();
     expect(canonicalRedirect("/de/konverter/svg-zu-css")).toBeNull();
@@ -56,6 +66,8 @@ describe("canonicalRedirect", () => {
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
       ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),
       ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
+      { page: "patterns" },
+      ...libraryPatterns().map((p): AppRoute => ({ page: "pattern", patternId: p.id })),
     ];
     for (const route of routes) {
       const paths = localizedPaths(route);

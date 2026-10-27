@@ -78,6 +78,15 @@ describe("path helpers", () => {
     expect(routeFromPathname("/convert", {}, "en")).toEqual({ page: "convert" });
     expect(routeFromPathname("/", {}, "en")).toEqual({ page: "home" });
     expect(routeFromPathname("/whatever", {}, "en")).toBeUndefined();
+    expect(routeFromPathname("/css-patterns", {}, "de")).toEqual({ page: "patterns" });
+    expect(
+      routeFromPathname("/css-patterns/[patternSlug]", { patternSlug: "zickzack" }, "de"),
+    ).toEqual({ page: "pattern", patternId: "zigzag" });
+    expect(routeFromPathname("/de/css-muster/zickzack", {}, "de")).toEqual({
+      page: "pattern",
+      patternId: "zigzag",
+    });
+    expect(routeFromPathname("/css-patterns/nope", { patternSlug: "nope" }, "en")).toBeUndefined();
     expect(routeFromPathname("/tools/nope", { toolSlug: "nope" }, "en")).toBeUndefined();
   });
 

@@ -1,6 +1,7 @@
 /**
  * Renders the Open Graph images of every registered tool in every enabled
- * locale into `public/og/<locale>/<toolId>.png` (see `lib/seo/og.ts`).
+ * locale into `public/og/<locale>/<toolId>.png` (see `lib/seo/og.ts`), and
+ * one per CSS library pattern into `public/og/<locale>/css-patterns/<id>.png`.
  * Runs before `next build` and `next dev`. Uses `next/og` in Node, so the
  * Worker bundle never contains Satori or resvg, and the images are plain
  * static assets on Cloudflare.
@@ -16,11 +17,12 @@ register("./ts-resolve-hook.mjs", import.meta.url);
 const APP_ROOT = new URL("../", import.meta.url);
 const OUT_DIR = new URL("public/og/", APP_ROOT);
 
-const [{ registry }, motifs, og, locales, ogModule] = await Promise.all([
+const [{ registry }, motifs, og, locales, patterns, ogModule] = await Promise.all([
   import("@motivo/tool-registry"),
   import("../lib/seo/motifs.ts"),
   import("../lib/seo/og.ts"),
   import("../i18n/locales.ts"),
+  import("../lib/css-patterns.ts"),
   // next has no ESM exports map: the CommonJS entry needs its file name.
   import("next/og.js"),
 ]);
@@ -52,6 +54,18 @@ for (const locale of locales.ENABLED_LOCALES) {
     const png = Buffer.from(await response.arrayBuffer());
     const file = new URL(`.${og.ogImagePath(tool.id, locale)}`, new URL("public/", APP_ROOT));
     await writeFile(file, png);
+    count++;
+  }
+
+  await mkdir(new URL(`${locale}/${patterns.PATTERN_TOOL_ID}/`, OUT_DIR), { recursive: true });
+  const brand = lookup(messages, "Layout.brand");
+  for (const spec of patterns.libraryPatterns()) {
+    const title = lookup(messages, patterns.patternKeys(spec).name);
+    if (typeof title !== "string") throw new Error(`og-images: no name for ${spec.id} (${locale})`);
+    const element = og.ogElement({ svg: patterns.patternOgSvg(spec), brand, title });
+    const png = Buffer.from(await new ImageResponse(element, { ...og.OG_SIZE }).arrayBuffer());
+    const key = patterns.patternOgKey(spec.id);
+    await writeFile(new URL(`.${og.ogImagePath(key, locale)}`, new URL("public/", APP_ROOT)), png);
     count++;
   }
 }

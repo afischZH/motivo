@@ -15,6 +15,8 @@ import {
   converterSlug,
   sectionFromAnySlug,
   isCategorySegment,
+  patternIdFromAnySlug,
+  patternSlug,
   sectionSlug,
   toolIdFromAnySlug,
   toolSlug,
@@ -47,6 +49,11 @@ export function canonicalRedirect(pathname: string): string | null {
     const toolId = toolIdFromAnySlug(slug);
     if (!toolId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${toolSlug(toolId, locale)}`;
+  } else if (section === "cssPatterns") {
+    // Library pattern page: `/de/css-muster/<pattern slug>`.
+    const patternId = patternIdFromAnySlug(slug);
+    if (!patternId) return null;
+    canonical = `/${locale}/${sectionSlug(section, locale)}/${patternSlug(patternId, locale)}`;
   } else {
     const converterId = converterIdFromAnySlug(slug);
     if (!converterId) return null;

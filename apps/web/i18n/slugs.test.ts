@@ -7,6 +7,7 @@ import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { libraryPatterns } from "@/lib/css-patterns";
 
 import { ALL_LOCALES, ENABLED_LOCALES } from "./locales";
 import {
@@ -22,6 +23,10 @@ import {
   converterIdFromAnySlug,
   converterIdFromSlug,
   converterSlug,
+  PATTERN_SLUGS,
+  patternIdFromAnySlug,
+  patternIdFromSlug,
+  patternSlug,
   sectionFromAnySlug,
   toolIdFromAnySlug,
   toolIdFromSlug,
@@ -29,6 +34,7 @@ import {
 } from "./slugs";
 
 const toolIds = registry.list().map((tool) => tool.id);
+const patternIds = libraryPatterns().map((spec) => spec.id);
 
 /** First path segments that a top-level tool landing slug must never shadow. */
 const RESERVED = ["tools", "convert", "api", "app", "pricing", "blog", "changelog", "community"];
@@ -75,6 +81,35 @@ describe.each(ENABLED_LOCALES)("slugs in %s", (locale) => {
     for (const id of CONVERTER_IDS) {
       expect(converterIdFromSlug(converterSlug(id, locale), locale)).toBe(id);
     }
+  });
+});
+
+describe.each(ENABLED_LOCALES)("CSS pattern slugs in %s", (locale) => {
+  it.each(patternIds)("pattern %s has a slug", (id) => {
+    expect(PATTERN_SLUGS[id]?.[locale], `add "${id}" to PATTERN_SLUGS in i18n/slugs.ts`).toMatch(
+      SLUG_PATTERN,
+    );
+  });
+
+  it("has unique pattern slugs that round-trip to ids", () => {
+    const slugs = patternIds.map((id) => patternSlug(id, locale));
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const id of patternIds)
+      expect(patternIdFromSlug(patternSlug(id, locale), locale)).toBe(id);
+  });
+});
+
+describe("CSS pattern slug map", () => {
+  it("has no entries for unknown patterns", () => {
+    expect(Object.keys(PATTERN_SLUGS).filter((id) => !patternIds.includes(id))).toEqual([]);
+  });
+
+  it("resolves any spelling for redirects", () => {
+    expect(patternIdFromAnySlug("zickzack")).toBe("zigzag");
+    expect(patternIdFromAnySlug("candy-stripes")).toBe("candy");
+    expect(patternIdFromAnySlug("dots-duo")).toBe("dots-duo");
+    expect(patternIdFromAnySlug("toString")).toBeUndefined();
+    expect(sectionFromAnySlug("css-muster")).toBe("cssPatterns");
   });
 });
 

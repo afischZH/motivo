@@ -5,6 +5,7 @@ import { ENABLED_LOCALES } from "@/i18n/locales";
 import { toolLandingPaths } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { libraryPatterns } from "@/lib/css-patterns";
 
 import { sitemapEntries } from "./sitemap";
 
@@ -16,7 +17,13 @@ describe("sitemap", () => {
 
   it("lists every page once per enabled locale", () => {
     const pages =
-      2 + populatedCategories().length + registry.list().length + 1 + CONVERTER_IDS.length;
+      2 +
+      populatedCategories().length +
+      registry.list().length +
+      1 +
+      libraryPatterns().length +
+      1 +
+      CONVERTER_IDS.length;
     expect(entries).toHaveLength(pages * ENABLED_LOCALES.length);
     expect(new Set(urls).size).toBe(urls.length);
   });
@@ -40,5 +47,16 @@ describe("sitemap", () => {
     for (const url of urls) expect(new URL(url).origin).toBe("https://example.test");
     expect(urls).toContain("https://example.test/de/tools/kategorie/farben");
     expect(urls).toContain("https://example.test/en/convert/svg-to-css");
+  });
+
+  it("contains the CSS pattern library and every pattern page with alternates", () => {
+    expect(urls).toContain("https://example.test/de/css-muster");
+    expect(urls).toContain("https://example.test/en/css-patterns");
+    const zigzag = entries.find((e) => e.url === "https://example.test/de/css-muster/zickzack");
+    expect(zigzag?.alternates?.languages).toEqual({
+      de: "https://example.test/de/css-muster/zickzack",
+      en: "https://example.test/en/css-patterns/zigzag",
+      "x-default": "https://example.test/en/css-patterns/zigzag",
+    });
   });
 });

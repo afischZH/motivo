@@ -34,6 +34,49 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
     en: "tailwind-color-palette-generator",
   },
   "palette-from-image": { de: "farbpalette-aus-bild", en: "color-palette-from-image" },
+  "css-patterns": { de: "css-muster-generator", en: "css-pattern-generator" },
+};
+
+/**
+ * CSS pattern library id (`CSS_PATTERNS` in `@motivo/engine`) to its
+ * localized slugs, used in `/[locale]/<cssPatterns section>/<slug>`. The
+ * contract test in `slugs.test.ts` requires an entry for every pattern.
+ */
+export const PATTERN_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
+  polka: { de: "punkte", en: "polka-dots" },
+  "polka-staggered": { de: "versetzte-punkte", en: "staggered-dots" },
+  "dots-duo": { de: "zweifarbige-punkte", en: "two-tone-dots" },
+  "dots-mixed": { de: "gemischte-punkte", en: "mixed-dots" },
+  rings: { de: "ringe", en: "rings" },
+  target: { de: "zielscheiben", en: "targets" },
+  "grid-lines": { de: "rasterlinien", en: "grid-lines" },
+  "graph-paper": { de: "millimeterpapier", en: "graph-paper" },
+  "dotted-grid": { de: "raster-mit-knoten", en: "dotted-grid" },
+  crosshatch: { de: "kreuzschraffur", en: "crosshatch" },
+  bricks: { de: "backsteine", en: "bricks" },
+  tiles: { de: "fliesen", en: "tiles" },
+  stripes: { de: "streifen", en: "stripes" },
+  candy: { de: "zuckerstange", en: "candy-stripes" },
+  pinstripes: { de: "nadelstreifen", en: "pinstripes" },
+  tricolor: { de: "dreifarbige-streifen", en: "tricolor-stripes" },
+  gingham: { de: "vichy-karo", en: "gingham" },
+  plaid: { de: "schottenkaro", en: "plaid" },
+  barcode: { de: "strichcode", en: "barcode" },
+  ripples: { de: "wellenringe", en: "ripples" },
+  sunrise: { de: "sonnenaufgang", en: "sunrise" },
+  "wavy-lines": { de: "wellenlinien", en: "wavy-lines" },
+  scallops: { de: "bogenkante", en: "scallops" },
+  scales: { de: "schuppen", en: "scales" },
+  rainbow: { de: "regenbogen", en: "rainbows" },
+  checkerboard: { de: "schachbrett", en: "checkerboard" },
+  diamonds: { de: "rauten", en: "diamonds" },
+  argyle: { de: "argyle", en: "argyle" },
+  zigzag: { de: "zickzack", en: "zigzag" },
+  chevron: { de: "chevron", en: "chevron" },
+  triangles: { de: "dreiecke", en: "triangles" },
+  pinwheel: { de: "windrad", en: "pinwheel" },
+  crosses: { de: "kreuze", en: "crosses" },
+  squares: { de: "quadrate", en: "squares" },
 };
 
 /** Converter id to its localized slugs. */
@@ -73,6 +116,7 @@ export const CATEGORY_SEGMENT = {
 export const SECTION_SLUGS = {
   tools: { de: "tools", en: "tools" },
   convert: { de: "konverter", en: "convert" },
+  cssPatterns: { de: "css-muster", en: "css-patterns" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;
@@ -156,4 +200,21 @@ export function categorySegment(locale: AnyLocale): string {
 /** Whether `value` is the category segment in any locale. */
 export function isCategorySegment(value: string): boolean {
   return hasSlug(CATEGORY_SEGMENT, value);
+}
+
+/** Slug of a CSS library pattern in a locale. A pattern without an entry falls back to its id. */
+export function patternSlug(patternId: string, locale: AnyLocale): string {
+  const entry = PATTERN_SLUGS[patternId];
+  return entry ? pick(entry, locale) : patternId;
+}
+
+/** Pattern id for the slug this locale uses, or undefined. */
+export function patternIdFromSlug(slug: string, locale: AnyLocale): string | undefined {
+  return findId(PATTERN_SLUGS, (entry) => pick(entry, locale) === slug);
+}
+
+/** Pattern id for any known spelling (id or a slug of any locale), for redirects. */
+export function patternIdFromAnySlug(value: string): string | undefined {
+  if (Object.hasOwn(PATTERN_SLUGS, value)) return value;
+  return findId(PATTERN_SLUGS, (entry) => hasSlug(entry, value));
 }

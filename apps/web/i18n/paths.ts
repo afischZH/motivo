@@ -16,6 +16,8 @@ import {
   converterIdFromSlug,
   converterSlug,
   isCategorySegment,
+  patternIdFromSlug,
+  patternSlug,
   sectionFromAnySlug,
   toolIdFromSlug,
   toolSlug,
@@ -28,7 +30,9 @@ export type AppRoute =
   | { page: "landing"; toolId: string }
   | { page: "tool"; toolId: string }
   | { page: "convert" }
-  | { page: "converter"; converterId: ConverterId };
+  | { page: "converter"; converterId: ConverterId }
+  | { page: "patterns" }
+  | { page: "pattern"; patternId: string };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
 export function routeHref(route: AppRoute, locale: AnyLocale) {
@@ -58,6 +62,13 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return {
         pathname: "/convert/[converterSlug]" as const,
         params: { converterSlug: converterSlug(route.converterId, locale) },
+      };
+    case "patterns":
+      return "/css-patterns" as const;
+    case "pattern":
+      return {
+        pathname: "/css-patterns/[patternSlug]" as const,
+        params: { patternSlug: patternSlug(route.patternId, locale) },
       };
   }
 }
@@ -131,6 +142,12 @@ export function routeFromPathname(
     const slug = param(params.toolSlug);
     const toolId = slug ? toolIdFromSlug(slug, locale) : undefined;
     return toolId ? { page: "tool", toolId } : undefined;
+  }
+  if (section === "cssPatterns") {
+    if (segments.length === 1) return { page: "patterns" };
+    const slug = param(params.patternSlug);
+    const patternId = slug ? patternIdFromSlug(slug, locale) : undefined;
+    return patternId ? { page: "pattern", patternId } : undefined;
   }
   if (section === "convert") {
     if (segments.length === 1) return { page: "convert" };
