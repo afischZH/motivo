@@ -43,13 +43,13 @@ Gesamtüberblick:
 
 ## M2: Gratis-Welle, SEO, i18n (Woche 5 bis 7) ► öffentliche Beta
 
-- [ ] Tools: **CSS Pattern Library + Editor**, **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots**, **Noise/Grain** (im Code fertig, Tests und Chromium-E2E grün; Prüfung in Firefox und Safari in AP12 offen)
-- [ ] Farbtools: **Palette Generator**, **Tints & Shades**, **Tailwind Palette**, **Palette aus Bild** (im Code fertig, Tests und Chromium-E2E grün; Prüfung in Firefox und Safari in AP12 offen)
+- [x] Tools: **CSS Pattern Library + Editor**, **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots**, **Noise/Grain** (E2E in Chromium, Firefox und WebKit grün)
+- [x] Farbtools: **Palette Generator**, **Tints & Shades**, **Tailwind Palette**, **Palette aus Bild** (E2E in Chromium, Firefox und WebKit grün)
 - [x] i18n mit next-intl (DE, EN zuerst; FR, IT vorbereitet), lokalisierte Slugs, `hreflang`
 - [x] SEO-Landingpage-Template pro Tool (Inhalte aus i18n-Dateien), Katalog, Kategorie-Seiten, Sitemap, strukturierte Daten, OG-Bilder pro Tool und Sprache (beim Build gerendert, siehe `ARCHITECTURE.md` Abschnitt 7)
 - [ ] Startseite, Impressum, Datenschutz (nDSG/DSGVO), cookiefreie Analytics, Sentry (im Code fertig; offen: juristische Prüfung der Rechtstexte, Analytics- und Sentry-Variablen durch Andreas)
 - [ ] **Founders-Warteliste** (E-Mail mit Double-Opt-in) mit Hinweis auf Lifetime-Preis ab 49, Zähler der Anmeldungen (im Code fertig, aus bis zum Owner-Setup nach `docs/SETUP-WAITLIST.md`)
-- [ ] Lighthouse ≥ 95 (Performance, SEO, A11y) auf Landingpages
+- [ ] Lighthouse ≥ 95 (Performance, SEO, A11y) auf Landingpages (Performance 95 bis 99 und A11y 100 lokal gemessen; SEO erst auf dem Produktions-Host messbar, wegen noindex auf allen anderen Hosts)
 
 **DoD**: Live unter eigener Domain, 15+ Tools, alle Seiten in DE und EN indexierbar, Search Console eingerichtet.
 
