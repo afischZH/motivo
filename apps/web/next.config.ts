@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
+import { securityHeaders } from "./lib/security-headers";
+
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
@@ -11,6 +13,16 @@ const nextConfig: NextConfig = {
     "@motivo/exporters",
     "@motivo/editor-ui",
   ],
+  // CSP and friends on every response, including proxy redirects. Static
+  // assets on Cloudflare get the same set from public/_headers.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders({ dev: process.env.NODE_ENV === "development" }),
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

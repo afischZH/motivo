@@ -9,6 +9,7 @@
     "start": "NEXT_TELEMETRY_DISABLED=1 next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests --exclude 'e2e/**'",
+    "headers:write": "vitest run lib/security-headers.test.ts -u",
     "test:e2e": "playwright test",
     "cf:build": "NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
     "cf:preview": "NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build && opennextjs-cloudflare preview",
