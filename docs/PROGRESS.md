@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: Welle 3 (AP03 CSS Pattern Library, dann AP04 Editor; AP09 Startseite, Rechtsseiten-Entwürfe, Analytics, Sentry). Domain und Impressum-Angaben von Andreas noch offen.
+- **Nächster Schritt**: PAUSIERT auf Wunsch von Andreas (2026-10-27, 14:02). Fortsetzen mit AP04 (Zwischenstand auf Branch `wip/m2-ap04`, Editor-Texte fehlen noch) und AP10 (Zwischenstand auf `wip/m2-ap10`, Web-Teil fehlt noch; Supabase-Projekt muss Andreas anlegen oder freigeben), danach AP12. Offen von Andreas: Impressum-Angaben, Analytics-Token, Sentry-DSN, Domain.
 - Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins
@@ -18,13 +18,13 @@
 | M2-AP01 | Tools **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots** | engine-dev | erledigt (Cross-Browser in AP12) | – | Je 7 Presets; Limits wie Polka Dots (≥ 4 px, ≤ 10 000 Elemente); Grid und Dieter Dots ohne Seed-Einfluss; Changelog-Format: eine Datei pro Sprache (Orchestrator-Entscheid) |
 | M2-AP02 | Tool **Noise/Grain** | engine-dev | erledigt (Cross-Browser in AP12) | – | Gauss-Kachel 256 px als PNG im SVG-Pattern (kein feTurbulence, rendert je Browser anders); Code in engine statt effects; SVG 90 bis 260 KB |
 | M2-AP03 | **CSS Pattern Library** (Dots, Grid, Stripes, Waves, Geometric) inkl. eigener Seite pro Muster | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | AP08 | 34 eigene Muster als Gradient-Ebenen; SVG-Fallback ohne foreignObject (< 1 % Pixel-Abweichung); Muster-Auswahl vorerst als Select; Worker +93 KiB gzip (Texte DE/EN liegen 3-fach im Bundle, in AP12 prüfen) |
-| M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | geplant | AP03 | Neuer Control-Typ Ebenenliste |
+| M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | pausiert (`wip/m2-ap04`) | AP03 | Neuer Control-Typ Ebenenliste |
 | M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | – | Ohne Shell-Erweiterung: Farben als Einzel-Params (color1 bis color8), Schloss pro Farbe; Harmonie-Wechsel wirkt erst bei nächster Leertaste (UX in AP12 prüfen); Code-Exporte statt CSS |
 | M2-AP06 | **Palette aus Bild** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | AP05 | Generischer Bild-Eingang in der Shell (`imageInput` in der ToolDefinition, Worker, 5 MB, Magic Bytes); abgeleitete Farben nie im Teilen-Link; SVG wird im Haupt-Thread gerastert (kann > 50 ms dauern, in AP12 prüfen) |
 | M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | erledigt | – | Slugs zentral in `apps/web/i18n/slugs.ts` (Contract-Test), alte Pfade per 308; Basis-URL aus `NEXT_PUBLIC_SITE_URL`; x-default zeigt auf DE (in AP08 nochmals prüfen, ggf. EN) |
 | M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, OG-Bilder | ui-dev | erledigt (Lighthouse in AP12) | AP07 | OG-Bilder beim Build (Worker 1.8 MiB gzip); x-default EN; noindex ausser Produktions-Host; echte SEO-Texte für M1-Tools; Editor-Seiten nicht in der Sitemap |
 | M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | erledigt bis auf Lighthouse-Performance (AP12) | AP08 | Rechtstexte als Entwurf mit Banner und noindex, Platzhalter in `lib/legal/config.ts`, "juristisch zu prüfen"; Analytics und Sentry nur mit Repo-Variablen und nur in Production (deploy.yml); @sentry/browser 11.9.0 MIT, 19.8 KB gzip, erst beim ersten Fehler geladen; Locale-Cookie abgeschaltet (keine Cookies); Lighthouse mobil Performance 75 bis 87 (Ziel 95), Rest 100; csp.spec unter Volllast einmal instabil |
-| M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | geplant, Entscheid offen | – | Neue Tabelle (Supabase EU, RLS) und E-Mail-Versand: Stopp-Punkte |
+| M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | pausiert (`wip/m2-ap10`) | – | Neue Tabelle (Supabase EU, RLS) und E-Mail-Versand: Stopp-Punkte |
 | M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | erledigt (Security-Review in AP12) | – | CSP erzwungen, aber `unsafe-inline` für Scripts (Next setzt pro Seite Inline-Scripts, Nonces würden statische Seiten verhindern); HSTS ohne preload; zod `jitless` gegen eval |
 | M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | geplant | alle | Domain, DNS, Search Console durch Andreas |
 
