@@ -82,7 +82,8 @@ export function EditorShell({
   const tool = useEditorStore((s) => s.tool);
   const canUndo = useEditorStore(selectCanUndo);
   const canRedo = useEditorStore(selectCanRedo);
-  const size = useEditorStore((s) => s.size);
+  // Only the filmstrip thumbnails use it; deferred so they never block input.
+  const size = useDeferredValue(useEditorStore((s) => s.size));
   const variants = useEditorStore((s) => s.variants);
   const activeVariantId = useEditorStore((s) => s.activeVariantId);
 
@@ -106,11 +107,17 @@ export function EditorShell({
   const toolName = t(`tools.${tool.id}.name`);
   const activeIndex = variants.findIndex((v) => v.id === activeVariantId);
 
-  // Announce the variant position whenever the active variant changes.
+  // Announce the variant position whenever the active variant or the variant
+  // count changes. Not on array identity: edits replace `variants` without
+  // moving the position, and re-announcing then would be noise.
   useEffect(
     () =>
       store.subscribe((s, prev) => {
-        if (s.activeVariantId === prev.activeVariantId && s.variants === prev.variants) return;
+        if (
+          s.activeVariantId === prev.activeVariantId &&
+          s.variants.length === prev.variants.length
+        )
+          return;
         const index = s.variants.findIndex((v) => v.id === s.activeVariantId);
         if (index === -1) return;
         setAnnouncement(
@@ -453,7 +460,8 @@ function PresetBar() {
   const tool = useEditorStore((s) => s.tool);
   const params = useEditorStore((s) => s.params);
   const seed = useDeferredValue(useEditorStore((s) => s.seed));
-  const size = useEditorStore((s) => s.size);
+  // Deferred like the preview: thumbnails follow size changes without blocking input.
+  const size = useDeferredValue(useEditorStore((s) => s.size));
   const applyPreset = useEditorStore((s) => s.applyPreset);
   const activePreset = findMatchingPresetId(tool, params);
 
@@ -476,6 +484,7 @@ function PresetBar() {
               aria-pressed={activePreset === preset.id}
               onClick={() => applyPreset(preset.id)}
               data-preset={preset.id}
+              data-editor-tile=""
             >
               <span className="flex size-18 items-center justify-center overflow-hidden rounded-md bg-canvas">
                 <Thumbnail
@@ -520,7 +529,9 @@ function Filmstrip(props: {
         type="button"
         className={ICON_BUTTON}
         onClick={props.onPrevious}
-        disabled={activeIndex <= 0}
+        // Without an active variant (design edited) both arrows jump to the
+        // newest variant, exactly like the arrow keys.
+        disabled={activeIndex === 0}
         aria-label={t("Editor.shell.previousVariant")}
         aria-keyshortcuts="ArrowLeft"
       >
@@ -535,6 +546,7 @@ function Filmstrip(props: {
               aria-current={index === activeIndex ? "true" : undefined}
               aria-label={t("Editor.shell.variantLabel", { index: index + 1 })}
               onClick={() => selectVariant(variant.id)}
+              data-editor-tile=""
             >
               <span className="flex size-14 items-center justify-center overflow-hidden rounded-md bg-canvas">
                 <Thumbnail
@@ -553,7 +565,7 @@ function Filmstrip(props: {
         type="button"
         className={ICON_BUTTON}
         onClick={props.onNext}
-        disabled={activeIndex === -1 || activeIndex >= variants.length - 1}
+        disabled={activeIndex !== -1 && activeIndex >= variants.length - 1}
         aria-label={t("Editor.shell.nextVariant")}
         aria-keyshortcuts="ArrowRight"
       >

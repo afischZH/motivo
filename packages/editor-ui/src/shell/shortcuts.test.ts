@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import {
+  EDITOR_TILE_ATTRIBUTE,
   isEditableTarget,
   isShortcutBlocked,
   matchShortcut,
@@ -136,6 +137,11 @@ describe("isShortcutBlocked", () => {
     const el = mount(html);
     expect(isShortcutBlocked(el, "previousVariant")).toBe(true);
     expect(isShortcutBlocked(el, "nextVariant")).toBe(true);
+  });
+
+  it("lets Space create a new variant on preset and filmstrip tiles", () => {
+    const el = mount(`<button data-target ${EDITOR_TILE_ATTRIBUTE}>tile</button>`);
+    expect(isShortcutBlocked(el, "newVariant")).toBe(false);
   });
 
   it("lets a slider use Space for a new variant, as it has no native meaning there", () => {

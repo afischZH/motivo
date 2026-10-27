@@ -98,6 +98,63 @@ describe("EditorShell", () => {
     expect(store.getState().variants).toHaveLength(2);
   });
 
+  it("creates a new variant with Space after a tile was clicked, Enter still activates it", () => {
+    const store = setup();
+    const preset = screen.getByRole("button", { name: "Preset dense" });
+    act(() => {
+      preset.focus();
+      preset.click();
+    });
+    expect(store.getState().variants).toHaveLength(2);
+    const seedAfterPreset = store.getState().seed;
+
+    press(" ", {}, preset);
+    expect(store.getState().variants).toHaveLength(3);
+    expect(store.getState().seed).not.toBe(seedAfterPreset);
+
+    const tile = within(screen.getByTestId("filmstrip")).getByRole("button", {
+      name: "Variante 1",
+    });
+    act(() => tile.focus());
+    press(" ", {}, tile);
+    expect(store.getState().variants).toHaveLength(4);
+    // The keyup that follows is swallowed, so the focused tile is not clicked too.
+    const up = new KeyboardEvent("keyup", { key: " ", bubbles: true, cancelable: true });
+    tile.dispatchEvent(up);
+    expect(up.defaultPrevented).toBe(true);
+    expect(store.getState().activeVariantId).toBe(3);
+  });
+
+  it("announces the variant position only when it changes, not on every edit", () => {
+    const store = setup();
+    press(" ");
+    const announcer = screen.getByTestId("editor-announcer");
+    expect(announcer.textContent).toBe("Variante 2 von 2");
+    act(() => announcer.replaceChildren());
+    act(() => store.getState().setParam("count", 33));
+    expect(announcer.textContent).toBe("");
+    press("ArrowLeft");
+    expect(announcer.textContent).toBe("Variante 1 von 2");
+  });
+
+  it("keeps the arrow buttons usable without an active variant", () => {
+    const store = setup();
+    press(" ");
+    // E.g. after undoing to a design whose variant left the filmstrip.
+    act(() => store.setState({ activeVariantId: null }));
+    const previous = screen.getByRole("button", { name: "Vorherige Variante" });
+    const next = screen.getByRole("button", { name: "Nächste Variante" });
+    expect(previous.hasAttribute("disabled")).toBe(false);
+    expect(next.hasAttribute("disabled")).toBe(false);
+    // Like the arrow keys: both jump to the newest variant first.
+    act(() => previous.click());
+    expect(store.getState().activeVariantId).toBe(1);
+    expect(next.hasAttribute("disabled")).toBe(true);
+    act(() => previous.click());
+    expect(store.getState().activeVariantId).toBe(0);
+    expect(previous.hasAttribute("disabled")).toBe(true);
+  });
+
   it("applies presets as new variants and marks the active one", () => {
     const store = setup();
     const preset = screen.getByRole("button", { name: "Preset dense" });
