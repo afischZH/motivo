@@ -130,11 +130,13 @@ export type Section = keyof typeof SECTION_SLUGS;
 
 /**
  * Result pages of the Founders waitlist under the `founders` section
- * (`/de/founders-warteliste/bestaetigt`). The API redirects to them after a
- * confirmation link; `unsubscribe` is the page the e-mail's unsubscribe link
- * opens. Not indexed, not in the sitemap.
+ * (`/de/founders-warteliste/bestaetigt`). `confirm` and `unsubscribe` are the
+ * pages the e-mail links to (each with a button that POSTs, so link scanners
+ * cannot act); the confirm page then opens `confirmed`, `invalid` or `error`.
+ * Not indexed, not in the sitemap.
  */
 export const WAITLIST_PAGE_SLUGS = {
+  confirm: { de: "bestaetigen", en: "confirm" },
   confirmed: { de: "bestaetigt", en: "confirmed" },
   invalid: { de: "link-ungueltig", en: "invalid-link" },
   error: { de: "fehler", en: "error" },

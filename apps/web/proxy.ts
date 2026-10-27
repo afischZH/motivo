@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { canonicalRedirect } from "./i18n/legacy";
 import { routing } from "./i18n/routing";
-import { isLocalHost, securityHeaders } from "./lib/security-headers";
+import { isLocalRequest, securityHeaders } from "./lib/security-headers";
 import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
 const intlMiddleware = createMiddleware(routing);
@@ -23,9 +23,7 @@ const LOCAL_SECURITY_HEADERS = securityHeaders({ ...OPTIONS, local: true });
  */
 function withSecurityHeaders(request: NextRequest, response: Response): Response {
   if (response.status >= 300 && response.status < 400) {
-    const headers = isLocalHost(request.headers.get("host"))
-      ? LOCAL_SECURITY_HEADERS
-      : SECURITY_HEADERS;
+    const headers = isLocalRequest(request.headers) ? LOCAL_SECURITY_HEADERS : SECURITY_HEADERS;
     for (const { key, value } of headers) response.headers.set(key, value);
   }
   return response;

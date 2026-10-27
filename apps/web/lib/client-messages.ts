@@ -16,7 +16,7 @@ export const CONVERTER_CLIENT_NAMESPACES = [...LAYOUT_CLIENT_NAMESPACES, "Conver
 /** Founders waitlist form (home page, Founders page): only its own texts. */
 export const WAITLIST_CLIENT_NAMESPACES = ["Waitlist"] as const;
 
-/** Waitlist unsubscribe page: only the result texts. */
+/** Waitlist confirm and unsubscribe pages: only the result texts. */
 export const WAITLIST_RESULT_CLIENT_NAMESPACES = ["WaitlistResult"] as const;
 
 /** Editor pages: layout, page chrome, editor shell and tool texts (`tools.*`). */

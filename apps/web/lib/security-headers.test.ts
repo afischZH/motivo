@@ -1,12 +1,15 @@
 import { createHash } from "node:crypto";
 
+import { matchHas } from "next/dist/shared/lib/router/utils/prepare-destination";
 import { describe, expect, it } from "vitest";
 
 import { THEME_SCRIPT_HASH } from "./csp-hash";
 import {
+  EDGE_REQUEST_HEADER,
   cloudflareHeadersFile,
   contentSecurityPolicy,
   isLocalHost,
+  isLocalRequest,
   localHostHeaderRule,
   securityHeaders,
 } from "./security-headers";
@@ -210,6 +213,25 @@ describe("local hosts", () => {
     expect(isLocalHost("example.com")).toBe(false);
     expect(isLocalHost("localhost.example.com")).toBe(false);
     expect(isLocalHost(null)).toBe(false);
+  });
+
+  it("never applies to requests through Cloudflare, even with a spoofed host", () => {
+    const rule = localHostHeaderRule({ dev: false });
+    // Next's own matcher, as next.config `headers()` uses it.
+    const matches = (headers: Record<string, string>) =>
+      matchHas({ headers } as Parameters<typeof matchHas>[0], {}, rule.has, rule.missing) !== false;
+    expect(matches({ host: "localhost:3100" })).toBe(true);
+    expect(matches({ host: "127.0.0.1" })).toBe(true);
+    // OpenNext copies a client-sent X-Forwarded-Host into Host; Cloudflare
+    // always adds CF-Connecting-IP, so such a request still gets production headers.
+    expect(matches({ host: "localhost", [EDGE_REQUEST_HEADER]: "203.0.113.7" })).toBe(false);
+    expect(matches({ host: "motivo-web.andreas-65d.workers.dev" })).toBe(false);
+
+    expect(isLocalRequest(new Headers({ host: "localhost:3100" }))).toBe(true);
+    expect(
+      isLocalRequest(new Headers({ host: "localhost", "CF-Connecting-IP": "203.0.113.7" })),
+    ).toBe(false);
+    expect(isLocalRequest(new Headers({ host: "example.com" }))).toBe(false);
   });
 
   it("never reaches public/_headers", () => {

@@ -84,6 +84,7 @@ describe("canonicalRedirect", () => {
       { page: "imprint" },
       { page: "privacy" },
       { page: "founders" },
+      { page: "waitlist", waitlistPage: "confirm" },
       { page: "waitlist", waitlistPage: "confirmed" },
       { page: "waitlist", waitlistPage: "invalid" },
       { page: "waitlist", waitlistPage: "error" },

@@ -38,7 +38,7 @@ Reihenfolge: 1. Supabase, 2. Resend mit Domain, 3. Turnstile, 4. Secrets und Var
 
 ## 3. Cloudflare Turnstile (empfohlen)
 
-1. Cloudflare-Dashboard > **Turnstile > Add widget**: Name `motivo-waitlist`, Hostnamen: Produktions-Domain und `motivo-web.andreas-65d.workers.dev`, Modus **Managed**.
+1. Cloudflare-Dashboard > **Turnstile > Add widget**: Name `motivo-waitlist`, Hostnamen: Produktions-Domain und `motivo-web.andreas-65d.workers.dev`, Modus **Managed**. Die Frage nach **Pre-Clearance** mit **Nein** beantworten (Standard): Nur mit Pre-Clearance setzt Turnstile ein Cookie (`cf_clearance`) für unsere Domain, und die Datenschutzerklärung verspricht "keine Cookies" (siehe "Vor dem Launch noch offen" unten).
 2. **Site Key** und **Secret Key** notieren.
 3. Beide Schlüssel gehören zusammen. Ist nur einer gesetzt, bleibt die Warteliste aus. Ohne Turnstile funktioniert die Warteliste auch (Honeypot und Rate-Limit schützen dann allein), aber Worker-Previews würden dann ebenfalls Anmeldungen annehmen, weil sie die Secrets der Produktion teilen. Mit Turnstile bleiben Previews aus.
 
@@ -69,7 +69,7 @@ Jeder Befehl fragt den Wert ab, er landet nicht in der Shell-History. Kontrolle:
 
 1. Startseite öffnen: Der Abschnitt "Founders-Warteliste" zeigt "0 von 300 Founders-Plätzen vorgemerkt" und das Formular.
 2. Mit einer eigenen Adresse eintragen. Die Mail kommt innerhalb einer Minute; Absender, Sprache, Links und Abmeldelink prüfen.
-3. Bestätigungslink öffnen: Seite "Du bist auf der Warteliste". Nach spätestens 60 Sekunden zeigt der Zähler 1.
+3. Bestätigungslink öffnen: Seite "Anmeldung bestätigen", Knopf drücken, dann Seite "Du bist auf der Warteliste". Nach spätestens 60 Sekunden zeigt der Zähler 1. (Erst der Knopf bestätigt, damit Mail-Scanner, die Links vorab öffnen, niemanden ungefragt eintragen.)
 4. Abmeldelink in der Mail öffnen und "Jetzt abmelden" drücken. Im Supabase-Table-Editor ist die Adresse danach leer (`email` = null).
 5. Bei Problemen: Cloudflare-Dashboard > Workers > motivo-web > **Logs**. Die Logs enthalten nur Dienst und HTTP-Status (z. B. `waitlist: confirmation mail failed: resend request failed (HTTP 403)`), nie Adressen.
 
@@ -83,4 +83,4 @@ Jeder Befehl fragt den Wert ab, er landet nicht in der Shell-History. Kontrolle:
 
 - Texte der Warteliste, der Mail und den Abschnitt "Founders-Warteliste" der Datenschutzerklärung juristisch prüfen lassen (im Code als "juristisch zu prüfen" markiert). Bei inhaltlicher Änderung des Einwilligungstexts `WAITLIST_CONSENT_VERSION` in `apps/web/lib/waitlist/constants.ts` erhöhen.
 - Betreiberangaben in `apps/web/lib/legal/config.ts` ausfüllen; sie erscheinen auch in der Fusszeile der Mail.
-- Prüfen, ob Turnstile im eigenen Frame Cookies setzt, und die Datenschutzerklärung (Abschnitt "Keine Cookies") bei Bedarf ergänzen.
+- Turnstile und Cookies (Security-Review M2-AP12): Ohne Pre-Clearance gibt das Widget nur ein Einmal-Token aus und setzt auf unserer Domain kein Cookie; `cf_clearance` gibt es nur mit der freiwilligen Pre-Clearance, die standardmässig aus ist und eine Cloudflare-Zone braucht ([Clearance](https://developers.cloudflare.com/cloudflare-challenges/concepts/clearance/)). Im eigenen Frame auf `challenges.cloudflare.com` kann die Challenge-Plattform aber eigene, von Cloudflare als "strictly necessary" eingestufte Cookies setzen (`cf_clearance` partitioniert pro Website, `cf_chl_rc_*`), und Cloudflare empfiehlt, diese offenzulegen ([Cloudflare Cookies](https://developers.cloudflare.com/fundamentals/reference/policies-compliances/cloudflare-cookies/)). Darum: Pre-Clearance aus lassen; im Abschnitt "Keine Cookies" der Datenschutzerklärung präzisieren ("Motivo setzt keine Cookies; ist die Sicherheitsprüfung Turnstile aktiv, kann Cloudflare in deren Rahmen technisch notwendige Cookies setzen") und im Abschnitt Warteliste auf das [Turnstile Privacy Addendum](https://www.cloudflare.com/turnstile-privacy-policy/) verweisen; juristisch prüfen lassen. Nach dem Einschalten einmal in den Browser-Entwicklertools (Application > Cookies und Storage, auch für `challenges.cloudflare.com`) nachsehen, was tatsächlich gesetzt wird.

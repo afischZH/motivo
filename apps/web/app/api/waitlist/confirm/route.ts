@@ -1,14 +1,13 @@
-/** GET /api/waitlist/confirm?token=…&lang=de: one-time confirmation link from the e-mail. */
+/**
+ * POST /api/waitlist/confirm: the button on the confirm page sends the token
+ * from the e-mail (JSON body). No GET: link scanners in mail systems open
+ * links and must not complete the double opt-in for anybody.
+ */
 import { waitlistDeps } from "@/lib/waitlist/deps";
 import { handleConfirm } from "@/lib/waitlist/handlers";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   return handleConfirm(request, waitlistDeps());
-}
-
-/** Link scanners probing with HEAD must not use up the one-time token. */
-export function HEAD(): Response {
-  return new Response(null, { status: 200, headers: { "Cache-Control": "no-store" } });
 }

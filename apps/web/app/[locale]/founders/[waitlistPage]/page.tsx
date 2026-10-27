@@ -1,8 +1,9 @@
 /**
- * Waitlist result pages under the Founders section: confirmation result
- * (`bestaetigt`, `link-ungueltig`, `fehler`) after the API's redirect, and
- * the unsubscribe page the e-mail links to (token in the URL fragment, so it
- * never reaches a server log). Static and `noindex`.
+ * Waitlist pages under the Founders section: the confirm and unsubscribe
+ * pages the e-mail links to (token in the URL fragment, so it never reaches
+ * a server log; each acts only on a button click, so mail link scanners
+ * cannot), and the confirmation results (`bestaetigt`, `link-ungueltig`,
+ * `fehler`). Static and `noindex`.
  */
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -10,9 +11,11 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 
 import { buttonVariants } from "@/components/ui/button";
+import { ConfirmForm } from "@/components/waitlist/confirm-form";
 import { UnsubscribeForm } from "@/components/waitlist/unsubscribe-form";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
+import { routePath } from "@/i18n/paths";
 import {
   WAITLIST_PAGE_SLUGS,
   waitlistPageFromSlug,
@@ -71,18 +74,25 @@ export default async function WaitlistResultPage({ params }: WaitlistPageProps) 
         {t(`${page}.title`)}
       </h1>
       <p className="text-lg text-muted-foreground">{t(`${page}.text`)}</p>
-      {page === "unsubscribe" && (
+      {(page === "unsubscribe" || page === "confirm") && (
         <NextIntlClientProvider
           messages={pickMessages(await getMessages({ locale }), WAITLIST_RESULT_CLIENT_NAMESPACES)}
         >
-          <UnsubscribeForm />
+          {page === "confirm" ? (
+            <ConfirmForm
+              confirmedPath={routePath({ page: "waitlist", waitlistPage: "confirmed" }, locale)}
+              invalidPath={routePath({ page: "waitlist", waitlistPage: "invalid" }, locale)}
+            />
+          ) : (
+            <UnsubscribeForm />
+          )}
         </NextIntlClientProvider>
       )}
       <div className="flex flex-wrap gap-3">
         <Link href="/" className={buttonVariants({ variant: "outline" })}>
           {t("backHome")}
         </Link>
-        {page !== "confirmed" && page !== "unsubscribe" && (
+        {page !== "confirmed" && page !== "unsubscribe" && page !== "confirm" && (
           <Link href="/founders" className={buttonVariants({ variant: "outline" })}>
             {t("backFounders")}
           </Link>

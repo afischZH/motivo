@@ -91,6 +91,28 @@ export async function submitUnsubscribe(
   }
 }
 
+export type ConfirmResult = "confirmed" | "invalid" | "error";
+
+/** Confirms the sign-up for the token from the e-mail (button on the confirm page). */
+export async function submitConfirm(
+  token: string,
+  fetchImpl: typeof fetch = fetch,
+): Promise<ConfirmResult> {
+  try {
+    const response = await fetchImpl(WAITLIST_API.confirm, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ token }),
+    });
+    const body = (await response.json().catch(() => ({}))) as { status?: unknown };
+    if (body.status === "confirmed") return "confirmed";
+    if (body.status === "invalid") return "invalid";
+    return "error";
+  } catch {
+    return "error";
+  }
+}
+
 /** The token from a URL fragment like `#token=…`, or null. */
 export function tokenFromHash(hash: string): string | null {
   const value = new URLSearchParams(hash.replace(/^#/, "")).get("token");
