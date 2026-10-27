@@ -5,8 +5,9 @@
  * and the UI shows "coming soon", unless all four required variables are set.
  *
  * Never import this from a client component; the secret-scan test in
- * `waitlist.test.ts` checks the client bundle.
+ * `client-bundle.test.ts` checks the client bundle.
  */
+import { turnstileSiteKey } from "@/lib/telemetry/config";
 
 export interface WaitlistEnv {
   SUPABASE_URL?: string | undefined;
@@ -14,6 +15,9 @@ export interface WaitlistEnv {
   RESEND_API_KEY?: string | undefined;
   WAITLIST_FROM_EMAIL?: string | undefined;
   TURNSTILE_SECRET_KEY?: string | undefined;
+  /** Public site key of this build (inlined at build time). */
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY?: string | undefined;
+  NODE_ENV?: string | undefined;
 }
 
 export interface WaitlistConfig {
@@ -36,6 +40,8 @@ export function waitlistEnv(): WaitlistEnv {
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     WAITLIST_FROM_EMAIL: process.env.WAITLIST_FROM_EMAIL,
     TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+    NODE_ENV: process.env.NODE_ENV,
   };
 }
 
@@ -62,7 +68,14 @@ function supabaseUrl(raw: string | null): string | null {
 const FROM_PATTERN =
   /^(?:[^<>\r\n@]{1,64} <[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+>|[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+)$/;
 
-/** The configuration, or null when the waitlist is switched off. */
+/**
+ * The configuration, or null when the waitlist is switched off.
+ *
+ * Turnstile needs both keys: the secret (runtime) and the site key (this
+ * build). With only one of them the form and the server would disagree, so
+ * the waitlist stays off. This also keeps Worker preview versions off: they
+ * share the production secrets but are built without public variables.
+ */
 export function waitlistConfig(env: WaitlistEnv = waitlistEnv()): WaitlistConfig | null {
   const url = supabaseUrl(value(env.SUPABASE_URL));
   const supabaseKey = value(env.SUPABASE_SERVICE_ROLE_KEY);
@@ -71,11 +84,17 @@ export function waitlistConfig(env: WaitlistEnv = waitlistEnv()): WaitlistConfig
   if (!url || !supabaseKey || !resendApiKey || !fromEmail || !FROM_PATTERN.test(fromEmail)) {
     return null;
   }
+  const turnstileSecret = value(env.TURNSTILE_SECRET_KEY);
+  const siteKey = turnstileSiteKey({
+    NODE_ENV: env.NODE_ENV,
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+  });
+  if ((turnstileSecret === null) !== (siteKey === null)) return null;
   return {
     supabaseUrl: url,
     supabaseKey,
     resendApiKey,
     fromEmail,
-    turnstileSecret: value(env.TURNSTILE_SECRET_KEY),
+    turnstileSecret,
   };
 }

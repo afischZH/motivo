@@ -198,9 +198,27 @@ describe("configuration", () => {
       expect(waitlistConfig({ ...ENV, [key]: undefined }), key).toBeNull();
     }
     expect(waitlistConfig(ENV)).toMatchObject({ supabaseUrl: SUPABASE_URL, turnstileSecret: null });
-    expect(waitlistConfig({ ...ENV, TURNSTILE_SECRET_KEY: "1x0000" })?.turnstileSecret).toBe(
-      "1x0000",
-    );
+    const turnstile = {
+      TURNSTILE_SECRET_KEY: "1x0000",
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
+    };
+    expect(waitlistConfig({ ...ENV, ...turnstile })?.turnstileSecret).toBe("1x0000");
+  });
+
+  it("stays off when only one Turnstile key is set (e.g. preview builds)", () => {
+    expect(waitlistConfig({ ...ENV, TURNSTILE_SECRET_KEY: "1x0000" })).toBeNull();
+    expect(
+      waitlistConfig({ ...ENV, NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA" }),
+    ).toBeNull();
+    // next dev never loads Turnstile, so a secret there switches the waitlist off.
+    expect(
+      waitlistConfig({
+        ...ENV,
+        TURNSTILE_SECRET_KEY: "1x0000",
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
+        NODE_ENV: "development",
+      }),
+    ).toBeNull();
   });
 
   it("accepts only https (or a local Supabase) and a single plain sender", () => {
@@ -468,7 +486,11 @@ describe("validation", () => {
 });
 
 describe("Turnstile", () => {
-  const env = { ...ENV, TURNSTILE_SECRET_KEY: "turnstile-secret" };
+  const env = {
+    ...ENV,
+    TURNSTILE_SECRET_KEY: "turnstile-secret",
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
+  };
 
   it("is required when the secret is set", async () => {
     const h = harness({ env });
