@@ -48,17 +48,22 @@ export function ControlPanel(props: ControlPanelProps) {
     ));
 
   return (
-    <div className={cx("grid gap-4", props.className)} data-tool={tool.id}>
+    <div
+      className={cx("grid grid-cols-[minmax(0,1fr)] gap-4", props.className)}
+      data-tool={tool.id}
+    >
       {groups.map((group) => {
         const body = (
-          <div className="grid gap-4">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
             {renderControls(group.controls)}
             {group.advanced.length > 0 && (
-              <details className="group/advanced grid gap-4">
+              <details className="group/advanced grid grid-cols-[minmax(0,1fr)] gap-4">
                 <summary className="cursor-pointer text-xs font-medium text-muted-foreground select-none">
                   {t("Editor.controls.advanced")}
                 </summary>
-                <div className="mt-3 grid gap-4">{renderControls(group.advanced)}</div>
+                <div className="mt-3 grid grid-cols-[minmax(0,1fr)] gap-4">
+                  {renderControls(group.advanced)}
+                </div>
               </details>
             )}
           </div>

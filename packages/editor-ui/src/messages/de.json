@@ -22,6 +22,81 @@
       "remove": "Farbe entfernen",
       "moveLeft": "Nach links schieben",
       "moveRight": "Nach rechts schieben"
+    },
+    "shell": {
+      "history": "Verlauf",
+      "undo": "Rückgängig",
+      "redo": "Wiederholen",
+      "undone": "Rückgängig gemacht",
+      "redone": "Wiederhergestellt",
+      "newVariant": "Neu würfeln",
+      "newVariantHint": "neue Variante",
+      "export": "Exportieren",
+      "exportSoon": "Der Export kommt in Kürze.",
+      "preview": "Vorschau",
+      "previewAlt": "Vorschau: {tool}, {width} × {height} px",
+      "unsupported": "Für dieses Werkzeug gibt es noch keine Vorschau.",
+      "zoom": "Zoom",
+      "zoomFit": "Einpassen",
+      "zoomPercent": "{percent} %",
+      "zoomCurrent": "Aktueller Zoom",
+      "presets": "Vorlagen",
+      "settings": "Einstellungen",
+      "variants": "Varianten",
+      "variantLabel": "Variante {index}",
+      "variantAnnouncement": "Variante {index} von {count}",
+      "previousVariant": "Vorherige Variante",
+      "nextVariant": "Nächste Variante"
+    },
+    "size": {
+      "label": "Grösse",
+      "custom": "Eigene Grösse",
+      "width": "Breite",
+      "height": "Höhe",
+      "option": "{name} ({width} × {height})",
+      "invalid": "Erlaubt sind ganze Zahlen von {min} bis {max} px.",
+      "groups": {
+        "social": "Social Media",
+        "desktop": "Desktop",
+        "mobile": "Mobil",
+        "print": "Druck"
+      }
+    },
+    "shortcuts": {
+      "title": "Tastaturkürzel",
+      "close": "Schliessen",
+      "keysColumn": "Tasten",
+      "actionColumn": "Aktion",
+      "or": "oder",
+      "focusHint": "Solange du in einem Eingabefeld tippst, sind die Kürzel aus.",
+      "keys": {
+        "space": "Leertaste"
+      },
+      "actions": {
+        "newVariant": "Neue Variante",
+        "undo": "Rückgängig",
+        "redo": "Wiederholen",
+        "previousVariant": "Vorherige Variante",
+        "nextVariant": "Nächste Variante",
+        "zoomFit": "Ins Fenster einpassen",
+        "zoom100": "Zoom 100 %",
+        "theme": "Hell und Dunkel wechseln",
+        "help": "Diese Übersicht"
+      }
     }
+  },
+  "sizes": {
+    "square": "Quadrat",
+    "portrait": "Hochformat",
+    "story": "Story",
+    "landscape": "Querformat (Link-Vorschau)",
+    "banner": "Banner",
+    "full-hd": "Full HD",
+    "qhd": "QHD",
+    "uhd-4k": "4K UHD",
+    "phone": "Smartphone",
+    "tablet": "Tablet",
+    "a4-portrait": "A4 hoch",
+    "a4-landscape": "A4 quer"
   }
 }
