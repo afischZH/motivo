@@ -4,14 +4,14 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M2 (Plan zur Freigabe vorgelegt 2026-10-27). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
+- **Meilenstein**: M2 (freigegeben 2026-10-27 mit Empfehlungen: Cloudflare Web Analytics, Sentry EU gratis, Warteliste mit Supabase + Resend am Schluss). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
-- **Nächster Schritt**: Freigabe des M2-Plans durch Andreas, inkl. Entscheide zu Domain, Rechtstexten, Analytics, Sentry und Founders-Warteliste.
+- **Nächster Schritt**: Welle 1 (AP01, AP02, AP05, AP07) läuft; danach integrieren, dann Welle 2 (AP06, AP08, AP11). Domain und Impressum-Angaben von Andreas noch offen.
 - Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M2: SEO-Seiten, mehr Tools, Beta (Plan, Freigabe offen)
+### M2: SEO-Seiten, mehr Tools, Beta (freigegeben 2026-10-27)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
