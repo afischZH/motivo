@@ -69,7 +69,7 @@ Jeder Befehl fragt den Wert ab, er landet nicht in der Shell-History. Kontrolle:
 
 1. Startseite öffnen: Der Abschnitt "Founders-Warteliste" zeigt "0 von 300 Founders-Plätzen vorgemerkt" und das Formular.
 2. Mit einer eigenen Adresse eintragen. Die Mail kommt innerhalb einer Minute; Absender, Sprache, Links und Abmeldelink prüfen.
-3. Bestätigungslink öffnen: Seite "Du bist auf der Warteliste". Nach spätestens 60 Sekunden zeigt der Zähler 1.
+3. Bestätigungslink öffnen: Seite "Anmeldung bestätigen", Knopf drücken, dann Seite "Du bist auf der Warteliste". Nach spätestens 60 Sekunden zeigt der Zähler 1. (Erst der Knopf bestätigt, damit Mail-Scanner, die Links vorab öffnen, niemanden ungefragt eintragen.)
 4. Abmeldelink in der Mail öffnen und "Jetzt abmelden" drücken. Im Supabase-Table-Editor ist die Adresse danach leer (`email` = null).
 5. Bei Problemen: Cloudflare-Dashboard > Workers > motivo-web > **Logs**. Die Logs enthalten nur Dienst und HTTP-Status (z. B. `waitlist: confirmation mail failed: resend request failed (HTTP 403)`), nie Adressen.
 

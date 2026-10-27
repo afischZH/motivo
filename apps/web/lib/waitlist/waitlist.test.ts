@@ -157,11 +157,31 @@ function signupRequest(
 
 const valid = (email = "Ada@Example.com", locale = "de") => ({ email, locale, consent: true });
 
-/** The confirmation URL from a mail's plain text. */
+/** The confirmation page URL from a mail's plain text (token in the fragment). */
 function confirmUrl(mail: SentMail): URL {
-  const line = mail.body.text.split("\n").find((l) => l.includes("/api/waitlist/confirm?"));
+  const line = mail.body.text
+    .split("\n")
+    .find((l) => /\/founders-(?:warteliste\/bestaetigen|waitlist\/confirm)#token=/.test(l));
   if (!line) throw new Error("no confirm link");
   return new URL(line.trim());
+}
+
+/** The token of a confirmation link. */
+function confirmToken(mail: SentMail): string {
+  return new URLSearchParams(confirmUrl(mail).hash.slice(1)).get("token") ?? "";
+}
+
+/** What the confirm page's button sends. */
+function confirmRequest(token: string, init: { type?: string; raw?: string } = {}): Request {
+  return new Request(`${ORIGIN}/api/waitlist/confirm`, {
+    method: "POST",
+    headers: { "Content-Type": init.type ?? "application/json" },
+    body: init.raw ?? JSON.stringify({ token }),
+  });
+}
+
+async function confirmWith(mail: SentMail, deps: WaitlistDeps): Promise<Response> {
+  return handleConfirm(confirmRequest(confirmToken(mail)), deps);
 }
 
 function unsubscribeToken(mail: SentMail): string {
@@ -258,13 +278,12 @@ describe("feature switched off", () => {
     expect(response.headers.get("cache-control")).toContain(`max-age=${COUNT_CACHE_SECONDS}`);
   });
 
-  it("sends confirmation links to the error page", async () => {
-    const response = await handleConfirm(
-      new Request(`${ORIGIN}/api/waitlist/confirm?token=${"a".repeat(43)}&lang=en`),
-      off().deps,
-    );
-    expect(response.status).toBe(303);
-    expect(response.headers.get("location")).toBe(`${ORIGIN}/en/founders-waitlist/error`);
+  it("refuses confirmations with 503", async () => {
+    const h = off();
+    const response = await handleConfirm(confirmRequest("a".repeat(43)), h.deps);
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({ error: "disabled" });
+    expect(h.rpcCalls).toEqual([]);
   });
 });
 
@@ -288,10 +307,15 @@ describe("double opt-in, end to end", () => {
     expect(mail.headers["idempotency-key"]).toMatch(/^waitlist-confirm\/[0-9a-f]{64}$/);
     expect(mail.body.headers["List-Unsubscribe-Post"]).toBe("List-Unsubscribe=One-Click");
 
+    // The link opens the confirm page (button), with the token in the fragment
+    // only: neither the API nor a query string that would reach server logs.
     const link = confirmUrl(mail);
     expect(link.origin).toBe(BASE.origin);
-    expect(link.searchParams.get("lang")).toBe("de");
-    const token = link.searchParams.get("token") ?? "";
+    expect(link.pathname).toBe("/de/founders-warteliste/bestaetigen");
+    expect(link.search).toBe("");
+    expect(mail.body.text).not.toContain("/api/waitlist/confirm");
+    expect(mail.body.html).not.toContain("/api/waitlist/confirm");
+    const token = confirmToken(mail);
     expect(token).toMatch(TOKEN_PATTERN);
     // Only the hash is stored.
     const stored = await db.query<{ confirm_token_hash: string }>(
@@ -306,20 +330,16 @@ describe("double opt-in, end to end", () => {
       seats: FOUNDERS_SEATS,
     });
 
-    const confirm = await handleConfirm(
-      new Request(link.toString().replace(BASE.origin, ORIGIN)),
-      h.deps,
-    );
-    expect(confirm.status).toBe(303);
-    expect(confirm.headers.get("location")).toBe(`${ORIGIN}/de/founders-warteliste/bestaetigt`);
-    expect(confirm.headers.get("referrer-policy")).toBe("no-referrer");
+    const confirm = await handleConfirm(confirmRequest(token), h.deps);
+    expect(confirm.status).toBe(200);
+    expect(await confirm.json()).toEqual({ status: "confirmed" });
+    expect(confirm.headers.get("cache-control")).toBe("no-store");
     expect(await confirmedCount()).toBe(1);
 
-    // Redirects stay on the host that served the link.
-    const again = await handleConfirm(new Request(link.toString()), h.deps);
-    expect(again.headers.get("location")).toBe(
-      `${BASE.origin}/de/founders-warteliste/link-ungueltig`,
-    );
+    // One-time token.
+    const again = await handleConfirm(confirmRequest(token), h.deps);
+    expect(again.status).toBe(404);
+    expect(await again.json()).toEqual({ status: "invalid" });
 
     resetCountCache();
     expect(await (await handleCount(h.deps)).json()).toMatchObject({ confirmed: 1 });
@@ -350,10 +370,8 @@ describe("double opt-in, end to end", () => {
       "https://motivo.example/en/founders-waitlist/unsubscribe#token=",
     );
     expect(mail.body.text).toContain("https://motivo.example/en/privacy");
-    const confirm = await handleConfirm(new Request(confirmUrl(mail).toString()), h.deps);
-    expect(confirm.headers.get("location")).toBe(
-      "https://motivo.example/en/founders-waitlist/confirmed",
-    );
+    expect(confirmUrl(mail).pathname).toBe("/en/founders-waitlist/confirm");
+    expect(await (await confirmWith(mail, h.deps)).json()).toEqual({ status: "confirmed" });
   });
 
   it("unsubscribes from the page with a JSON body", async () => {
@@ -382,12 +400,11 @@ describe("double opt-in, end to end", () => {
 
   it("rejects malformed and expired confirmation tokens", async () => {
     const h = harness();
-    const bad = await handleConfirm(
-      new Request(`${ORIGIN}/api/waitlist/confirm?token=nope&lang=xx`),
-      h.deps,
-    );
-    // Unknown language falls back to German.
-    expect(bad.headers.get("location")).toBe(`${ORIGIN}/de/founders-warteliste/link-ungueltig`);
+    const bad = await handleConfirm(confirmRequest("nope"), h.deps);
+    expect(bad.status).toBe(400);
+    expect(await bad.json()).toEqual({ status: "invalid" });
+    const notJson = await handleConfirm(confirmRequest("", { raw: "{" }), h.deps);
+    expect(notJson.status).toBe(400);
     expect(h.rpcCalls).toEqual([]);
 
     await handleSignup(signupRequest(valid()), h.deps);
@@ -395,12 +412,51 @@ describe("double opt-in, end to end", () => {
     await db.query(
       "update public.waitlist_signups set token_expires_at = now() - interval '1 minute'",
     );
-    const expired = await handleConfirm(
-      new Request(confirmUrl(h.mails[0] as SentMail).toString()),
+    const expired = await confirmWith(h.mails[0] as SentMail, h.deps);
+    expect(expired.status).toBe(404);
+    expect(await confirmedCount()).toBe(0);
+  });
+
+  it("confirms only through a JSON POST, never from a form or a scanner", async () => {
+    const h = harness();
+    await handleSignup(signupRequest(valid()), h.deps);
+    await h.flush();
+    const mail = h.mails[0] as SentMail;
+    const token = confirmToken(mail);
+    // A cross-site HTML form can only send simple content types.
+    for (const type of ["application/x-www-form-urlencoded", "text/plain", "multipart/form-data"]) {
+      const response = await handleConfirm(
+        confirmRequest(token, { type, raw: `token=${token}` }),
+        h.deps,
+      );
+      expect(response.status).toBe(415);
+    }
+    // A link scanner fetches the mail's link: that is a static page and the
+    // token in the fragment is never sent, so nothing reaches the database.
+    expect(h.rpcCalls).not.toContain("waitlist_confirm");
+    expect(await confirmedCount()).toBe(0);
+    expect((await confirmWith(mail, h.deps)).status).toBe(200);
+  });
+
+  it("caps request bodies while reading, also without Content-Length", async () => {
+    const h = harness();
+    const big = new ReadableStream<Uint8Array>({
+      start(controller) {
+        for (let i = 0; i < 64; i++) controller.enqueue(new Uint8Array(1024).fill(0x20));
+        controller.close();
+      },
+    });
+    const response = await handleConfirm(
+      new Request(`${ORIGIN}/api/waitlist/confirm`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: big,
+        duplex: "half",
+      } as RequestInit),
       h.deps,
     );
-    expect(expired.headers.get("location")).toContain("/link-ungueltig");
-    expect(await confirmedCount()).toBe(0);
+    expect(response.status).toBe(400);
+    expect(h.rpcCalls).toEqual([]);
   });
 });
 
@@ -415,7 +471,7 @@ describe("privacy of the sign-up answer", () => {
     };
     await ask("ada@example.com"); // new
     await ask("ADA@example.com"); // pending, cooldown
-    await handleConfirm(new Request(confirmUrl(h.mails[0] as SentMail).toString()), h.deps);
+    await confirmWith(h.mails[0] as SentMail, h.deps);
     await ask("ada@example.com"); // confirmed
     await ask("new@example.com"); // new
     expect(new Set(answers.map((a) => JSON.stringify(a))).size).toBe(1);
@@ -652,7 +708,7 @@ describe("Supabase client", () => {
 
 describe("confirmation e-mail", () => {
   const input = {
-    confirmUrl: "https://motivo.example/api/waitlist/confirm?token=abc&lang=de",
+    confirmUrl: "https://motivo.example/de/founders-warteliste/bestaetigen#token=abc",
     unsubscribeUrl: "https://motivo.example/de/founders-warteliste/abmelden#token=def",
     oneClickUnsubscribeUrl: "https://motivo.example/api/waitlist/unsubscribe?token=def",
     privacyUrl: "https://motivo.example/de/datenschutz",

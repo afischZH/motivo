@@ -16,7 +16,7 @@
  */
 import type { Messages } from "next-intl";
 
-import { DEFAULT_LOCALE, isEnabledLocale, type EnabledLocale } from "@/i18n/locales";
+import type { EnabledLocale } from "@/i18n/locales";
 import { routePath } from "@/i18n/paths";
 
 import type { WaitlistConfig } from "./config";
@@ -77,12 +77,35 @@ function absolute(deps: WaitlistDeps, path: string): string {
   return new URL(path, deps.baseUrl).toString();
 }
 
-/** The body as text, or null when it is larger than `limit` bytes. */
-async function readBody(request: Request, limit: number): Promise<string | null> {
+/**
+ * The body as UTF-8 text, or null when it is larger than `limit` bytes. Reads
+ * the stream and stops at the limit, so a body without (or with a false)
+ * Content-Length is never buffered in full.
+ */
+export async function readBody(request: Request, limit: number): Promise<string | null> {
   const declared = Number(request.headers.get("content-length") ?? "0");
   if (declared > limit) return null;
-  const text = await request.text();
-  return new TextEncoder().encode(text).length > limit ? null : text;
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > limit) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(bytes);
 }
 
 // ---------------------------------------------------------------------------
@@ -154,9 +177,11 @@ export async function handleSignup(request: Request, deps: WaitlistDeps): Promis
         const email = buildConfirmationEmail({
           locale,
           messages: await deps.messages(locale),
+          // A page with a button, not the API: link scanners must not confirm.
+          // The token sits in the fragment, so it never reaches a server log.
           confirmUrl: absolute(
             deps,
-            `${WAITLIST_API.confirm}?token=${confirmToken}&lang=${locale}`,
+            `${routePath({ page: "waitlist", waitlistPage: "confirm" }, locale)}#token=${confirmToken}`,
           ),
           unsubscribeUrl: absolute(
             deps,
@@ -191,35 +216,37 @@ export async function handleSignup(request: Request, deps: WaitlistDeps): Promis
 }
 
 // ---------------------------------------------------------------------------
-// GET /api/waitlist/confirm?token=…&lang=de
+// POST /api/waitlist/confirm (button on the confirm page)
 // ---------------------------------------------------------------------------
 
-function redirectTo(request: Request, path: string): Response {
-  // Relative to the request's origin, so previews and local runs stay on their host.
-  const location = new URL(path, request.url).toString();
-  return new Response(null, {
-    status: 303,
-    headers: { Location: location, ...NO_STORE, "Referrer-Policy": "no-referrer" },
-  });
-}
-
+/**
+ * One-time confirmation. The e-mail links to a page (token in the URL
+ * fragment) whose button POSTs here, never to a GET that confirms: mail
+ * security scanners open links, and a confirming GET would let them complete
+ * the double opt-in for an address whose owner never agreed. JSON only, so
+ * a cross-site HTML form cannot send it without a CORS preflight.
+ */
 export async function handleConfirm(request: Request, deps: WaitlistDeps): Promise<Response> {
-  const url = new URL(request.url);
-  const lang = url.searchParams.get("lang") ?? "";
-  const locale: EnabledLocale = isEnabledLocale(lang) ? lang : DEFAULT_LOCALE;
-  const page = (waitlistPage: "confirmed" | "invalid" | "error") =>
-    redirectTo(request, routePath({ page: "waitlist", waitlistPage }, locale));
-
   const config = deps.config;
-  if (!config) return page("error");
-  const token = url.searchParams.get("token") ?? "";
-  if (!TOKEN_PATTERN.test(token)) return page("invalid");
+  if (!config) return error(503, "disabled");
+  const type = request.headers.get("content-type") ?? "";
+  if (!type.toLowerCase().startsWith("application/json")) return json(415, { status: "invalid" });
+  const body = await readBody(request, MAX_BODY_BYTES);
+  let token: unknown;
+  try {
+    token = body === null ? null : (JSON.parse(body) as { token?: unknown } | null)?.token;
+  } catch {
+    token = null;
+  }
+  if (typeof token !== "string" || !TOKEN_PATTERN.test(token)) {
+    return json(400, { status: "invalid" });
+  }
   try {
     const outcome = await storeOf(deps, config).confirm(await sha256Hex(token));
-    return page(outcome === "confirmed" ? "confirmed" : "invalid");
+    return json(outcome === "confirmed" ? 200 : 404, { status: outcome });
   } catch (cause) {
     logFailure(deps, "confirm", cause);
-    return page("error");
+    return error(503, "unavailable");
   }
 }
 
