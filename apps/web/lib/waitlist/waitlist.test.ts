@@ -14,7 +14,7 @@ import en from "@/messages/en.json";
 
 import { waitlistConfig, type WaitlistConfig, type WaitlistEnv } from "./config";
 import { COUNT_CACHE_SECONDS, FOUNDERS_SEATS, TOKEN_PATTERN } from "./constants";
-import { clientIp, rateLimitKey, sha256Hex } from "./crypto";
+import { clientIp, rateLimitKey, rateLimitSubject, sha256Hex } from "./crypto";
 import { RESEND_ENDPOINT, buildConfirmationEmail, escapeHtml } from "./email";
 import {
   handleConfirm,
@@ -533,6 +533,27 @@ describe("rate limiting", () => {
     );
     expect(await rateLimitKey("other", "203.0.113.7", day1)).not.toBe(a);
     expect(await rateLimitKey("secret", "203.0.113.8", day1)).not.toBe(a);
+  });
+
+  it("counts IPv6 clients per /64, so rotating addresses does not help", async () => {
+    expect(rateLimitSubject("203.0.113.7")).toBe("203.0.113.7");
+    expect(rateLimitSubject("2001:db8:1:2:aaaa:bbbb:cccc:dddd")).toBe("2001:db8:1:2::/64");
+    expect(rateLimitSubject("2001:DB8:0001:0002::1")).toBe("2001:db8:1:2::/64");
+    expect(rateLimitSubject("2001:db8::1")).toBe("2001:db8:0:0::/64");
+    expect(rateLimitSubject("::1")).toBe("0:0:0:0::/64");
+    expect(rateLimitSubject("::ffff:203.0.113.7")).toBe("203.0.113.7");
+    expect(rateLimitSubject("::ffff:cb00:7107")).toBe("203.0.113.7");
+    expect(rateLimitSubject("fe80::1%eth0")).toBe("fe80:0:0:0::/64");
+    // Malformed values stay as they are (still one bucket each, never a crash).
+    expect(rateLimitSubject("1::2::3")).toBe("1::2::3");
+    expect(rateLimitSubject("1:2:3:4:5:6:7:8:9")).toBe("1:2:3:4:5:6:7:8:9");
+    const day = new Date("2026-10-27T10:00:00Z");
+    expect(await rateLimitKey("secret", "2001:db8:1:2::a", day)).toBe(
+      await rateLimitKey("secret", "2001:db8:1:2:ffff::b", day),
+    );
+    expect(await rateLimitKey("secret", "2001:db8:1:2::a", day)).not.toBe(
+      await rateLimitKey("secret", "2001:db8:1:3::a", day),
+    );
   });
 
   it("trusts only CF-Connecting-IP", () => {
