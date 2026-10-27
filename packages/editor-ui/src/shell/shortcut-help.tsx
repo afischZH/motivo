@@ -5,6 +5,7 @@ import { cx } from "../controls/primitives";
 import { useT } from "../i18n";
 import { SHORTCUT_HELP } from "./shortcuts";
 import { BUTTON_CLASS } from "./styles";
+import { useBackdropClose } from "./use-backdrop-close";
 
 export interface ShortcutHelpProps {
   open: boolean;
@@ -18,6 +19,7 @@ export interface ShortcutHelpProps {
 export function ShortcutHelp({ open, onClose }: ShortcutHelpProps) {
   const t = useT();
   const titleId = useId();
+  const backdropClose = useBackdropClose(onClose);
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -50,10 +52,7 @@ export function ShortcutHelp({ open, onClose }: ShortcutHelpProps) {
       ref={ref}
       aria-labelledby={titleId}
       onClose={onClose}
-      onClick={(event) => {
-        // A click on the backdrop targets the dialog element itself.
-        if (event.target === event.currentTarget) onClose();
-      }}
+      {...backdropClose}
       className={cx(
         "m-auto w-[min(28rem,calc(100vw-2rem))] rounded-2xl border border-border bg-popover p-0 text-popover-foreground shadow-lg",
         "backdrop:bg-background/70 backdrop:backdrop-blur-sm",

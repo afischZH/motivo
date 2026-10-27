@@ -50,6 +50,7 @@ import {
   type ExportSizeMode,
   type TextChoice,
 } from "./export-model";
+import { useBackdropClose } from "../shell/use-backdrop-close";
 
 /** Browser side effects of the dialog, replaceable in tests. */
 export interface ExportServices {
@@ -133,6 +134,7 @@ export function ExportDialog({
 }: ExportDialogProps) {
   const t = useT();
   const titleId = useId();
+  const backdropClose = useBackdropClose(onClose);
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -152,10 +154,7 @@ export function ExportDialog({
       ref={ref}
       aria-labelledby={titleId}
       onClose={onClose}
-      onClick={(event) => {
-        // A click on the backdrop targets the dialog element itself.
-        if (event.target === event.currentTarget) onClose();
-      }}
+      {...backdropClose}
       className={cx(
         "m-auto max-h-[calc(100dvh-2rem)] w-[min(40rem,calc(100vw-2rem))] rounded-2xl border border-border bg-popover p-0 text-popover-foreground shadow-lg",
         "backdrop:bg-background/70 backdrop:backdrop-blur-sm",
