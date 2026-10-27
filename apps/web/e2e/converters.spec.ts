@@ -76,10 +76,16 @@ test.describe("SVG to CSS converter", () => {
   test("explains invalid input", async ({ page }) => {
     await page.goto("/de/convert/svg-to-css");
     const input = page.getByLabel("SVG-Code");
-    await input.fill("<html><body>kein svg</body></html>");
-    await expect(page.getByRole("main").getByRole("alert")).toContainText(
-      "Das sieht nicht nach SVG aus.",
-    );
+    // Retried: input typed before hydration never reaches React, and the
+    // debounced worker run can be slow on CI (WebKit).
+    await expect(async () => {
+      await input.fill("");
+      await input.fill("<html><body>kein svg</body></html>");
+      await expect(page.getByRole("main").getByRole("alert")).toContainText(
+        "Das sieht nicht nach SVG aus.",
+        { timeout: 3000 },
+      );
+    }).toPass({ timeout: 20_000 });
     await expect(input).toHaveAttribute("aria-invalid", "true");
     await expect(page.getByRole("button", { name: "Herunterladen" })).toBeDisabled();
   });
@@ -88,9 +94,14 @@ test.describe("SVG to CSS converter", () => {
 test.describe("Base64 to image converter", () => {
   test("decodes a PNG into a blob preview and downloads it", async ({ page }) => {
     await page.goto("/en/convert/base64-to-image");
-    await page.getByLabel("Base64 or data URI").fill(`data:image/png;base64,${PNG_BASE64}`);
+    const input = page.getByLabel("Base64 or data URI");
     const preview = page.getByRole("img", { name: "Preview of the converted image" });
-    await expect(preview).toHaveAttribute("src", /^blob:/);
+    // Retried for the same reasons as "explains invalid input".
+    await expect(async () => {
+      await input.fill("");
+      await input.fill(`data:image/png;base64,${PNG_BASE64}`);
+      await expect(preview).toHaveAttribute("src", /^blob:/, { timeout: 3000 });
+    }).toPass({ timeout: 20_000 });
 
     const download = page.waitForEvent("download");
     await page.getByRole("button", { name: "Download" }).click();
