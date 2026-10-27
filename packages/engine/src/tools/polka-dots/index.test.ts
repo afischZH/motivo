@@ -183,7 +183,9 @@ describe("polkaDotsSvg size guard", () => {
       };
       expect(dotSites({ ...o, rng: createRng(1) }).length).toBeLessThanOrEqual(MAX_DOT_SITES);
       const { ms, value: svg } = fastest(() => polkaDotsSvg({ ...o, rng: createRng(1) }));
-      expect(ms).toBeLessThan(200);
+      // Unguarded this took seconds; 500 ms leaves headroom for slow shared CI
+      // runners (scatter measured 230 ms there) while still catching a regression.
+      expect(ms).toBeLessThan(500);
       expect((svg.match(/<circle /g) ?? []).length).toBeLessThanOrEqual(MAX_DOT_SITES);
       expect(svg.length).toBeLessThan(1_000_000);
     });
