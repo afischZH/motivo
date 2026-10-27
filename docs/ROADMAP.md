@@ -25,7 +25,7 @@ Gesamtüberblick:
 - [x] Vitest + Playwright eingerichtet, GitHub Actions (lint, typecheck, test, build)
 - [x] Design-Tokens Light/Dark, Basis-Layout, Theme-Switch (⌘⇧K)
 - [x] `packages/engine`: PRNG (`mulberry32`), Vektor-Helfer, Catmull-Rom zu Bezier, Poisson-Disk
-- [ ] Deployment-Pipeline (Preview pro PR, Production auf `main`)
+- [x] Deployment-Pipeline (Preview pro PR, Production auf `main`)
 
 **DoD**: CI grün, Preview-URL zeigt leere App in Light/Dark, Engine-Helfer mit Unit-Tests.
 
