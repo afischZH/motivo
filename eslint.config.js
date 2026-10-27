@@ -9,6 +9,9 @@ import tseslint from "typescript-eslint";
 /** The Next.js web app. React and Next rules apply only here. */
 const WEB_APP = ["apps/web/**/*.{ts,tsx,js,mjs}"];
 
+/** Packages with React components: hook rules and browser globals apply. */
+const REACT_PACKAGES = ["packages/editor-ui/**/*.{ts,tsx}", "packages/ui/**/*.{ts,tsx}"];
+
 /** Packages whose output must be reproducible from (params, seed) alone. */
 const DETERMINISTIC_PACKAGES = [
   "packages/engine/**",
@@ -77,6 +80,16 @@ export default tseslint.config(
       globals: { ...globals.browser, ...globals.node },
     },
     settings: { next: { rootDir: "apps/web/" } },
+  },
+  {
+    files: REACT_PACKAGES,
+    ...reactHooks.configs.flat.recommended,
+  },
+  {
+    files: REACT_PACKAGES,
+    languageOptions: {
+      globals: { ...globals.browser },
+    },
   },
   prettier,
 );
