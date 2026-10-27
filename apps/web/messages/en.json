@@ -12,7 +12,8 @@
     "languages": {
       "de": "Deutsch",
       "en": "English"
-    }
+    },
+    "mainNav": "Main"
   },
   "Theme": {
     "toggle": "Dark theme",
@@ -261,6 +262,175 @@
         "todo": "TODO M2: placeholder, finalise SEO copy (3 to 5 FAQ)",
         "whatIs": "Polka dots are regular or scattered dot patterns, a classic for backgrounds, packaging and textiles.",
         "howTo": "Pick a layout, spacing and dot size, mix your colors and export as SVG or PNG."
+      }
+    }
+  },
+  "Converters": {
+    "nav": "Converters",
+    "index": {
+      "title": "Converters",
+      "lead": "Convert SVG, CSS, Base64 and images in both directions. Free, fast and right in your browser.",
+      "metaTitle": "Converters for SVG, CSS, Base64 and images",
+      "metaDescription": "Free converters for SVG to CSS, SVG to Base64, image to Base64 and back. Everything runs in your browser."
+    },
+    "common": {
+      "breadcrumb": "Converters",
+      "privacy": "Everything happens in your browser. Your data never leaves your device.",
+      "input": "Input",
+      "output": "Result",
+      "outputLabel": "Converted code",
+      "preview": "Preview",
+      "previewEmpty": "The preview appears here.",
+      "previewAlt": "Preview of the converted image",
+      "chooseFile": "Choose file",
+      "dropHint": "You can also drop a file onto the field.",
+      "dropzone": "Choose an image or drop it here",
+      "pasteHint": "You can also paste an image with ⌘/Ctrl+V.",
+      "selectedFile": "Selected: {name}",
+      "example": "Insert example",
+      "clear": "Clear",
+      "copy": "Copy",
+      "copied": "Copied! Off to your project.",
+      "copyFailed": "Copying did not work. Select the text and copy it by hand.",
+      "download": "Download",
+      "format": "Output format",
+      "formats": {
+        "css": "CSS",
+        "dataUri": "Data URI",
+        "base64": "Base64 only",
+        "html": "HTML tag"
+      },
+      "working": "Converting …",
+      "inputSize": "Input: {size}",
+      "outputSize": "Result: {size}",
+      "truncated": "The result is very long. You only see the beginning here, Copy and Download give you everything.",
+      "imageType": "Type",
+      "imageSize": "Size",
+      "imageDimensions": "Dimensions",
+      "dimensions": "{width} × {height} px",
+      "notes": {
+        "addedNamespace": "Added the missing SVG namespace (xmlns), so the image renders.",
+        "multipleFound": "Found {count} data URIs, showing the first SVG.",
+        "typeMismatch": "The data URI declares a different type. Detected from the content: {type}."
+      },
+      "errors": {
+        "empty": "Paste something to get started.",
+        "tooLarge": "That is more than {limit}. Please use a smaller input.",
+        "notSvg": "This does not look like SVG. SVG code needs an svg root element that is closed at the end.",
+        "invalidBase64": "This is not valid Base64. Allowed are letters, digits and the characters +, /, = and spaces.",
+        "invalidDataUri": "This data URI is incomplete. It needs the form data:type;base64,content.",
+        "noDataUri": "No data URI found. Look for url(\"data:image/svg+xml,...\") in your CSS.",
+        "unsupportedType": "This type is not supported. Allowed are PNG, JPG, WebP, GIF and SVG.",
+        "notAnImage": "The content is not a supported image (PNG, JPG, WebP, GIF or SVG).",
+        "readFailed": "The file could not be read."
+      },
+      "whatIsHeading": "What is it?",
+      "howToHeading": "How it works",
+      "faqHeading": "FAQ",
+      "relatedHeading": "More converters"
+    },
+    "items": {
+      "svg-to-css": {
+        "name": "SVG to CSS",
+        "title": "SVG to CSS converter",
+        "description": "Turn SVG code into a CSS background with a compact, URL-encoded data URI.",
+        "inputLabel": "SVG code",
+        "placeholder": "Paste SVG code here",
+        "whatIs": "A data URI embeds the SVG directly in your stylesheet, so the browser needs no extra request. URL encoding keeps the code shorter and more readable than Base64, which makes it the best choice for icons, patterns and backgrounds in CSS.",
+        "howTo": "Paste your SVG or drop an .svg file onto the field. Pick the output format, check the preview and copy the result into your CSS.",
+        "faq": {
+          "q1": "Why URL encoding instead of Base64?",
+          "a1": "SVG is text. URL encoding only escapes a few characters, so the result is usually about a third smaller than Base64 and compresses better with gzip.",
+          "q2": "Why does my SVG not show up?",
+          "a2": "An SVG used as an image needs the attribute xmlns=\"http://www.w3.org/2000/svg\" on its root element. The converter adds it if it is missing. External images and fonts inside the SVG are not loaded in CSS backgrounds.",
+          "q3": "Is my SVG uploaded?",
+          "a3": "No. The conversion runs entirely in your browser, nothing is sent to a server."
+        }
+      },
+      "css-to-svg": {
+        "name": "CSS to SVG",
+        "title": "CSS to SVG converter",
+        "description": "Extract the SVG from a CSS data URI, URL-encoded or Base64, and get clean SVG code back.",
+        "inputLabel": "CSS with a data URI",
+        "placeholder": "background-image: url(\"data:image/svg+xml,...\");",
+        "whatIs": "Many stylesheets contain icons and patterns as embedded SVG data URIs. This converter finds the first SVG data URI in your CSS, decodes it and shows the original SVG code, so you can edit it again.",
+        "howTo": "Paste a CSS rule, a url() value or the bare data URI. The SVG appears next to it, ready to copy or to download as an .svg file.",
+        "faq": {
+          "q1": "Which formats are recognised?",
+          "a1": "Data URIs with the type image/svg+xml, URL-encoded or Base64, in double quotes, single quotes or without quotes.",
+          "q2": "My CSS contains several images. Which one do I get?",
+          "a2": "The first SVG data URI. To get another one, paste only the rule you need.",
+          "q3": "Is the SVG safe to use?",
+          "a3": "The preview shows the SVG as an image, so scripts in it never run here. Check SVG from unknown sources before you embed it directly in your own pages."
+        }
+      },
+      "svg-to-base64": {
+        "name": "SVG to Base64",
+        "title": "SVG to Base64 converter",
+        "description": "Encode SVG as Base64 for data URIs, CSS, HTML or JSON.",
+        "inputLabel": "SVG code",
+        "placeholder": "Paste SVG code here",
+        "whatIs": "Base64 turns any file into plain letters and digits. For SVG it is useful wherever only Base64 is accepted, for example in some email clients, JSON APIs or older tools.",
+        "howTo": "Paste your SVG or choose a file. Pick data URI, Base64 only, CSS or an HTML tag and copy the result.",
+        "faq": {
+          "q1": "Base64 or URL encoding?",
+          "a1": "For CSS, URL encoding is usually shorter. Base64 is about 33 percent larger than the original but works everywhere a data URI is accepted.",
+          "q2": "Are umlauts and emoji supported?",
+          "a2": "Yes. The SVG is encoded as UTF-8 before the Base64 step, so special characters survive the round trip.",
+          "q3": "Is there a size limit?",
+          "a3": "Inputs up to 5 MB are converted directly in your browser. Large data URIs slow pages down, so keep embedded graphics small."
+        }
+      },
+      "base64-to-svg": {
+        "name": "Base64 to SVG",
+        "title": "Base64 to SVG converter",
+        "description": "Decode Base64 or a data URI back into readable SVG code.",
+        "inputLabel": "Base64 or data URI",
+        "placeholder": "data:image/svg+xml;base64,PHN2Zy...",
+        "whatIs": "Embedded SVGs are hard to read as Base64. This converter decodes the string, checks that it really is an SVG and shows you the code and a preview.",
+        "howTo": "Paste raw Base64, a data URI or a whole CSS line. Copy the SVG code or download it as a file.",
+        "faq": {
+          "q1": "Do I need the data:image/svg+xml prefix?",
+          "a1": "No. Raw Base64 and complete data URIs both work, line breaks and spaces are ignored.",
+          "q2": "Why do I get an error?",
+          "a2": "Either the string is not valid Base64 or the decoded content is not an SVG. For PNG, JPG and other images, use the Base64 to image converter.",
+          "q3": "Is my data sent anywhere?",
+          "a3": "No. Decoding happens locally in your browser."
+        }
+      },
+      "image-to-base64": {
+        "name": "Image to Base64",
+        "title": "Image to Base64 converter",
+        "description": "Convert PNG, JPG, WebP, GIF or SVG into a Base64 data URI for CSS and HTML.",
+        "inputLabel": "Image file",
+        "placeholder": "",
+        "whatIs": "A Base64 data URI contains the whole image as text. You can paste it straight into CSS, HTML or an email template without hosting a separate file.",
+        "howTo": "Choose an image, drop it onto the field or paste it from the clipboard. Pick an output format and copy the result.",
+        "faq": {
+          "q1": "Which formats are supported?",
+          "a1": "PNG, JPG, WebP, GIF and SVG up to 5 MB. The type is detected from the file content, not from the file name.",
+          "q2": "When is Base64 worth it?",
+          "a2": "For small images such as icons or placeholders. Larger images are better served as separate files, because Base64 adds about 33 percent and cannot be cached on its own.",
+          "q3": "Is my image uploaded?",
+          "a3": "No. The image stays on your device, the conversion runs in your browser."
+        }
+      },
+      "base64-to-image": {
+        "name": "Base64 to image",
+        "title": "Base64 to image converter",
+        "description": "Turn Base64 or a data URI back into a PNG, JPG, WebP, GIF or SVG file.",
+        "inputLabel": "Base64 or data URI",
+        "placeholder": "data:image/png;base64,iVBORw0KGgo...",
+        "whatIs": "Found an image as Base64 in CSS, HTML or an API response? This converter decodes it, detects the real image type from the content and lets you save it as a file.",
+        "howTo": "Paste the Base64 string or data URI. Check the preview, then download the image.",
+        "faq": {
+          "q1": "Which image types are recognised?",
+          "a1": "PNG, JPG, WebP, GIF and SVG. Other content, such as HTML or scripts, is rejected.",
+          "q2": "The data URI says PNG, but I get a JPG. Why?",
+          "a2": "The converter trusts the content, not the label. If they differ, you get the file type that matches the actual data.",
+          "q3": "Is there a size limit?",
+          "a3": "Yes, decoded images can be up to 5 MB. Everything runs in your browser."
+        }
       }
     }
   }
