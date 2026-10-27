@@ -22,6 +22,18 @@ async function previewSvg(page: Page): Promise<string> {
   return decodeURIComponent(src.slice(src.indexOf(",") + 1));
 }
 
+/** Hex colours shown in the preview, in order. */
+function previewHexes(svg: string): string[] {
+  return [...svg.matchAll(/>(#[0-9a-f]{6})<\/text>/g)].map((m) => m[1] ?? "");
+}
+
+/** True when two hex colours differ by at most `tolerance` per channel. */
+function closeHex(a: string, b: string, tolerance = 8): boolean {
+  const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const [ca, cb] = [channels(a), channels(b)];
+  return ca.every((v, i) => Math.abs(v - (cb[i] ?? -999)) <= tolerance);
+}
+
 async function openTool(page: Page, locale: "de" | "en") {
   await page.goto(`/${locale}/tools/palette-from-image`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -84,8 +96,15 @@ test.describe("palette from image", () => {
     await expect(page.getByTestId("image-input-source")).toHaveText("flag.svg");
     await expect.poll(() => previewSvg(page)).toContain(">#1d3557</text>");
     const preview = await previewSvg(page);
-    for (const text of [">#e63946</text>", ">#f1faee</text>", ">60%</text>", ">30%</text>"]) {
-      expect(preview).toContain(text);
+    for (const text of [">60%</text>", ">30%</text>"]) expect(preview).toContain(text);
+    // Browsers rasterise SVG differently (Firefox blends rect edges into the
+    // red, e.g. #e63b47), so the colours are compared with a small tolerance.
+    const hexes = previewHexes(preview);
+    for (const expected of ["#1d3557", "#e63946", "#f1faee"]) {
+      expect(
+        hexes.some((hex) => closeHex(hex, expected)),
+        `${expected} in ${hexes.join(", ")}`,
+      ).toBe(true);
     }
     expect(await page.evaluate(() => (window as { __pwned?: number }).__pwned)).toBeUndefined();
   });
