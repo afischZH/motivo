@@ -1,5 +1,8 @@
+import { polkaDotsTool } from "@motivo/tool-registry";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { THUMBNAIL_RENDER_EDGE, thumbnailRenderSize } from "./thumbnail";
+import { THUMBNAIL_RENDER_EDGE, Thumbnail, thumbnailRenderSize } from "./thumbnail";
 
 describe("thumbnailRenderSize", () => {
   it("scales the longest edge down and keeps the aspect ratio", () => {
@@ -18,5 +21,24 @@ describe("thumbnailRenderSize", () => {
   it("leaves small sizes untouched", () => {
     const size = { width: 200, height: 100 };
     expect(thumbnailRenderSize(size)).toBe(size);
+  });
+});
+
+describe("Thumbnail", () => {
+  it("renders only a same-size placeholder on the server", () => {
+    const html = renderToString(
+      createElement(Thumbnail, {
+        tool: polkaDotsTool as never,
+        params: polkaDotsTool.defaults,
+        seed: 1,
+        size: { width: 1920, height: 1080 },
+        edge: 72,
+      }),
+    );
+    expect(html).not.toContain("<img");
+    expect(html).not.toContain("data:");
+    expect(html).toContain("data-thumbnail-placeholder");
+    expect(html).toContain("width:72px");
+    expect(html).toContain("height:40.5px");
   });
 });

@@ -155,6 +155,21 @@ describe("EditorShell", () => {
     expect(previous.hasAttribute("disabled")).toBe(true);
   });
 
+  it("lets the active filmstrip tile reuse the preview render", () => {
+    setup();
+    act(() => {
+      press(" ");
+    });
+    const preview = screen.getByRole("img", { name: /^Vorschau/ });
+    const previewSrc =
+      preview.querySelector("img")?.getAttribute("src") ?? preview.getAttribute("src");
+    const active = within(screen.getByTestId("filmstrip")).getByRole("button", {
+      name: "Variante 2",
+    });
+    expect(previewSrc).toBeTruthy();
+    expect(active.querySelector("img")?.getAttribute("src")).toBe(previewSrc);
+  });
+
   it("applies presets as new variants and marks the active one", () => {
     const store = setup();
     const preset = screen.getByRole("button", { name: "Preset dense" });

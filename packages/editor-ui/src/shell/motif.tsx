@@ -2,7 +2,7 @@
 
 import { useMemo, useSyncExternalStore, type CSSProperties } from "react";
 import { cx } from "../controls/primitives";
-import { cssToStyle, svgDataUrl, type CssSupports, type MotifOutput } from "./render";
+import { cssToStyle, motifDataUrl, type CssSupports, type MotifOutput } from "./render";
 
 const noopSubscribe = () => () => undefined;
 
@@ -51,7 +51,7 @@ export function Motif({ output, width, height, scale, className }: MotifProps) {
     () => (declarations ? cssToStyle(declarations, supports) : null),
     [declarations, supports],
   );
-  const svgSrc = useMemo(() => (output.kind === "svg" ? svgDataUrl(output.svg) : null), [output]);
+  const svgSrc = useMemo(() => (output.kind === "svg" ? motifDataUrl(output) : null), [output]);
 
   const box: CSSProperties = { width: width * scale, height: height * scale };
 
