@@ -973,7 +973,7 @@
         },
         "harmony": {
           "label": "Harmony",
-          "description": "Applies to the next palette. Press the space bar.",
+          "description": "Recolours all unlocked colours right away. Press the space bar for a new palette in the same harmony.",
           "options": {
             "auto": "Surprise me",
             "analogous": "Analogous",

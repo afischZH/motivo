@@ -242,6 +242,22 @@ function mergePatch(s: EditorState, patch: ParamValues): ParamValues | null {
   return next;
 }
 
+/** The randomize rng of a variant with this seed (`newVariant`, `regenerateOn`). */
+function randomizeRng(seed: number) {
+  return createRng((seed ^ RANDOMIZE_SALT) >>> 0);
+}
+
+/**
+ * `next` (with `key` changed) after the tool's `regenerateOn` rule: when
+ * `key` steers `randomize`, the unlocked params are regenerated from the
+ * current seed; locked keys and `key` itself keep their values.
+ */
+function regenerated(s: EditorState, key: string, next: ParamValues): ParamValues {
+  if (!s.tool.regenerateOn?.includes(key)) return next;
+  const params = keepLocked(s.tool.randomize(randomizeRng(s.seed), next, s.locks), next, s.locks);
+  return { ...params, [key]: next[key] };
+}
+
 export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
   const registry = options.registry ?? defaultRegistry;
   const historyLimit = Math.max(1, options.historyLimit ?? DEFAULT_HISTORY_LIMIT);
@@ -414,7 +430,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const s = get();
         if (!Object.prototype.hasOwnProperty.call(s.tool.schema.shape, key)) return;
         if (valuesEqual(s.params[key], value)) return;
-        change({ params: { ...s.params, [key]: value } }, key);
+        change({ params: regenerated(s, key, { ...s.params, [key]: value }) }, key);
       },
 
       setParams(patch) {
@@ -437,7 +453,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const defaults = s.tool.defaults as ParamValues;
         if (!Object.prototype.hasOwnProperty.call(defaults, key)) return;
         if (valuesEqual(s.params[key], defaults[key])) return;
-        change({ params: { ...s.params, [key]: defaults[key] } });
+        change({ params: regenerated(s, key, { ...s.params, [key]: defaults[key] }) });
       },
 
       resetParams() {
@@ -476,7 +492,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
       newVariant() {
         const s = get();
         const seed = toUint32(randomSeed());
-        const rng = createRng((seed ^ RANDOMIZE_SALT) >>> 0);
+        const rng = randomizeRng(seed);
         // Re-applying the locks guards against a tool that forgets keepLocked.
         const params = keepLocked(s.tool.randomize(rng, s.params, s.locks), s.params, s.locks);
         pushVariant(params, seed);

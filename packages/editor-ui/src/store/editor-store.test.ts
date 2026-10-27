@@ -266,6 +266,66 @@ describe("locks", () => {
   });
 });
 
+describe("regenerateOn", () => {
+  const palette = () => {
+    const tool = registry.get("palette-generator");
+    if (!tool) throw new Error("palette-generator missing");
+    return tool;
+  };
+  const colors = (params: Readonly<Record<string, unknown>>) =>
+    ["color1", "color2", "color3", "color4", "color5"].map((k) => params[k]);
+
+  it("regenerates unlocked colours from the current seed when the harmony changes", () => {
+    const tool = palette();
+    const store = setup({ toolId: tool.id, registry, seed: 777 });
+    const before = store.getState().params;
+    store.getState().setParam("harmony", "triadic");
+    const s = store.getState();
+    const expected = tool.randomize(
+      createRng((777 ^ RANDOMIZE_SALT) >>> 0),
+      { ...before, harmony: "triadic" },
+      new Set(),
+    );
+    expect(s.params).toEqual({ ...expected, harmony: "triadic" });
+    expect(colors(s.params)).not.toEqual(colors(before));
+    expect(s.seed).toBe(777);
+    expect(s.past).toHaveLength(1);
+    // Undo restores the old harmony and colours in one step.
+    store.getState().undo();
+    expect(store.getState().params).toEqual(before);
+  });
+
+  it("is deterministic and matches Space with the same seed", () => {
+    const tool = palette();
+    const viaSpace = setup({ toolId: tool.id, registry, randomSeed: () => 4242 });
+    viaSpace.getState().setParams({ harmony: "analogous" });
+    viaSpace.getState().newVariant();
+    const viaHarmony = setup({ toolId: tool.id, registry, seed: 4242 });
+    viaHarmony.getState().setParam("harmony", "analogous");
+    expect(viaHarmony.getState().params).toEqual(viaSpace.getState().params);
+  });
+
+  it("keeps locked colours", () => {
+    const tool = palette();
+    const store = setup({ toolId: tool.id, registry, seed: 9 });
+    const locked = store.getState().params.color2;
+    store.getState().setLocked("color2", true);
+    store.getState().setParam("harmony", "complementary");
+    expect(store.getState().params.color2).toBe(locked);
+    store.getState().resetParam("harmony");
+    expect(store.getState().params.harmony).toBe("auto");
+    expect(store.getState().params.color2).toBe(locked);
+  });
+
+  it("leaves other params alone", () => {
+    const tool = palette();
+    const store = setup({ toolId: tool.id, registry, seed: 9 });
+    const before = store.getState().params;
+    store.getState().setParam("matrix", true);
+    expect(colors(store.getState().params)).toEqual(colors(before));
+  });
+});
+
 describe("newVariant", () => {
   it("uses a new seed and the tool's randomize with a salted rng", () => {
     const store = setup();

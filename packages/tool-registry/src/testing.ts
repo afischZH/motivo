@@ -173,6 +173,7 @@ export function describeToolContract<S extends ParamsSchema>(
           ...Object.keys(tool.controls?.params ?? {}),
           ...(tool.controls?.order ?? []),
           ...Object.keys(tool.gating.params ?? {}),
+          ...(anyTool.regenerateOn ?? []),
         ];
         expect(referenced.filter((k) => !known.has(k))).toEqual([]);
         const groups = new Set((tool.controls?.groups ?? []).map((g) => g.id));
