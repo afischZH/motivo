@@ -31,6 +31,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
     de: "tailwind-farbpalette-generator",
     en: "tailwind-color-palette-generator",
   },
+  "palette-from-image": { de: "farbpalette-aus-bild", en: "color-palette-from-image" },
 };
 
 /** Converter id to its localized slugs. */
