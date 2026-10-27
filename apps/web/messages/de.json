@@ -964,6 +964,182 @@
         }
       }
     },
+    "mesh-gradient": {
+      "name": "Mesh-Verlauf",
+      "description": "Weiche, fliessende Farbverläufe aus mehreren unscharfen Farbflächen. Als PNG, JPG, WebP, SVG oder CSS exportieren.",
+      "groups": {
+        "effects": "Unschärfe und Körnung"
+      },
+      "params": {
+        "points": {
+          "label": "Farbflächen"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "lagoon": "Lagune",
+        "ember": "Glut",
+        "meadow": "Wiese",
+        "nebula": "Nebel",
+        "citrus": "Zitrus",
+        "dusk": "Dämmerung",
+        "ice": "Eis"
+      },
+      "seo": {
+        "whatIs": "Ein Mesh-Verlauf mischt mehrere Farben über die ganze Fläche statt entlang einer Linie. Das Ergebnis wirkt wie weiches, fliessendes Licht und passt zu Website-Headern, App-Hintergründen, Präsentationen und Social-Media-Posts.",
+        "howTo": "Wähle deine Farben und einen Hintergrund, lege fest, wie viele Farbflächen sich mischen und wie stark sie verzerrt und weichgezeichnet werden, und füge bei Bedarf Körnung hinzu. Mit der Leertaste würfelst du eine neue Anordnung. Exportiere dann als PNG, JPG, WebP, SVG oder CSS in der Grösse, die du brauchst.",
+        "faq": {
+          "q1": {
+            "question": "Was unterscheidet einen Mesh-Verlauf von einem normalen Verlauf?",
+            "answer": "Ein linearer oder radialer Verlauf läuft entlang einer Linie oder von einem Punkt aus. Ein Mesh-Verlauf verteilt mehrere Farben frei auf der Fläche und mischt sie weich. Darum wirkt er organisch statt technisch."
+          },
+          "q2": {
+            "question": "Kann ich das SVG in einem Grafikprogramm bearbeiten?",
+            "answer": "Das SVG enthält einfache Formen und einen einzigen Standard-Weichzeichner (Gausscher Weichzeichner), den Browser und viele Grafikprogramme darstellen. Grafikprogramme unterstützen SVG-Filter unterschiedlich gut. Sieht die Unschärfe dort anders aus, nimm den PNG-Export."
+          },
+          "q3": {
+            "question": "Wozu dient die Körnung?",
+            "answer": "Feine Körnung gibt der Fläche einen weichen, analogen Look und kaschiert Banding, also sichtbare Stufen in glatten Verläufen. Mit Körnung 0 bleibt der Verlauf ganz glatt."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, und die Anordnung wird aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer denselben Verlauf."
+          }
+        }
+      }
+    },
+    "blurry-gradient": {
+      "name": "Verschwommener Verlauf",
+      "description": "Verträumte Hintergründe aus grossen, stark weichgezeichneten Farbkreisen. Als PNG, JPG, WebP, SVG oder CSS exportieren.",
+      "groups": {
+        "effects": "Wirkung"
+      },
+      "params": {
+        "circles": {
+          "label": "Kreise"
+        },
+        "layout": {
+          "label": "Position",
+          "options": {
+            "corners": "Ecken",
+            "mixed": "Mitte und Ecken",
+            "center": "Mitte"
+          }
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "spread": {
+          "label": "Streuung"
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "midnight": "Mitternacht",
+        "sorbet": "Sorbet",
+        "ocean": "Ozean",
+        "sunset": "Sonnenuntergang",
+        "forest": "Wald",
+        "mono": "Mono",
+        "neon": "Neon"
+      },
+      "seo": {
+        "whatIs": "Ein verschwommener Verlauf ist ein Hintergrund aus wenigen grossen Farbkreisen, die so stark weichgezeichnet sind, dass nur noch weiche Farbwolken bleiben. Er eignet sich hinter Text, als Website-Header, in Präsentationen und als Wallpaper.",
+        "howTo": "Wähle zwei bis fünf Kreise und ob sie in den Ecken oder um die Mitte liegen. Stelle dann Grösse, Streuung, Deckkraft und Unschärfe ein. Mit der Leertaste würfelst du eine neue Variante. Füge bei Bedarf Körnung hinzu und exportiere als PNG, JPG, WebP, SVG oder CSS.",
+        "faq": {
+          "q1": {
+            "question": "Bleibt Text darauf gut lesbar?",
+            "answer": "Ja, mit genügend Kontrast. Helle Kreise auf hellem Grund oder dunkle auf dunklem Grund halten die Fläche ruhig. Senke die Deckkraft, wenn die Farben mit deinem Text konkurrieren."
+          },
+          "q2": {
+            "question": "Verwendet das SVG Filter?",
+            "answer": "Nein. Jeder weichgezeichnete Kreis ist ein radialer Verlauf, dessen Transparenz genau der Form eines unscharfen Kreises folgt. Darum sieht das SVG in jedem Browser und Grafikprogramm gleich aus und ist in jeder Grösse schnell gezeichnet."
+          },
+          "q3": {
+            "question": "Was bewirkt die Streuung?",
+            "answer": "Sie verschiebt jeden Kreis um einen zufälligen Betrag von seinem Ankerpunkt zur Bildmitte hin. Bei 0 liegen die Kreise genau in den Ecken oder in der Mitte."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, und die Positionen werden aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer dasselbe Bild."
+          }
+        }
+      }
+    },
+    "striped-gradient": {
+      "name": "Streifenverlauf",
+      "description": "Senkrechte Streifen mit je eigenem Verlauf, leicht gegeneinander versetzt. Als PNG, JPG, WebP, SVG oder CSS exportieren.",
+      "groups": {
+        "effects": "Schattierung und Körnung"
+      },
+      "params": {
+        "stripes": {
+          "label": "Streifen"
+        },
+        "variance": {
+          "label": "Breitenvariation"
+        },
+        "offset": {
+          "label": "Versatz"
+        },
+        "alternate": {
+          "label": "Richtung abwechseln"
+        },
+        "shading": {
+          "label": "Schattierung"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "fluted": "Riffelglas",
+        "candy": "Bonbon",
+        "dusk": "Dämmerung",
+        "forest": "Wald",
+        "retro": "Retro",
+        "silk": "Seide",
+        "ink": "Tinte"
+      },
+      "seo": {
+        "whatIs": "Ein Streifenverlauf teilt einen Farbverlauf in senkrechte Bänder und verschiebt jedes Band ein wenig. Das wirkt wie Licht hinter Riffelglas oder wie Stoff mit Falten und gibt Covern, Plakaten und Websites einen markanten Hintergrund.",
+        "howTo": "Lege deine Farben von oben nach unten fest und wähle dann die Anzahl Streifen, wie stark ihre Breite variiert und wie weit sie versetzt sind. Die Schattierung gibt jedem Streifen Licht und Schatten. Mit der Leertaste würfelst du neue Varianten. Exportiere als PNG, JPG, WebP, SVG oder CSS.",
+        "faq": {
+          "q1": {
+            "question": "Was bewirkt der Versatz?",
+            "answer": "Jeder Streifen läuft durch dieselben Farben, beginnt aber auf einer etwas anderen Höhe. Je grösser der Versatz, desto stärker sind die Streifen gegeneinander verschoben. Bei 0 ergeben sie einen durchgehenden Verlauf."
+          },
+          "q2": {
+            "question": "Wie erreiche ich einen Riffelglas-Look?",
+            "answer": "Nimm viele schmale Streifen, wenig Versatz und eine kräftige Schattierung. Die Vorlage Riffelglas ist ein guter Startpunkt."
+          },
+          "q3": {
+            "question": "Lässt sich das SVG gut bearbeiten?",
+            "answer": "Ja. Abgesehen von der optionalen Körnung besteht es nur aus Rechtecken mit linearen Verläufen, ohne Filter. Grafikprogramme wie Figma, Illustrator oder Inkscape öffnen es als bearbeitbare Formen."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, und der Versatz wird aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer dasselbe Bild."
+          }
+        }
+      }
+    },
     "palette-generator": {
       "name": "Farbpaletten-Generator",
       "description": "Harmonische Farbpaletten per Leertaste. Farben sperren, Harmonie wählen, Kontrast prüfen und als CSS exportieren.",
