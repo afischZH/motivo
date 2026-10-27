@@ -173,10 +173,10 @@
     "css-patterns": {
       "name": "CSS Patterns",
       "description": "Over 30 pure CSS patterns: dots, grids, stripes, waves and geometric shapes. Export as CSS, Tailwind, SVG or image.",
-      "groups": {
-        "pattern": "Pattern"
-      },
       "params": {
+        "layers": {
+          "label": "Layers"
+        },
         "pattern": {
           "label": "Pattern"
         },
@@ -196,6 +196,7 @@
           "label": "Opacity"
         }
       },
+      "layer": "Layer {index}",
       "presets": {
         "picnic": "Picnic",
         "blueprint": "Blueprint",
@@ -214,7 +215,7 @@
       },
       "seo": {
         "whatIs": "CSS patterns are backgrounds the browser draws itself from gradients. They need no image file, load instantly, stay sharp at any size and can be recolored with a few characters of CSS. The library contains over 30 original patterns in five categories.",
-        "howTo": "Pick a pattern, set size, colors and opacity, and rotate stripes or grids to the angle you need. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "howTo": "Pick a pattern, set size, colors and opacity, and rotate stripes or grids to the angle you need. Stack up to five patterns as layers, show or hide them and change their order. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
         "faq": {
           "q1": {
             "question": "Do the patterns need an image?",

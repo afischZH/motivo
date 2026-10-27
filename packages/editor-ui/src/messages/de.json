@@ -7,6 +7,27 @@
       "advanced": "Erweitert",
       "moreSettings": "Weitere Einstellungen"
     },
+    "list": {
+      "item": "Element {index}",
+      "add": "Neu hinzufügen",
+      "duplicate": "{item} duplizieren",
+      "moveUp": "{item} nach oben",
+      "moveDown": "{item} nach unten",
+      "remove": "{item} entfernen",
+      "visible": "{item} sichtbar",
+      "visibleHint": "Ein- oder ausblenden",
+      "isHidden": "ausgeblendet",
+      "actions": "Aktionen für {item}",
+      "editing": "{item} bearbeiten",
+      "count": "{count} von {max}",
+      "keyboardHint": "Pfeiltasten wählen aus, mit Alt verschiebst du, Entf entfernt.",
+      "added": "{item} hinzugefügt.",
+      "duplicated": "{item} dupliziert als {copy}.",
+      "moved": "{item} verschoben, jetzt Position {position} von {count}.",
+      "removed": "{item} entfernt.",
+      "shown": "{item} eingeblendet.",
+      "hidden": "{item} ausgeblendet."
+    },
     "color": {
       "picker": "Farbe wählen",
       "hex": "HEX-Wert",

@@ -83,3 +83,57 @@ export const CloseIcon = () => (
     <path d="m6 6 12 12" />
   </Icon>
 );
+
+export const PlusIcon = () => (
+  <Icon>
+    <path d="M12 5v14" />
+    <path d="M5 12h14" />
+  </Icon>
+);
+
+export const CopyIcon = () => (
+  <Icon>
+    <rect x="8" y="8" width="13" height="13" rx="2" />
+    <path d="M4 16V5a2 2 0 0 1 2-2h11" />
+  </Icon>
+);
+
+export const ArrowUpIcon = () => (
+  <Icon>
+    <path d="m6 11 6-6 6 6" />
+    <path d="M12 5v14" />
+  </Icon>
+);
+
+export const ArrowDownIcon = () => (
+  <Icon>
+    <path d="m6 13 6 6 6-6" />
+    <path d="M12 5v14" />
+  </Icon>
+);
+
+export const TrashIcon = () => (
+  <Icon>
+    <path d="M4 7h16" />
+    <path d="M10 11v6" />
+    <path d="M14 11v6" />
+    <path d="M6 7l1 13h10l1-13" />
+    <path d="M9 7V4h6v3" />
+  </Icon>
+);
+
+export const EyeIcon = () => (
+  <Icon>
+    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </Icon>
+);
+
+export const EyeOffIcon = () => (
+  <Icon>
+    <path d="M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-2.2 3.1" />
+    <path d="M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6" />
+    <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+    <path d="m2 2 20 20" />
+  </Icon>
+);

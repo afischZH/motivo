@@ -173,10 +173,10 @@
     "css-patterns": {
       "name": "CSS-Muster",
       "description": "Über 30 Muster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Als CSS, Tailwind, SVG oder Bild exportieren.",
-      "groups": {
-        "pattern": "Muster"
-      },
       "params": {
+        "layers": {
+          "label": "Ebenen"
+        },
         "pattern": {
           "label": "Muster"
         },
@@ -196,6 +196,7 @@
           "label": "Deckkraft"
         }
       },
+      "layer": "Ebene {index}",
       "presets": {
         "picnic": "Picknick",
         "blueprint": "Bauplan",
@@ -214,7 +215,7 @@
       },
       "seo": {
         "whatIs": "CSS-Muster sind Hintergründe, die der Browser selbst aus Verläufen zeichnet. Sie brauchen keine Bilddatei, laden sofort, bleiben in jeder Grösse scharf und lassen sich mit ein paar Zeichen CSS umfärben. Die Bibliothek enthält über 30 eigene Muster in fünf Kategorien.",
-        "howTo": "Wähle ein Muster, stelle Grösse, Farben und Deckkraft ein und drehe Streifen oder Raster in den passenden Winkel. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "howTo": "Wähle ein Muster, stelle Grösse, Farben und Deckkraft ein und drehe Streifen oder Raster in den passenden Winkel. Staple bis zu fünf Muster als Ebenen übereinander, blende sie ein und aus oder ändere ihre Reihenfolge. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
         "faq": {
           "q1": {
             "question": "Brauche ich für die Muster ein Bild?",
