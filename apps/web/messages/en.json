@@ -13,7 +13,8 @@
       "de": "Deutsch",
       "en": "English"
     },
-    "mainNav": "Main"
+    "mainNav": "Main",
+    "toolsNav": "Tools"
   },
   "Theme": {
     "toggle": "Dark theme",

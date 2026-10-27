@@ -34,6 +34,7 @@ export default tseslint.config(
       "**/.open-next/**",
       "**/.wrangler/**",
       "**/next-env.d.ts",
+      ".claude/worktrees/**",
     ],
   },
   js.configs.recommended,
