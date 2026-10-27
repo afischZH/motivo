@@ -2,8 +2,8 @@
  * Poisson-disk sampling in a rectangle using Bridson's algorithm
  * ("Fast Poisson Disk Sampling in Arbitrary Dimensions", 2007).
  */
-import type { Rng } from "./rng.js";
-import type { Vec2 } from "./vec.js";
+import type { Rng } from "./rng";
+import type { Vec2 } from "./vec";
 
 export interface PoissonOptions {
   readonly width: number;

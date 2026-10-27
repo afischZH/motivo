@@ -12,7 +12,7 @@ import {
   scale,
   sub,
   vec2,
-} from "./vec.js";
+} from "./vec";
 
 describe("vec", () => {
   const a = vec2(3, 4);

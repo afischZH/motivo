@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createRng, deriveSeed, toUint32 } from "./rng.js";
+import { createRng, deriveSeed, toUint32 } from "./rng";
 
 const take = (seed: number, n: number): number[] => {
   const rng = createRng(seed);

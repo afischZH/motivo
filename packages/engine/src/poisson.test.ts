@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { poissonDisk } from "./poisson.js";
-import { createRng } from "./rng.js";
-import { distance } from "./vec.js";
+import { poissonDisk } from "./poisson";
+import { createRng } from "./rng";
+import { distance } from "./vec";
 
 describe("poissonDisk", () => {
   const options = { width: 100, height: 80, minDistance: 10 };

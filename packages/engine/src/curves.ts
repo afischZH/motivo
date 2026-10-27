@@ -10,7 +10,7 @@
  * `tension = 0.5` is the classic Catmull-Rom spline, `0` yields straight lines
  * and larger values give rounder, more overshooting curves.
  */
-import { add, scale, sub, type Vec2 } from "./vec.js";
+import { add, scale, sub, type Vec2 } from "./vec";
 
 export interface CubicSegment {
   readonly c1: Vec2;

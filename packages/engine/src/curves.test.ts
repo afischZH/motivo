@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { catmullRomToBezier, cubicPathToSvg, formatNumber } from "./curves.js";
-import type { Vec2 } from "./vec.js";
+import { catmullRomToBezier, cubicPathToSvg, formatNumber } from "./curves";
+import type { Vec2 } from "./vec";
 
 const zigzag: Vec2[] = [
   { x: 0, y: 0 },
