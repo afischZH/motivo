@@ -110,3 +110,4 @@ pnpm db:types           # Supabase-Typen generieren (ab M3)
 | 2026-10-27 | Hosting auf Cloudflare Workers via OpenNext statt Vercel | Entscheid Andreas; Preview-Deployments pro PR über Cloudflare |
 | 2026-10-27 | TypeScript auf 6.0.x gepinnt (nicht 7.x) | typescript-eslint unterstützt aktuell nur TypeScript < 6.1; bei Support upgraden |
 | 2026-10-27 | Deploy über GitHub Actions statt Cloudflare Workers Builds | Workers Builds konnte das Repo wiederholt nicht klonen; Actions-Deploy ist unabhängig davon und zeigt Preview-URL im PR |
+| 2026-10-27 | Kein SVGO in M1 | Generatoren erzeugen bereits kompaktes SVG; SVGO wäre über 50 KB gzip. Neubeurteilung bei Nutzer-Uploads (M4) |

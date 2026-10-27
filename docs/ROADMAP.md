@@ -33,7 +33,7 @@ Gesamtüberblick:
 
 - [ ] `ToolDefinition`-Typen und Registry (`packages/tool-registry`)
 - [ ] Editor-Shell: Auto-Controls aus Zod-Schema, Presets-Leiste, Vorschau mit Zoom/Fit, Randomize (Leertaste) mit Locks, Undo/Redo, Varianten-Filmstreifen
-- [ ] Export-Dialog + Exporter: SVG (mit SVGO), CSS, PNG/JPG/WebP (frei wählbare Grösse), Clipboard
+- [ ] Export-Dialog + Exporter: SVG (kompakt aus dem Generator, ohne SVGO), CSS, PNG/JPG/WebP (frei wählbare Grösse), Clipboard
 - [ ] Share via URL-Hash (Params komprimiert)
 - [ ] Tools: **CSS Gradient**, **Blob**, **SVG Waves**, **Polka Dots**
 - [ ] Alle 6 **Converters**

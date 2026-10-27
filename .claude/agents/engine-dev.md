@@ -16,7 +16,7 @@ You are a senior graphics and TypeScript engineer building the generator engine 
 - Every tool is a `ToolDefinition` (Zod schema, defaults, at least 6 presets, `randomize` respecting locks, `render`, `exports`, `gating`). No tool-specific logic outside the registry and engine packages.
 - **Deterministic**: never use `Math.random()`, `Date.now()` or DOM APIs in engine, effects or shaders. Use the injected seeded `Rng`.
 - **One render path**: preview and export call the same render function.
-- SVG output must be clean and Illustrator/Figma compatible; run through the SVGO config in `packages/exporters`.
+- SVG output must be clean and Illustrator/Figma compatible; keep it compact (fixed decimal precision, no redundant attributes); SVGO is intentionally not used.
 - Pixel effects operate on `ImageData` and must be runnable in a Web Worker.
 - Performance: vector re-render under 16 ms for default params; heavy work goes to workers.
 - Only implement well-known, generic algorithms. Never copy code, shapes or assets from other products.

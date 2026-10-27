@@ -20,7 +20,7 @@
 | Editor-State | **Zustand** + `immer`, Undo/Redo via History-Middleware | Leichtgewichtig, gut testbar |
 | Validierung | **Zod** | Ein Schema für UI, Speicherung, API und KI-Output |
 | Farben | **culori** | OKLCH, Kontraste, Interpolation |
-| Vektor | eigene SVG-String-Builder, **SVGO** für Export-Optimierung | Schnell, serverfähig |
+| Vektor | eigene SVG-String-Builder mit fester Nachkommastellen-Präzision; kein SVGO (Entscheid 2026-10-27, Neubeurteilung bei Nutzer-Uploads in M4) | Schnell, serverfähig, kein grosses Bundle |
 | Raster/Effekte | Canvas 2D in **OffscreenCanvas + Web Worker** | UI bleibt flüssig |
 | Shader | **WebGL2** (dünner eigener Wrapper oder `twgl.js`), optional **three.js** für 3D-Grid | Volle Kontrolle über Fragment-Shader |
 | GIF | **gifenc** (im Worker) | Klein, schnell |
@@ -109,7 +109,7 @@ export interface ToolDefinition<S extends z.ZodTypeAny> {
 Params + Seed ──► Renderer ──► Vorschau (DOM-SVG / Canvas / WebGL im Viewport)
                       │
                       └──► Exporter(format, size, options)
-                              ├─ SVG: String ► SVGO ► Datei
+                              ├─ SVG: String (bereits kompakt) ► Datei
                               ├─ CSS: data-URI (url-encoded SVG) oder native CSS-Gradients
                               ├─ PNG/JPG/WebP: SVG ► Image ► Canvas ► Blob  |  Canvas/WebGL direkt
                               ├─ GIF: N Frames (Seed-Varianten oder Zeit t) ► gifenc (Worker)

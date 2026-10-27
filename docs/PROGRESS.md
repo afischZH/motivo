@@ -4,9 +4,9 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M1 (AP-Plan erstellt, wartet auf Freigabe). M0 abgenommen und live seit 2026-10-27.
+- **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: Freigabe M1-AP-Plan (inkl. Entscheid SVGO), dann M1-AP01.
+- **Nächster Schritt**: M1-AP01 (freigegeben 2026-10-27, ohne SVGO).
 
 ## Arbeitspakete des aktuellen Meilensteins
 
@@ -18,7 +18,7 @@
 | M1-AP02 | Editor-State: Params, Seed, Locks, Randomize, Undo/Redo, Varianten-Verlauf | ui-dev | offen | AP01 | Dep: zustand (+ ggf. immer) |
 | M1-AP03 | Auto-Controls aus Zod-Schema (Slider, Segmented, Switch, Farbe, Palette) inkl. Schloss | ui-dev | offen | AP01 | DESIGN.md 3 |
 | M1-AP04 | Editor-Seite `/[locale]/tools/[toolId]`: Layout, Presets-Leiste, Vorschau mit Zoom/Fit, Filmstreifen, Tastaturkürzel | ui-dev | offen | AP02, AP03 | DESIGN.md 2 und 4 |
-| M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | offen | AP01, AP04 | SVGO-Entscheid offen |
+| M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | offen | AP01, AP04 | ohne SVGO (Entscheid Andreas) |
 | M1-AP06 | Teilen per URL-Hash (Params komprimiert) | ui-dev | offen | AP02 | Dep: fflate oder lz-string |
 | M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | offen | AP01 | Dep: culori |
 | M1-AP08 | Tool **Blob** | engine-dev | offen | AP01 | nutzt curves.ts |
@@ -47,8 +47,7 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 
 ## Blocker und offene Fragen an Andreas
 
-- Freigabe M1-AP-Plan.
-- Entscheid SVGO (ca. 4.1, gross) vs. eigener schlanker SVG-Optimierer, siehe Kurzlage im Thread.
+- ...
 - Offen (niedrig, aus Code-Review M0): Sprachwechsel übernimmt Query/Hash nicht (relevant ab Editor-URLs in M1). Inline-Theme-Script braucht Nonce/Hash, sobald CSP kommt. Firefox öffnet evtl. Konsole bei Ctrl+Shift+K.
 
 ## Kostenentscheide (Lifetime-Ökonomie)
