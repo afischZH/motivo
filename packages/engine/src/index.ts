@@ -17,3 +17,7 @@ export * from "./tools/confetti";
 export * from "./tools/starry-sky";
 export * from "./tools/dieter-dots";
 export * from "./tools/css-patterns";
+export * from "./noise";
+export * from "./tools/blob-composition";
+export * from "./tools/doodles";
+export * from "./tools/svg-charts";
