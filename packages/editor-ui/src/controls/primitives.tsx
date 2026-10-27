@@ -52,7 +52,7 @@ export interface ControlRowProps {
 export function ControlRow(props: ControlRowProps) {
   const labelClass = "min-w-0 truncate text-sm font-medium text-foreground";
   return (
-    <div className="grid gap-1.5" data-control={props.controlKey}>
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-1.5" data-control={props.controlKey}>
       <div className="flex min-h-7 items-center justify-between gap-2">
         {props.labelFor ? (
           <label id={props.ids.label} htmlFor={props.ids.input} className={labelClass}>
