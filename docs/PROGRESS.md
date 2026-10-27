@@ -20,12 +20,14 @@
 | M1-AP04 | Editor-Seite `/[locale]/tools/[toolId]`: Layout, Presets-Leiste, Vorschau mit Zoom/Fit, Filmstreifen, Tastaturkürzel | ui-dev | offen | AP02, AP03 | DESIGN.md 2 und 4 |
 | M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | offen | AP01, AP04 | ohne SVGO (Entscheid Andreas) |
 | M1-AP06 | Teilen per URL-Hash (Params komprimiert) | ui-dev | offen | AP02 | Dep: fflate oder lz-string |
-| M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | in Arbeit | AP01 | Dep: culori |
-| M1-AP08 | Tool **Blob** | engine-dev | in Arbeit | AP01 | nutzt curves.ts |
-| M1-AP09 | Tool **SVG Waves** | engine-dev | in Arbeit | AP01 | nutzt curves.ts |
-| M1-AP10 | Tool **Polka Dots** | engine-dev | in Arbeit | AP01 | ROADMAP M1 (TOOLS.md sagt M2/M3, ROADMAP gilt) |
+| M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Dep: culori 4 via `culori/fn` (ca. 1.3 KB gzip); Stopps gleichmässig, ziehbare Stopps später (neuer Control-Typ) |
+| M1-AP08 | Tool **Blob** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Füllung solid/outline/gradient; clip-path-CSS kommt mit AP05-Hook |
+| M1-AP09 | Tool **SVG Waves** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Param `coverage`, Standard 1920×1080 |
+| M1-AP10 | Tool **Polka Dots** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Abstand relativ zur kürzeren Kante; Params shape, colorMode, jitter |
 | M1-AP11 | 6 **Konverter**-Seiten (SVG↔CSS, SVG↔Base64, Bild↔Base64) | ui-dev | offen | – | Nutzer-SVG nur per `<img>` anzeigen, nie inline |
 | M1-AP12 | Snapshot-Tests je Preset, visueller Test Vorschau == PNG-Export in 3 Browsern | qa-tester | offen | AP05, AP07 bis AP10 | DoD M1 |
+
+Entscheide Orchestrator 2026-10-27: AP05 erhält einen Hook für Zusatz-Exporte pro Tool (Tailwind, clip-path); ziehbare Verlaufsstopps nach M1; i18n-Test in tool-registry liest `apps/web/messages` direkt (vorerst akzeptiert).
 
 Reihenfolge: AP01, dann parallel Engine-Strang (AP07 bis AP10) und UI-Strang (AP02, AP03, dann AP04), danach AP05, AP06; AP11 jederzeit parallel; zum Schluss AP12 und Reviews (code-reviewer; security-reviewer für Konverter und URL-Hash).
 
