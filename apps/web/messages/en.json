@@ -170,6 +170,213 @@
         }
       }
     },
+    "css-patterns": {
+      "name": "CSS Patterns",
+      "description": "Over 30 pure CSS patterns: dots, grids, stripes, waves and geometric shapes. Export as CSS, Tailwind, SVG or image.",
+      "groups": {
+        "pattern": "Pattern"
+      },
+      "params": {
+        "pattern": {
+          "label": "Pattern"
+        },
+        "color": {
+          "label": "Color"
+        },
+        "accent": {
+          "label": "Accent color"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "opacity": {
+          "label": "Opacity"
+        }
+      },
+      "presets": {
+        "picnic": "Picnic",
+        "blueprint": "Blueprint",
+        "candy-shop": "Candy Shop",
+        "seventies": "Seventies",
+        "seaside": "Seaside",
+        "highland": "Highland",
+        "night-dots": "Night Dots"
+      },
+      "categories": {
+        "dots": "Dots",
+        "grid": "Grid",
+        "stripes": "Stripes",
+        "waves": "Waves",
+        "geometric": "Geometric"
+      },
+      "seo": {
+        "whatIs": "CSS patterns are backgrounds the browser draws itself from gradients. They need no image file, load instantly, stay sharp at any size and can be recolored with a few characters of CSS. The library contains over 30 original patterns in five categories.",
+        "howTo": "Pick a pattern, set size, colors and opacity, and rotate stripes or grids to the angle you need. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Do the patterns need an image?",
+            "answer": "No. Every pattern is made only of CSS gradients in background-image. That saves loading time and stays sharp on every screen."
+          },
+          "q2": {
+            "question": "Which browsers support the patterns?",
+            "answer": "All current browsers: Chrome, Edge, Firefox and Safari. The patterns use linear, radial and conic gradients, which have been widely supported for years."
+          },
+          "q3": {
+            "question": "How exact is the SVG export?",
+            "answer": "The SVG redraws the same geometry with SVG gradients and tiles. At most, antialiasing of single pixels may differ. For an image without any deviation, use the PNG export."
+          },
+          "q4": {
+            "question": "Can I use the patterns with Tailwind?",
+            "answer": "Yes. The export gives you Tailwind classes with arbitrary values that you paste straight into your HTML. They work with Tailwind 3 and 4."
+          },
+          "q5": {
+            "question": "May I use the patterns commercially?",
+            "answer": "Yes. What you create with Motivo is yours and may be used in personal and commercial projects."
+          }
+        }
+      },
+      "patterns": {
+        "polka": {
+          "name": "Polka Dots",
+          "description": "Evenly spaced dots on a square grid, the classic for playful surfaces."
+        },
+        "polka-staggered": {
+          "name": "Staggered Dots",
+          "description": "Dots in offset rows, denser and calmer than a straight grid."
+        },
+        "dots-duo": {
+          "name": "Two-Tone Dots",
+          "description": "Staggered dots that alternate between two colors."
+        },
+        "dots-mixed": {
+          "name": "Mixed Dots",
+          "description": "Large and small dots in two colors, alternating in a relaxed rhythm."
+        },
+        "rings": {
+          "name": "Rings",
+          "description": "Circle outlines on a grid, light and airy."
+        },
+        "target": {
+          "name": "Targets",
+          "description": "Concentric rings in two colors, like tiny targets."
+        },
+        "grid-lines": {
+          "name": "Grid Lines",
+          "description": "Thin lines on a square grid, rotatable to any angle."
+        },
+        "graph-paper": {
+          "name": "Graph Paper",
+          "description": "A fine minor grid with a bold major line every five cells."
+        },
+        "dotted-grid": {
+          "name": "Dotted Grid",
+          "description": "Grid lines with a dot on every crossing."
+        },
+        "crosshatch": {
+          "name": "Crosshatch",
+          "description": "Diagonal lines in both directions, like a lattice or hatching."
+        },
+        "bricks": {
+          "name": "Bricks",
+          "description": "A running bond brick wall drawn as mortar lines."
+        },
+        "tiles": {
+          "name": "Tiles",
+          "description": "Square tiles in two colors with narrow grout lines."
+        },
+        "stripes": {
+          "name": "Stripes",
+          "description": "Wide stripes at any angle you like."
+        },
+        "candy": {
+          "name": "Candy Stripes",
+          "description": "Two colors with narrow gaps, like a candy cane."
+        },
+        "pinstripes": {
+          "name": "Pinstripes",
+          "description": "Fine lines with lots of space, elegant and understated."
+        },
+        "tricolor": {
+          "name": "Tricolor Stripes",
+          "description": "Equal stripes in two colors plus the background."
+        },
+        "gingham": {
+          "name": "Gingham",
+          "description": "Translucent stripes in both directions create the classic check."
+        },
+        "plaid": {
+          "name": "Plaid",
+          "description": "Wide and narrow stripes in two colors, crossed like woven tartan."
+        },
+        "barcode": {
+          "name": "Barcode",
+          "description": "Irregular lines like a barcode, decorative and not machine readable."
+        },
+        "ripples": {
+          "name": "Ripples",
+          "description": "Concentric rings from the center, like ripples on water."
+        },
+        "sunrise": {
+          "name": "Sunrise",
+          "description": "Wide arcs in two colors rising from the bottom edge."
+        },
+        "wavy-lines": {
+          "name": "Wavy Lines",
+          "description": "Smooth wavy lines built from half circles, row after row."
+        },
+        "scallops": {
+          "name": "Scallops",
+          "description": "Rows of half circles with a small accent, like a scalloped edge."
+        },
+        "scales": {
+          "name": "Scales",
+          "description": "Overlapping arcs like fish scales or roof tiles."
+        },
+        "rainbow": {
+          "name": "Rainbows",
+          "description": "Little three-band rainbows, row after row."
+        },
+        "checkerboard": {
+          "name": "Checkerboard",
+          "description": "Alternating squares, as crisp as a chessboard."
+        },
+        "diamonds": {
+          "name": "Diamonds",
+          "description": "Squares standing on their tips in a dense grid."
+        },
+        "argyle": {
+          "name": "Argyle",
+          "description": "Diamonds with fine diagonal lines, known from socks and sweaters."
+        },
+        "zigzag": {
+          "name": "Zigzag",
+          "description": "Bold zigzag bands running across the surface."
+        },
+        "chevron": {
+          "name": "Chevron",
+          "description": "Zigzag bands in two colors plus the background, with a seventies feel."
+        },
+        "triangles": {
+          "name": "Triangles",
+          "description": "Every tile split along its diagonal, forming rows of triangles."
+        },
+        "pinwheel": {
+          "name": "Pinwheel",
+          "description": "Four blades per tile that turn into pinwheels."
+        },
+        "crosses": {
+          "name": "Crosses",
+          "description": "Plus signs on a regular grid."
+        },
+        "squares": {
+          "name": "Squares",
+          "description": "Small squares with space around them, calm and orderly."
+        }
+      }
+    },
     "blob": {
       "name": "Blob Generator",
       "description": "Organic shapes in one click, filled, outlined or with a gradient. Export as SVG or image.",
@@ -1142,5 +1349,38 @@
       "name": "Composer",
       "description": "Combine several motifs into one graphic."
     }
+  },
+  "PatternLibrary": {
+    "metaTitle": "CSS patterns to copy: {count} patterns | Motivo",
+    "metaDescription": "{count} background patterns in pure CSS: dots, grids, stripes, waves and geometric shapes. Copy, paste, done.",
+    "title": "CSS Patterns",
+    "lead": "Backgrounds in pure CSS, no image file needed. Pick a pattern, copy the code or adjust colors and size in the editor.",
+    "filterLabel": "Filter by category",
+    "all": "All",
+    "count": "{count, plural, one {# pattern} other {# patterns}}",
+    "openGenerator": "Design your own in the editor",
+    "ogAlt": "A selection of CSS patterns by Motivo",
+    "nav": "CSS Patterns"
+  },
+  "PatternPage": {
+    "metaTitle": "{pattern} CSS pattern to copy | Motivo",
+    "metaDescription": "{description} Pure CSS, ready to copy, with Tailwind classes and SVG export.",
+    "heading": "{pattern} CSS pattern",
+    "previewLabel": "Preview of the {pattern} pattern",
+    "codeHeading": "Code",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "cssLead": "Paste the lines into your element's rule. The pattern repeats by itself and adapts to any size.",
+    "copy": "Copy",
+    "copyLabel": "Copy {format}",
+    "copied": "Copied! Off to your project.",
+    "copyFailed": "That did not work. Select the code and copy it by hand.",
+    "openEditor": "Customize in the editor",
+    "openEditorHint": "Change colors, size and opacity, then export as CSS, SVG or PNG.",
+    "howToHeading": "How to use this pattern",
+    "howTo": "Copy the CSS into the rule of the element that should carry the pattern, for example a section, a card or the body. The colors are hex values in the code and can be swapped directly. In the editor you change everything with sliders and can also export the pattern as SVG or PNG.",
+    "relatedHeading": "Related patterns",
+    "backToLibrary": "All CSS patterns",
+    "ogAlt": "{pattern}, a CSS pattern by Motivo"
   }
 }

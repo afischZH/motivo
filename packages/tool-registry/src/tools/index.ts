@@ -7,6 +7,7 @@ import type { AnyToolDefinition } from "../types";
 import { blobTool } from "./blob";
 import { confettiTool } from "./confetti";
 import { cssGradientTool } from "./css-gradient";
+import { cssPatternsTool } from "./css-patterns";
 import { dieterDotsTool } from "./dieter-dots";
 import { gridPatternsTool } from "./grid-patterns";
 import { noiseGrainTool } from "./noise-grain";
@@ -22,6 +23,7 @@ export {
   blobTool,
   confettiTool,
   cssGradientTool,
+  cssPatternsTool,
   dieterDotsTool,
   gridPatternsTool,
   noiseGrainTool,
@@ -36,6 +38,8 @@ export {
 export type { BlobParams } from "./blob";
 export type { ConfettiParams } from "./confetti";
 export type { CssGradientParams } from "./css-gradient";
+export type { CssPatternsParams } from "./css-patterns";
+export { cssPatternDescriptionKey, cssPatternNameKey, cssPatternShowcase } from "./css-patterns";
 export type { DieterDotsParams } from "./dieter-dots";
 export type { GridPatternsParams } from "./grid-patterns";
 export type { NoiseGrainParams } from "./noise-grain";
@@ -50,6 +54,7 @@ export type { TintsShadesParams } from "./tints-shades";
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
   cssGradientTool,
+  cssPatternsTool,
   blobTool,
   svgWavesTool,
   polkaDotsTool,

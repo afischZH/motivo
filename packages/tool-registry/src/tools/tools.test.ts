@@ -1,4 +1,4 @@
-import { GRAIN_TILE_EDGE, MAX_DOT_SITES, createRng, crc32 } from "@motivo/engine";
+import { CSS_PATTERN_IDS, GRAIN_TILE_EDGE, MAX_DOT_SITES, createRng, crc32 } from "@motivo/engine";
 import { describe, expect, it } from "vitest";
 import { registry } from "../registry";
 import { createRenderContext } from "../render";
@@ -9,6 +9,8 @@ import {
   builtInTools,
   confettiTool,
   cssGradientTool,
+  cssPatternShowcase,
+  cssPatternsTool,
   dieterDotsTool,
   gridPatternsTool,
   noiseGrainTool,
@@ -53,6 +55,7 @@ describe("built-in tool registration", () => {
   it("registers every built-in tool in the default registry", () => {
     expect(registry.list().map((t) => t.id)).toEqual([
       "css-gradient",
+      "css-patterns",
       "blob",
       "svg-waves",
       "polka-dots",
@@ -74,6 +77,7 @@ describe("built-in tool registration", () => {
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
+      "css-patterns",
       "polka-dots",
       "grid-patterns",
       "confetti",
@@ -117,6 +121,67 @@ describe("css-gradient", () => {
     expect(
       cssGradientTool.schema.safeParse({ ...cssGradientTool.defaults, type: "diamond" }).success,
     ).toBe(false);
+  });
+});
+
+describe("css-patterns", () => {
+  const size = { width: 400, height: 300 };
+
+  it("renders CSS declarations and an SVG twin of the same size", () => {
+    const out = renderStatic(cssPatternsTool, cssPatternsTool.defaults, 1, size) as CssOutput;
+    expect(out.css).toMatch(/^background-color: #f8f5ee;\nbackground-image: /);
+    expect(out.previewSvg).toContain('width="400" height="300"');
+  });
+
+  it("ignores the seed (patterns are fully described by their params)", () => {
+    const a = renderStatic(cssPatternsTool, cssPatternsTool.defaults, 1, size);
+    expect(renderStatic(cssPatternsTool, cssPatternsTool.defaults, 99, size)).toEqual(a);
+  });
+
+  it("has a valid showcase for every library pattern", () => {
+    for (const id of CSS_PATTERN_IDS) {
+      const params = cssPatternShowcase(id);
+      expect(cssPatternsTool.schema.parse(params)).toEqual(params);
+      expect(params.pattern).toBe(id);
+    }
+    expect(() => cssPatternShowcase("nope")).toThrow(RangeError);
+  });
+
+  it("rejects colours and patterns that could inject CSS (crafted share links)", () => {
+    const attacks: Record<string, unknown>[] = [
+      { color: "red;background:url(https://evil.example/x)" },
+      { accent: "#fff) , url(https://evil.example/x" },
+      { background: "#000;}body{display:none" },
+      { background: "url(x)" },
+      { color: '#fff"/><script>alert(1)</script>' },
+      { pattern: "polka;color:red" },
+      { pattern: "__proto__" },
+      { size: 1e9 },
+      { angle: Number.NaN },
+      { opacity: -1 },
+    ];
+    for (const attack of attacks) {
+      const parsed = cssPatternsTool.schema.safeParse({ ...cssPatternsTool.defaults, ...attack });
+      expect(parsed.success, JSON.stringify(attack)).toBe(false);
+    }
+  });
+
+  it("only shows the angle for rotatable patterns and the accent where it is used", () => {
+    const hints = cssPatternsTool.controls?.params;
+    const show = (key: "angle" | "accent", pattern: string) =>
+      hints?.[key]?.visibleWhen?.({ ...cssPatternsTool.defaults, pattern }) ?? true;
+    expect(show("angle", "stripes")).toBe(true);
+    expect(show("angle", "polka")).toBe(false);
+    expect(show("accent", "dots-duo")).toBe(true);
+    expect(show("accent", "polka")).toBe(false);
+  });
+
+  it("keeps the size even and in range when randomising", () => {
+    for (let s = 0; s < 50; s++) {
+      const out = cssPatternsTool.randomize(createRng(s), cssPatternsTool.defaults, new Set());
+      expect(out.size % 2).toBe(0);
+      expect(cssPatternsTool.schema.safeParse(out).success).toBe(true);
+    }
   });
 });
 
@@ -164,9 +229,19 @@ describe("extra exports", () => {
     expect(css).toContain("width: 300px;");
   });
 
-  it("only css-gradient, blob and the colour tools declare extras so far", () => {
+  it("css-patterns offers Tailwind classes for the same declarations", () => {
+    const out = extra(cssPatternsTool, "tailwind").render(
+      cssPatternsTool.defaults,
+      createRenderContext(1, size),
+    );
+    expect(out).toMatch(/^bg-\[#f8f5ee\] \[background-image:linear-gradient\(/);
+    expect(out.split(" ").every((c) => /^(?:bg-)?\[[^\s]+\]$/.test(c))).toBe(true);
+  });
+
+  it("only css-gradient, css-patterns, blob and the colour tools declare extras so far", () => {
     expect(builtInTools.filter((t) => t.extraExports?.length).map((t) => t.id)).toEqual([
       "css-gradient",
+      "css-patterns",
       "blob",
       "palette-generator",
       "tints-shades",

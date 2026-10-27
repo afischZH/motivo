@@ -170,6 +170,213 @@
         }
       }
     },
+    "css-patterns": {
+      "name": "CSS-Muster",
+      "description": "Über 30 Muster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Als CSS, Tailwind, SVG oder Bild exportieren.",
+      "groups": {
+        "pattern": "Muster"
+      },
+      "params": {
+        "pattern": {
+          "label": "Muster"
+        },
+        "color": {
+          "label": "Farbe"
+        },
+        "accent": {
+          "label": "Akzentfarbe"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        }
+      },
+      "presets": {
+        "picnic": "Picknick",
+        "blueprint": "Bauplan",
+        "candy-shop": "Süsswaren",
+        "seventies": "Siebziger",
+        "seaside": "Meeresbrise",
+        "highland": "Highland",
+        "night-dots": "Nachtpunkte"
+      },
+      "categories": {
+        "dots": "Punkte",
+        "grid": "Raster",
+        "stripes": "Streifen",
+        "waves": "Wellen",
+        "geometric": "Geometrisch"
+      },
+      "seo": {
+        "whatIs": "CSS-Muster sind Hintergründe, die der Browser selbst aus Verläufen zeichnet. Sie brauchen keine Bilddatei, laden sofort, bleiben in jeder Grösse scharf und lassen sich mit ein paar Zeichen CSS umfärben. Die Bibliothek enthält über 30 eigene Muster in fünf Kategorien.",
+        "howTo": "Wähle ein Muster, stelle Grösse, Farben und Deckkraft ein und drehe Streifen oder Raster in den passenden Winkel. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Brauche ich für die Muster ein Bild?",
+            "answer": "Nein. Jedes Muster besteht nur aus CSS-Verläufen in background-image. Das spart Ladezeit und bleibt auf jedem Bildschirm scharf."
+          },
+          "q2": {
+            "question": "In welchen Browsern funktionieren die Muster?",
+            "answer": "In allen aktuellen Browsern, also Chrome, Edge, Firefox und Safari. Die Muster nutzen lineare, radiale und konische Verläufe, die seit Jahren breit unterstützt werden."
+          },
+          "q3": {
+            "question": "Wie genau ist der SVG-Export?",
+            "answer": "Das SVG zeichnet dieselbe Geometrie mit SVG-Verläufen und Kacheln nach. Unterschiede gibt es höchstens bei der Kantenglättung einzelner Pixel. Für ein Bild ohne jede Abweichung nimm den PNG-Export."
+          },
+          "q4": {
+            "question": "Kann ich die Muster mit Tailwind verwenden?",
+            "answer": "Ja. Der Export liefert Tailwind-Klassen mit beliebigen Werten, die du direkt in dein HTML kopierst. Sie funktionieren mit Tailwind 3 und 4."
+          },
+          "q5": {
+            "question": "Darf ich die Muster kommerziell nutzen?",
+            "answer": "Ja. Was du mit Motivo erstellst, gehört dir und darf in eigenen und kommerziellen Projekten verwendet werden."
+          }
+        }
+      },
+      "patterns": {
+        "polka": {
+          "name": "Punkte",
+          "description": "Gleichmässige Punkte in einem Raster, der Klassiker für verspielte Flächen."
+        },
+        "polka-staggered": {
+          "name": "Versetzte Punkte",
+          "description": "Punkte in versetzten Reihen, dichter und ruhiger als ein gerades Raster."
+        },
+        "dots-duo": {
+          "name": "Zweifarbige Punkte",
+          "description": "Versetzte Punkte im Wechsel zweier Farben."
+        },
+        "dots-mixed": {
+          "name": "Gemischte Punkte",
+          "description": "Grosse und kleine Punkte in zwei Farben, locker im Wechsel."
+        },
+        "rings": {
+          "name": "Ringe",
+          "description": "Kreisringe in einem Raster, leicht und luftig."
+        },
+        "target": {
+          "name": "Zielscheiben",
+          "description": "Konzentrische Ringe in zwei Farben, wie kleine Zielscheiben."
+        },
+        "grid-lines": {
+          "name": "Rasterlinien",
+          "description": "Feine Linien im Quadratraster, frei drehbar."
+        },
+        "graph-paper": {
+          "name": "Millimeterpapier",
+          "description": "Feines Nebenraster mit kräftigem Hauptraster alle fünf Felder."
+        },
+        "dotted-grid": {
+          "name": "Raster mit Knoten",
+          "description": "Rasterlinien mit Punkten auf jeder Kreuzung."
+        },
+        "crosshatch": {
+          "name": "Kreuzschraffur",
+          "description": "Diagonale Linien in beide Richtungen, wie ein Gitter oder eine Schraffur."
+        },
+        "bricks": {
+          "name": "Backsteine",
+          "description": "Mauerwerk im Läuferverband, gezeichnet als Fugen."
+        },
+        "tiles": {
+          "name": "Fliesen",
+          "description": "Quadratische Fliesen in zwei Farben mit schmalen Fugen."
+        },
+        "stripes": {
+          "name": "Streifen",
+          "description": "Breite Streifen in einem frei wählbaren Winkel."
+        },
+        "candy": {
+          "name": "Zuckerstange",
+          "description": "Zwei Farben mit schmalen Abständen, wie eine Zuckerstange."
+        },
+        "pinstripes": {
+          "name": "Nadelstreifen",
+          "description": "Feine Linien mit viel Abstand, elegant und zurückhaltend."
+        },
+        "tricolor": {
+          "name": "Dreifarbige Streifen",
+          "description": "Gleich breite Streifen in zwei Farben und dem Hintergrund."
+        },
+        "gingham": {
+          "name": "Vichy-Karo",
+          "description": "Halbtransparente Streifen in beide Richtungen ergeben das typische Karo."
+        },
+        "plaid": {
+          "name": "Schottenkaro",
+          "description": "Breite und schmale Streifen in zwei Farben, gekreuzt wie ein Karostoff."
+        },
+        "barcode": {
+          "name": "Strichcode",
+          "description": "Unregelmässige Linien wie ein Strichcode, dekorativ und nicht lesbar."
+        },
+        "ripples": {
+          "name": "Wellenringe",
+          "description": "Konzentrische Ringe von der Mitte aus, wie Wellen im Wasser."
+        },
+        "sunrise": {
+          "name": "Sonnenaufgang",
+          "description": "Breite Bögen in zwei Farben, die vom unteren Rand aufsteigen."
+        },
+        "wavy-lines": {
+          "name": "Wellenlinien",
+          "description": "Weiche Wellenlinien aus Halbkreisen, Reihe um Reihe."
+        },
+        "scallops": {
+          "name": "Bogenkante",
+          "description": "Halbkreise in Reihen mit kleinem Akzent, wie eine Bogenkante."
+        },
+        "scales": {
+          "name": "Schuppen",
+          "description": "Überlappende Bögen wie Fischschuppen oder Dachziegel."
+        },
+        "rainbow": {
+          "name": "Regenbogen",
+          "description": "Kleine Regenbögen aus drei Bändern, Reihe für Reihe."
+        },
+        "checkerboard": {
+          "name": "Schachbrett",
+          "description": "Quadrate im Wechsel, so klar wie ein Schachbrett."
+        },
+        "diamonds": {
+          "name": "Rauten",
+          "description": "Auf die Spitze gestellte Quadrate in einem dichten Raster."
+        },
+        "argyle": {
+          "name": "Argyle",
+          "description": "Rauten mit feinen Diagonalen, bekannt von Socken und Pullovern."
+        },
+        "zigzag": {
+          "name": "Zickzack",
+          "description": "Kräftige Zickzackbänder, die quer über die Fläche laufen."
+        },
+        "chevron": {
+          "name": "Chevron",
+          "description": "Zickzackbänder in zwei Farben und dem Hintergrund, im Stil der Siebziger."
+        },
+        "triangles": {
+          "name": "Dreiecke",
+          "description": "Jede Kachel diagonal geteilt, das ergibt Reihen aus Dreiecken."
+        },
+        "pinwheel": {
+          "name": "Windrad",
+          "description": "Vier Flügel pro Kachel, die sich zu Windrädern drehen."
+        },
+        "crosses": {
+          "name": "Kreuze",
+          "description": "Pluszeichen in einem regelmässigen Raster."
+        },
+        "squares": {
+          "name": "Quadrate",
+          "description": "Kleine Quadrate mit Abstand, ruhig und geordnet."
+        }
+      }
+    },
     "blob": {
       "name": "Blob-Generator",
       "description": "Organische Formen per Klick, mit Farbe, Kontur oder Verlauf. Als SVG oder Bild exportieren.",
@@ -1142,5 +1349,38 @@
       "name": "Composer",
       "description": "Mehrere Motive zu einer Grafik kombinieren."
     }
+  },
+  "PatternLibrary": {
+    "metaTitle": "CSS-Muster zum Kopieren: {count} Muster | Motivo",
+    "metaDescription": "{count} Hintergrundmuster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Kopieren, einfügen, fertig.",
+    "title": "CSS-Muster",
+    "lead": "Hintergründe aus reinem CSS, ganz ohne Bilddatei. Such dir ein Muster aus, kopiere den Code oder pass Farben und Grösse im Editor an.",
+    "filterLabel": "Nach Kategorie filtern",
+    "all": "Alle",
+    "count": "{count, plural, one {# Muster} other {# Muster}}",
+    "openGenerator": "Eigenes Muster im Editor gestalten",
+    "ogAlt": "Auswahl an CSS-Mustern von Motivo",
+    "nav": "CSS-Muster"
+  },
+  "PatternPage": {
+    "metaTitle": "{pattern}: CSS-Muster zum Kopieren | Motivo",
+    "metaDescription": "{description} Reines CSS, bereit zum Kopieren, mit Tailwind-Klassen und SVG-Export.",
+    "heading": "{pattern} als CSS-Muster",
+    "previewLabel": "Vorschau des Musters {pattern}",
+    "codeHeading": "Code",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "cssLead": "Füge die Zeilen in die Regel deines Elements ein. Das Muster wiederholt sich von selbst und passt sich jeder Grösse an.",
+    "copy": "Kopieren",
+    "copyLabel": "{format} kopieren",
+    "copied": "Kopiert! Ab ins Projekt damit.",
+    "copyFailed": "Das hat nicht geklappt. Markiere den Code und kopiere ihn von Hand.",
+    "openEditor": "Im Editor anpassen",
+    "openEditorHint": "Farben, Grösse und Deckkraft ändern, dann als CSS, SVG oder PNG exportieren.",
+    "howToHeading": "So verwendest du das Muster",
+    "howTo": "Kopiere das CSS in die Regel des Elements, das das Muster tragen soll, zum Beispiel einen Abschnitt, eine Karte oder den body. Die Farben stehen als Hex-Werte im Code und lassen sich direkt austauschen. Im Editor änderst du alles mit Reglern und exportierst das Muster auch als SVG oder PNG.",
+    "relatedHeading": "Ähnliche Muster",
+    "backToLibrary": "Alle CSS-Muster",
+    "ogAlt": "{pattern}, ein CSS-Muster von Motivo"
   }
 }
