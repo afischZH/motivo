@@ -48,12 +48,31 @@
         },
         "palette": {
           "label": "Farben"
+        },
+        "labels": {
+          "label": "Beschriftung",
+          "options": {
+            "none": "Keine",
+            "hex": "HEX",
+            "rgb": "RGB",
+            "hsl": "HSL",
+            "oklch": "OKLCH"
+          }
+        },
+        "contrast": {
+          "label": "Kontrast anzeigen",
+          "description": "Zeigt das WCAG-Kontrastverhältnis der Beschriftung zur Farbe, AA ab 4.5:1, AAA ab 7:1."
+        },
+        "name": {
+          "label": "Name im Code",
+          "description": "Wird für CSS-Variablen und Tailwind verwendet, zum Beispiel brand."
         }
       },
       "groups": {
         "colors": "Farben",
         "shape": "Form",
-        "layout": "Anordnung"
+        "layout": "Anordnung",
+        "display": "Anzeige"
       }
     },
     "css-gradient": {
@@ -584,6 +603,180 @@
             "question": "Kann ich ein Spiralmuster erzeugen?",
             "answer": "Ja. Erhöhe die Verdrehung, dann wird jeder Ring etwas weiter gedreht als der vorherige."
           }
+        }
+      }
+    },
+    "palette-generator": {
+      "name": "Farbpaletten-Generator",
+      "description": "Harmonische Farbpaletten per Leertaste. Farben sperren, Harmonie wählen, Kontrast prüfen und als CSS exportieren.",
+      "params": {
+        "count": {
+          "label": "Anzahl Farben"
+        },
+        "harmony": {
+          "label": "Harmonie",
+          "description": "Gilt für die nächste Palette. Drück die Leertaste.",
+          "options": {
+            "auto": "Überrasch mich",
+            "analogous": "Analog",
+            "complementary": "Komplementär",
+            "triadic": "Triadisch",
+            "split": "Split-komplementär",
+            "tetradic": "Tetradisch"
+          }
+        },
+        "color1": {
+          "label": "Farbe 1"
+        },
+        "color2": {
+          "label": "Farbe 2"
+        },
+        "color3": {
+          "label": "Farbe 3"
+        },
+        "color4": {
+          "label": "Farbe 4"
+        },
+        "color5": {
+          "label": "Farbe 5"
+        },
+        "color6": {
+          "label": "Farbe 6"
+        },
+        "color7": {
+          "label": "Farbe 7"
+        },
+        "color8": {
+          "label": "Farbe 8"
+        },
+        "matrix": {
+          "label": "Kontrastmatrix",
+          "description": "Zeigt jede Farbe als Text auf jeder anderen Farbe mit ihrem Kontrastverhältnis."
+        }
+      },
+      "groups": {
+        "palette": "Palette"
+      },
+      "presets": {
+        "terracotta": "Terrakotta",
+        "fjord": "Fjord",
+        "citrus": "Zitrus",
+        "moss": "Moos",
+        "harbour": "Hafen",
+        "berry": "Beeren",
+        "primaries": "Grundfarben"
+      },
+      "seo": {
+        "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Motivo rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
+        "howTo": "Drück die Leertaste für eine neue Palette. Sperr Farben, die dir gefallen, mit dem Schloss, wähl eine Harmonie und exportier die Palette als CSS-Variablen, HEX-Liste oder Bild.",
+        "faq": {
+          "q1": "Was bedeuten die Harmonien?",
+          "a1": "Analog nutzt benachbarte Farbtöne, komplementär gegenüberliegende. Triadisch verteilt drei Töne gleichmässig, split-komplementär kombiniert einen Ton mit den Nachbarn seines Gegenstücks, tetradisch nutzt vier Töne im Quadrat.",
+          "q2": "Was passiert mit gesperrten Farben?",
+          "a2": "Gesperrte Farben bleiben beim Würfeln erhalten. Die erste gesperrte Farbe dient als Anker, die neue Palette wird in der gewählten Harmonie um sie herum aufgebaut.",
+          "q3": "Was zeigt die Kontrastanzeige?",
+          "a3": "Das Kontrastverhältnis nach WCAG 2 zwischen Farbe und Beschriftung. AA steht für mindestens 4.5:1, AAA für mindestens 7:1 bei normalem Text.",
+          "q4": "Kann ich die Palette in Figma oder im Code verwenden?",
+          "a4": "Ja. Kopier die HEX-Liste oder die CSS-Variablen, oder exportier die Palette als SVG oder PNG."
+        }
+      }
+    },
+    "tints-shades": {
+      "name": "Tints & Shades",
+      "description": "Hellere und dunklere Abstufungen einer Farbe. Export als HEX, RGB, HSL oder CSS-Variablen.",
+      "params": {
+        "base": {
+          "label": "Grundfarbe"
+        },
+        "tints": {
+          "label": "Aufhellungen"
+        },
+        "shades": {
+          "label": "Abdunklungen"
+        },
+        "range": {
+          "label": "Spannweite"
+        },
+        "method": {
+          "label": "Methode",
+          "description": "OKLCH hält die Sättigung, Mischen geht gleichmässig Richtung Weiss oder Schwarz.",
+          "options": {
+            "oklch": "Helligkeit (OKLCH)",
+            "oklab": "Mischen (OKLab)",
+            "srgb": "Mischen (sRGB)"
+          }
+        }
+      },
+      "groups": {
+        "scale": "Abstufung"
+      },
+      "presets": {
+        "lagoon": "Lagune",
+        "tomato": "Tomate",
+        "indigo": "Indigo",
+        "sand": "Sand",
+        "forest": "Wald",
+        "slate": "Schiefer",
+        "sunflower": "Sonnenblume"
+      },
+      "seo": {
+        "whatIs": "Tints sind Aufhellungen einer Farbe, Shades sind Abdunklungen. Zusammen ergeben sie eine Abstufung für Hover-Zustände, Hintergründe und Rahmen.",
+        "howTo": "Wähl eine Grundfarbe, leg die Anzahl Aufhellungen und Abdunklungen fest und kopier die Werte als HEX, RGB, HSL oder CSS-Variablen.",
+        "faq": {
+          "q1": "Was ist der Unterschied zwischen Tint und Shade?",
+          "a1": "Ein Tint entsteht, wenn du eine Farbe mit Weiss mischst, ein Shade, wenn du sie mit Schwarz mischst.",
+          "q2": "Welche Methode soll ich wählen?",
+          "a2": "Die OKLCH-Methode ändert nur die Helligkeit und behält die Farbigkeit, so bleiben Abstufungen lebendig. Mischen in OKLab wirkt gleichmässig, Mischen in sRGB entspricht klassischen Werkzeugen wie Sass.",
+          "q3": "Wie verwende ich die CSS-Variablen?",
+          "a3": "Kopier den Block in dein Stylesheet und nutz die Farben mit var(), zum Beispiel var(--primary-tint-2)."
+        }
+      }
+    },
+    "tailwind-palette": {
+      "name": "Tailwind-Farbpalette",
+      "description": "Aus einer Farbe die elf Tailwind-Stufen 50 bis 950. Export für tailwind.config.js, @theme, OKLCH und HEX.",
+      "params": {
+        "base": {
+          "label": "Grundfarbe",
+          "description": "Liegt genau auf Stufe 500."
+        },
+        "lightest": {
+          "label": "Hellste Stufe (50)"
+        },
+        "darkest": {
+          "label": "Dunkelste Stufe (950)"
+        },
+        "chromaFalloff": {
+          "label": "Sättigung an den Enden reduzieren"
+        },
+        "hueShift": {
+          "label": "Farbton verschieben"
+        }
+      },
+      "groups": {
+        "scale": "Skala"
+      },
+      "presets": {
+        "ocean": "Ozean",
+        "coral": "Koralle",
+        "emerald": "Smaragd",
+        "amber": "Bernstein",
+        "grape": "Traube",
+        "stone": "Stein",
+        "rose": "Rose"
+      },
+      "seo": {
+        "whatIs": "Tailwind CSS ordnet jede Farbe in elf Stufen von 50 (sehr hell) bis 950 (sehr dunkel). Dieser Generator berechnet eine solche Skala aus deiner Markenfarbe, die Farbe selbst liegt genau auf 500.",
+        "howTo": "Wähl deine Grundfarbe, gib der Palette einen Namen und kopier den Code für tailwind.config.js oder den @theme-Block für Tailwind v4.",
+        "faq": {
+          "q1": "Funktioniert das mit Tailwind v4?",
+          "a1": "Ja. Der @theme-Export erzeugt Variablen wie --color-brand-500 in OKLCH, so wie Tailwind v4 sie verwendet. Für ältere Versionen gibt es den Export für tailwind.config.js.",
+          "q2": "Warum liegt meine Farbe auf 500?",
+          "a2": "Stufe 500 ist in Tailwind die Hauptfarbe. Die helleren und dunkleren Stufen folgen einer Helligkeitskurve, die sich an bekannten UI-Paletten orientiert.",
+          "q3": "Warum werden die Enden weniger gesättigt?",
+          "a3": "Sehr helle und sehr dunkle Farben wirken mit voller Sättigung schnell grell oder schmutzig. Mit dem Regler bestimmst du, wie stark die Sättigung abnimmt.",
+          "q4": "Was bedeutet OKLCH?",
+          "a4": "OKLCH beschreibt Farben über Helligkeit, Buntheit und Farbton so, wie das Auge sie wahrnimmt. Moderne Browser verstehen OKLCH direkt in CSS."
         }
       }
     }

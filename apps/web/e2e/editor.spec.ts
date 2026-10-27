@@ -112,6 +112,50 @@ test.describe("editor", () => {
   });
 });
 
+test.describe("colour tools", () => {
+  const value = (page: Page, key: string): Promise<string> =>
+    page.locator(`[data-control="${key}"] .font-mono`).innerText();
+
+  test("palette generator keeps a locked colour when shuffling", async ({ page }) => {
+    await openEditor(page, "/en/tools/palette-generator");
+    const lock = page.getByRole("button", { name: "Lock Color 2" });
+    await lock.click();
+    await expect(lock).toHaveAttribute("aria-pressed", "true");
+    const locked = await value(page, "color2");
+    const other = await value(page, "color1");
+
+    // Space on the focused lock button would toggle it; shortcuts need the focus elsewhere.
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await page.locator("body").press("Space");
+    await expect.poll(() => value(page, "color1")).not.toBe(other);
+    expect(await value(page, "color2")).toBe(locked);
+    // Only colours get a lock; count and harmony are generation settings.
+    await expect(page.getByRole("button", { name: /^Lock Number of colors/ })).toHaveCount(0);
+  });
+
+  test("tailwind palette exports a tailwind.config.js", async ({ page }) => {
+    await openEditor(page, "/en/tools/tailwind-palette");
+    const dialog = page.getByRole("dialog", { name: "Export" });
+    // Retried: a click before hydration finishes does nothing.
+    await expect(async () => {
+      await page.getByRole("button", { name: "Export", exact: true }).click();
+      await expect(dialog).toBeVisible({ timeout: 1000 });
+    }).toPass();
+    const radio = dialog.getByRole("radio", { name: "tailwind.config.js", exact: true });
+    await dialog.locator(`label[for="${(await radio.getAttribute("id")) ?? ""}"]`).click();
+    await expect(radio).toBeChecked();
+    await expect(dialog.getByTestId("export-code")).toContainText("500: '#3b82f6'");
+  });
+
+  for (const toolId of ["palette-generator", "tints-shades", "tailwind-palette"]) {
+    test(`/de/tools/${toolId} has no axe violations`, async ({ page }) => {
+      await openEditor(page, `/de/tools/${toolId}`);
+      const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  }
+});
+
 test.describe("editor accessibility", () => {
   for (const scheme of ["light", "dark"] as const) {
     test(`/en/tools/blob has no axe violations (${scheme})`, async ({ page }) => {

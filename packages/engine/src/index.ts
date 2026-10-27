@@ -6,6 +6,7 @@ export * from "./color";
 export * from "./easing";
 export * from "./svg";
 export * from "./png";
+export * from "./palette/index";
 export * from "./tools/css-gradient";
 export * from "./tools/blob";
 export * from "./tools/svg-waves";

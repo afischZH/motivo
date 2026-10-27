@@ -145,7 +145,14 @@
       },
       "extras": {
         "tailwind": "Tailwind classes",
-        "clipPath": "CSS clip-path"
+        "clipPath": "CSS clip-path",
+        "cssVariables": "CSS variables",
+        "cssVariablesOklch": "CSS variables (OKLCH)",
+        "hexList": "HEX list",
+        "rgbList": "RGB list",
+        "hslList": "HSL list",
+        "tailwindConfig": "tailwind.config.js",
+        "tailwindTheme": "Tailwind v4 @theme"
       }
     },
     "share": {

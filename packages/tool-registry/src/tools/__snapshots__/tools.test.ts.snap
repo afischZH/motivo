@@ -198,6 +198,135 @@ exports[`preset snapshots: noise-grain > riso 1`] = `"<svg xmlns="http://www.w3.
 
 exports[`preset snapshots: noise-grain > sand 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><defs><pattern id="g1f7s4o0" width="256" height="256" patternUnits="userSpaceOnUse"><image width="256" height="256" style="image-rendering:pixelated" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="png-base64:87820:3731a022"/></pattern></defs><rect width="1080" height="1080" fill="#e9c46a"/><rect width="1080" height="1080" fill="url(#g1f7s4o0)" opacity="0.4" style="mix-blend-mode:multiply"/></svg>"`;
 
+exports[`preset snapshots: palette-generator > berry 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="320" height="432" fill="#ffe5ec"/><rect x="320" y="0" width="320" height="432" fill="#ff8fab"/><rect x="640" y="0" width="320" height="432" fill="#c9184a"/><rect x="960" y="0" width="320" height="432" fill="#590d22"/><rect x="1280" y="0" width="320" height="432" fill="#2d6a4f"/><rect x="1600" y="0" width="320" height="432" fill="#b7e4c7"/></g><g fill="#000000"><text x="25.6" y="406.4" font-size="38.88">17.6:1 AAA</text></g><g fill="#000000"><text x="345.6" y="406.4" font-size="38.88">9.7:1 AAA</text></g><g fill="#ffffff"><text x="665.6" y="406.4" font-size="38.88">5.6:1 AA</text></g><g fill="#ffffff"><text x="985.6" y="406.4" font-size="38.88">13.9:1 AAA</text></g><g fill="#ffffff"><text x="1305.6" y="406.4" font-size="38.88">6.3:1 AA</text></g><g fill="#000000"><text x="1625.6" y="406.4" font-size="38.88">14.9:1 AAA</text></g><g shape-rendering="crispEdges"><rect x="0" y="432" width="1920" height="108" fill="#ffe5ec"/><rect x="0" y="540" width="1920" height="108" fill="#ff8fab"/><rect x="0" y="648" width="1920" height="108" fill="#c9184a"/><rect x="0" y="756" width="1920" height="108" fill="#590d22"/><rect x="0" y="864" width="1920" height="108" fill="#2d6a4f"/><rect x="0" y="972" width="1920" height="108" fill="#b7e4c7"/></g><g font-size="34.56" text-anchor="middle"><text x="480" y="498.1" fill="#ff8fab">1.8:1</text><text x="800" y="498.1" fill="#c9184a">4.7:1 AA</text><text x="1120" y="498.1" fill="#590d22">11.7:1 AAA</text><text x="1440" y="498.1" fill="#2d6a4f">5.3:1 AA</text><text x="1760" y="498.1" fill="#b7e4c7">1.1:1</text><text x="160" y="606.1" fill="#ffe5ec">1.8:1</text><text x="800" y="606.1" fill="#c9184a">2.6:1</text><text x="1120" y="606.1" fill="#590d22">6.4:1 AA</text><text x="1440" y="606.1" fill="#2d6a4f">2.9:1</text><text x="1760" y="606.1" fill="#b7e4c7">1.5:1</text><text x="160" y="714.1" fill="#ffe5ec">4.7:1 AA</text><text x="480" y="714.1" fill="#ff8fab">2.6:1</text><text x="1120" y="714.1" fill="#590d22">2.4:1</text><text x="1440" y="714.1" fill="#2d6a4f">1.1:1</text><text x="1760" y="714.1" fill="#b7e4c7">4.0:1</text><text x="160" y="822.1" fill="#ffe5ec">11.7:1 AAA</text><text x="480" y="822.1" fill="#ff8fab">6.4:1 AA</text><text x="800" y="822.1" fill="#c9184a">2.4:1</text><text x="1440" y="822.1" fill="#2d6a4f">2.1:1</text><text x="1760" y="822.1" fill="#b7e4c7">9.9:1 AAA</text><text x="160" y="930.1" fill="#ffe5ec">5.3:1 AA</text><text x="480" y="930.1" fill="#ff8fab">2.9:1</text><text x="800" y="930.1" fill="#c9184a">1.1:1</text><text x="1120" y="930.1" fill="#590d22">2.1:1</text><text x="1760" y="930.1" fill="#b7e4c7">4.5:1 AA</text><text x="160" y="1038.1" fill="#ffe5ec">1.1:1</text><text x="480" y="1038.1" fill="#ff8fab">1.5:1</text><text x="800" y="1038.1" fill="#c9184a">4.0:1</text><text x="1120" y="1038.1" fill="#590d22">9.9:1 AAA</text><text x="1440" y="1038.1" fill="#2d6a4f">4.5:1 AA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-generator > citrus 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#fff8e1"/><rect x="384" y="0" width="384" height="1080" fill="#ffd23f"/><rect x="768" y="0" width="384" height="1080" fill="#ee4266"/><rect x="1152" y="0" width="384" height="1080" fill="#540d6e"/><rect x="1536" y="0" width="384" height="1080" fill="#3bceac"/></g><g fill="#000000"><text x="30.72" y="993.12" font-size="43.2">#fff8e1</text><text x="30.72" y="1049.28" font-size="38.88">19.7:1 AAA</text></g><g fill="#000000"><text x="414.72" y="993.12" font-size="43.2">#ffd23f</text><text x="414.72" y="1049.28" font-size="38.88">14.5:1 AAA</text></g><g fill="#000000"><text x="798.72" y="993.12" font-size="43.2">#ee4266</text><text x="798.72" y="1049.28" font-size="38.88">5.6:1 AA</text></g><g fill="#ffffff"><text x="1182.72" y="993.12" font-size="43.2">#540d6e</text><text x="1182.72" y="1049.28" font-size="38.88">12.6:1 AAA</text></g><g fill="#000000"><text x="1566.72" y="993.12" font-size="43.2">#3bceac</text><text x="1566.72" y="1049.28" font-size="38.88">10.6:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-generator > extra exports of every preset 1`] = `
+{
+  "berry": {
+    "css-variables": ":root {
+  --palette-1: #ffe5ec;
+  --palette-2: #ff8fab;
+  --palette-3: #c9184a;
+  --palette-4: #590d22;
+  --palette-5: #2d6a4f;
+  --palette-6: #b7e4c7;
+}
+",
+    "hex-list": "#ffe5ec
+#ff8fab
+#c9184a
+#590d22
+#2d6a4f
+#b7e4c7
+",
+  },
+  "citrus": {
+    "css-variables": ":root {
+  --palette-1: #fff8e1;
+  --palette-2: #ffd23f;
+  --palette-3: #ee4266;
+  --palette-4: #540d6e;
+  --palette-5: #3bceac;
+}
+",
+    "hex-list": "#fff8e1
+#ffd23f
+#ee4266
+#540d6e
+#3bceac
+",
+  },
+  "fjord": {
+    "css-variables": ":root {
+  --palette-1: #e8f1f2;
+  --palette-2: #a3cef1;
+  --palette-3: #6096ba;
+  --palette-4: #274c77;
+  --palette-5: #1b263b;
+}
+",
+    "hex-list": "#e8f1f2
+#a3cef1
+#6096ba
+#274c77
+#1b263b
+",
+  },
+  "harbour": {
+    "css-variables": ":root {
+  --palette-1: #fefae0;
+  --palette-2: #e9c46a;
+  --palette-3: #2a9d8f;
+  --palette-4: #264653;
+}
+",
+    "hex-list": "#fefae0
+#e9c46a
+#2a9d8f
+#264653
+",
+  },
+  "moss": {
+    "css-variables": ":root {
+  --palette-1: #f0ead2;
+  --palette-2: #dde5b6;
+  --palette-3: #adc178;
+  --palette-4: #a98467;
+  --palette-5: #6c584c;
+}
+",
+    "hex-list": "#f0ead2
+#dde5b6
+#adc178
+#a98467
+#6c584c
+",
+  },
+  "primaries": {
+    "css-variables": ":root {
+  --palette-1: #f7f7f2;
+  --palette-2: #e63946;
+  --palette-3: #1d3557;
+  --palette-4: #ffb703;
+}
+",
+    "hex-list": "#f7f7f2
+#e63946
+#1d3557
+#ffb703
+",
+  },
+  "terracotta": {
+    "css-variables": ":root {
+  --palette-1: #f4f1de;
+  --palette-2: #e07a5f;
+  --palette-3: #3d405b;
+  --palette-4: #81b29a;
+  --palette-5: #f2cc8f;
+}
+",
+    "hex-list": "#f4f1de
+#e07a5f
+#3d405b
+#81b29a
+#f2cc8f
+",
+  },
+}
+`;
+
+exports[`preset snapshots: palette-generator > fjord 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#e8f1f2"/><rect x="384" y="0" width="384" height="1080" fill="#a3cef1"/><rect x="768" y="0" width="384" height="1080" fill="#6096ba"/><rect x="1152" y="0" width="384" height="1080" fill="#274c77"/><rect x="1536" y="0" width="384" height="1080" fill="#1b263b"/></g><g fill="#000000"><text x="30.72" y="993.12" font-size="43.2">#e8f1f2</text><text x="30.72" y="1049.28" font-size="38.88">18.2:1 AAA</text></g><g fill="#000000"><text x="414.72" y="993.12" font-size="43.2">#a3cef1</text><text x="414.72" y="1049.28" font-size="38.88">12.6:1 AAA</text></g><g fill="#000000"><text x="798.72" y="993.12" font-size="43.2">#6096ba</text><text x="798.72" y="1049.28" font-size="38.88">6.5:1 AA</text></g><g fill="#ffffff"><text x="1182.72" y="993.12" font-size="43.2">#274c77</text><text x="1182.72" y="1049.28" font-size="38.88">8.7:1 AAA</text></g><g fill="#ffffff"><text x="1566.72" y="993.12" font-size="43.2">#1b263b</text><text x="1566.72" y="1049.28" font-size="38.88">15.1:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-generator > harbour 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="480" height="1080" fill="#fefae0"/><rect x="480" y="0" width="480" height="1080" fill="#e9c46a"/><rect x="960" y="0" width="480" height="1080" fill="#2a9d8f"/><rect x="1440" y="0" width="480" height="1080" fill="#264653"/></g><g fill="#000000"><text x="38.4" y="985.44" font-size="43.2">#fefae0</text><text x="38.4" y="1041.6" font-size="38.88">19.9:1 AAA</text></g><g fill="#000000"><text x="518.4" y="985.44" font-size="43.2">#e9c46a</text><text x="518.4" y="1041.6" font-size="38.88">12.5:1 AAA</text></g><g fill="#000000"><text x="998.4" y="985.44" font-size="43.2">#2a9d8f</text><text x="998.4" y="1041.6" font-size="38.88">6.3:1 AA</text></g><g fill="#ffffff"><text x="1478.4" y="985.44" font-size="43.2">#264653</text><text x="1478.4" y="1041.6" font-size="38.88">10.0:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-generator > moss 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#f0ead2"/><rect x="384" y="0" width="384" height="1080" fill="#dde5b6"/><rect x="768" y="0" width="384" height="1080" fill="#adc178"/><rect x="1152" y="0" width="384" height="1080" fill="#a98467"/><rect x="1536" y="0" width="384" height="1080" fill="#6c584c"/></g><g fill="#000000"><text x="30.72" y="993.12" font-size="43.2">#f0ead2</text><text x="30.72" y="1049.28" font-size="38.88">17.4:1 AAA</text></g><g fill="#000000"><text x="414.72" y="993.12" font-size="43.2">#dde5b6</text><text x="414.72" y="1049.28" font-size="38.88">15.9:1 AAA</text></g><g fill="#000000"><text x="798.72" y="993.12" font-size="43.2">#adc178</text><text x="798.72" y="1049.28" font-size="38.88">10.6:1 AAA</text></g><g fill="#000000"><text x="1182.72" y="993.12" font-size="43.2">#a98467</text><text x="1182.72" y="1049.28" font-size="38.88">6.1:1 AA</text></g><g fill="#ffffff"><text x="1566.72" y="993.12" font-size="43.2">#6c584c</text><text x="1566.72" y="1049.28" font-size="38.88">6.6:1 AA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-generator > primaries 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="480" height="1080" fill="#f7f7f2"/><rect x="480" y="0" width="480" height="1080" fill="#e63946"/><rect x="960" y="0" width="480" height="1080" fill="#1d3557"/><rect x="1440" y="0" width="480" height="1080" fill="#ffb703"/></g><g fill="#000000"><text x="38.4" y="991.87" font-size="38.25">97.5% 0.007 106.5</text><text x="38.4" y="1041.6" font-size="34.43">19.5:1 AAA</text></g><g fill="#000000"><text x="518.4" y="991.87" font-size="38.25">61.2% 0.208 22.2</text><text x="518.4" y="1041.6" font-size="34.43">5.0:1 AA</text></g><g fill="#ffffff"><text x="998.4" y="991.87" font-size="38.25">32.8% 0.068 257.3</text><text x="998.4" y="1041.6" font-size="34.43">12.3:1 AAA</text></g><g fill="#000000"><text x="1478.4" y="991.87" font-size="38.25">82.5% 0.171 79.9</text><text x="1478.4" y="1041.6" font-size="34.43">12.0:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: palette-generator > terracotta 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#f4f1de"/><rect x="384" y="0" width="384" height="1080" fill="#e07a5f"/><rect x="768" y="0" width="384" height="1080" fill="#3d405b"/><rect x="1152" y="0" width="384" height="1080" fill="#81b29a"/><rect x="1536" y="0" width="384" height="1080" fill="#f2cc8f"/></g><g fill="#000000"><text x="30.72" y="993.12" font-size="43.2">#f4f1de</text><text x="30.72" y="1049.28" font-size="38.88">18.4:1 AAA</text></g><g fill="#000000"><text x="414.72" y="993.12" font-size="43.2">#e07a5f</text><text x="414.72" y="1049.28" font-size="38.88">7.1:1 AAA</text></g><g fill="#ffffff"><text x="798.72" y="993.12" font-size="43.2">#3d405b</text><text x="798.72" y="1049.28" font-size="38.88">10.0:1 AAA</text></g><g fill="#000000"><text x="1182.72" y="993.12" font-size="43.2">#81b29a</text><text x="1182.72" y="1049.28" font-size="38.88">8.7:1 AAA</text></g><g fill="#000000"><text x="1566.72" y="993.12" font-size="43.2">#f2cc8f</text><text x="1566.72" y="1049.28" font-size="38.88">13.8:1 AAA</text></g></g></svg>"`;
+
 exports[`preset snapshots: polka-dots > fizz 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><rect width="1080" height="1080" fill="#ffffff"/><g fill="none" stroke="#cdb4db" stroke-width="7.9"><circle cx="566.8" cy="25.8" r="16.9"/><circle cx="546.2" cy="310.2" r="13.3"/><circle cx="746.3" cy="159.4" r="20"/><circle cx="877.9" cy="90.6" r="12.7"/><circle cx="519.4" cy="85.8" r="5.5"/><circle cx="544.8" cy="398.6" r="22.1"/><circle cx="973.9" cy="-9.2" r="21.5"/><circle cx="382.2" cy="371.4" r="19.3"/><circle cx="475.6" cy="502.8" r="13.1"/><circle cx="346.3" cy="490.3" r="21.5"/><circle cx="632.1" cy="286.5" r="15.9"/><circle cx="877.6" cy="1.3" r="15.2"/><circle cx="404.4" cy="566.5" r="5.4"/><circle cx="810.5" cy="593.6" r="14.7"/><circle cx="379.9" cy="67" r="15.4"/><circle cx="257.4" cy="532.9" r="10.4"/><circle cx="707.5" cy="696.8" r="6"/><circle cx="1038.8" cy="523.2" r="19.9"/><circle cx="1050.6" cy="648.8" r="12.4"/><circle cx="889.5" cy="704.9" r="10.6"/><circle cx="810.6" cy="805.6" r="12.4"/><circle cx="994.3" cy="707.1" r="2.5"/><circle cx="660.2" cy="482.6" r="16.4"/><circle cx="583.9" cy="702.7" r="20.6"/><circle cx="993.5" cy="793.6" r="8.9"/><circle cx="1003.8" cy="935" r="3.2"/><circle cx="447.7" cy="946" r="19.2"/><circle cx="1086.5" cy="717.1" r="10.8"/><circle cx="714.3" cy="842.2" r="14.9"/><circle cx="909.7" cy="787.8" r="19.2"/><circle cx="86.7" cy="230.4" r="1.4"/><circle cx="154.8" cy="498.8" r="11"/><circle cx="146.9" cy="9.4" r="21.5"/><circle cx="46.3" cy="367" r="8"/><circle cx="541" cy="1023" r="8.6"/><circle cx="205.6" cy="657.8" r="4.3"/><circle cx="347.2" cy="1026.7" r="5.8"/><circle cx="241.9" cy="908" r="4.9"/><circle cx="269.8" cy="1017.2" r="13.2"/><circle cx="85.3" cy="535.9" r="7"/><circle cx="112" cy="667.3" r="22.1"/><circle cx="63" cy="452.7" r="14"/><circle cx="700.2" cy="974.4" r="7.2"/><circle cx="74.4" cy="1012.9" r="14.1"/></g><g fill="none" stroke="#bde0fe" stroke-width="7.9"><circle cx="450.8" cy="34" r="7.6"/><circle cx="536.1" cy="159.7" r="1.9"/><circle cx="633.2" cy="399.8" r="9.4"/><circle cx="732" cy="393.2" r="12"/><circle cx="710" cy="265.7" r="1.4"/><circle cx="743.9" cy="497.1" r="4.3"/><circle cx="480.4" cy="263.5" r="11.6"/><circle cx="611.9" cy="546.8" r="4"/><circle cx="560.4" cy="618.6" r="11.8"/><circle cx="870" cy="523.2" r="18.5"/><circle cx="799.8" cy="243" r="21.3"/><circle cx="552.5" cy="477.6" r="12"/><circle cx="901.5" cy="245.5" r="5.5"/><circle cx="460.2" cy="397.2" r="12.9"/><circle cx="346.3" cy="184.1" r="18.6"/><circle cx="969.7" cy="75.9" r="2.2"/><circle cx="909.6" cy="343.2" r="15.9"/><circle cx="1037.8" cy="369.6" r="1.8"/><circle cx="1005.1" cy="279.1" r="1.6"/><circle cx="319.1" cy="603.8" r="4.8"/><circle cx="1040.5" cy="183.4" r="21.8"/><circle cx="312.8" cy="680.4" r="9.2"/><circle cx="788.8" cy="721.8" r="8.9"/><circle cx="458.1" cy="679.7" r="8.6"/><circle cx="464.3" cy="829.9" r="19.8"/><circle cx="433.6" cy="1020.8" r="5.4"/><circle cx="786.7" cy="947.4" r="18.8"/><circle cx="625.7" cy="1049.1" r="12.7"/><circle cx="59.6" cy="63.6" r="11.3"/><circle cx="416.1" cy="1098.1" r="11.8"/><circle cx="1088.2" cy="1047.7" r="12.1"/><circle cx="145.2" cy="908.9" r="19.3"/><circle cx="153.1" cy="995.4" r="18.1"/><circle cx="87" cy="138.9" r="21.2"/><circle cx="935" cy="990.8" r="6.8"/><circle cx="922" cy="1074.5" r="15.9"/><circle cx="956.7" cy="873.9" r="16.4"/><circle cx="42.7" cy="857.5" r="13.1"/><circle cx="151.4" cy="773.3" r="14.4"/><circle cx="239.4" cy="737.2" r="21.2"/></g><g fill="none" stroke="#a2d2ff" stroke-width="7.9"><circle cx="688.6" cy="77.8" r="17.5"/><circle cx="795.1" cy="14.1" r="4.6"/><circle cx="614.9" cy="153.9" r="16.2"/><circle cx="574.3" cy="235.7" r="12.3"/><circle cx="411.6" cy="137.7" r="5.2"/><circle cx="820.7" cy="142.1" r="17.7"/><circle cx="687.9" cy="602.3" r="12.4"/><circle cx="933.2" cy="585.3" r="18.3"/><circle cx="402.8" cy="266.2" r="14.2"/><circle cx="916.2" cy="169.5" r="17.3"/><circle cx="1093.5" cy="14.5" r="12.8"/><circle cx="484.2" cy="593.1" r="5"/><circle cx="927.4" cy="460" r="20.4"/><circle cx="513.3" cy="750.9" r="18.1"/><circle cx="516" cy="886.3" r="14.5"/><circle cx="837.8" cy="440.3" r="4.2"/><circle cx="264.3" cy="82" r="4.9"/><circle cx="219.8" cy="227.5" r="5.9"/><circle cx="803.9" cy="328.8" r="20.9"/><circle cx="625.7" cy="795.3" r="15.7"/><circle cx="883.4" cy="923.5" r="6.2"/><circle cx="330.6" cy="784.7" r="18.9"/><circle cx="210.1" cy="435" r="10.7"/><circle cx="623.7" cy="959" r="10.8"/><circle cx="279" cy="348.5" r="4.6"/><circle cx="147.6" cy="324.8" r="9.3"/><circle cx="337.1" cy="951" r="5.6"/><circle cx="389.8" cy="855.6" r="21.6"/><circle cx="1086.9" cy="949.3" r="21.6"/><circle cx="599.6" cy="880.5" r="7.6"/><circle cx="313.8" cy="272.1" r="8"/><circle cx="174.9" cy="146.5" r="13.2"/><circle cx="217.1" cy="1090.3" r="4.4"/><circle cx="245.5" cy="818.5" r="16.3"/><circle cx="1000.1" cy="1067.3" r="20"/><circle cx="742.8" cy="1062.7" r="15.4"/><circle cx="403.9" cy="756.2" r="18.9"/><circle cx="849.7" cy="1026.7" r="11.1"/><circle cx="-21.7" cy="457.2" r="20.8"/><circle cx="-8.2" cy="574.6" r="20.1"/><circle cx="34.9" cy="685.1" r="10.5"/><circle cx="54.1" cy="777.1" r="21.6"/><circle cx="12.3" cy="932.2" r="10.4"/></g></svg>"`;
 
 exports[`preset snapshots: polka-dots > halo 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><rect width="1080" height="1080" fill="#001d3d"/><g fill="none" stroke="#ffd60a" stroke-width="11.7"><circle cx="-43.2" cy="-21.2" r="33"/><circle cx="86.4" cy="-21.2" r="33"/><circle cx="216" cy="-21.2" r="33"/><circle cx="345.6" cy="-21.2" r="33"/><circle cx="475.2" cy="-21.2" r="33"/><circle cx="604.8" cy="-21.2" r="33"/><circle cx="734.4" cy="-21.2" r="33"/><circle cx="864" cy="-21.2" r="33"/><circle cx="993.6" cy="-21.2" r="33"/><circle cx="1123.2" cy="-21.2" r="33"/><circle cx="21.6" cy="91.1" r="33"/><circle cx="151.2" cy="91.1" r="33"/><circle cx="280.8" cy="91.1" r="33"/><circle cx="410.4" cy="91.1" r="33"/><circle cx="540" cy="91.1" r="33"/><circle cx="669.6" cy="91.1" r="33"/><circle cx="799.2" cy="91.1" r="33"/><circle cx="928.8" cy="91.1" r="33"/><circle cx="1058.4" cy="91.1" r="33"/><circle cx="-43.2" cy="203.3" r="33"/><circle cx="86.4" cy="203.3" r="33"/><circle cx="216" cy="203.3" r="33"/><circle cx="345.6" cy="203.3" r="33"/><circle cx="475.2" cy="203.3" r="33"/><circle cx="604.8" cy="203.3" r="33"/><circle cx="734.4" cy="203.3" r="33"/><circle cx="864" cy="203.3" r="33"/><circle cx="993.6" cy="203.3" r="33"/><circle cx="1123.2" cy="203.3" r="33"/><circle cx="21.6" cy="315.5" r="33"/><circle cx="151.2" cy="315.5" r="33"/><circle cx="280.8" cy="315.5" r="33"/><circle cx="410.4" cy="315.5" r="33"/><circle cx="540" cy="315.5" r="33"/><circle cx="669.6" cy="315.5" r="33"/><circle cx="799.2" cy="315.5" r="33"/><circle cx="928.8" cy="315.5" r="33"/><circle cx="1058.4" cy="315.5" r="33"/><circle cx="-43.2" cy="427.8" r="33"/><circle cx="86.4" cy="427.8" r="33"/><circle cx="216" cy="427.8" r="33"/><circle cx="345.6" cy="427.8" r="33"/><circle cx="475.2" cy="427.8" r="33"/><circle cx="604.8" cy="427.8" r="33"/><circle cx="734.4" cy="427.8" r="33"/><circle cx="864" cy="427.8" r="33"/><circle cx="993.6" cy="427.8" r="33"/><circle cx="1123.2" cy="427.8" r="33"/><circle cx="21.6" cy="540" r="33"/><circle cx="151.2" cy="540" r="33"/><circle cx="280.8" cy="540" r="33"/><circle cx="410.4" cy="540" r="33"/><circle cx="540" cy="540" r="33"/><circle cx="669.6" cy="540" r="33"/><circle cx="799.2" cy="540" r="33"/><circle cx="928.8" cy="540" r="33"/><circle cx="1058.4" cy="540" r="33"/><circle cx="-43.2" cy="652.2" r="33"/><circle cx="86.4" cy="652.2" r="33"/><circle cx="216" cy="652.2" r="33"/><circle cx="345.6" cy="652.2" r="33"/><circle cx="475.2" cy="652.2" r="33"/><circle cx="604.8" cy="652.2" r="33"/><circle cx="734.4" cy="652.2" r="33"/><circle cx="864" cy="652.2" r="33"/><circle cx="993.6" cy="652.2" r="33"/><circle cx="1123.2" cy="652.2" r="33"/><circle cx="21.6" cy="764.5" r="33"/><circle cx="151.2" cy="764.5" r="33"/><circle cx="280.8" cy="764.5" r="33"/><circle cx="410.4" cy="764.5" r="33"/><circle cx="540" cy="764.5" r="33"/><circle cx="669.6" cy="764.5" r="33"/><circle cx="799.2" cy="764.5" r="33"/><circle cx="928.8" cy="764.5" r="33"/><circle cx="1058.4" cy="764.5" r="33"/><circle cx="-43.2" cy="876.7" r="33"/><circle cx="86.4" cy="876.7" r="33"/><circle cx="216" cy="876.7" r="33"/><circle cx="345.6" cy="876.7" r="33"/><circle cx="475.2" cy="876.7" r="33"/><circle cx="604.8" cy="876.7" r="33"/><circle cx="734.4" cy="876.7" r="33"/><circle cx="864" cy="876.7" r="33"/><circle cx="993.6" cy="876.7" r="33"/><circle cx="1123.2" cy="876.7" r="33"/><circle cx="21.6" cy="988.9" r="33"/><circle cx="151.2" cy="988.9" r="33"/><circle cx="280.8" cy="988.9" r="33"/><circle cx="410.4" cy="988.9" r="33"/><circle cx="540" cy="988.9" r="33"/><circle cx="669.6" cy="988.9" r="33"/><circle cx="799.2" cy="988.9" r="33"/><circle cx="928.8" cy="988.9" r="33"/><circle cx="1058.4" cy="988.9" r="33"/><circle cx="-43.2" cy="1101.2" r="33"/><circle cx="86.4" cy="1101.2" r="33"/><circle cx="216" cy="1101.2" r="33"/><circle cx="345.6" cy="1101.2" r="33"/><circle cx="475.2" cy="1101.2" r="33"/><circle cx="604.8" cy="1101.2" r="33"/><circle cx="734.4" cy="1101.2" r="33"/><circle cx="864" cy="1101.2" r="33"/><circle cx="993.6" cy="1101.2" r="33"/><circle cx="1123.2" cy="1101.2" r="33"/></g></svg>"`;
@@ -239,3 +368,910 @@ exports[`preset snapshots: svg-waves > shallows 1`] = `"<svg xmlns="http://www.w
 exports[`preset snapshots: svg-waves > storm 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="#edf2f4"/><path d="M0 594.54 C20.36 575.66 133.82 435.72 174.55 432.71 C215.27 429.7 308.36 539.13 349.09 568.71 C389.82 598.3 482.91 672.95 523.64 686.29 C564.36 699.62 657.45 704.17 698.18 683 C738.91 661.84 832 515.61 872.73 504.86 C913.45 494.11 1006.55 577.55 1047.27 590.85 C1088 604.14 1181.09 624.47 1221.82 618.82 C1262.55 613.16 1355.64 534.08 1396.36 542.37 C1437.09 550.65 1530.18 688.97 1570.91 689.86 C1611.64 690.75 1704.73 565.31 1745.45 550.01 C1786.18 534.7 1899.64 557.68 1920 558.69 L1920 1080 L0 1080Z" fill="#8d99ae"/><path d="M0 597.61 C20.36 605.62 133.82 662.97 174.55 666.25 C215.27 669.53 308.36 633.3 349.09 625.76 C389.82 618.22 482.91 594.34 523.64 601.64 C564.36 608.95 657.45 691.02 698.18 688.39 C738.91 685.75 832 581.92 872.73 579.06 C913.45 576.2 1006.55 642.73 1047.27 663.89 C1088 685.05 1181.09 763.72 1221.82 760.43 C1262.55 757.15 1355.64 653.12 1396.36 635.7 C1437.09 618.27 1530.18 618.43 1570.91 611.07 C1611.64 603.72 1704.73 565.52 1745.45 572.68 C1786.18 579.83 1899.64 660.75 1920 672.38 L1920 1080 L0 1080Z" fill="#6a7388"/><path d="M0 844.23 C20.36 850.53 133.82 907.16 174.55 898.22 C215.27 889.28 308.36 785.57 349.09 767.63 C389.82 749.69 482.91 733.47 523.64 744.46 C564.36 755.44 657.45 851.49 698.18 861.79 C738.91 872.09 832 829.71 872.73 832.74 C913.45 835.78 1006.55 898.47 1047.27 887.79 C1088 877.11 1181.09 742.31 1221.82 741.18 C1262.55 740.04 1355.64 870.17 1396.36 878.07 C1437.09 885.97 1530.18 807.42 1570.91 808.91 C1611.64 810.41 1704.73 874.55 1745.45 890.89 C1786.18 907.23 1899.64 942.21 1920 948.98 L1920 1080 L0 1080Z" fill="#494f64"/><path d="M0 882.84 C20.36 898.49 133.82 1019.62 174.55 1017.01 C215.27 1014.41 308.36 873.64 349.09 860.53 C389.82 847.41 482.91 896.75 523.64 904.61 C564.36 912.47 657.45 930.14 698.18 927.9 C738.91 925.66 832 893.29 872.73 885.4 C913.45 877.5 1006.55 845.8 1047.27 860.22 C1088 874.64 1181.09 996.18 1221.82 1009.01 C1262.55 1021.84 1355.64 988.3 1396.36 970.19 C1437.09 952.08 1530.18 863.2 1570.91 853.77 C1611.64 844.35 1704.73 891.77 1745.45 889.4 C1786.18 887.03 1899.64 839.96 1920 833.43 L1920 1080 L0 1080Z" fill="#2b2d42"/></svg>"`;
 
 exports[`preset snapshots: svg-waves > tide 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="#ffffff"/><path d="M0 581.36 C64 565.18 256 486.85 384 484.27 C512 481.68 640 540.51 768 565.87 C896 591.23 1024 624.98 1152 636.41 C1280 647.84 1408 652.58 1536 634.44 C1664 616.3 1856 545.37 1920 527.56 L1920 1080 L0 1080Z" fill="#caf0f8"/><path d="M0 708.75 C64 711.55 256 730.38 384 725.53 C512 720.68 640 672.56 768 679.66 C896 686.76 1024 767.39 1152 768.15 C1280 768.92 1408 697.36 1536 684.24 C1664 671.13 1856 688.59 1920 689.46 L1920 1080 L0 1080Z" fill="#4ea1ca"/><path d="M0 764.65 C64 771.51 256 803.02 384 805.83 C512 808.65 640 788 768 781.53 C896 775.07 1024 760.8 1152 767.07 C1280 773.33 1408 821.37 1536 819.11 C1664 816.85 1856 764.45 1920 753.52 L1920 1080 L0 1080Z" fill="#005494"/><path d="M0 934.01 C64 943.67 256 994.76 384 991.94 C512 989.12 640 932.03 768 917.1 C896 902.16 1024 908.63 1152 902.32 C1280 896.02 1408 873.16 1536 879.29 C1664 885.42 1856 929.14 1920 939.11 L1920 1080 L0 1080Z" fill="#03045e"/></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > amber 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#fff5ed"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#ffeddf"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#ffe1c9"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#ffcfa4"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#ffb157"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#f59e0b"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#c98400"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#a36d00"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#855a00"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#6d4b00"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#3d2a00"/></g><g fill="#000000"><text x="13.96" y="997.72" font-size="30.22" font-weight="700">50</text><text x="13.96" y="1031.88" font-size="26.28">#fff5ed</text><text x="13.96" y="1066.04" font-size="23.65">19.5:1 AAA</text></g><g fill="#000000"><text x="188.51" y="997.72" font-size="30.22" font-weight="700">100</text><text x="188.51" y="1031.88" font-size="26.28">#ffeddf</text><text x="188.51" y="1066.04" font-size="23.65">18.4:1 AAA</text></g><g fill="#000000"><text x="363.05" y="997.72" font-size="30.22" font-weight="700">200</text><text x="363.05" y="1031.88" font-size="26.28">#ffe1c9</text><text x="363.05" y="1066.04" font-size="23.65">16.8:1 AAA</text></g><g fill="#000000"><text x="537.6" y="997.72" font-size="30.22" font-weight="700">300</text><text x="537.6" y="1031.88" font-size="26.28">#ffcfa4</text><text x="537.6" y="1066.04" font-size="23.65">14.7:1 AAA</text></g><g fill="#000000"><text x="712.15" y="997.72" font-size="30.22" font-weight="700">400</text><text x="712.15" y="1031.88" font-size="26.28">#ffb157</text><text x="712.15" y="1066.04" font-size="23.65">11.6:1 AAA</text></g><g fill="#000000"><text x="886.69" y="997.72" font-size="30.22" font-weight="700">500</text><text x="886.69" y="1031.88" font-size="26.28">#f59e0b</text><text x="886.69" y="1066.04" font-size="23.65">9.7:1 AAA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#000000"/><g fill="#000000"><text x="1061.24" y="997.72" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="1031.88" font-size="26.28">#c98400</text><text x="1061.24" y="1066.04" font-size="23.65">6.7:1 AA</text></g><g fill="#000000"><text x="1235.78" y="997.72" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="1031.88" font-size="26.28">#a36d00</text><text x="1235.78" y="1066.04" font-size="23.65">4.7:1 AA</text></g><g fill="#ffffff"><text x="1410.33" y="997.72" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="1031.88" font-size="26.28">#855a00</text><text x="1410.33" y="1066.04" font-size="23.65">6.0:1 AA</text></g><g fill="#ffffff"><text x="1584.87" y="997.72" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="1031.88" font-size="26.28">#6d4b00</text><text x="1584.87" y="1066.04" font-size="23.65">7.9:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="997.72" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="1031.88" font-size="26.28">#3d2a00</text><text x="1759.42" y="1066.04" font-size="23.65">13.7:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > coral 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#fff4f2"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#ffe7e3"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#ffd4ce"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#ffb4ac"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#ff7c78"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#f2545b"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#d13a49"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#b2253b"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#98122f"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#820126"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#4e0016"/></g><g fill="#000000"><text x="13.96" y="997.72" font-size="30.22" font-weight="700">50</text><text x="13.96" y="1031.88" font-size="26.28">#fff4f2</text><text x="13.96" y="1066.04" font-size="23.65">19.4:1 AAA</text></g><g fill="#000000"><text x="188.51" y="997.72" font-size="30.22" font-weight="700">100</text><text x="188.51" y="1031.88" font-size="26.28">#ffe7e3</text><text x="188.51" y="1066.04" font-size="23.65">17.7:1 AAA</text></g><g fill="#000000"><text x="363.05" y="997.72" font-size="30.22" font-weight="700">200</text><text x="363.05" y="1031.88" font-size="26.28">#ffd4ce</text><text x="363.05" y="1066.04" font-size="23.65">15.5:1 AAA</text></g><g fill="#000000"><text x="537.6" y="997.72" font-size="30.22" font-weight="700">300</text><text x="537.6" y="1031.88" font-size="26.28">#ffb4ac</text><text x="537.6" y="1066.04" font-size="23.65">12.3:1 AAA</text></g><g fill="#000000"><text x="712.15" y="997.72" font-size="30.22" font-weight="700">400</text><text x="712.15" y="1031.88" font-size="26.28">#ff7c78</text><text x="712.15" y="1066.04" font-size="23.65">8.4:1 AAA</text></g><g fill="#000000"><text x="886.69" y="997.72" font-size="30.22" font-weight="700">500</text><text x="886.69" y="1031.88" font-size="26.28">#f2545b</text><text x="886.69" y="1066.04" font-size="23.65">6.1:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#000000"/><g fill="#ffffff"><text x="1061.24" y="997.72" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="1031.88" font-size="26.28">#d13a49</text><text x="1061.24" y="1066.04" font-size="23.65">4.7:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="997.72" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="1031.88" font-size="26.28">#b2253b</text><text x="1235.78" y="1066.04" font-size="23.65">6.5:1 AA</text></g><g fill="#ffffff"><text x="1410.33" y="997.72" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="1031.88" font-size="26.28">#98122f</text><text x="1410.33" y="1066.04" font-size="23.65">8.5:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="997.72" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="1031.88" font-size="26.28">#820126</text><text x="1584.87" y="1066.04" font-size="23.65">10.5:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="997.72" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="1031.88" font-size="26.28">#4e0016</text><text x="1759.42" y="1066.04" font-size="23.65">15.7:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > emerald 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#e2ffef"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#bffedc"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#a7f1cb"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#82dcb0"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#48bc89"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#10a36f"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#00885b"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#00714b"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#005e3e"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#004f33"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#002f1d"/></g><g fill="#000000"><text x="13.96" y="997.72" font-size="30.22" font-weight="700">50</text><text x="13.96" y="1031.88" font-size="26.28">#e2ffef</text><text x="13.96" y="1066.04" font-size="23.65">19.7:1 AAA</text></g><g fill="#000000"><text x="188.51" y="997.72" font-size="30.22" font-weight="700">100</text><text x="188.51" y="1031.88" font-size="26.28">#bffedc</text><text x="188.51" y="1066.04" font-size="23.65">18.4:1 AAA</text></g><g fill="#000000"><text x="363.05" y="997.72" font-size="30.22" font-weight="700">200</text><text x="363.05" y="1031.88" font-size="26.28">#a7f1cb</text><text x="363.05" y="1066.04" font-size="23.65">16.0:1 AAA</text></g><g fill="#000000"><text x="537.6" y="997.72" font-size="30.22" font-weight="700">300</text><text x="537.6" y="1031.88" font-size="26.28">#82dcb0</text><text x="537.6" y="1066.04" font-size="23.65">12.8:1 AAA</text></g><g fill="#000000"><text x="712.15" y="997.72" font-size="30.22" font-weight="700">400</text><text x="712.15" y="1031.88" font-size="26.28">#48bc89</text><text x="712.15" y="1066.04" font-size="23.65">8.8:1 AAA</text></g><g fill="#000000"><text x="886.69" y="997.72" font-size="30.22" font-weight="700">500</text><text x="886.69" y="1031.88" font-size="26.28">#10a36f</text><text x="886.69" y="1066.04" font-size="23.65">6.4:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#000000"/><g fill="#000000"><text x="1061.24" y="997.72" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="1031.88" font-size="26.28">#00885b</text><text x="1061.24" y="1066.04" font-size="23.65">4.6:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="997.72" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="1031.88" font-size="26.28">#00714b</text><text x="1235.78" y="1066.04" font-size="23.65">6.0:1 AA</text></g><g fill="#ffffff"><text x="1410.33" y="997.72" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="1031.88" font-size="26.28">#005e3e</text><text x="1410.33" y="1066.04" font-size="23.65">7.8:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="997.72" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="1031.88" font-size="26.28">#004f33</text><text x="1584.87" y="1066.04" font-size="23.65">9.6:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="997.72" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="1031.88" font-size="26.28">#002f1d</text><text x="1759.42" y="1066.04" font-size="23.65">14.7:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > extra exports of every preset 1`] = `
+{
+  "amber": {
+    "css-variables": ":root {
+  --amber-50: #fff5ed;
+  --amber-100: #ffeddf;
+  --amber-200: #ffe1c9;
+  --amber-300: #ffcfa4;
+  --amber-400: #ffb157;
+  --amber-500: #f59e0b;
+  --amber-600: #c98400;
+  --amber-700: #a36d00;
+  --amber-800: #855a00;
+  --amber-900: #6d4b00;
+  --amber-950: #3d2a00;
+}
+",
+    "css-variables-oklch": ":root {
+  --amber-50: oklch(97.6% 0.015 61.3);
+  --amber-100: oklch(95.7% 0.027 60.4);
+  --amber-200: oklch(92.8% 0.046 60.9);
+  --amber-300: oklch(88.6% 0.078 63.4);
+  --amber-400: oklch(81.9% 0.139 67.5);
+  --amber-500: oklch(76.9% 0.165 70.1);
+  --amber-600: oklch(66.8% 0.143 72.6);
+  --amber-700: oklch(57.7% 0.122 74.8);
+  --amber-800: oklch(50.1% 0.105 76.6);
+  --amber-900: oklch(43.9% 0.091 78.8);
+  --amber-950: oklch(30% 0.062 82);
+}
+",
+    "hex-list": "#fff5ed
+#ffeddf
+#ffe1c9
+#ffcfa4
+#ffb157
+#f59e0b
+#c98400
+#a36d00
+#855a00
+#6d4b00
+#3d2a00
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        amber: {
+          50: '#fff5ed',
+          100: '#ffeddf',
+          200: '#ffe1c9',
+          300: '#ffcfa4',
+          400: '#ffb157',
+          500: '#f59e0b',
+          600: '#c98400',
+          700: '#a36d00',
+          800: '#855a00',
+          900: '#6d4b00',
+          950: '#3d2a00',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-amber-50: oklch(97.6% 0.015 61.3);
+  --color-amber-100: oklch(95.7% 0.027 60.4);
+  --color-amber-200: oklch(92.8% 0.046 60.9);
+  --color-amber-300: oklch(88.6% 0.078 63.4);
+  --color-amber-400: oklch(81.9% 0.139 67.5);
+  --color-amber-500: oklch(76.9% 0.165 70.1);
+  --color-amber-600: oklch(66.8% 0.143 72.6);
+  --color-amber-700: oklch(57.7% 0.122 74.8);
+  --color-amber-800: oklch(50.1% 0.105 76.6);
+  --color-amber-900: oklch(43.9% 0.091 78.8);
+  --color-amber-950: oklch(30% 0.062 82);
+}
+",
+  },
+  "coral": {
+    "css-variables": ":root {
+  --coral-50: #fff4f2;
+  --coral-100: #ffe7e3;
+  --coral-200: #ffd4ce;
+  --coral-300: #ffb4ac;
+  --coral-400: #ff7c78;
+  --coral-500: #f2545b;
+  --coral-600: #d13a49;
+  --coral-700: #b2253b;
+  --coral-800: #98122f;
+  --coral-900: #820126;
+  --coral-950: #4e0016;
+}
+",
+    "css-variables-oklch": ":root {
+  --coral-50: oklch(97.5% 0.012 29.9);
+  --coral-100: oklch(94.6% 0.027 28.9);
+  --coral-200: oklch(90.5% 0.049 27.4);
+  --coral-300: oklch(83.9% 0.089 25.9);
+  --coral-400: oklch(73.7% 0.161 23.6);
+  --coral-500: oklch(66.2% 0.193 21.7);
+  --coral-600: oklch(57.8% 0.187 20);
+  --coral-700: oklch(50.3% 0.176 18.4);
+  --coral-800: oklch(43.9% 0.165 17.3);
+  --coral-900: oklch(38.6% 0.154 16.1);
+  --coral-950: oklch(27% 0.108 13.7);
+}
+",
+    "hex-list": "#fff4f2
+#ffe7e3
+#ffd4ce
+#ffb4ac
+#ff7c78
+#f2545b
+#d13a49
+#b2253b
+#98122f
+#820126
+#4e0016
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        coral: {
+          50: '#fff4f2',
+          100: '#ffe7e3',
+          200: '#ffd4ce',
+          300: '#ffb4ac',
+          400: '#ff7c78',
+          500: '#f2545b',
+          600: '#d13a49',
+          700: '#b2253b',
+          800: '#98122f',
+          900: '#820126',
+          950: '#4e0016',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-coral-50: oklch(97.5% 0.012 29.9);
+  --color-coral-100: oklch(94.6% 0.027 28.9);
+  --color-coral-200: oklch(90.5% 0.049 27.4);
+  --color-coral-300: oklch(83.9% 0.089 25.9);
+  --color-coral-400: oklch(73.7% 0.161 23.6);
+  --color-coral-500: oklch(66.2% 0.193 21.7);
+  --color-coral-600: oklch(57.8% 0.187 20);
+  --color-coral-700: oklch(50.3% 0.176 18.4);
+  --color-coral-800: oklch(43.9% 0.165 17.3);
+  --color-coral-900: oklch(38.6% 0.154 16.1);
+  --color-coral-950: oklch(27% 0.108 13.7);
+}
+",
+  },
+  "emerald": {
+    "css-variables": ":root {
+  --emerald-50: #e2ffef;
+  --emerald-100: #bffedc;
+  --emerald-200: #a7f1cb;
+  --emerald-300: #82dcb0;
+  --emerald-400: #48bc89;
+  --emerald-500: #10a36f;
+  --emerald-600: #00885b;
+  --emerald-700: #00714b;
+  --emerald-800: #005e3e;
+  --emerald-900: #004f33;
+  --emerald-950: #002f1d;
+}
+",
+    "css-variables-oklch": ":root {
+  --emerald-50: oklch(97.5% 0.037 161.6);
+  --emerald-100: oklch(94.6% 0.078 160.9);
+  --emerald-200: oklch(89.9% 0.09 161.5);
+  --emerald-300: oklch(82.6% 0.108 161.5);
+  --emerald-400: oklch(71.6% 0.129 161.3);
+  --emerald-500: oklch(63.3% 0.137 161.4);
+  --emerald-600: oklch(55.4% 0.123 161.3);
+  --emerald-700: oklch(48.5% 0.107 161.4);
+  --emerald-800: oklch(42.6% 0.094 161.6);
+  --emerald-900: oklch(37.8% 0.084 161.3);
+  --emerald-950: oklch(27% 0.059 161.7);
+}
+",
+    "hex-list": "#e2ffef
+#bffedc
+#a7f1cb
+#82dcb0
+#48bc89
+#10a36f
+#00885b
+#00714b
+#005e3e
+#004f33
+#002f1d
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        emerald: {
+          50: '#e2ffef',
+          100: '#bffedc',
+          200: '#a7f1cb',
+          300: '#82dcb0',
+          400: '#48bc89',
+          500: '#10a36f',
+          600: '#00885b',
+          700: '#00714b',
+          800: '#005e3e',
+          900: '#004f33',
+          950: '#002f1d',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-emerald-50: oklch(97.5% 0.037 161.6);
+  --color-emerald-100: oklch(94.6% 0.078 160.9);
+  --color-emerald-200: oklch(89.9% 0.09 161.5);
+  --color-emerald-300: oklch(82.6% 0.108 161.5);
+  --color-emerald-400: oklch(71.6% 0.129 161.3);
+  --color-emerald-500: oklch(63.3% 0.137 161.4);
+  --color-emerald-600: oklch(55.4% 0.123 161.3);
+  --color-emerald-700: oklch(48.5% 0.107 161.4);
+  --color-emerald-800: oklch(42.6% 0.094 161.6);
+  --color-emerald-900: oklch(37.8% 0.084 161.3);
+  --color-emerald-950: oklch(27% 0.059 161.7);
+}
+",
+  },
+  "grape": {
+    "css-variables": ":root {
+  --grape-50: #f7f5ff;
+  --grape-100: #ece9ff;
+  --grape-200: #dcd5ff;
+  --grape-300: #c4b7ff;
+  --grape-400: #a283ff;
+  --grape-500: #8b5cf6;
+  --grape-600: #7646d9;
+  --grape-700: #6435bd;
+  --grape-800: #5427a5;
+  --grape-900: #481c90;
+  --grape-950: #2d0563;
+}
+",
+    "css-variables-oklch": ":root {
+  --grape-50: oklch(97.5% 0.013 295.3);
+  --grape-100: oklch(94.3% 0.03 292.1);
+  --grape-200: oklch(89.2% 0.058 292.8);
+  --grape-300: oklch(81.6% 0.101 292.3);
+  --grape-400: oklch(69.4% 0.177 292.7);
+  --grape-500: oklch(60.6% 0.219 292.7);
+  --grape-600: oklch(53.3% 0.212 292.8);
+  --grape-700: oklch(47% 0.199 292.9);
+  --grape-800: oklch(41.5% 0.186 292.6);
+  --grape-900: oklch(36.9% 0.174 293);
+  --grape-950: oklch(26.9% 0.142 292.7);
+}
+",
+    "hex-list": "#f7f5ff
+#ece9ff
+#dcd5ff
+#c4b7ff
+#a283ff
+#8b5cf6
+#7646d9
+#6435bd
+#5427a5
+#481c90
+#2d0563
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        grape: {
+          50: '#f7f5ff',
+          100: '#ece9ff',
+          200: '#dcd5ff',
+          300: '#c4b7ff',
+          400: '#a283ff',
+          500: '#8b5cf6',
+          600: '#7646d9',
+          700: '#6435bd',
+          800: '#5427a5',
+          900: '#481c90',
+          950: '#2d0563',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-grape-50: oklch(97.5% 0.013 295.3);
+  --color-grape-100: oklch(94.3% 0.03 292.1);
+  --color-grape-200: oklch(89.2% 0.058 292.8);
+  --color-grape-300: oklch(81.6% 0.101 292.3);
+  --color-grape-400: oklch(69.4% 0.177 292.7);
+  --color-grape-500: oklch(60.6% 0.219 292.7);
+  --color-grape-600: oklch(53.3% 0.212 292.8);
+  --color-grape-700: oklch(47% 0.199 292.9);
+  --color-grape-800: oklch(41.5% 0.186 292.6);
+  --color-grape-900: oklch(36.9% 0.174 293);
+  --color-grape-950: oklch(26.9% 0.142 292.7);
+}
+",
+  },
+  "ocean": {
+    "css-variables": ":root {
+  --brand-50: #f2f7ff;
+  --brand-100: #e2edff;
+  --brand-200: #cadeff;
+  --brand-300: #a3c6ff;
+  --brand-400: #659fff;
+  --brand-500: #3b82f6;
+  --brand-600: #276bd8;
+  --brand-700: #1757bc;
+  --brand-800: #0a47a3;
+  --brand-900: #023a8e;
+  --brand-950: #00225a;
+}
+",
+    "css-variables-oklch": ":root {
+  --brand-50: oklch(97.5% 0.012 259.8);
+  --brand-100: oklch(94.3% 0.027 260.3);
+  --brand-200: oklch(89.6% 0.05 260.4);
+  --brand-300: oklch(82.2% 0.089 260);
+  --brand-400: oklch(70.6% 0.154 260);
+  --brand-500: oklch(62.3% 0.188 259.8);
+  --brand-600: oklch(54.8% 0.181 259.7);
+  --brand-700: oklch(48% 0.172 259.8);
+  --brand-800: oklch(42.3% 0.16 259.8);
+  --brand-900: oklch(37.5% 0.149 259.9);
+  --brand-950: oklch(27.1% 0.108 259.6);
+}
+",
+    "hex-list": "#f2f7ff
+#e2edff
+#cadeff
+#a3c6ff
+#659fff
+#3b82f6
+#276bd8
+#1757bc
+#0a47a3
+#023a8e
+#00225a
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          50: '#f2f7ff',
+          100: '#e2edff',
+          200: '#cadeff',
+          300: '#a3c6ff',
+          400: '#659fff',
+          500: '#3b82f6',
+          600: '#276bd8',
+          700: '#1757bc',
+          800: '#0a47a3',
+          900: '#023a8e',
+          950: '#00225a',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-brand-50: oklch(97.5% 0.012 259.8);
+  --color-brand-100: oklch(94.3% 0.027 260.3);
+  --color-brand-200: oklch(89.6% 0.05 260.4);
+  --color-brand-300: oklch(82.2% 0.089 260);
+  --color-brand-400: oklch(70.6% 0.154 260);
+  --color-brand-500: oklch(62.3% 0.188 259.8);
+  --color-brand-600: oklch(54.8% 0.181 259.7);
+  --color-brand-700: oklch(48% 0.172 259.8);
+  --color-brand-800: oklch(42.3% 0.16 259.8);
+  --color-brand-900: oklch(37.5% 0.149 259.9);
+  --color-brand-950: oklch(27.1% 0.108 259.6);
+}
+",
+  },
+  "rose": {
+    "css-variables": ":root {
+  --rose-50: #fff3f5;
+  --rose-100: #ffe4e8;
+  --rose-200: #ffcbd4;
+  --rose-300: #ffa2b7;
+  --rose-400: #ff4e8c;
+  --rose-500: #e11d74;
+  --rose-600: #bf0062;
+  --rose-700: #9f0053;
+  --rose-800: #850046;
+  --rose-900: #6f003b;
+  --rose-950: #430023;
+}
+",
+    "css-variables-oklch": ":root {
+  --rose-50: oklch(97.4% 0.013 5.8);
+  --rose-100: oklch(94.2% 0.03 7.5);
+  --rose-200: oklch(89% 0.06 6.7);
+  --rose-300: oklch(81.1% 0.113 5.2);
+  --rose-400: oklch(68.7% 0.217 3.6);
+  --rose-500: oklch(59.6% 0.228 2.2);
+  --rose-600: oklch(52% 0.211 0.9);
+  --rose-700: oklch(45.5% 0.185 359.7);
+  --rose-800: oklch(40% 0.163 358.8);
+  --rose-900: oklch(35.2% 0.143 357.8);
+  --rose-950: oklch(25% 0.102 356);
+}
+",
+    "hex-list": "#fff3f5
+#ffe4e8
+#ffcbd4
+#ffa2b7
+#ff4e8c
+#e11d74
+#bf0062
+#9f0053
+#850046
+#6f003b
+#430023
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        rose: {
+          50: '#fff3f5',
+          100: '#ffe4e8',
+          200: '#ffcbd4',
+          300: '#ffa2b7',
+          400: '#ff4e8c',
+          500: '#e11d74',
+          600: '#bf0062',
+          700: '#9f0053',
+          800: '#850046',
+          900: '#6f003b',
+          950: '#430023',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-rose-50: oklch(97.4% 0.013 5.8);
+  --color-rose-100: oklch(94.2% 0.03 7.5);
+  --color-rose-200: oklch(89% 0.06 6.7);
+  --color-rose-300: oklch(81.1% 0.113 5.2);
+  --color-rose-400: oklch(68.7% 0.217 3.6);
+  --color-rose-500: oklch(59.6% 0.228 2.2);
+  --color-rose-600: oklch(52% 0.211 0.9);
+  --color-rose-700: oklch(45.5% 0.185 359.7);
+  --color-rose-800: oklch(40% 0.163 358.8);
+  --color-rose-900: oklch(35.2% 0.143 357.8);
+  --color-rose-950: oklch(25% 0.102 356);
+}
+",
+  },
+  "stone": {
+    "css-variables": ":root {
+  --stone-50: #fdf9f7;
+  --stone-100: #f0ecea;
+  --stone-200: #ded9d6;
+  --stone-300: #c2bcb8;
+  --stone-400: #96908b;
+  --stone-500: #78716c;
+  --stone-600: #66605b;
+  --stone-700: #56514d;
+  --stone-800: #494541;
+  --stone-900: #3f3b38;
+  --stone-950: #282624;
+}
+",
+    "css-variables-oklch": ":root {
+  --stone-50: oklch(98.5% 0.005 48.7);
+  --stone-100: oklch(94.6% 0.005 48.7);
+  --stone-200: oklch(88.8% 0.007 53.4);
+  --stone-300: oklch(79.9% 0.009 56.3);
+  --stone-400: oklch(65.7% 0.01 62.5);
+  --stone-500: oklch(55.3% 0.012 58.1);
+  --stone-600: oklch(49.3% 0.011 62.4);
+  --stone-700: oklch(43.8% 0.009 61.3);
+  --stone-800: oklch(39.3% 0.009 67.6);
+  --stone-900: oklch(35.5% 0.008 59.4);
+  --stone-950: oklch(27% 0.005 67.6);
+}
+",
+    "hex-list": "#fdf9f7
+#f0ecea
+#ded9d6
+#c2bcb8
+#96908b
+#78716c
+#66605b
+#56514d
+#494541
+#3f3b38
+#282624
+",
+    "tailwind-config": "/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        stone: {
+          50: '#fdf9f7',
+          100: '#f0ecea',
+          200: '#ded9d6',
+          300: '#c2bcb8',
+          400: '#96908b',
+          500: '#78716c',
+          600: '#66605b',
+          700: '#56514d',
+          800: '#494541',
+          900: '#3f3b38',
+          950: '#282624',
+        },
+      },
+    },
+  },
+};
+",
+    "tailwind-theme": "@theme {
+  --color-stone-50: oklch(98.5% 0.005 48.7);
+  --color-stone-100: oklch(94.6% 0.005 48.7);
+  --color-stone-200: oklch(88.8% 0.007 53.4);
+  --color-stone-300: oklch(79.9% 0.009 56.3);
+  --color-stone-400: oklch(65.7% 0.01 62.5);
+  --color-stone-500: oklch(55.3% 0.012 58.1);
+  --color-stone-600: oklch(49.3% 0.011 62.4);
+  --color-stone-700: oklch(43.8% 0.009 61.3);
+  --color-stone-800: oklch(39.3% 0.009 67.6);
+  --color-stone-900: oklch(35.5% 0.008 59.4);
+  --color-stone-950: oklch(27% 0.005 67.6);
+}
+",
+  },
+}
+`;
+
+exports[`preset snapshots: tailwind-palette > grape 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#f7f5ff"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#ece9ff"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#dcd5ff"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#c4b7ff"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#a283ff"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#8b5cf6"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#7646d9"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#6435bd"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#5427a5"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#481c90"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#2d0563"/></g><g fill="#000000"><text x="13.96" y="929.4" font-size="30.22" font-weight="700">50</text><text x="13.96" y="963.56" font-size="26.28">97.5%</text><text x="13.96" y="997.72" font-size="26.28">0.013</text><text x="13.96" y="1031.88" font-size="26.28">295.3</text><text x="13.96" y="1066.04" font-size="23.65">19.4:1 AAA</text></g><g fill="#000000"><text x="188.51" y="929.4" font-size="30.22" font-weight="700">100</text><text x="188.51" y="963.56" font-size="26.28">94.3%</text><text x="188.51" y="997.72" font-size="26.28">0.03</text><text x="188.51" y="1031.88" font-size="26.28">292.1</text><text x="188.51" y="1066.04" font-size="23.65">17.6:1 AAA</text></g><g fill="#000000"><text x="363.05" y="929.4" font-size="30.22" font-weight="700">200</text><text x="363.05" y="963.56" font-size="26.28">89.2%</text><text x="363.05" y="997.72" font-size="26.28">0.058</text><text x="363.05" y="1031.88" font-size="26.28">292.8</text><text x="363.05" y="1066.04" font-size="23.65">15.0:1 AAA</text></g><g fill="#000000"><text x="537.6" y="929.4" font-size="30.22" font-weight="700">300</text><text x="537.6" y="963.56" font-size="26.28">81.6%</text><text x="537.6" y="997.72" font-size="26.28">0.101</text><text x="537.6" y="1031.88" font-size="26.28">292.3</text><text x="537.6" y="1066.04" font-size="23.65">11.5:1 AAA</text></g><g fill="#000000"><text x="712.15" y="929.4" font-size="30.22" font-weight="700">400</text><text x="712.15" y="963.56" font-size="26.28">69.4%</text><text x="712.15" y="997.72" font-size="26.28">0.177</text><text x="712.15" y="1031.88" font-size="26.28">292.7</text><text x="712.15" y="1066.04" font-size="23.65">7.2:1 AAA</text></g><g fill="#000000"><text x="886.69" y="929.4" font-size="30.22" font-weight="700">500</text><text x="886.69" y="963.56" font-size="26.28">60.6%</text><text x="886.69" y="997.72" font-size="26.28">0.219</text><text x="886.69" y="1031.88" font-size="26.28">292.7</text><text x="886.69" y="1066.04" font-size="23.65">4.9:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#000000"/><g fill="#ffffff"><text x="1061.24" y="929.4" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="963.56" font-size="26.28">53.3%</text><text x="1061.24" y="997.72" font-size="26.28">0.212</text><text x="1061.24" y="1031.88" font-size="26.28">292.8</text><text x="1061.24" y="1066.04" font-size="23.65">5.7:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="929.4" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="963.56" font-size="26.28">47%</text><text x="1235.78" y="997.72" font-size="26.28">0.199</text><text x="1235.78" y="1031.88" font-size="26.28">292.9</text><text x="1235.78" y="1066.04" font-size="23.65">7.5:1 AAA</text></g><g fill="#ffffff"><text x="1410.33" y="929.4" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="963.56" font-size="26.28">41.5%</text><text x="1410.33" y="997.72" font-size="26.28">0.186</text><text x="1410.33" y="1031.88" font-size="26.28">292.6</text><text x="1410.33" y="1066.04" font-size="23.65">9.5:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="929.4" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="963.56" font-size="26.28">36.9%</text><text x="1584.87" y="997.72" font-size="26.28">0.174</text><text x="1584.87" y="1031.88" font-size="26.28">293</text><text x="1584.87" y="1066.04" font-size="23.65">11.3:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="929.4" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="963.56" font-size="26.28">26.9%</text><text x="1759.42" y="997.72" font-size="26.28">0.142</text><text x="1759.42" y="1031.88" font-size="26.28">292.7</text><text x="1759.42" y="1066.04" font-size="23.65">15.9:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > ocean 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#f2f7ff"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#e2edff"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#cadeff"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#a3c6ff"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#659fff"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#3b82f6"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#276bd8"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#1757bc"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#0a47a3"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#023a8e"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#00225a"/></g><g fill="#000000"><text x="13.96" y="997.72" font-size="30.22" font-weight="700">50</text><text x="13.96" y="1031.88" font-size="26.28">#f2f7ff</text><text x="13.96" y="1066.04" font-size="23.65">19.5:1 AAA</text></g><g fill="#000000"><text x="188.51" y="997.72" font-size="30.22" font-weight="700">100</text><text x="188.51" y="1031.88" font-size="26.28">#e2edff</text><text x="188.51" y="1066.04" font-size="23.65">17.7:1 AAA</text></g><g fill="#000000"><text x="363.05" y="997.72" font-size="30.22" font-weight="700">200</text><text x="363.05" y="1031.88" font-size="26.28">#cadeff</text><text x="363.05" y="1066.04" font-size="23.65">15.4:1 AAA</text></g><g fill="#000000"><text x="537.6" y="997.72" font-size="30.22" font-weight="700">300</text><text x="537.6" y="1031.88" font-size="26.28">#a3c6ff</text><text x="537.6" y="1066.04" font-size="23.65">12.0:1 AAA</text></g><g fill="#000000"><text x="712.15" y="997.72" font-size="30.22" font-weight="700">400</text><text x="712.15" y="1031.88" font-size="26.28">#659fff</text><text x="712.15" y="1066.04" font-size="23.65">7.9:1 AAA</text></g><g fill="#000000"><text x="886.69" y="997.72" font-size="30.22" font-weight="700">500</text><text x="886.69" y="1031.88" font-size="26.28">#3b82f6</text><text x="886.69" y="1066.04" font-size="23.65">5.7:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#000000"/><g fill="#ffffff"><text x="1061.24" y="997.72" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="1031.88" font-size="26.28">#276bd8</text><text x="1061.24" y="1066.04" font-size="23.65">5.0:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="997.72" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="1031.88" font-size="26.28">#1757bc</text><text x="1235.78" y="1066.04" font-size="23.65">6.7:1 AA</text></g><g fill="#ffffff"><text x="1410.33" y="997.72" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="1031.88" font-size="26.28">#0a47a3</text><text x="1410.33" y="1066.04" font-size="23.65">8.5:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="997.72" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="1031.88" font-size="26.28">#023a8e</text><text x="1584.87" y="1066.04" font-size="23.65">10.5:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="997.72" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="1031.88" font-size="26.28">#00225a</text><text x="1759.42" y="1066.04" font-size="23.65">15.2:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > rose 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#fff3f5"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#ffe4e8"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#ffcbd4"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#ffa2b7"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#ff4e8c"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#e11d74"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#bf0062"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#9f0053"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#850046"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#6f003b"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#430023"/></g><g fill="#000000"><text x="13.96" y="997.72" font-size="30.22" font-weight="700">50</text><text x="13.96" y="1031.88" font-size="26.28">#fff3f5</text><text x="13.96" y="1066.04" font-size="23.65">19.3:1 AAA</text></g><g fill="#000000"><text x="188.51" y="997.72" font-size="30.22" font-weight="700">100</text><text x="188.51" y="1031.88" font-size="26.28">#ffe4e8</text><text x="188.51" y="1066.04" font-size="23.65">17.5:1 AAA</text></g><g fill="#000000"><text x="363.05" y="997.72" font-size="30.22" font-weight="700">200</text><text x="363.05" y="1031.88" font-size="26.28">#ffcbd4</text><text x="363.05" y="1066.04" font-size="23.65">14.7:1 AAA</text></g><g fill="#000000"><text x="537.6" y="997.72" font-size="30.22" font-weight="700">300</text><text x="537.6" y="1031.88" font-size="26.28">#ffa2b7</text><text x="537.6" y="1066.04" font-size="23.65">11.1:1 AAA</text></g><g fill="#000000"><text x="712.15" y="997.72" font-size="30.22" font-weight="700">400</text><text x="712.15" y="1031.88" font-size="26.28">#ff4e8c</text><text x="712.15" y="1066.04" font-size="23.65">6.7:1 AA</text></g><g fill="#000000"><text x="886.69" y="997.72" font-size="30.22" font-weight="700">500</text><text x="886.69" y="1031.88" font-size="26.28">#e11d74</text><text x="886.69" y="1066.04" font-size="23.65">4.6:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#000000"/><g fill="#ffffff"><text x="1061.24" y="997.72" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="1031.88" font-size="26.28">#bf0062</text><text x="1061.24" y="1066.04" font-size="23.65">6.1:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="997.72" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="1031.88" font-size="26.28">#9f0053</text><text x="1235.78" y="1066.04" font-size="23.65">8.0:1 AAA</text></g><g fill="#ffffff"><text x="1410.33" y="997.72" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="1031.88" font-size="26.28">#850046</text><text x="1410.33" y="1066.04" font-size="23.65">10.0:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="997.72" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="1031.88" font-size="26.28">#6f003b</text><text x="1584.87" y="1066.04" font-size="23.65">12.0:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="997.72" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="1031.88" font-size="26.28">#430023</text><text x="1759.42" y="1066.04" font-size="23.65">16.6:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tailwind-palette > stone 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#fdf9f7"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#f0ecea"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#ded9d6"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#c2bcb8"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#96908b"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#78716c"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#66605b"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#56514d"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#494541"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#3f3b38"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#282624"/></g><g fill="#000000"><text x="13.96" y="997.72" font-size="30.22" font-weight="700">50</text><text x="13.96" y="1031.88" font-size="26.28">#fdf9f7</text><text x="13.96" y="1066.04" font-size="23.65">20.0:1 AAA</text></g><g fill="#000000"><text x="188.51" y="997.72" font-size="30.22" font-weight="700">100</text><text x="188.51" y="1031.88" font-size="26.28">#f0ecea</text><text x="188.51" y="1066.04" font-size="23.65">17.8:1 AAA</text></g><g fill="#000000"><text x="363.05" y="997.72" font-size="30.22" font-weight="700">200</text><text x="363.05" y="1031.88" font-size="26.28">#ded9d6</text><text x="363.05" y="1066.04" font-size="23.65">15.0:1 AAA</text></g><g fill="#000000"><text x="537.6" y="997.72" font-size="30.22" font-weight="700">300</text><text x="537.6" y="1031.88" font-size="26.28">#c2bcb8</text><text x="537.6" y="1066.04" font-size="23.65">11.1:1 AAA</text></g><g fill="#000000"><text x="712.15" y="997.72" font-size="30.22" font-weight="700">400</text><text x="712.15" y="1031.88" font-size="26.28">#96908b</text><text x="712.15" y="1066.04" font-size="23.65">6.6:1 AA</text></g><g fill="#ffffff"><text x="886.69" y="997.72" font-size="30.22" font-weight="700">500</text><text x="886.69" y="1031.88" font-size="26.28">#78716c</text><text x="886.69" y="1066.04" font-size="23.65">4.7:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#ffffff"/><g fill="#ffffff"><text x="1061.24" y="997.72" font-size="30.22" font-weight="700">600</text><text x="1061.24" y="1031.88" font-size="26.28">#66605b</text><text x="1061.24" y="1066.04" font-size="23.65">6.1:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="997.72" font-size="30.22" font-weight="700">700</text><text x="1235.78" y="1031.88" font-size="26.28">#56514d</text><text x="1235.78" y="1066.04" font-size="23.65">7.8:1 AAA</text></g><g fill="#ffffff"><text x="1410.33" y="997.72" font-size="30.22" font-weight="700">800</text><text x="1410.33" y="1031.88" font-size="26.28">#494541</text><text x="1410.33" y="1066.04" font-size="23.65">9.4:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="997.72" font-size="30.22" font-weight="700">900</text><text x="1584.87" y="1031.88" font-size="26.28">#3f3b38</text><text x="1584.87" y="1066.04" font-size="23.65">11.0:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="997.72" font-size="30.22" font-weight="700">950</text><text x="1759.42" y="1031.88" font-size="26.28">#282624</text><text x="1759.42" y="1066.04" font-size="23.65">15.0:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > extra exports of every preset 1`] = `
+{
+  "forest": {
+    "css-variables": ":root {
+  --forest-tint-3: #80be9f;
+  --forest-tint-2: #64a184;
+  --forest-tint-1: #498569;
+  --forest: #2d6a4f;
+  --forest-shade-1: #115239;
+  --forest-shade-2: #003a25;
+  --forest-shade-3: #002315;
+}
+",
+    "hex-list": "#80be9f
+#64a184
+#498569
+#2d6a4f
+#115239
+#003a25
+#002315
+",
+    "hsl-list": "hsl(150, 32.3%, 62.4%)
+hsl(151, 24.5%, 51.2%)
+hsl(152, 29.1%, 40.4%)
+hsl(153, 40.4%, 29.6%)
+hsl(157, 65.7%, 19.4%)
+hsl(158, 100%, 11.4%)
+hsl(156, 100%, 6.9%)
+",
+    "rgb-list": "rgb(128, 190, 159)
+rgb(100, 161, 132)
+rgb(73, 133, 105)
+rgb(45, 106, 79)
+rgb(17, 82, 57)
+rgb(0, 58, 37)
+rgb(0, 35, 21)
+",
+  },
+  "indigo": {
+    "css-variables": ":root {
+  --accent-tint-5: #d4dbff;
+  --accent-tint-4: #b5bfff;
+  --accent-tint-3: #97a3ff;
+  --accent-tint-2: #7b84ff;
+  --accent-tint-1: #6261ff;
+  --accent: #4f46e5;
+  --accent-shade-1: #3d26c9;
+  --accent-shade-2: #2e00a6;
+  --accent-shade-3: #1d0073;
+  --accent-shade-4: #0d0045;
+  --accent-shade-5: #03001b;
+}
+",
+    "hex-list": "#d4dbff
+#b5bfff
+#97a3ff
+#7b84ff
+#6261ff
+#4f46e5
+#3d26c9
+#2e00a6
+#1d0073
+#0d0045
+#03001b
+",
+    "hsl-list": "hsl(230, 100%, 91.6%)
+hsl(232, 100%, 85.5%)
+hsl(233, 100%, 79.6%)
+hsl(236, 100%, 74.1%)
+hsl(240, 100%, 69%)
+hsl(243, 75.4%, 58.6%)
+hsl(248, 68.2%, 46.9%)
+hsl(257, 100%, 32.5%)
+hsl(255, 100%, 22.5%)
+hsl(251, 100%, 13.5%)
+hsl(247, 100%, 5.3%)
+",
+    "rgb-list": "rgb(212, 219, 255)
+rgb(181, 191, 255)
+rgb(151, 163, 255)
+rgb(123, 132, 255)
+rgb(98, 97, 255)
+rgb(79, 70, 229)
+rgb(61, 38, 201)
+rgb(46, 0, 166)
+rgb(29, 0, 115)
+rgb(13, 0, 69)
+rgb(3, 0, 27)
+",
+  },
+  "lagoon": {
+    "css-variables": ":root {
+  --primary-tint-4: #8af3e3;
+  --primary-tint-3: #73ddcd;
+  --primary-tint-2: #5dc7b8;
+  --primary-tint-1: #45b2a3;
+  --primary: #2a9d8f;
+  --primary-shade-1: #00796d;
+  --primary-shade-2: #00554c;
+  --primary-shade-3: #00332e;
+  --primary-shade-4: #001512;
+}
+",
+    "hex-list": "#8af3e3
+#73ddcd
+#5dc7b8
+#45b2a3
+#2a9d8f
+#00796d
+#00554c
+#00332e
+#001512
+",
+    "hsl-list": "hsl(171, 81.4%, 74.7%)
+hsl(171, 60.9%, 65.9%)
+hsl(172, 48.6%, 57.3%)
+hsl(172, 44.1%, 48.4%)
+hsl(173, 57.8%, 39%)
+hsl(174, 100%, 23.7%)
+hsl(174, 100%, 16.7%)
+hsl(174, 100%, 10%)
+hsl(171, 100%, 4.1%)
+",
+    "rgb-list": "rgb(138, 243, 227)
+rgb(115, 221, 205)
+rgb(93, 199, 184)
+rgb(69, 178, 163)
+rgb(42, 157, 143)
+rgb(0, 121, 109)
+rgb(0, 85, 76)
+rgb(0, 51, 46)
+rgb(0, 21, 18)
+",
+  },
+  "sand": {
+    "css-variables": ":root {
+  --sand-tint-6: #f5eadf;
+  --sand-tint-5: #f0decd;
+  --sand-tint-4: #ead2bb;
+  --sand-tint-3: #e5c6a9;
+  --sand-tint-2: #dfbb97;
+  --sand-tint-1: #daaf85;
+  --sand: #d4a373;
+  --sand-shade-1: #947251;
+  --sand-shade-2: #55412e;
+}
+",
+    "hex-list": "#f5eadf
+#f0decd
+#ead2bb
+#e5c6a9
+#dfbb97
+#daaf85
+#d4a373
+#947251
+#55412e
+",
+    "hsl-list": "hsl(30, 52.4%, 91.8%)
+hsl(29, 53.8%, 87.3%)
+hsl(29, 52.8%, 82.5%)
+hsl(29, 53.6%, 78%)
+hsl(30, 52.9%, 73.3%)
+hsl(30, 53.5%, 68.8%)
+hsl(30, 53%, 64.1%)
+hsl(30, 29.3%, 44.9%)
+hsl(29, 29.8%, 25.7%)
+",
+    "rgb-list": "rgb(245, 234, 223)
+rgb(240, 222, 205)
+rgb(234, 210, 187)
+rgb(229, 198, 169)
+rgb(223, 187, 151)
+rgb(218, 175, 133)
+rgb(212, 163, 115)
+rgb(148, 114, 81)
+rgb(85, 65, 46)
+",
+  },
+  "slate": {
+    "css-variables": ":root {
+  --neutral-tint-5: #cadcf6;
+  --neutral-tint-4: #b4c6e0;
+  --neutral-tint-3: #a0b1ca;
+  --neutral-tint-2: #8b9cb4;
+  --neutral-tint-1: #77889f;
+  --neutral: #64748b;
+  --neutral-shade-1: #4d5c72;
+  --neutral-shade-2: #37455a;
+  --neutral-shade-3: #223044;
+  --neutral-shade-4: #0e1b2e;
+  --neutral-shade-5: #010819;
+}
+",
+    "hex-list": "#cadcf6
+#b4c6e0
+#a0b1ca
+#8b9cb4
+#77889f
+#64748b
+#4d5c72
+#37455a
+#223044
+#0e1b2e
+#010819
+",
+    "hsl-list": "hsl(215, 71%, 87.8%)
+hsl(215, 41.5%, 79.2%)
+hsl(216, 28.4%, 71%)
+hsl(215, 21.5%, 62.5%)
+hsl(215, 17.2%, 54.5%)
+hsl(215, 16.3%, 46.9%)
+hsl(216, 19.4%, 37.5%)
+hsl(216, 24.1%, 28.4%)
+hsl(215, 33.3%, 20%)
+hsl(216, 53.3%, 11.8%)
+hsl(223, 92.3%, 5.1%)
+",
+    "rgb-list": "rgb(202, 220, 246)
+rgb(180, 198, 224)
+rgb(160, 177, 202)
+rgb(139, 156, 180)
+rgb(119, 136, 159)
+rgb(100, 116, 139)
+rgb(77, 92, 114)
+rgb(55, 69, 90)
+rgb(34, 48, 68)
+rgb(14, 27, 46)
+rgb(1, 8, 25)
+",
+  },
+  "sunflower": {
+    "css-variables": ":root {
+  --warning-tint-2: #ffe4b5;
+  --warning-tint-1: #ffce77;
+  --warning: #ffb703;
+  --warning-shade-1: #d49802;
+  --warning-shade-2: #ac7a01;
+  --warning-shade-3: #845d01;
+  --warning-shade-4: #5f4200;
+  --warning-shade-5: #3c2800;
+  --warning-shade-6: #1c1100;
+}
+",
+    "hex-list": "#ffe4b5
+#ffce77
+#ffb703
+#d49802
+#ac7a01
+#845d01
+#5f4200
+#3c2800
+#1c1100
+",
+    "hsl-list": "hsl(38, 100%, 85.5%)
+hsl(38, 100%, 73.3%)
+hsl(43, 100%, 50.6%)
+hsl(43, 98.1%, 42%)
+hsl(42, 98.8%, 33.9%)
+hsl(42, 98.5%, 26.1%)
+hsl(42, 100%, 18.6%)
+hsl(40, 100%, 11.8%)
+hsl(36, 100%, 5.5%)
+",
+    "rgb-list": "rgb(255, 228, 181)
+rgb(255, 206, 119)
+rgb(255, 183, 3)
+rgb(212, 152, 2)
+rgb(172, 122, 1)
+rgb(132, 93, 1)
+rgb(95, 66, 0)
+rgb(60, 40, 0)
+rgb(28, 17, 0)
+",
+  },
+  "tomato": {
+    "css-variables": ":root {
+  --danger-tint-4: #ffcdca;
+  --danger-tint-3: #fdaca8;
+  --danger-tint-2: #f78a88;
+  --danger-tint-1: #f06667;
+  --danger: #e63946;
+  --danger-shade-1: #b02934;
+  --danger-shade-2: #7e1b22;
+  --danger-shade-3: #4e0d12;
+  --danger-shade-4: #240304;
+}
+",
+    "hex-list": "#ffcdca
+#fdaca8
+#f78a88
+#f06667
+#e63946
+#b02934
+#7e1b22
+#4e0d12
+#240304
+",
+    "hsl-list": "hsl(3, 100%, 89.6%)
+hsl(3, 95.5%, 82.5%)
+hsl(1, 87.4%, 75.1%)
+hsl(360, 82.1%, 67.1%)
+hsl(355, 77.6%, 56.3%)
+hsl(355, 62.2%, 42.5%)
+hsl(356, 64.7%, 30%)
+hsl(355, 71.4%, 17.8%)
+hsl(358, 84.6%, 7.6%)
+",
+    "rgb-list": "rgb(255, 205, 202)
+rgb(253, 172, 168)
+rgb(247, 138, 136)
+rgb(240, 102, 103)
+rgb(230, 57, 70)
+rgb(176, 41, 52)
+rgb(126, 27, 34)
+rgb(78, 13, 18)
+rgb(36, 3, 4)
+",
+  },
+}
+`;
+
+exports[`preset snapshots: tints-shades > forest 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="274.29" height="1080" fill="#80be9f"/><rect x="274.29" y="0" width="274.29" height="1080" fill="#64a184"/><rect x="548.57" y="0" width="274.29" height="1080" fill="#498569"/><rect x="822.86" y="0" width="274.29" height="1080" fill="#2d6a4f"/><rect x="1097.14" y="0" width="274.29" height="1080" fill="#115239"/><rect x="1371.43" y="0" width="274.29" height="1080" fill="#003a25"/><rect x="1645.71" y="0" width="274.29" height="1080" fill="#002315"/></g><g fill="#000000"><text x="21.94" y="1004.38" font-size="41.29">#80be9f</text><text x="21.94" y="1058.06" font-size="37.16">9.7:1 AAA</text></g><g fill="#000000"><text x="296.23" y="1004.38" font-size="41.29">#64a184</text><text x="296.23" y="1058.06" font-size="37.16">6.9:1 AA</text></g><g fill="#000000"><text x="570.51" y="1004.38" font-size="41.29">#498569</text><text x="570.51" y="1058.06" font-size="37.16">4.8:1 AA</text></g><g fill="#ffffff"><text x="844.8" y="1004.38" font-size="41.29">#2d6a4f</text><text x="844.8" y="1058.06" font-size="37.16">6.3:1 AA</text></g><circle cx="1065.6" cy="31.54" r="9.6" fill="#ffffff"/><g fill="#ffffff"><text x="1119.09" y="1004.38" font-size="41.29">#115239</text><text x="1119.09" y="1058.06" font-size="37.16">9.1:1 AAA</text></g><g fill="#ffffff"><text x="1393.37" y="1004.38" font-size="41.29">#003a25</text><text x="1393.37" y="1058.06" font-size="37.16">12.8:1 AAA</text></g><g fill="#ffffff"><text x="1667.66" y="1004.38" font-size="41.29">#002315</text><text x="1667.66" y="1058.06" font-size="37.16">16.7:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > indigo 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#d4dbff"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#b5bfff"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#97a3ff"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#7b84ff"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#6261ff"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#4f46e5"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#3d26c9"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#2e00a6"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#1d0073"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#0d0045"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#03001b"/></g><g fill="#000000"><text x="13.96" y="1031.88" font-size="26.28">#d4dbff</text><text x="13.96" y="1066.04" font-size="23.65">15.3:1 AAA</text></g><g fill="#000000"><text x="188.51" y="1031.88" font-size="26.28">#b5bfff</text><text x="188.51" y="1066.04" font-size="23.65">11.8:1 AAA</text></g><g fill="#000000"><text x="363.05" y="1031.88" font-size="26.28">#97a3ff</text><text x="363.05" y="1066.04" font-size="23.65">8.9:1 AAA</text></g><g fill="#000000"><text x="537.6" y="1031.88" font-size="26.28">#7b84ff</text><text x="537.6" y="1066.04" font-size="23.65">6.5:1 AA</text></g><g fill="#000000"><text x="712.15" y="1031.88" font-size="26.28">#6261ff</text><text x="712.15" y="1066.04" font-size="23.65">4.6:1 AA</text></g><g fill="#ffffff"><text x="886.69" y="1031.88" font-size="26.28">#4f46e5</text><text x="886.69" y="1066.04" font-size="23.65">6.2:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#ffffff"/><g fill="#ffffff"><text x="1061.24" y="1031.88" font-size="26.28">#3d26c9</text><text x="1061.24" y="1066.04" font-size="23.65">9.0:1 AAA</text></g><g fill="#ffffff"><text x="1235.78" y="1031.88" font-size="26.28">#2e00a6</text><text x="1235.78" y="1066.04" font-size="23.65">12.5:1 AAA</text></g><g fill="#ffffff"><text x="1410.33" y="1031.88" font-size="26.28">#1d0073</text><text x="1410.33" y="1066.04" font-size="23.65">16.1:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="1031.88" font-size="26.28">#0d0045</text><text x="1584.87" y="1066.04" font-size="23.65">19.0:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="1031.88" font-size="26.28">#03001b</text><text x="1759.42" y="1066.04" font-size="23.65">20.5:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > lagoon 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="213.33" height="1080" fill="#8af3e3"/><rect x="213.33" y="0" width="213.33" height="1080" fill="#73ddcd"/><rect x="426.67" y="0" width="213.33" height="1080" fill="#5dc7b8"/><rect x="640" y="0" width="213.33" height="1080" fill="#45b2a3"/><rect x="853.33" y="0" width="213.33" height="1080" fill="#2a9d8f"/><rect x="1066.67" y="0" width="213.33" height="1080" fill="#00796d"/><rect x="1280" y="0" width="213.33" height="1080" fill="#00554c"/><rect x="1493.33" y="0" width="213.33" height="1080" fill="#00332e"/><rect x="1706.67" y="0" width="213.33" height="1080" fill="#001512"/></g><g fill="#000000"><text x="17.07" y="1021.18" font-size="32.11">#8af3e3</text><text x="17.07" y="1062.93" font-size="28.9">16.0:1 AAA</text></g><g fill="#000000"><text x="230.4" y="1021.18" font-size="32.11">#73ddcd</text><text x="230.4" y="1062.93" font-size="28.9">12.9:1 AAA</text></g><g fill="#000000"><text x="443.73" y="1021.18" font-size="32.11">#5dc7b8</text><text x="443.73" y="1062.93" font-size="28.9">10.3:1 AAA</text></g><g fill="#000000"><text x="657.07" y="1021.18" font-size="32.11">#45b2a3</text><text x="657.07" y="1062.93" font-size="28.9">8.1:1 AAA</text></g><g fill="#000000"><text x="870.4" y="1021.18" font-size="32.11">#2a9d8f</text><text x="870.4" y="1062.93" font-size="28.9">6.3:1 AA</text></g><circle cx="1042.13" cy="24.53" r="7.47" fill="#000000"/><g fill="#ffffff"><text x="1083.73" y="1021.18" font-size="32.11">#00796d</text><text x="1083.73" y="1062.93" font-size="28.9">5.3:1 AA</text></g><g fill="#ffffff"><text x="1297.07" y="1021.18" font-size="32.11">#00554c</text><text x="1297.07" y="1062.93" font-size="28.9">8.7:1 AAA</text></g><g fill="#ffffff"><text x="1510.4" y="1021.18" font-size="32.11">#00332e</text><text x="1510.4" y="1062.93" font-size="28.9">13.8:1 AAA</text></g><g fill="#ffffff"><text x="1723.73" y="1021.18" font-size="32.11">#001512</text><text x="1723.73" y="1062.93" font-size="28.9">18.8:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > sand 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="213.33" height="1080" fill="#f5eadf"/><rect x="213.33" y="0" width="213.33" height="1080" fill="#f0decd"/><rect x="426.67" y="0" width="213.33" height="1080" fill="#ead2bb"/><rect x="640" y="0" width="213.33" height="1080" fill="#e5c6a9"/><rect x="853.33" y="0" width="213.33" height="1080" fill="#dfbb97"/><rect x="1066.67" y="0" width="213.33" height="1080" fill="#daaf85"/><rect x="1280" y="0" width="213.33" height="1080" fill="#d4a373"/><rect x="1493.33" y="0" width="213.33" height="1080" fill="#947251"/><rect x="1706.67" y="0" width="213.33" height="1080" fill="#55412e"/></g><g fill="#000000"><text x="17.07" y="1021.18" font-size="32.11">#f5eadf</text><text x="17.07" y="1062.93" font-size="28.9">17.7:1 AAA</text></g><g fill="#000000"><text x="230.4" y="1021.18" font-size="32.11">#f0decd</text><text x="230.4" y="1062.93" font-size="28.9">16.0:1 AAA</text></g><g fill="#000000"><text x="443.73" y="1021.18" font-size="32.11">#ead2bb</text><text x="443.73" y="1062.93" font-size="28.9">14.4:1 AAA</text></g><g fill="#000000"><text x="657.07" y="1021.18" font-size="32.11">#e5c6a9</text><text x="657.07" y="1062.93" font-size="28.9">12.9:1 AAA</text></g><g fill="#000000"><text x="870.4" y="1021.18" font-size="32.11">#dfbb97</text><text x="870.4" y="1062.93" font-size="28.9">11.6:1 AAA</text></g><g fill="#000000"><text x="1083.73" y="1021.18" font-size="32.11">#daaf85</text><text x="1083.73" y="1062.93" font-size="28.9">10.4:1 AAA</text></g><g fill="#000000"><text x="1297.07" y="1021.18" font-size="32.11">#d4a373</text><text x="1297.07" y="1062.93" font-size="28.9">9.2:1 AAA</text></g><circle cx="1468.8" cy="24.53" r="7.47" fill="#000000"/><g fill="#000000"><text x="1510.4" y="1021.18" font-size="32.11">#947251</text><text x="1510.4" y="1062.93" font-size="28.9">4.7:1 AA</text></g><g fill="#ffffff"><text x="1723.73" y="1021.18" font-size="32.11">#55412e</text><text x="1723.73" y="1062.93" font-size="28.9">9.6:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > slate 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="174.55" height="1080" fill="#cadcf6"/><rect x="174.55" y="0" width="174.55" height="1080" fill="#b4c6e0"/><rect x="349.09" y="0" width="174.55" height="1080" fill="#a0b1ca"/><rect x="523.64" y="0" width="174.55" height="1080" fill="#8b9cb4"/><rect x="698.18" y="0" width="174.55" height="1080" fill="#77889f"/><rect x="872.73" y="0" width="174.55" height="1080" fill="#64748b"/><rect x="1047.27" y="0" width="174.55" height="1080" fill="#4d5c72"/><rect x="1221.82" y="0" width="174.55" height="1080" fill="#37455a"/><rect x="1396.36" y="0" width="174.55" height="1080" fill="#223044"/><rect x="1570.91" y="0" width="174.55" height="1080" fill="#0e1b2e"/><rect x="1745.45" y="0" width="174.55" height="1080" fill="#010819"/></g><g fill="#000000"><text x="13.96" y="963.56" font-size="26.28">215</text><text x="13.96" y="997.72" font-size="26.28">71%</text><text x="13.96" y="1031.88" font-size="26.28">87.8%</text><text x="13.96" y="1066.04" font-size="23.65">15.0:1 AAA</text></g><g fill="#000000"><text x="188.51" y="963.56" font-size="26.28">215</text><text x="188.51" y="997.72" font-size="26.28">41.5%</text><text x="188.51" y="1031.88" font-size="26.28">79.2%</text><text x="188.51" y="1066.04" font-size="23.65">12.0:1 AAA</text></g><g fill="#000000"><text x="363.05" y="963.56" font-size="26.28">216</text><text x="363.05" y="997.72" font-size="26.28">28.4%</text><text x="363.05" y="1031.88" font-size="26.28">71%</text><text x="363.05" y="1066.04" font-size="23.65">9.6:1 AAA</text></g><g fill="#000000"><text x="537.6" y="963.56" font-size="26.28">215</text><text x="537.6" y="997.72" font-size="26.28">21.5%</text><text x="537.6" y="1031.88" font-size="26.28">62.5%</text><text x="537.6" y="1066.04" font-size="23.65">7.5:1 AAA</text></g><g fill="#000000"><text x="712.15" y="963.56" font-size="26.28">215</text><text x="712.15" y="997.72" font-size="26.28">17.2%</text><text x="712.15" y="1031.88" font-size="26.28">54.5%</text><text x="712.15" y="1066.04" font-size="23.65">5.8:1 AA</text></g><g fill="#ffffff"><text x="886.69" y="963.56" font-size="26.28">215</text><text x="886.69" y="997.72" font-size="26.28">16.3%</text><text x="886.69" y="1031.88" font-size="26.28">46.9%</text><text x="886.69" y="1066.04" font-size="23.65">4.7:1 AA</text></g><circle cx="1027.2" cy="20.07" r="6.11" fill="#ffffff"/><g fill="#ffffff"><text x="1061.24" y="963.56" font-size="26.28">216</text><text x="1061.24" y="997.72" font-size="26.28">19.4%</text><text x="1061.24" y="1031.88" font-size="26.28">37.5%</text><text x="1061.24" y="1066.04" font-size="23.65">6.7:1 AA</text></g><g fill="#ffffff"><text x="1235.78" y="963.56" font-size="26.28">216</text><text x="1235.78" y="997.72" font-size="26.28">24.1%</text><text x="1235.78" y="1031.88" font-size="26.28">28.4%</text><text x="1235.78" y="1066.04" font-size="23.65">9.7:1 AAA</text></g><g fill="#ffffff"><text x="1410.33" y="963.56" font-size="26.28">215</text><text x="1410.33" y="997.72" font-size="26.28">33.3%</text><text x="1410.33" y="1031.88" font-size="26.28">20%</text><text x="1410.33" y="1066.04" font-size="23.65">13.3:1 AAA</text></g><g fill="#ffffff"><text x="1584.87" y="963.56" font-size="26.28">216</text><text x="1584.87" y="997.72" font-size="26.28">53.3%</text><text x="1584.87" y="1031.88" font-size="26.28">11.8%</text><text x="1584.87" y="1066.04" font-size="23.65">17.2:1 AAA</text></g><g fill="#ffffff"><text x="1759.42" y="963.56" font-size="26.28">223</text><text x="1759.42" y="997.72" font-size="26.28">92.3%</text><text x="1759.42" y="1031.88" font-size="26.28">5.1%</text><text x="1759.42" y="1066.04" font-size="23.65">19.9:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > sunflower 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="213.33" height="1080" fill="#ffe4b5"/><rect x="213.33" y="0" width="213.33" height="1080" fill="#ffce77"/><rect x="426.67" y="0" width="213.33" height="1080" fill="#ffb703"/><rect x="640" y="0" width="213.33" height="1080" fill="#d49802"/><rect x="853.33" y="0" width="213.33" height="1080" fill="#ac7a01"/><rect x="1066.67" y="0" width="213.33" height="1080" fill="#845d01"/><rect x="1280" y="0" width="213.33" height="1080" fill="#5f4200"/><rect x="1493.33" y="0" width="213.33" height="1080" fill="#3c2800"/><rect x="1706.67" y="0" width="213.33" height="1080" fill="#1c1100"/></g><g fill="#000000"><text x="17.07" y="937.69" font-size="32.11">255</text><text x="17.07" y="979.44" font-size="32.11">228</text><text x="17.07" y="1021.18" font-size="32.11">181</text><text x="17.07" y="1062.93" font-size="28.9">17.0:1 AAA</text></g><g fill="#000000"><text x="230.4" y="937.69" font-size="32.11">255</text><text x="230.4" y="979.44" font-size="32.11">206</text><text x="230.4" y="1021.18" font-size="32.11">119</text><text x="230.4" y="1062.93" font-size="28.9">14.3:1 AAA</text></g><g fill="#000000"><text x="443.73" y="937.69" font-size="32.11">255</text><text x="443.73" y="979.44" font-size="32.11">183</text><text x="443.73" y="1021.18" font-size="32.11">3</text><text x="443.73" y="1062.93" font-size="28.9">12.0:1 AAA</text></g><circle cx="615.47" cy="24.53" r="7.47" fill="#000000"/><g fill="#000000"><text x="657.07" y="937.69" font-size="32.11">212</text><text x="657.07" y="979.44" font-size="32.11">152</text><text x="657.07" y="1021.18" font-size="32.11">2</text><text x="657.07" y="1062.93" font-size="28.9">8.2:1 AAA</text></g><g fill="#000000"><text x="870.4" y="937.69" font-size="32.11">172</text><text x="870.4" y="979.44" font-size="32.11">122</text><text x="870.4" y="1021.18" font-size="32.11">1</text><text x="870.4" y="1062.93" font-size="28.9">5.5:1 AA</text></g><g fill="#ffffff"><text x="1083.73" y="1021.18" font-size="32.11">132 93 1</text><text x="1083.73" y="1062.93" font-size="28.9">5.9:1 AA</text></g><g fill="#ffffff"><text x="1297.07" y="1021.18" font-size="32.11">95 66 0</text><text x="1297.07" y="1062.93" font-size="28.9">9.2:1 AAA</text></g><g fill="#ffffff"><text x="1510.4" y="1021.18" font-size="32.11">60 40 0</text><text x="1510.4" y="1062.93" font-size="28.9">14.0:1 AAA</text></g><g fill="#ffffff"><text x="1723.73" y="1021.18" font-size="32.11">28 17 0</text><text x="1723.73" y="1062.93" font-size="28.9">18.5:1 AAA</text></g></g></svg>"`;
+
+exports[`preset snapshots: tints-shades > tomato 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="213.33" height="1080" fill="#ffcdca"/><rect x="213.33" y="0" width="213.33" height="1080" fill="#fdaca8"/><rect x="426.67" y="0" width="213.33" height="1080" fill="#f78a88"/><rect x="640" y="0" width="213.33" height="1080" fill="#f06667"/><rect x="853.33" y="0" width="213.33" height="1080" fill="#e63946"/><rect x="1066.67" y="0" width="213.33" height="1080" fill="#b02934"/><rect x="1280" y="0" width="213.33" height="1080" fill="#7e1b22"/><rect x="1493.33" y="0" width="213.33" height="1080" fill="#4e0d12"/><rect x="1706.67" y="0" width="213.33" height="1080" fill="#240304"/></g><g fill="#000000"><text x="17.07" y="1021.18" font-size="32.11">#ffcdca</text><text x="17.07" y="1062.93" font-size="28.9">14.8:1 AAA</text></g><g fill="#000000"><text x="230.4" y="1021.18" font-size="32.11">#fdaca8</text><text x="230.4" y="1062.93" font-size="28.9">11.6:1 AAA</text></g><g fill="#000000"><text x="443.73" y="1021.18" font-size="32.11">#f78a88</text><text x="443.73" y="1062.93" font-size="28.9">8.9:1 AAA</text></g><g fill="#000000"><text x="657.07" y="1021.18" font-size="32.11">#f06667</text><text x="657.07" y="1062.93" font-size="28.9">6.8:1 AA</text></g><g fill="#000000"><text x="870.4" y="1021.18" font-size="32.11">#e63946</text><text x="870.4" y="1062.93" font-size="28.9">5.0:1 AA</text></g><circle cx="1042.13" cy="24.53" r="7.47" fill="#000000"/><g fill="#ffffff"><text x="1083.73" y="1021.18" font-size="32.11">#b02934</text><text x="1083.73" y="1062.93" font-size="28.9">6.5:1 AA</text></g><g fill="#ffffff"><text x="1297.07" y="1021.18" font-size="32.11">#7e1b22</text><text x="1297.07" y="1062.93" font-size="28.9">10.1:1 AAA</text></g><g fill="#ffffff"><text x="1510.4" y="1021.18" font-size="32.11">#4e0d12</text><text x="1510.4" y="1062.93" font-size="28.9">15.1:1 AAA</text></g><g fill="#ffffff"><text x="1723.73" y="1021.18" font-size="32.11">#240304</text><text x="1723.73" y="1062.93" font-size="28.9">19.2:1 AAA</text></g></g></svg>"`;
