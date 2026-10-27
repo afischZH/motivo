@@ -7,6 +7,7 @@ export function SiteHeader() {
   const t = useTranslations("Layout");
   const tConvert = useTranslations("Converters");
   const tPatterns = useTranslations("PatternLibrary");
+  const tTheme = useTranslations("Theme");
 
   return (
     <header className="border-b border-border">
@@ -39,7 +40,8 @@ export function SiteHeader() {
               {tConvert("nav")}
             </Link>
           </nav>
-          <ThemeToggle />
+          {/* The visible hint uses the generic form; macOS users read ⌘ for Ctrl. */}
+          <ThemeToggle label={tTheme("toggle")} hint={tTheme("hint", { shortcut: "⌘/Ctrl+⇧+K" })} />
         </div>
       </div>
     </header>

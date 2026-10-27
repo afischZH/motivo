@@ -1,6 +1,6 @@
-import { Link } from "@/i18n/navigation";
+import { IntentLink } from "@/i18n/intent-link";
 import type { EnabledLocale } from "@/i18n/locales";
-import { routeHref } from "@/i18n/paths";
+import { routePath } from "@/i18n/paths";
 import type { PatternStyle } from "@/lib/css-patterns";
 
 export interface PatternCardData {
@@ -33,12 +33,13 @@ export function PatternCard({
       <div aria-hidden="true" className="h-36 border-b border-border" style={pattern.style} />
       <div className="flex flex-1 flex-col gap-1 p-4">
         <Heading className="text-base font-semibold">
-          <Link
-            href={routeHref({ page: "pattern", patternId: pattern.id }, locale)}
+          {/* Also rendered inside the client pattern browser: an already localized href. */}
+          <IntentLink
+            href={routePath({ page: "pattern", patternId: pattern.id }, locale)}
             className="after:absolute after:inset-0 after:rounded-card focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring focus-visible:after:ring-inset"
           >
             {pattern.name}
-          </Link>
+          </IntentLink>
         </Heading>
         <p className="text-sm text-muted-foreground">{pattern.description}</p>
         <p className="mt-auto pt-2 text-xs text-muted-foreground">{pattern.categoryLabel}</p>

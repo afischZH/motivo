@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -9,7 +9,6 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { MAIN_CONTENT_ID, SkipLink } from "@/components/layout/skip-link";
 import { Telemetry } from "@/components/telemetry/telemetry";
 import { routing } from "@/i18n/routing";
-import { LAYOUT_CLIENT_NAMESPACES, pickMessages } from "@/lib/client-messages";
 import { siteUrl } from "@/lib/seo/site-url";
 import { themeInitScript } from "@/lib/theme";
 
@@ -36,8 +35,6 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
-  // Only what the layout's client components need; pages add their own.
-  const messages = pickMessages(await getMessages(), LAYOUT_CLIENT_NAMESPACES);
 
   return (
     // The inline script adds the `dark` class before hydration.
@@ -46,14 +43,18 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <SkipLink />
-          <SiteHeader />
-          <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1 focus:outline-none">
-            {children}
-          </main>
-          <SiteFooter />
-        </NextIntlClientProvider>
+        {/*
+          No NextIntlClientProvider here: the layout's client components get
+          their texts as props and links resolve on the server, so landing
+          pages load no client message formatter. Pages with translated
+          client components (editor, converters, waitlist) add their own.
+        */}
+        <SkipLink />
+        <SiteHeader />
+        <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1 focus:outline-none">
+          {children}
+        </main>
+        <SiteFooter />
         {/* Analytics and error reporting; renders nothing and is off without env vars. */}
         <Telemetry />
       </body>

@@ -3,23 +3,13 @@ import { describe, expect, it } from "vitest";
 import editorDe from "@motivo/editor-ui/messages/de.json";
 import de from "@/messages/de.json";
 
-import {
-  CONVERTER_CLIENT_NAMESPACES,
-  LAYOUT_CLIENT_NAMESPACES,
-  editorMessages,
-  pickMessages,
-} from "./client-messages";
+import { CONVERTER_CLIENT_NAMESPACES, editorMessages, pickMessages } from "./client-messages";
 
 const all = { ...de, ...editorDe } as Record<string, unknown>;
 
 describe("client messages", () => {
-  it("sends only the layout namespaces by default", () => {
-    expect(Object.keys(pickMessages(all, LAYOUT_CLIENT_NAMESPACES))).toEqual(["Layout", "Theme"]);
-    expect(Object.keys(pickMessages(all, CONVERTER_CLIENT_NAMESPACES))).toEqual([
-      "Layout",
-      "Theme",
-      "Converters",
-    ]);
+  it("sends only the converter texts to converters", () => {
+    expect(Object.keys(pickMessages(all, CONVERTER_CLIENT_NAMESPACES))).toEqual(["Converters"]);
   });
 
   it("keeps legal and home texts out of client payloads", () => {
@@ -31,9 +21,7 @@ describe("client messages", () => {
 
   it("gives the editor its namespaces and tool texts without SEO copy", () => {
     const editor = editorMessages(all);
-    expect(Object.keys(editor).sort()).toEqual(
-      ["Editor", "Layout", "Theme", "ToolPage", "sizes", "tools"].sort(),
-    );
+    expect(Object.keys(editor).sort()).toEqual(["Editor", "ToolPage", "sizes", "tools"].sort());
     const tools = editor.tools as Record<string, Record<string, unknown>>;
     expect(Object.keys(tools)).toEqual(Object.keys(de.tools));
     for (const [id, entry] of Object.entries(tools)) {
