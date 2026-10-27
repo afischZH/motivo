@@ -123,6 +123,7 @@ describe("Founders waitlist pages", () => {
   it("have the documented localized slugs", () => {
     expect(SECTION_SLUGS.founders).toEqual({ de: "founders-warteliste", en: "founders-waitlist" });
     expect(WAITLIST_PAGE_SLUGS).toEqual({
+      confirm: { de: "bestaetigen", en: "confirm" },
       confirmed: { de: "bestaetigt", en: "confirmed" },
       invalid: { de: "link-ungueltig", en: "invalid-link" },
       error: { de: "fehler", en: "error" },

@@ -73,6 +73,24 @@ export function isLocalHost(host: string | null | undefined): boolean {
   return new RegExp(`^${LOCAL_HOST_PATTERN}$`).test(host.replace(/:\d+$/, "").toLowerCase());
 }
 
+/**
+ * Header that Cloudflare adds to every request reaching the Worker and that
+ * clients cannot remove. Its presence rules out the local variant.
+ *
+ * Why the Host header alone is not enough: OpenNext copies a client-sent
+ * `X-Forwarded-Host` into `Host` before Next evaluates `has` rules and the
+ * proxy runs (`@opennextjs/aws` core/requestHandler.js), and Cloudflare
+ * passes that header through. Without this check, anybody could ask the
+ * production Worker for the local variant (no HSTS, max-age=0, COOP
+ * unsafe-none) with `X-Forwarded-Host: localhost`.
+ */
+export const EDGE_REQUEST_HEADER = "cf-connecting-ip";
+
+/** The local variant applies: local Host header and not served through Cloudflare. */
+export function isLocalRequest(headers: Pick<Headers, "get" | "has">): boolean {
+  return isLocalHost(headers.get("host")) && !headers.has(EDGE_REQUEST_HEADER);
+}
+
 /** The Content-Security-Policy value as a single header line. */
 export function contentSecurityPolicy({
   dev,
@@ -157,13 +175,15 @@ export function securityHeaders(options: SecurityHeaderOptions): Header[] {
 /**
  * next.config `headers()` rule for local hosts. Listed after the main rule:
  * Next lets the last matching rule win for the same header key, so only the
- * headers that differ change. Production hosts never match.
+ * headers that differ change. Production hosts never match, and neither does
+ * any request through Cloudflare, whatever its Host (see EDGE_REQUEST_HEADER).
  */
 export function localHostHeaderRule(options: SecurityHeaderOptions) {
   const remote = new Map(securityHeaders(options).map(({ key, value }) => [key, value]));
   return {
     source: "/:path*",
     has: [{ type: "host" as const, value: LOCAL_HOST_PATTERN }],
+    missing: [{ type: "header" as const, key: EDGE_REQUEST_HEADER }],
     headers: securityHeaders({ ...options, local: true }).filter(
       ({ key, value }) => remote.get(key) !== value,
     ),

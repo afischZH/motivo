@@ -1686,6 +1686,15 @@
   "WaitlistResult": {
     "backHome": "Zur Startseite",
     "backFounders": "Zur Founders-Warteliste",
+    "confirm": {
+      "metaTitle": "Anmeldung bestätigen",
+      "title": "Anmeldung bestätigen",
+      "text": "Bestätige mit einem Klick, dass du auf die Founders-Warteliste möchtest.",
+      "button": "Anmeldung bestätigen",
+      "working": "Wird bestätigt …",
+      "error": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
+      "noToken": "Öffne diese Seite über den Bestätigungslink in unserer E-Mail."
+    },
     "confirmed": {
       "metaTitle": "Anmeldung bestätigt",
       "title": "Du bist auf der Warteliste",

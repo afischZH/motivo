@@ -46,12 +46,10 @@ test.describe("waitlist switched off (no secrets)", () => {
     });
     expect(signup.status()).toBe(503);
     expect(await signup.json()).toEqual({ error: "disabled" });
-    const confirm = await request.get(`/api/waitlist/confirm?token=${TOKEN}&lang=en`, {
-      maxRedirects: 0,
-    });
-    expect(confirm.status()).toBe(303);
-    expect(new URL(confirm.headers().location ?? "").pathname).toBe("/en/founders-waitlist/error");
-    // No GET unsubscribe: link scanners must not unsubscribe anybody.
+    const confirm = await request.post("/api/waitlist/confirm", { data: { token: TOKEN } });
+    expect(confirm.status()).toBe(503);
+    // No GET confirm or unsubscribe: link scanners must not act for anybody.
+    expect((await request.get(`/api/waitlist/confirm?token=${TOKEN}&lang=en`)).status()).toBe(405);
     expect((await request.get(`/api/waitlist/unsubscribe?token=${TOKEN}`)).status()).toBe(405);
   });
 
@@ -157,6 +155,54 @@ test.describe("result pages", () => {
       );
     }
     await expectNoAxeViolations(page);
+  });
+
+  test("confirms only on a click, with the token from the fragment", async ({ page }) => {
+    const bodies: unknown[] = [];
+    await page.route("**/api/waitlist/confirm", async (route) => {
+      bodies.push(route.request().postDataJSON());
+      await route.fulfill({ json: { status: "confirmed" } });
+    });
+    await page.goto(`/de/founders-warteliste/bestaetigen#token=${TOKEN}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Anmeldung bestätigen");
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      "noindex, nofollow",
+    );
+    const button = page.getByRole("button", { name: "Anmeldung bestätigen" });
+    await expect(button).toBeVisible();
+    expect(new URL(page.url()).hash).toBe("");
+    // Opening the link (what a mail scanner does) sends nothing.
+    expect(bodies).toEqual([]);
+    await expectNoAxeViolations(page);
+    await button.click();
+    await expect(page).toHaveURL(/\/de\/founders-warteliste\/bestaetigt$/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Du bist auf der Warteliste");
+    expect(bodies).toEqual([{ token: TOKEN }]);
+  });
+
+  test("leads a used confirmation link to the invalid page and keeps errors on the page", async ({
+    page,
+  }) => {
+    let answer: { status: number; json: unknown } = { status: 503, json: { error: "unavailable" } };
+    await page.route("**/api/waitlist/confirm", (route) => route.fulfill(answer));
+    await page.goto(`/en/founders-waitlist/confirm#token=${TOKEN}`);
+    const button = page.getByRole("button", { name: "Confirm sign-up" });
+    await button.click();
+    await expect(page.getByTestId("confirm-status")).toHaveText(
+      "That did not work. Please try again in a few minutes.",
+    );
+    answer = { status: 404, json: { status: "invalid" } };
+    await button.click();
+    await expect(page).toHaveURL(/\/en\/founders-waitlist\/invalid-link$/);
+  });
+
+  test("explains a missing confirmation token", async ({ page }) => {
+    await page.goto("/en/founders-waitlist/confirm");
+    await expect(page.getByTestId("confirm-status")).toHaveText(
+      "Open this page with the confirmation link in our email.",
+    );
+    await expect(page.getByRole("button", { name: "Confirm sign-up" })).toHaveCount(0);
   });
 
   test("unsubscribes with the token from the fragment, then drops it from the URL", async ({

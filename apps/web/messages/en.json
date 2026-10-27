@@ -1686,6 +1686,15 @@
   "WaitlistResult": {
     "backHome": "Go to the home page",
     "backFounders": "Go to the Founders waitlist",
+    "confirm": {
+      "metaTitle": "Confirm your sign-up",
+      "title": "Confirm your sign-up",
+      "text": "Confirm with one click that you want to join the Founders waitlist.",
+      "button": "Confirm sign-up",
+      "working": "Confirming …",
+      "error": "That did not work. Please try again in a few minutes.",
+      "noToken": "Open this page with the confirmation link in our email."
+    },
     "confirmed": {
       "metaTitle": "Sign-up confirmed",
       "title": "You are on the waitlist",
