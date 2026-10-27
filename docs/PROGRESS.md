@@ -6,7 +6,8 @@
 
 - **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: Export-Dialog und Teilen-Knopf (AP05/06 UI), danach AP12 und Reviews.
+- **Nächster Schritt**: AP12 (QA cross-browser) sowie Code- und Security-Review, danach M1-Abnahme durch Andreas.
+- Offene Kleinfragen (Orchestrator entschieden, bei Abnahme nennen): Link eines anderen Tools zeigt Hinweis statt Weiterleitung; Teilen kopiert nur, ändert die Adresszeile nicht; ⌘⇧C kollidiert unter Windows/Linux evtl. mit DevTools.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
@@ -18,8 +19,8 @@
 | M1-AP02 | Editor-State: Params, Seed, Locks, Randomize, Undo/Redo, Varianten-Verlauf | ui-dev | erledigt | AP01 | Dep: zustand 5 (ca. 0.4 KB gzip); Preset erzeugt neue Variante; Locks und Filmstreifen nicht im Undo |
 | M1-AP03 | Auto-Controls aus Zod-Schema (Slider, Segmented, Switch, Farbe, Palette) inkl. Schloss | ui-dev | erledigt | AP01 | Farbwähler ohne OKLCH-Tabs, Palette per Knöpfe statt Drag, Reset per Doppelklick (Tastatur folgt); 116 Tests |
 | M1-AP04 | Editor-Seite `/[locale]/tools/[toolId]`: Layout, Presets-Leiste, Vorschau mit Zoom/Fit, Filmstreifen, Tastaturkürzel | ui-dev | erledigt | AP02, AP03 | EditorShell in editor-ui; Mobile einspaltig statt Bottom-Sheet; ⌘K, ⌘S, ⌘⇧C fehlen noch; Preset-Thumbnails als data-URL im HTML (Polka Dots ca. 34 KB gzip), in AP12 prüfen |
-| M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | Kern erledigt, UI in Arbeit | AP01, AP04 | `@motivo/exporters` (SVG, CSS, Raster im Worker, Clipboard), Extra-Exporte Tailwind und clip-path; ohne SVGO; iOS-Canvas-Limit ca. 16.7 MP |
-| M1-AP06 | Teilen per URL-Hash (Params komprimiert) | ui-dev | Kern erledigt, UI in Arbeit | AP02 | Dep: fflate 0.8 (ca. 4.1 KB gzip); Format Version + DEFLATE + base64url, Limits 8 KB / 64 KB |
+| M1-AP05 | Exporter SVG, CSS, PNG/JPG/WebP (freie Grösse, gross im Worker), Clipboard + Export-Dialog | engine-dev + ui-dev | erledigt | AP01, AP04 | `@motivo/exporters` (SVG, CSS, Raster im Worker, Clipboard), Extra-Exporte Tailwind und clip-path; ohne SVGO; iOS-Canvas-Limit ca. 16.7 MP |
+| M1-AP06 | Teilen per URL-Hash (Params komprimiert) | ui-dev | erledigt | AP02 | Dep: fflate 0.8 (ca. 4.1 KB gzip); Format Version + DEFLATE + base64url, Limits 8 KB / 64 KB |
 | M1-AP07 | Tool **CSS Gradient** (linear/radial/conic, Easing, OKLCH) | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Dep: culori 4 via `culori/fn` (ca. 1.3 KB gzip); Stopps gleichmässig, ziehbare Stopps später (neuer Control-Typ) |
 | M1-AP08 | Tool **Blob** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Füllung solid/outline/gradient; clip-path-CSS kommt mit AP05-Hook |
 | M1-AP09 | Tool **SVG Waves** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Param `coverage`, Standard 1920×1080 |
