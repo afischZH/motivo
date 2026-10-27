@@ -22,6 +22,81 @@
       "remove": "Remove color",
       "moveLeft": "Move left",
       "moveRight": "Move right"
+    },
+    "shell": {
+      "history": "History",
+      "undo": "Undo",
+      "redo": "Redo",
+      "undone": "Undone",
+      "redone": "Redone",
+      "newVariant": "Shuffle",
+      "newVariantHint": "new variant",
+      "export": "Export",
+      "exportSoon": "Export is coming soon.",
+      "preview": "Preview",
+      "previewAlt": "Preview: {tool}, {width} × {height} px",
+      "unsupported": "There is no preview for this tool yet.",
+      "zoom": "Zoom",
+      "zoomFit": "Fit",
+      "zoomPercent": "{percent}%",
+      "zoomCurrent": "Current zoom",
+      "presets": "Presets",
+      "settings": "Settings",
+      "variants": "Variants",
+      "variantLabel": "Variant {index}",
+      "variantAnnouncement": "Variant {index} of {count}",
+      "previousVariant": "Previous variant",
+      "nextVariant": "Next variant"
+    },
+    "size": {
+      "label": "Size",
+      "custom": "Custom size",
+      "width": "Width",
+      "height": "Height",
+      "option": "{name} ({width} × {height})",
+      "invalid": "Use a whole number from {min} to {max} px.",
+      "groups": {
+        "social": "Social media",
+        "desktop": "Desktop",
+        "mobile": "Mobile",
+        "print": "Print"
+      }
+    },
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "close": "Close",
+      "keysColumn": "Keys",
+      "actionColumn": "Action",
+      "or": "or",
+      "focusHint": "Shortcuts pause while you type in a field.",
+      "keys": {
+        "space": "Space"
+      },
+      "actions": {
+        "newVariant": "New variant",
+        "undo": "Undo",
+        "redo": "Redo",
+        "previousVariant": "Previous variant",
+        "nextVariant": "Next variant",
+        "zoomFit": "Zoom to fit",
+        "zoom100": "Zoom to 100%",
+        "theme": "Switch light and dark",
+        "help": "This overview"
+      }
     }
+  },
+  "sizes": {
+    "square": "Square",
+    "portrait": "Portrait",
+    "story": "Story",
+    "landscape": "Landscape (link preview)",
+    "banner": "Banner",
+    "full-hd": "Full HD",
+    "qhd": "QHD",
+    "uhd-4k": "4K UHD",
+    "phone": "Phone",
+    "tablet": "Tablet",
+    "a4-portrait": "A4 portrait",
+    "a4-landscape": "A4 landscape"
   }
 }

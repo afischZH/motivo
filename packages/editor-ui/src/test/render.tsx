@@ -34,11 +34,11 @@ export const fixtureMessages = {
 };
 
 /** Renders inside `NextIntlClientProvider`; a missing message fails the test. */
-export function renderWithIntl(ui: ReactElement): RenderResult {
+export function renderWithIntl(ui: ReactElement, messages: object = fixtureMessages): RenderResult {
   return render(
     <NextIntlClientProvider
       locale="de"
-      messages={fixtureMessages}
+      messages={messages}
       onError={(error) => {
         throw error;
       }}
