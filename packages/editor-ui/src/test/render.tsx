@@ -30,6 +30,15 @@ export const fixtureMessages = {
         fixed: { label: "Fixiert" },
       },
     },
+    "test-list": {
+      item: "Ebene {index}",
+      params: {
+        background: { label: "Hintergrund" },
+        items: { label: "Ebenen" },
+        kind: { label: "Art", options: optionLabels(["a", "b", "c", "d", "e", "f", "g"]) },
+        size: { label: "Grösse" },
+      },
+    },
   },
 };
 

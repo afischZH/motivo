@@ -17,6 +17,7 @@
  */
 import {
   canvasSizeSchema,
+  parseToolParams,
   registry as defaultRegistry,
   seedSchema,
   withoutDerivedParams,
@@ -76,7 +77,8 @@ function validate(
 ): ValidateResult {
   const tool = registry.get(toolId);
   if (!tool) return { ok: false, error: "unknown-tool" };
-  const p = tool.schema.safeParse(params);
+  // Old param shapes (e.g. single-pattern links) are upgraded, then fully validated.
+  const p = parseToolParams(tool, params);
   if (!p.success) return { ok: false, error: "invalid-params" };
   const s = seedSchema.safeParse(seed);
   if (!s.success) return { ok: false, error: "invalid-seed" };

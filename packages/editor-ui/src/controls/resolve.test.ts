@@ -7,7 +7,7 @@ import {
 } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 import * as z from "zod";
-import { fixtureDefaults, fixtureTool } from "../test/fixture-tool";
+import { fixtureDefaults, fixtureTool, listFixtureDefaults, listTool } from "../test/fixture-tool";
 import {
   SEGMENTED_MAX_OPTIONS,
   deriveControlKind,
@@ -171,5 +171,40 @@ describe("resolveControls", () => {
     expect(groups).toHaveLength(1);
     expect(groups[0]?.id).toBeNull();
     expect(groups[0]?.controls).toContain("internal");
+  });
+});
+
+describe("list and thumbnail controls", () => {
+  it("derives a list for arrays of objects, nothing for arrays of scalars", () => {
+    expect(deriveControlKind(z.array(z.object({ a: z.number() })).min(1))).toBe("list");
+    expect(deriveControlKind(z.array(z.number()))).toBe("hidden");
+  });
+
+  it("reads limits, item source and hints of a list param", () => {
+    const c = resolveControl(listTool, "items", listTool.controls?.params?.items, {
+      params: listFixtureDefaults,
+      root: listFixtureDefaults,
+    });
+    expect(c?.kind).toBe("list");
+    if (c?.kind !== "list") return;
+    expect([c.minItems, c.maxItems]).toEqual([1, 4]);
+    expect(c.visibilityField).toBe("on");
+    expect(c.titleField).toBe("kind");
+    expect(c.itemLabelKey).toBe("tools.test-list.item");
+    expect(c.item.defaults).toEqual(listFixtureDefaults.items[0]);
+    expect(c.newItem(listFixtureDefaults.items)).toEqual({ kind: "c", size: 5, on: true });
+    // The sub-form resolves from the item schema; hidden fields drop out.
+    const item = listFixtureDefaults.items[0] as Record<string, unknown>;
+    const keys = resolveControls(c.item, item, listFixtureDefaults).flatMap((g) =>
+      g.controls.map((x) => `${x.key}:${x.kind}`),
+    );
+    expect(keys).toEqual(["kind:thumbnails", "size:slider"]);
+  });
+
+  it("falls back to a select without a preview hint", () => {
+    const c = resolveControl(listTool, "background", { kind: "thumbnails" });
+    expect(c).toBeNull(); // not a choice
+    const tool = { id: "t", schema: z.object({ k: z.enum(["a", "b"]) }), defaults: { k: "a" } };
+    expect(resolveControl(tool, "k", { kind: "thumbnails" })?.kind).toBe("select");
   });
 });
