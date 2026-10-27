@@ -4,6 +4,7 @@
   "private": true,
   "description": "Pure, deterministic generators per tool, PRNG, geometry, color",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./src/index.ts"
   },
@@ -13,5 +14,8 @@
   },
   "devDependencies": {
     "@motivo/config": "workspace:*"
+  },
+  "dependencies": {
+    "culori": "^4.0.2"
   }
 }
