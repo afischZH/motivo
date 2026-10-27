@@ -4,15 +4,33 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M1 (freigegeben 2026-10-27, umgesetzt, Abnahme offen). M0 abgenommen und live seit 2026-10-27.
-- **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: M1-Abnahme durch Andreas (PR #2 mergen = Production-Deploy).
-- Reviews 2026-10-27: Code-Review (keine kritischen Befunde, 2 mittel, 5 tief) und Security-Review (PASS WITH NOTES: Polka-Dots-Link konnte Tab einfrieren) alle behoben. Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben).
-- Offene Kleinfragen (Orchestrator entschieden, bei Abnahme nennen): Link eines anderen Tools zeigt Hinweis statt Weiterleitung; Teilen kopiert nur, ändert die Adresszeile nicht; ⌘⇧C kollidiert unter Windows/Linux evtl. mit DevTools.
+- **Meilenstein**: M2 (Plan zur Freigabe vorgelegt 2026-10-27). M1 abgenommen und live seit 2026-10-27 (PR #2, Merge e56e13f). M0 live seit 2026-10-27.
+- **Letzte Sitzung**: 2026-10-27 (Cloud-Sitzung)
+- **Nächster Schritt**: Freigabe des M2-Plans durch Andreas, inkl. Entscheide zu Domain, Rechtstexten, Analytics, Sentry und Founders-Warteliste.
+- Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben), als M2-AP11 eingeplant.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M1: Editor-Shell + erste Tools
+### M2: SEO-Seiten, mehr Tools, Beta (Plan, Freigabe offen)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M2-AP01 | Tools **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots** | engine-dev | geplant | – | Confetti/Starry Sky mit Poisson-Disk (seeded); Limits gegen Einfrieren wie bei Polka Dots |
+| M2-AP02 | Tool **Noise/Grain** | engine-dev | geplant | – | SVG feTurbulence + Raster; Vorschau == Export prüfen |
+| M2-AP03 | **CSS Pattern Library** (Dots, Grid, Stripes, Waves, Geometric) inkl. eigener Seite pro Muster | engine-dev + ui-dev | geplant | AP08 (Template) | Eigene, frei entworfene Muster (Clean-Room); Exporte CSS, Tailwind, SVG, PNG |
+| M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | geplant | AP03 | Neuer Control-Typ Ebenenliste |
+| M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | geplant | – | OKLCH, WCAG-Kontrast; Export `tailwind.config.js` und v4 `@theme`; braucht Paletten-Vorschau in der Shell |
+| M2-AP06 | **Palette aus Bild** | engine-dev | geplant | AP05 | k-means in OKLab im Worker, Bild bleibt im Browser |
+| M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | geplant | – | FR/IT nur Struktur, Texte später |
+| M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, dynamische OG-Bilder | ui-dev | geplant | AP07 | OG-Bilder zur Build-Zeit oder im Worker, keine laufenden Kosten |
+| M2-AP09 | Startseite, Impressum, Datenschutz, Analytics, Sentry | ui-dev | geplant | AP08 | Rechtstexte "juristisch zu prüfen"; Analytics/Sentry nach Entscheid Andreas |
+| M2-AP10 | **Founders-Warteliste** (Double Opt-in, Zähler) | backend-dev + security-reviewer | geplant, Entscheid offen | – | Neue Tabelle (Supabase EU, RLS) und E-Mail-Versand: Stopp-Punkte |
+| M2-AP11 | CSP und Security-Header | security-reviewer + ui-dev | geplant | – | Aus M1-Review |
+| M2-AP12 | Lighthouse ≥ 95, QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | geplant | alle | Domain, DNS, Search Console durch Andreas |
+
+Reihenfolge: zuerst parallel Tool-Strang (AP01, AP02, AP05, AP06) und Seiten-Strang (AP07, dann AP08, dann AP03/AP04 und AP09); AP10 und AP11 parallel, sobald entschieden; zum Schluss AP12.
+
+### M1: Editor-Shell + erste Tools (abgeschlossen)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
