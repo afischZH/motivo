@@ -53,9 +53,20 @@ test.describe("home page", () => {
 
   test("states no binding price or offer", async ({ page }) => {
     await page.goto("/de");
-    const text = (await page.getByRole("main").textContent()) ?? "";
-    expect(text).not.toMatch(/CHF|EUR|USD|€|\$/);
-    expect(text).toContain("Lifetime-Lizenz");
+    const main = page.getByRole("main");
+    // The only price is the Founders "from" price, marked as non-binding (M2-AP10).
+    const waitlist = main.locator("#founders-waitlist");
+    await expect(waitlist.getByTestId("waitlist-price")).toHaveText(
+      "Lifetime-Lizenz ab 49 CHF oder EUR",
+    );
+    await expect(waitlist).toContainText("Unverbindlicher Richtwert, kein Angebot.");
+    const outside = await main.evaluate((el) => {
+      const clone = el.cloneNode(true) as HTMLElement;
+      clone.querySelector("#founders-waitlist")?.remove();
+      return clone.textContent ?? "";
+    });
+    expect(outside).not.toMatch(/CHF|EUR|USD|€|\$/);
+    expect(outside).toContain("Lifetime-Lizenz");
   });
 });
 

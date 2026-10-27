@@ -30,6 +30,8 @@ export function sitemapRoutes(): AppRoute[] {
     ...libraryPatterns().map((spec): AppRoute => ({ page: "pattern", patternId: spec.id })),
     { page: "convert" },
     ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
+    // Waitlist result pages are noindex and never listed.
+    { page: "founders" },
     // Draft legal pages are noindex and stay out until the legal review.
     ...(legalPagesIndexable() ? [{ page: "imprint" } as const, { page: "privacy" } as const] : []),
   ];

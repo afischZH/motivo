@@ -16,6 +16,9 @@ export const MIGRATIONS_DIR = new URL("../../../../supabase/migrations/", import
 
 export type DbRole = "anon" | "authenticated" | "service_role";
 
+/** The test database (re-exported so other packages need no PGlite dependency). */
+export type TestDatabase = PGlite;
+
 /** Roles and grants as on a Supabase project (simplified to what RLS tests need). */
 const SUPABASE_BOOTSTRAP = `
   create role anon nologin noinherit;

@@ -15,6 +15,7 @@ export const LEGAL_SECTIONS = {
     "local",
     "share",
     "contact",
+    "waitlist",
     "transfer",
     "retention",
     "rights",

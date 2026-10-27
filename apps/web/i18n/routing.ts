@@ -47,6 +47,8 @@ export const routing = defineRouting({
     "/css-patterns/[patternSlug]": sectionPath("cssPatterns", "/[patternSlug]"),
     "/imprint": sectionPath("imprint"),
     "/privacy": sectionPath("privacy"),
+    "/founders": sectionPath("founders"),
+    "/founders/[waitlistPage]": sectionPath("founders", "/[waitlistPage]"),
   },
   // hreflang and canonical come from the Metadata API (lib/seo), which knows
   // the localized slugs; the middleware's Link header would not.

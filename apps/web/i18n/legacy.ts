@@ -20,6 +20,8 @@ import {
   sectionSlug,
   toolIdFromAnySlug,
   toolSlug,
+  waitlistPageFromAnySlug,
+  waitlistPageSlug,
 } from "./slugs";
 
 /** The canonical pathname for `pathname`, or null if it is canonical or unknown. */
@@ -58,6 +60,11 @@ export function canonicalRedirect(pathname: string): string | null {
     const converterId = converterIdFromAnySlug(slug);
     if (!converterId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${converterSlug(converterId, locale)}`;
+  } else if (section === "founders") {
+    // Waitlist result pages: `/de/founders-warteliste/bestaetigt`.
+    const page = waitlistPageFromAnySlug(slug);
+    if (!page || segments.length !== 3) return null;
+    canonical = `/${locale}/${sectionSlug(section, locale)}/${waitlistPageSlug(page, locale)}`;
   } else {
     // Single-page sections (legal pages) have no sub-pages.
     return null;

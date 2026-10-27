@@ -5,7 +5,8 @@
   "description": "Supabase types, queries and migrations",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./testing": "./src/testing/database.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

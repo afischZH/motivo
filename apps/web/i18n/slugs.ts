@@ -123,9 +123,25 @@ export const SECTION_SLUGS = {
   cssPatterns: { de: "css-muster", en: "css-patterns" },
   imprint: { de: "impressum", en: "imprint" },
   privacy: { de: "datenschutz", en: "privacy" },
+  founders: { de: "founders-warteliste", en: "founders-waitlist" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;
+
+/**
+ * Result pages of the Founders waitlist under the `founders` section
+ * (`/de/founders-warteliste/bestaetigt`). The API redirects to them after a
+ * confirmation link; `unsubscribe` is the page the e-mail's unsubscribe link
+ * opens. Not indexed, not in the sitemap.
+ */
+export const WAITLIST_PAGE_SLUGS = {
+  confirmed: { de: "bestaetigt", en: "confirmed" },
+  invalid: { de: "link-ungueltig", en: "invalid-link" },
+  error: { de: "fehler", en: "error" },
+  unsubscribe: { de: "abmelden", en: "unsubscribe" },
+} as const satisfies Record<string, LocalizedSlugs>;
+
+export type WaitlistPage = keyof typeof WAITLIST_PAGE_SLUGS;
 
 /** Slug format: lowercase ASCII words joined by single hyphens. */
 export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -184,6 +200,19 @@ export function sectionFromAnySlug(value: string): Section | undefined {
   return (Object.keys(SECTION_SLUGS) as Section[]).find((section) =>
     hasSlug(SECTION_SLUGS[section], value),
   );
+}
+
+export function waitlistPageSlug(page: WaitlistPage, locale: AnyLocale): string {
+  return pick(WAITLIST_PAGE_SLUGS[page], locale);
+}
+
+export function waitlistPageFromSlug(slug: string, locale: AnyLocale): WaitlistPage | undefined {
+  return findId(WAITLIST_PAGE_SLUGS, (entry) => pick(entry, locale) === slug);
+}
+
+export function waitlistPageFromAnySlug(value: string): WaitlistPage | undefined {
+  if (Object.hasOwn(WAITLIST_PAGE_SLUGS, value)) return value as WaitlistPage;
+  return findId(WAITLIST_PAGE_SLUGS, (entry) => hasSlug(entry, value));
 }
 
 export function categorySlug(category: ToolCategory, locale: AnyLocale): string {
