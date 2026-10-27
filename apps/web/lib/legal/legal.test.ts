@@ -53,13 +53,32 @@ describe.each([
 
   it("covers the required topics in the privacy policy", () => {
     const text = JSON.stringify(messages.Legal.privacy);
-    for (const term of ["Cloudflare", "Sentry", "localStorage", "#", "EU"]) {
+    for (const term of [
+      "Cloudflare",
+      "Sentry",
+      "localStorage",
+      "#",
+      "EU",
+      "Supabase",
+      "Resend",
+      "Turnstile",
+      "eu-central-2",
+    ]) {
       expect(text).toContain(term);
     }
   });
 
   it("follows the house style", () => {
-    const text = JSON.stringify(messages.Legal) + JSON.stringify(messages.Home);
+    const text = [
+      messages.Legal,
+      messages.Home,
+      messages.Waitlist,
+      messages.Founders,
+      messages.WaitlistResult,
+      messages.WaitlistEmail,
+    ]
+      .map((part) => JSON.stringify(part))
+      .join("");
     // No dashes as punctuation.
     expect(text).not.toMatch(/\s[–—]\s/);
     if (locale === "de") expect(text).not.toContain("ß");

@@ -178,6 +178,8 @@ export_events   (id, user_id null, anon_id null, tool_id, format, width, height,
 api_keys        (id, user_id, name, key_hash, last4, scopes text[], created_at, revoked_at)
 api_usage       (api_key_id, day date, count int, pk(api_key_id, day))
 ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, tokens_out, created_at)
+
+waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECURITY-DEFINER-Funktionen (Abschnitt 14)
 ```
 
 **Sicherheit**
@@ -191,7 +193,7 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
   - **Warum `'unsafe-inline'` bei Scripts**: Statisch vorgerenderte App-Router-Seiten enthalten neben dem Theme-Script seitenspezifische Inline-Scripts von Next (Turbopack-Bootstrap, React-Flight-Daten `self.__next_f.push`). Diese lassen sich nur mit Nonces erlauben, und Nonces erzwingen dynamisches Rendering (Next.js-Doku "Content Security Policy"). Ein Hash in der Policy würde `'unsafe-inline'` im Browser abschalten und die Hydration brechen. Der sha256-Hash des Theme-Scripts wird trotzdem in `lib/csp-hash.ts` aus demselben String berechnet und getestet, damit der Wechsel ein Einzeiler ist, sobald Next statische Inline-Scripts hashen kann. Schutz gegen XSS liefern weiterhin: kein Nutzer-HTML im DOM, Nutzer-SVG nur per `<img>`, kein `eval` (auch Zod läuft `jitless`), keine fremden Script-Quellen.
   - **Warum `'unsafe-inline'` bei Styles**: React rendert `style`-Attribute ins statische HTML (Vorschaugrössen, CSS-Tool-Vorschau, Farbfelder), Radix setzt `<style>` für die Scroll-Sperre. CSS führt keinen Code aus; Datenabfluss per CSS ist durch `img-src`, `font-src` und `connect-src` begrenzt.
   - Nur in `next dev`: `'unsafe-eval'` (React-Debugging) und `ws:` (HMR), ohne `upgrade-insecure-requests`. Ein Unit-Test stellt sicher, dass das nie in Produktion landet.
-  - Fremde Ursprünge stehen pro Dienst in `EXTERNAL` und landen nur in der CSP, wenn der Build den Dienst aktiviert (`lib/telemetry/config.ts`, Abschnitt 13): Cloudflare Web Analytics (`script-src https://static.cloudflareinsights.com`, `connect-src https://cloudflareinsights.com`) und Sentry EU (`connect-src https://*.ingest.de.sentry.io`). In `next dev` nie. Unit-Tests prüfen beide Fälle, E2E prüft, dass ohne Variablen kein fremder Ursprung in der CSP steht.
+  - Fremde Ursprünge stehen pro Dienst in `EXTERNAL` und landen nur in der CSP, wenn der Build den Dienst aktiviert (`lib/telemetry/config.ts`, Abschnitt 13): Cloudflare Web Analytics (`script-src https://static.cloudflareinsights.com`, `connect-src https://cloudflareinsights.com`) Sentry EU (`connect-src https://*.ingest.de.sentry.io`) und seit M2-AP10 Cloudflare Turnstile für die Warteliste (`script-src` und `frame-src https://challenges.cloudflare.com`, Abschnitt 14; `frame-src` steht nur dann in der Policy). In `next dev` nie. Unit-Tests prüfen beide Fälle, E2E prüft, dass ohne Variablen kein fremder Ursprung in der CSP steht.
   - E2E (`e2e/csp.spec.ts`) prüft Header, Durchsetzung und dass Startseite, Editor (PNG-Export im Worker, Kopieren) und Konverter keine CSP-Verletzung auslösen.
 
 **Lifetime-Kauf und Credits (Ablauf)**
@@ -313,3 +315,46 @@ Beide Dienste sind **aus**, solange ihre öffentliche Umgebungsvariable beim Bui
 **Tests**: `lib/telemetry/telemetry.test.ts` (Konfiguration, Host-Regel, Lazy-Loading, Scrubbing), `lib/security-headers.test.ts` (CSP nur mit aktivierten Diensten), `e2e/home-legal.spec.ts` (ohne Variablen keine Anfragen an Cloudflare oder Sentry, kein Sentry-Chunk, keine Cookies, CSP ohne fremde Ursprünge).
 
 **Cookies**: Das Sprach-Cookie von next-intl ist aus (`localeCookie: false`); `/` wählt die Sprache nur nach `Accept-Language`. Lokal gespeichert werden nur Design (Theme) und zuletzt genutztes Exportformat im localStorage.
+
+## 14. Founders-Warteliste (seit M2-AP10)
+
+E-Mail-Warteliste mit Double-Opt-in für die Founders-Lizenzen (`docs/PRODUCT.md` 6.2), mit ehrlichem Zähler der bestätigten Anmeldungen. Speicher: Supabase (Region Zürich `eu-central-2`), Versand: Resend (Gratis-Tarif). Beide nur per `fetch`, ohne SDK und ohne neue Laufzeit-Dependency (neu in `apps/web`: `zod` und `@motivo/db`, beide schon im Monorepo; neu als devDependency in `packages/db`: `@electric-sql/pglite` 0.5.12 für Tests). Einrichtung durch den Owner: `docs/SETUP-WAITLIST.md`.
+
+**Ein/Aus**: Die Funktion ist aus, solange eine der Laufzeit-Variablen `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `WAITLIST_FROM_EMAIL` fehlt (`lib/waitlist/config.ts`, pro Request gelesen, auf Cloudflare als Worker-Secrets). Dann antwortet `GET /api/waitlist/count` mit `{ enabled: false }`, das Formular zeigt "Die Warteliste öffnet bald", `POST` gibt 503. Die Seiten sind statisch; das Formular fragt beim Laden den Zähler-Endpunkt und entscheidet erst dann. `TURNSTILE_SECRET_KEY` (Laufzeit) und `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (Build) schalten die Sicherheitsprüfung zusammen ein; der Site-Key öffnet die CSP für `https://challenges.cloudflare.com` (`script-src`, `frame-src`), im selben Muster wie Analytics und Sentry (Abschnitt 13, `EXTERNAL` in `lib/security-headers.ts`, `scripts/headers.mjs`). In `next dev` ist Turnstile immer aus. Ist nur einer der beiden Turnstile-Schlüssel vorhanden, bleibt die Warteliste aus, damit Formular und Server nie auseinanderlaufen. Das hält auch Worker-Previews aus: Sie teilen die Secrets der Produktion, werden aber ohne `NEXT_PUBLIC_*`-Variablen gebaut (`deploy.yml` setzt den Site-Key nur beim Push auf `main`).
+
+**Datenmodell** (`supabase/migrations/20261027120000_founders_waitlist.sql`):
+
+```sql
+waitlist_signups     (id uuid pk, email text unique null (kleingeschrieben, null nach Abmeldung),
+                      locale, status pending|confirmed|unsubscribed, consent_version,
+                      confirm_token_hash, token_expires_at, unsubscribe_token_hash,
+                      send_count, last_sent_at, created_at, confirmed_at, unsubscribed_at)
+waitlist_rate_limits (key_hash, window_start, hits, pk(key_hash, window_start))
+```
+
+- **RLS an, keine Policies**, alle Tabellenrechte für `anon`, `authenticated` und `service_role` entzogen. Niemand liest Zeilen direkt über die Data API.
+- Der Server ruft nur schmale `SECURITY DEFINER`-Funktionen mit `search_path = ''` auf, ausführbar nur durch `service_role`: `waitlist_request_signup` (liefert `send`, `skip` oder `rate_limited`), `waitlist_confirm`, `waitlist_unsubscribe`, `waitlist_mail_failed`. Einzige Funktion für `anon`: `waitlist_confirmed_count()` (nur die Zahl).
+- **Keine IP-Adresse gespeichert**: Rate-Limit pro Stunde (10 Anfragen) auf einem HMAC-SHA-256 der IP, Schlüssel aus dem Server-Secret plus UTC-Tag (`lib/waitlist/crypto.ts`), nach einem Tag gelöscht. Nur `CF-Connecting-IP` zählt (von Cloudflare gesetzt). Lokal ohne IP kein IP-Limit.
+- Tokens: 32 Zufallsbytes (base64url), gespeichert nur als SHA-256; Bestätigung 48 h gültig und einmalig. Unbestätigte Anmeldungen werden 30 Tage nach der letzten Mail gelöscht. Abmelden löscht die Adresse sofort (Zeile bleibt als anonymer Zähler).
+- Kostenbremse: höchstens 5 Mails pro Adresse, 10 Minuten Sperrfrist zwischen zwei Mails, höchstens 90 Bestätigungsmails pro UTC-Tag insgesamt (Resend gratis: 100 pro Tag, 3000 pro Monat). Die Grenzen stehen in der Migration und in `WAITLIST_DB_LIMITS` (`packages/db/src/waitlist.ts`); ein Test hält beide gleich.
+
+**API** (`app/api/waitlist/...`, Logik in `lib/waitlist/handlers.ts`, testbar ohne Next):
+
+| Route | Zweck |
+|---|---|
+| `POST /api/waitlist` | Anmeldung. Nur JSON (max. 4 KB), Zod-Schema, Honeypot-Feld, Turnstile-Siteverify falls Secret gesetzt. Antwort immer `202 { status: "pending" }` für neue, offene und bestätigte Adressen; die Mail geht per `after()` nach der Antwort raus, damit auch die Antwortzeit nichts verrät. Fehler: 400 `invalid`/`captcha`, 415, 413, 429 `rate_limited`, 503 `disabled`/`unavailable`. |
+| `GET /api/waitlist/confirm?token=…&lang=de` | Einmal-Bestätigung, 303 auf `/<sprache>/founders-warteliste/bestaetigt`, `link-ungueltig` oder `fehler`. `HEAD` verbraucht nichts (Link-Scanner). |
+| `POST /api/waitlist/unsubscribe` | Abmelden per Knopf (JSON) und als RFC-8058-One-Click (`List-Unsubscribe-Post`). Kein GET, damit Link-Scanner niemanden abmelden. |
+| `GET /api/waitlist/count` | `{ enabled, confirmed, seats }`, 60 s im Isolate-Speicher und per `Cache-Control` gecacht. |
+
+- Logs enthalten nur Dienst und HTTP-Status, nie Adresse, Token, Schlüssel oder Antwort-Bodies (Postgres-Fehler können die Zeile samt Adresse zurückgeben).
+- Supabase-Schlüssel: neue Secret-Keys (`sb_secret_…`) nur im Header `apikey`, alte `service_role`-JWTs zusätzlich als `Authorization: Bearer` (Supabase-Doku "Understanding API keys").
+- E-Mail (`lib/waitlist/email.ts`, Texte `WaitlistEmail`): Text plus einfaches HTML, keine Bilder, keine externen Ressourcen, keine Zählpixel, Links nur auf die eigene Domain (`NEXT_PUBLIC_SITE_URL`). `Idempotency-Key` pro Token. Open- und Click-Tracking müssen bei Resend für die Domain aus sein.
+
+**UI**: Abschnitt auf der Startseite (vor den FAQ) und Seite `/de/founders-warteliste`, `/en/founders-waitlist` (`SECTION_SLUGS.founders`, in der Sitemap). Preis "Lifetime-Lizenz ab 49 CHF oder EUR" mit Hinweis "unverbindlicher Richtwert, kein Angebot". Zähler "X von 300 Founders-Plätzen vorgemerkt" nur, wenn die Funktion an ist und die Zahl vorliegt; ab 300 ein eigener Text. Formular mit Label, Einwilligung mit Link zur Datenschutzerklärung, Fehler per `aria-invalid`/`aria-describedby` und Fokus, API-Fehler in `role="alert"`, Erfolg fokussiert. Ergebnisseiten `/<sprache>/founders-warteliste/<bestaetigt|link-ungueltig|fehler|abmelden>` (`WAITLIST_PAGE_SLUGS`, noindex, nicht in der Sitemap). Die Abmeldeseite liest das Token aus dem URL-Fragment `#token=` (geht nie an einen Server) und entfernt es sofort aus der Adresszeile. Alle Texte sind als "juristisch zu prüfen" markiert; die Datenschutzerklärung hat einen Abschnitt `waitlist`.
+
+**Tests**
+- `packages/db/src/waitlist.test.ts`: Migration in PGlite (Postgres 18 als WASM, ohne Docker) mit nachgebildeten Supabase-Rollen und Default-Grants (`packages/db/src/testing/database.ts`). Prüft RLS ohne Policies, keine Tabellenrechte für alle drei Rollen, Funktionsrechte, `SECURITY DEFINER` mit leerem `search_path`, Idempotenz, Sperrfrist, Mail-Obergrenzen, Ablauf, Einmal-Bestätigung, Abmeldung mit Löschung, Rate-Limits und Aufräumen. Der lokale Supabase-Stack (Docker) lief in der Cloud-Sitzung nicht; vor dem ersten Deploy die Migration zusätzlich mit `supabase db reset` prüfen.
+- `apps/web/lib/waitlist/waitlist.test.ts`: echte Handler und Supabase-Client, `fetch` auf dieselbe Migration in PGlite umgeleitet, Resend und Turnstile gefälscht. Aus ohne Variablen, ganzer Ablauf mit Variablen, gleiche Antwort für jede Adresse, keine personenbezogenen Daten in Logs.
+- `apps/web/lib/waitlist/client-bundle.test.ts`: kein `"use client"`-Modul erreicht über Imports ein Server-Modul der Warteliste; nach einem Build enthält `.next/static` keine Secret-Namen, Secret-Werte (falls beim Build gesetzt) oder Backend-Endpunkte.
+- `e2e/waitlist.spec.ts`: aus ohne Secrets (echte API), an mit gemockter API im Browser, Tastatur, axe, Ergebnisseiten.

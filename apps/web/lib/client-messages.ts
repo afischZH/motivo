@@ -13,6 +13,12 @@ export const LAYOUT_CLIENT_NAMESPACES = ["Layout", "Theme"] as const;
 /** Converter pages: layout plus the converter UI. */
 export const CONVERTER_CLIENT_NAMESPACES = [...LAYOUT_CLIENT_NAMESPACES, "Converters"] as const;
 
+/** Founders waitlist form (home page, Founders page): only its own texts. */
+export const WAITLIST_CLIENT_NAMESPACES = ["Waitlist"] as const;
+
+/** Waitlist unsubscribe page: only the result texts. */
+export const WAITLIST_RESULT_CLIENT_NAMESPACES = ["WaitlistResult"] as const;
+
 /** Editor pages: layout, page chrome, editor shell and tool texts (`tools.*`). */
 export const EDITOR_CLIENT_NAMESPACES = [
   ...LAYOUT_CLIENT_NAMESPACES,

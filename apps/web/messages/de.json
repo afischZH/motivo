@@ -1473,7 +1473,8 @@
     "catalogue": "Alle Tools",
     "converters": "Konverter",
     "imprint": "Impressum",
-    "privacy": "Datenschutz"
+    "privacy": "Datenschutz",
+    "founders": "Founders-Warteliste"
   },
   "Legal": {
     "draftBanner": {
@@ -1590,17 +1591,27 @@
             "Wenn du uns schreibst, bearbeiten wir deine E-Mail-Adresse und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Wir löschen die Nachricht, sobald sie erledigt ist und keine gesetzliche Aufbewahrungspflicht besteht."
           ]
         },
+        "waitlist": {
+          "heading": "Founders-Warteliste",
+          "paragraphs": [
+            "Wenn du dich für die Founders-Warteliste einträgst, bearbeiten wir deine E-Mail-Adresse, die Sprache der Website, den Zeitpunkt der Anmeldung und der Bestätigung sowie die Version des Einwilligungstexts. Wir nutzen diese Daten nur, um dich über den Verkaufsstart der Lifetime-Lizenzen zum Founders-Preis zu informieren. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du jederzeit widerrufen kannst.",
+            "Die Anmeldung läuft im Double-Opt-in-Verfahren: Eingetragen bist du erst, wenn du den Link in unserer Bestätigungs-E-Mail öffnest. Der Link ist 48 Stunden gültig. Unbestätigte Anmeldungen löschen wir spätestens 30 Tage nach der letzten E-Mail. Jede E-Mail enthält einen Abmeldelink. Meldest du dich ab, löschen wir deine E-Mail-Adresse sofort.",
+            "Die Daten speichern wir bei Supabase (Supabase, Inc., USA) in einem Rechenzentrum in Zürich (Region eu-central-2). Die Bestätigungs-E-Mail verschicken wir über den E-Mail-Dienst Resend mit Sitz in den USA. Unsere E-Mails enthalten keine Zählpixel und keine umgeleiteten Links.",
+            "Zum Schutz vor Missbrauch begrenzen wir die Anzahl Anmeldungen. Dafür bilden wir aus deiner IP-Adresse einen täglich wechselnden, nicht umkehrbaren Prüfwert und löschen ihn nach spätestens einem Tag. Deine IP-Adresse selbst speichern wir nicht. Ist die Sicherheitsprüfung Cloudflare Turnstile aktiv, verarbeitet Cloudflare beim Absenden technische Angaben zu deinem Browser und deine IP-Adresse, um automatisierte Anmeldungen zu erkennen."
+          ]
+        },
         "transfer": {
           "heading": "Bekanntgabe ins Ausland",
           "paragraphs": [
-            "Cloudflare und Sentry haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
+            "Cloudflare, Sentry, Supabase und Resend haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
             "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen."
           ]
         },
         "retention": {
           "heading": "Aufbewahrung",
           "paragraphs": [
-            "Wir bewahren Personendaten nur so lange auf, wie es für den jeweiligen Zweck nötig ist oder das Gesetz es verlangt. Statistikdaten sehen wir nur zusammengefasst. Technische Protokolle und Fehlerberichte löschen die Anbieter nach ihren Fristen automatisch."
+            "Wir bewahren Personendaten nur so lange auf, wie es für den jeweiligen Zweck nötig ist oder das Gesetz es verlangt. Statistikdaten sehen wir nur zusammengefasst. Technische Protokolle und Fehlerberichte löschen die Anbieter nach ihren Fristen automatisch.",
+            "Für die Founders-Warteliste gelten die Fristen im Abschnitt «Founders-Warteliste»."
           ]
         },
         "rights": {
@@ -1619,5 +1630,99 @@
         }
       }
     }
+  },
+  "Waitlist": {
+    "eyebrow": "Founders-Warteliste",
+    "heading": "Sichere dir den Founders-Preis",
+    "lead": "Die ersten {seats} Lifetime-Lizenzen gibt es zum Founders-Preis. Trag dich ein, und wir sagen dir Bescheid, sobald du kaufen kannst. Einmal zahlen, kein Abo.",
+    "price": "Lifetime-Lizenz ab {price} CHF oder EUR",
+    "priceNote": "Unverbindlicher Richtwert, kein Angebot. Preise und Umfang legen wir vor dem Verkaufsstart fest.",
+    "count": "{count} von {seats} Founders-Plätzen vorgemerkt",
+    "countFull": "Alle {seats} Founders-Plätze sind vorgemerkt. Trag dich trotzdem ein, falls jemand abspringt.",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "du@beispiel.ch",
+    "consent": "Ich bin einverstanden, dass Motivo meine E-Mail-Adresse speichert, um mich über den Verkaufsstart der Founders-Lizenzen zu informieren. Ich kann mich jederzeit abmelden. Mehr dazu in der <link>Datenschutzerklärung</link>.",
+    "submit": "Eintragen",
+    "submitting": "Wird gesendet …",
+    "captchaLoading": "Sicherheitsprüfung wird geladen …",
+    "honeypotLabel": "Website (bitte leer lassen)",
+    "successTitle": "Fast geschafft!",
+    "success": "Wir haben dir eine E-Mail geschickt. Bitte bestätige deine Anmeldung über den Link darin. Der Link ist {hours} Stunden gültig.",
+    "successHint": "Keine E-Mail erhalten? Schau im Spam-Ordner nach oder versuch es in {minutes} Minuten nochmals.",
+    "errors": {
+      "email": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "consent": "Bitte bestätige die Einwilligung.",
+      "invalid": "Bitte prüf deine Angaben und versuch es nochmals.",
+      "captcha": "Die Sicherheitsprüfung hat nicht geklappt. Bitte versuch es nochmals.",
+      "rate_limited": "Gerade sind sehr viele Anmeldungen eingegangen. Bitte versuch es später nochmals.",
+      "unavailable": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
+      "disabled": "Die Warteliste ist noch nicht geöffnet."
+    },
+    "comingSoon": "Die Warteliste öffnet bald. Schau in ein paar Tagen wieder vorbei.",
+    "loading": "Warteliste wird geladen …",
+    "noscript": "Für die Anmeldung braucht es JavaScript.",
+    "learnMore": "Mehr zur Founders-Lizenz"
+  },
+  "Founders": {
+    "metaTitle": "Founders-Warteliste: Lifetime-Lizenz zum Founders-Preis",
+    "metaDescription": "Trag dich auf die Warteliste ein und sichere dir einen der ersten {seats} Founders-Plätze für die Motivo-Lifetime-Lizenz. Einmal zahlen, kein Abo.",
+    "title": "Founders-Warteliste",
+    "lead": "Motivo bleibt gratis nutzbar. Für Profi-Funktionen kommt eine Lifetime-Lizenz: einmal zahlen statt monatlich. Die ersten {seats} Lizenzen gibt es zum tiefsten Preis.",
+    "points": {
+      "once": {
+        "title": "Einmal zahlen",
+        "text": "Kein Abo und keine Verlängerung. Die Lizenz gilt, solange es Motivo gibt."
+      },
+      "future": {
+        "title": "Künftige Tools inklusive",
+        "text": "Neue Generatoren und Exporte kommen laufend dazu, ohne Aufpreis."
+      },
+      "honest": {
+        "title": "Ehrlicher Zähler",
+        "text": "Der Zähler zeigt bestätigte Anmeldungen, direkt aus der Datenbank. Keine künstliche Verknappung."
+      }
+    }
+  },
+  "WaitlistResult": {
+    "backHome": "Zur Startseite",
+    "backFounders": "Zur Founders-Warteliste",
+    "confirmed": {
+      "metaTitle": "Anmeldung bestätigt",
+      "title": "Du bist auf der Warteliste",
+      "text": "Danke für deine Bestätigung. Wir melden uns per E-Mail, sobald die Founders-Lizenzen erhältlich sind. Abmelden kannst du dich jederzeit über den Link in unserer E-Mail."
+    },
+    "invalid": {
+      "metaTitle": "Link ungültig",
+      "title": "Dieser Link funktioniert nicht mehr",
+      "text": "Der Bestätigungslink ist abgelaufen oder wurde schon verwendet. Falls du bereits bestätigt hast, ist alles in Ordnung. Sonst trag dich einfach nochmals ein."
+    },
+    "error": {
+      "metaTitle": "Fehler",
+      "title": "Das hat nicht geklappt",
+      "text": "Wir konnten deine Anfrage gerade nicht bearbeiten. Bitte öffne den Link in ein paar Minuten nochmals."
+    },
+    "unsubscribe": {
+      "metaTitle": "Von der Warteliste abmelden",
+      "title": "Von der Warteliste abmelden",
+      "text": "Nach der Abmeldung löschen wir deine E-Mail-Adresse und schreiben dir nicht mehr.",
+      "button": "Jetzt abmelden",
+      "working": "Wird abgemeldet …",
+      "done": "Du bist abgemeldet. Wir haben deine E-Mail-Adresse gelöscht.",
+      "invalid": "Dieser Abmeldelink ist ungültig oder wurde schon verwendet. Falls du dich bereits abgemeldet hast, musst du nichts mehr tun.",
+      "error": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
+      "noToken": "Öffne diese Seite über den Abmeldelink in unserer E-Mail."
+    }
+  },
+  "WaitlistEmail": {
+    "subject": "Bitte bestätige deine Anmeldung zur Founders-Warteliste",
+    "heading": "Fast geschafft",
+    "intro": "Du hast dich mit dieser E-Mail-Adresse für die Founders-Warteliste von Motivo eingetragen. Bitte bestätige deine Anmeldung mit einem Klick:",
+    "button": "Anmeldung bestätigen",
+    "fallback": "Falls der Knopf nicht funktioniert, kopiere diesen Link in deinen Browser:",
+    "expiry": "Der Link ist {hours} Stunden gültig und funktioniert nur einmal.",
+    "what": "Wir informieren dich per E-Mail, sobald die Lifetime-Lizenzen zum Founders-Preis erhältlich sind (geplant ab {price} CHF oder EUR, unverbindlich). Sonst schreiben wir dir nichts, und wir geben deine Adresse nicht weiter.",
+    "ignore": "Du hast dich nicht angemeldet? Dann ignoriere diese E-Mail einfach. Ohne Bestätigung löschen wir deine Adresse nach spätestens {days} Tagen.",
+    "unsubscribe": "Abmelden",
+    "privacy": "Datenschutz"
   }
 }

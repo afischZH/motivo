@@ -55,6 +55,18 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/impressum/svg-to-css")).toBeNull();
   });
 
+  it("redirects the Founders page and waitlist pages to this locale's slugs", () => {
+    expect(canonicalRedirect("/de/founders-waitlist")).toBe("/de/founders-warteliste");
+    expect(canonicalRedirect("/en/founders-warteliste/bestaetigt")).toBe(
+      "/en/founders-waitlist/confirmed",
+    );
+    expect(canonicalRedirect("/de/founders-warteliste/unsubscribe")).toBe(
+      "/de/founders-warteliste/abmelden",
+    );
+    expect(canonicalRedirect("/de/founders-warteliste/bestaetigt")).toBeNull();
+    expect(canonicalRedirect("/de/founders-warteliste/nope")).toBeNull();
+  });
+
   it("leaves canonical, unknown and unrelated paths alone", () => {
     expect(canonicalRedirect("/en/tools/blob-generator")).toBeNull();
     expect(canonicalRedirect("/de/konverter/svg-zu-css")).toBeNull();
@@ -71,6 +83,11 @@ describe("canonicalRedirect", () => {
       { page: "convert" },
       { page: "imprint" },
       { page: "privacy" },
+      { page: "founders" },
+      { page: "waitlist", waitlistPage: "confirmed" },
+      { page: "waitlist", waitlistPage: "invalid" },
+      { page: "waitlist", waitlistPage: "error" },
+      { page: "waitlist", waitlistPage: "unsubscribe" },
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
       ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),

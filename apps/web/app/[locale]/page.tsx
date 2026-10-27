@@ -1,8 +1,9 @@
 /**
  * Home page: hero with motifs rendered by the tools themselves (static SVG
  * files from `/motifs`), value proposition, categories, featured tools,
- * "how it works", FAQ and a closing call to action. Built from the registry
- * and `lib/home.ts`; static, no client JS beyond the shared layout.
+ * "how it works", the Founders waitlist, FAQ and a closing call to action.
+ * Built from the registry and `lib/home.ts`; static. The only page-specific
+ * client JS is the waitlist form, which asks the API whether it is on.
  */
 import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
 import type { Metadata } from "next";
@@ -14,6 +15,7 @@ import type { ReactNode } from "react";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
 import { ToolCard } from "@/components/seo/tool-card";
+import { WaitlistSection } from "@/components/waitlist/waitlist-section";
 import { buttonVariants } from "@/components/ui/button";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
@@ -75,6 +77,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <Categories locale={locale} text={text} />
       <Featured locale={locale} text={text} />
       <HowItWorks text={text} />
+      <WaitlistSection locale={locale} showMoreLink />
       <Faq faq={faq} text={text} />
       <ClosingCta locale={locale} text={text} />
     </div>

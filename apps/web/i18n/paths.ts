@@ -21,6 +21,9 @@ import {
   sectionFromAnySlug,
   toolIdFromSlug,
   toolSlug,
+  waitlistPageFromSlug,
+  waitlistPageSlug,
+  type WaitlistPage,
 } from "./slugs";
 
 export type AppRoute =
@@ -34,7 +37,9 @@ export type AppRoute =
   | { page: "patterns" }
   | { page: "pattern"; patternId: string }
   | { page: "imprint" }
-  | { page: "privacy" };
+  | { page: "privacy" }
+  | { page: "founders" }
+  | { page: "waitlist"; waitlistPage: WaitlistPage };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
 export function routeHref(route: AppRoute, locale: AnyLocale) {
@@ -49,6 +54,13 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/imprint" as const;
     case "privacy":
       return "/privacy" as const;
+    case "founders":
+      return "/founders" as const;
+    case "waitlist":
+      return {
+        pathname: "/founders/[waitlistPage]" as const,
+        params: { waitlistPage: waitlistPageSlug(route.waitlistPage, locale) },
+      };
     case "category":
       return {
         pathname: "/tools/category/[categorySlug]" as const,
@@ -126,7 +138,9 @@ export function routeFromPathname(
   if (segments.length === 0) return { page: "home" };
   if (segments.length > 3) return undefined;
 
-  const section = sectionFromAnySlug(segments[0] ?? "");
+  const first = segments[0] ?? "";
+  // Internal folder names that differ from every localized slug.
+  const section = sectionFromAnySlug(first) ?? (first === "founders" ? "founders" : undefined);
   const param = (value: string | string[] | undefined) =>
     typeof value === "string" ? value : segments[segments.length - 1];
 
@@ -157,6 +171,12 @@ export function routeFromPathname(
   }
   if (section === "imprint" || section === "privacy") {
     return segments.length === 1 ? { page: section } : undefined;
+  }
+  if (section === "founders") {
+    if (segments.length === 1) return { page: "founders" };
+    const slug = param(params.waitlistPage);
+    const waitlistPage = slug ? waitlistPageFromSlug(slug, locale) : undefined;
+    return waitlistPage && segments.length === 2 ? { page: "waitlist", waitlistPage } : undefined;
   }
   if (section === "convert") {
     if (segments.length === 1) return { page: "convert" };

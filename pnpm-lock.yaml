@@ -50,6 +50,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@motivo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@motivo/editor-ui':
         specifier: workspace:*
         version: link:../../packages/editor-ui
@@ -89,6 +92,9 @@ importers:
       react-dom:
         specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.14.0
@@ -128,9 +134,15 @@ importers:
 
   packages/db:
     devDependencies:
+      '@electric-sql/pglite':
+        specifier: 0.5.12
+        version: 0.5.12
       '@motivo/config':
         specifier: workspace:*
         version: link:../config
+      '@types/node':
+        specifier: ^22.20.5
+        version: 22.20.5
 
   packages/editor-ui:
     dependencies:
@@ -746,6 +758,9 @@ packages:
 
   '@dotenvx/tooling@1.0.6':
     resolution: {integrity: sha512-d1AhKqlprzjR7+/7YTYbf9lTjeIUxr2WN+gYL5jf9O25wymlVWzuwOujq9IWJOt33sGWcLjr1eswSOmqm4SRMg==}
+
+  '@electric-sql/pglite@0.5.12':
+    resolution: {integrity: sha512-IiAxv1ld1V9QP0AWsflliDqrGRo+20O+yXOr2fjk6YzBHsCvTPclwQhCB1uZ7eHtPrxUrSllNzWgqy/Ot76PEw==}
 
   '@eloqnt/config@0.1.1':
     resolution: {integrity: sha512-YRDigSaiJEzKDfzTth5kG+L/PKfB3mo8h7yNzpXExPfvQmcD05WoZT57PdhJE0jI+Vva6eb0OCU8hnHHgdME3g==}
@@ -5876,6 +5891,8 @@ snapshots:
       '@dotenvx/tooling': 1.0.6
 
   '@dotenvx/tooling@1.0.6': {}
+
+  '@electric-sql/pglite@0.5.12': {}
 
   '@eloqnt/config@0.1.1': {}
 

@@ -32,6 +32,11 @@ export function SiteFooter() {
                   {tFooter("converters")}
                 </Link>
               </li>
+              <li>
+                <Link href="/founders" className={LINK_CLASS}>
+                  {tFooter("founders")}
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="flex flex-col gap-2">

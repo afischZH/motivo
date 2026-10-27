@@ -10,6 +10,7 @@ import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { libraryPatterns } from "@/lib/css-patterns";
 
 import { ALL_LOCALES, ENABLED_LOCALES } from "./locales";
+import { routeFromPathname, routePath } from "./paths";
 import {
   CATEGORY_SEGMENT,
   CATEGORY_SLUGS,
@@ -28,6 +29,11 @@ import {
   patternIdFromSlug,
   patternSlug,
   sectionFromAnySlug,
+  WAITLIST_PAGE_SLUGS,
+  waitlistPageFromAnySlug,
+  waitlistPageFromSlug,
+  waitlistPageSlug,
+  type WaitlistPage,
   toolIdFromAnySlug,
   toolIdFromSlug,
   toolSlug,
@@ -110,6 +116,55 @@ describe("CSS pattern slug map", () => {
     expect(patternIdFromAnySlug("dots-duo")).toBe("dots-duo");
     expect(patternIdFromAnySlug("toString")).toBeUndefined();
     expect(sectionFromAnySlug("css-muster")).toBe("cssPatterns");
+  });
+});
+
+describe("Founders waitlist pages", () => {
+  it("have the documented localized slugs", () => {
+    expect(SECTION_SLUGS.founders).toEqual({ de: "founders-warteliste", en: "founders-waitlist" });
+    expect(WAITLIST_PAGE_SLUGS).toEqual({
+      confirmed: { de: "bestaetigt", en: "confirmed" },
+      invalid: { de: "link-ungueltig", en: "invalid-link" },
+      error: { de: "fehler", en: "error" },
+      unsubscribe: { de: "abmelden", en: "unsubscribe" },
+    });
+  });
+
+  it.each(ENABLED_LOCALES)("are valid, unique and resolvable in %s", (locale) => {
+    const pages = Object.keys(WAITLIST_PAGE_SLUGS) as WaitlistPage[];
+    const slugs = pages.map((page) => waitlistPageSlug(page, locale));
+    for (const slug of slugs) expect(slug).toMatch(SLUG_PATTERN);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const page of pages) {
+      expect(waitlistPageFromSlug(waitlistPageSlug(page, locale), locale)).toBe(page);
+      expect(waitlistPageFromAnySlug(waitlistPageSlug(page, locale))).toBe(page);
+    }
+    expect(sectionFromAnySlug(SECTION_SLUGS.founders[locale])).toBe("founders");
+    expect(waitlistPageFromAnySlug("toString")).toBeUndefined();
+  });
+
+  it("have paths that round-trip through the route model", () => {
+    for (const locale of ENABLED_LOCALES) {
+      expect(routeFromPathname("/founders", {}, locale)).toEqual({ page: "founders" });
+      expect(routePath({ page: "founders" }, locale)).toBe(
+        `/${locale}/${SECTION_SLUGS.founders[locale]}`,
+      );
+      for (const waitlistPage of Object.keys(WAITLIST_PAGE_SLUGS) as WaitlistPage[]) {
+        const path = routePath({ page: "waitlist", waitlistPage }, locale);
+        expect(path).toBe(
+          `/${locale}/${SECTION_SLUGS.founders[locale]}/${waitlistPageSlug(waitlistPage, locale)}`,
+        );
+        expect(routeFromPathname(path, {}, locale)).toEqual({ page: "waitlist", waitlistPage });
+        // Internal pathname as next-intl's usePathname reports it.
+        expect(
+          routeFromPathname(
+            "/founders/[waitlistPage]",
+            { waitlistPage: waitlistPageSlug(waitlistPage, locale) },
+            locale,
+          ),
+        ).toEqual({ page: "waitlist", waitlistPage });
+      }
+    }
   });
 });
 
