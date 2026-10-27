@@ -9,6 +9,7 @@ import {
   HUE_INTERPOLATIONS,
   RADIAL_SHAPES,
   cssGradient,
+  cssGradientTailwind,
   randomPalette,
 } from "@motivo/engine";
 import * as z from "zod";
@@ -16,7 +17,7 @@ import { paletteSchema } from "../common";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
-import { COMMON_GROUPS, COMMON_LABELS, optionLabels } from "./shared";
+import { COMMON_GROUPS, COMMON_LABELS, EXTRA_EXPORT_LABELS, optionLabels } from "./shared";
 
 const ID = "css-gradient";
 
@@ -184,5 +185,15 @@ export const cssGradientTool = defineTool({
     },
   },
   exports: ["css", "svg", "png", "jpg", "webp"],
+  extraExports: [
+    {
+      id: "tailwind",
+      labelKey: EXTRA_EXPORT_LABELS.tailwind,
+      language: "html",
+      render(p, { width, height }) {
+        return cssGradientTailwind({ ...p, colors: p.palette, width, height });
+      },
+    },
+  ],
   gating: {},
 });

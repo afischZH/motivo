@@ -144,6 +144,8 @@ export interface Gating<P> {
   exports?: { readonly [F in ExportFormat]?: LicenseTier };
   /** Largest export edge in pixels per tier; a missing tier means no limit. */
   maxExportEdge?: { readonly [T in LicenseTier]?: number };
+  /** Minimum tier per extra export, by `ExtraExport.id`. */
+  extraExports?: Readonly<Record<string, LicenseTier>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -230,6 +232,27 @@ export type Renderer<P> =
   | ImageEffectRenderer<P>;
 
 // ---------------------------------------------------------------------------
+// Extra exports
+// ---------------------------------------------------------------------------
+
+/** Language of a text output, for syntax highlighting and the file type. */
+export type CodeLanguage = "css" | "html" | "js" | "json" | "text";
+
+/**
+ * A tool-specific text output beyond the generic formats, shown in the
+ * export dialog's code section (e.g. Tailwind classes, `clip-path` CSS).
+ */
+export interface ExtraExport<P> {
+  /** Stable kebab-case id, unique within the tool (e.g. "tailwind"). */
+  id: string;
+  /** i18n key of the label in the export dialog. */
+  labelKey: string;
+  language: CodeLanguage;
+  /** Pure and deterministic, with the same inputs as the tool's `render`. */
+  render(params: P, ctx: RenderContext): string;
+}
+
+// ---------------------------------------------------------------------------
 // Tool definition
 // ---------------------------------------------------------------------------
 
@@ -257,6 +280,8 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   /** The single render path for preview and export. `render.kind` is the render kind. */
   render: Renderer<Params<S>>;
   exports: readonly ExportFormat[];
+  /** Tool-specific text outputs, offered next to `exports`. */
+  extraExports?: readonly ExtraExport<Params<S>>[];
   gating: Gating<Params<S>>;
   /** Needs an uploaded image (halftone, dither, ...). */
   needsImageInput?: boolean;

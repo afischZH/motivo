@@ -4,9 +4,11 @@ import { distance } from "../../vec";
 import {
   type BlobSvgOptions,
   MAX_DEVIATION,
+  blobClipPathCss,
   blobPath,
   blobPoints,
   blobSvg,
+  blobSvgPath,
   circleTension,
 } from "./index";
 
@@ -98,5 +100,35 @@ describe("blobSvg", () => {
     const solid = d(blobSvg({ ...opts, rng: createRng(4), strokeWidth: 0 }));
     const gradient = d(blobSvg({ ...opts, rng: createRng(4), fillStyle: "gradient" }));
     expect(solid).toBe(gradient);
+  });
+});
+
+describe("blobSvgPath / blobClipPathCss", () => {
+  const opts = {
+    width: 400,
+    height: 300,
+    complexity: 7,
+    randomness: 0.4,
+    size: 0.8,
+    fillStyle: "solid" as const,
+    strokeWidth: 8,
+  };
+  const pathOf = (svg: string): string | undefined => /<path d="([^"]+)"/.exec(svg)?.[1];
+
+  it("is the path blobSvg draws", () => {
+    const svg = blobSvg({
+      ...opts,
+      rng: createRng(5),
+      background: "#fff",
+      colors: ["#000", "#111"],
+      gradientAngle: 0,
+    });
+    expect(blobSvgPath({ ...opts, rng: createRng(5) })).toBe(pathOf(svg));
+  });
+
+  it("emits size and clip-path declarations", () => {
+    const css = blobClipPathCss({ ...opts, rng: createRng(5) });
+    const d = blobSvgPath({ ...opts, rng: createRng(5) });
+    expect(css).toBe(`width: 400px;\nheight: 300px;\nclip-path: path("${d}");`);
   });
 });

@@ -30,3 +30,13 @@ export const COMMON_GROUPS = {
   shape: { id: "shape", labelKey: "tools.common.groups.shape" },
   layout: { id: "layout", labelKey: "tools.common.groups.layout" },
 } as const satisfies Record<string, ControlGroup>;
+
+/**
+ * Labels of extra exports. Generic (not per tool) because the same output
+ * kind recurs across tools; the messages live in `@motivo/editor-ui`
+ * (`Editor.export.extras.*`) next to the export dialog.
+ */
+export const EXTRA_EXPORT_LABELS = {
+  tailwind: "Editor.export.extras.tailwind",
+  clipPath: "Editor.export.extras.clipPath",
+} as const;

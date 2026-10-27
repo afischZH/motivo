@@ -1,3 +1,4 @@
+import { builtInTools } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 import de from "./de.json";
 import en from "./en.json";
@@ -36,6 +37,15 @@ describe("editor messages", () => {
       expect(text, key).not.toMatch(/ß/);
       expect(text, key).not.toMatch(/[–—]/);
       expect(text, key).not.toMatch(/ - /);
+    }
+  });
+
+  it("labels every extra export of the built-in tools", () => {
+    const keys = builtInTools.flatMap((t) => (t.extraExports ?? []).map((e) => e.labelKey));
+    expect(keys.length).toBeGreaterThan(0);
+    for (const key of keys) {
+      expect(enMessages.has(key), key).toBe(true);
+      expect(deMessages.has(key), key).toBe(true);
     }
   });
 

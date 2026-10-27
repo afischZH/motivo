@@ -7,6 +7,7 @@
   "sideEffects": false,
   "exports": {
     ".": "./src/index.ts",
+    "./share": "./src/share/share-codec.ts",
     "./messages/de.json": "./src/messages/de.json",
     "./messages/en.json": "./src/messages/en.json"
   },
@@ -17,6 +18,7 @@
   "dependencies": {
     "@motivo/engine": "workspace:*",
     "@motivo/tool-registry": "workspace:*",
+    "fflate": "^0.8.3",
     "zod": "^4.6.7",
     "zustand": "^5.0.16"
   },

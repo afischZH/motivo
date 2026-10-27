@@ -83,6 +83,12 @@
         "theme": "Hell und Dunkel wechseln",
         "help": "Diese Übersicht"
       }
+    },
+    "export": {
+      "extras": {
+        "tailwind": "Tailwind-Klassen",
+        "clipPath": "CSS clip-path"
+      }
     }
   },
   "sizes": {

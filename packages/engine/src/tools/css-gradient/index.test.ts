@@ -4,8 +4,11 @@ import {
   type CssGradientOptions,
   cssGradient,
   cssGradientCss,
+  cssGradientLayers,
+  cssGradientTailwind,
   gradientColorAt,
   gradientStops,
+  tailwindArbitrary,
 } from "./index";
 
 const base: CssGradientOptions = {
@@ -98,6 +101,41 @@ describe("cssGradientCss", () => {
       "conic-gradient(from 45deg at 50% 50% in oklch,",
     );
     expect(cssGradientCss({ ...base, interpolation: "oklab" })).toContain("90deg in oklab,");
+  });
+});
+
+describe("cssGradientLayers", () => {
+  it("matches the declarations of cssGradientCss", () => {
+    const layers = cssGradientLayers(base);
+    expect(cssGradientCss(base)).toBe(
+      [
+        `background-color: ${layers.color};`,
+        `background-image: ${layers.fallback};`,
+        `background-image: ${layers.native ?? ""};`,
+      ].join("\n"),
+    );
+    expect(cssGradientLayers({ ...base, interpolation: "srgb" }).native).toBeUndefined();
+  });
+});
+
+describe("tailwindArbitrary", () => {
+  it("replaces whitespace with underscores and escapes underscores", () => {
+    expect(tailwindArbitrary(" a  b\nc_d ")).toBe("a_b_c\\_d");
+  });
+});
+
+describe("cssGradientTailwind", () => {
+  it("emits a colour and an image class without spaces", () => {
+    const tw = cssGradientTailwind({ ...base, interpolation: "srgb" });
+    expect(tw).toBe("bg-[#ff0000] bg-[linear-gradient(90deg,_#ff0000_0%,_#0000ff_100%)]");
+  });
+
+  it("uses the precomputed fallback stops", () => {
+    const tw = cssGradientTailwind({ ...base, type: "conic", easing: "ease-in" });
+    const [color, image] = tw.split(" ");
+    expect(color).toBe("bg-[#ff0000]");
+    expect(image).toMatch(/^bg-\[conic-gradient\(from_90deg_at_50%_50%,_#ff0000_0%,_.+\)\]$/);
+    expect(image).not.toContain("oklch");
   });
 });
 

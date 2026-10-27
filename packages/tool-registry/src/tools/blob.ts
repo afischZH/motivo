@@ -2,13 +2,13 @@
  * M1-AP08: Blob (docs/TOOLS.md D1). One organic shape from seeded points on a
  * circle, smoothed with a closed Catmull-Rom spline.
  */
-import { BLOB_FILL_STYLES, blobSvg, randomPalette } from "@motivo/engine";
+import { BLOB_FILL_STYLES, blobClipPathCss, blobSvg, randomPalette } from "@motivo/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
-import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
+import { COMMON_GROUPS, COMMON_LABELS, EXTRA_EXPORT_LABELS, optionLabels, roundTo } from "./shared";
 
 const ID = "blob";
 
@@ -138,5 +138,15 @@ export const blobTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  extraExports: [
+    {
+      id: "clip-path",
+      labelKey: EXTRA_EXPORT_LABELS.clipPath,
+      language: "css",
+      render(p, { rng, width, height }) {
+        return blobClipPathCss({ ...p, width, height, rng });
+      },
+    },
+  ],
   gating: {},
 });

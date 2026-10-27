@@ -83,6 +83,12 @@
         "theme": "Switch light and dark",
         "help": "This overview"
       }
+    },
+    "export": {
+      "extras": {
+        "tailwind": "Tailwind classes",
+        "clipPath": "CSS clip-path"
+      }
     }
   },
   "sizes": {
