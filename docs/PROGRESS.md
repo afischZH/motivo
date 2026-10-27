@@ -16,7 +16,7 @@
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
 | M2-AP01 | Tools **Grid Patterns**, **Confetti**, **Starry Sky**, **Dieter Dots** | engine-dev | geplant | – | Confetti/Starry Sky mit Poisson-Disk (seeded); Limits gegen Einfrieren wie bei Polka Dots |
-| M2-AP02 | Tool **Noise/Grain** | engine-dev | geplant | – | SVG feTurbulence + Raster; Vorschau == Export prüfen |
+| M2-AP02 | Tool **Noise/Grain** | engine-dev | erledigt (Cross-Browser in AP12) | – | Gauss-Kachel 256 px als PNG im SVG-Pattern (kein feTurbulence, rendert je Browser anders); Code in engine statt effects; SVG 90 bis 260 KB |
 | M2-AP03 | **CSS Pattern Library** (Dots, Grid, Stripes, Waves, Geometric) inkl. eigener Seite pro Muster | engine-dev + ui-dev | geplant | AP08 (Template) | Eigene, frei entworfene Muster (Clean-Room); Exporte CSS, Tailwind, SVG, PNG |
 | M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | geplant | AP03 | Neuer Control-Typ Ebenenliste |
 | M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | geplant | – | OKLCH, WCAG-Kontrast; Export `tailwind.config.js` und v4 `@theme`; braucht Paletten-Vorschau in der Shell |
