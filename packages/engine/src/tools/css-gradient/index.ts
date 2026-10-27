@@ -135,21 +135,54 @@ function interpolationMethod(o: CssGradientOptions): string {
   return ` in ${o.interpolation}`;
 }
 
-/** CSS declarations with an sRGB fallback followed by the native interpolation method. */
-export function cssGradientCss(o: CssGradientOptions): string {
+/** The values behind `cssGradientCss`, for other code outputs (Tailwind, ...). */
+export interface CssGradientLayers {
+  /** First stop colour, used as `background-color`. */
+  readonly color: string;
+  /** Gradient with precomputed (eased, perceptually mixed) sRGB stops; works everywhere. */
+  readonly fallback: string;
+  /** Same gradient using the native interpolation method; absent for sRGB. */
+  readonly native?: string;
+}
+
+export function cssGradientLayers(o: CssGradientOptions): CssGradientLayers {
   const fn = `${o.type}-gradient`;
   const prelude = cssPrelude(o);
   const eased = gradientStops(o);
-  const first = eased[0]?.color ?? "#000000";
-  const lines = [`background-color: ${first};`];
-  lines.push(`background-image: ${fn}(${prelude}, ${cssStopList(eased)});`);
+  const color = eased[0]?.color ?? "#000000";
+  const fallback = `${fn}(${prelude}, ${cssStopList(eased)})`;
   const method = interpolationMethod(o);
-  if (method !== "") {
-    // Native interpolation handles linear easing itself; keep only the palette stops then.
-    const native = o.easing === "linear" ? gradientStops({ ...o, steps: 0 }) : eased;
-    lines.push(`background-image: ${fn}(${prelude}${method}, ${cssStopList(native)});`);
-  }
+  if (method === "") return { color, fallback };
+  // Native interpolation handles linear easing itself; keep only the palette stops then.
+  const native = o.easing === "linear" ? gradientStops({ ...o, steps: 0 }) : eased;
+  return { color, fallback, native: `${fn}(${prelude}${method}, ${cssStopList(native)})` };
+}
+
+/** CSS declarations with an sRGB fallback followed by the native interpolation method. */
+export function cssGradientCss(o: CssGradientOptions): string {
+  const layers = cssGradientLayers(o);
+  const lines = [`background-color: ${layers.color};`, `background-image: ${layers.fallback};`];
+  if (layers.native !== undefined) lines.push(`background-image: ${layers.native};`);
   return lines.join("\n");
+}
+
+/**
+ * Turns a CSS value into a Tailwind arbitrary value body: spaces become
+ * underscores (Tailwind turns them back), existing underscores are escaped.
+ */
+export function tailwindArbitrary(value: string): string {
+  return value.trim().replace(/_/g, "\\_").replace(/\s+/g, "_");
+}
+
+/**
+ * Tailwind utility classes for the gradient (arbitrary values, v3 and v4).
+ * Uses the fallback stops: they are precomputed in the chosen colour space,
+ * so the result matches the native version closely without needing
+ * `in oklch` support.
+ */
+export function cssGradientTailwind(o: CssGradientOptions): string {
+  const layers = cssGradientLayers(o);
+  return `bg-[${layers.color}] bg-[${tailwindArbitrary(layers.fallback)}]`;
 }
 
 function svgStops(stops: readonly GradientStop[]): string {

@@ -261,6 +261,38 @@ export function describeToolContract<S extends ParamsSchema>(
         }
       });
     });
+
+    describe("extra exports", () => {
+      const extras = anyTool.extraExports ?? [];
+
+      it("have unique kebab-case ids and label keys", () => {
+        const ids = extras.map((e) => e.id);
+        expect(new Set(ids).size).toBe(ids.length);
+        for (const e of extras) {
+          expect(e.id).toMatch(TOOL_ID_PATTERN);
+          expect(e.labelKey.length).toBeGreaterThan(0);
+        }
+        const gated = Object.keys(tool.gating.extraExports ?? {});
+        expect(gated.filter((id) => !ids.includes(id))).toEqual([]);
+      });
+
+      it.each(extras.map((e) => [e.id, e] as const))(
+        "%s renders deterministic, non-empty text for defaults and presets",
+        (_, extra) => {
+          for (const p of [
+            { params: tool.defaults, seed },
+            ...tool.presets.map((pr) => ({ params: pr.params, seed: pr.seed ?? seed })),
+          ]) {
+            const run = (): string =>
+              extra.render(anyTool.schema.parse(p.params), createRenderContext(p.seed, size));
+            const out = run();
+            expect(out.trim().length).toBeGreaterThan(0);
+            expect(out).not.toMatch(/\b(?:NaN|undefined|Infinity|null)\b/);
+            expect(run()).toBe(out);
+          }
+        },
+      );
+    });
   });
 }
 
@@ -280,6 +312,22 @@ export function describePresetSnapshots<S extends ParamsSchema>(
     it.each(tool.presets.map((p) => [p.id, p] as const))("%s", (_, p) => {
       const out = renderStatic(anyTool, p.params, p.seed ?? seed, size);
       expect(out, `${tool.render.kind} tools cannot be snapshotted statically`).toBeDefined();
+      expect(out).toMatchSnapshot();
+    });
+
+    const extras = anyTool.extraExports ?? [];
+    it.runIf(extras.length > 0)("extra exports of every preset", () => {
+      const out = Object.fromEntries(
+        tool.presets.map((p) => [
+          p.id,
+          Object.fromEntries(
+            extras.map((e) => [
+              e.id,
+              e.render(anyTool.schema.parse(p.params), createRenderContext(p.seed ?? seed, size)),
+            ]),
+          ),
+        ]),
+      );
       expect(out).toMatchSnapshot();
     });
   });

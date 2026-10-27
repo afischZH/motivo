@@ -75,12 +75,16 @@ export interface BlobSvgOptions {
   readonly gradientAngle: number;
 }
 
-export function blobSvg(o: BlobSvgOptions): string {
-  const color = o.colors[0] ?? "#000000";
-  const outline = o.fillStyle === "outline";
-  const inset = outline ? o.strokeWidth / 2 : 0;
+/** Path `d` of the blob exactly as `blobSvg` places it on the canvas. */
+export function blobSvgPath(
+  o: Pick<
+    BlobSvgOptions,
+    "width" | "height" | "rng" | "complexity" | "randomness" | "size" | "fillStyle" | "strokeWidth"
+  >,
+): string {
+  const inset = o.fillStyle === "outline" ? o.strokeWidth / 2 : 0;
   const radius = Math.max((Math.min(o.width, o.height) * o.size) / 2 - inset, 1);
-  const d = blobPath({
+  return blobPath({
     cx: o.width / 2,
     cy: o.height / 2,
     radius,
@@ -88,6 +92,25 @@ export function blobSvg(o: BlobSvgOptions): string {
     randomness: o.randomness,
     rng: o.rng,
   });
+}
+
+/**
+ * CSS declarations that cut an element of the canvas size to the blob shape
+ * (`clip-path: path()`; px units, so the element keeps the canvas size).
+ */
+export function blobClipPathCss(o: Parameters<typeof blobSvgPath>[0]): string {
+  const d = blobSvgPath(o);
+  return [
+    `width: ${formatNumber(o.width)}px;`,
+    `height: ${formatNumber(o.height)}px;`,
+    `clip-path: path("${d}");`,
+  ].join("\n");
+}
+
+export function blobSvg(o: BlobSvgOptions): string {
+  const color = o.colors[0] ?? "#000000";
+  const outline = o.fillStyle === "outline";
+  const d = blobSvgPath(o);
 
   let defs = "";
   let paint: string;

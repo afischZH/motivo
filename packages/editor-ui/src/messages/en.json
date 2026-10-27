@@ -22,6 +22,12 @@
       "remove": "Remove color",
       "moveLeft": "Move left",
       "moveRight": "Move right"
+    },
+    "export": {
+      "extras": {
+        "tailwind": "Tailwind classes",
+        "clipPath": "CSS clip-path"
+      }
     }
   }
 }

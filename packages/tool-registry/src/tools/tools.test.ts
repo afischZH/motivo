@@ -1,8 +1,9 @@
 import { createRng } from "@motivo/engine";
 import { describe, expect, it } from "vitest";
 import { registry } from "../registry";
+import { createRenderContext } from "../render";
 import { renderStatic, describePresetSnapshots, describeToolContract } from "../testing";
-import type { CssOutput } from "../types";
+import type { AnyToolDefinition, CssOutput } from "../types";
 import { blobTool, builtInTools, cssGradientTool, polkaDotsTool, svgWavesTool } from "./index";
 
 for (const tool of builtInTools) {
@@ -74,6 +75,41 @@ describe("blob", () => {
       size,
     ) as string;
     expect(d(c)).toBe(d(a));
+  });
+});
+
+describe("extra exports", () => {
+  const size = { width: 300, height: 200 };
+  const extra = (tool: AnyToolDefinition, id: string) => {
+    const e = tool.extraExports?.find((x) => x.id === id);
+    if (!e) throw new Error(`missing extra export ${id}`);
+    return e;
+  };
+
+  it("css-gradient offers Tailwind classes", () => {
+    const out = extra(cssGradientTool, "tailwind").render(
+      cssGradientTool.defaults,
+      createRenderContext(1, size),
+    );
+    expect(out).toMatch(/^bg-\[#ff7e5f\] bg-\[linear-gradient\(135deg,_#ff7e5f_0%,_\S+\)\]$/);
+  });
+
+  it("blob offers a clip-path matching the rendered shape", () => {
+    const css = extra(blobTool, "clip-path").render(
+      blobTool.defaults,
+      createRenderContext(4, size),
+    );
+    const svg = renderStatic(blobTool, blobTool.defaults, 4, size) as string;
+    const d = /<path d="([^"]+)"/.exec(svg)?.[1];
+    expect(css).toContain(`clip-path: path("${d ?? "?"}");`);
+    expect(css).toContain("width: 300px;");
+  });
+
+  it("only css-gradient and blob declare extras so far", () => {
+    expect(builtInTools.filter((t) => t.extraExports?.length).map((t) => t.id)).toEqual([
+      "css-gradient",
+      "blob",
+    ]);
   });
 });
 

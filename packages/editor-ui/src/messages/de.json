@@ -22,6 +22,12 @@
       "remove": "Farbe entfernen",
       "moveLeft": "Nach links schieben",
       "moveRight": "Nach rechts schieben"
+    },
+    "export": {
+      "extras": {
+        "tailwind": "Tailwind-Klassen",
+        "clipPath": "CSS clip-path"
+      }
     }
   }
 }
