@@ -1,9 +1,10 @@
+import type editorMessages from "@motivo/editor-ui/messages/de.json";
 import type { routing } from "@/i18n/routing";
 import type messages from "./messages/de.json";
 
 declare module "next-intl" {
   interface AppConfig {
     Locale: (typeof routing.locales)[number];
-    Messages: typeof messages;
+    Messages: typeof messages & typeof editorMessages;
   }
 }

@@ -1,0 +1,332 @@
+/**
+ * Pure derivation of the control panel from a tool's schema and control
+ * hints (M1-AP03). React components only render what this returns, so the
+ * mapping rules (docs/DESIGN.md section 3) are unit-testable without a DOM.
+ */
+import {
+  PALETTE_MAX,
+  PALETTE_MIN,
+  controlKindRegistry,
+  type AnyToolDefinition,
+  type ControlHint,
+  type ControlKind,
+} from "@motivo/tool-registry";
+import * as z from "zod";
+import type { ParamValues } from "../store/editor-store";
+
+/** Enums with at most this many options become a segmented control, larger ones a select. */
+export const SEGMENTED_MAX_OPTIONS = 5;
+
+export type OptionValue = string | number;
+
+export interface ControlOption {
+  value: OptionValue;
+  labelKey: string;
+}
+
+interface ControlBase {
+  /** Top-level param key. */
+  key: string;
+  labelKey: string;
+  descriptionKey?: string;
+  lockable: boolean;
+  advanced: boolean;
+  /** Tool default, used by "reset" (double-click). */
+  defaultValue: unknown;
+}
+
+export interface RangeControl extends ControlBase {
+  kind: "slider" | "angle";
+  min: number;
+  max: number;
+  step: number;
+  integer: boolean;
+  unit?: string;
+}
+
+export interface NumberControl extends ControlBase {
+  kind: "number";
+  min?: number;
+  max?: number;
+  step: number;
+  integer: boolean;
+  unit?: string;
+}
+
+export interface ChoiceControl extends ControlBase {
+  kind: "segmented" | "select";
+  options: ControlOption[];
+}
+
+export interface TextControl extends ControlBase {
+  kind: "text";
+  maxLength?: number;
+}
+
+export interface PaletteControl extends ControlBase {
+  kind: "palette";
+  minItems: number;
+  maxItems: number;
+}
+
+export interface SimpleControl extends ControlBase {
+  kind: "switch" | "color" | "background";
+}
+
+/** Kinds without a component yet (M1): resolved so callers can see them, rendered as nothing. */
+export interface PendingControl extends ControlBase {
+  kind: "shape" | "image";
+}
+
+export type ResolvedControl =
+  | RangeControl
+  | NumberControl
+  | ChoiceControl
+  | TextControl
+  | PaletteControl
+  | SimpleControl
+  | PendingControl;
+
+export interface ResolvedGroup {
+  /** Group id from the hints; `null` for params without a (known) group. */
+  id: string | null;
+  labelKey?: string;
+  collapsed: boolean;
+  controls: ResolvedControl[];
+  /** Controls collapsed under "Advanced". */
+  advanced: ResolvedControl[];
+}
+
+type AnySchema = z.core.$ZodType;
+
+/** Strips wrappers that do not change which control fits. */
+function unwrap(schema: AnySchema): AnySchema {
+  let s = schema;
+  for (;;) {
+    const def = s._zod.def as { type: string; innerType?: AnySchema };
+    if (
+      (def.type === "optional" ||
+        def.type === "nullable" ||
+        def.type === "default" ||
+        def.type === "prefault" ||
+        def.type === "readonly" ||
+        def.type === "catch") &&
+      def.innerType
+    ) {
+      s = def.innerType;
+    } else {
+      return s;
+    }
+  }
+}
+
+function registeredKind(schema: AnySchema): ControlKind | undefined {
+  let s: AnySchema | undefined = schema;
+  while (s) {
+    const kind = controlKindRegistry.get(s)?.kind;
+    if (kind) return kind;
+    const def = s._zod.def as { innerType?: AnySchema };
+    s = def.innerType;
+  }
+  return undefined;
+}
+
+/** Literal options of an enum, a multi-value literal or a union of literals. */
+function choiceValues(schema: AnySchema): OptionValue[] | undefined {
+  const def = schema._zod.def as {
+    type: string;
+    entries?: Record<string, OptionValue>;
+    values?: readonly unknown[];
+    options?: readonly AnySchema[];
+  };
+  const isOption = (v: unknown): v is OptionValue => typeof v === "string" || typeof v === "number";
+  if (def.type === "enum" && def.entries) return Object.values(def.entries);
+  if (def.type === "literal" && def.values?.every(isOption)) return [...def.values];
+  if (def.type === "union" && def.options) {
+    const out: OptionValue[] = [];
+    for (const option of def.options) {
+      const values = choiceValues(unwrap(option));
+      if (!values) return undefined;
+      out.push(...values);
+    }
+    return out;
+  }
+  return undefined;
+}
+
+interface NumberBounds {
+  min?: number;
+  max?: number;
+  integer: boolean;
+}
+
+function numberBounds(schema: AnySchema): NumberBounds | undefined {
+  if (!(schema instanceof z.ZodNumber)) return undefined;
+  const out: NumberBounds = { integer: schema.isInt };
+  if (Number.isFinite(schema.minValue)) out.min = schema.minValue as number;
+  if (Number.isFinite(schema.maxValue)) out.max = schema.maxValue as number;
+  return out;
+}
+
+function lengthBounds(schema: AnySchema): { min?: number; max?: number } {
+  const out: { min?: number; max?: number } = {};
+  for (const check of schema._zod.def.checks ?? []) {
+    const def = check._zod.def as { check: string; minimum?: number; maximum?: number };
+    if (def.check === "min_length" && def.minimum !== undefined) out.min = def.minimum;
+    if (def.check === "max_length" && def.maximum !== undefined) out.max = def.maximum;
+  }
+  return out;
+}
+
+/** The control kind for a param schema without hints (docs/DESIGN.md section 3). */
+export function deriveControlKind(schema: AnySchema): ControlKind {
+  const registered = registeredKind(schema);
+  if (registered) return registered;
+  const inner = unwrap(schema);
+  const bounds = numberBounds(inner);
+  if (bounds) return bounds.min !== undefined && bounds.max !== undefined ? "slider" : "number";
+  const values = choiceValues(inner);
+  if (values) return values.length <= SEGMENTED_MAX_OPTIONS ? "segmented" : "select";
+  const type = inner._zod.def.type;
+  if (type === "boolean") return "switch";
+  if (type === "string") return "text";
+  // Unknown shapes (objects, records, ...) need an explicit hint.
+  return "hidden";
+}
+
+/** Default i18n key of a param label. */
+export function paramLabelKey(toolId: string, key: string): string {
+  return `tools.${toolId}.params.${key}.label`;
+}
+
+/** Default i18n key of an enum option label. */
+export function optionLabelKey(toolId: string, key: string, value: OptionValue): string {
+  return `tools.${toolId}.params.${key}.options.${String(value)}`;
+}
+
+/** Resolves one param. Returns `null` for hidden params or ones the schema cannot drive. */
+export function resolveControl(
+  tool: AnyToolDefinition,
+  key: string,
+  hint: ControlHint<ParamValues> = {},
+): ResolvedControl | null {
+  const schema = (tool.schema.shape as Record<string, AnySchema | undefined>)[key];
+  if (!schema) return null;
+  const kind = hint.kind ?? deriveControlKind(schema);
+  const inner = unwrap(schema);
+
+  const base: ControlBase = {
+    key,
+    labelKey: hint.labelKey ?? paramLabelKey(tool.id, key),
+    lockable: hint.lockable !== false,
+    advanced: hint.advanced === true,
+    defaultValue: (tool.defaults as ParamValues)[key],
+  };
+  if (hint.descriptionKey) base.descriptionKey = hint.descriptionKey;
+  const withUnit = <T extends RangeControl | NumberControl>(c: T): T => {
+    if (hint.unit !== undefined) c.unit = hint.unit;
+    return c;
+  };
+
+  switch (kind) {
+    case "hidden":
+      return null;
+    case "slider":
+    case "angle": {
+      const b = numberBounds(inner) ?? { integer: false };
+      const min = b.min ?? (kind === "angle" ? 0 : undefined);
+      const max = b.max ?? (kind === "angle" ? 360 : undefined);
+      // A slider needs a finite range; fall back to a number field.
+      if (min === undefined || max === undefined) {
+        const c: NumberControl = {
+          ...base,
+          kind: "number",
+          step: hint.step ?? 1,
+          integer: b.integer,
+        };
+        return withUnit(c);
+      }
+      const step = hint.step ?? (b.integer ? 1 : (max - min) / 100);
+      const c: RangeControl = { ...base, kind, min, max, step, integer: b.integer };
+      return withUnit(c);
+    }
+    case "number": {
+      const b = numberBounds(inner) ?? { integer: false };
+      const c: NumberControl = { ...base, kind, step: hint.step ?? 1, integer: b.integer };
+      if (b.min !== undefined) c.min = b.min;
+      if (b.max !== undefined) c.max = b.max;
+      return withUnit(c);
+    }
+    case "segmented":
+    case "select": {
+      const values = choiceValues(inner);
+      if (!values) return null;
+      const options = values.map((value) => ({
+        value,
+        labelKey: hint.optionLabelKeys?.[String(value)] ?? optionLabelKey(tool.id, key, value),
+      }));
+      return { ...base, kind, options };
+    }
+    case "text": {
+      const c: TextControl = { ...base, kind };
+      const { max } = lengthBounds(inner);
+      if (max !== undefined) c.maxLength = max;
+      return c;
+    }
+    case "palette": {
+      const { min, max } = lengthBounds(inner);
+      return { ...base, kind, minItems: min ?? PALETTE_MIN, maxItems: max ?? PALETTE_MAX };
+    }
+    case "switch":
+    case "color":
+    case "background":
+      return { ...base, kind };
+    case "shape":
+    case "image":
+      return { ...base, kind };
+  }
+}
+
+/** Param keys in display order: `controls.order` first, then schema order. */
+export function orderedParamKeys(tool: AnyToolDefinition): string[] {
+  const schemaKeys = Object.keys(tool.schema.shape);
+  const order = (tool.controls?.order ?? []).filter((k) => schemaKeys.includes(k));
+  return [...new Set([...order, ...schemaKeys])];
+}
+
+/**
+ * The full panel for the current params: visible controls in display order,
+ * grouped as declared. Empty groups are dropped; ungrouped params form a
+ * trailing group with `id: null`.
+ */
+export function resolveControls(tool: AnyToolDefinition, params: ParamValues): ResolvedGroup[] {
+  const hints = (tool.controls?.params ?? {}) as Record<
+    string,
+    ControlHint<ParamValues> | undefined
+  >;
+  const declared = tool.controls?.groups ?? [];
+  const groups = new Map<string | null, ResolvedGroup>();
+  for (const g of declared) {
+    groups.set(g.id, {
+      id: g.id,
+      labelKey: g.labelKey,
+      collapsed: g.collapsed === true,
+      controls: [],
+      advanced: [],
+    });
+  }
+  const ungrouped: ResolvedGroup = { id: null, collapsed: false, controls: [], advanced: [] };
+
+  for (const key of orderedParamKeys(tool)) {
+    const hint = hints[key] ?? {};
+    if (hint.visibleWhen && !hint.visibleWhen(params)) continue;
+    const control = resolveControl(tool, key, hint);
+    if (!control) continue;
+    const group = (hint.group !== undefined ? groups.get(hint.group) : undefined) ?? ungrouped;
+    (control.advanced ? group.advanced : group.controls).push(control);
+  }
+
+  return [...groups.values(), ungrouped].filter(
+    (g) => g.controls.length > 0 || g.advanced.length > 0,
+  );
+}

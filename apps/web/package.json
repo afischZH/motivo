@@ -16,6 +16,7 @@
     "cf:upload": "NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build && opennextjs-cloudflare upload"
   },
   "dependencies": {
+    "@motivo/editor-ui": "workspace:*",
     "@motivo/engine": "workspace:*",
     "@opennextjs/cloudflare": "^1.20.13",
     "class-variance-authority": "^0.7.1",
