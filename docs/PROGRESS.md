@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
-- **Nächster Schritt**: AP12 WebKit-Fehler im Vergleichstest Vorschau/PNG beheben, dann M1-Abnahme durch Andreas.
+- **Nächster Schritt**: M1-Abnahme durch Andreas (PR #2 mergen = Production-Deploy).
 - Reviews 2026-10-27: Code-Review (keine kritischen Befunde, 2 mittel, 5 tief) und Security-Review (PASS WITH NOTES: Polka-Dots-Link konnte Tab einfrieren) alle behoben. Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben).
 - Offene Kleinfragen (Orchestrator entschieden, bei Abnahme nennen): Link eines anderen Tools zeigt Hinweis statt Weiterleitung; Teilen kopiert nur, ändert die Adresszeile nicht; ⌘⇧C kollidiert unter Windows/Linux evtl. mit DevTools.
 
@@ -27,7 +27,7 @@
 | M1-AP09 | Tool **SVG Waves** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Param `coverage`, Standard 1920×1080 |
 | M1-AP10 | Tool **Polka Dots** | engine-dev | erledigt (Cross-Browser in AP12) | AP01 | Abstand relativ zur kürzeren Kante; Params shape, colorMode, jitter |
 | M1-AP11 | 6 **Konverter**-Seiten (SVG↔CSS, SVG↔Base64, Bild↔Base64) | ui-dev | erledigt (Security-Review in AP12) | – | Nutzer-SVG nur per `<img>` mit data-URI; Typ per Magic Bytes, 5 MB Limit, Web Worker; Sitemap/Changelog folgen in M2 |
-| M1-AP12 | Snapshot-Tests je Preset, visueller Test Vorschau == PNG-Export in 3 Browsern | qa-tester | offen | AP05, AP07 bis AP10 | DoD M1 |
+| M1-AP12 | Snapshot-Tests je Preset, visueller Test Vorschau == PNG-Export in 3 Browsern | qa-tester | erledigt | AP05, AP07 bis AP10 | Vorschau == PNG je Tool in Chromium, Firefox, WebKit grün (Kantenglättung toleriert, echte Abweichung ≤ 0.02 %); axe, Tastatur, Hell/Dunkel, 375/768/1280 px geprüft |
 
 Entscheide Orchestrator 2026-10-27: AP05 erhält einen Hook für Zusatz-Exporte pro Tool (Tailwind, clip-path); ziehbare Verlaufsstopps nach M1; i18n-Test in tool-registry liest `apps/web/messages` direkt (vorerst akzeptiert).
 
