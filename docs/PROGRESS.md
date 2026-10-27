@@ -19,7 +19,7 @@
 | M2-AP02 | Tool **Noise/Grain** | engine-dev | erledigt (Cross-Browser in AP12) | – | Gauss-Kachel 256 px als PNG im SVG-Pattern (kein feTurbulence, rendert je Browser anders); Code in engine statt effects; SVG 90 bis 260 KB |
 | M2-AP03 | **CSS Pattern Library** (Dots, Grid, Stripes, Waves, Geometric) inkl. eigener Seite pro Muster | engine-dev + ui-dev | geplant | AP08 (Template) | Eigene, frei entworfene Muster (Clean-Room); Exporte CSS, Tailwind, SVG, PNG |
 | M2-AP04 | **CSS Pattern Editor** mit Ebenen | ui-dev | geplant | AP03 | Neuer Control-Typ Ebenenliste |
-| M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | geplant | – | OKLCH, WCAG-Kontrast; Export `tailwind.config.js` und v4 `@theme`; braucht Paletten-Vorschau in der Shell |
+| M2-AP05 | Farb-Tools **Palette Generator**, **Tints & Shades**, **Tailwind Palette** | engine-dev + ui-dev | erledigt (Cross-Browser in AP12) | – | Ohne Shell-Erweiterung: Farben als Einzel-Params (color1 bis color8), Schloss pro Farbe; Harmonie-Wechsel wirkt erst bei nächster Leertaste (UX in AP12 prüfen); Code-Exporte statt CSS |
 | M2-AP06 | **Palette aus Bild** | engine-dev | geplant | AP05 | k-means in OKLab im Worker, Bild bleibt im Browser |
 | M2-AP07 | i18n: lokalisierte Slugs, hreflang, FR/IT vorbereitet | ui-dev | geplant | – | FR/IT nur Struktur, Texte später |
 | M2-AP08 | SEO: Landing-Template je Tool, Katalog, Kategorien, Sitemap, JSON-LD, dynamische OG-Bilder | ui-dev | geplant | AP07 | OG-Bilder zur Build-Zeit oder im Worker, keine laufenden Kosten |
