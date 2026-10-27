@@ -10,6 +10,8 @@ import { readFile } from "node:fs/promises";
 
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
+import { toolSlug } from "../i18n/slugs";
+
 /** Small enough to show at 100 % in the default 1280 × 720 viewport. */
 const SIZE = { width: 480, height: 320 };
 
@@ -253,7 +255,7 @@ test.describe("preview equals PNG export", () => {
     const label = `${c.toolId} (${c.preset ?? "defaults"})`;
 
     test(label, async ({ page, browserName }, testInfo) => {
-      await page.goto(`/en/tools/${c.toolId}`);
+      await page.goto(`/en/tools/${toolSlug(c.toolId, "en")}`);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await expect(page.getByRole("button", { name: "Share" })).toBeEnabled();
 

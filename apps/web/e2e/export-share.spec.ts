@@ -96,7 +96,7 @@ async function downloaded(download: Download): Promise<Buffer> {
 
 test.describe("export dialog", () => {
   test("Ctrl/Cmd+E opens it, Escape closes it", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const dialog = page.getByRole("dialog", { name: "Export" });
     await expect(async () => {
       await page.locator("body").press("ControlOrMeta+E");
@@ -111,7 +111,7 @@ test.describe("export dialog", () => {
   });
 
   test("downloads SVG", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const dialog = await openExport(page);
     await choose(dialog, "SVG");
     const [download] = await Promise.all([
@@ -128,7 +128,7 @@ test.describe("export dialog", () => {
   test("downloads PNG at 2x through the raster worker", async ({ page }) => {
     const workers: string[] = [];
     page.on("worker", (worker) => workers.push(worker.url()));
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const dialog = await openExport(page);
     await choose(dialog, "PNG");
     await choose(dialog, "2× (2160 × 2160)");
@@ -149,7 +149,7 @@ test.describe("export dialog", () => {
   });
 
   test("re-renders a custom size with another aspect ratio", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const dialog = await openExport(page);
     await choose(dialog, "PNG");
     await choose(dialog, "Custom size");
@@ -172,7 +172,7 @@ test.describe("export dialog", () => {
 
   test("shows code with a copy button for CSS exports", async ({ page, context, browserName }) => {
     await enableClipboard(context, browserName);
-    await openEditor(page, "/en/tools/css-gradient", { svg: false });
+    await openEditor(page, "/en/tools/css-gradient-generator", { svg: false });
     const dialog = await openExport(page);
     await choose(dialog, "Tailwind classes");
     const code = dialog.getByTestId("export-code");
@@ -186,7 +186,7 @@ test.describe("export dialog", () => {
   for (const scheme of ["light", "dark"] as const) {
     test(`open dialog has no axe violations (${scheme})`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: scheme });
-      await openEditor(page, "/en/tools/blob");
+      await openEditor(page, "/en/tools/blob-generator");
       const dialog = await openExport(page);
       await choose(dialog, "JPG");
       await expect(dialog.getByLabel("Quality")).toBeVisible();
@@ -206,7 +206,7 @@ test.describe("share link", () => {
     browserName,
   }) => {
     await enableClipboard(context, browserName);
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const defaults = await motifSrc(page);
     await page.getByRole("button", { name: "Lava" }).click();
     await page.locator("body").press("Space");
@@ -214,7 +214,7 @@ test.describe("share link", () => {
     const original = await motifSrc(page);
 
     const link = await shareLink(page);
-    expect(link).toMatch(/\/en\/tools\/blob#d=[\w-]+$/);
+    expect(link).toMatch(/\/en\/tools\/blob-generator#d=[\w-]+$/);
     // Sharing does not rewrite the current URL.
     expect(new URL(page.url()).hash).toBe("");
 
@@ -222,13 +222,19 @@ test.describe("share link", () => {
     await openEditor(other, link);
     await expect.poll(() => motifSrc(other)).toBe(original);
     await expect(other.getByTestId("shell-notice")).toHaveCount(0);
+
+    // An M1 link with the tool id is redirected to the slug and keeps the design.
+    const legacy = await context.newPage();
+    await openEditor(legacy, link.replace("/blob-generator#", "/blob#"));
+    await expect(legacy).toHaveURL(/\/en\/tools\/blob-generator#d=/);
+    await expect.poll(() => motifSrc(legacy)).toBe(original);
   });
 
   test("an invalid hash keeps the defaults and shows a dismissible notice", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const defaults = await motifSrc(page);
 
-    await openEditor(page, "/en/tools/blob#d=@@not-a-design@@");
+    await openEditor(page, "/en/tools/blob-generator#d=@@not-a-design@@");
     const notice = page.getByRole("alert").filter({ hasText: "The shared link is damaged." });
     await expect(notice).toBeVisible();
     expect(await motifSrc(page)).toBe(defaults);
@@ -238,7 +244,7 @@ test.describe("share link", () => {
 
   test("a hash change loads the new design", async ({ page, context, browserName }) => {
     await enableClipboard(context, browserName);
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const defaults = await motifSrc(page);
     await page.locator("body").press("Space");
     await expect.poll(() => motifSrc(page)).not.toBe(defaults);

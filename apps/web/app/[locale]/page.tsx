@@ -1,12 +1,20 @@
 import { createRng } from "@motivo/engine";
+import type { Metadata } from "next";
 import { hasLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { use } from "react";
 
 import { routing } from "@/i18n/routing";
+import { pageAlternates } from "@/lib/seo/alternates";
 
 type HomePageProps = Readonly<{ params: Promise<{ locale: string }> }>;
+
+export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  return { alternates: pageAlternates({ page: "home" }, locale) };
+}
 
 export default function HomePage({ params }: HomePageProps) {
   const { locale } = use(params);

@@ -186,6 +186,8 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
 /[locale]/tools/category/[cat]          Kategorie-Seiten
 /[locale]/[tool-slug]                   SEO-Landingpage (statisch generiert)
 /[locale]/tools/[tool-slug]             Editor (Client), ?d=<designId> oder ?p=<base64-params>
+/de/konverter, /en/convert              Konverter-Übersicht
+/de/konverter/[slug], /en/convert/[slug]   Konverter (z. B. /de/konverter/svg-zu-css)
 /[locale]/community/...                 Packs, Paletten, Templates (ISR)
 /[locale]/gradients, /palettes, /wallpapers   Programmatic-SEO-Sammlungen
 /[locale]/blog, /changelog, /pricing
@@ -194,6 +196,17 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
 ```
 
 - Lokalisierte Slugs (z. B. `/de/geometrische-muster-generator`), `hreflang`, Sitemap pro Sprache.
+
+**Slug-Modell (seit M2-AP07)**
+- **Sprachen**: `apps/web/i18n/locales.ts` kennt `ALL_LOCALES` (de, en, fr, it) und `ENABLED_LOCALES` (de, en). Nur aktivierte Sprachen werden geroutet, haben Messages und erscheinen in `hreflang`. FR/IT aktivieren heisst: in `ENABLED_LOCALES` aufnehmen, `messages/<locale>.json` anlegen, Slugs ergänzen.
+- **Einzige Quelle** für URL-Slugs ist `apps/web/i18n/slugs.ts`: `TOOL_SLUGS` (Tool-ID ► Slug pro Sprache), `CONVERTER_SLUGS` und `SECTION_SLUGS` (erstes Pfadsegment, z. B. `convert` ► `konverter`). Reine Daten ohne Registry- oder Message-Import, darum in Proxy, Server-Seiten und Client nutzbar. Ein neues Tool braucht nur einen Eintrag; der Vertragstest `slugs.test.ts` verlangt für jedes registrierte Tool und jeden Konverter einen gültigen, pro Sprache eindeutigen Slug in jeder aktivierten Sprache. Vorbereitete Sprachen ohne eigenen Slug fallen auf EN zurück. Ein Slug bleibt nach Veröffentlichung stabil.
+- Derselbe Tool-Slug gilt für Editor (`/[locale]/tools/[slug]`) und die künftige Landingpage (`/[locale]/[slug]`); Tool-Slugs dürfen darum keine reservierten Segmente sein (im Test geprüft).
+- **Routing**: next-intl `pathnames` in `i18n/routing.ts` lokalisiert die statischen Segmente; interne Ordner heissen `tools/[toolSlug]` und `convert/[converterSlug]`. Die Seiten lösen den Slug der aktuellen Sprache auf und liefern sonst 404.
+- **Seitenmodell**: `i18n/paths.ts` beschreibt Seiten sprachunabhängig (`AppRoute`) und liefert `routeHref` (für `Link`), `routePath`, `localizedPaths`, `toolEditorPaths`, `toolSlugs` sowie `routeFromPathname` (Sprachumschalter). Sitemap, Katalog und Landingpages bauen darauf auf.
+- **Alte Pfade**: `proxy.ts` leitet Tool-IDs (M1-Links wie `/en/tools/blob#d=…`), Slugs oder Segmente einer anderen Sprache mit einem 308 auf die kanonische URL um (`i18n/legacy.ts`). Der Hash `#d=` bleibt dabei im Browser erhalten.
+- **`hreflang` und Canonical** über die Metadata API (`lib/seo/alternates.ts`): Canonical, alle aktivierten Sprachen und `x-default` (Startseite: Root `/` mit Spracherkennung; sonst die Standardsprache DE). Die Link-Header der next-intl-Middleware sind aus (`alternateLinks: false`), weil sie die Slugs nicht kennen.
+- **Basis-URL** aus `NEXT_PUBLIC_SITE_URL` (wird beim Build eingesetzt), Fallback `https://motivo-web.andreas-65d.workers.dev`, bis die Domain feststeht.
+- **Sprachumschalter** bleibt auf der gleichen Seite und übersetzt Abschnitt und Slug (z. B. `/de/konverter/svg-zu-css` ► `/en/convert/svg-to-css`).
 - OG-Bilder dynamisch (Next.js `ImageResponse`) aus Tool-Presets.
 - Strukturierte Daten: `SoftwareApplication`, `FAQPage`, `HowTo`.
 - Share-Links: Params im URL-Hash komprimiert (z. B. `lz-string`), damit ein Design ohne Account teilbar ist.

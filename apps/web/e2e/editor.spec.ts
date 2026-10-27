@@ -26,7 +26,7 @@ test.describe("tools index", () => {
     const cards = page.getByRole("main").getByRole("listitem");
     await expect(cards).toHaveCount(4);
     await page.getByRole("link", { name: /Blob Generator/ }).click();
-    await expect(page).toHaveURL(/\/en\/tools\/blob$/);
+    await expect(page).toHaveURL(/\/en\/tools\/blob-generator$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Blob Generator");
   });
 
@@ -38,7 +38,7 @@ test.describe("tools index", () => {
 
 test.describe("editor", () => {
   test("Space makes a new variant and undo restores it", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const before = await motifSrc(page);
     const announcer = page.getByTestId("editor-announcer");
 
@@ -60,7 +60,7 @@ test.describe("editor", () => {
   });
 
   test("Space is ignored while typing in a field", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const before = await motifSrc(page);
     const width = page.getByLabel("Width");
     await width.click();
@@ -70,7 +70,7 @@ test.describe("editor", () => {
   });
 
   test("clicking a preset applies it as a new variant", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     const before = await motifSrc(page);
     const preset = page.getByRole("button", { name: "Lava" });
     await preset.click();
@@ -80,7 +80,7 @@ test.describe("editor", () => {
   });
 
   test("size picker and zoom shortcuts change the preview", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     await page.getByRole("combobox", { name: "Size", exact: true }).selectOption("full-hd");
     await expect(page.getByLabel("Width")).toHaveValue("1920");
     await expect(page.getByRole("img", { name: /1920 × 1080 px/ })).toBeVisible();
@@ -95,7 +95,7 @@ test.describe("editor", () => {
   });
 
   test("? opens the shortcut overview", async ({ page }) => {
-    await openEditor(page, "/en/tools/blob");
+    await openEditor(page, "/en/tools/blob-generator");
     await page.locator("body").press("?");
     const dialog = page.getByRole("dialog", { name: "Keyboard shortcuts" });
     await expect(dialog).toBeVisible();
@@ -104,7 +104,7 @@ test.describe("editor", () => {
   });
 
   test("CSS tools render through a style, German page uses German copy", async ({ page }) => {
-    await page.goto("/de/tools/css-gradient");
+    await page.goto("/de/tools/css-verlauf-generator");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("CSS-Verlauf");
     const box = page.getByTestId("preview").locator("div[style*='gradient']");
     await expect(box).toBeAttached();
@@ -113,9 +113,9 @@ test.describe("editor", () => {
 
 test.describe("editor accessibility", () => {
   for (const scheme of ["light", "dark"] as const) {
-    test(`/en/tools/blob has no axe violations (${scheme})`, async ({ page }) => {
+    test(`/en/tools/blob-generator has no axe violations (${scheme})`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: scheme });
-      await openEditor(page, "/en/tools/blob");
+      await openEditor(page, "/en/tools/blob-generator");
       await page.locator("body").press("Space");
       const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
       expect(results.violations).toEqual([]);

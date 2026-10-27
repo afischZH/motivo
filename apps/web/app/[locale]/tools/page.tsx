@@ -7,7 +7,9 @@ import { notFound } from "next/navigation";
 import { use } from "react";
 
 import { Link } from "@/i18n/navigation";
+import { routeHref } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
+import { pageAlternates } from "@/lib/seo/alternates";
 
 type ToolsPageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -18,7 +20,11 @@ export async function generateMetadata({ params }: ToolsPageProps): Promise<Meta
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "ToolsIndex" });
-  return { title: t("metaTitle"), description: t("metaDescription") };
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: pageAlternates({ page: "tools" }, locale),
+  };
 }
 
 export default function ToolsPage({ params }: ToolsPageProps) {
@@ -44,7 +50,7 @@ export default function ToolsPage({ params }: ToolsPageProps) {
           return (
             <li key={tool.id}>
               <Link
-                href={`/tools/${tool.id}`}
+                href={routeHref({ page: "tool", toolId: tool.id }, locale)}
                 className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-card text-card-foreground transition-colors hover:border-ring"
               >
                 <div className="flex h-44 items-center justify-center bg-canvas" aria-hidden="true">
