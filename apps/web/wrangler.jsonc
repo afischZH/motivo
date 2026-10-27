@@ -8,19 +8,13 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS",
   },
-  "services": [
-    {
-      // Self-reference binding required by OpenNext (https://opennext.js.org/cloudflare/caching)
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "motivo-web",
-    },
-  ],
+  // No WORKER_SELF_REFERENCE service binding yet: OpenNext only needs it for ISR
+  // revalidation, and service bindings are not supported in Worker Previews.
+  // Add it back together with the R2 incremental cache when ISR pages arrive.
   "observability": { "enabled": true },
   // Serve production on <name>.<subdomain>.workers.dev and give every preview its own URL.
   "workers_dev": true,
   "preview_urls": true,
   // Settings for `wrangler preview` (preview builds of non-production branches).
-  // Service bindings are not available in previews; the self-reference above is only
-  // used for ISR revalidation, which this app does not use yet.
   "previews": {},
 }
