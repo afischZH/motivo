@@ -36,7 +36,7 @@ export interface DotLayoutOptions {
 /** Smallest centre distance in px; finer grids are invisible and only cost time. */
 export const MIN_DOT_SPACING_PX = 4;
 /** Upper bound for dot sites per render, so extreme sizes cannot freeze the UI. */
-export const MAX_DOT_SITES = 20_000;
+export const MAX_DOT_SITES = 10_000;
 
 const rowStep = (layout: DotLayout, s: number): number =>
   layout === "offset" ? (s * Math.sqrt(3)) / 2 : s;
