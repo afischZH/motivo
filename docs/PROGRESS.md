@@ -4,7 +4,7 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M1 (freigegeben 2026-10-27). M0 abgenommen und live seit 2026-10-27.
+- **Meilenstein**: M1 (freigegeben 2026-10-27, umgesetzt, Abnahme offen). M0 abgenommen und live seit 2026-10-27.
 - **Letzte Sitzung**: 2026-10-27 (Sitzungsstart-Ritual, Cloud-Sitzung)
 - **Nächster Schritt**: M1-Abnahme durch Andreas (PR #2 mergen = Production-Deploy).
 - Reviews 2026-10-27: Code-Review (keine kritischen Befunde, 2 mittel, 5 tief) und Security-Review (PASS WITH NOTES: Polka-Dots-Link konnte Tab einfrieren) alle behoben. Offen für vor Launch: CSP und Security-Header (Theme-Script per sha256 erlauben).
