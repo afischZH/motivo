@@ -16,4 +16,8 @@
     },
   ],
   "observability": { "enabled": true },
+  // Settings for `wrangler preview` (preview builds of non-production branches).
+  // Service bindings are not available in previews; the self-reference above is only
+  // used for ISR revalidation, which this app does not use yet.
+  "previews": {},
 }
