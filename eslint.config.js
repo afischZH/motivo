@@ -10,7 +10,12 @@ import tseslint from "typescript-eslint";
 const WEB_APP = ["apps/web/**/*.{ts,tsx,js,mjs}"];
 
 /** Packages whose output must be reproducible from (params, seed) alone. */
-const DETERMINISTIC_PACKAGES = ["packages/engine/**", "packages/effects/**", "packages/shaders/**"];
+const DETERMINISTIC_PACKAGES = [
+  "packages/engine/**",
+  "packages/effects/**",
+  "packages/shaders/**",
+  "packages/tool-registry/src/**",
+];
 
 const NON_DETERMINISTIC_MESSAGE =
   "Not allowed in deterministic packages: use the injected seeded Rng (see CLAUDE.md).";
