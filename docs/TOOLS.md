@@ -36,6 +36,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 ### A4. Doodle Backgrounds · M3 · G
 - Handgezeichnet wirkende Formen: Linien/Pfade mit leichtem Rauschen (Perlin-Offset der Kontrollpunkte), runde Linienenden, Verteilung per Poisson-Disk.
+- **Umsetzung M3** (Tool-ID `doodles`): acht eigene, prozedurale Strichformen (Kringel, Zickzack, Spirale, Kreis mit Überschwung, Dreieck, Stern, Kreuz, Bogen) als Polylinien in Einheitskoordinaten; jeder Punkt wird mit 1D-Gradientenrauschen (Perlin-Konstruktion, `noise.ts`) entlang der Strichlänge verschoben (`wobble`), danach Catmull-Rom-Glättung (eckige Formen mit tiefer Spannung). Params `shape` (gemischt oder eine Form), `spacing` (Poisson-Disk in Prozent der kürzeren Kante), `size`, `sizeVariance`, `rotation`, `wobble`, `strokeWidth` (px). Ein Rauschpaar pro Render, pro Doodle nur eine Phase (fünf RNG-Ziehungen pro Position, damit Optionen die Anordnung nicht verschieben). Alle Striche einer Farbe in einem Pfad mit runden Enden. Schutz: Abstand mindestens 8 px, höchstens 2500 Doodles. Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ## B. CSS-Patterns
 
@@ -95,6 +96,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 ### D2. Blob Composition · M3 · G/P
 - Mehrere Blobs als Ebenen, Positionen an Ecken/Rändern, Brand-Farben, "Magic Resize" (Positionen relativ in % gespeichert).
+- **Umsetzung M3** (Tool-ID `blob-composition`): Blobs als Listen-Param (`kind: "list"`, 1 bis 8 Ebenen, oberste zuerst) mit `anchor` (neun Positionen: Ecken, Ränder, Mitte), `offsetX`/`offsetY` in Prozent von Breite bzw. Höhe, `size` in Prozent der kürzeren Kante, `complexity`, `randomness`, `variant` (bestimmt den Umriss, unabhängig von Seed und Listenposition), `opacity`, `visible`. Form aus der Blob-Engine (D1). Farben der Reihe nach aus der Palette (Brand-Paletten folgen mit M3-AP06), Füllung Farbe, Kontur oder Verlauf (Farbe i nach i + 1). "Hinzufügen" setzt den Blob in die erste freie Ecke. Gating vorerst frei (bis M4). Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ### D3. SVG Waves · M1 · G
 - Layers 1 bis 5, Punkte pro Welle, Amplitude, Glättung, Richtung (oben/unten), Farbverlauf über Layers. Spline wie bei Blobs, aber offen. Exporte: SVG, PNG, CSS.
@@ -105,6 +107,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 ### D5. SVG Charts (Platzhalter-Charts) · M3 · G
 - Linien- und Balken-Diagramme mit Zufallsdaten für Mockups. Glättung, Achsen ein/aus, Farben.
+- **Umsetzung M3** (Tool-ID `svg-charts`): `type` (Linie, Fläche, gruppierte Balken), `series` (1 bis 4), `points` (2 bis 24), Daten als geseedeter Random Walk mit `trend` und `volatility` (es werden immer 4 × 24 Werte gezogen, Stiländerungen behalten die Daten), `smoothing` (Catmull-Rom), `lineWidth`, `markers`, `barGap`, `barRadius`, `axes`, `grid`, `axisColor`, `margin`. Bewusst ohne Text (keine Schriften, überall gleiche Darstellung). Leertaste würfelt Daten, Trend und Farben, der Stil bleibt. Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ## E. Image Effects (alle im Web Worker auf ImageData)
 
