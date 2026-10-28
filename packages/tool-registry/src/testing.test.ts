@@ -30,6 +30,7 @@ describe("checkSvg", () => {
     ["NaN leak", `<svg ${NS} viewBox="0 0 1 1"><circle r="NaN"/></svg>`],
     ["undefined leak", `<svg ${NS} viewBox="0 0 1 1"><circle fill="undefined"/></svg>`],
     ["unquoted attribute", `<svg ${NS} viewBox="0 0 1 1"><circle r=1/></svg>`],
+    ["duplicate id", `<svg ${NS} viewBox="0 0 1 1"><defs><g id="a"/><g id="a"/></defs></svg>`],
     ["two roots", `<svg ${NS} viewBox="0 0 1 1"></svg><svg ${NS} viewBox="0 0 1 1"></svg>`],
   ])("rejects %s", (_, svg) => {
     expect(checkSvg(svg).length).toBeGreaterThan(0);
