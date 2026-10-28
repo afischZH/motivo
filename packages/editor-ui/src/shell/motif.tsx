@@ -197,6 +197,14 @@ export interface MotifProps {
    * `loopSeconds`) and the viewer allows motion. Only the main preview.
    */
   animate?: boolean;
+  /**
+   * Id for a notice that replaces the picture (a shader motif without
+   * WebGL2), so the preview's `role="img"` box can name it in
+   * `aria-describedby`: an image's children are hidden from assistive tech.
+   */
+  noticeId?: string;
+  /** Called with `true` while such a notice is shown, `false` otherwise. */
+  onNoticeChange?: (shown: boolean) => void;
 }
 
 /**
@@ -365,6 +373,8 @@ function ShaderMotif({
   scale,
   className,
   animate = false,
+  noticeId,
+  onNoticeChange,
 }: MotifProps & { output: ShaderOutput }) {
   const t = useT();
   const ref = useRef<HTMLCanvasElement>(null);
@@ -379,6 +389,12 @@ function ShaderMotif({
 
   // Keeps the workers (and their GPU contexts) only while WebGL tools are shown.
   useEffect(() => retainShaderClient(), []);
+
+  const unavailable = status === "unavailable";
+  useEffect(() => {
+    onNoticeChange?.(unavailable);
+    return () => onNoticeChange?.(false);
+  }, [unavailable, onNoticeChange]);
 
   const show = useCallback((bitmap: ImageBitmap, job: ShaderJob) => {
     const canvas = ref.current;
@@ -429,9 +445,12 @@ function ShaderMotif({
       step();
       return;
     }
-    // Animation: the clock keeps running across param changes.
+    // Animation: the clock keeps running across param changes. Frames still
+    // in flight when the effect ends are dropped: a late one would replace
+    // the still (time 0, full size) that a switch to a still picture shows.
     let frame = 0;
     let busy = false;
+    let stopped = false;
     let last = -Infinity;
     const interval = 1000 / SHADER_ANIMATION_FPS;
     const tick = (now: number) => {
@@ -444,14 +463,22 @@ function ShaderMotif({
       const next = job({ width: moving.width, height: moving.height }, time);
       void shaderClient()
         .preview(next)
-        .then((bitmap) => show(bitmap, next))
-        .catch(fail)
+        .then((bitmap) => {
+          if (stopped) bitmap.close();
+          else show(bitmap, next);
+        })
+        .catch((error: unknown) => {
+          if (!stopped) fail(error);
+        })
         .finally(() => {
           busy = false;
         });
     };
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+    };
   }, [output, loop, still.width, still.height, moving.width, moving.height, show, fail]);
 
   const box: CSSProperties = { width: width * scale, height: height * scale };
@@ -463,6 +490,7 @@ function ShaderMotif({
           className,
         )}
         style={box}
+        id={noticeId}
         data-shader-unavailable=""
       >
         {t("Editor.shader.unavailable")}

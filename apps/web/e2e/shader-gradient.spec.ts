@@ -299,6 +299,9 @@ test.describe("shader gradient editor", () => {
       "WebGL2",
       { timeout: 15_000 },
     );
+    // The notice sits inside the role="img" box, whose children assistive tech skips:
+    // it must be announced as the image's description.
+    await expect(page.getByTestId("preview")).toHaveAccessibleDescription(/WebGL2/);
   });
 });
 

@@ -3,6 +3,7 @@
 import type { CanvasSize } from "@musterli/tool-registry";
 import {
   useEffect,
+  useId,
   useLayoutEffect,
   useRef,
   useState,
@@ -70,6 +71,8 @@ export interface PreviewStageProps {
 export function PreviewStage(props: PreviewStageProps) {
   const { size, zoom, onZoomChange, onScaleChange } = props;
   const stageRef = useRef<HTMLDivElement>(null);
+  const noticeId = useId();
+  const [motifNotice, setMotifNotice] = useState(false);
   const [stage, setStage] = useState<{ width: number; height: number } | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -122,9 +125,15 @@ export function PreviewStage(props: PreviewStageProps) {
       data-testid="preview-stage"
     >
       <div className="relative m-auto shrink-0">
+        {/* A notice replacing the picture is a child of the image, so it is named as its description. */}
         <div
           role="img"
           aria-label={props.label}
+          aria-describedby={
+            scale !== null && (props.output.kind === "unsupported" || motifNotice)
+              ? noticeId
+              : undefined
+          }
           className="shadow-sm"
           style={props.transparent ? CHECKERBOARD_STYLE : undefined}
           data-testid="preview"
@@ -132,6 +141,7 @@ export function PreviewStage(props: PreviewStageProps) {
           {scale !== null &&
             (props.output.kind === "unsupported" ? (
               <div
+                id={noticeId}
                 className="flex items-center justify-center p-4 text-center text-sm text-muted-foreground"
                 style={{ width: size.width * scale, height: size.height * scale }}
               >
@@ -144,6 +154,8 @@ export function PreviewStage(props: PreviewStageProps) {
                 height={size.height}
                 scale={scale}
                 animate
+                noticeId={noticeId}
+                onNoticeChange={setMotifNotice}
               />
             ))}
         </div>
