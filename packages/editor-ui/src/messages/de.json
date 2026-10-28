@@ -201,7 +201,9 @@
         "htmlExample": "HTML-Beispiel",
         "cssGrid": "CSS Grid + HTML",
         "report": "Bericht als Text",
-        "dropShadow": "CSS drop-shadow()"
+        "dropShadow": "CSS drop-shadow()",
+        "plainText": "Text (.txt)",
+        "htmlPre": "HTML (pre)"
       },
       "gif": {
         "title": "GIF-Einstellungen",
@@ -296,7 +298,8 @@
         "no-result": "Das Bild liess sich nicht zuschneiden. Versuch es nochmals.",
         "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
         "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals.",
-        "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals."
+        "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals.",
+        "raster-only": "Hier geht nur ein Foto im Format PNG, JPG oder WebP. SVG-Dateien lassen sich nicht als Foto bearbeiten."
       },
       "crop": {
         "title": "Zuschneiden",

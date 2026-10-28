@@ -201,7 +201,9 @@
         "htmlExample": "HTML example",
         "cssGrid": "CSS Grid + HTML",
         "report": "Text report",
-        "dropShadow": "CSS drop-shadow()"
+        "dropShadow": "CSS drop-shadow()",
+        "plainText": "Plain text (.txt)",
+        "htmlPre": "HTML (pre)"
       },
       "gif": {
         "title": "GIF settings",
@@ -296,7 +298,8 @@
         "no-result": "The image could not be cropped. Please try again.",
         "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
         "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
-        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again."
+        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again.",
+        "raster-only": "Only a photo works here: PNG, JPG or WebP. SVG files cannot be edited as a photo."
       },
       "crop": {
         "title": "Crop",

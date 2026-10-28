@@ -83,7 +83,7 @@ function digestDataUris(svg: string): string {
  * Tools whose SVG runs to hundreds of KB (thousands of generated lines):
  * snapshotted as length, CRC-32 and the first 600 characters, exact but small.
  */
-const DIGEST_TOOLS: ReadonlySet<string> = new Set(["topo-lines", "flow-field"]);
+const DIGEST_TOOLS: ReadonlySet<string> = new Set(["topo-lines", "flow-field", "ascii-art"]);
 
 function digestSvg(svg: string): string {
   // The generated SVG is ASCII, so code units are bytes.
@@ -140,6 +140,8 @@ describe("built-in tool registration", () => {
       "low-poly",
       "terrazzo",
       "screenshot-beautifier",
+      "duotone",
+      "ascii-art",
     ]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual(["screenshot-beautifier"]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
@@ -170,7 +172,11 @@ describe("built-in tool registration", () => {
       "low-poly",
       "terrazzo",
     ]);
-    expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
+    expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual([
+      "noise-grain",
+      "duotone",
+      "ascii-art",
+    ]);
   });
 
   it.each(builtInTools.map((t) => [t.id, t] as const))("%s has no gating (all free)", (_, tool) => {
@@ -461,6 +467,7 @@ describe("extra exports", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "ascii-art",
     ]);
   });
 });

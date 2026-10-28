@@ -53,6 +53,9 @@ importers:
       '@musterli/editor-ui':
         specifier: workspace:*
         version: link:../../packages/editor-ui
+      '@musterli/effects':
+        specifier: workspace:*
+        version: link:../../packages/effects
       '@musterli/engine':
         specifier: workspace:*
         version: link:../../packages/engine
@@ -197,6 +200,10 @@ importers:
         version: 19.3.1(react@19.3.1)
 
   packages/effects:
+    dependencies:
+      '@musterli/engine':
+        specifier: workspace:*
+        version: link:../engine
     devDependencies:
       '@musterli/config':
         specifier: workspace:*
@@ -258,6 +265,9 @@ importers:
 
   packages/tool-registry:
     dependencies:
+      '@musterli/effects':
+        specifier: workspace:*
+        version: link:../effects
       '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
