@@ -13,6 +13,7 @@
 import {
   SEAMLESS_SHAPES,
   SEAMLESS_TILINGS,
+  tileShapeIds,
   randomPalette,
   seamlessLayout,
   seamlessPatternSvg,
@@ -25,6 +26,12 @@ import {
 import * as z from "zod";
 import { colorSchema, imageAssetSchema, visualParamsSchema, type ImageAsset } from "../common";
 import { keepLocked } from "../randomize";
+import { SEED_AND_COLOR_ANIMATION } from "../animation";
+import {
+  SHAPE_OPTION_LABEL_KEYS,
+  shapePackGroups,
+  shapePreview as libraryShapePreview,
+} from "../shapes";
 import { defineTool } from "../registry";
 import { recolorSvgAsset, svgAssetFor } from "../svg-asset";
 import type { Preset, RenderContext } from "../types";
@@ -175,22 +182,15 @@ function layoutFor(
   });
 }
 
-const escapeAttr = (v: string): string => v.replace(/[^#0-9a-zA-Z]/g, "");
-
-/** Small preview of one built-in shape in the current colours (thumbnail picker). */
-function shapePreview(value: string | number, p: SeamlessPatternsParams): { svg: string } {
-  const shape = (SEAMLESS_SHAPES as readonly string[]).includes(String(value))
-    ? (value as SeamlessPatternsParams["shape"])
-    : "circle";
-  const fill = escapeAttr(p.colorMode === "palette" ? (p.palette[0] ?? p.color) : p.color);
-  const bg =
-    p.background === "transparent"
-      ? ""
-      : `<rect x="-60" y="-60" width="120" height="120" fill="${escapeAttr(p.background)}"/>`;
-  return {
-    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="-60 -60 120 120">${bg}<path d="${seamlessShapePath(shape)}" fill="${fill}"/></svg>`,
-  };
+/** Small preview of one library shape in the current colours (thumbnail picker). */
+function shapePreview(value: string | number, p: SeamlessPatternsParams): { readonly svg: string } {
+  const fill = p.colorMode === "palette" ? (p.palette[0] ?? p.color) : p.color;
+  return libraryShapePreview(value, fill, p.background);
 }
+
+/** Shapes the space bar picks from: all but the edge-filling tile shapes. */
+const TILE_SHAPES: ReadonlySet<string> = new Set(tileShapeIds());
+const RANDOM_SHAPES = SEAMLESS_SHAPES.filter((s) => !TILE_SHAPES.has(s));
 
 const hasUpload = (p: SeamlessPatternsParams): boolean => p.upload !== null;
 const usesColors = (p: SeamlessPatternsParams): boolean => !(hasUpload(p) && p.keepOriginalColors);
@@ -309,8 +309,10 @@ export const seamlessPatternsTool = defineTool({
       shape: {
         group: "shape",
         kind: "thumbnails",
-        optionLabelKeys: optionLabels(ID, "shape", SEAMLESS_SHAPES),
+        optionLabelKeys: SHAPE_OPTION_LABEL_KEYS,
         optionPreview: shapePreview,
+        optionGroups: shapePackGroups(),
+        brandShapesParam: "upload",
         visibleWhen: (p) => !hasUpload(p),
       },
       keepOriginalColors: { group: "shape", visibleWhen: hasUpload },
@@ -344,7 +346,7 @@ export const seamlessPatternsTool = defineTool({
     const next: SeamlessPatternsParams = {
       background: rng.bool(0.5) ? current.background : background,
       palette: colors.length >= 2 ? colors : randomPalette(rng, 3),
-      shape: rng.pick(SEAMLESS_SHAPES),
+      shape: rng.pick(RANDOM_SHAPES),
       // The user's own file is never replaced by a random value.
       upload: current.upload,
       keepOriginalColors: current.keepOriginalColors,
@@ -393,4 +395,5 @@ export const seamlessPatternsTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  animation: SEED_AND_COLOR_ANIMATION,
 });

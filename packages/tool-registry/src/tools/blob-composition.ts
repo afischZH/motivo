@@ -17,6 +17,7 @@ import {
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { isItemLocked, keepLocked } from "../randomize";
+import { COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { ControlHints, Preset } from "../types";
 import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
@@ -290,4 +291,5 @@ export const blobCompositionTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  animation: COLOR_ANIMATION,
 });

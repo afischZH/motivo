@@ -25,6 +25,11 @@ import { svgChartsTool } from "./svg-charts";
 import { svgWavesTool } from "./svg-waves";
 import { tailwindPaletteTool } from "./tailwind-palette";
 import { tintsShadesTool } from "./tints-shades";
+import { glassEffectsTool } from "./glass-effects";
+import { bentoGridTool } from "./bento-grid";
+import { geometricPatternsTool } from "./geometric-patterns";
+import { contrastCheckerTool } from "./contrast-checker";
+import { cssShadowTool } from "./css-shadow";
 
 export {
   blobTool,
@@ -48,6 +53,11 @@ export {
   svgWavesTool,
   tailwindPaletteTool,
   tintsShadesTool,
+  glassEffectsTool,
+  bentoGridTool,
+  geometricPatternsTool,
+  contrastCheckerTool,
+  cssShadowTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -72,6 +82,20 @@ export type { SvgChartsParams } from "./svg-charts";
 export type { SvgWavesParams } from "./svg-waves";
 export type { TailwindPaletteParams } from "./tailwind-palette";
 export type { TintsShadesParams } from "./tints-shades";
+export type { GlassEffectsParams } from "./glass-effects";
+export type { BentoGridParams } from "./bento-grid";
+export type { GeometricPatternsParams, TileOverride, TileValues } from "./geometric-patterns";
+export {
+  GEOMETRIC_PACKS,
+  GEOMETRIC_SHAPES_MAX,
+  TILE_OVERRIDES_MAX,
+  geometricShapesOf,
+  tileOverrideSchema,
+  tileOverridesSchema,
+} from "./geometric-patterns";
+export type { ContrastCheckerParams } from "./contrast-checker";
+export { CONTRAST_SUGGESTION_IDS, contrastSuggestions } from "./contrast-checker";
+export type { CssShadowParams } from "./css-shadow";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -83,6 +107,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   doodlesTool,
   svgChartsTool,
   polkaDotsTool,
+  geometricPatternsTool,
   seamlessPatternsTool,
   noiseGrainTool,
   gridPatternsTool,
@@ -96,6 +121,10 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   tintsShadesTool,
   tailwindPaletteTool,
   paletteFromImageTool,
+  glassEffectsTool,
+  bentoGridTool,
+  contrastCheckerTool,
+  cssShadowTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

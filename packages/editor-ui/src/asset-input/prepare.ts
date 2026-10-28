@@ -125,12 +125,23 @@ export async function readAsset(
   };
 }
 
+/** How a finished upload is encoded and checked (`ImageHint` of the field). */
+export interface AssetOutputOptions {
+  /** Longest raster edge. Default `IMAGE_ASSET_RASTER_MAX_EDGE`. */
+  maxEdge?: number;
+  /** Re-encode rasters as JPEG. */
+  photo?: boolean;
+  /** Schema that must accept the asset. Default `imageAssetSchema`. */
+  schema?: { safeParse(value: unknown): { success: boolean; data?: unknown } };
+}
+
 /** Applies the crop and builds the asset. Never throws. */
 export async function finishAsset(
   source: AssetSource,
   crop: CropRect,
   services: Pick<ImageInputServices, "crop"> & { svg?: SvgSanitizer | undefined },
   signal?: AbortSignal,
+  output: AssetOutputOptions = {},
 ): Promise<AssetFinishResult> {
   let asset: ImageAsset;
   if (source.kind === "svg") {
@@ -150,12 +161,12 @@ export async function finishAsset(
   } else {
     let result: Awaited<ReturnType<ImageInputServices["crop"]>>;
     try {
-      result = await services.crop(
-        source.bytes,
-        source.mime,
-        cropToSource(crop, source),
-        IMAGE_ASSET_RASTER_MAX_EDGE,
-      );
+      const rect = cropToSource(crop, source);
+      const maxEdge = output.maxEdge ?? IMAGE_ASSET_RASTER_MAX_EDGE;
+      result =
+        output.photo === true
+          ? await services.crop(source.bytes, source.mime, rect, maxEdge, true)
+          : await services.crop(source.bytes, source.mime, rect, maxEdge);
     } catch {
       return { ok: false, error: "decode-failed" };
     }
@@ -169,6 +180,8 @@ export async function finishAsset(
     };
   }
   // The schema is the final judge (size limits, data URI shape).
-  const parsed = imageAssetSchema.safeParse(asset);
-  return parsed.success ? { ok: true, asset: parsed.data } : { ok: false, error: "too-large" };
+  const parsed = (output.schema ?? imageAssetSchema).safeParse(asset);
+  return parsed.success && parsed.data
+    ? { ok: true, asset: parsed.data as ImageAsset }
+    : { ok: false, error: "too-large" };
 }

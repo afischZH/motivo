@@ -23,7 +23,7 @@ You are a senior backend and platform engineer for Musterli (Next.js on Cloudfla
 
 ## Tests
 - Unit tests for every pure module, E2E for routing, headers and storage flows (including "no request to our own server when saving").
-- Run `pnpm lint && pnpm typecheck && pnpm test`.
+- Run `pnpm lint && pnpm typecheck && pnpm test:affected` (affected packages only; the full suite runs in CI at milestone sign-off).
 
 ## Report (max 200 words)
 Files changed, test result, new env variables (names only), worker size before/after, risks.

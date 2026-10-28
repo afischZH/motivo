@@ -22,7 +22,7 @@ describe("client messages", () => {
   it("gives the editor its namespaces and tool texts without SEO copy", () => {
     const editor = editorMessages(all);
     expect(Object.keys(editor).sort()).toEqual(
-      ["Designs", "Editor", "ToolPage", "sizes", "tools"].sort(),
+      ["Designs", "Editor", "Shapes", "ToolPage", "sizes", "tools"].sort(),
     );
     const tools = editor.tools as Record<string, Record<string, unknown>>;
     expect(Object.keys(tools)).toEqual(Object.keys(de.tools));

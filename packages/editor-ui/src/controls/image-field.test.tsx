@@ -4,6 +4,8 @@ import {
   type SeamlessPatternsParams,
 } from "@musterli/tool-registry";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
+import { createBrandKitStore } from "@musterli/storage";
+import { IDBFactory } from "fake-indexeddb";
 import { afterEach, describe, expect, it, vi } from "vitest";
 // Test-only cross-package import: tool texts live in the web app.
 import webDe from "../../../../apps/web/messages/de.json";
@@ -18,7 +20,7 @@ import { fakeServices } from "../test/fake-services";
 import { fixtureMessages, renderWithIntl } from "../test/render";
 
 const tool = seamlessPatternsTool;
-const messages = { ...fixtureMessages, tools: webDe.tools };
+const messages = { ...fixtureMessages, tools: webDe.tools, Shapes: webDe.Shapes };
 
 const SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20"><script>alert(1)</script>' +
@@ -56,13 +58,17 @@ function imageServices(): ImageInputServices {
   };
 }
 
-function setup() {
+function setup(brandKit?: ReturnType<typeof createBrandKitStore>) {
   const store = createEditorStore({ toolId: tool.id });
   const services = fakeServices();
   const images = imageServices();
   renderWithIntl(
     <EditorStoreProvider store={store}>
-      <EditorShell exportServices={services} imageInputServices={images} />
+      <EditorShell
+        exportServices={services}
+        imageInputServices={images}
+        {...(brandKit ? { brandKit, brandKitHref: "/de/brand-kit" } : {})}
+      />
     </EditorStoreProvider>,
     messages,
   );
@@ -189,6 +195,88 @@ describe("upload field (Seamless Patterns)", () => {
   });
 });
 
+describe("shape picker with packs", () => {
+  const packSelect = () => screen.getByLabelText<HTMLSelectElement>("Form: Sammlung");
+
+  it("shows one pack at a time and follows the value", async () => {
+    const { store, params } = setup();
+    // Default shape "flower" lives in the nature pack.
+    expect(packSelect().value).toBe("nature");
+    const shapes = screen.getByRole("radiogroup", { name: "Form" });
+    expect(within(shapes).getAllByRole("radio")).toHaveLength(15);
+    expect(within(shapes).getByRole("radio", { name: "Blume" }).getAttribute("aria-checked")).toBe(
+      "true",
+    );
+    fireEvent.change(packSelect(), { target: { value: "symbols" } });
+    const heart = within(screen.getByRole("radiogroup", { name: "Form" })).getByRole("radio", {
+      name: "Herz",
+    });
+    // Nothing checked in this pack: the first tile is the tab stop.
+    expect(heart.tabIndex).toBe(0);
+    fireEvent.click(heart);
+    expect(params().shape).toBe("heart");
+    // Arrow keys move within the pack.
+    fireEvent.keyDown(heart, { key: "ArrowRight" });
+    expect(params().shape).toBe("check");
+    // A preset elsewhere switches to the pack of its shape.
+    act(() => store.getState().applyPreset("bauhaus"));
+    await waitFor(() => expect(packSelect().value).toBe("basics"));
+    expect(
+      within(screen.getByRole("radiogroup", { name: "Form" }))
+        .getByRole("radio", { name: "Halbkreis" })
+        .getAttribute("aria-checked"),
+    ).toBe("true");
+  });
+
+  it("has no Brand Kit group without a brand kit", () => {
+    setup();
+    expect([...packSelect().options].map((o) => o.value)).not.toContain("__brand-kit");
+    expect(packSelect().options).toHaveLength(12);
+  });
+
+  it("offers Brand Kit shapes, which go through the upload pipeline", async () => {
+    const kit = createBrandKitStore({ indexedDB: new IDBFactory() });
+    await kit.addAsset({
+      kind: "shape",
+      name: "Acme",
+      image: { kind: "svg", svg: SVG, width: 40, height: 20, name: "acme.svg" },
+    });
+    await kit.addAsset({
+      kind: "logo",
+      name: "Logo",
+      image: { kind: "svg", svg: SVG, width: 40, height: 20, name: "logo.svg" },
+    });
+    const { params } = setup(kit);
+    fireEvent.change(packSelect(), { target: { value: "__brand-kit" } });
+    const items = await screen.findAllByTestId("thumbnail-brand-item");
+    // Shapes only, no logos.
+    expect(items).toHaveLength(1);
+    expect(items[0]?.getAttribute("aria-label")).toBe("Acme verwenden");
+    fireEvent.click(items[0] as HTMLElement);
+    const dialog = await cropDialog();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Übernehmen" }));
+    await waitFor(() => expect(params().upload).not.toBeNull());
+    const asset = params().upload as Extract<ImageAsset, { kind: "svg" }>;
+    expect(asset.kind).toBe("svg");
+    expect(asset.svg).not.toContain("script");
+    // The picker gives way to the upload field, which shows the shape.
+    expect(screen.queryByRole("radiogroup", { name: "Form" })).toBeNull();
+    expect(screen.getByTestId("asset-thumbnail")).toBeTruthy();
+    kit.close();
+  });
+
+  it("says so when the brand kit has no shapes", async () => {
+    const kit = createBrandKitStore({ indexedDB: new IDBFactory() });
+    setup(kit);
+    fireEvent.change(packSelect(), { target: { value: "__brand-kit" } });
+    expect(await screen.findByText(/Noch keine eigenen Shapes/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Zum Brand Kit" }).getAttribute("href")).toBe(
+      "/de/brand-kit",
+    );
+    kit.close();
+  });
+});
+
 describe("repeat tile export", () => {
   it("is offered as an image format for tools with a tile", () => {
     expect(listExportChoices(tool).map((c) => c.id)).toEqual([
@@ -198,6 +286,7 @@ describe("repeat tile export", () => {
       "png-tile",
       "svg",
       "css",
+      "gif",
     ]);
   });
 

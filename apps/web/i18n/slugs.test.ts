@@ -172,6 +172,7 @@ describe("legal sections", () => {
   it("have the documented localized slugs", () => {
     expect(SECTION_SLUGS.imprint).toEqual({ de: "impressum", en: "imprint" });
     expect(SECTION_SLUGS.privacy).toEqual({ de: "datenschutz", en: "privacy" });
+    expect(SECTION_SLUGS.terms).toEqual({ de: "nutzungsbedingungen", en: "terms" });
   });
 
   it.each(ENABLED_LOCALES)("are unique section slugs in %s", (locale) => {
@@ -180,6 +181,7 @@ describe("legal sections", () => {
     expect(new Set(all).size).toBe(all.length);
     expect(sectionFromAnySlug(SECTION_SLUGS.imprint[locale])).toBe("imprint");
     expect(sectionFromAnySlug(SECTION_SLUGS.privacy[locale])).toBe("privacy");
+    expect(sectionFromAnySlug(SECTION_SLUGS.terms[locale])).toBe("terms");
   });
 });
 

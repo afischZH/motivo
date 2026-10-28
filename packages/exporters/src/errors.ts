@@ -15,6 +15,8 @@ export type ExportErrorCode =
    * size limit, e.g. Safari); PNG still works through strips.
    */
   | "too-large"
+  /** An animation exceeds the pixel budget (frames × width × height, see `GIF_PIXEL_BUDGET`). */
+  | "budget-exceeded"
   /** The required browser API is missing (Canvas, Clipboard, ...). */
   | "unavailable"
   | "aborted";

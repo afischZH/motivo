@@ -183,7 +183,7 @@ describe("designs import under attack", { timeout: 60_000 }, () => {
   it("exports large collections in files that each import again", async () => {
     // Uploads make designs large: one file would exceed the import limit.
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M0 0${" L1 1".repeat(160_000)}"/></svg>`;
-    const designs = Array.from({ length: 30 }, (_, i) =>
+    const designs = Array.from({ length: 45 }, (_, i) =>
       entry({
         id: `u${i}`,
         toolId: "seamless-patterns",

@@ -114,7 +114,7 @@ test.describe("export dialog hint", () => {
     ]);
     await expect(dialog.getByRole("status")).toHaveText("Downloaded.");
 
-    const hint = dialog.getByTestId("export-after");
+    const hint = dialog.getByTestId("export-support-hint");
     await expect(hint).toHaveText("Enjoying Musterli? Support the project (opens in a new tab).");
     const link = hint.getByRole("link", { name: /Support the project/ });
     await expect(link).toHaveAttribute("href", "/en/support");

@@ -12,6 +12,7 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
+    "test:affected": "turbo run test --affected",
     "test:e2e": "pnpm --filter @musterli/web test:e2e",
     "test:e2e:chromium": "pnpm --filter @musterli/web test:e2e --project=chromium",
     "format": "prettier --write .",

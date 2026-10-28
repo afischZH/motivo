@@ -5,7 +5,8 @@
       "lockHint": "Gesperrte Werte bleiben beim Neu würfeln erhalten",
       "resetHint": "Doppelklick setzt den Standardwert",
       "advanced": "Erweitert",
-      "moreSettings": "Weitere Einstellungen"
+      "moreSettings": "Weitere Einstellungen",
+      "advisories": "Hinweise zum Design"
     },
     "list": {
       "item": "Element {index}",
@@ -115,7 +116,8 @@
       "categories": {
         "image": "Bild",
         "vector": "Vektor",
-        "code": "Code"
+        "code": "Code",
+        "animation": "Animation"
       },
       "formats": {
         "png": "PNG",
@@ -123,7 +125,8 @@
         "webp": "WebP",
         "svg": "SVG",
         "css": "CSS",
-        "png-tile": "PNG-Kachel"
+        "png-tile": "PNG-Kachel",
+        "gif": "GIF"
       },
       "size": "Grösse",
       "scale": "{scale}× ({width} × {height})",
@@ -160,7 +163,8 @@
         "tooLarge": "Dein Browser kann ein Bild dieser Grösse nicht in diesem Format erzeugen. Wähle PNG oder eine kleinere Grösse.",
         "unavailable": "Dein Browser unterstützt diesen Export nicht. Versuch es mit einem aktuellen Browser.",
         "aborted": "Export abgebrochen.",
-        "unknown": "Etwas ist schiefgelaufen. Versuch es nochmals."
+        "unknown": "Etwas ist schiefgelaufen. Versuch es nochmals.",
+        "gifBudget": "Das ist zu viel für ein GIF. Wähle weniger Bilder oder eine kleinere Grösse."
       },
       "copyErrors": {
         "unsupported": "Dein Browser kann das nicht in die Zwischenablage legen.",
@@ -176,7 +180,29 @@
         "rgbList": "RGB-Liste",
         "hslList": "HSL-Liste",
         "tailwindConfig": "tailwind.config.js",
-        "tailwindTheme": "Tailwind v4 @theme"
+        "tailwindTheme": "Tailwind v4 @theme",
+        "css": "CSS",
+        "htmlExample": "HTML-Beispiel",
+        "cssGrid": "CSS Grid + HTML",
+        "report": "Bericht als Text",
+        "dropShadow": "CSS drop-shadow()"
+      },
+      "gif": {
+        "title": "GIF-Einstellungen",
+        "source": "Animation",
+        "sources": {
+          "seeds": "Neue Varianten",
+          "colors": "Farbwechsel",
+          "time": "Bewegung",
+          "custom": "Eigene Animation"
+        },
+        "frames": "Anzahl Bilder",
+        "delay": "Dauer pro Bild",
+        "delayValue": "{ms} ms",
+        "loop": "Endlos wiederholen",
+        "edgeOption": "{width} × {height}",
+        "summary": "Ergebnis: {width} × {height} px, {frames} Bilder, {seconds} s pro Durchgang.",
+        "overBudget": "Das ist zu viel für ein GIF (höchstens {megapixels} Mio. Pixel über alle Bilder). Wähle höchstens {max} Bilder oder eine kleinere Grösse."
       }
     },
     "share": {
@@ -204,7 +230,7 @@
         "other-tool": "Dieser Link gehört zu einem anderen Tool. Du siehst die Standardeinstellungen.",
         "outdated": "Dieser Link stammt aus einer älteren Version. Das Motiv kann leicht anders aussehen."
       },
-      "localLeftOut": "Deine eigene Datei ist nicht im Link, sie bleibt auf deinem Gerät. Wer den Link öffnet, sieht das Muster mit der gewählten Form."
+      "localLeftOut": "Deine eigenen Dateien sind nicht im Link, sie bleiben auf deinem Gerät. Wer den Link öffnet, sieht das Design ohne sie."
     },
     "imageInput": {
       "title": "Bild",
@@ -231,12 +257,12 @@
       }
     },
     "asset": {
-      "none": "Keine eigene Datei, es wird die gewählte Form verwendet",
+      "none": "Keine eigene Datei",
       "yourFile": "Deine Datei",
       "choose": "Datei wählen",
       "replace": "Ersetzen",
       "remove": "Entfernen",
-      "removedFile": "Deine Datei ist entfernt. Das Muster verwendet wieder die gewählte Form.",
+      "removedFile": "Deine Datei ist entfernt.",
       "dropNow": "Loslassen, um die Datei zu laden",
       "hint": "Zieh ein SVG, PNG, JPG oder WebP hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Die Datei bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
       "thumbnail": "Deine Datei: {name}",
@@ -258,7 +284,7 @@
       },
       "crop": {
         "title": "Zuschneiden",
-        "hint": "Wähl den Teil von {name}, der als Motiv ins Muster kommt.",
+        "hint": "Wähl den Teil von {name}, den du verwenden willst.",
         "frame": "Zuschnitt",
         "frameLabel": "Zuschnitt: links {x} %, oben {y} %, Breite {w} %, Höhe {h} %",
         "keys": "Pfeiltasten verschieben den Rahmen, mit Alt änderst du die Grösse, mit Shift geht es in grösseren Schritten.",
@@ -298,7 +324,29 @@
       "loading": "Wird geladen …",
       "assetsEmpty": "Noch keine Logos oder Shapes.",
       "openKit": "Zum Brand Kit",
-      "useAsset": "{name} verwenden"
+      "useAsset": "{name} verwenden",
+      "shapesEmpty": "Noch keine eigenen Shapes im Brand Kit."
+    },
+    "thumbnails": {
+      "group": "{label}: Sammlung",
+      "brandKit": "Brand Kit",
+      "chosen": "{count} gewählt"
+    },
+    "suggestions": {
+      "title": "Vorschläge",
+      "hint": "Ein Klick übernimmt den Vorschlag, Rückgängig macht ihn ungeschehen.",
+      "applied": "Übernommen: {label}"
+    },
+    "regions": {
+      "picker": "Kacheln der Vorschau",
+      "pickerHint": "Pfeiltasten wählen eine Kachel, Enter öffnet sie.",
+      "edited": "{label}, geändert",
+      "resetRegion": "Kachel zurücksetzen",
+      "resetAll": "Alle zurücksetzen ({count})",
+      "close": "Fertig",
+      "limit": "Du hast {max} Kacheln geändert, mehr geht nicht. Setz eine zurück, um eine weitere zu ändern.",
+      "resetDone": "Kachel zurückgesetzt.",
+      "resetAllDone": "Alle Kacheln zurückgesetzt."
     }
   },
   "sizes": {
@@ -401,7 +449,7 @@
         "unsafe-upload": "unsichere oder beschädigte Datei im Design"
       },
       "importErrors": {
-        "too-large": "Die Datei ist zu gross. Höchstens 20 MB sind erlaubt.",
+        "too-large": "Die Datei ist zu gross. Höchstens 32 MB sind erlaubt.",
         "empty": "Die Datei ist leer.",
         "malformed": "Die Datei ist beschädigt oder kein JSON.",
         "forbidden-keys": "Die Datei enthält unzulässige Einträge und wurde nicht importiert.",

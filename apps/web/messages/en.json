@@ -110,7 +110,8 @@
       "heading": "Ready for your first motif?",
       "text": "Ten seconds from click to finished background.",
       "button": "Try it now"
-    }
+    },
+    "kofiButton": "Donate"
   },
   "NotFound": {
     "title": "Page not found",
@@ -127,7 +128,8 @@
     "metaTitle": "{tool} | Musterli",
     "allTools": "All generators",
     "supportHint": "Enjoying Musterli? <link>Support the project</link>.",
-    "newTab": "(opens in a new tab)"
+    "newTab": "(opens in a new tab)",
+    "termsHint": "<link>Free to use, commercially too</link>."
   },
   "tools": {
     "common": {
@@ -659,6 +661,113 @@
         }
       }
     },
+    "geometric-patterns": {
+      "name": "Geometric Patterns",
+      "description": "Grids of tiles with geometric shapes, even or nested. Edit any single tile, export as SVG, CSS or image.",
+      "params": {
+        "pack": {
+          "label": "Shape pack",
+          "options": {
+            "custom": "Your selection"
+          }
+        },
+        "shapes": {
+          "label": "Shapes"
+        },
+        "gridMode": {
+          "label": "Grid",
+          "options": {
+            "uniform": "Even",
+            "dynamic": "Nested"
+          }
+        },
+        "columns": {
+          "label": "Tiles per row"
+        },
+        "depth": {
+          "label": "Split levels"
+        },
+        "splitChance": {
+          "label": "Split chance"
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "rotationMode": {
+          "label": "Rotation",
+          "options": {
+            "none": "None",
+            "quarter": "Quarter turns",
+            "free": "Free"
+          }
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "tile": "Random per tile",
+            "layer": "Per shape layer"
+          }
+        },
+        "tileFill": {
+          "label": "Fill tiles"
+        },
+        "duotoneOpacity": {
+          "label": "Second layer opacity"
+        },
+        "strokeOnly": {
+          "label": "Outline only"
+        },
+        "strokeWidth": {
+          "label": "Outline width"
+        }
+      },
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Maze",
+        "mosaic": "Mosaic",
+        "night-garden": "Night garden",
+        "blueprint": "Blueprint",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Shooting stars"
+      },
+      "tile": {
+        "title": "Edit tile",
+        "cell": "Tile row {row}, column {col}",
+        "cellPart": "Tile row {row}, column {col}, part {part}",
+        "shape": "Shape",
+        "color": "Color",
+        "rotation": "Rotation"
+      },
+      "seo": {
+        "whatIs": "A geometric pattern is a grid of tiles, each holding one simple shape: circles, quarter circles, triangles, stars or arcs. Rotation and color changes turn a handful of shapes into lively surfaces, familiar from Bauhaus posters, tiles and quilts. Such patterns work well for website backgrounds, slides, packaging and social media graphics.",
+        "howTo": "Pick a shape pack or put together your own shapes. Set the number of tiles per row, choose an even or nested grid and how shapes rotate. Color the tiles at random from your palette or per shape layer, with or without tile fills. Press the space bar for new variations. Click a tile to change its shape, color and rotation. Export as SVG, as a CSS background or as an image.",
+        "faq": {
+          "q1": {
+            "question": "Can I change single tiles?",
+            "answer": "Yes. Click a tile in the preview, or reach it with Tab and the arrow keys and press Enter. The popup lets you swap shape, color and rotation. Edited tiles survive new variations and travel with share links and saved designs."
+          },
+          "q2": {
+            "question": "What is the difference between an even and a nested grid?",
+            "answer": "Even means all tiles have the same size. In a nested grid every tile splits into four smaller ones with the chance you choose, up to four levels deep. The result is a mosaic of large and small tiles."
+          },
+          "q3": {
+            "question": "Does the pattern tile seamlessly?",
+            "answer": "Yes. The grid always fills the canvas with whole tiles, so the full design repeats without a visible edge. The CSS export uses it as a background with background-repeat."
+          },
+          "q4": {
+            "question": "What are the tile shapes and quarter turns for?",
+            "answer": "The shapes of the “Tiles and quarters” pack meet the tile edges at fixed points. With quarter turns neighbouring tiles connect, which creates mazes and arc patterns in the spirit of Truchet tiles."
+          },
+          "q5": {
+            "question": "May I use the patterns freely?",
+            "answer": "Yes. Musterli drew every shape itself. You can use your exports privately and commercially, without an account and without watermarks."
+          }
+        }
+      }
+    },
     "seamless-patterns": {
       "name": "Seamless Patterns",
       "description": "Seamlessly tiling patterns made of shapes or your own graphic. Export as SVG, CSS, tile or image.",
@@ -667,33 +776,7 @@
           "label": "Your graphic"
         },
         "shape": {
-          "label": "Shape",
-          "options": {
-            "circle": "Circle",
-            "ring": "Ring",
-            "square": "Square",
-            "diamond": "Diamond",
-            "triangle": "Triangle",
-            "hexagon": "Hexagon",
-            "star": "Star",
-            "sparkle": "Sparkle",
-            "heart": "Heart",
-            "leaf": "Leaf",
-            "drop": "Drop",
-            "wave": "Wave",
-            "plus": "Plus",
-            "cross": "Cross",
-            "arch": "Arch",
-            "flower": "Flower",
-            "clover": "Clover",
-            "moon": "Moon",
-            "semicircle": "Semicircle",
-            "pill": "Pill",
-            "chevron": "Chevron",
-            "sun": "Sun",
-            "pebble": "Pebble",
-            "dots": "Dots"
-          }
+          "label": "Shape"
         },
         "keepOriginalColors": {
           "label": "Keep original colors"
@@ -1737,6 +1820,456 @@
           }
         }
       }
+    },
+    "glass-effects": {
+      "name": "Glass and Border Effects",
+      "description": "Frosted glass, gradient borders and glows for cards and hero sections. Real CSS with a live preview, ready to copy as CSS, Tailwind or HTML.",
+      "groups": {
+        "effect": "Effect",
+        "glass": "Glass",
+        "border": "Gradient border",
+        "glow": "Glow",
+        "card": "Card",
+        "stage": "Stage"
+      },
+      "params": {
+        "effect": {
+          "label": "Effect",
+          "options": {
+            "glass": "Glass",
+            "gradient-border": "Gradient border",
+            "glow": "Glow"
+          }
+        },
+        "backdrop": {
+          "label": "Background",
+          "options": {
+            "aurora": "Aurora",
+            "shapes": "Shapes",
+            "gradient": "Gradient",
+            "dots": "Dots",
+            "grid": "Grid",
+            "stripes": "Stripes"
+          }
+        },
+        "backdropPalette": {
+          "label": "Stage colors"
+        },
+        "cardWidth": {
+          "label": "Card width"
+        },
+        "cardHeight": {
+          "label": "Card height"
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "textColor": {
+          "label": "Text color"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "tint": {
+          "label": "Tint"
+        },
+        "tintOpacity": {
+          "label": "Tint opacity"
+        },
+        "saturation": {
+          "label": "Saturation"
+        },
+        "border": {
+          "label": "Light inner border"
+        },
+        "noise": {
+          "label": "Grain"
+        },
+        "borderPalette": {
+          "label": "Border colors"
+        },
+        "borderWidth": {
+          "label": "Border width"
+        },
+        "borderAngle": {
+          "label": "Start angle"
+        },
+        "animated": {
+          "label": "Rotating border"
+        },
+        "speed": {
+          "label": "Time per turn"
+        },
+        "surface": {
+          "label": "Card color"
+        },
+        "glowColor": {
+          "label": "Glow color"
+        },
+        "glowSize": {
+          "label": "Reach"
+        },
+        "glowIntensity": {
+          "label": "Strength"
+        },
+        "backgroundImage": {
+          "label": "Own background picture",
+          "description": "Replaces the stage with your picture (PNG, JPG, WebP or SVG). It stays in your browser, share links leave it out and the code points to a placeholder."
+        },
+        "imageFit": {
+          "label": "Picture size",
+          "options": {
+            "cover": "Fill",
+            "contain": "Show all"
+          }
+        },
+        "imagePosition": {
+          "label": "Alignment",
+          "options": {
+            "center": "Center",
+            "top": "Top",
+            "bottom": "Bottom",
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "embedImage": {
+          "label": "Embed picture in the code",
+          "description": "Writes the picture into the code as a data URI instead of a placeholder. The code gets much longer."
+        }
+      },
+      "presets": {
+        "frosted": "Frosted",
+        "ice": "Ice",
+        "smoke": "Smoked glass",
+        "grainy": "Grainy glass",
+        "neon-ring": "Neon ring",
+        "sunset-frame": "Sunset frame",
+        "mint-glow": "Mint glow",
+        "violet-glow": "Violet glow"
+      },
+      "advisories": {
+        "textContrast": "Text on the glass only reaches a contrast of {ratio}:1, WCAG AA needs {required}:1. Try a stronger tint or another text color.",
+        "imageContrast": "With your own picture, Musterli cannot check the contrast of the text. Check it yourself, for example with a stronger tint."
+      },
+      "seo": {
+        "whatIs": "Glass and border effects are CSS surfaces for cards, dialogs and hero sections: frosted glass with backdrop-filter, borders with a gradient (rotating if you like) and colored glows. The tool shows the effect as real CSS on a Musterli background and gives you the code.",
+        "howTo": "Pick glass, gradient border or glow. For glass, set blur, tint, saturation, inner border and grain; for the border, its colors, width and rotation; for the glow, its color, reach and strength. Switch the background under Stage. Press Space for new variations. Copy CSS, Tailwind classes or an HTML example.",
+        "faq": {
+          "q1": {
+            "question": "Does the glass effect work in Safari?",
+            "answer": "Yes. The code also writes backdrop-filter with the -webkit- prefix, which Safari needs before version 18. Chrome, Edge and Firefox support backdrop-filter without a prefix."
+          },
+          "q2": {
+            "question": "Why is there no PNG of the glass?",
+            "answer": "Glass blurs whatever lies behind it on your page. An image would only capture the background in this tool. Gradient borders and glows can be exported as PNG or WebP."
+          },
+          "q3": {
+            "question": "What happens to the rotating border with reduced motion?",
+            "answer": "People who ask their system for less motion see a still border: the code includes a prefers-reduced-motion rule. Browsers without @property show the static border too."
+          },
+          "q4": {
+            "question": "Is text on glass readable?",
+            "answer": "That depends on the tint and the background. The tool checks the contrast of your text color on the tinted glass and shows a hint when it misses WCAG AA at 4.5:1."
+          }
+        }
+      }
+    },
+    "bento-grid": {
+      "name": "Bento Grid",
+      "description": "Rounded tiles of different sizes in a grid, without gaps. For feature sections, portfolios and social graphics, as CSS Grid, Tailwind or an image.",
+      "groups": {
+        "grid": "Grid",
+        "tiles": "Tiles"
+      },
+      "params": {
+        "columns": {
+          "label": "Columns"
+        },
+        "rows": {
+          "label": "Rows"
+        },
+        "tiles": {
+          "label": "Number of tiles"
+        },
+        "minSpan": {
+          "label": "Smallest tile (cells)"
+        },
+        "maxSpan": {
+          "label": "Largest tile (cells)"
+        },
+        "layoutSeed": {
+          "label": "Layout no.",
+          "description": "Every number gives another layout. Lock it to keep the layout while Space only rolls new colors."
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "fill": {
+          "label": "Fill",
+          "options": {
+            "single": "One color",
+            "palette-random": "Palette, random",
+            "palette-order": "Palette, in order"
+          }
+        },
+        "content": {
+          "label": "Content",
+          "options": {
+            "empty": "Empty",
+            "title": "Title",
+            "icon": "Icon",
+            "lines": "Text lines",
+            "mixed": "Mixed"
+          }
+        },
+        "breakpointColumns": {
+          "label": "Columns on narrow screens",
+          "description": "Below 768 px the code arranges the tiles in reading order in this many columns."
+        },
+        "backgroundImage": {
+          "label": "Grid background picture",
+          "description": "Sits behind all tiles. Stays in your browser, share links leave it out."
+        },
+        "imagePosition": {
+          "label": "Alignment",
+          "options": {
+            "center": "Center",
+            "top": "Top",
+            "bottom": "Bottom",
+            "left": "Left",
+            "right": "Right"
+          }
+        }
+      },
+      "presets": {
+        "feature-section": "Feature section 3×2",
+        "portfolio": "Portfolio",
+        "dashboard": "Dashboard",
+        "story": "Portrait story",
+        "mosaic": "Mosaic",
+        "calm": "Calm",
+        "blocks": "Blocks"
+      },
+      "seo": {
+        "whatIs": "A bento grid arranges content in tiles of different sizes, like the compartments of a bento box. The layout is popular for feature sections, portfolios, dashboards and social media graphics. The generator always fills the whole grid, without gaps.",
+        "howTo": "Set columns, rows and the number of tiles you want. The smallest and largest tile control how varied the tiles get. Press Space for a new layout, or lock the layout and roll new colors only. Export as CSS Grid with HTML, Tailwind classes, SVG or an image.",
+        "faq": {
+          "q1": {
+            "question": "Can I move single tiles?",
+            "answer": "No, Musterli is deliberately not a layout editor. Roll layouts until one fits and lock it. Columns, rows and tile sizes are set with the controls."
+          },
+          "q2": {
+            "question": "Does the grid work on phones?",
+            "answer": "Yes. Below 768 px the CSS arranges the tiles in reading order in fewer columns. Set how many under Columns on narrow screens."
+          },
+          "q3": {
+            "question": "Are there gaps in the grid?",
+            "answer": "Never. The grid is split along cell lines until it has the number of tiles you asked for. Every cell belongs to exactly one tile."
+          },
+          "q4": {
+            "question": "Do I need Tailwind for the code?",
+            "answer": "No. The CSS Grid + HTML export works in any browser without a framework. The Tailwind classes are an alternative for projects that use Tailwind."
+          },
+          "q5": {
+            "question": "Can I put text, icons and pictures into the tiles?",
+            "answer": "Yes. Click a tile in the preview, or pick it with Tab and the arrow keys. You can set a title, a subtitle, an icon, your own graphic and a background picture. Pictures stay in your browser: share links leave them out, and the code points to placeholder files you replace with your pictures."
+          }
+        }
+      },
+      "tile": {
+        "title": "Edit tile",
+        "label": "Tile {index}, {cols} × {rows} cells",
+        "fields": {
+          "title": "Title",
+          "subtitle": "Subtitle",
+          "showIcon": "Show icon",
+          "icon": "Icon",
+          "graphic": "Own graphic",
+          "graphicPosition": "Graphic alignment",
+          "graphicSize": "Graphic size",
+          "background": "Tile background picture"
+        }
+      }
+    },
+    "contrast-checker": {
+      "name": "Contrast Checker",
+      "description": "Check whether text and background are readable under WCAG, see the colors with color vision deficiency and apply better colors in one click.",
+      "params": {
+        "foreground": {
+          "label": "Text color"
+        },
+        "background": {
+          "label": "Background color"
+        },
+        "sample": {
+          "label": "Sample",
+          "description": "Decides which levels count: body text needs 4.5:1 for AA and 7:1 for AAA, large text 3:1 and 4.5:1, UI components 3:1.",
+          "options": {
+            "heading": "Heading",
+            "body": "Body text",
+            "ui": "UI element"
+          }
+        },
+        "simulation": {
+          "label": "Simulate color vision deficiency",
+          "description": "Also shows the pair as people with a color vision deficiency see it, including its contrast.",
+          "options": {
+            "none": "None",
+            "protanopia": "Protanopia (red-blind)",
+            "deuteranopia": "Deuteranopia (green-blind)",
+            "tritanopia": "Tritanopia (blue-blind)",
+            "achromatopsia": "Achromatopsia (no color)"
+          }
+        },
+        "pairs": {
+          "label": "All pairs of a palette",
+          "description": "Shows every palette color as text on every other one, with its contrast ratio."
+        }
+      },
+      "groups": {
+        "check": "Check",
+        "pairs": "Palette"
+      },
+      "presets": {
+        "slate": "Slate",
+        "night": "Dark mode",
+        "signal": "Signal",
+        "mint": "Mint",
+        "traffic-light": "Traffic light",
+        "sky": "Sky and sun",
+        "grey-scale": "Grayscale",
+        "palette-pairs": "Palette pairs"
+      },
+      "suggestions": {
+        "foreground-aa": "Text color for AA: {color} ({ratio}:1)",
+        "foreground-aaa": "Text color for AAA: {color} ({ratio}:1)",
+        "background-aa": "Background for AA: {color} ({ratio}:1)",
+        "background-aaa": "Background for AAA: {color} ({ratio}:1)"
+      },
+      "seo": {
+        "whatIs": "A contrast checker measures how much text and background colors differ in lightness. The Web Content Accessibility Guidelines (WCAG 2) set minimum ratios so text stays readable with low vision, glare or poor screens.",
+        "howTo": "Pick the text and background colors with the color picker, a HEX value or the eyedropper and read which WCAG levels pass. If the contrast falls short, apply the nearest color that reaches AA or AAA in one click. The simulation shows how the pair looks with color vision deficiency.",
+        "faq": {
+          "q1": "What do AA and AAA mean?",
+          "a1": "AA is the usual minimum: 4.5:1 for normal text and 3:1 for large text. AAA is stricter and asks for 7:1 and 4.5:1. UI components and graphics need 3:1.",
+          "q2": "When is text large?",
+          "a2": "From 18 point (24 px) in regular weight or from 14 point (about 18.7 px) in bold.",
+          "q3": "Why does Musterli round the contrast down?",
+          "a3": "So a value that just misses never looks like a pass. Musterli shows 4.49:1 as 4.4:1, because under WCAG it is not enough for AA.",
+          "q4": "How does the color vision simulation work?",
+          "a4": "Musterli converts the colors with the published matrices by Machado, Oliveira and Fernandes (2009); achromatopsia keeps only the lightness. The simulation is an approximation and does not replace testing with affected people.",
+          "q5": "How does Musterli find a better color?",
+          "a5": "It only moves the lightness in the OKLCH color space and keeps hue and chroma as far as possible. Your brand color stays recognizable and still reaches AA or AAA."
+        }
+      }
+    },
+    "css-shadow": {
+      "name": "CSS Shadow Generator",
+      "description": "Soft, layered shadows for cards and buttons. Real CSS preview, export as box-shadow, Tailwind or drop-shadow.",
+      "params": {
+        "layers": {
+          "label": "Layers"
+        },
+        "distance": {
+          "label": "Distance"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "spread": {
+          "label": "Spread"
+        },
+        "angle": {
+          "label": "Light direction",
+          "description": "Where the light comes from. At 0° it comes from the top and the shadow falls down."
+        },
+        "opacity": {
+          "label": "Opacity"
+        },
+        "autoColor": {
+          "label": "Color from background",
+          "description": "Darkens the hue of the background instead of using pure black. That looks more natural."
+        },
+        "color": {
+          "label": "Shadow color"
+        },
+        "easing": {
+          "label": "Easing",
+          "description": "How distance and blur grow from layer to layer.",
+          "options": {
+            "linear": "Linear",
+            "ease-out": "Ease-out",
+            "exponential": "Exponential"
+          }
+        },
+        "inset": {
+          "label": "Inner shadow"
+        },
+        "shape": {
+          "label": "Preview shape",
+          "options": {
+            "card": "Card",
+            "button": "Button"
+          }
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "elementColor": {
+          "label": "Surface color"
+        },
+        "stage": {
+          "label": "Stage",
+          "description": "A Musterli background for the preview. It is not part of the CSS export.",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "dots": "Dots",
+            "grid": "Grid"
+          }
+        },
+        "surface": {
+          "label": "Background color"
+        }
+      },
+      "groups": {
+        "shadow": "Shadow",
+        "element": "Surface and stage",
+        "code": "Code"
+      },
+      "presets": {
+        "soft": "Soft",
+        "floating": "Floating",
+        "crisp": "Crisp",
+        "deep": "Deep",
+        "inner": "Inner",
+        "button": "Button",
+        "sunset": "Evening light"
+      },
+      "seo": {
+        "whatIs": "A CSS shadow generator writes the code for box-shadow. Instead of one hard shadow, Musterli stacks several layers whose distance and blur grow along a curve. Cards and buttons look soft and naturally lit.",
+        "howTo": "Set layers, distance, blur and light direction, or press Space for a new variant. The preview is real CSS on a Musterli background. Then copy the box-shadow, the Tailwind class, the @theme variable or the drop-shadow version.",
+        "faq": {
+          "q1": "Why several shadow layers?",
+          "a1": "A real shadow is dark and sharp close to the object and gets lighter and softer further away. Several layers recreate that, while a single box-shadow often looks flat or muddy.",
+          "q2": "How do I use the shadow in Tailwind?",
+          "a2": "For Tailwind v3 and v4 there is the class shadow-[...] with all layers. In Tailwind v4 you can also store the shadow as a --shadow-name variable in @theme and simply write shadow-name.",
+          "q3": "What is the difference to drop-shadow?",
+          "a3": "box-shadow follows the element's rectangle, filter: drop-shadow() follows its shape, for example of a cut-out PNG or SVG. drop-shadow has no spread and no inner shadow.",
+          "q4": "Why is the shadow not black?",
+          "a4": "Shadows pick up some of the color around them. That is why Musterli darkens the hue of the background by default. You can still pick your own color."
+        }
+      }
     }
   },
   "Converters": {
@@ -1979,6 +2512,10 @@
     "composer": {
       "name": "Composer",
       "description": "Combine several motifs into one graphic."
+    },
+    "css-effects": {
+      "name": "CSS effects and layouts",
+      "description": "Glass, gradient borders, glows and bento layouts as ready-to-copy code."
     }
   },
   "PatternLibrary": {
@@ -2024,7 +2561,8 @@
     "privacy": "Privacy",
     "support": "Support Musterli",
     "gradients": "Gradients",
-    "palettes": "Color palettes"
+    "palettes": "Color palettes",
+    "terms": "Terms of use"
   },
   "Support": {
     "metaTitle": "Support Musterli",
@@ -2186,15 +2724,18 @@
         "donations": {
           "heading": "Donations",
           "paragraphs": [
-            "Musterli is free and funded by voluntary donations. On the “Support” page we link to an external donation provider. Musterli itself accepts no payments and receives neither payment nor account details from you.",
-            "You only leave Musterli when you follow the link. The donation provider is responsible for processing your data there, and its privacy policy applies. The provider may tell us the amount donated and any details you explicitly choose to share with us."
+            "Musterli is free and funded by voluntary donations. We use Ko-fi for this, a service of Ko-fi Labs Limited, based in the United Kingdom. Musterli itself accepts no payments and receives neither payment nor account details from you.",
+            "On the home page we show a donate button from Ko-fi. For this, your browser loads a script, a stylesheet and a logo from storage.ko-fi.com when you open the home page. Ko-fi receives technically necessary data such as your IP address, date and time, the page address and your user agent. We deliberately do not load Google fonts for it. The button itself sets no cookies on Musterli and uses no local storage.",
+            "Only when you click the button does the donation form from ko-fi.com open in an embedded window. The “Support” page also links directly to Ko-fi. Ko-fi is responsible for everything that happens in the donation form or on ko-fi.com. Ko-fi and its payment providers may set cookies there, and Ko-fi’s privacy policy applies. Ko-fi may tell us the amount donated and any details you explicitly choose to share with us.",
+            "We embed the donate button because we have a legitimate interest in offering a simple way to support Musterli (Art. 6(1)(f) GDPR)."
           ]
         },
         "transfer": {
           "heading": "Transfers abroad",
           "paragraphs": [
             "Cloudflare and Sentry are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
-            "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out."
+            "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out.",
+            "Ko-fi is based in the United Kingdom. The European Commission and the Swiss Federal Council have recognised the United Kingdom as providing adequate data protection. Ko-fi and its payment providers may also process data in the USA."
           ]
         },
         "retention": {
@@ -2215,6 +2756,77 @@
           "heading": "Changes",
           "paragraphs": [
             "We update this policy when the website or the services we use change. The version published on this page applies."
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Terms of use",
+      "metaTitle": "Terms of use",
+      "metaDescription": "The rules for Musterli in short: free and without warranty, everything stays in your browser, and you may use your exports freely, commercially too.",
+      "intro": "In short: Musterli is free, your designs stay on your device, and you may use whatever you export freely, commercially too and without attribution.",
+      "sections": {
+        "scope": {
+          "heading": "What this covers",
+          "paragraphs": [
+            "These terms apply to the use of musterli.app with all its generators, converters and collections (together “Musterli”). By using Musterli, you agree to them. Who runs Musterli is stated in the <imprint>imprint</imprint>."
+          ]
+        },
+        "free": {
+          "heading": "Free and without warranty",
+          "paragraphs": [
+            "Musterli is free. You need no account, and there are no paid features.",
+            "We provide Musterli as it is. We do our best to keep everything working and the site online, but we cannot promise it. Nor do we promise that results are free of errors or fit for a particular purpose. Check your exports yourself before you use them, for example colour contrast, resolution or print requirements. Features may change or go away.",
+            "As far as the law permits, we are not liable for damage arising from the use of Musterli, for example lost designs or lost profits. For damage caused intentionally or through gross negligence, we are liable as the law provides."
+          ]
+        },
+        "local": {
+          "heading": "Everything runs in your browser",
+          "paragraphs": [
+            "Musterli computes, exports and saves right in your browser. Saved designs, drafts and your Brand Kit live on your device only, not on our servers. Images and logos you upload never leave your device.",
+            "That is why backups are up to you: if you clear your browser data or switch devices, locally saved designs are gone. You can back them up with the file export in “My designs” and in the Brand Kit. Everything else about data is explained in the <privacy>privacy policy</privacy>."
+          ]
+        },
+        "exports": {
+          "heading": "You may use your exports freely",
+          "paragraphs": [
+            "Graphics, animations, colour palettes and code (for example SVG, CSS or Tailwind) that you create with Musterli are yours to use freely: privately and commercially, modified or unmodified, in your own projects and in work for others. Attribution is not required, though of course it is welcome.",
+            "Musterli makes no claims on your exports. To the extent we hold any rights in them at all, we waive them irrevocably, worldwide and as far as the law allows. In spirit this matches the Creative Commons “CC0 1.0 Universal” dedication. The same applies to the gradients and colour palettes in our collections.",
+            "This waiver only covers what you export. The website itself, meaning its texts, design, program code and the Musterli name and logo, remains protected. Because the generators work with settings and randomness, others may create identical or similar graphics. We therefore cannot give you an exclusive right to a motif."
+          ]
+        },
+        "uploads": {
+          "heading": "Your content",
+          "paragraphs": [
+            "You are responsible for the content you use in Musterli, for example logos, images, shapes or lettering. Only use content you hold the necessary rights to, and nothing unlawful.",
+            "Musterli acquires no rights in your content, which is processed in your browser only. If an export contains your own content or that of third parties, their rights continue to apply to those parts. The waiver above does not cover them."
+          ]
+        },
+        "fair": {
+          "heading": "Fair use",
+          "paragraphs": [
+            "Use Musterli in a way that keeps it working for everyone else. In particular, automated mass requests (for example by bots or scrapers), attempts to get around security measures, and anything that disrupts operation are not allowed.",
+            "In case of misuse we may restrict or block access, also without prior notice."
+          ]
+        },
+        "donations": {
+          "heading": "Donations",
+          "paragraphs": [
+            "Musterli is funded by voluntary donations. A donation is a gift: it gets you no extra features and no claim to any particular service, and Musterli stays the same for everyone.",
+            "Donations go through an external provider, currently Ko-fi. Musterli itself accepts no payments. The provider’s terms and privacy policy apply to your donation. More on the <support>Support Musterli</support> page."
+          ]
+        },
+        "law": {
+          "heading": "Applicable law and jurisdiction",
+          "paragraphs": [
+            "Swiss law applies. The place of jurisdiction is {jurisdiction}, unless mandatory legal provisions say otherwise, for example to protect consumers."
+          ]
+        },
+        "changes": {
+          "heading": "Changes",
+          "paragraphs": [
+            "We may adapt these terms, for example when Musterli gains new features. The version on this page applies, and the date at the top shows when it was last updated.",
+            "We will never withdraw the waiver for exports you have already created."
           ]
         }
       }
@@ -2662,5 +3274,193 @@
     "relatedHeading": "Similar palettes",
     "backToCollection": "All color palettes",
     "ogAlt": "{palette} color palette by Musterli"
+  },
+  "Shapes": {
+    "packs": {
+      "basics": "Basics",
+      "geometric": "Geometric",
+      "organic": "Organic",
+      "blobs": "Abstract blobs",
+      "stars": "Stars and sparkles",
+      "lines": "Arrows and lines",
+      "retro": "Retro",
+      "bauhaus": "Bauhaus",
+      "nature": "Nature",
+      "symbols": "Symbols",
+      "tiles": "Tiles and quarters",
+      "decorative": "Decorative"
+    },
+    "names": {
+      "circle": "Circle",
+      "ring": "Ring",
+      "square": "Square",
+      "block": "Block",
+      "diamond": "Diamond",
+      "triangle": "Triangle",
+      "pentagon": "Pentagon",
+      "hexagon": "Hexagon",
+      "octagon": "Octagon",
+      "oval": "Oval",
+      "semicircle": "Semicircle",
+      "pill": "Pill",
+      "plus": "Plus",
+      "cross": "Cross",
+      "dots": "Dots",
+      "hexagon-ring": "Hexagon ring",
+      "triangle-ring": "Triangle ring",
+      "square-ring": "Square ring",
+      "diamond-ring": "Diamond ring",
+      "octagon-ring": "Octagon ring",
+      "hexagram": "Hexagram",
+      "octagram": "Octagram",
+      "cube": "Cube",
+      "pyramid": "Pyramid",
+      "nested-squares": "Nested squares",
+      "sierpinski": "Triangle split",
+      "checker": "Checker",
+      "hex-cluster": "Honeycomb",
+      "pinwheel": "Pinwheel",
+      "diamond-quad": "Four diamonds",
+      "pebble": "Pebble",
+      "bean": "Bean",
+      "egg": "Egg",
+      "cell": "Cell",
+      "worm": "Worm",
+      "puddle": "Puddle",
+      "petal": "Petal",
+      "seed": "Seed",
+      "comma": "Comma",
+      "spots": "Spots",
+      "twin-pebbles": "Twin pebbles",
+      "wobble-ring": "Wobbly ring",
+      "splat": "Splat",
+      "blob-1": "Blob 1",
+      "blob-2": "Blob 2",
+      "blob-3": "Blob 3",
+      "blob-4": "Blob 4",
+      "blob-5": "Blob 5",
+      "blob-6": "Blob 6",
+      "blob-7": "Blob 7",
+      "blob-8": "Blob 8",
+      "blob-9": "Blob 9",
+      "blob-10": "Blob 10",
+      "blob-11": "Blob 11",
+      "blob-12": "Blob 12",
+      "star": "Star",
+      "sparkle": "Sparkle",
+      "star-4": "Four-point star",
+      "star-6": "Six-point star",
+      "star-8": "Eight-point star",
+      "burst": "Burst",
+      "seal": "Seal",
+      "sparkle-slim": "Slim sparkle",
+      "sparkles": "Sparkles",
+      "asterisk": "Asterisk",
+      "star-round": "Rounded star",
+      "star-ring": "Star outline",
+      "twinkle": "Twinkle",
+      "star-trio": "Star trio",
+      "shooting-star": "Shooting star",
+      "chevron": "Chevron",
+      "wave": "Wave",
+      "arrow": "Arrow",
+      "arrow-diagonal": "Diagonal arrow",
+      "arrow-double": "Double arrow",
+      "arrow-turn": "Turn arrow",
+      "double-chevron": "Double chevron",
+      "caret": "Caret",
+      "stripes": "Stripes",
+      "slashes": "Slashes",
+      "zigzag": "Zigzag",
+      "wave-double": "Double wave",
+      "squiggle": "Squiggle",
+      "dashes": "Dashes",
+      "arch": "Arch",
+      "rainbow": "Rainbow",
+      "sunrise": "Sunrise",
+      "sunset": "Sunset",
+      "flower-power": "Flower power",
+      "groovy-star": "Groovy star",
+      "bolt": "Bolt",
+      "tv": "TV",
+      "boomerang": "Boomerang",
+      "orbit": "Orbit",
+      "pill-stack": "Pill stack",
+      "record": "Record",
+      "wavy-circle": "Wavy circle",
+      "split-circle": "Split circle",
+      "circle-square": "Circle in square",
+      "quarters": "Quarters",
+      "lens": "Lens",
+      "target": "Target",
+      "bars": "Bars",
+      "dome": "Dome",
+      "arc-thick": "Thick arc",
+      "quarter-arc": "Quarter arc",
+      "steps": "Steps",
+      "d-shape": "D shape",
+      "split-square": "Split square",
+      "dot-grid": "Dot grid",
+      "cross-circle": "Quartered circle",
+      "leaf": "Leaf",
+      "drop": "Drop",
+      "flower": "Flower",
+      "clover": "Clover",
+      "moon": "Moon",
+      "sun": "Sun",
+      "cloud": "Cloud",
+      "mountains": "Mountains",
+      "pine": "Pine",
+      "tulip": "Tulip",
+      "mushroom": "Mushroom",
+      "snowflake": "Snowflake",
+      "daisy": "Daisy",
+      "branch": "Branch",
+      "fish": "Fish",
+      "heart": "Heart",
+      "check": "Check mark",
+      "double-ring": "Double ring",
+      "eye": "Eye",
+      "hourglass": "Hourglass",
+      "pin": "Pin",
+      "bookmark": "Bookmark",
+      "shield": "Shield",
+      "keyhole": "Keyhole",
+      "speech": "Speech bubble",
+      "play": "Play",
+      "house": "House",
+      "spiral": "Spiral",
+      "quarter-circle": "Quarter circle",
+      "quarter-cutout": "Quarter cutout",
+      "truchet-arcs": "Truchet arcs",
+      "truchet-discs": "Truchet discs",
+      "arc-band": "Arc band",
+      "diagonal-half": "Diagonal half",
+      "diagonal-band": "Diagonal band",
+      "diagonal-stripes": "Diagonal stripes",
+      "half-rect": "Half tile",
+      "corner-square": "Corner square",
+      "checker-tile": "Checker tile",
+      "bridge": "Bridge",
+      "edge-dots": "Edge dots",
+      "corner-dots": "Corner dots",
+      "plus-band": "Cross band",
+      "t-band": "T band",
+      "wave-band": "Wave band",
+      "corner-triangle": "Corner triangle",
+      "quatrefoil": "Quatrefoil",
+      "trefoil": "Trefoil",
+      "rosette": "Rosette",
+      "scallop": "Scallop",
+      "ogee": "Ogee",
+      "zellige": "Zellige star",
+      "medallion": "Medallion",
+      "fleuron": "Fleuron",
+      "paisley": "Paisley",
+      "damask": "Damask",
+      "lace-ring": "Lace ring",
+      "bow": "Bow",
+      "mandala": "Mandala"
+    }
   }
 }

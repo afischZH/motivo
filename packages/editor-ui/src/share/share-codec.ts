@@ -20,6 +20,7 @@ import {
   parseToolParams,
   registry as defaultRegistry,
   seedSchema,
+  privateParamKeys,
   withoutDerivedParams,
   type AnyToolDefinition,
   type ToolRegistry,
@@ -132,13 +133,16 @@ export function encodeDesign(
   const v = validate(registry, design.toolId, design.params, design.seed, design.size);
   if (!v.ok) return v;
   const { design: d, tool } = v;
+  // Private keys (uploads, image-derived values) are reset on decode anyway: leave them out.
+  const hidden = new Set(privateParamKeys(tool));
+  const params = Object.fromEntries(Object.entries(d.params).filter(([k]) => !hidden.has(k)));
   const json = JSON.stringify([
     d.toolId,
     tool.version,
     d.seed,
     d.size.width,
     d.size.height,
-    d.params,
+    params,
   ]);
   const raw = new TextEncoder().encode(json);
   if (raw.length > SHARE_MAX_DECODED_BYTES) return { ok: false, error: "too-long" };
@@ -178,7 +182,16 @@ function decodeUnsafe(input: unknown, registry: Lookup): ShareDecodeResult {
   if (typeof params !== "object" || params === null || Array.isArray(params)) {
     return { ok: false, error: "invalid-params" };
   }
-  const v = validate(registry, toolId, params, seed, { width, height });
+  const tool = registry.get(toolId);
+  // Links leave private keys out (see `encodeDesign`): put the defaults back before validation.
+  // A crafted link that carries them anyway gets the defaults too, whatever it put there:
+  // never validated, never kept, and a bad value cannot make the whole link fail.
+  const full: Record<string, unknown> = { ...(params as Record<string, unknown>) };
+  if (tool) {
+    const defaults = tool.defaults as Record<string, unknown>;
+    for (const key of privateParamKeys(tool)) full[key] = defaults[key];
+  }
+  const v = validate(registry, toolId, full, seed, { width, height });
   if (!v.ok) return v;
   return { ok: true, design: v.design, toolVersion, outdated: toolVersion !== v.tool.version };
 }

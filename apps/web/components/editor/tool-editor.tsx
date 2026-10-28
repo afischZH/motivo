@@ -40,22 +40,45 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
             {t("allTools")}
           </Link>
         }
-        // Quiet donation hint after a successful export (M3-AP14). A new tab,
-        // so the design in the editor stays as it is.
-        afterExport={t.rich("supportHint", {
-          link: (chunks) => (
-            <Link
-              href="/support"
-              target="_blank"
-              rel="noopener"
-              className="rounded-control text-link underline underline-offset-4"
-              data-testid="export-support-link"
-            >
-              {chunks}
-              <span className="sr-only"> {t("newTab")}</span>
-            </Link>
-          ),
-        })}
+        // Quiet hints after a successful export: free use of the export
+        // (M4-AP07) and donations (M3-AP14). New tabs, so the design in the
+        // editor stays as it is.
+        afterExport={
+          <div className="flex flex-col gap-1">
+            <p data-testid="export-terms-hint">
+              {t.rich("termsHint", {
+                link: (chunks) => (
+                  <Link
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener"
+                    className="rounded-control text-link underline underline-offset-4"
+                    data-testid="export-terms-link"
+                  >
+                    {chunks}
+                    <span className="sr-only"> {t("newTab")}</span>
+                  </Link>
+                ),
+              })}
+            </p>
+            <p data-testid="export-support-hint">
+              {t.rich("supportHint", {
+                link: (chunks) => (
+                  <Link
+                    href="/support"
+                    target="_blank"
+                    rel="noopener"
+                    className="rounded-control text-link underline underline-offset-4"
+                    data-testid="export-support-link"
+                  >
+                    {chunks}
+                    <span className="sr-only"> {t("newTab")}</span>
+                  </Link>
+                ),
+              })}
+            </p>
+          </div>
+        }
       />
     </EditorStoreProvider>
   );

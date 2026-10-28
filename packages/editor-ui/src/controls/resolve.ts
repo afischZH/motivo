@@ -5,6 +5,7 @@
  */
 import {
   PALETTE_MAX,
+  IMAGE_ASSET_RASTER_MAX_EDGE,
   PALETTE_MIN,
   controlKindRegistry,
   type AnyToolDefinition,
@@ -83,6 +84,22 @@ export interface ThumbnailControl extends ControlBase {
   options: ControlOption[];
   /** Preview of one option for the current params; cheap, called lazily per visible tile. */
   preview(value: OptionValue): OptionPreview;
+  /** Named groups of options (e.g. shape packs); the picker shows one at a time. */
+  groups?: ThumbnailGroup[];
+  /** Image param that takes Brand Kit shapes (adds a "Brand Kit" group). */
+  brandShapesParam?: string;
+  /**
+   * Multi-select: the param is an array of choices (`z.array(z.enum(...))`)
+   * with these length bounds; tiles are checkboxes instead of radios.
+   */
+  multiple?: { min: number; max: number };
+}
+
+/** One group of a thumbnail picker: its options, in the control's order. */
+export interface ThumbnailGroup {
+  id: string;
+  labelKey: string;
+  options: ControlOption[];
 }
 
 /** An array of objects: item list plus a sub-form for the selected item. */
@@ -119,7 +136,20 @@ export interface SimpleControl extends ControlBase {
 
 /** Kinds without a component yet (M1): resolved so callers can see them, rendered as nothing. */
 export interface PendingControl extends ControlBase {
-  kind: "shape" | "image";
+  kind: "shape";
+}
+
+/** An upload field (`kind: "image"`) with the options of its `ImageHint`. */
+export interface ImageControl extends ControlBase {
+  kind: "image";
+  /** Longest edge of a raster upload. */
+  maxEdge: number;
+  /** Re-encode rasters as JPEG. */
+  photo: boolean;
+  /** Takes images pasted anywhere in the editor. */
+  paste: boolean;
+  /** The param schema: the final judge of a finished upload. */
+  schema: z.ZodType;
 }
 
 export type ResolvedControl =
@@ -131,6 +161,7 @@ export type ResolvedControl =
   | TextControl
   | PaletteControl
   | SimpleControl
+  | ImageControl
   | PendingControl;
 
 export interface ResolvedGroup {
@@ -309,7 +340,12 @@ export function resolveControl(
     case "segmented":
     case "select":
     case "thumbnails": {
-      const values = choiceValues(inner);
+      // An array of choices is a multi-select picker (thumbnails only).
+      const many =
+        kind === "thumbnails" && inner instanceof z.ZodArray
+          ? { element: unwrap(inner.element as AnySchema), ...lengthBounds(inner) }
+          : null;
+      const values = choiceValues(many ? many.element : inner);
       if (!values) return null;
       const options = values.map((value) => ({
         value,
@@ -318,9 +354,32 @@ export function resolveControl(
       const optionPreview = hint.optionPreview;
       if (kind !== "thumbnails") return { ...base, kind, options };
       // Without a preview (or params to draw it with) a grid would be blank: use a select.
-      if (!optionPreview || !context) return { ...base, kind: "select", options };
+      if (!optionPreview || !context) return many ? null : { ...base, kind: "select", options };
       const { params, root } = context;
-      return { ...base, kind, options, preview: (value) => optionPreview(value, params, root) };
+      const c: ThumbnailControl = {
+        ...base,
+        kind,
+        options,
+        preview: (value) => optionPreview(value, params, root),
+      };
+      if (hint.optionGroups) {
+        const byValue = new Map(options.map((o) => [o.value, o]));
+        c.groups = hint.optionGroups
+          .map((g) => ({
+            id: g.id,
+            labelKey: g.labelKey,
+            options: g.values.flatMap((v) => byValue.get(v) ?? []),
+          }))
+          .filter((g) => g.options.length > 0);
+      }
+      if (hint.brandShapesParam) c.brandShapesParam = hint.brandShapesParam;
+      if (many) {
+        c.multiple = {
+          min: Math.max(0, many.min ?? 0),
+          max: Math.max(1, many.max ?? values.length),
+        };
+      }
+      return c;
     }
     case "list": {
       if (!(inner instanceof z.ZodArray)) return null;
@@ -363,8 +422,16 @@ export function resolveControl(
     case "background":
       return { ...base, kind };
     case "shape":
-    case "image":
       return { ...base, kind };
+    case "image":
+      return {
+        ...base,
+        kind,
+        maxEdge: hint.image?.maxEdge ?? IMAGE_ASSET_RASTER_MAX_EDGE,
+        photo: hint.image?.photo === true,
+        paste: hint.image?.paste !== false,
+        schema: schema as z.ZodType,
+      };
   }
 }
 

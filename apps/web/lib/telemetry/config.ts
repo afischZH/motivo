@@ -18,6 +18,7 @@ export interface TelemetryEnv {
   NODE_ENV?: string | undefined;
   NEXT_PUBLIC_CF_ANALYTICS_TOKEN?: string | undefined;
   NEXT_PUBLIC_SENTRY_DSN?: string | undefined;
+  NEXT_PUBLIC_DONATION_URL?: string | undefined;
 }
 
 /**
@@ -29,6 +30,7 @@ export function telemetryEnv(): TelemetryEnv {
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_CF_ANALYTICS_TOKEN: process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_DONATION_URL: process.env.NEXT_PUBLIC_DONATION_URL,
   };
 }
 
@@ -69,14 +71,38 @@ export function sentryDsn(env: TelemetryEnv): string | null {
   }
 }
 
+/** Ko-fi page ids: letters, digits and underscores. */
+const KOFI_PAGE_ID = /^[A-Za-z0-9_]{1,64}$/;
+
+/**
+ * The Ko-fi page id for the floating donate widget on the home page, or null
+ * when the widget is off. Taken from the donation URL, so the widget appears
+ * only when that URL is an https link to a Ko-fi page (`https://ko-fi.com/<id>`).
+ */
+export function kofiPageId(env: TelemetryEnv): string | null {
+  const raw = env.NEXT_PUBLIC_DONATION_URL?.trim();
+  if (isDev(env) || !raw) return null;
+  try {
+    const url = new URL(raw);
+    if (url.protocol !== "https:" || url.username !== "" || url.password !== "") return null;
+    if (url.hostname !== "ko-fi.com" && url.hostname !== "www.ko-fi.com") return null;
+    const id = url.pathname.replace(/^\/|\/$/g, "");
+    return KOFI_PAGE_ID.test(id) ? id : null;
+  } catch {
+    return null;
+  }
+}
+
 export interface ExternalServices {
   analytics: boolean;
   sentry: boolean;
+  kofi: boolean;
 }
 
 export const NO_EXTERNAL_SERVICES: ExternalServices = {
   analytics: false,
   sentry: false,
+  kofi: false,
 };
 
 /** Which services the build enables (drives the CSP). */
@@ -84,8 +110,12 @@ export function externalServices(env: TelemetryEnv): ExternalServices {
   return {
     analytics: analyticsToken(env) !== null,
     sentry: sentryDsn(env) !== null,
+    kofi: kofiPageId(env) !== null,
   };
 }
+
+/** Ko-fi's overlay widget script (loaded on the home page only). */
+export const KOFI_WIDGET_SCRIPT = "https://storage.ko-fi.com/cdn/scripts/overlay-widget.js";
 
 /** Beacon script and endpoint for sites not proxied through Cloudflare. */
 export const CF_BEACON_SCRIPT = "https://static.cloudflareinsights.com/beacon.min.js";

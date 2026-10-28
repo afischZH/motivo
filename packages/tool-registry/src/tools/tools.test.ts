@@ -82,7 +82,10 @@ function digestDataUris(svg: string): string {
 for (const tool of builtInTools) {
   describeToolContract(tool);
   describePresetSnapshots(tool, {
-    normalize: (out) => (typeof out === "string" ? digestDataUris(out) : out),
+    normalize: (out) =>
+      typeof out === "string"
+        ? digestDataUris(out)
+        : (JSON.parse(digestDataUris(JSON.stringify(out))) as CssOutput),
   });
 }
 
@@ -97,6 +100,7 @@ describe("built-in tool registration", () => {
       "doodles",
       "svg-charts",
       "polka-dots",
+      "geometric-patterns",
       "seamless-patterns",
       "noise-grain",
       "grid-patterns",
@@ -110,12 +114,17 @@ describe("built-in tool registration", () => {
       "tints-shades",
       "tailwind-palette",
       "palette-from-image",
+      "glass-effects",
+      "bento-grid",
+      "contrast-checker",
+      "css-shadow",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
       "tints-shades",
       "tailwind-palette",
       "palette-from-image",
+      "contrast-checker",
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual([
       "css-gradient",
@@ -127,6 +136,7 @@ describe("built-in tool registration", () => {
       "css-patterns",
       "doodles",
       "polka-dots",
+      "geometric-patterns",
       "seamless-patterns",
       "grid-patterns",
       "confetti",
@@ -419,6 +429,10 @@ describe("extra exports", () => {
       "tints-shades",
       "tailwind-palette",
       "palette-from-image",
+      "glass-effects",
+      "bento-grid",
+      "contrast-checker",
+      "css-shadow",
     ]);
   });
 });

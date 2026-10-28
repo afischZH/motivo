@@ -24,6 +24,7 @@ export const TOOL_CATEGORIES = [
   "converters",
   "social",
   "composer",
+  "css-effects",
 ] as const;
 
 export type ToolCategory = (typeof TOOL_CATEGORIES)[number];
@@ -143,6 +144,49 @@ export interface ControlHint<P> {
     params: P,
     root: Readonly<Record<string, unknown>>,
   ): OptionPreview;
+  /**
+   * For `kind: "thumbnails"`: the options in named groups (e.g. shape packs).
+   * The picker shows one group at a time behind a group select, which keeps
+   * long option lists small. Options missing from every group are not shown
+   * in the grid (they stay valid values).
+   */
+  optionGroups?: readonly OptionGroup[];
+  /**
+   * For `kind: "thumbnails"`: an image param (`kind: "image"`) that takes
+   * the user's own shapes. With a Brand Kit, the picker adds a "Brand Kit"
+   * group whose shapes go into that param, through the same checks,
+   * sanitizer and crop dialog as an upload.
+   */
+  brandShapesParam?: string;
+  /** For `kind: "image"`: how the upload is prepared; see `ImageHint`. */
+  image?: ImageHint;
+}
+
+/**
+ * Options of an upload field (`kind: "image"`). The param schema must
+ * accept what the field produces (`photoAssetSchema` for `maxEdge` 2048).
+ */
+export interface ImageHint {
+  /** Longest edge of a raster upload after downsampling. Default 1024. */
+  readonly maxEdge?: number;
+  /**
+   * Re-encode raster uploads as JPEG (transparency flattened onto white),
+   * for backgrounds where a large PNG would be needlessly heavy.
+   */
+  readonly photo?: boolean;
+  /**
+   * Whether the field takes images pasted anywhere in the editor. Default
+   * true; set false when several upload fields are visible at once.
+   */
+  readonly paste?: boolean;
+}
+
+/** A named group of options of a thumbnail picker. */
+export interface OptionGroup {
+  readonly id: string;
+  /** i18n key of the group name. */
+  readonly labelKey: string;
+  readonly values: readonly (string | number)[];
 }
 
 /**
@@ -208,12 +252,54 @@ export interface RenderContext {
   t?: number;
 }
 
+/** A box inside a `CssElement`, positioned in CSS px relative to it (e.g. sample text bars). */
+export interface CssBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  /** CSS declarations of the box, without a selector. */
+  css: string;
+}
+
+/**
+ * An element drawn on top of the `css` box (the stage), for code-first
+ * effects whose subject is a component, not a background: a glass card, a
+ * gradient border. The preview renders it as a real element, so effects
+ * like `backdrop-filter` act on the stage behind it.
+ */
+export interface CssElement {
+  /** Position and size in CSS px at the render size. */
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  /** CSS declarations of the element, without a selector. */
+  css: string;
+  /**
+   * Animation declarations (e.g. `animation: ...`). The preview applies them
+   * only when the viewer allows motion (`prefers-reduced-motion`), the
+   * exports guard them with a media query.
+   */
+  motionCss?: string;
+  /** Boxes inside the element, in paint order. */
+  content?: readonly CssBox[];
+}
+
 /** Output of a CSS renderer. */
 export interface CssOutput {
   /** CSS declarations (e.g. `background-image: ...;`), without a selector. */
   css: string;
   /** Optional SVG equivalent for preview and SVG/PNG export. */
   previewSvg?: string;
+  /** Optional element on top of the box; see `CssElement`. */
+  element?: CssElement;
+  /**
+   * Global rules the output needs (`@property`, `@keyframes`), installed by
+   * the preview as a stylesheet. Must not depend on anything but constants
+   * of the tool: several previews may share the rules on one page.
+   */
+  rules?: string;
 }
 
 /** Pure SVG string renderer; runs on the server and in workers. */
@@ -312,6 +398,90 @@ export interface ExtraExport<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Editable preview regions
+// ---------------------------------------------------------------------------
+
+/**
+ * A clickable area of the preview (e.g. one tile of a grid), in CSS px of
+ * the render size. See `RegionEditor`.
+ */
+export interface PreviewRegion {
+  /** Stable id within the design; also the key of its stored edits. */
+  readonly id: string;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  /** i18n key of the accessible name, with `labelValues` as placeholders. */
+  readonly labelKey: string;
+  readonly labelValues?: Readonly<Record<string, string | number>>;
+  /** The region carries an edit (enables "reset", announced as edited). */
+  readonly edited: boolean;
+}
+
+/**
+ * Lets the user edit single regions of the preview (M4-AP03: tiles of
+ * Geometric Patterns). The shell shows a generic cell picker over the
+ * preview (click, or focus plus arrow keys and Enter) and a popover whose
+ * form is built from `schema` and `controls` like a list item sub-form.
+ * Edits are ordinary params (`set`/`reset` return new params), so they are
+ * part of undo, share links and saved designs without any extra code.
+ *
+ * Every function is pure and deterministic; `ctx` is a fresh render
+ * context of the design (same seed and size as the preview).
+ */
+/** Values of one editable region (the popover form). */
+export type RegionValues = Readonly<Record<string, unknown>>;
+
+export interface RegionEditor<P, V extends RegionValues = RegionValues> {
+  /** i18n key of the popover title (e.g. "Edit tile"). */
+  titleKey: string;
+  /** The regions of these params, in reading order. Must stay cheap (capped count). */
+  regions(params: P, ctx: RenderContext): readonly PreviewRegion[];
+  /** Schema of the values of one region (the popover form). */
+  schema: ParamsSchema;
+  /**
+   * Hints of the form fields; `optionPreview` receives the region values as
+   * `params` and the tool params as `root`.
+   */
+  controls?: ControlHints<V>;
+  /** Current values of a region (generated or edited), `undefined` for unknown ids. */
+  values(params: P, regionId: string, ctx: RenderContext): V | undefined;
+  /**
+   * Params with fields of one region changed. Returns `params` itself when
+   * the edit does not apply (unknown region, limit of edited regions reached).
+   */
+  set(params: P, regionId: string, patch: Partial<V>, ctx: RenderContext): P;
+  /** Params with one region (or every region for `null`) back to generated. */
+  reset(params: P, regionId: string | null): P;
+  /** Number of edited regions stored in the params (also ones outside the current grid). */
+  editedCount(params: P): number;
+  /** Most edited regions the params may hold (share link size). */
+  maxEdited: number;
+}
+
+// ---------------------------------------------------------------------------
+// Suggestions
+// ---------------------------------------------------------------------------
+
+/**
+ * A one-click change the tool proposes for the current params (e.g. the
+ * nearest text colour that passes WCAG AA). The editor lists them above the
+ * controls; choosing one merges `patch` into the params as one undo step.
+ */
+export interface ParamSuggestion<P> {
+  /** Stable kebab-case id, unique within one result. */
+  id: string;
+  /** i18n key of the button text; may use the placeholders in `values`. */
+  labelKey: string;
+  values?: Readonly<Record<string, string | number>>;
+  /** Optional colour shown as a swatch on the button (hex). */
+  swatch?: string;
+  /** Params to merge; must keep the params valid. */
+  patch: Partial<P>;
+}
+
+// ---------------------------------------------------------------------------
 // Image input
 // ---------------------------------------------------------------------------
 
@@ -346,6 +516,54 @@ export interface ImageInput<P> {
    * patch. Must return values that pass the schema.
    */
   derive(pixels: PixelBuffer, params: P, rng: Rng): Partial<P>;
+}
+
+// ---------------------------------------------------------------------------
+// Animation (GIF export)
+// ---------------------------------------------------------------------------
+
+/**
+ * Where the frames of an animated export come from:
+ *  - `seeds`: frame i renders the same params with seed `seed + i` (the
+ *    tool's own randomness, e.g. a new blob outline per frame);
+ *  - `colors`: the colour params rotate through the frames, blended in
+ *    OKLab, so the last frame leads smoothly back to the first;
+ *  - `time`: the renderer reads `RenderContext.t` = i / count (looped
+ *    motion); only for tools whose renderer uses `t`;
+ *  - `custom`: the tool's own `AnimationSupport.frame`.
+ */
+export type AnimationSource = "seeds" | "colors" | "time" | "custom";
+
+/** Position of one frame in an animation. */
+export interface AnimationFrameInfo {
+  /** 0-based frame index. */
+  index: number;
+  /** Number of frames. */
+  count: number;
+  /** `index / count`, in [0, 1). */
+  t: number;
+  /** Seed of the design (uint32). */
+  seed: number;
+}
+
+/** What one frame renders: params, seed and an optional time. */
+export interface AnimationFrame<P> {
+  params: P;
+  seed: number;
+  t?: number;
+}
+
+/** Opt-in of a tool for animated exports. */
+export interface AnimationSupport<P> {
+  /** Frame sources in display order; the first is the default. */
+  sources: readonly [AnimationSource, ...AnimationSource[]];
+  /**
+   * Frames of the `custom` source. Pure and deterministic; must return
+   * params that pass the schema. Required when `sources` has `custom`.
+   */
+  frame?(params: P, info: AnimationFrameInfo): AnimationFrame<P>;
+  /** i18n key of the `custom` source label. Required with `frame`. */
+  customLabelKey?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -415,8 +633,44 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   localParams?: readonly ParamKey<Params<S>>[];
   /** The repeat tile of a seamless design; see `TileRenderer`. */
   tile?: TileRenderer<Params<S>>;
-  /** Uses `RenderContext.t` (GIF/video export). */
-  supportsAnimation?: boolean;
+  /**
+   * Opt-in for animated exports (GIF): which frame sources the export
+   * dialog offers. Every frame is rendered by `render` (one render path);
+   * see `AnimationSupport` and `planAnimationFrames`. Most tools need one
+   * line: `animation: SEED_AND_COLOR_ANIMATION`.
+   */
+  animation?: AnimationSupport<Params<S>>;
+  /**
+   * Single regions of the preview the user can click and edit (e.g. tiles);
+   * see `RegionEditor`. Without it the preview is not interactive.
+   */
+  regionEditor?: RegionEditor<Params<S>>;
+  /**
+   * One-click changes for the current params; see `ParamSuggestion`. Pure
+   * and cheap (runs on every change); an empty list shows nothing.
+   */
+  suggestions?(params: Params<S>): readonly ParamSuggestion<Params<S>>[];
+  /**
+   * The subset of `exports` offered for these params, when it depends on
+   * them (e.g. image exports only for some effects). Pure. Default: all.
+   */
+  exportsFor?(params: Params<S>): readonly ExportFormat[];
+  /**
+   * Hints about the current params shown above the controls (e.g. text that
+   * misses WCAG contrast). Pure and cheap; `values` fill the message's
+   * placeholders. An empty list shows nothing.
+   */
+  advisories?(params: Params<S>, ctx: RenderContext): readonly ToolAdvisory[];
+}
+
+/** A hint about the current params; see `ToolDefinition.advisories`. */
+export interface ToolAdvisory {
+  /** Stable id, unique within the tool. */
+  id: string;
+  /** i18n key of the message. */
+  messageKey: string;
+  /** Placeholder values of the message. */
+  values?: Readonly<Record<string, string | number>>;
 }
 
 /** A tool of any schema, as stored in a registry. */

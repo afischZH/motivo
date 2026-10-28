@@ -26,7 +26,7 @@ You are a senior graphics and TypeScript engineer building the generator engine 
 - Unit tests for every engine helper.
 - Snapshot test per preset with `seed = 1`.
 - `schema.parse(defaults)` and `schema.parse(preset)` for all presets.
-- Run `pnpm lint && pnpm typecheck && pnpm test` and include the result in your report.
+- Run `pnpm lint && pnpm typecheck && pnpm test:affected` (affected packages only; the full suite runs in CI at milestone sign-off) and include the result in your report.
 
 ## Report (max 200 words)
 Files changed, test command + result, assumptions, open risks, new dependencies.

@@ -12,16 +12,39 @@
  *   list costs nothing until it is seen. Previews are small CSS or SVG
  *   strings from the registry: CSS goes into an inline style, SVG into
  *   `<img>`, never into markup.
+ * - Grouped options (`ControlHint.optionGroups`, e.g. the packs of the
+ *   shape library, M4-AP01) are shown one group at a time behind a group
+ *   select; the group follows the value when it changes elsewhere
+ *   (variant, undo, preset).
+ * - With `brandShapesParam` and a Brand Kit, an extra "Brand Kit" group
+ *   lists the kit's own shapes. Picking one runs it through the upload
+ *   pipeline (checks, sanitizer worker, crop dialog) into that image param.
  */
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type RefObject } from "react";
+import type { BrandAsset } from "@musterli/storage";
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type RefObject,
+} from "react";
+import { useAssetLoader } from "../asset-input/use-asset-loader";
+import { useBrandKit, type BrandKitView } from "../brand-kit/context";
+import { brandImageToFile } from "../brand-kit/prepare";
 import { useT } from "../i18n";
 import { cssToStyle, parseCssDeclarations, svgDataUrl } from "../shell/render";
 import type { FieldProps } from "./fields";
-import { FOCUS_RING, cx } from "./primitives";
-import type { OptionValue, ThumbnailControl } from "./resolve";
+import { assetThumbnailUrl } from "./image-field";
+import { FOCUS_RING, INPUT_CLASS, cx } from "./primitives";
+import type { ControlOption, OptionValue, ThumbnailControl } from "./resolve";
 
 /** Tiles per row; matches `grid-cols-5` below. */
 export const THUMBNAIL_COLUMNS = 5;
+
+/** Group id of the Brand Kit's own shapes (never a group id of a tool). */
+export const BRAND_GROUP = "__brand-kit";
 
 /** Index after a navigation key, or `null` for other keys. */
 export function thumbnailKeyTarget(key: string, index: number, count: number): number | null {
@@ -42,6 +65,39 @@ export function thumbnailKeyTarget(key: string, index: number, count: number): n
     default:
       return null;
   }
+}
+
+/** The group that holds `value` (else the first group), or `undefined` without groups. */
+export function thumbnailGroupOf(
+  control: ThumbnailControl,
+  value: ThumbnailFieldValue,
+): string | undefined {
+  const groups = control.groups;
+  if (!groups) return undefined;
+  // Multi-select: the group of the first chosen option.
+  const first = Array.isArray(value) ? value[0] : value;
+  return (groups.find((g) => g.options.some((o) => o.value === first)) ?? groups[0])?.id;
+}
+
+/** A single choice, or the chosen options of a multi-select (`ThumbnailControl.multiple`). */
+export type ThumbnailFieldValue = OptionValue | readonly OptionValue[];
+
+const isChosen = (value: ThumbnailFieldValue, option: OptionValue): boolean =>
+  Array.isArray(value) ? value.includes(option) : value === option;
+
+/**
+ * Multi-select toggle within the length bounds; `null` when the bounds
+ * forbid it (last chosen option, or the list is full).
+ */
+export function toggleChoice(
+  value: readonly OptionValue[],
+  option: OptionValue,
+  bounds: { min: number; max: number },
+): OptionValue[] | null {
+  if (value.includes(option)) {
+    return value.length > bounds.min ? value.filter((v) => v !== option) : null;
+  }
+  return value.length < bounds.max ? [...value, option] : null;
 }
 
 /** Becomes true once the element is (nearly) visible in `root`, and stays true. */
@@ -70,6 +126,8 @@ interface TileProps {
   value: OptionValue;
   label: string;
   checked: boolean;
+  /** Checkbox (multi-select) instead of radio. */
+  multiple: boolean;
   tabbable: boolean;
   preview: ThumbnailControl["preview"];
   rootRef: RefObject<HTMLDivElement | null>;
@@ -96,7 +154,7 @@ function Tile(props: TileProps) {
         props.setRef(el);
       }}
       type="button"
-      role="radio"
+      role={props.multiple ? "checkbox" : "radio"}
       aria-checked={props.checked}
       aria-label={props.label}
       title={props.label}
@@ -120,32 +178,114 @@ function Tile(props: TileProps) {
   );
 }
 
-export function ThumbnailField(props: FieldProps<ThumbnailControl, OptionValue>) {
+export interface ThumbnailFieldProps extends FieldProps<ThumbnailControl, ThumbnailFieldValue> {
+  /** Sets another param of the same level (Brand Kit shapes go into `brandShapesParam`). */
+  onChangeParam?(key: string, value: unknown): void;
+}
+
+export function ThumbnailField(props: ThumbnailFieldProps) {
   const t = useT();
-  const { control, value } = props;
+  const { control, value, onChangeParam } = props;
+  const brandKit = useBrandKit();
+  const brandParam =
+    control.groups && control.brandShapesParam && brandKit && onChangeParam
+      ? control.brandShapesParam
+      : null;
+  const [view, setView] = useState(() => ({ value, group: thumbnailGroupOf(control, value) }));
+  // The value changed elsewhere (variant, undo, preset): show its group.
+  if (view.value !== value) {
+    const current = control.groups?.find((g) => g.id === view.group);
+    const keep = current?.options.some((o) => isChosen(value, o.value)) ?? Array.isArray(value);
+    setView({ value, group: keep ? view.group : thumbnailGroupOf(control, value) });
+  }
+  const groupId =
+    view.group === BRAND_GROUP && !brandParam ? thumbnailGroupOf(control, value) : view.group;
+  // A multi-select keeps the group the user looks at while toggling options.
+  const groupSelectId = useId();
+
+  const options =
+    groupId === undefined
+      ? control.options
+      : (control.groups?.find((g) => g.id === groupId)?.options ?? []);
+
+  return (
+    <div className="grid min-w-0 gap-2">
+      {control.groups && (
+        <select
+          id={groupSelectId}
+          className={cx(INPUT_CLASS, "w-full")}
+          aria-label={t("Editor.thumbnails.group", { label: props.label })}
+          value={groupId ?? ""}
+          onChange={(event) => setView({ value, group: event.target.value })}
+          data-testid="thumbnail-group"
+        >
+          {control.groups.map((g) => (
+            <option key={g.id} value={g.id}>
+              {t(g.labelKey)}
+            </option>
+          ))}
+          {brandParam && <option value={BRAND_GROUP}>{t("Editor.thumbnails.brandKit")}</option>}
+        </select>
+      )}
+      {groupId === BRAND_GROUP && brandKit && brandParam && onChangeParam ? (
+        <BrandShapeGroup
+          kit={brandKit}
+          param={brandParam}
+          labelId={props.ids.label}
+          onChangeParam={onChangeParam}
+          {...(props.onCommit ? { onCommit: props.onCommit } : {})}
+        />
+      ) : (
+        <ThumbnailGrid {...props} options={options} />
+      )}
+    </div>
+  );
+}
+
+/** The radio grid of one set of options. */
+function ThumbnailGrid(props: ThumbnailFieldProps & { options: ControlOption[] }) {
+  const t = useT();
+  const { control, value, options } = props;
+  const multiple = control.multiple;
   const rootRef = useRef<HTMLDivElement | null>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
-  const checkedIndex = control.options.findIndex((o) => o.value === value);
+  const checkedIndex = options.findIndex((o) => isChosen(value, o.value));
+  // Multi-select: the roving tab stop follows the focus, not the choice.
+  const [focusIndex, setFocusIndex] = useState<number | null>(null);
+  const tabIndex =
+    multiple && focusIndex !== null && focusIndex < options.length
+      ? focusIndex
+      : checkedIndex === -1
+        ? 0
+        : checkedIndex;
 
   const select = (index: number) => {
-    const option = control.options[index];
-    if (option && option.value !== value) props.onChange(option.value);
+    const option = options[index];
+    if (!option) return;
+    if (multiple) {
+      const next = toggleChoice(Array.isArray(value) ? value : [], option.value, multiple);
+      if (next) props.onChange(next);
+      return;
+    }
+    if (option.value !== value) props.onChange(option.value);
   };
 
   const onKeyDown = (index: number) => (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
-    const target = thumbnailKeyTarget(event.key, index, control.options.length);
+    const target = thumbnailKeyTarget(event.key, index, options.length);
     if (target === null) return;
     event.preventDefault();
     tiles.current[target]?.focus();
-    select(target);
+    // Radios select on arrow keys; checkboxes only move (Space or Enter toggles).
+    if (multiple) setFocusIndex(target);
+    else select(target);
   };
 
   return (
     <div
       ref={rootRef}
       id={props.ids.input}
-      role="radiogroup"
+      role={multiple ? "group" : "radiogroup"}
       aria-labelledby={props.ids.label}
       aria-describedby={props.ids.description}
       className="grid max-h-64 grid-cols-5 gap-1.5 overflow-y-auto p-1"
@@ -153,19 +293,23 @@ export function ThumbnailField(props: FieldProps<ThumbnailControl, OptionValue>)
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) props.onCommit?.();
       }}
     >
-      {control.options.map((option, i) => (
+      {options.map((option, i) => (
         <Tile
           key={String(option.value)}
           value={option.value}
           label={t(option.labelKey)}
-          checked={i === checkedIndex}
-          tabbable={i === (checkedIndex === -1 ? 0 : checkedIndex)}
+          checked={isChosen(value, option.value)}
+          multiple={multiple !== undefined}
+          tabbable={i === tabIndex}
           preview={control.preview}
           rootRef={rootRef}
           setRef={(el) => {
             tiles.current[i] = el;
           }}
-          onSelect={() => select(i)}
+          onSelect={() => {
+            if (multiple) setFocusIndex(i);
+            select(i);
+          }}
           onKeyDown={onKeyDown(i)}
         />
       ))}
@@ -173,9 +317,132 @@ export function ThumbnailField(props: FieldProps<ThumbnailControl, OptionValue>)
   );
 }
 
+/**
+ * The Brand Kit's own shapes as a source for an image param. A picked shape
+ * goes through the same checks, sanitizer and crop dialog as a file from
+ * disk; afterwards the focus moves to that param's upload field (this
+ * picker hides once a file is set).
+ */
+function BrandShapeGroup(props: {
+  kit: BrandKitView;
+  param: string;
+  labelId: string;
+  onChangeParam(key: string, value: unknown): void;
+  onCommit?(): void;
+}) {
+  const t = useT();
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const lastButton = useRef<HTMLButtonElement | null>(null);
+  const applied = useRef(false);
+  const [assets, setAssets] = useState<BrandAsset[] | null>(null);
+  const { kit, param } = props;
+
+  useEffect(() => {
+    let active = true;
+    kit.listAssets().then(
+      (all) => {
+        if (active) setAssets(all.filter((a) => a.kind === "shape"));
+      },
+      () => {
+        if (active) setAssets([]);
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, [kit]);
+
+  const loader = useAssetLoader({
+    onAsset: (asset) => {
+      applied.current = true;
+      // Find the target field's panel before this picker unmounts.
+      const panel = rootRef.current?.closest("[data-tool]") ?? document;
+      props.onChangeParam(param, asset);
+      props.onCommit?.();
+      requestAnimationFrame(() => {
+        panel
+          .querySelector<HTMLElement>(`[data-control="${CSS.escape(param)}"] input[type="file"]`)
+          ?.focus();
+      });
+    },
+    onClose: () => {
+      if (!applied.current) lastButton.current?.focus();
+      applied.current = false;
+    },
+  });
+
+  return (
+    <div ref={rootRef} className="grid min-w-0 gap-2" data-testid="thumbnail-brand-shapes">
+      {assets === null ? (
+        <p className="text-xs text-muted-foreground">{t("Editor.brand.loading")}</p>
+      ) : assets.length === 0 ? (
+        <p className="text-xs text-muted-foreground">
+          {t("Editor.brand.shapesEmpty")}{" "}
+          {kit.href && (
+            <a href={kit.href} className="rounded-sm text-link underline underline-offset-4">
+              {t("Editor.brand.openKit")}
+            </a>
+          )}
+        </p>
+      ) : (
+        <ul
+          aria-labelledby={props.labelId}
+          className="grid max-h-64 grid-cols-5 gap-1.5 overflow-y-auto p-1"
+        >
+          {assets.map((a) => {
+            const name = a.name || t("Editor.brand.unnamed");
+            return (
+              <li key={a.id}>
+                <button
+                  type="button"
+                  disabled={loader.reading}
+                  aria-label={t("Editor.brand.useAsset", { name })}
+                  title={name}
+                  className={cx(
+                    "flex aspect-square w-full items-center justify-center overflow-hidden rounded-md border border-border bg-canvas p-1 hover:border-foreground/40",
+                    FOCUS_RING,
+                  )}
+                  onClick={(event) => {
+                    lastButton.current = event.currentTarget;
+                    void loader.loadFile(brandImageToFile(a.image, a.image.name || a.name));
+                  }}
+                  data-testid="thumbnail-brand-item"
+                >
+                  <img
+                    src={assetThumbnailUrl(a.image)}
+                    alt=""
+                    className="max-h-full max-w-full object-contain"
+                    draggable={false}
+                  />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <p role="status" aria-live="polite" className="text-xs text-muted-foreground">
+        {loader.status}
+      </p>
+      {loader.error && (
+        <p role="alert" className="rounded-md bg-destructive/10 p-2 text-sm">
+          {t(`Editor.asset.errors.${loader.error}`)}
+        </p>
+      )}
+      {loader.dialog}
+    </div>
+  );
+}
+
 /** Name of the checked option, shown next to the label. */
 export function ThumbnailValue(props: { control: ThumbnailControl; value: unknown }) {
   const t = useT();
+  if (props.control.multiple && Array.isArray(props.value)) {
+    return (
+      <span className="truncate text-xs text-muted-foreground" aria-hidden="true">
+        {t("Editor.thumbnails.chosen", { count: props.value.length })}
+      </span>
+    );
+  }
   const option = props.control.options.find((o) => o.value === props.value);
   if (!option) return null;
   return (

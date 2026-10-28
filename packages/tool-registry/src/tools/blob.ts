@@ -6,6 +6,7 @@ import { BLOB_FILL_STYLES, blobClipPathCss, blobSvg, randomPalette } from "@must
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
+import { SEED_AND_COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
 import { COMMON_GROUPS, COMMON_LABELS, EXTRA_EXPORT_LABELS, optionLabels, roundTo } from "./shared";
@@ -138,6 +139,7 @@ export const blobTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  animation: SEED_AND_COLOR_ANIMATION,
   extraExports: [
     {
       id: "clip-path",

@@ -110,7 +110,8 @@
       "heading": "Bereit für dein erstes Motiv?",
       "text": "In zehn Sekunden vom Klick zum fertigen Hintergrund.",
       "button": "Jetzt ausprobieren"
-    }
+    },
+    "kofiButton": "Spenden"
   },
   "NotFound": {
     "title": "Seite nicht gefunden",
@@ -127,7 +128,8 @@
     "metaTitle": "{tool} | Musterli",
     "allTools": "Alle Generatoren",
     "supportHint": "Gefällt dir Musterli? <link>Unterstütze das Projekt</link>.",
-    "newTab": "(öffnet in neuem Tab)"
+    "newTab": "(öffnet in neuem Tab)",
+    "termsHint": "<link>Frei nutzbar, auch kommerziell</link>."
   },
   "tools": {
     "common": {
@@ -659,6 +661,113 @@
         }
       }
     },
+    "geometric-patterns": {
+      "name": "Geometrische Muster",
+      "description": "Raster aus Kacheln mit geometrischen Formen, gleichmässig oder verschachtelt. Jede Kachel einzeln anpassbar, als SVG, CSS oder Bild.",
+      "params": {
+        "pack": {
+          "label": "Formen-Pack",
+          "options": {
+            "custom": "Eigene Auswahl"
+          }
+        },
+        "shapes": {
+          "label": "Formen"
+        },
+        "gridMode": {
+          "label": "Raster",
+          "options": {
+            "uniform": "Gleichmässig",
+            "dynamic": "Verschachtelt"
+          }
+        },
+        "columns": {
+          "label": "Kacheln pro Zeile"
+        },
+        "depth": {
+          "label": "Teilungsstufen"
+        },
+        "splitChance": {
+          "label": "Teilungswahrscheinlichkeit"
+        },
+        "padding": {
+          "label": "Innenabstand"
+        },
+        "gap": {
+          "label": "Fuge"
+        },
+        "rotationMode": {
+          "label": "Drehung",
+          "options": {
+            "none": "Keine",
+            "quarter": "Vierteldrehungen",
+            "free": "Frei"
+          }
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "tile": "Pro Kachel zufällig",
+            "layer": "Pro Formebene"
+          }
+        },
+        "tileFill": {
+          "label": "Kachelflächen einfärben"
+        },
+        "duotoneOpacity": {
+          "label": "Deckkraft Zweitebene"
+        },
+        "strokeOnly": {
+          "label": "Nur Kontur"
+        },
+        "strokeWidth": {
+          "label": "Konturstärke"
+        }
+      },
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Labyrinth",
+        "mosaic": "Mosaik",
+        "night-garden": "Nachtgarten",
+        "blueprint": "Blaupause",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Sternschnuppen"
+      },
+      "tile": {
+        "title": "Kachel bearbeiten",
+        "cell": "Kachel Zeile {row}, Spalte {col}",
+        "cellPart": "Kachel Zeile {row}, Spalte {col}, Teil {part}",
+        "shape": "Form",
+        "color": "Farbe",
+        "rotation": "Drehung"
+      },
+      "seo": {
+        "whatIs": "Ein geometrisches Muster besteht aus einem Raster von Kacheln, in denen je eine einfache Form sitzt: Kreise, Viertelkreise, Dreiecke, Sterne oder Bögen. Durch Drehung und Farbwechsel entstehen aus wenigen Formen lebendige Flächen, wie man sie von Bauhaus-Plakaten, Fliesen oder Quilts kennt. Solche Muster eignen sich für Website-Hintergründe, Präsentationen, Verpackungen und Social-Media-Grafiken.",
+        "howTo": "Wähl ein Formen-Pack oder stell dir eigene Formen zusammen. Bestimme, wie viele Kacheln pro Zeile es gibt, ob das Raster gleichmässig oder verschachtelt ist und wie die Formen gedreht werden. Färbe die Kacheln zufällig aus deiner Palette oder pro Formebene, mit oder ohne Kachelflächen. Mit der Leertaste würfelst du neue Varianten. Klick auf eine Kachel, um Form, Farbe und Drehung einzeln anzupassen. Exportiere als SVG, als CSS-Hintergrund oder als Bild.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich einzelne Kacheln ändern?",
+            "answer": "Ja. Klick in der Vorschau auf eine Kachel, oder wähl sie per Tab und Pfeiltasten und drück Enter. Im Fenster tauschst du Form, Farbe und Drehung. Geänderte Kacheln bleiben beim Würfeln erhalten und stecken auch im Teilen-Link und im gespeicherten Design."
+          },
+          "q2": {
+            "question": "Was ist der Unterschied zwischen gleichmässigem und verschachteltem Raster?",
+            "answer": "Gleichmässig heisst: alle Kacheln sind gleich gross. Beim verschachtelten Raster wird jede Kachel mit einer gewählten Wahrscheinlichkeit in vier kleinere geteilt, und das bis zu vier Stufen tief. So entsteht ein Mosaik aus grossen und kleinen Kacheln."
+          },
+          "q3": {
+            "question": "Ist das Muster nahtlos kachelbar?",
+            "answer": "Ja. Das Raster füllt die Fläche immer mit ganzen Kacheln, darum lässt sich das ganze Motiv ohne Kante wiederholen. Der CSS-Export setzt es als Hintergrund mit background-repeat ein."
+          },
+          "q4": {
+            "question": "Wofür sind die Kachelformen und Vierteldrehungen gut?",
+            "answer": "Die Formen aus dem Pack „Kacheln und Viertel“ treffen die Kachelränder an festen Punkten. Mit Vierteldrehungen schliessen benachbarte Kacheln aneinander an, so entstehen Labyrinthe und Bogenmuster nach dem Prinzip der Truchet-Kacheln."
+          },
+          "q5": {
+            "question": "Darf ich die Muster frei verwenden?",
+            "answer": "Ja. Alle Formen hat Musterli selbst gezeichnet. Deine Exporte kannst du privat und kommerziell nutzen, ohne Konto und ohne Wasserzeichen."
+          }
+        }
+      }
+    },
     "seamless-patterns": {
       "name": "Nahtlose Muster",
       "description": "Nahtlos kachelbare Muster aus Formen oder deiner eigenen Grafik. Als SVG, CSS, Kachel oder Bild exportieren.",
@@ -667,33 +776,7 @@
           "label": "Eigene Grafik"
         },
         "shape": {
-          "label": "Form",
-          "options": {
-            "circle": "Kreis",
-            "ring": "Ring",
-            "square": "Quadrat",
-            "diamond": "Raute",
-            "triangle": "Dreieck",
-            "hexagon": "Sechseck",
-            "star": "Stern",
-            "sparkle": "Funkeln",
-            "heart": "Herz",
-            "leaf": "Blatt",
-            "drop": "Tropfen",
-            "wave": "Welle",
-            "plus": "Plus",
-            "cross": "Kreuz",
-            "arch": "Bogen",
-            "flower": "Blume",
-            "clover": "Klee",
-            "moon": "Mond",
-            "semicircle": "Halbkreis",
-            "pill": "Kapsel",
-            "chevron": "Winkel",
-            "sun": "Sonne",
-            "pebble": "Kiesel",
-            "dots": "Punkte"
-          }
+          "label": "Form"
         },
         "keepOriginalColors": {
           "label": "Originalfarben behalten"
@@ -1737,6 +1820,456 @@
           }
         }
       }
+    },
+    "glass-effects": {
+      "name": "Glas- und Rahmen-Effekte",
+      "description": "Milchglas, Verlaufsrahmen und Leuchten für Karten und Hero-Bereiche. Echtes CSS mit Vorschau, kopierbar als CSS, Tailwind oder HTML.",
+      "groups": {
+        "effect": "Effekt",
+        "glass": "Glas",
+        "border": "Verlaufsrahmen",
+        "glow": "Leuchten",
+        "card": "Karte",
+        "stage": "Bühne"
+      },
+      "params": {
+        "effect": {
+          "label": "Effekt",
+          "options": {
+            "glass": "Glas",
+            "gradient-border": "Verlaufsrahmen",
+            "glow": "Leuchten"
+          }
+        },
+        "backdrop": {
+          "label": "Hintergrund",
+          "options": {
+            "aurora": "Polarlicht",
+            "shapes": "Formen",
+            "gradient": "Verlauf",
+            "dots": "Punkte",
+            "grid": "Raster",
+            "stripes": "Streifen"
+          }
+        },
+        "backdropPalette": {
+          "label": "Farben der Bühne"
+        },
+        "cardWidth": {
+          "label": "Breite der Karte"
+        },
+        "cardHeight": {
+          "label": "Höhe der Karte"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "shadow": {
+          "label": "Schatten"
+        },
+        "textColor": {
+          "label": "Textfarbe"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "tint": {
+          "label": "Tönung"
+        },
+        "tintOpacity": {
+          "label": "Deckkraft der Tönung"
+        },
+        "saturation": {
+          "label": "Sättigung"
+        },
+        "border": {
+          "label": "Heller Innenrand"
+        },
+        "noise": {
+          "label": "Körnung"
+        },
+        "borderPalette": {
+          "label": "Farben des Rahmens"
+        },
+        "borderWidth": {
+          "label": "Rahmenbreite"
+        },
+        "borderAngle": {
+          "label": "Startwinkel"
+        },
+        "animated": {
+          "label": "Rahmen dreht sich"
+        },
+        "speed": {
+          "label": "Dauer einer Drehung"
+        },
+        "surface": {
+          "label": "Kartenfarbe"
+        },
+        "glowColor": {
+          "label": "Farbe des Leuchtens"
+        },
+        "glowSize": {
+          "label": "Reichweite"
+        },
+        "glowIntensity": {
+          "label": "Stärke"
+        },
+        "backgroundImage": {
+          "label": "Eigenes Hintergrundbild",
+          "description": "Ersetzt die Bühne durch dein Bild (PNG, JPG, WebP oder SVG). Es bleibt in deinem Browser, im Teilen-Link fehlt es, und der Code verweist auf einen Platzhalter."
+        },
+        "imageFit": {
+          "label": "Bildgrösse",
+          "options": {
+            "cover": "Füllen",
+            "contain": "Ganz zeigen"
+          }
+        },
+        "imagePosition": {
+          "label": "Ausrichtung",
+          "options": {
+            "center": "Mitte",
+            "top": "Oben",
+            "bottom": "Unten",
+            "left": "Links",
+            "right": "Rechts"
+          }
+        },
+        "embedImage": {
+          "label": "Bild in den Code einbetten",
+          "description": "Schreibt das Bild als data-URI in den Code statt eines Platzhalters. Der Code wird dadurch viel länger."
+        }
+      },
+      "presets": {
+        "frosted": "Milchglas",
+        "ice": "Eis",
+        "smoke": "Rauchglas",
+        "grainy": "Körniges Glas",
+        "neon-ring": "Neonring",
+        "sunset-frame": "Abendrot-Rahmen",
+        "mint-glow": "Minzleuchten",
+        "violet-glow": "Violettes Leuchten"
+      },
+      "advisories": {
+        "textContrast": "Text auf dem Glas erreicht nur {ratio}:1 Kontrast, für WCAG AA brauchst du {required}:1. Wähle eine kräftigere Tönung oder eine andere Textfarbe.",
+        "imageContrast": "Bei einem eigenen Bild kann Musterli den Kontrast des Texts nicht prüfen. Kontrolliere ihn selbst, zum Beispiel mit einer kräftigeren Tönung."
+      },
+      "seo": {
+        "whatIs": "Glas- und Rahmen-Effekte sind CSS-Oberflächen für Karten, Dialoge und Hero-Bereiche: Milchglas mit backdrop-filter, Rahmen mit Farbverlauf (auf Wunsch drehend) und farbiges Leuchten. Das Tool zeigt den Effekt als echtes CSS auf einem Musterli-Hintergrund und liefert den Code dazu.",
+        "howTo": "Wähle Glas, Verlaufsrahmen oder Leuchten. Beim Glas stellst du Unschärfe, Tönung, Sättigung, Innenrand und Körnung ein, beim Rahmen Farben, Breite und Drehung, beim Leuchten Farbe, Reichweite und Stärke. Unter Bühne wechselst du den Hintergrund. Mit der Leertaste entstehen neue Varianten. Kopiere CSS, Tailwind-Klassen oder ein HTML-Beispiel.",
+        "faq": {
+          "q1": {
+            "question": "Funktioniert der Glas-Effekt in Safari?",
+            "answer": "Ja. Der Code enthält backdrop-filter zusätzlich mit dem Präfix -webkit-, das Safari vor Version 18 braucht. Chrome, Edge und Firefox unterstützen backdrop-filter ohne Präfix."
+          },
+          "q2": {
+            "question": "Warum gibt es Glas nicht als PNG?",
+            "answer": "Glas zeigt verschwommen, was auf deiner Seite dahinter liegt. Ein Bild würde nur den Hintergrund hier im Tool festhalten. Verlaufsrahmen und Leuchten kannst du dagegen als PNG oder WebP exportieren."
+          },
+          "q3": {
+            "question": "Was passiert mit dem drehenden Rahmen bei reduzierter Bewegung?",
+            "answer": "Wer in den Systemeinstellungen weniger Bewegung wünscht, sieht einen stillstehenden Rahmen. Der Code enthält dafür eine Regel für prefers-reduced-motion. Browser ohne @property zeigen ebenfalls den statischen Rahmen."
+          },
+          "q4": {
+            "question": "Ist Text auf Glas gut lesbar?",
+            "answer": "Das hängt von Tönung und Hintergrund ab. Das Tool prüft den Kontrast deiner Textfarbe auf dem getönten Glas und zeigt einen Hinweis, wenn WCAG AA mit 4.5:1 verfehlt wird."
+          }
+        }
+      }
+    },
+    "bento-grid": {
+      "name": "Bento-Grid",
+      "description": "Ungleich grosse, abgerundete Kacheln in einem Raster, ohne Lücken. Für Feature-Sektionen, Portfolios und Social-Grafiken, als CSS Grid, Tailwind oder Bild.",
+      "groups": {
+        "grid": "Raster",
+        "tiles": "Kacheln"
+      },
+      "params": {
+        "columns": {
+          "label": "Spalten"
+        },
+        "rows": {
+          "label": "Zeilen"
+        },
+        "tiles": {
+          "label": "Anzahl Kacheln"
+        },
+        "minSpan": {
+          "label": "Kleinste Kachel (Zellen)"
+        },
+        "maxSpan": {
+          "label": "Grösste Kachel (Zellen)"
+        },
+        "layoutSeed": {
+          "label": "Aufteilung Nr.",
+          "description": "Jede Nummer ergibt eine andere Aufteilung. Mit dem Schloss behältst du sie, während die Leertaste nur die Farben neu würfelt."
+        },
+        "gap": {
+          "label": "Abstand"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "padding": {
+          "label": "Rand"
+        },
+        "fill": {
+          "label": "Füllung",
+          "options": {
+            "single": "Eine Farbe",
+            "palette-random": "Palette zufällig",
+            "palette-order": "Palette der Reihe nach"
+          }
+        },
+        "content": {
+          "label": "Inhalt",
+          "options": {
+            "empty": "Leer",
+            "title": "Titel",
+            "icon": "Symbol",
+            "lines": "Textzeilen",
+            "mixed": "Gemischt"
+          }
+        },
+        "breakpointColumns": {
+          "label": "Spalten auf schmalen Bildschirmen",
+          "description": "Unter 768 px Breite ordnet der Code die Kacheln in Lesereihenfolge in so vielen Spalten an."
+        },
+        "backgroundImage": {
+          "label": "Hintergrundbild des Rasters",
+          "description": "Liegt hinter allen Kacheln. Bleibt in deinem Browser, im Teilen-Link fehlt es."
+        },
+        "imagePosition": {
+          "label": "Ausrichtung",
+          "options": {
+            "center": "Mitte",
+            "top": "Oben",
+            "bottom": "Unten",
+            "left": "Links",
+            "right": "Rechts"
+          }
+        }
+      },
+      "presets": {
+        "feature-section": "Feature-Sektion 3×2",
+        "portfolio": "Portfolio",
+        "dashboard": "Dashboard",
+        "story": "Hochformat Story",
+        "mosaic": "Mosaik",
+        "calm": "Ruhig",
+        "blocks": "Blöcke"
+      },
+      "seo": {
+        "whatIs": "Ein Bento-Grid ordnet Inhalte in Kacheln unterschiedlicher Grösse an, wie die Fächer einer Bento-Box. Das Layout ist beliebt für Feature-Sektionen, Portfolios, Dashboards und Social-Media-Grafiken. Der Generator füllt das Raster immer vollständig, ohne Lücken.",
+        "howTo": "Lege Spalten, Zeilen und die gewünschte Anzahl Kacheln fest. Mit kleinster und grösster Kachel steuerst du, wie unterschiedlich die Kacheln werden. Drücke die Leertaste für eine neue Aufteilung oder sperre die Aufteilung und würfle nur die Farben neu. Exportiere als CSS Grid mit HTML, als Tailwind-Klassen, als SVG oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich einzelne Kacheln verschieben?",
+            "answer": "Nein, Musterli ist bewusst kein Layout-Editor. Du würfelst Aufteilungen, bis eine passt, und sperrst sie mit dem Schloss. Spalten, Zeilen und Kachelgrössen steuerst du über die Regler."
+          },
+          "q2": {
+            "question": "Funktioniert das Raster auch auf dem Handy?",
+            "answer": "Ja. Der CSS-Code ordnet die Kacheln unter 768 px Breite in Lesereihenfolge in weniger Spalten an. Wie viele, stellst du unter Spalten auf schmalen Bildschirmen ein."
+          },
+          "q3": {
+            "question": "Bleiben Lücken im Raster?",
+            "answer": "Nie. Das Raster wird so lange entlang der Zellgrenzen geteilt, bis die gewünschte Anzahl Kacheln erreicht ist. Jede Zelle gehört genau zu einer Kachel."
+          },
+          "q4": {
+            "question": "Brauche ich Tailwind für den Code?",
+            "answer": "Nein. Der Export CSS Grid + HTML läuft in jedem Browser ohne Framework. Die Tailwind-Klassen sind eine Alternative für Projekte mit Tailwind."
+          },
+          "q5": {
+            "question": "Kann ich Text, Symbole und Bilder in die Kacheln setzen?",
+            "answer": "Ja. Klicke in der Vorschau auf eine Kachel oder wähle sie mit Tab und den Pfeiltasten. Du kannst Titel, Untertitel, ein Symbol, eine eigene Grafik und ein Hintergrundbild setzen. Bilder bleiben in deinem Browser: Im Teilen-Link fehlen sie, und der Code verweist auf Platzhalter-Dateien, die du durch deine Bilder ersetzt."
+          }
+        }
+      },
+      "tile": {
+        "title": "Kachel bearbeiten",
+        "label": "Kachel {index}, {cols} × {rows} Zellen",
+        "fields": {
+          "title": "Titel",
+          "subtitle": "Untertitel",
+          "showIcon": "Symbol zeigen",
+          "icon": "Symbol",
+          "graphic": "Eigene Grafik",
+          "graphicPosition": "Ausrichtung der Grafik",
+          "graphicSize": "Grösse der Grafik",
+          "background": "Hintergrundbild der Kachel"
+        }
+      }
+    },
+    "contrast-checker": {
+      "name": "Kontrast-Checker",
+      "description": "Prüf, ob Text und Hintergrund nach WCAG gut lesbar sind, sieh die Farben mit Farbsehschwäche und übernimm passende Farben per Klick.",
+      "params": {
+        "foreground": {
+          "label": "Textfarbe"
+        },
+        "background": {
+          "label": "Hintergrundfarbe"
+        },
+        "sample": {
+          "label": "Beispiel",
+          "description": "Bestimmt, welche Stufen zählen: Fliesstext braucht 4.5:1 für AA und 7:1 für AAA, grosser Text 3:1 und 4.5:1, Bedienelemente 3:1.",
+          "options": {
+            "heading": "Überschrift",
+            "body": "Fliesstext",
+            "ui": "UI-Element"
+          }
+        },
+        "simulation": {
+          "label": "Farbsehschwäche simulieren",
+          "description": "Zeigt die Kombination zusätzlich so, wie sie Menschen mit einer Farbsehschwäche wahrnehmen, samt Kontrast.",
+          "options": {
+            "none": "Keine",
+            "protanopia": "Protanopie (Rotblindheit)",
+            "deuteranopia": "Deuteranopie (Grünblindheit)",
+            "tritanopia": "Tritanopie (Blaublindheit)",
+            "achromatopsia": "Achromatopsie (keine Farben)"
+          }
+        },
+        "pairs": {
+          "label": "Alle Paare einer Palette",
+          "description": "Zeigt jede Farbe der Palette als Text auf jeder anderen, mit Kontrastverhältnis."
+        }
+      },
+      "groups": {
+        "check": "Prüfung",
+        "pairs": "Palette"
+      },
+      "presets": {
+        "slate": "Schiefer",
+        "night": "Nachtmodus",
+        "signal": "Signal",
+        "mint": "Minze",
+        "traffic-light": "Ampel",
+        "sky": "Himmel und Sonne",
+        "grey-scale": "Graustufen",
+        "palette-pairs": "Palettenpaare"
+      },
+      "suggestions": {
+        "foreground-aa": "Textfarbe für AA: {color} ({ratio}:1)",
+        "foreground-aaa": "Textfarbe für AAA: {color} ({ratio}:1)",
+        "background-aa": "Hintergrund für AA: {color} ({ratio}:1)",
+        "background-aaa": "Hintergrund für AAA: {color} ({ratio}:1)"
+      },
+      "seo": {
+        "whatIs": "Ein Kontrast-Checker misst, wie stark sich Text- und Hintergrundfarbe in der Helligkeit unterscheiden. Die Richtlinien für barrierefreie Webinhalte (WCAG 2) verlangen dafür Mindestwerte, damit Texte auch bei schwacher Sehkraft, Blendung oder auf schlechten Bildschirmen lesbar bleiben.",
+        "howTo": "Wähl Text- und Hintergrundfarbe per Farbwähler, HEX-Wert oder Pipette und lies ab, welche WCAG-Stufen erfüllt sind. Reicht der Kontrast nicht, übernimmst du mit einem Klick die nächstgelegene Farbe, die AA oder AAA schafft. Die Simulation zeigt, wie die Kombination bei Farbsehschwäche wirkt.",
+        "faq": {
+          "q1": "Was bedeuten AA und AAA?",
+          "a1": "AA ist die übliche Mindestanforderung: 4.5:1 für normalen Text und 3:1 für grossen Text. AAA ist strenger und verlangt 7:1 bzw. 4.5:1. Für Bedienelemente und Grafiken gilt 3:1.",
+          "q2": "Ab wann gilt Text als gross?",
+          "a2": "Ab 18 Punkt (24 px) in normaler Schrift oder ab 14 Punkt (rund 18.7 px) in fetter Schrift.",
+          "q3": "Warum rundet Musterli den Kontrast ab?",
+          "a3": "Damit nie ein knapp verfehlter Wert als bestanden erscheint. 4.49:1 zeigt Musterli als 4.4:1, denn für AA reicht das nach WCAG nicht.",
+          "q4": "Wie funktioniert die Simulation der Farbsehschwäche?",
+          "a4": "Musterli rechnet die Farben mit den veröffentlichten Matrizen von Machado, Oliveira und Fernandes (2009) um, für Achromatopsie zählt nur die Helligkeit. Die Simulation ist eine Annäherung und ersetzt keinen Test mit Betroffenen.",
+          "q5": "Wie findet Musterli eine bessere Farbe?",
+          "a5": "Es verschiebt nur die Helligkeit im OKLCH-Farbraum, Farbton und Sättigung bleiben möglichst gleich. So bleibt deine Markenfarbe erkennbar und erreicht trotzdem AA oder AAA."
+        }
+      }
+    },
+    "css-shadow": {
+      "name": "CSS-Schatten-Generator",
+      "description": "Weiche, mehrschichtige Schatten für Karten und Buttons. Vorschau mit echtem CSS, Export als box-shadow, Tailwind oder drop-shadow.",
+      "params": {
+        "layers": {
+          "label": "Ebenen"
+        },
+        "distance": {
+          "label": "Abstand"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "spread": {
+          "label": "Ausdehnung"
+        },
+        "angle": {
+          "label": "Lichtrichtung",
+          "description": "Woher das Licht kommt. Bei 0° kommt es von oben und der Schatten fällt nach unten."
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        },
+        "autoColor": {
+          "label": "Farbe aus dem Hintergrund",
+          "description": "Dunkelt den Farbton des Hintergrunds ab, statt reines Schwarz zu nehmen. Das wirkt natürlicher."
+        },
+        "color": {
+          "label": "Schattenfarbe"
+        },
+        "easing": {
+          "label": "Verlauf",
+          "description": "Wie Abstand und Unschärfe von Ebene zu Ebene wachsen.",
+          "options": {
+            "linear": "Linear",
+            "ease-out": "Ease-out",
+            "exponential": "Exponentiell"
+          }
+        },
+        "inset": {
+          "label": "Innenschatten"
+        },
+        "shape": {
+          "label": "Vorschau-Form",
+          "options": {
+            "card": "Karte",
+            "button": "Button"
+          }
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "elementColor": {
+          "label": "Farbe der Fläche"
+        },
+        "stage": {
+          "label": "Bühne",
+          "description": "Musterli-Hintergrund für die Vorschau. Er gehört nicht zum CSS-Export.",
+          "options": {
+            "solid": "Einfarbig",
+            "gradient": "Verlauf",
+            "dots": "Punkte",
+            "grid": "Raster"
+          }
+        },
+        "surface": {
+          "label": "Hintergrundfarbe"
+        }
+      },
+      "groups": {
+        "shadow": "Schatten",
+        "element": "Fläche und Bühne",
+        "code": "Code"
+      },
+      "presets": {
+        "soft": "Sanft",
+        "floating": "Schwebend",
+        "crisp": "Scharf",
+        "deep": "Tief",
+        "inner": "Innen",
+        "button": "Button",
+        "sunset": "Abendlicht"
+      },
+      "seo": {
+        "whatIs": "Ein CSS-Schatten-Generator erzeugt den Code für box-shadow. Statt eines einzelnen harten Schattens legt Musterli mehrere Ebenen übereinander, deren Abstand und Unschärfe nach einer Kurve wachsen. So wirken Karten und Buttons weich und natürlich beleuchtet.",
+        "howTo": "Stell Ebenen, Abstand, Unschärfe und Lichtrichtung ein oder drück die Leertaste für eine neue Variante. Die Vorschau ist echtes CSS auf einem Musterli-Hintergrund. Kopier danach box-shadow, die Tailwind-Klasse, die @theme-Variable oder die drop-shadow-Variante.",
+        "faq": {
+          "q1": "Warum mehrere Schattenebenen?",
+          "a1": "Ein echter Schatten ist nahe am Gegenstand dunkel und scharf und wird mit Abstand heller und weicher. Mehrere Ebenen bilden das nach, ein einzelner box-shadow wirkt dagegen oft flach oder schmutzig.",
+          "q2": "Wie nutze ich den Schatten in Tailwind?",
+          "a2": "Für Tailwind v3 und v4 gibt es die Klasse shadow-[...] mit allen Ebenen. In Tailwind v4 legst du den Schatten auch als Variable --shadow-name in @theme ab und schreibst dann einfach shadow-name.",
+          "q3": "Was ist der Unterschied zu drop-shadow?",
+          "a3": "box-shadow folgt dem Rechteck des Elements, filter: drop-shadow() folgt der Form, etwa bei freigestellten PNG oder SVG. drop-shadow kennt keine Ausdehnung und keinen Innenschatten.",
+          "q4": "Warum ist der Schatten nicht schwarz?",
+          "a4": "Schatten nehmen etwas von der Farbe der Umgebung an. Musterli dunkelt darum standardmässig den Farbton des Hintergrunds ab. Du kannst die Farbe aber auch selbst wählen."
+        }
+      }
     }
   },
   "Converters": {
@@ -1979,6 +2512,10 @@
     "composer": {
       "name": "Composer",
       "description": "Mehrere Motive zu einer Grafik kombinieren."
+    },
+    "css-effects": {
+      "name": "CSS-Effekte und Layouts",
+      "description": "Glas, Verlaufsrahmen, Leuchten und Bento-Layouts als fertiger Code zum Kopieren."
     }
   },
   "PatternLibrary": {
@@ -2024,7 +2561,8 @@
     "privacy": "Datenschutz",
     "support": "Musterli unterstützen",
     "gradients": "Farbverläufe",
-    "palettes": "Farbpaletten"
+    "palettes": "Farbpaletten",
+    "terms": "Nutzungsbedingungen"
   },
   "Support": {
     "metaTitle": "Musterli unterstützen",
@@ -2186,15 +2724,18 @@
         "donations": {
           "heading": "Spenden",
           "paragraphs": [
-            "Musterli ist gratis und finanziert sich über freiwillige Spenden. Auf der Seite «Unterstützen» verlinken wir auf einen externen Spendenanbieter. Musterli selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
-            "Erst wenn du dem Link folgst, verlässt du Musterli. Für die Bearbeitung deiner Daten beim Spendenanbieter ist dieser verantwortlich, und es gilt seine Datenschutzerklärung. Der Anbieter teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ihm ausdrücklich zur Weitergabe an uns überlässt."
+            "Musterli ist gratis und finanziert sich über freiwillige Spenden. Wir nutzen dafür Ko-fi, einen Dienst der Ko-fi Labs Limited mit Sitz im Vereinigten Königreich. Musterli selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
+            "Auf der Startseite zeigen wir einen Spenden-Knopf von Ko-fi. Dafür lädt dein Browser beim Aufruf der Startseite ein Script, ein Stylesheet und ein Logo von storage.ko-fi.com. Dabei erhält Ko-fi technisch notwendige Daten wie deine IP-Adresse, Datum und Uhrzeit, die Adresse der Seite und deinen User Agent. Schriften von Google laden wir dabei bewusst nicht. Der Knopf selbst setzt auf Musterli keine Cookies und nutzt keinen lokalen Speicher.",
+            "Erst wenn du auf den Knopf klickst, öffnet sich das Spendenformular von ko-fi.com in einem eingebetteten Fenster. Auf der Seite «Unterstützen» verlinken wir ausserdem direkt auf Ko-fi. Für alles, was im Spendenformular oder auf ko-fi.com geschieht, ist Ko-fi verantwortlich. Ko-fi und seine Zahlungsdienste können dort Cookies setzen, und es gilt die Datenschutzerklärung von Ko-fi. Ko-fi teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ausdrücklich zur Weitergabe an uns angibst.",
+            "Wir binden den Spenden-Knopf ein, weil wir an einer einfachen Möglichkeit, Musterli zu unterstützen, ein berechtigtes Interesse haben (Art. 6 Abs. 1 lit. f DSGVO)."
           ]
         },
         "transfer": {
           "heading": "Bekanntgabe ins Ausland",
           "paragraphs": [
             "Cloudflare und Sentry haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
-            "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen."
+            "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen.",
+            "Ko-fi hat seinen Sitz im Vereinigten Königreich. Für das Vereinigte Königreich haben die EU-Kommission und der Bundesrat einen angemessenen Datenschutz festgestellt. Ko-fi und seine Zahlungsdienste können Daten auch in den USA bearbeiten."
           ]
         },
         "retention": {
@@ -2215,6 +2756,77 @@
           "heading": "Änderungen",
           "paragraphs": [
             "Wir passen diese Erklärung an, wenn sich die Website oder die eingesetzten Dienste ändern. Es gilt die Fassung, die auf dieser Seite veröffentlicht ist."
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Nutzungsbedingungen",
+      "metaTitle": "Nutzungsbedingungen",
+      "metaDescription": "Die Regeln für Musterli in Kürze: gratis und ohne Gewähr, alles bleibt in deinem Browser, deine Exporte darfst du frei verwenden, auch kommerziell.",
+      "intro": "Kurz gesagt: Musterli ist gratis, deine Designs bleiben auf deinem Gerät, und was du exportierst, darfst du frei verwenden, auch kommerziell und ohne Namensnennung.",
+      "sections": {
+        "scope": {
+          "heading": "Worum es geht",
+          "paragraphs": [
+            "Diese Bedingungen gelten für die Nutzung von musterli.app mit allen Generatoren, Konvertern und Sammlungen (zusammen «Musterli»). Wenn du Musterli nutzt, bist du mit ihnen einverstanden. Wer Musterli betreibt, steht im <imprint>Impressum</imprint>."
+          ]
+        },
+        "free": {
+          "heading": "Gratis und ohne Gewähr",
+          "paragraphs": [
+            "Musterli ist gratis. Du brauchst kein Konto, und es gibt keine kostenpflichtigen Funktionen.",
+            "Wir stellen Musterli so zur Verfügung, wie es ist. Wir geben uns Mühe, dass alles funktioniert und die Website erreichbar ist, können das aber nicht zusichern. Ebenso wenig sichern wir zu, dass Ergebnisse fehlerfrei sind oder sich für einen bestimmten Zweck eignen. Prüfe Exporte vor der Verwendung selbst, etwa Farbkontraste, Auflösung oder Druckvorgaben. Funktionen können sich ändern oder wegfallen.",
+            "Soweit das Gesetz es zulässt, haften wir nicht für Schäden aus der Nutzung von Musterli, zum Beispiel für verlorene Designs oder entgangenen Gewinn. Für absichtlich oder grobfahrlässig verursachte Schäden haften wir nach dem Gesetz."
+          ]
+        },
+        "local": {
+          "heading": "Alles läuft in deinem Browser",
+          "paragraphs": [
+            "Musterli berechnet, exportiert und speichert direkt in deinem Browser. Gespeicherte Designs, Entwürfe und dein Brand Kit liegen nur auf deinem Gerät, nicht auf unseren Servern. Bilder und Logos, die du hochlädst, verlassen dein Gerät nicht.",
+            "Um Sicherungen kümmerst du dich darum selbst: Löschst du die Browserdaten oder wechselst du das Gerät, sind lokal gespeicherte Designs weg. Mit dem Datei-Export unter «Meine Designs» und im Brand Kit kannst du sie sichern. Was sonst mit Daten geschieht, steht in der <privacy>Datenschutzerklärung</privacy>."
+          ]
+        },
+        "exports": {
+          "heading": "Deine Exporte darfst du frei verwenden",
+          "paragraphs": [
+            "Grafiken, Animationen, Farbpaletten und Code (zum Beispiel SVG, CSS oder Tailwind), die du mit Musterli erzeugst, darfst du frei verwenden: privat und kommerziell, verändert oder unverändert, in eigenen Projekten und in Aufträgen für andere. Eine Namensnennung ist nicht nötig, aber natürlich willkommen.",
+            "Musterli erhebt keine Ansprüche an deinen Exporten. Soweit uns daran überhaupt Rechte zustehen, verzichten wir darauf unwiderruflich, weltweit und so weit, wie das Gesetz es erlaubt. Das entspricht sinngemäss der Freigabe «CC0 1.0 Universal» von Creative Commons. Dasselbe gilt für die Farbverläufe und Farbpaletten aus unseren Sammlungen.",
+            "Die Freigabe betrifft nur, was du exportierst. Die Website selbst, also Texte, Gestaltung, Programmcode sowie Name und Logo von Musterli, bleibt geschützt. Weil die Generatoren mit Einstellungen und Zufall arbeiten, können andere gleiche oder ähnliche Grafiken erzeugen. Ein exklusives Recht an einem Motiv können wir dir darum nicht verschaffen."
+          ]
+        },
+        "uploads": {
+          "heading": "Deine Inhalte",
+          "paragraphs": [
+            "Für Inhalte, die du in Musterli verwendest, bist du selbst verantwortlich, zum Beispiel für Logos, Bilder, Formen oder Schriftzüge. Verwende nur Inhalte, an denen du die nötigen Rechte hast, und nichts Rechtswidriges.",
+            "An deinen Inhalten erwirbt Musterli keine Rechte, sie werden nur in deinem Browser verarbeitet. Enthält ein Export eigene Inhalte oder solche von Dritten, gelten für diese Teile weiterhin deren Rechte. Die Freigabe oben deckt sie nicht ab."
+          ]
+        },
+        "fair": {
+          "heading": "Faire Nutzung",
+          "paragraphs": [
+            "Nutze Musterli so, dass es auch für alle anderen funktioniert. Nicht erlaubt sind insbesondere massenhafte automatisierte Abrufe (zum Beispiel durch Bots oder Scraper), Versuche, Sicherheitsmassnahmen zu umgehen, und alles, was den Betrieb stört.",
+            "Bei Missbrauch dürfen wir den Zugriff einschränken oder sperren, auch ohne Vorankündigung."
+          ]
+        },
+        "donations": {
+          "heading": "Spenden",
+          "paragraphs": [
+            "Musterli finanziert sich über freiwillige Spenden. Eine Spende ist ein Geschenk: Du erhältst dafür keine zusätzlichen Funktionen und keinen Anspruch auf bestimmte Leistungen, und Musterli bleibt für alle gleich.",
+            "Spenden laufen über einen externen Anbieter, derzeit Ko-fi. Musterli selbst nimmt keine Zahlungen entgegen. Für deine Spende gelten die Bedingungen und die Datenschutzerklärung des Anbieters. Mehr dazu auf der Seite <support>Musterli unterstützen</support>."
+          ]
+        },
+        "law": {
+          "heading": "Anwendbares Recht und Gerichtsstand",
+          "paragraphs": [
+            "Es gilt Schweizer Recht. Gerichtsstand ist {jurisdiction}, soweit zwingende gesetzliche Bestimmungen nichts anderes vorsehen, etwa zum Schutz von Konsumentinnen und Konsumenten."
+          ]
+        },
+        "changes": {
+          "heading": "Änderungen",
+          "paragraphs": [
+            "Wir können diese Bedingungen anpassen, zum Beispiel wenn Musterli neue Funktionen erhält. Es gilt die Fassung auf dieser Seite, das Datum oben zeigt ihren Stand.",
+            "Die Freigabe für Exporte, die du bereits erstellt hast, nehmen wir nie zurück."
           ]
         }
       }
@@ -2662,5 +3274,193 @@
     "relatedHeading": "Ähnliche Paletten",
     "backToCollection": "Alle Farbpaletten",
     "ogAlt": "Farbpalette {palette} von Musterli"
+  },
+  "Shapes": {
+    "packs": {
+      "basics": "Grundformen",
+      "geometric": "Geometrisch",
+      "organic": "Organisch",
+      "blobs": "Kleckse",
+      "stars": "Sterne und Funkeln",
+      "lines": "Pfeile und Linien",
+      "retro": "Retro",
+      "bauhaus": "Bauhaus",
+      "nature": "Natur",
+      "symbols": "Symbole",
+      "tiles": "Kacheln und Viertel",
+      "decorative": "Ornamente"
+    },
+    "names": {
+      "circle": "Kreis",
+      "ring": "Ring",
+      "square": "Quadrat",
+      "block": "Block",
+      "diamond": "Raute",
+      "triangle": "Dreieck",
+      "pentagon": "Fünfeck",
+      "hexagon": "Sechseck",
+      "octagon": "Achteck",
+      "oval": "Oval",
+      "semicircle": "Halbkreis",
+      "pill": "Kapsel",
+      "plus": "Plus",
+      "cross": "Kreuz",
+      "dots": "Punkte",
+      "hexagon-ring": "Sechseck-Ring",
+      "triangle-ring": "Dreieck-Ring",
+      "square-ring": "Quadrat-Ring",
+      "diamond-ring": "Rauten-Ring",
+      "octagon-ring": "Achteck-Ring",
+      "hexagram": "Hexagramm",
+      "octagram": "Oktagramm",
+      "cube": "Würfel",
+      "pyramid": "Pyramide",
+      "nested-squares": "Verschachtelte Quadrate",
+      "sierpinski": "Dreiecksteilung",
+      "checker": "Schachbrett",
+      "hex-cluster": "Wabe",
+      "pinwheel": "Windrad",
+      "diamond-quad": "Vier Rauten",
+      "pebble": "Kiesel",
+      "bean": "Bohne",
+      "egg": "Ei",
+      "cell": "Zelle",
+      "worm": "Wurm",
+      "puddle": "Pfütze",
+      "petal": "Blütenblatt",
+      "seed": "Samen",
+      "comma": "Komma",
+      "spots": "Flecken",
+      "twin-pebbles": "Zwei Kiesel",
+      "wobble-ring": "Wackelring",
+      "splat": "Spritzer",
+      "blob-1": "Klecks 1",
+      "blob-2": "Klecks 2",
+      "blob-3": "Klecks 3",
+      "blob-4": "Klecks 4",
+      "blob-5": "Klecks 5",
+      "blob-6": "Klecks 6",
+      "blob-7": "Klecks 7",
+      "blob-8": "Klecks 8",
+      "blob-9": "Klecks 9",
+      "blob-10": "Klecks 10",
+      "blob-11": "Klecks 11",
+      "blob-12": "Klecks 12",
+      "star": "Stern",
+      "sparkle": "Funkeln",
+      "star-4": "Vierzackiger Stern",
+      "star-6": "Sechszackiger Stern",
+      "star-8": "Achtzackiger Stern",
+      "burst": "Strahlenkranz",
+      "seal": "Siegel",
+      "sparkle-slim": "Schmales Funkeln",
+      "sparkles": "Glitzer",
+      "asterisk": "Sternchen",
+      "star-round": "Runder Stern",
+      "star-ring": "Sternrahmen",
+      "twinkle": "Glanzlicht",
+      "star-trio": "Drei Sterne",
+      "shooting-star": "Sternschnuppe",
+      "chevron": "Winkel",
+      "wave": "Welle",
+      "arrow": "Pfeil",
+      "arrow-diagonal": "Pfeil schräg",
+      "arrow-double": "Doppelpfeil",
+      "arrow-turn": "Wendepfeil",
+      "double-chevron": "Doppelwinkel",
+      "caret": "Spitze",
+      "stripes": "Streifen",
+      "slashes": "Schrägstriche",
+      "zigzag": "Zickzack",
+      "wave-double": "Doppelwelle",
+      "squiggle": "Kringel",
+      "dashes": "Striche",
+      "arch": "Bogen",
+      "rainbow": "Regenbogen",
+      "sunrise": "Sonnenaufgang",
+      "sunset": "Abendsonne",
+      "flower-power": "Flower-Power",
+      "groovy-star": "Groovy-Stern",
+      "bolt": "Blitz",
+      "tv": "Fernseher",
+      "boomerang": "Bumerang",
+      "orbit": "Umlaufbahn",
+      "pill-stack": "Kapselstapel",
+      "record": "Schallplatte",
+      "wavy-circle": "Wellenkreis",
+      "split-circle": "Geteilter Kreis",
+      "circle-square": "Kreis im Quadrat",
+      "quarters": "Viertel",
+      "lens": "Linse",
+      "target": "Zielscheibe",
+      "bars": "Balken",
+      "dome": "Kuppel",
+      "arc-thick": "Dicker Bogen",
+      "quarter-arc": "Viertelbogen",
+      "steps": "Treppe",
+      "d-shape": "D-Form",
+      "split-square": "Geteiltes Quadrat",
+      "dot-grid": "Punkteraster",
+      "cross-circle": "Kreisviertel",
+      "leaf": "Blatt",
+      "drop": "Tropfen",
+      "flower": "Blume",
+      "clover": "Klee",
+      "moon": "Mond",
+      "sun": "Sonne",
+      "cloud": "Wolke",
+      "mountains": "Berge",
+      "pine": "Tanne",
+      "tulip": "Tulpe",
+      "mushroom": "Pilz",
+      "snowflake": "Schneeflocke",
+      "daisy": "Gänseblümchen",
+      "branch": "Zweig",
+      "fish": "Fisch",
+      "heart": "Herz",
+      "check": "Häkchen",
+      "double-ring": "Doppelring",
+      "eye": "Auge",
+      "hourglass": "Sanduhr",
+      "pin": "Ortsmarke",
+      "bookmark": "Lesezeichen",
+      "shield": "Schild",
+      "keyhole": "Schlüsselloch",
+      "speech": "Sprechblase",
+      "play": "Play",
+      "house": "Haus",
+      "spiral": "Spirale",
+      "quarter-circle": "Viertelkreis",
+      "quarter-cutout": "Viertelkreis-Ausschnitt",
+      "truchet-arcs": "Truchet-Bögen",
+      "truchet-discs": "Truchet-Scheiben",
+      "arc-band": "Bogenband",
+      "diagonal-half": "Diagonale Hälfte",
+      "diagonal-band": "Diagonales Band",
+      "diagonal-stripes": "Diagonale Streifen",
+      "half-rect": "Halbe Kachel",
+      "corner-square": "Eckquadrat",
+      "checker-tile": "Schachbrettkachel",
+      "bridge": "Brücke",
+      "edge-dots": "Randpunkte",
+      "corner-dots": "Eckpunkte",
+      "plus-band": "Kreuzband",
+      "t-band": "T-Band",
+      "wave-band": "Wellenband",
+      "corner-triangle": "Eckdreieck",
+      "quatrefoil": "Vierpass",
+      "trefoil": "Dreipass",
+      "rosette": "Rosette",
+      "scallop": "Muschel",
+      "ogee": "Zwiebelbogen",
+      "zellige": "Zellige-Stern",
+      "medallion": "Medaillon",
+      "fleuron": "Fleuron",
+      "paisley": "Paisley",
+      "damask": "Damast",
+      "lace-ring": "Spitzenring",
+      "bow": "Schleife",
+      "mandala": "Mandala"
+    }
   }
 }

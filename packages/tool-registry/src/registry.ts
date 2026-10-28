@@ -1,4 +1,11 @@
-import type { AnyToolDefinition, ParamsSchema, ToolCategory, ToolDefinition } from "./types";
+import type {
+  AnyToolDefinition,
+  ParamsSchema,
+  RegionEditor,
+  RegionValues,
+  ToolCategory,
+  ToolDefinition,
+} from "./types";
 
 /** Kebab-case: lowercase letters and digits, single hyphens between words. */
 export const TOOL_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -9,6 +16,17 @@ export const TOOL_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
  */
 export function defineTool<S extends ParamsSchema>(tool: ToolDefinition<S>): ToolDefinition<S> {
   return tool;
+}
+
+/**
+ * Types a region editor against its own value type and erases that type for
+ * `ToolDefinition.regionEditor` (the editor shell only sees plain records,
+ * like the item sub-forms of list params).
+ */
+export function defineRegionEditor<P, V extends RegionValues>(
+  editor: RegionEditor<P, V>,
+): RegionEditor<P> {
+  return editor as unknown as RegionEditor<P>;
 }
 
 export interface ToolRegistry {

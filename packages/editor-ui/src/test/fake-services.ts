@@ -27,6 +27,16 @@ export function fakeServices(overrides: Partial<ExportServices> = {}): FakeServi
           filename: `musterli-${tool.id}-tile.${options.format}`,
         })),
     ),
+    exportGif: vi.fn<ExportServices["exportGif"]>(
+      overrides.exportGif ??
+        (async (tool, _params, _ctx, options) => ({
+          blob: new Blob(["GIF89a"], { type: "image/gif" }),
+          width: options.edge,
+          height: options.edge,
+          frames: options.frames,
+          filename: `musterli-${tool.id}.gif`,
+        })),
+    ),
     downloadBlob: vi.fn<ExportServices["downloadBlob"]>(
       overrides.downloadBlob ?? (() => undefined),
     ),

@@ -6,6 +6,7 @@ import { WAVE_DIRECTIONS, randomPalette, wavesSvg } from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
+import { SEED_AND_COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
 import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
@@ -135,4 +136,5 @@ export const svgWavesTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  animation: SEED_AND_COLOR_ANIMATION,
 });

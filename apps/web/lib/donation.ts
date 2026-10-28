@@ -1,7 +1,8 @@
 /**
- * Link to the external donation provider (docs/PRODUCT.md 6.1). Musterli only
- * links there: no script, no widget, no payment data on our domain, so the
- * CSP stays unchanged.
+ * Link to the external donation provider (docs/PRODUCT.md 6.1). No payment
+ * data on our domain. When the URL is a Ko-fi page, the home page also shows
+ * Ko-fi's floating donate widget (`telemetry/config.ts` `kofiPageId`, which
+ * also opens the CSP for it).
  *
  * The URL comes from `NEXT_PUBLIC_DONATION_URL` at build time (spelled out
  * so Next inlines it). Only absolute https URLs without credentials are

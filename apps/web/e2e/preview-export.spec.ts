@@ -48,6 +48,8 @@ interface Case {
   css?: boolean;
   /** Overrides `MAX_MEAN_DIFF`, with the reason in a comment. */
   maxMeanDiff?: number;
+  /** Overrides `MAX_STRAY_RATIO` per browser, with the reason in a comment. */
+  maxStrayRatio?: Partial<Record<string, number>>;
 }
 
 const CASES: Case[] = [
@@ -69,6 +71,15 @@ const CASES: Case[] = [
   // M3-AP12: SVG <pattern> fills (brick by default, mirror with flips).
   { toolId: "seamless-patterns" },
   { toolId: "seamless-patterns", preset: "Botanical" },
+  // M4-AP02: tile fills plus shapes in a nested grid, and outlines with free rotation.
+  { toolId: "geometric-patterns" },
+  // WebKit anti-aliases hundreds of small rotated shapes (Mosaic) and thin
+  // translucent strokes (Blueprint) differently in <img> and on the export
+  // canvas (CI: 0.025 % and 0.093 % stray pixels, about 38 and 143 at
+  // 480 × 320). Only WebKit gets the larger budget; Chromium and Firefox
+  // keep the default, so a missing or moved shape still fails there.
+  { toolId: "geometric-patterns", preset: "Mosaic", maxStrayRatio: { webkit: 0.0004 } },
+  { toolId: "geometric-patterns", preset: "Blueprint", maxStrayRatio: { webkit: 0.0012 } },
   // M3-AP08: layered blobs (partly translucent, gradients), many thin strokes, charts.
   { toolId: "blob-composition" },
   { toolId: "blob-composition", preset: "Dusk" },
@@ -84,6 +95,13 @@ const CASES: Case[] = [
   { toolId: "blurry-gradient", preset: "Sorbet" },
   { toolId: "striped-gradient" },
   { toolId: "striped-gradient", preset: "Dusk" },
+  // M4-AP05: SVG text and glyphs; real CSS box-shadow vs. its SVG twin
+  // (Gaussian blur per layer, outer on a gradient, inner clipped, dots stage).
+  { toolId: "contrast-checker" },
+  { toolId: "contrast-checker", preset: "Traffic light" },
+  { toolId: "css-shadow", css: true },
+  { toolId: "css-shadow", preset: "Inner", css: true },
+  { toolId: "css-shadow", preset: "Floating", css: true },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).
@@ -370,7 +388,7 @@ async function expectPreviewEqualsExport(
 
   expect({ width: result.width, height: result.height }).toEqual(SIZE);
   expect(result.strayRatio, "share of pixels that differ beyond edges").toBeLessThanOrEqual(
-    MAX_STRAY_RATIO,
+    c.maxStrayRatio?.[browserName] ?? MAX_STRAY_RATIO,
   );
   expect(result.diffRatio, "share of pixels that differ").toBeLessThanOrEqual(
     MAX_DIFF_RATIO_BY_BROWSER[browserName] ?? MAX_DIFF_RATIO,

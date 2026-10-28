@@ -6,6 +6,7 @@ import { MAX_SPARKLES, oklchToHex, randomPalette, starrySkySvg } from "@musterli
 import * as z from "zod";
 import { colorSchema, paletteSchema } from "../common";
 import { keepLocked } from "../randomize";
+import { SEED_AND_COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
 import { COMMON_GROUPS, roundTo } from "./shared";
@@ -156,4 +157,5 @@ export const starrySkyTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  animation: SEED_AND_COLOR_ANIMATION,
 });

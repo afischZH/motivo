@@ -66,7 +66,7 @@ Prioritäten: **P0** = MVP, **P1** = öffentlicher Launch, **P2** = Wachstum, **
 **Grundentscheid (2026-10-28, Andreas)**: Musterli ist **komplett gratis**. Es gibt **keine Konten, keine Bezahlfunktionen, keine Lizenzen, keine Credits und keine Bezahlschranke**. Alle Tools, Auflösungen und Exporte stehen allen offen. Finanziert wird der Betrieb über **freiwillige Spenden**.
 
 ### 6.1 Spenden
-- Spenden laufen über einen **externen Anbieter** (Entscheid Andreas, siehe `PROGRESS.md`). Musterli verlinkt nur dorthin: keine Zahlungsintegration, keine Kundendaten, keine Webhooks, keine Cookies auf unserer Domain.
+- Spenden laufen über einen **externen Anbieter** (Entscheid Andreas, siehe `PROGRESS.md`). Musterli verlinkt dorthin und zeigt auf der Startseite den schwebenden Spendenknopf von Ko-fi (Script von Ko-fi, Entscheid Andreas 2026-10-28): keine Zahlungsintegration, keine Kundendaten, keine Webhooks, keine Cookies auf unserer Domain.
 - Eine eigene Seite "Unterstützen" erklärt kurz, wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung). Im Editor und im Footer höchstens ein **dezenter Hinweis**, nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
 - Optional später: transparente Seite mit Kosten und Spendeneingang pro Jahr.
 
@@ -101,7 +101,7 @@ Gemessen nur cookiefrei und aggregiert (Cloudflare Web Analytics), ohne Konten.
 
 ## 9. Rechtliches und Compliance (Schweiz/EU)
 
-- **nDSG und DSGVO**: keine Konten, keine Personendaten auf unseren Servern, keine Cookies. Datenschutzerklärung nennt Hosting (Cloudflare), Analytics und Fehlerberichte (falls aktiv) und den externen Spendenanbieter.
+- **nDSG und DSGVO**: keine Konten, keine Personendaten auf unseren Servern, keine Cookies. Datenschutzerklärung nennt Hosting (Cloudflare), Analytics und Fehlerberichte (falls aktiv) und den Spendenanbieter Ko-fi samt Widget auf der Startseite (juristisch zu prüfen).
 - **Impressum** und kurze Nutzungsbedingungen mit Lizenz für Exporte (juristisch zu prüfen).
 - **Spenden**: steuerliche Behandlung von Spenden an eine Privatperson bzw. Einzelfirma mit Treuhand klären (juristisch/steuerlich zu prüfen). Keine Gegenleistung versprechen, damit es eine Spende bleibt.
 - Marke und Domain vor dem Launch prüfen (Swissreg, EUIPO).

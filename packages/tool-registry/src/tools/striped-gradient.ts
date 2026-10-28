@@ -10,6 +10,7 @@ import { STRIPES_MAX, STRIPES_MIN, randomPalette, stripedGradientSvg } from "@mu
 import * as z from "zod";
 import { paletteSchema } from "../common";
 import { keepLocked } from "../randomize";
+import { SEED_AND_COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
 import { gradientGrain } from "./grain";
@@ -161,4 +162,5 @@ export const stripedGradientTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
+  animation: SEED_AND_COLOR_ANIMATION,
 });

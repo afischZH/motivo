@@ -24,7 +24,7 @@ import {
   type OptionValue,
   type ResolvedControl,
 } from "./resolve";
-import { ThumbnailField, ThumbnailValue } from "./thumbnail-field";
+import { ThumbnailField, ThumbnailValue, type ThumbnailFieldValue } from "./thumbnail-field";
 
 export interface ControlPanelProps {
   tool: AnyToolDefinition;
@@ -108,6 +108,37 @@ export function ControlPanel(props: ControlPanelProps) {
     </div>
   );
 }
+
+/**
+ * A plain form from a schema and hints (no sections, no locks), e.g. the
+ * tile editor popover (`ToolDefinition.regionEditor`). Controlled.
+ */
+export function ControlForm(props: {
+  source: ControlSource;
+  params: ParamValues;
+  /** The tool params (passed to `optionPreview` as `root`). */
+  root: ParamValues;
+  onChange(key: string, value: unknown): void;
+  onCommit?(): void;
+}) {
+  return (
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
+      <ControlLevel
+        source={props.source}
+        params={props.params}
+        root={props.root}
+        locks={EMPTY_LOCKS}
+        lockPrefix=""
+        sections={false}
+        onChange={props.onChange}
+        onListOp={() => false}
+        {...(props.onCommit ? { onCommit: props.onCommit } : {})}
+      />
+    </div>
+  );
+}
+
+const EMPTY_LOCKS: ReadonlySet<string> = new Set();
 
 function ControlLevel(level: Level) {
   const t = useT();
@@ -213,7 +244,12 @@ function ControlField({ control, value, level }: ControlFieldProps) {
     case "thumbnails":
       return row(
         false,
-        <ThumbnailField {...field} control={control} value={value as OptionValue} />,
+        <ThumbnailField
+          {...field}
+          control={control}
+          value={value as ThumbnailFieldValue}
+          onChangeParam={level.onChange}
+        />,
         <ThumbnailValue control={control} value={value} />,
       );
     case "switch":
@@ -277,6 +313,8 @@ function ControlField({ control, value, level }: ControlFieldProps) {
           label={label}
           value={(value ?? null) as ImageAsset | null}
           onChange={onChange}
+          output={{ maxEdge: control.maxEdge, photo: control.photo, schema: control.schema }}
+          paste={control.paste}
           {...(level.onCommit ? { onCommit: level.onCommit } : {})}
         />,
       );

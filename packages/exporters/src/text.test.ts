@@ -4,6 +4,7 @@ import {
   createRenderContext,
   cssGradientTool,
   defineTool,
+  glassEffectsTool,
   polkaDotsTool,
   svgWavesTool,
   type AnyToolDefinition,
@@ -54,18 +55,50 @@ describe("supportsExport", () => {
   it("needs the format declared and a render kind that can produce it", () => {
     expect(supportsExport(blobTool, "svg")).toBe(true);
     expect(supportsExport(cssGradientTool, "css")).toBe(true);
-    expect(supportsExport(blobTool, "gif")).toBe(false);
     expect(supportsExport(textTool, "svg")).toBe(false);
+  });
+
+  it("lets params narrow the formats (exportsFor)", () => {
+    const glass = glassEffectsTool.defaults;
+    const glow = { ...glass, effect: "glow" as const };
+    expect(supportsExport(glassEffectsTool, "png")).toBe(true);
+    expect(supportsExport(glassEffectsTool, "png", glass)).toBe(false);
+    expect(supportsExport(glassEffectsTool, "png", glow)).toBe(true);
+    expect(supportsExport(glassEffectsTool, "webp", glow)).toBe(true);
+    expect(supportsExport(glassEffectsTool, "jpg", glow)).toBe(false);
+    expect(supportsExport(blobTool, "svg", blobTool.defaults)).toBe(true);
+  });
+
+  it("derives GIF from the animation opt-in", () => {
+    expect(supportsExport(blobTool, "gif")).toBe(true);
+    expect(supportsExport(cssGradientTool, "gif")).toBe(true);
+    expect(supportsExport(textTool, "gif")).toBe(false);
+    expect(
+      supportsExport(
+        { ...textTool, animation: { sources: ["seeds"] } } as AnyToolDefinition,
+        "gif",
+      ),
+    ).toBe(false);
+    // exportsFor without raster output for these params: no GIF either.
+    const svgOnly = { ...blobTool, exportsFor: () => ["svg"] } as AnyToolDefinition;
+    expect(supportsExport(svgOnly, "gif")).toBe(true);
+    expect(supportsExport(svgOnly, "gif", blobTool.defaults)).toBe(false);
+    const glow = { ...glassEffectsTool.defaults, effect: "glow" as const };
+    expect(supportsExport(glassEffectsTool, "gif", glow)).toBe(false);
   });
 });
 
 describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyToolDefinition) => {
-  it("exports well-formed SVG equal to the preview render", () => {
-    const svg = exportSvg(tool, tool.defaults, ctx());
-    expect(checkSvg(svg)).toEqual([]);
-    expect(svg).toBe(renderDesignSvg(tool, tool.defaults, ctx()));
-    expect(svg).toContain('width="320" height="240"');
-  });
+  // Code-first tools without an SVG export (glass effects) are covered by renderDesignSvg below.
+  it.runIf(supportsExport(tool, "svg"))(
+    "exports well-formed SVG equal to the preview render",
+    () => {
+      const svg = exportSvg(tool, tool.defaults, ctx());
+      expect(checkSvg(svg)).toEqual([]);
+      expect(svg).toBe(renderDesignSvg(tool, tool.defaults, ctx()));
+      expect(svg).toContain('width="320" height="240"');
+    },
+  );
 
   // Colour tools offer code via extra exports instead of an SVG background.
   it.runIf(supportsExport(tool, "css"))("exports CSS declarations", () => {
@@ -74,10 +107,22 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
     expect(css).not.toMatch(/\b(?:NaN|undefined)\b/);
   });
 
+  it("renders every extra export for defaults and presets", () => {
+    for (const params of [tool.defaults, ...tool.presets.map((p) => p.params)]) {
+      for (const extra of listExtraExports(tool)) {
+        const text = exportExtra(tool, extra.id, params, ctx());
+        expect(text.length).toBeGreaterThan(0);
+        expect(text).not.toMatch(/\b(?:NaN|undefined)\b/);
+      }
+    }
+  });
+
   it("is unaffected by an rng the caller already consumed", () => {
     const used = ctx(5);
     for (let i = 0; i < 10; i++) used.rng.next();
-    expect(exportSvg(tool, tool.defaults, used)).toBe(exportSvg(tool, tool.defaults, ctx(5)));
+    expect(renderDesignSvg(tool, tool.defaults, used)).toBe(
+      renderDesignSvg(tool, tool.defaults, ctx(5)),
+    );
   });
 });
 

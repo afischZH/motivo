@@ -5,7 +5,8 @@
       "lockHint": "Locked values stay the same when you shuffle",
       "resetHint": "Double-click to reset to the default",
       "advanced": "Advanced",
-      "moreSettings": "More settings"
+      "moreSettings": "More settings",
+      "advisories": "Hints about the design"
     },
     "list": {
       "item": "Item {index}",
@@ -115,7 +116,8 @@
       "categories": {
         "image": "Image",
         "vector": "Vector",
-        "code": "Code"
+        "code": "Code",
+        "animation": "Animation"
       },
       "formats": {
         "png": "PNG",
@@ -123,7 +125,8 @@
         "webp": "WebP",
         "svg": "SVG",
         "css": "CSS",
-        "png-tile": "PNG tile"
+        "png-tile": "PNG tile",
+        "gif": "GIF"
       },
       "size": "Size",
       "scale": "{scale}× ({width} × {height})",
@@ -160,7 +163,8 @@
         "tooLarge": "Your browser cannot create an image of this size in this format. Choose PNG or a smaller size.",
         "unavailable": "Your browser does not support this export. Try a current browser.",
         "aborted": "Export cancelled.",
-        "unknown": "Something went wrong. Please try again."
+        "unknown": "Something went wrong. Please try again.",
+        "gifBudget": "That is too much for one GIF. Choose fewer frames or a smaller size."
       },
       "copyErrors": {
         "unsupported": "Your browser cannot put this on the clipboard.",
@@ -176,7 +180,29 @@
         "rgbList": "RGB list",
         "hslList": "HSL list",
         "tailwindConfig": "tailwind.config.js",
-        "tailwindTheme": "Tailwind v4 @theme"
+        "tailwindTheme": "Tailwind v4 @theme",
+        "css": "CSS",
+        "htmlExample": "HTML example",
+        "cssGrid": "CSS Grid + HTML",
+        "report": "Text report",
+        "dropShadow": "CSS drop-shadow()"
+      },
+      "gif": {
+        "title": "GIF settings",
+        "source": "Animation",
+        "sources": {
+          "seeds": "New variants",
+          "colors": "Color cycle",
+          "time": "Motion",
+          "custom": "Custom animation"
+        },
+        "frames": "Frames",
+        "delay": "Time per frame",
+        "delayValue": "{ms} ms",
+        "loop": "Loop forever",
+        "edgeOption": "{width} × {height}",
+        "summary": "Result: {width} × {height} px, {frames} frames, {seconds} s per loop.",
+        "overBudget": "That is too much for one GIF (at most {megapixels} million pixels across all frames). Choose at most {max} frames or a smaller size."
       }
     },
     "share": {
@@ -204,7 +230,7 @@
         "other-tool": "This link belongs to another tool. You are seeing the default settings.",
         "outdated": "This link comes from an older version. The design may look slightly different."
       },
-      "localLeftOut": "Your own file is not in the link, it stays on your device. Anyone opening the link sees the pattern with the chosen shape."
+      "localLeftOut": "Your own files are not in the link, they stay on your device. Anyone opening the link sees the design without them."
     },
     "imageInput": {
       "title": "Image",
@@ -231,12 +257,12 @@
       }
     },
     "asset": {
-      "none": "No file of your own, the chosen shape is used",
+      "none": "No file of your own",
       "yourFile": "Your file",
       "choose": "Choose file",
       "replace": "Replace",
       "remove": "Remove",
-      "removedFile": "Your file is removed. The pattern uses the chosen shape again.",
+      "removedFile": "Your file is removed.",
       "dropNow": "Drop to load the file",
       "hint": "Drag an SVG, PNG, JPG or WebP here, paste it with Ctrl+V or choose a file (up to 5 MB). The file stays on your device, is not uploaded and is not shared in links.",
       "thumbnail": "Your file: {name}",
@@ -258,7 +284,7 @@
       },
       "crop": {
         "title": "Crop",
-        "hint": "Choose the part of {name} that becomes the motif of the pattern.",
+        "hint": "Choose the part of {name} you want to use.",
         "frame": "Crop frame",
         "frameLabel": "Crop: left {x} %, top {y} %, width {w} %, height {h} %",
         "keys": "Arrow keys move the frame, hold Alt to resize, hold Shift for bigger steps.",
@@ -298,7 +324,29 @@
       "loading": "Loading …",
       "assetsEmpty": "No logos or shapes yet.",
       "openKit": "Open the Brand Kit",
-      "useAsset": "Use {name}"
+      "useAsset": "Use {name}",
+      "shapesEmpty": "No shapes in your brand kit yet."
+    },
+    "thumbnails": {
+      "group": "{label}: collection",
+      "brandKit": "Brand Kit",
+      "chosen": "{count} chosen"
+    },
+    "suggestions": {
+      "title": "Suggestions",
+      "hint": "One click applies a suggestion; undo reverts it.",
+      "applied": "Applied: {label}"
+    },
+    "regions": {
+      "picker": "Preview tiles",
+      "pickerHint": "Arrow keys pick a tile, Enter opens it.",
+      "edited": "{label}, changed",
+      "resetRegion": "Reset tile",
+      "resetAll": "Reset all ({count})",
+      "close": "Done",
+      "limit": "You have changed {max} tiles, the limit. Reset one to change another.",
+      "resetDone": "Tile reset.",
+      "resetAllDone": "All tiles reset."
     }
   },
   "sizes": {
@@ -401,7 +449,7 @@
         "unsafe-upload": "unsafe or damaged file in the design"
       },
       "importErrors": {
-        "too-large": "The file is too large. At most 20 MB are allowed.",
+        "too-large": "The file is too large. At most 32 MB are allowed.",
         "empty": "The file is empty.",
         "malformed": "The file is damaged or not JSON.",
         "forbidden-keys": "The file contains forbidden entries and was not imported.",

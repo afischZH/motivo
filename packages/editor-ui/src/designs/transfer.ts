@@ -43,6 +43,7 @@ import {
 import {
   IMAGE_ASSET_MAX_SVG_LENGTH,
   IMAGE_ASSET_RASTER_MAX_EDGE,
+  PHOTO_ASSET_RASTER_MAX_EDGE,
   controlKindRegistry,
   parseToolParams,
   type AnyToolDefinition,
@@ -113,7 +114,10 @@ function base64Head(data: string): Uint8Array | null {
  * length of 4n + 1 passes the character check but makes `atob` throw when
  * the image is turned back into a file (brand kit, upload fields).
  */
-export function isSafeRasterHref(href: string): boolean {
+export function isSafeRasterHref(
+  href: string,
+  maxEdge: number = IMAGE_ASSET_RASTER_MAX_EDGE,
+): boolean {
   const match = RASTER_HREF.exec(href);
   if (!match) return false;
   const declared = match[1];
@@ -124,11 +128,7 @@ export function isSafeRasterHref(href: string): boolean {
   const actual = sniffImageType(bytes);
   if (actual !== declared) return false;
   const dims = imageDimensions(bytes, actual);
-  return (
-    dims !== null &&
-    dims.width <= IMAGE_ASSET_RASTER_MAX_EDGE &&
-    dims.height <= IMAGE_ASSET_RASTER_MAX_EDGE
-  );
+  return dims !== null && dims.width <= maxEdge && dims.height <= maxEdge;
 }
 
 /**
@@ -143,21 +143,54 @@ export function resanitizeUploads(
   let out: Record<string, unknown> | null = null;
   for (const key of imageParamKeys(tool)) {
     const value = params[key];
-    if (typeof value !== "object" || value === null) continue;
-    const asset = value as { kind?: unknown; svg?: unknown; href?: unknown };
-    if (asset.kind === "svg") {
-      if (typeof asset.svg !== "string") return null;
-      const clean = sanitizeSvg(asset.svg, { maxLength: IMAGE_ASSET_MAX_SVG_LENGTH });
-      if (!clean.ok || clean.svg.length > IMAGE_ASSET_MAX_SVG_LENGTH) return null;
-      if (clean.svg !== asset.svg) {
-        out ??= { ...params };
-        out[key] = { ...asset, svg: clean.svg };
-      }
-    } else if (asset.kind === "raster") {
-      if (typeof asset.href !== "string" || !isSafeRasterHref(asset.href)) return null;
+    const clean = resanitizeValue(value, 0);
+    if (clean === UNSAFE) return null;
+    if (clean !== value) {
+      out ??= { ...params };
+      out[key] = clean;
     }
   }
   return out ?? params;
+}
+
+const UNSAFE = Symbol("unsafe");
+/** Nesting of uploads inside local params (record of tile -> { graphic, background }). */
+const MAX_ASSET_DEPTH = 3;
+
+/**
+ * One upload, or a plain object or array holding uploads (e.g. the per-tile
+ * images of the Bento grid): every SVG sanitised again, every raster checked.
+ * Returns the value itself when nothing changed, `UNSAFE` for a bad file.
+ * Rasters may be up to the largest edge any upload schema allows (2048 px);
+ * the tool schema has already checked the declared size per param.
+ */
+function resanitizeValue(value: unknown, depth: number): unknown {
+  if (typeof value !== "object" || value === null) return value;
+  const asset = value as { kind?: unknown; svg?: unknown; href?: unknown };
+  if (asset.kind === "svg") {
+    if (typeof asset.svg !== "string") return UNSAFE;
+    const clean = sanitizeSvg(asset.svg, { maxLength: IMAGE_ASSET_MAX_SVG_LENGTH });
+    if (!clean.ok || clean.svg.length > IMAGE_ASSET_MAX_SVG_LENGTH) return UNSAFE;
+    return clean.svg === asset.svg ? value : { ...asset, svg: clean.svg };
+  }
+  if (asset.kind === "raster") {
+    return typeof asset.href === "string" &&
+      isSafeRasterHref(asset.href, PHOTO_ASSET_RASTER_MAX_EDGE)
+      ? value
+      : UNSAFE;
+  }
+  if (depth >= MAX_ASSET_DEPTH) return value;
+  let out: Record<string, unknown> | unknown[] | null = null;
+  const entries = Array.isArray(value) ? value.entries() : Object.entries(value);
+  for (const [k, v] of entries) {
+    const clean = resanitizeValue(v, depth + 1);
+    if (clean === UNSAFE) return UNSAFE;
+    if (clean !== v) {
+      out ??= Array.isArray(value) ? [...value] : { ...(value as Record<string, unknown>) };
+      (out as Record<string | number, unknown>)[k] = clean;
+    }
+  }
+  return out ?? value;
 }
 
 function readName(value: unknown): string | undefined {

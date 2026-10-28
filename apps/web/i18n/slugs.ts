@@ -23,6 +23,10 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "svg-waves": { de: "svg-wellen-generator", en: "svg-wave-generator" },
   "polka-dots": { de: "punktmuster-generator", en: "polka-dot-pattern-generator" },
   "seamless-patterns": { de: "nahtlose-muster-generator", en: "seamless-pattern-generator" },
+  "geometric-patterns": {
+    de: "geometrische-muster-generator",
+    en: "geometric-pattern-generator",
+  },
   "noise-grain": { de: "rauschen-koernung-generator", en: "noise-grain-generator" },
   "grid-patterns": { de: "rastermuster-generator", en: "grid-pattern-generator" },
   confetti: { de: "konfetti-generator", en: "confetti-generator" },
@@ -45,6 +49,10 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   },
   "palette-from-image": { de: "farbpalette-aus-bild", en: "color-palette-from-image" },
   "css-patterns": { de: "css-muster-generator", en: "css-pattern-generator" },
+  "glass-effects": { de: "glas-effekt-generator", en: "glassmorphism-generator" },
+  "bento-grid": { de: "bento-grid-generator", en: "bento-grid-generator" },
+  "contrast-checker": { de: "kontrast-checker", en: "contrast-checker" },
+  "css-shadow": { de: "css-schatten-generator", en: "css-shadow-generator" },
 };
 
 /**
@@ -202,6 +210,7 @@ export const CATEGORY_SLUGS: Readonly<Record<ToolCategory, LocalizedSlugs>> = {
   converters: { de: "konverter", en: "converters" },
   social: { de: "social-media", en: "social-media" },
   composer: { de: "composer", en: "composer" },
+  "css-effects": { de: "css-effekte", en: "css-effects" },
 };
 
 /** Localized segment between `tools` and a category slug. */
@@ -212,9 +221,9 @@ export const CATEGORY_SEGMENT = {
 
 /**
  * Localized first path segment of each section (internal name to slug). The
- * internal name is also the folder under `app/[locale]`. `imprint` and
- * `privacy` are the legal pages linked from the footer, `support` is the
- * donation page.
+ * internal name is also the folder under `app/[locale]`. `imprint`,
+ * `privacy` and `terms` are the legal pages linked from the footer, `support`
+ * is the donation page.
  */
 export const SECTION_SLUGS = {
   tools: { de: "tools", en: "tools" },
@@ -222,6 +231,7 @@ export const SECTION_SLUGS = {
   cssPatterns: { de: "css-muster", en: "css-patterns" },
   imprint: { de: "impressum", en: "imprint" },
   privacy: { de: "datenschutz", en: "privacy" },
+  terms: { de: "nutzungsbedingungen", en: "terms" },
   support: { de: "unterstuetzen", en: "support" },
   gradients: { de: "farbverlaeufe", en: "gradients" },
   palettes: { de: "farbpaletten", en: "color-palettes" },

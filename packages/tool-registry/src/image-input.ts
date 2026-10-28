@@ -66,5 +66,13 @@ export function withoutDerivedParams<T extends Values>(tool: AnyToolDefinition, 
  */
 export function hasLocalContent(tool: AnyToolDefinition, params: Values): boolean {
   const defaults = tool.defaults as Values;
-  return (tool.localParams ?? []).some((key) => params[key] !== defaults[key]);
+  return (tool.localParams ?? []).some((key) => !sameLocalValue(params[key], defaults[key]));
+}
+
+/** Empty records (`{}`) count as equal, so removing every upload clears the hint again. */
+function sameLocalValue(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  const empty = (v: unknown) =>
+    typeof v === "object" && v !== null && !Array.isArray(v) && Object.keys(v).length === 0;
+  return empty(a) && empty(b);
 }

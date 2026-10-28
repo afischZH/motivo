@@ -107,8 +107,12 @@ export interface EditorActions {
    * (limits, out of range, invalid value).
    */
   listOp(key: string, op: ListOp): boolean;
-  /** Sets several params as one undo step. */
-  setParams(patch: ParamValues): void;
+  /**
+   * Sets several params as one undo step. With `coalesceKey`, consecutive
+   * calls with the same key inside the window form one step (like `setParam`),
+   * e.g. dragging a colour in the tile editor.
+   */
+  setParams(patch: ParamValues, options?: { coalesceKey?: string }): void;
   /**
    * Puts a brand palette onto the tool's colour params (generic mapping,
    * `applyBrandPalette` in the tool registry) as one undo step. Locked
@@ -442,9 +446,9 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         change({ params: regenerated(s, key, { ...s.params, [key]: value }) }, key);
       },
 
-      setParams(patch) {
+      setParams(patch, options) {
         const next = mergePatch(get(), patch);
-        if (next) change({ params: next });
+        if (next) change({ params: next }, options?.coalesceKey);
       },
 
       applyBrandPalette(colors, options = {}) {

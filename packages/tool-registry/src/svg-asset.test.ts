@@ -1,7 +1,10 @@
 import { sanitizeSvg } from "@musterli/svg-sanitizer";
 import { afterEach, describe, expect, it } from "vitest";
 import {
+  SVG_ASSET_CACHE_CHARS,
+  SVG_ASSET_CACHE_ENTRIES,
   clearSvgAssetCache,
+  imageAssetHref,
   prepareSvgAsset,
   primeSvgAsset,
   recolorSvgAsset,
@@ -101,12 +104,70 @@ describe("svg asset cache", () => {
     expect(primeSvgAsset({ ...prepared, input: prepared.svg + " " })).toBe(false);
   });
 
-  it("prepares unknown input on demand and evicts the oldest entry", () => {
+  it("prepares unknown input on demand and evicts the least recently used entry", () => {
     const first = svgAssetFor(CORPUS[0] ?? "");
     expect(first?.svg).toBe(CORPUS[0]);
     expect(svgAssetFor(CORPUS[0] ?? "")).toBe(first);
-    for (const input of CORPUS.slice(1, 5)) svgAssetFor(input);
+    const fillers = Array.from({ length: SVG_ASSET_CACHE_ENTRIES }, (_, i) =>
+      ok(wrap(`<rect width="${i + 1}" height="4"/>`)),
+    );
+    for (const input of fillers) svgAssetFor(input);
     expect(svgAssetFor(CORPUS[0] ?? "")).not.toBe(first);
     expect(svgAssetFor("not svg")).toBeNull();
+  });
+
+  // M4-AP09: Bento holds up to 48 tile pictures plus the grid picture. With the
+  // old 4-entry cache every render evicted the entry the next lookup needed,
+  // so each SVG went through the sanitizer on the main thread on every render.
+  it("keeps every SVG of a full Bento design across repeated renders", () => {
+    const inputs = Array.from({ length: 49 }, (_, i) =>
+      ok(wrap(`<circle cx="${i}" cy="10" r="3" fill="#000000"/>`)),
+    );
+    const primed = inputs.map((input) => {
+      const prepared = prepareSvgAsset(input);
+      if (!prepared) throw new Error("expected prepared");
+      expect(primeSvgAsset(prepared)).toBe(true);
+      return prepared;
+    });
+    for (let round = 0; round < 3; round++) {
+      inputs.forEach((input, i) => expect(svgAssetFor(input)).toBe(primed[i]));
+    }
+    // Data URIs are cached per picture as well (same string, no new encoding).
+    const assets = inputs.map(
+      (svg) => ({ kind: "svg", svg, width: 40, height: 20, name: "" }) as const,
+    );
+    const uris = assets.map((a) => imageAssetHref(a));
+    assets.forEach((a, i) => expect(imageAssetHref(a)).toBe(uris[i]));
+  });
+
+  it("refreshes an entry on use, so the picture in use is not evicted", () => {
+    const keep = CORPUS[1] ?? "";
+    const kept = svgAssetFor(keep);
+    for (let i = 0; i < SVG_ASSET_CACHE_ENTRIES * 2; i++) {
+      svgAssetFor(ok(wrap(`<rect width="${i + 1}" height="2"/>`)));
+      expect(svgAssetFor(keep)).toBe(kept);
+    }
+  });
+
+  it("bounds the cache by size as well as by entries", () => {
+    const big = (c: string) => `<svg>${c.repeat(Math.ceil(SVG_ASSET_CACHE_CHARS / 2) + 1)}</svg>`;
+    const a = big("a");
+    const b = big("b");
+    const entry = (input: string) => ({
+      input,
+      svg: input,
+      width: 1,
+      height: 1,
+      viewBox: { x: 0, y: 0, width: 1, height: 1 },
+      recolorParts: null,
+    });
+    const primedA = entry(a);
+    expect(primeSvgAsset(primedA)).toBe(true);
+    expect(svgAssetFor(a)).toBe(primedA);
+    const primedB = entry(b);
+    expect(primeSvgAsset(primedB)).toBe(true);
+    // Both together exceed the size budget: the older one is gone.
+    expect(svgAssetFor(b)).toBe(primedB);
+    expect(svgAssetFor(a)).not.toBe(primedA);
   });
 });

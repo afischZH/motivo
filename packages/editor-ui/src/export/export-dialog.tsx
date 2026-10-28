@@ -10,13 +10,23 @@ import {
   exportCss,
   exportExtra,
   exportFilename,
+  exportGif,
   exportRaster,
   exportRasterTile,
   exportSvg,
   exportTile,
   resolveQuality,
   textBlob,
+  GIF_DELAY_MAX,
+  GIF_DELAY_MIN,
+  GIF_DELAY_STEP,
+  GIF_EDGES,
+  GIF_FRAMES_MAX,
+  GIF_FRAMES_MIN,
+  GIF_PIXEL_BUDGET,
   MIME_TYPES,
+  gifSize,
+  type GifPlan,
   type RasterFormat,
 } from "@musterli/exporters";
 import {
@@ -39,17 +49,21 @@ import {
   EXPORT_CATEGORIES,
   EXPORT_SCALES,
   clipboardErrorKey,
+  defaultGifSettings,
   defaultJpgBackground,
   exportErrorKey,
   formatBytes,
+  gifSourceLabelKey,
   isTextChoice,
   listExportChoices,
   pickInitialChoice,
+  planGifExport,
   planRasterSize,
   utf8Bytes,
   type ExportChoice,
   type ExportScale,
   type ExportSizeMode,
+  type GifSettings,
   type TextChoice,
 } from "./export-model";
 import { useBackdropClose } from "../shell/use-backdrop-close";
@@ -59,6 +73,8 @@ export interface ExportServices {
   exportRaster: typeof exportRaster;
   /** Repeat tile of seamless tools (scale only, the tile has its own size). */
   exportRasterTile: typeof exportRasterTile;
+  /** Animated GIF (tools with `animation`); frames are encoded in a worker. */
+  exportGif: typeof exportGif;
   downloadBlob: typeof downloadBlob;
   copyText: typeof copyText;
   copyPng: typeof copyPng;
@@ -69,6 +85,7 @@ export interface ExportServices {
 export const browserExportServices: ExportServices = {
   exportRaster,
   exportRasterTile,
+  exportGif,
   downloadBlob,
   copyText,
   copyPng,
@@ -206,7 +223,7 @@ function ExportDialogBody({
   const seed = useEditorStore((s) => s.seed);
   const size = useEditorStore((s) => s.size);
 
-  const choices = useMemo(() => listExportChoices(tool), [tool]);
+  const choices = useMemo(() => listExportChoices(tool, params), [tool, params]);
   const [choiceId, setChoiceId] = useState<string | undefined>(
     () => pickInitialChoice(choices, readRemembered())?.id,
   );
@@ -215,6 +232,7 @@ function ExportDialogBody({
   const [sizeMode, setSizeMode] = useState<ExportSizeMode>({ kind: "scale", scale: 1 });
   const [qualityPercent, setQualityPercent] = useState<Partial<Record<RasterFormat, number>>>({});
   const [jpgBackground, setJpgBackground] = useState(() => defaultJpgBackground(params.background));
+  const [gifSettings, setGifSettings] = useState<GifSettings>(() => defaultGifSettings(tool));
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   // Something was downloaded or copied since the dialog opened.
   const [exported, setExported] = useState(false);
@@ -242,6 +260,10 @@ function ExportDialogBody({
   }
 
   const raster = choice.kind === "raster" || choice.kind === "tile" ? choice.format : null;
+  const gifChoice = choice.kind === "gif";
+  const gifPlan = gifChoice ? planGifExport(size, gifSettings) : null;
+  // Image formats (copy only works for PNG).
+  const imageFormat = raster ?? (gifChoice ? "gif" : null);
   const tileChoice = choice.kind === "tile";
   const tileSize = tileChoice ? tileSizeOf(tool, params, seed, size) : null;
   // The tile has its own size and only scales; a custom size would cut it.
@@ -305,7 +327,40 @@ function ExportDialogBody({
     abortRef.current = null;
   };
 
+  const startGif = () => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setStatus({ kind: "busy", action: "download", progress: null });
+    return services.exportGif(tool, params as AnyParams, createRenderContext(seed, size), {
+      source: gifSettings.source,
+      frames: gifSettings.frames,
+      delay: gifSettings.delay,
+      loop: gifSettings.loop,
+      edge: gifSettings.edge,
+      signal: controller.signal,
+      onProgress: (fraction) => {
+        if (!controller.signal.aborted) {
+          setStatus({ kind: "busy", action: "download", progress: fraction });
+        }
+      },
+    });
+  };
+
   const download = async () => {
+    if (gifChoice) {
+      try {
+        const result = await startGif();
+        services.downloadBlob(result.blob, result.filename);
+        setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+        setExported(true);
+      } catch (error) {
+        fail(error);
+      } finally {
+        finishRaster();
+      }
+      return;
+    }
     if (raster !== null) {
       try {
         const result = await startRaster(raster, "download");
@@ -367,17 +422,17 @@ function ExportDialogBody({
 
   // Copy: text always (if the API exists), images only as PNG via ClipboardItem.
   const copyBlockedKey: string | null =
-    raster === null
+    imageFormat === null
       ? clipboard.text
         ? null
         : "copyUnavailableText"
-      : raster !== "png"
+      : imageFormat !== "png"
         ? "copyOnlyPng"
         : clipboard.image
           ? null
           : "copyUnavailableImage";
   const copyDisabled = busy || copyBlockedKey !== null || text?.ok === false;
-  const downloadDisabled = busy || text?.ok === false;
+  const downloadDisabled = busy || text?.ok === false || gifPlan?.overBudget === true;
 
   return (
     <div className="grid max-h-[calc(100dvh-6rem)] gap-5 overflow-y-auto px-5 py-4">
@@ -442,6 +497,17 @@ function ExportDialogBody({
         </>
       )}
 
+      {gifChoice && gifPlan && (
+        <GifSection
+          tool={tool}
+          design={size}
+          settings={gifSettings}
+          plan={gifPlan}
+          onChange={setGifSettings}
+          disabled={busy}
+        />
+      )}
+
       {text !== null && (
         <CodeView
           text={text.ok ? text.value : null}
@@ -483,7 +549,7 @@ function ExportDialogBody({
             aria-describedby={copyBlockedKey !== null ? `${id}-copy-note` : undefined}
             data-testid="export-copy"
           >
-            {raster === null ? t("Editor.export.copyText") : t("Editor.export.copyImage")}
+            {imageFormat === null ? t("Editor.export.copyText") : t("Editor.export.copyImage")}
           </button>
           <button
             type="button"
@@ -698,6 +764,173 @@ function SizeSection(props: {
         {plan.recomposed && <> {t("Editor.export.recomposed")}</>}
         {plan.clamped && <> {t("Editor.export.clamped", { max: CANVAS_EDGE_MAX })}</>}
       </p>
+    </fieldset>
+  );
+}
+
+function GifSection(props: {
+  tool: AnyToolDefinition;
+  design: CanvasSize;
+  settings: GifSettings;
+  plan: GifPlan;
+  onChange(settings: GifSettings): void;
+  disabled: boolean;
+}) {
+  const t = useT();
+  const id = useId();
+  const { tool, design, settings, plan } = props;
+  const sources = tool.animation?.sources ?? [];
+  const set = (patch: Partial<GifSettings>) => props.onChange({ ...settings, ...patch });
+
+  const radio = (
+    group: string,
+    key: string,
+    checked: boolean,
+    onSelect: () => void,
+    label: ReactNode,
+  ) => (
+    <div key={key}>
+      <input
+        id={`${id}-${group}-${key}`}
+        type="radio"
+        name={`${id}-${group}`}
+        checked={checked}
+        onChange={onSelect}
+        className="peer sr-only"
+      />
+      <label
+        htmlFor={`${id}-${group}-${key}`}
+        className={cx(
+          "inline-flex h-8 cursor-pointer items-center rounded-md border border-border bg-background px-3 text-sm tabular-nums",
+          "hover:bg-accent peer-checked:border-primary peer-checked:bg-accent peer-checked:font-medium",
+          "peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50",
+          "peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+        )}
+      >
+        {label}
+      </label>
+    </div>
+  );
+
+  const slider = (
+    key: string,
+    label: string,
+    value: number,
+    shown: string,
+    min: number,
+    max: number,
+    step: number,
+    onValue: (value: number) => void,
+  ) => (
+    <div className="grid gap-1">
+      <div className="flex items-center justify-between">
+        <label htmlFor={`${id}-${key}`} className="text-sm font-medium">
+          {label}
+        </label>
+        <output htmlFor={`${id}-${key}`} className="text-sm tabular-nums">
+          {shown}
+        </output>
+      </div>
+      <input
+        id={`${id}-${key}`}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(event) => onValue(Number(event.target.value))}
+        className="w-full accent-primary"
+      />
+    </div>
+  );
+
+  const seconds = ((plan.frames * plan.delay) / 1000).toFixed(1);
+  return (
+    <fieldset className="grid gap-4" disabled={props.disabled} data-testid="export-gif">
+      <legend className="sr-only">{t("Editor.export.gif.title")}</legend>
+      {sources.length > 1 && (
+        <div role="radiogroup" aria-labelledby={`${id}-source`} className="grid gap-1.5">
+          <p id={`${id}-source`} className="text-sm font-semibold">
+            {t("Editor.export.gif.source")}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {sources.map((source) =>
+              radio(
+                "source",
+                source,
+                settings.source === source,
+                () => set({ source }),
+                t(gifSourceLabelKey(tool, source)),
+              ),
+            )}
+          </div>
+        </div>
+      )}
+      {slider(
+        "frames",
+        t("Editor.export.gif.frames"),
+        settings.frames,
+        String(settings.frames),
+        GIF_FRAMES_MIN,
+        GIF_FRAMES_MAX,
+        1,
+        (frames) => set({ frames }),
+      )}
+      {slider(
+        "delay",
+        t("Editor.export.gif.delay"),
+        settings.delay,
+        t("Editor.export.gif.delayValue", { ms: settings.delay }),
+        GIF_DELAY_MIN,
+        GIF_DELAY_MAX,
+        GIF_DELAY_STEP,
+        (delay) => set({ delay }),
+      )}
+      <div className="flex items-center gap-2">
+        <input
+          id={`${id}-loop`}
+          type="checkbox"
+          checked={settings.loop}
+          onChange={(event) => set({ loop: event.target.checked })}
+          className="size-4 accent-primary"
+        />
+        <label htmlFor={`${id}-loop`} className="text-sm font-medium">
+          {t("Editor.export.gif.loop")}
+        </label>
+      </div>
+      <div role="radiogroup" aria-labelledby={`${id}-edge`} className="grid gap-1.5">
+        <p id={`${id}-edge`} className="text-sm font-semibold">
+          {t("Editor.export.size")}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {GIF_EDGES.map((edge) => {
+            const s = gifSize(design, edge);
+            return radio(
+              "edge",
+              String(edge),
+              settings.edge === edge,
+              () => set({ edge }),
+              t("Editor.export.gif.edgeOption", { width: s.width, height: s.height }),
+            );
+          })}
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground tabular-nums" data-testid="export-gif-summary">
+        {t("Editor.export.gif.summary", {
+          width: plan.width,
+          height: plan.height,
+          frames: plan.frames,
+          seconds,
+        })}
+      </p>
+      {plan.overBudget && (
+        <p role="alert" className="text-sm text-destructive" data-testid="export-gif-budget">
+          {t("Editor.export.gif.overBudget", {
+            max: Math.max(GIF_FRAMES_MIN, Math.min(GIF_FRAMES_MAX, plan.maxFrames)),
+            megapixels: Math.round(GIF_PIXEL_BUDGET / 1_000_000),
+          })}
+        </p>
+      )}
     </fieldset>
   );
 }

@@ -26,7 +26,7 @@ You are a senior frontend engineer and UI/UX designer building Musterli with Nex
 ## Tests and checks
 - Component tests where logic exists; ask `qa-tester` coverage via your report for E2E.
 - Check light/dark and 375 px, 768 px, 1280 px widths.
-- Run `pnpm lint && pnpm typecheck && pnpm test`.
+- Run `pnpm lint && pnpm typecheck && pnpm test:affected` (affected packages only; the full suite runs in CI at milestone sign-off).
 
 ## Report (max 200 words)
 Files changed, screenshots or routes to check, test result, Impeccable findings, open questions.

@@ -4,21 +4,37 @@
  * error. No React, no browser APIs.
  */
 import {
+  GIF_DELAY_DEFAULT,
+  GIF_EDGE_DEFAULT,
+  GIF_FRAMES_DEFAULT,
   isExportError,
   listExtraExports,
   resolveRasterSize,
   supportsExport,
   supportsTile,
   type ClipboardResult,
+  planGif,
   type ExtraExportInfo,
+  type GifPlan,
   type RasterFormat,
 } from "@musterli/exporters";
-import { CANVAS_EDGE_MAX, type AnyToolDefinition, type CanvasSize } from "@musterli/tool-registry";
+import {
+  CANVAS_EDGE_MAX,
+  animationSources,
+  type AnimationSource,
+  type AnyToolDefinition,
+  type CanvasSize,
+} from "@musterli/tool-registry";
 
-/** Card groups of the format choice (docs/DESIGN.md 6: Bild, Vektor, Code). */
-export type ExportCategory = "image" | "vector" | "code";
+/** Card groups of the format choice (docs/DESIGN.md 6: Bild, Vektor, Code, Animation). */
+export type ExportCategory = "image" | "vector" | "code" | "animation";
 
-export const EXPORT_CATEGORIES: readonly ExportCategory[] = ["image", "vector", "code"];
+export const EXPORT_CATEGORIES: readonly ExportCategory[] = [
+  "image",
+  "vector",
+  "code",
+  "animation",
+];
 
 export type ExportChoice =
   | { id: RasterFormat; kind: "raster"; format: RasterFormat; category: "image" }
@@ -26,33 +42,43 @@ export type ExportChoice =
   | { id: "png-tile"; kind: "tile"; format: "png"; category: "image" }
   | { id: "svg"; kind: "svg"; category: "vector" }
   | { id: "css"; kind: "css"; category: "code" }
-  | { id: `extra:${string}`; kind: "extra"; extra: ExtraExportInfo; category: "code" };
+  | { id: `extra:${string}`; kind: "extra"; extra: ExtraExportInfo; category: "code" }
+  /** Animated GIF (tools with `animation`). */
+  | { id: "gif"; kind: "gif"; format: "gif"; category: "animation" };
 
 /** Text outputs: shown as code, copied as text. */
 export type TextChoice = Extract<ExportChoice, { kind: "svg" | "css" | "extra" }>;
 
 export const isTextChoice = (choice: ExportChoice): choice is TextChoice =>
-  choice.kind !== "raster" && choice.kind !== "tile";
+  choice.kind === "svg" || choice.kind === "css" || choice.kind === "extra";
 
 const RASTER_ORDER: readonly RasterFormat[] = ["png", "jpg", "webp"];
 
 /**
  * Every export the tool offers and the exporters can produce, in display
- * order: PNG, JPG, WebP, PNG tile, SVG, CSS, then the tool's extra exports.
+ * order: PNG, JPG, WebP, PNG tile, SVG, CSS, the tool's extra exports, GIF.
+ * With `params`, formats the tool's `exportsFor` rules out are left out.
  */
-export function listExportChoices(tool: AnyToolDefinition): ExportChoice[] {
+export function listExportChoices(
+  tool: AnyToolDefinition,
+  params?: Readonly<Record<string, unknown>>,
+): ExportChoice[] {
   const choices: ExportChoice[] = [];
+  const supports = (format: Parameters<typeof supportsExport>[1]) =>
+    supportsExport(tool, format, params);
   for (const format of RASTER_ORDER) {
-    if (supportsExport(tool, format))
-      choices.push({ id: format, kind: "raster", format, category: "image" });
+    if (supports(format)) choices.push({ id: format, kind: "raster", format, category: "image" });
   }
-  if (supportsTile(tool) && supportsExport(tool, "png")) {
+  if (supportsTile(tool) && supports("png")) {
     choices.push({ id: "png-tile", kind: "tile", format: "png", category: "image" });
   }
-  if (supportsExport(tool, "svg")) choices.push({ id: "svg", kind: "svg", category: "vector" });
-  if (supportsExport(tool, "css")) choices.push({ id: "css", kind: "css", category: "code" });
+  if (supports("svg")) choices.push({ id: "svg", kind: "svg", category: "vector" });
+  if (supports("css")) choices.push({ id: "css", kind: "css", category: "code" });
   for (const extra of listExtraExports(tool)) {
     choices.push({ id: `extra:${extra.id}`, kind: "extra", extra, category: "code" });
+  }
+  if (supports("gif")) {
+    choices.push({ id: "gif", kind: "gif", format: "gif", category: "animation" });
   }
   return choices;
 }
@@ -144,6 +170,8 @@ export function exportErrorKey(error: unknown): string {
         return "tooLarge";
       case "unavailable":
         return "unavailable";
+      case "budget-exceeded":
+        return "gifBudget";
       case "aborted":
         return "aborted";
     }
@@ -173,4 +201,37 @@ export function formatBytes(bytes: number): { value: string; unit: "B" | "KB" | 
   if (bytes < 1000) return { value: String(bytes), unit: "B" };
   if (bytes < 1_000_000) return { value: (bytes / 1000).toFixed(1), unit: "KB" };
   return { value: (bytes / 1_000_000).toFixed(1), unit: "MB" };
+}
+
+/** Settings of a GIF export in the dialog. */
+export interface GifSettings {
+  source: AnimationSource;
+  frames: number;
+  /** Frame delay in ms. */
+  delay: number;
+  loop: boolean;
+  /** Longest edge in pixels (one of `GIF_EDGES`). */
+  edge: number;
+}
+
+/** Starting values: the tool's first frame source, 12 frames at 100 ms, endless, 640 px. */
+export function defaultGifSettings(tool: AnyToolDefinition): GifSettings {
+  return {
+    source: animationSources(tool)[0] ?? "seeds",
+    frames: GIF_FRAMES_DEFAULT,
+    delay: GIF_DELAY_DEFAULT,
+    loop: true,
+    edge: GIF_EDGE_DEFAULT,
+  };
+}
+
+/** Size, frame count and budget check of the GIF settings for a design. */
+export function planGifExport(design: CanvasSize, settings: GifSettings): GifPlan {
+  return planGif(design, { edge: settings.edge, frames: settings.frames, delay: settings.delay });
+}
+
+/** i18n key of a frame source label (the tool's own key for `custom`). */
+export function gifSourceLabelKey(tool: AnyToolDefinition, source: AnimationSource): string {
+  if (source === "custom" && tool.animation?.customLabelKey) return tool.animation.customLabelKey;
+  return `Editor.export.gif.sources.${source}`;
 }

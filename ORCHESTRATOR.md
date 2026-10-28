@@ -68,14 +68,16 @@ Zusätzlich verfügbar (eingebaut): `Explore` für schnelle Code-Suche, `Plan` f
 - Jeden Auftrag mit der **Delegations-Vorlage** (Abschnitt 6) formulieren. Subagents sehen den Gesprächsverlauf nicht.
 
 ### Schritt C: Integrieren
-- Ergebnisbericht des Subagents lesen, Diff ansehen (`git diff`), selbst `pnpm lint && pnpm typecheck && pnpm test` laufen lassen.
+- Ergebnisbericht des Subagents lesen, Diff ansehen (`git diff`), selbst `pnpm lint && pnpm typecheck && pnpm test:affected` laufen lassen (nur betroffene Pakete; Basis über `TURBO_SCM_BASE=<Zielbranch>`).
 - Berichtet ein Subagent "fertig", ohne dass Tests laufen, gilt das AP als **nicht fertig**.
 
 ### Schritt D: Quality Gates (alle müssen grün sein)
 
 | Gate | Wann | Wer |
 |---|---|---|
-| Lint, Typecheck, Unit-Tests | immer | du selbst |
+| Lint, Typecheck, Unit-Tests der betroffenen Pakete (`pnpm test:affected`) | immer | du selbst |
+| E2E nur Chromium, nur die betroffenen Specs | bei UI- und Tool-Änderungen | du selbst oder `qa-tester` |
+| Volle Testsuite: alle Unit-Tests, E2E in Chromium, Firefox und WebKit | nur vor der Meilenstein-Abnahme (CI, sobald der PR "ready for review" ist) | CI |
 | Code-Review | immer | `code-reviewer` |
 | Tests ergänzt (Snapshots pro Preset, E2E für User-Flows) | bei jedem Feature | `qa-tester` |
 | Security-Review | bei Uploads, Datei-Importen, lokaler Speicherung, CSP/Headern, Drittanbietern, Server-Fetches | `security-reviewer` |
@@ -121,7 +123,7 @@ Regeln (Auszug CLAUDE.md, gelten zwingend):
 
 Akzeptanzkriterien:
 - [ ] <messbar, z. B. "render(defaults, seed=1) erzeugt gültiges SVG, Snapshot-Test vorhanden">
-- [ ] pnpm lint && pnpm typecheck && pnpm test grün
+- [ ] pnpm lint && pnpm typecheck && pnpm test:affected grün (E2E nur Chromium und nur betroffene Specs)
 
 Bericht an mich (max. 200 Wörter):
 1. Was umgesetzt wurde (Dateien)

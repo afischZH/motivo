@@ -71,6 +71,11 @@ export function SiteFooter() {
                   {tFooter("privacy")}
                 </Link>
               </li>
+              <li>
+                <Link href="/terms" className={LINK_CLASS}>
+                  {tFooter("terms")}
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>

@@ -28,6 +28,7 @@ import type { LocalDesignController, LocalDesignView } from "../designs/local-de
 import { useLocalDesign } from "../designs/use-local-design";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
 import { ImageInputSection } from "../image-input/image-input-section";
+import { SuggestionsSection } from "./suggestions";
 import type { ImageInputServices } from "../image-input/services";
 import { buildShareUrl, useShareHash } from "../share/use-share";
 import { cx } from "../controls/primitives";
@@ -47,7 +48,9 @@ import {
   UndoIcon,
 } from "./icons";
 import { PreviewStage, ZOOM_LEVELS, type Zoom } from "./preview";
+import { RegionLayer, regionEditorOf } from "./region-editor";
 import { renderMotifCached } from "./render";
+import { ToolAdvisories } from "./advisories";
 import { ShortcutHelp } from "./shortcut-help";
 import { SizePicker } from "./size-picker";
 import { BUTTON_CLASS, ICON_BUTTON, PRIMARY_BUTTON_CLASS, TILE_CLASS } from "./styles";
@@ -117,6 +120,7 @@ export function EditorShell({
   const locale = useLocale();
   const store = useEditorStoreApi();
   const tool = useEditorStore((s) => s.tool);
+  const currentParams = useEditorStore((s) => s.params);
   const canUndo = useEditorStore(selectCanUndo);
   const canRedo = useEditorStore(selectCanRedo);
 
@@ -223,7 +227,7 @@ export function EditorShell({
   };
 
   // ⌘/Ctrl+Shift+C: the current design as PNG (DESIGN.md 4), for tools that export PNG.
-  const copyImage = supportsExport(tool, "png")
+  const copyImage = supportsExport(tool, "png", currentParams)
     ? () => {
         if (!exportServices.canCopyImage()) {
           setNotice({ tone: "error", message: t("Editor.export.copyUnavailableImage") });
@@ -431,7 +435,9 @@ export function EditorShell({
             <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
               {t("Editor.shell.settings")}
             </h2>
+            <ToolAdvisories />
             <BrandPaletteSection onApplied={confirm} />
+            <SuggestionsSection onApplied={confirm} />
             <ImageInputSection services={imageInputServices} />
             <AssetServicesContext.Provider value={imageInputServices}>
               <EditorControls />
@@ -579,6 +585,9 @@ function PreviewSection(props: {
   const seed = useDeferredValue(useEditorStore((s) => s.seed));
   const size = useDeferredValue(useEditorStore((s) => s.size));
   const liveSize = useEditorStore((s) => s.size);
+  const liveParams = useEditorStore((s) => s.params);
+  const liveSeed = useEditorStore((s) => s.seed);
+  const regionEditor = regionEditorOf(tool);
 
   const output = useMemo(
     () => renderMotifCached(tool, params, seed, size),
@@ -648,6 +657,17 @@ function PreviewSection(props: {
         })}
         transparent={transparent}
         unsupportedText={t("Editor.shell.unsupported")}
+        overlay={
+          regionEditor ? (
+            <RegionLayer
+              tool={tool}
+              editor={regionEditor}
+              params={liveParams}
+              seed={liveSeed}
+              size={liveSize}
+            />
+          ) : undefined
+        }
         className="h-[55dvh] min-h-64 lg:h-auto lg:min-h-0 lg:flex-1"
       />
     </section>
