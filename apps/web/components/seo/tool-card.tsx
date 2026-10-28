@@ -29,7 +29,7 @@ export async function ToolCard({ tool, locale, headingLevel }: ToolCardProps) {
 
   return (
     <article className="relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-card text-card-foreground transition-colors hover:border-ring">
-      <div className="flex h-44 items-center justify-center bg-canvas p-4">
+      <div className="flex h-44 items-center justify-center bg-muted p-4">
         <MotifImage tool={tool} alt="" className="max-h-full w-auto rounded-md shadow-sm" />
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">

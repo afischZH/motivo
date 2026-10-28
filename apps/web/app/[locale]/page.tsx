@@ -95,7 +95,6 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
     >
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-14 sm:py-20 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-6">
-          <p className="text-sm font-medium text-link">{text("Home.hero.eyebrow")}</p>
           <h1
             id="hero-heading"
             className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
@@ -103,7 +102,7 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
             {text("Home.hero.title")}
           </h1>
           <p className="max-w-prose text-lg text-muted-foreground">{text("Home.hero.lead")}</p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <Link href="/tools" className={buttonVariants({ size: "lg" })}>
               {text("Home.hero.ctaPrimary")}
             </Link>
@@ -194,15 +193,15 @@ function Values({ text }: { text: Text }) {
       <h2 id="values-heading" className={H2}>
         {text("Home.values.heading")}
       </h2>
-      <ul className="grid gap-4 md:grid-cols-3">
+      <ul className="grid gap-x-10 gap-y-8 md:grid-cols-3">
         {items.map((item) => (
-          <li key={item} className="flex flex-col gap-2 rounded-card border border-border p-5">
+          <li key={item} className="flex flex-col gap-2 border-t border-border pt-5">
             <h3 className="text-lg font-semibold">{text(`Home.values.${item}.title`)}</h3>
             <p className="text-muted-foreground">{text(`Home.values.${item}.text`)}</p>
             {item === "donations" && (
               <Link
                 href="/support"
-                className="mt-auto rounded-control text-sm font-medium text-link underline-offset-4 hover:underline"
+                className="mt-auto self-start rounded-control pt-1 text-sm font-medium text-link underline-offset-4 hover:underline"
               >
                 {text("Footer.support")}
               </Link>
@@ -294,7 +293,7 @@ function HowItWorks({ text }: { text: Text }) {
           <li key={step} className="flex gap-4">
             <span
               aria-hidden="true"
-              className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground tabular-nums"
+              className="flex size-9 shrink-0 items-center justify-center rounded-full bg-highlight font-semibold text-link tabular-nums"
             >
               {i + 1}
             </span>
