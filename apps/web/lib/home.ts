@@ -4,8 +4,8 @@
  * so removing or renaming a tool cannot silently break the page.
  */
 
-/** Motifs in the hero showcase: the first is the large stage, the others float on top. */
-export const HERO_TOOL_IDS = ["svg-waves", "blob", "css-gradient"] as const;
+/** Tool in the hero preview; its stage cycles through the tool's presets. */
+export const HERO_TOOL_ID = "svg-waves";
 
 /** Tool behind the secondary hero button ("Start with ..."). */
 export const HERO_START_TOOL_ID = "css-gradient";
