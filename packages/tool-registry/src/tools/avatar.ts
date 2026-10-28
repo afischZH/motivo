@@ -198,6 +198,7 @@ export const avatarTool = defineTool({
       palette: ["#0f172a", "#1e293b", "#312e81", "#134e4a", "#4c0519"],
     }),
     preset("bauhaus", {
+      background: "#f1e9da",
       style: "shapes",
       shape: "square",
       inset: 0,

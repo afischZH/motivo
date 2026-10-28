@@ -124,6 +124,11 @@ const CASES: Case[] = [
   { toolId: "screenshot-beautifier", preset: "Paper", css: true },
   // M4b-AP07: responsive website mockup (four devices, placeholder sites, per-device shadows).
   { toolId: "screenshot-beautifier", preset: "Responsive", css: true },
+  // M4c-AP01: system-font label over diagonals; library pattern nested in
+  // the placeholder; Bauhaus avatar clipped to a square on an opaque page.
+  { toolId: "placeholder-image" },
+  { toolId: "placeholder-image", preset: "Blueprint" },
+  { toolId: "avatar", preset: "Bauhaus" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).
