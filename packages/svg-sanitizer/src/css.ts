@@ -26,7 +26,20 @@ export interface CssRule {
   order: number;
 }
 
-const stripComments = (css: string): string => css.replace(/\/\*[\s\S]*?\*\//g, " ");
+/** Replaces comments with a space; an unclosed comment runs to the end (CSS). Linear. */
+function stripComments(css: string): string {
+  if (!css.includes("/*")) return css;
+  let out = "";
+  let i = 0;
+  for (;;) {
+    const start = css.indexOf("/*", i);
+    if (start === -1) return out + css.slice(i);
+    out += `${css.slice(i, start)} `;
+    const end = css.indexOf("*/", start + 2);
+    if (end === -1) return out;
+    i = end + 2;
+  }
+}
 
 /**
  * Parses `prop: value; prop: value` and keeps whitelisted presentation
@@ -88,13 +101,29 @@ function matchingBrace(css: string, open: number): number {
   return -1;
 }
 
-/** Parses a stylesheet into rules with simple selectors. Never throws. */
-export function parseStylesheet(css: string, firstOrder = 0): CssRule[] {
+/**
+ * Most selectors kept from all stylesheets of a document. Design tools write
+ * a few dozen (`.st0` to `.st40`); the cap keeps "every element against every
+ * selector" bounded for hostile files (DoS).
+ */
+export const MAX_CSS_SELECTORS = 2000;
+
+/**
+ * Parses a stylesheet into rules with simple selectors. Never throws.
+ * `budget` is the number of selectors still allowed; rules beyond it are
+ * ignored.
+ */
+export function parseStylesheet(
+  css: string,
+  firstOrder = 0,
+  budget = MAX_CSS_SELECTORS,
+): CssRule[] {
   const src = stripComments(css);
   const rules: CssRule[] = [];
   let i = 0;
   let order = firstOrder;
-  while (i < src.length) {
+  let left = budget;
+  while (i < src.length && left > 0) {
     const open = src.indexOf("{", i);
     if (open === -1) break;
     const prelude = src.slice(i, open).trim();
@@ -102,13 +131,13 @@ export function parseStylesheet(css: string, firstOrder = 0): CssRule[] {
     if (close === -1) break;
     // At-rules (and their nested blocks) carry nothing we keep.
     if (!prelude.includes("@")) {
-      const selectors = prelude
-        .split(",")
-        .map(parseSelector)
-        .filter((s): s is SimpleSelector => s !== null);
+      // Duplicates add nothing; dropping them keeps `.a,.a,.a,...` from eating the budget twice.
+      const unique = [...new Set(prelude.split(",").map((t) => t.trim()))].slice(0, left);
+      const selectors = unique.map(parseSelector).filter((s): s is SimpleSelector => s !== null);
       const declarations = parseDeclarations(src.slice(open + 1, close));
       if (selectors.length > 0 && declarations.size > 0) {
         rules.push({ selectors, declarations, order: order++ });
+        left -= selectors.length;
       }
     }
     i = close + 1;

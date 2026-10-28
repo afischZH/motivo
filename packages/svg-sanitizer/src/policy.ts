@@ -220,6 +220,29 @@ const LOCAL_URL = /^url\(\s*(['"]?)#([A-Za-z_][\w.-]{0,199})\1\s*\)$/;
 const PATH_DATA = /^[MmZzLlHhVvCcSsQqTtAaEe0-9.,+\-\s]*$/;
 const NUMBER_LIST = /^[0-9eE.,+\-\s]*$/;
 
+const isFnChar = (code: number): boolean => (code >= 0x61 && code <= 0x7a) || code === 0x2d; // a-z and "-"
+const isSpace = (code: number): boolean =>
+  code === 0x20 || code === 0x09 || code === 0x0a || code === 0x0d || code === 0x0c;
+
+/**
+ * Whether every `name(` in the (lower-cased) value calls an allowed function.
+ * A linear scan backwards from each `(`: a regex like `/([a-z-]*)\s*\(/g`
+ * backtracks quadratically on long letter runs without a parenthesis.
+ */
+function functionsAllowed(lower: string): boolean {
+  let from = 0;
+  for (;;) {
+    const paren = lower.indexOf("(", from);
+    if (paren === -1) return true;
+    let end = paren;
+    while (end > from && isSpace(lower.charCodeAt(end - 1))) end--;
+    let start = end;
+    while (start > from && isFnChar(lower.charCodeAt(start - 1))) start--;
+    if (!ALLOWED_FUNCTIONS.has(lower.slice(start, end))) return false;
+    from = paren + 1;
+  }
+}
+
 /** Whether `id` is a plain, safe XML id. */
 export function isSafeId(id: string): boolean {
   return ID_PATTERN.test(id);
@@ -244,10 +267,7 @@ export function isSafeValue(name: string, value: string): boolean {
   if (/[<>{};\\@`]/.test(value)) return false;
   // Every `name(` must be an allowed function; url() only to a local id.
   const lower = value.toLowerCase();
-  for (const m of lower.matchAll(/([a-z-]*)\s*\(/g)) {
-    const fn = m[1] ?? "";
-    if (!ALLOWED_FUNCTIONS.has(fn)) return false;
-  }
+  if (!functionsAllowed(lower)) return false;
   if (lower.includes("url")) {
     const urls = value.match(/url\s*\([^)]*\)/gi) ?? [];
     const total = (lower.match(/url/g) ?? []).length;
@@ -265,8 +285,57 @@ const DATA_IMAGE = /^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+/]+={0,2}
 /** Longest embedded raster image inside an uploaded SVG (characters of the data URI). */
 export const MAX_EMBEDDED_IMAGE = 4_000_000;
 
+const BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/** Decodes the first bytes of a base64 string (enough for a file signature). */
+function base64Head(b64: string, bytes: number): number[] {
+  const out: number[] = [];
+  let bits = 0;
+  let buffer = 0;
+  for (let i = 0; i < b64.length && out.length < bytes; i++) {
+    const v = BASE64_ALPHABET.indexOf(b64.charAt(i));
+    if (v === -1) break;
+    buffer = (buffer << 6) | v;
+    bits += 6;
+    if (bits >= 8) {
+      bits -= 8;
+      out.push((buffer >> bits) & 0xff);
+    }
+  }
+  return out;
+}
+
+const startsWith = (head: readonly number[], sig: readonly number[], at = 0): boolean =>
+  sig.every((b, i) => head[at + i] === b);
+
+/**
+ * Whether the decoded bytes carry the signature of the declared type, so an
+ * SVG or HTML document cannot hide behind `data:image/png` (browsers do not
+ * sniff SVG in images today; this keeps it that way should one ever do).
+ */
+function magicMatches(type: string, head: readonly number[]): boolean {
+  switch (type) {
+    case "png":
+      return startsWith(head, [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    case "jpeg":
+      return startsWith(head, [0xff, 0xd8, 0xff]);
+    case "gif":
+      return startsWith(head, [0x47, 0x49, 0x46, 0x38]); // GIF8
+    case "webp":
+      return (
+        startsWith(head, [0x52, 0x49, 0x46, 0x46]) && startsWith(head, [0x57, 0x45, 0x42, 0x50], 8)
+      );
+    default:
+      return false;
+  }
+}
+
 /** Whether `href` is an embedded raster image (never SVG, never remote). */
 export function isSafeImageHref(href: string): boolean {
   const compact = href.replace(/\s+/g, "");
-  return compact.length <= MAX_EMBEDDED_IMAGE && DATA_IMAGE.test(compact);
+  if (compact.length > MAX_EMBEDDED_IMAGE) return false;
+  const m = DATA_IMAGE.exec(compact);
+  if (!m) return false;
+  const payload = compact.slice(compact.indexOf(",") + 1);
+  return magicMatches(m[1] ?? "", base64Head(payload, 12));
 }

@@ -16,7 +16,14 @@
  * string, which callers use for cheap defence in depth (re-sanitising before
  * every render is a cache hit, see `sanitizeSvgCached`).
  */
-import { matches, parseDeclarations, parseStylesheet, type CssRule } from "./css";
+import {
+  MAX_CSS_SELECTORS,
+  matches,
+  parseDeclarations,
+  parseStylesheet,
+  type CssRule,
+  type SimpleSelector,
+} from "./css";
 import { XmlParseError, parseXml, type ParseError, type XmlElement, type XmlNode } from "./parse";
 import {
   ALLOWED_ELEMENTS,
@@ -155,12 +162,69 @@ function collectStyles(node: XmlElement, out: string[]): void {
   }
 }
 
+/** Most distinct classes of one element that take part in matching. */
+const MAX_CLASSES = 32;
+/**
+ * Most selector checks for a whole document. Real files need a few per
+ * element; a hostile one (thousands of selectors sharing a class, on every
+ * element) stops getting class styles once this is spent, which is safe.
+ */
+const MAX_MATCH_CHECKS = 1_000_000;
+
+interface IndexedSelector {
+  selector: SimpleSelector;
+  rule: CssRule;
+}
+
+/**
+ * Selectors by the most specific part every match must have (`#id`, else
+ * `.class`, else the tag), so an element is only compared with selectors that
+ * can match it instead of with every selector of the document.
+ */
+function indexRules(rules: readonly CssRule[]): Map<string, IndexedSelector[]> {
+  const index = new Map<string, IndexedSelector[]>();
+  for (const rule of rules) {
+    for (const selector of rule.selectors) {
+      const key =
+        selector.id !== undefined
+          ? `#${selector.id}`
+          : selector.classes[0] !== undefined
+            ? `.${selector.classes[0]}`
+            : (selector.tag ?? "");
+      let list = index.get(key);
+      if (!list) index.set(key, (list = []));
+      list.push({ selector, rule });
+    }
+  }
+  return index;
+}
+
 class Sanitizer {
   removed = 0;
-  private readonly rules: CssRule[];
+  private readonly index: Map<string, IndexedSelector[]>;
+  private checksLeft = MAX_MATCH_CHECKS;
 
   constructor(rules: CssRule[]) {
-    this.rules = rules;
+    this.index = indexRules(rules);
+  }
+
+  /** Matching rules with the specificity of their best matching selector. */
+  private matchingRules(el: XmlElement, tag: string): { specificity: number; rule: CssRule }[] {
+    const id = el.attrs.get("id");
+    const classes = [...new Set((el.attrs.get("class") ?? "").split(/\s+/).filter(Boolean))].slice(
+      0,
+      MAX_CLASSES,
+    );
+    const keys = [tag, ...classes.map((c) => `.${c}`), ...(id === undefined ? [] : [`#${id}`])];
+    const best = new Map<CssRule, number>();
+    for (const key of keys) {
+      for (const { selector, rule } of this.index.get(key) ?? []) {
+        if (--this.checksLeft < 0) return [];
+        if (!matches(selector, tag, id, classes)) continue;
+        best.set(rule, Math.max(best.get(rule) ?? -1, selector.specificity));
+      }
+    }
+    return [...best].map(([rule, specificity]) => ({ rule, specificity }));
   }
 
   /** Cascaded presentation values of an element: attributes < class rules < style attribute. */
@@ -172,18 +236,9 @@ class Sanitizer {
       if (isSafeValue(name, v)) out.set(name, v);
       else this.removed++;
     }
-    if (this.rules.length > 0) {
-      const id = el.attrs.get("id");
-      const classes = (el.attrs.get("class") ?? "").split(/\s+/).filter(Boolean);
-      const hits: { specificity: number; order: number; rule: CssRule }[] = [];
-      for (const rule of this.rules) {
-        let best = -1;
-        for (const s of rule.selectors) {
-          if (matches(s, tag, id, classes)) best = Math.max(best, s.specificity);
-        }
-        if (best >= 0) hits.push({ specificity: best, order: rule.order, rule });
-      }
-      hits.sort((a, b) => a.specificity - b.specificity || a.order - b.order);
+    if (this.index.size > 0) {
+      const hits = this.matchingRules(el, tag);
+      hits.sort((a, b) => a.specificity - b.specificity || a.rule.order - b.rule.order);
       for (const hit of hits) for (const [k, v] of hit.rule.declarations) out.set(k, v);
     }
     const style = el.attrs.get("style");
@@ -278,11 +333,13 @@ function isAncestor(candidate: Out, node: Out): boolean {
   return false;
 }
 
-function removeNode(node: Out): void {
-  const parent = node.parent;
-  if (!parent) return;
-  const index = parent.children.indexOf(node);
-  if (index !== -1) parent.children.splice(index, 1);
+/** Removes `nodes` from their parents, one pass per parent (no quadratic splicing). */
+function removeNodes(nodes: ReadonlySet<Out>): void {
+  const parents = new Set<Out>();
+  for (const node of nodes) if (node.parent) parents.add(node.parent);
+  for (const parent of parents) {
+    parent.children = parent.children.filter((c) => typeof c === "string" || !nodes.has(c));
+  }
 }
 
 /**
@@ -303,6 +360,7 @@ function checkUses(root: Out): number {
   markUseContainers(root, withUse);
   let removed = 0;
   let kept = 0;
+  const drop = new Set<Out>();
   for (const use of uses) {
     const target = ids.get((use.attrs.get("href") ?? "").slice(1));
     const ok =
@@ -312,10 +370,11 @@ function checkUses(root: Out): number {
       !withUse.has(target);
     if (ok) kept++;
     else {
-      removeNode(use);
+      drop.add(use);
       removed++;
     }
   }
+  removeNodes(drop);
   return removed;
 }
 
@@ -412,9 +471,12 @@ export function sanitizeSvg(input: string, options: SanitizeOptions = {}): Sanit
   const styles: string[] = [];
   collectStyles(tree, styles);
   let order = 0;
+  let budget = MAX_CSS_SELECTORS;
   const rules = styles.flatMap((css) => {
-    const parsed = parseStylesheet(css, order);
+    if (budget <= 0) return [];
+    const parsed = parseStylesheet(css, order, budget);
     order += parsed.length;
+    for (const rule of parsed) budget -= rule.selectors.length;
     return parsed;
   });
 

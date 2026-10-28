@@ -89,12 +89,17 @@ export function cropMime(mime: string): CropMime {
   return mime === "image/jpeg" ? "image/jpeg" : "image/png";
 }
 
-/** Clamps a crop to the image and rounds it to whole pixels (at least 1 × 1). */
+/**
+ * Clamps a crop to the image and rounds it to whole pixels (at least 1 × 1).
+ * Non-finite values (NaN, Infinity from a message) fall back to the origin
+ * and the whole image, so the result is always a valid rectangle.
+ */
 export function clampPixelRect(crop: PixelRect, width: number, height: number): PixelRect {
-  const x = Math.min(Math.max(0, Math.floor(crop.x)), Math.max(0, width - 1));
-  const y = Math.min(Math.max(0, Math.floor(crop.y)), Math.max(0, height - 1));
-  const w = Math.min(Math.max(1, Math.round(crop.width)), width - x);
-  const h = Math.min(Math.max(1, Math.round(crop.height)), height - y);
+  const finite = (v: number, fallback: number): number => (Number.isFinite(v) ? v : fallback);
+  const x = Math.min(Math.max(0, Math.floor(finite(crop.x, 0))), Math.max(0, width - 1));
+  const y = Math.min(Math.max(0, Math.floor(finite(crop.y, 0))), Math.max(0, height - 1));
+  const w = Math.min(Math.max(1, Math.round(finite(crop.width, width))), width - x);
+  const h = Math.min(Math.max(1, Math.round(finite(crop.height, height))), height - y);
   return { x, y, width: w, height: h };
 }
 
