@@ -14,7 +14,8 @@
       "en": "English"
     },
     "mainNav": "Hauptnavigation",
-    "toolsNav": "Tools"
+    "toolsNav": "Tools",
+    "menu": "Menü"
   },
   "Theme": {
     "toggle": "Dunkles Design",
@@ -3155,7 +3156,15 @@
     "toolCount": "{count, plural, one {# Generator} other {# Generatoren}}",
     "showCategory": "Kategorie ansehen",
     "convertersLead": "Code und Bilder umwandeln, direkt im Browser.",
-    "allConverters": "Alle Konverter"
+    "allConverters": "Alle Konverter",
+    "searchLabel": "Generatoren durchsuchen",
+    "searchPlaceholder": "Suchen, z. B. Wellen, Verlauf, Palette",
+    "searchShortcut": "Taste / springt ins Suchfeld",
+    "resultsOne": "1 Treffer",
+    "resultsOther": "{count} Treffer",
+    "noResults": "Nichts gefunden für «{query}».",
+    "noResultsHint": "Versuch es mit einem anderen Wort oder stöbere in den Kategorien.",
+    "clearSearch": "Suche zurücksetzen"
   },
   "CategoryPage": {
     "metaTitle": "{category}: Generatoren | Musterli",
