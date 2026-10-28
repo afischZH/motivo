@@ -32,7 +32,7 @@
 Reihenfolge (ab 2026-10-28): AP13, AP14 und AP03 parallel; danach AP04 und AP05 parallel, dann AP06; zum Schluss AP11.
 
 Entscheide für Andreas (Empfehlung zuerst):
-- **Spendenanbieter**: externer Link, keine Integration. Optionen siehe Entscheidkarte im Thread.
+- **Spendenanbieter**: entschieden 2026-10-28, **Ko-fi** (externer Link, keine Integration). Andreas legt die Ko-fi-Seite an und setzt die Repo-Variable `NEXT_PUBLIC_DONATION_URL`.
 
 ### M2: SEO-Seiten, mehr Tools, Beta (abgenommen 2026-10-27, live)
 
