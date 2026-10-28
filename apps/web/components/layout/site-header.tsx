@@ -21,8 +21,8 @@ export function SiteHeader() {
         >
           {t("brand")}
         </Link>
-        <div className="flex items-center gap-4">
-          <nav aria-label={t("mainNav")} className="flex items-center gap-4">
+        <div className="flex items-center gap-2.5 sm:gap-4">
+          <nav aria-label={t("mainNav")} className="flex items-center gap-2.5 sm:gap-4">
             <Link
               href="/tools"
               className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
