@@ -53,7 +53,7 @@ describe.each(Object.entries(MESSAGES))("SEO texts in %s", (_, messages) => {
   });
 });
 
-// Every namespace, not only the SEO ones: home, waitlist, footer and editor
+// Every namespace, not only the SEO ones: home, support, footer and editor
 // pages follow the same rules (CLAUDE.md, "Sprache und Stil").
 describe("German web copy", () => {
   const texts = strings(de);

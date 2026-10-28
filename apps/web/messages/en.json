@@ -42,15 +42,15 @@
       "heading": "Why Motivo",
       "free": {
         "title": "Free generators",
-        "text": "Every generator and converter is free to use, without signing up and without watermarks on your patterns."
+        "text": "Every generator and converter is free to use, without signing up, without limits and without watermarks on your motifs."
       },
       "local": {
         "title": "Everything in your browser",
         "text": "Motifs are computed on your device. Images you load into a converter never leave your browser."
       },
-      "lifetime": {
-        "title": "Lifetime instead of subscription",
-        "text": "A lifetime license is planned for future pro features: pay once instead of every month. Scope and prices are not set yet."
+      "donations": {
+        "title": "Funded by donations",
+        "text": "Motivo is funded by voluntary donations. There is no paywall, no subscription and no pro version."
       }
     },
     "categories": {
@@ -82,7 +82,7 @@
       "heading": "Frequently asked questions",
       "q1": {
         "question": "Does Motivo cost anything?",
-        "answer": "No. Every generator and converter you find here is free. A lifetime license without a subscription is planned for future pro features such as very large exports."
+        "answer": "No. Every generator, converter and export is free, without limits. Motivo is funded by voluntary donations."
       },
       "q2": {
         "question": "Do I need an account?",
@@ -94,7 +94,7 @@
       },
       "q4": {
         "question": "Can I use the motifs commercially?",
-        "answer": "We will set the license terms for exports before the paid launch and publish them on this website."
+        "answer": "Yes. You may use whatever you export from Motivo freely, including commercially. We will publish the exact license text on this website."
       },
       "q5": {
         "question": "Which formats can I export?",
@@ -120,7 +120,9 @@
   },
   "ToolPage": {
     "metaTitle": "{tool} | Motivo",
-    "allTools": "All generators"
+    "allTools": "All generators",
+    "supportHint": "Enjoying Motivo? <link>Support the project</link>.",
+    "newTab": "(opens in a new tab)"
   },
   "tools": {
     "common": {
@@ -2015,9 +2017,49 @@
     "converters": "Converters",
     "imprint": "Imprint",
     "privacy": "Privacy",
-    "founders": "Founders waitlist",
+    "support": "Support Motivo",
     "gradients": "Gradients",
     "palettes": "Color palettes"
+  },
+  "Support": {
+    "metaTitle": "Support Motivo",
+    "metaDescription": "Motivo is free, with no account and no tracking. A donation helps pay for the domain, hosting and further development.",
+    "title": "Support Motivo",
+    "lead": "Motivo is free and will stay free. There is no account, no subscription and no tracking. If Motivo helps you and you would like to give something back, we are happy about a donation.",
+    "facts": {
+      "heading": "How Motivo works",
+      "free": {
+        "title": "Free, no account",
+        "text": "Every tool, size and export format is open to everyone. You never have to sign up."
+      },
+      "private": {
+        "title": "No tracking",
+        "text": "Your motifs are made in your browser. We set no cookies and do not follow you across other websites."
+      },
+      "license": {
+        "title": "Exports free to use",
+        "text": "You may use what you export freely, including commercially. With or without a donation."
+      }
+    },
+    "uses": {
+      "heading": "What your donation pays for",
+      "domain": "The domain, so Motivo stays reachable at its address.",
+      "hosting": "Hosting, so the pages load fast and reliably.",
+      "development": "Further development: new generators, improvements and bug fixes."
+    },
+    "donate": {
+      "heading": "Donate",
+      "text": "Every amount helps. A donation is voluntary and unlocks nothing, because everything in Motivo is already open.",
+      "button": "Donate now",
+      "external": "The link takes you to our external donation provider. You enter payment details only there, never on Motivo.",
+      "soon": "Donation link coming soon",
+      "soonText": "We are setting up donations right now. Check back soon."
+    },
+    "other": {
+      "heading": "Other ways to help",
+      "text": "Tell others about Motivo or share a motif you like. That helps a lot too."
+    },
+    "thanks": "Thank you for using Motivo."
   },
   "Legal": {
     "draftBanner": {
@@ -2069,7 +2111,7 @@
     },
     "privacy": {
       "metaTitle": "Privacy policy",
-      "metaDescription": "How Motivo handles data: no cookies, images stay in your browser, cookie-free statistics and error reports.",
+      "metaDescription": "How Motivo handles data: no account, no cookies, images stay in your browser, cookie-free statistics and error reports.",
       "title": "Privacy policy",
       "intro": "Motivo is built to collect as little data as possible. There is no account, no cookies and no cross-site tracking. Motifs and images are computed in your browser. Here you can find out which data is still processed, and why.",
       "sections": {
@@ -2134,27 +2176,24 @@
             "If you write to us, we process your email address and the content of your message to answer your request. We delete the message once it is resolved and no legal retention obligation applies."
           ]
         },
-        "waitlist": {
-          "heading": "Founders waitlist",
+        "donations": {
+          "heading": "Donations",
           "paragraphs": [
-            "When you join the Founders waitlist, we process your email address, the language of the website, the time of sign-up and confirmation, and the version of the consent text. We use this data only to tell you when the lifetime licenses go on sale at the Founders price. The legal basis is your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time.",
-            "Sign-up uses double opt-in: you are only on the list once you open the link in our confirmation email. The link is valid for 48 hours. We delete unconfirmed sign-ups at the latest 30 days after the last email. Every email contains an unsubscribe link. If you unsubscribe, we delete your email address immediately.",
-            "We store the data with Supabase (Supabase, Inc., USA) in a data center in Zurich (region eu-central-2). We send the confirmation email through the email service Resend, based in the USA. Our emails contain no tracking pixels and no redirected links.",
-            "To prevent abuse, we limit the number of sign-ups. For this we derive a value from your IP address that changes daily and cannot be reversed, and delete it after one day at the latest. We do not store your IP address itself. If the Cloudflare Turnstile security check is active, Cloudflare processes technical details of your browser and your IP address when you submit the form, to detect automated sign-ups."
+            "Motivo is free and funded by voluntary donations. On the “Support” page we link to an external donation provider. Motivo itself accepts no payments and receives neither payment nor account details from you.",
+            "You only leave Motivo when you follow the link. The donation provider is responsible for processing your data there, and its privacy policy applies. The provider may tell us the amount donated and any details you explicitly choose to share with us."
           ]
         },
         "transfer": {
           "heading": "Transfers abroad",
           "paragraphs": [
-            "Cloudflare, Sentry, Supabase and Resend are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
+            "Cloudflare and Sentry are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
             "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out."
           ]
         },
         "retention": {
           "heading": "Retention",
           "paragraphs": [
-            "We keep personal data only as long as needed for its purpose or required by law. We only see statistics in aggregated form. The providers delete technical logs and error reports automatically according to their retention periods.",
-            "For the Founders waitlist, the periods in the section “Founders waitlist” apply."
+            "We keep personal data only as long as needed for its purpose or required by law. We only see statistics in aggregated form. The providers delete technical logs and error reports automatically according to their retention periods."
           ]
         },
         "rights": {
@@ -2173,109 +2212,6 @@
         }
       }
     }
-  },
-  "Waitlist": {
-    "eyebrow": "Founders waitlist",
-    "heading": "Lock in the Founders price",
-    "lead": "The first {seats} lifetime licenses come at the Founders price. Join the list and we will let you know as soon as you can buy. Pay once, no subscription.",
-    "price": "Lifetime license from {price} CHF or EUR",
-    "priceNote": "Non-binding guide price, not an offer. We will set prices and scope before sales start.",
-    "count": "{count} of {seats} Founders spots reserved",
-    "countFull": "All {seats} Founders spots are reserved. Join anyway in case someone drops out.",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "consent": "I agree that Motivo stores my email address to tell me when the Founders licenses go on sale. I can unsubscribe at any time. See the <link>privacy policy</link>.",
-    "submit": "Join the list",
-    "submitting": "Sending …",
-    "captchaLoading": "Loading security check …",
-    "honeypotLabel": "Website (leave empty)",
-    "successTitle": "Almost done!",
-    "success": "We have sent you an email. Please confirm your sign-up with the link in it. The link is valid for {hours} hours.",
-    "successHint": "No email? Check your spam folder or try again in {minutes} minutes.",
-    "errors": {
-      "email": "Please enter a valid email address.",
-      "consent": "Please confirm your consent.",
-      "invalid": "Please check your details and try again.",
-      "captcha": "The security check failed. Please try again.",
-      "rate_limited": "We are receiving a lot of sign-ups right now. Please try again later.",
-      "unavailable": "That did not work. Please try again in a few minutes.",
-      "disabled": "The waitlist is not open yet."
-    },
-    "comingSoon": "The waitlist opens soon. Check back in a few days.",
-    "loading": "Loading the waitlist …",
-    "noscript": "Signing up requires JavaScript.",
-    "learnMore": "More about the Founders license"
-  },
-  "Founders": {
-    "metaTitle": "Founders waitlist: lifetime license at the Founders price",
-    "metaDescription": "Join the waitlist and claim one of the first {seats} Founders spots for the Motivo lifetime license. Pay once, no subscription.",
-    "title": "Founders waitlist",
-    "lead": "Motivo stays free to use. A lifetime license for pro features is coming: pay once instead of every month. The first {seats} licenses come at the lowest price.",
-    "points": {
-      "once": {
-        "title": "Pay once",
-        "text": "No subscription, no renewal. The license is valid for as long as Motivo exists."
-      },
-      "future": {
-        "title": "Future tools included",
-        "text": "New generators and exports keep coming, at no extra cost."
-      },
-      "honest": {
-        "title": "Honest counter",
-        "text": "The counter shows confirmed sign-ups, straight from the database. No artificial scarcity."
-      }
-    }
-  },
-  "WaitlistResult": {
-    "backHome": "Go to the home page",
-    "backFounders": "Go to the Founders waitlist",
-    "confirm": {
-      "metaTitle": "Confirm your sign-up",
-      "title": "Confirm your sign-up",
-      "text": "Confirm with one click that you want to join the Founders waitlist.",
-      "button": "Confirm sign-up",
-      "working": "Confirming …",
-      "error": "That did not work. Please try again in a few minutes.",
-      "noToken": "Open this page with the confirmation link in our email."
-    },
-    "confirmed": {
-      "metaTitle": "Sign-up confirmed",
-      "title": "You are on the waitlist",
-      "text": "Thanks for confirming. We will email you as soon as the Founders licenses are available. You can unsubscribe at any time with the link in our email."
-    },
-    "invalid": {
-      "metaTitle": "Invalid link",
-      "title": "This link no longer works",
-      "text": "The confirmation link has expired or was already used. If you have already confirmed, you are all set. Otherwise, simply sign up again."
-    },
-    "error": {
-      "metaTitle": "Error",
-      "title": "That did not work",
-      "text": "We could not process your request right now. Please open the link again in a few minutes."
-    },
-    "unsubscribe": {
-      "metaTitle": "Unsubscribe from the waitlist",
-      "title": "Unsubscribe from the waitlist",
-      "text": "When you unsubscribe, we delete your email address and will not write to you again.",
-      "button": "Unsubscribe now",
-      "working": "Unsubscribing …",
-      "done": "You are unsubscribed. We have deleted your email address.",
-      "invalid": "This unsubscribe link is invalid or was already used. If you have already unsubscribed, there is nothing left to do.",
-      "error": "That did not work. Please try again in a few minutes.",
-      "noToken": "Open this page with the unsubscribe link in our email."
-    }
-  },
-  "WaitlistEmail": {
-    "subject": "Please confirm your Founders waitlist sign-up",
-    "heading": "Almost done",
-    "intro": "You signed up for the Motivo Founders waitlist with this email address. Please confirm with one click:",
-    "button": "Confirm sign-up",
-    "fallback": "If the button does not work, copy this link into your browser:",
-    "expiry": "The link is valid for {hours} hours and works only once.",
-    "what": "We will email you as soon as the lifetime licenses are available at the Founders price (planned from {price} CHF or EUR, non-binding). Other than that we will not write to you, and we do not share your address.",
-    "ignore": "Did not sign up? Then simply ignore this email. Without confirmation we delete your address after {days} days at the latest.",
-    "unsubscribe": "Unsubscribe",
-    "privacy": "Privacy"
   },
   "Collections": {
     "copy": "Copy",

@@ -68,16 +68,20 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/impressum/svg-to-css")).toBeNull();
   });
 
-  it("redirects the Founders page and waitlist pages to this locale's slugs", () => {
-    expect(canonicalRedirect("/de/founders-waitlist")).toBe("/de/founders-warteliste");
-    expect(canonicalRedirect("/en/founders-warteliste/bestaetigt")).toBe(
-      "/en/founders-waitlist/confirmed",
-    );
-    expect(canonicalRedirect("/de/founders-warteliste/unsubscribe")).toBe(
-      "/de/founders-warteliste/abmelden",
-    );
-    expect(canonicalRedirect("/de/founders-warteliste/bestaetigt")).toBeNull();
-    expect(canonicalRedirect("/de/founders-warteliste/nope")).toBeNull();
+  it("redirects the support page to this locale's slug", () => {
+    expect(canonicalRedirect("/de/support")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/en/unterstuetzen")).toBe("/en/support");
+    expect(canonicalRedirect("/de/unterstuetzen")).toBeNull();
+    expect(canonicalRedirect("/en/support/more")).toBeNull();
+  });
+
+  it("sends every path of the retired Founders waitlist to the support page", () => {
+    expect(canonicalRedirect("/de/founders-warteliste")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/en/founders-waitlist")).toBe("/en/support");
+    expect(canonicalRedirect("/en/founders-warteliste/bestaetigt")).toBe("/en/support");
+    expect(canonicalRedirect("/de/founders-waitlist/unsubscribe")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/de/founders")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/fr/founders-waitlist")).toBeNull();
   });
 
   it("leaves canonical, unknown and unrelated paths alone", () => {
@@ -96,12 +100,7 @@ describe("canonicalRedirect", () => {
       { page: "convert" },
       { page: "imprint" },
       { page: "privacy" },
-      { page: "founders" },
-      { page: "waitlist", waitlistPage: "confirm" },
-      { page: "waitlist", waitlistPage: "confirmed" },
-      { page: "waitlist", waitlistPage: "invalid" },
-      { page: "waitlist", waitlistPage: "error" },
-      { page: "waitlist", waitlistPage: "unsubscribe" },
+      { page: "support" },
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
       ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),

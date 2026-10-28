@@ -38,7 +38,6 @@ const textTool = defineTool({
   randomize: (_rng, current) => current,
   render: { kind: "text", render: (p) => p.value },
   exports: ["css", "svg"],
-  gating: {},
 });
 
 describe("freshContext", () => {

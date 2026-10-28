@@ -165,5 +165,4 @@ export const tintsShadesTool = defineTool({
     list("rgb-list", EXTRA_EXPORT_LABELS.rgbList, "rgb"),
     list("hsl-list", EXTRA_EXPORT_LABELS.hslList, "hsl"),
   ],
-  gating: {},
 });

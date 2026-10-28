@@ -10,7 +10,6 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig: NextConfig = {
   // Workspace packages ship TypeScript source and must be compiled by Next.
   transpilePackages: [
-    "@motivo/db",
     "@motivo/engine",
     "@motivo/tool-registry",
     "@motivo/exporters",
@@ -23,8 +22,8 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_CF_ANALYTICS_TOKEN: process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN ?? "",
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN ?? "",
-    // Founders waitlist challenge (lib/waitlist); public site key, never the secret.
-    NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "",
+    // External donation page (lib/donation.ts); a plain link, no script.
+    NEXT_PUBLIC_DONATION_URL: process.env.NEXT_PUBLIC_DONATION_URL ?? "",
   },
   // CSP and friends on every response, including proxy redirects. Static
   // assets on Cloudflare get the same set from public/_headers. Only the

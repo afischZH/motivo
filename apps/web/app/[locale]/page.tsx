@@ -1,9 +1,8 @@
 /**
  * Home page: hero with motifs rendered by the tools themselves (static SVG
  * files from `/motifs`), value proposition, categories, featured tools,
- * "how it works", the Founders waitlist, FAQ and a closing call to action.
- * Built from the registry and `lib/home.ts`; static. The only page-specific
- * client JS is the waitlist form, which asks the API whether it is on.
+ * "how it works", FAQ and a closing call to action. Built from the registry
+ * and `lib/home.ts`; static, without page-specific client JS.
  */
 import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
 import type { Metadata } from "next";
@@ -15,7 +14,6 @@ import type { ReactNode } from "react";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
 import { ToolCard } from "@/components/seo/tool-card";
-import { WaitlistSection } from "@/components/waitlist/waitlist-section";
 import { buttonVariants } from "@/components/ui/button";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
@@ -77,7 +75,6 @@ export default async function HomePage({ params }: HomePageProps) {
       <Categories locale={locale} text={text} />
       <Featured locale={locale} text={text} />
       <HowItWorks text={text} />
-      <WaitlistSection locale={locale} showMoreLink />
       <Faq faq={faq} text={text} />
       <ClosingCta locale={locale} text={text} />
     </div>
@@ -191,7 +188,7 @@ function ShowcaseLink({
 }
 
 function Values({ text }: { text: Text }) {
-  const items = ["free", "local", "lifetime"] as const;
+  const items = ["free", "local", "donations"] as const;
   return (
     <section aria-labelledby="values-heading" className={SECTION}>
       <h2 id="values-heading" className={H2}>
@@ -202,6 +199,14 @@ function Values({ text }: { text: Text }) {
           <li key={item} className="flex flex-col gap-2 rounded-card border border-border p-5">
             <h3 className="text-lg font-semibold">{text(`Home.values.${item}.title`)}</h3>
             <p className="text-muted-foreground">{text(`Home.values.${item}.text`)}</p>
+            {item === "donations" && (
+              <Link
+                href="/support"
+                className="mt-auto rounded-control text-sm font-medium text-link underline-offset-4 hover:underline"
+              >
+                {text("Footer.support")}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

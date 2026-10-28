@@ -195,5 +195,4 @@ export const cssGradientTool = defineTool({
       },
     },
   ],
-  gating: {},
 });

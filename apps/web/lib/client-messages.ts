@@ -14,12 +14,6 @@ type Messages = Record<string, unknown>;
 /** Converter pages: the converter UI. */
 export const CONVERTER_CLIENT_NAMESPACES = ["Converters"] as const;
 
-/** Founders waitlist form (home page, Founders page): only its own texts. */
-export const WAITLIST_CLIENT_NAMESPACES = ["Waitlist"] as const;
-
-/** Waitlist confirm and unsubscribe pages: only the result texts. */
-export const WAITLIST_RESULT_CLIENT_NAMESPACES = ["WaitlistResult"] as const;
-
 /** Editor pages: page chrome, editor shell and tool texts (`tools.*`). */
 export const EDITOR_CLIENT_NAMESPACES = ["ToolPage", "Editor", "sizes", "tools"] as const;
 

@@ -393,5 +393,4 @@ export const seamlessPatternsTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

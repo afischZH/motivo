@@ -52,8 +52,8 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/founders" className={LINK_CLASS}>
-                  {tFooter("founders")}
+                <Link href="/support" className={LINK_CLASS}>
+                  {tFooter("support")}
                 </Link>
               </li>
             </ul>

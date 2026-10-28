@@ -51,22 +51,17 @@ test.describe("home page", () => {
     );
   });
 
-  test("states no binding price or offer", async ({ page }) => {
+  test("states no price or paywall and points to donations", async ({ page }) => {
     await page.goto("/de");
     const main = page.getByRole("main");
-    // The only price is the Founders "from" price, marked as non-binding (M2-AP10).
-    const waitlist = main.locator("#founders-waitlist");
-    await expect(waitlist.getByTestId("waitlist-price")).toHaveText(
-      "Lifetime-Lizenz ab 49 CHF oder EUR",
+    const text = (await main.textContent()) ?? "";
+    expect(text).not.toMatch(/CHF|EUR|USD|€|\$/);
+    expect(text).not.toMatch(/Lifetime|Founders|Lizenz ab|Warteliste/);
+    await expect(main.getByRole("heading", { name: "Getragen von Spenden" })).toBeVisible();
+    await expect(main.getByRole("link", { name: "Motivo unterstützen" })).toHaveAttribute(
+      "href",
+      "/de/unterstuetzen",
     );
-    await expect(waitlist).toContainText("Unverbindlicher Richtwert, kein Angebot.");
-    const outside = await main.evaluate((el) => {
-      const clone = el.cloneNode(true) as HTMLElement;
-      clone.querySelector("#founders-waitlist")?.remove();
-      return clone.textContent ?? "";
-    });
-    expect(outside).not.toMatch(/CHF|EUR|USD|€|\$/);
-    expect(outside).toContain("Lifetime-Lizenz");
   });
 });
 

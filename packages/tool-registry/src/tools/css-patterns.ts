@@ -327,5 +327,4 @@ export const cssPatternsTool = defineTool({
       },
     },
   ],
-  gating: {},
 });

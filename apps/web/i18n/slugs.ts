@@ -213,7 +213,8 @@ export const CATEGORY_SEGMENT = {
 /**
  * Localized first path segment of each section (internal name to slug). The
  * internal name is also the folder under `app/[locale]`. `imprint` and
- * `privacy` are the legal pages linked from the footer.
+ * `privacy` are the legal pages linked from the footer, `support` is the
+ * donation page.
  */
 export const SECTION_SLUGS = {
   tools: { de: "tools", en: "tools" },
@@ -221,7 +222,7 @@ export const SECTION_SLUGS = {
   cssPatterns: { de: "css-muster", en: "css-patterns" },
   imprint: { de: "impressum", en: "imprint" },
   privacy: { de: "datenschutz", en: "privacy" },
-  founders: { de: "founders-warteliste", en: "founders-waitlist" },
+  support: { de: "unterstuetzen", en: "support" },
   gradients: { de: "farbverlaeufe", en: "gradients" },
   palettes: { de: "farbpaletten", en: "color-palettes" },
 } as const satisfies Record<string, LocalizedSlugs>;
@@ -229,21 +230,15 @@ export const SECTION_SLUGS = {
 export type Section = keyof typeof SECTION_SLUGS;
 
 /**
- * Result pages of the Founders waitlist under the `founders` section
- * (`/de/founders-warteliste/bestaetigt`). `confirm` and `unsubscribe` are the
- * pages the e-mail links to (each with a button that POSTs, so link scanners
- * cannot act); the confirm page then opens `confirmed`, `invalid` or `error`.
- * Not indexed, not in the sitemap.
+ * First segments of retired sections (the Founders waitlist, removed with the
+ * switch to donations on 2026-10-28). Any path below them, in any locale,
+ * gets one permanent redirect to the section that replaced it.
  */
-export const WAITLIST_PAGE_SLUGS = {
-  confirm: { de: "bestaetigen", en: "confirm" },
-  confirmed: { de: "bestaetigt", en: "confirmed" },
-  invalid: { de: "link-ungueltig", en: "invalid-link" },
-  error: { de: "fehler", en: "error" },
-  unsubscribe: { de: "abmelden", en: "unsubscribe" },
-} as const satisfies Record<string, LocalizedSlugs>;
-
-export type WaitlistPage = keyof typeof WAITLIST_PAGE_SLUGS;
+export const RETIRED_SECTION_SLUGS: Readonly<Record<string, Section>> = {
+  founders: "support",
+  "founders-warteliste": "support",
+  "founders-waitlist": "support",
+};
 
 /** Slug format: lowercase ASCII words joined by single hyphens. */
 export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -302,19 +297,6 @@ export function sectionFromAnySlug(value: string): Section | undefined {
   return (Object.keys(SECTION_SLUGS) as Section[]).find((section) =>
     hasSlug(SECTION_SLUGS[section], value),
   );
-}
-
-export function waitlistPageSlug(page: WaitlistPage, locale: AnyLocale): string {
-  return pick(WAITLIST_PAGE_SLUGS[page], locale);
-}
-
-export function waitlistPageFromSlug(slug: string, locale: AnyLocale): WaitlistPage | undefined {
-  return findId(WAITLIST_PAGE_SLUGS, (entry) => pick(entry, locale) === slug);
-}
-
-export function waitlistPageFromAnySlug(value: string): WaitlistPage | undefined {
-  if (Object.hasOwn(WAITLIST_PAGE_SLUGS, value)) return value as WaitlistPage;
-  return findId(WAITLIST_PAGE_SLUGS, (entry) => hasSlug(entry, value));
 }
 
 export function categorySlug(category: ToolCategory, locale: AnyLocale): string {

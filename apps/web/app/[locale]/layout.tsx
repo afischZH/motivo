@@ -47,7 +47,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           No NextIntlClientProvider here: the layout's client components get
           their texts as props and links resolve on the server, so landing
           pages load no client message formatter. Pages with translated
-          client components (editor, converters, waitlist) add their own.
+          client components (editor, converters) add their own.
         */}
         <SkipLink />
         <SiteHeader />

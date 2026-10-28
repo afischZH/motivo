@@ -22,10 +22,7 @@ import { NO_EXTERNAL_SERVICES, type ExternalServices } from "./telemetry/config"
  * enables it (`telemetry/config.ts`: its environment variable is set), so
  * previews and local builds keep the strict self-only policy.
  */
-const EXTERNAL: Record<
-  keyof ExternalServices,
-  { script: string[]; connect: string[]; frame?: string[] }
-> = {
+const EXTERNAL: Record<keyof ExternalServices, { script: string[]; connect: string[] }> = {
   // Cloudflare Web Analytics, manual embedding (site not proxied by Cloudflare).
   analytics: {
     script: ["https://static.cloudflareinsights.com"],
@@ -33,18 +30,12 @@ const EXTERNAL: Record<
   },
   // Sentry EU ingest. The SDK itself is bundled and loaded from 'self'.
   sentry: { script: [], connect: ["https://*.ingest.de.sentry.io"] },
-  // Cloudflare Turnstile on the waitlist form: loader script and challenge iframe.
-  turnstile: {
-    script: ["https://challenges.cloudflare.com"],
-    connect: [],
-    frame: ["https://challenges.cloudflare.com"],
-  },
 };
 
-function external(services: ExternalServices, kind: "script" | "connect" | "frame"): string[] {
+function external(services: ExternalServices, kind: "script" | "connect"): string[] {
   return (Object.keys(EXTERNAL) as (keyof ExternalServices)[])
     .filter((service) => services[service])
-    .flatMap((service) => EXTERNAL[service][kind] ?? []);
+    .flatMap((service) => EXTERNAL[service][kind]);
 }
 
 export interface SecurityHeaderOptions {
@@ -124,9 +115,6 @@ export function contentSecurityPolicy({
     "form-action": ["'self'"],
     "frame-ancestors": ["'none'"],
   };
-  // Only with a service that embeds a frame (Turnstile); otherwise default-src applies.
-  const frames = external(enabled, "frame");
-  if (frames.length > 0) directives["frame-src"] = ["'self'", ...frames];
   const parts = Object.entries(directives).map(([name, values]) => `${name} ${values.join(" ")}`);
   // Dev and local runs use plain http://localhost; upgrading would break subresources there.
   if (!dev && !local) parts.push("upgrade-insecure-requests");

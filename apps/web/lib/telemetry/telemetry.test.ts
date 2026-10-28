@@ -1,12 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import {
-  analyticsToken,
-  externalServices,
-  sentryDsn,
-  turnstileSiteKey,
-  type TelemetryEnv,
-} from "./config";
+import { analyticsToken, externalServices, sentryDsn, type TelemetryEnv } from "./config";
 import { beaconConfig, telemetryPlan } from "./plan";
 import {
   createLazyReporter,
@@ -26,44 +20,30 @@ const ALL: TelemetryEnv = {
   ...PROD,
   NEXT_PUBLIC_CF_ANALYTICS_TOKEN: TOKEN,
   NEXT_PUBLIC_SENTRY_DSN: DSN,
-  NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
 };
 
 describe("telemetry config", () => {
   it("is off without environment variables", () => {
     expect(analyticsToken(PROD)).toBeNull();
     expect(sentryDsn(PROD)).toBeNull();
-    expect(turnstileSiteKey(PROD)).toBeNull();
-    expect(externalServices(PROD)).toEqual({ analytics: false, sentry: false, turnstile: false });
+    expect(externalServices(PROD)).toEqual({ analytics: false, sentry: false });
     expect(externalServices({ ...PROD, NEXT_PUBLIC_CF_ANALYTICS_TOKEN: " " })).toEqual({
       analytics: false,
       sentry: false,
-      turnstile: false,
     });
   });
 
   it("is on with valid variables", () => {
     expect(analyticsToken(ALL)).toBe(TOKEN);
     expect(sentryDsn(ALL)).toBe(DSN);
-    expect(turnstileSiteKey(ALL)).toBe("1x00000000000000000000AA");
-    expect(externalServices(ALL)).toEqual({ analytics: true, sentry: true, turnstile: true });
+    expect(externalServices(ALL)).toEqual({ analytics: true, sentry: true });
   });
 
   it("is always off in next dev", () => {
     expect(externalServices({ ...ALL, NODE_ENV: "development" })).toEqual({
       analytics: false,
       sentry: false,
-      turnstile: false,
     });
-  });
-
-  it("rejects malformed Turnstile site keys", () => {
-    for (const key of ["", " ", "abc", '0x" onload="1', "9x00000000000000000000AA"]) {
-      expect(turnstileSiteKey({ ...PROD, NEXT_PUBLIC_TURNSTILE_SITE_KEY: key }), key).toBeNull();
-    }
-    expect(
-      turnstileSiteKey({ ...PROD, NEXT_PUBLIC_TURNSTILE_SITE_KEY: "0x4AAAAAAABkMYinukE8nzY" }),
-    ).toBe("0x4AAAAAAABkMYinukE8nzY");
   });
 
   it("rejects malformed tokens and DSNs outside the EU region", () => {

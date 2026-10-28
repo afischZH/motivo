@@ -290,5 +290,4 @@ export const blobCompositionTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

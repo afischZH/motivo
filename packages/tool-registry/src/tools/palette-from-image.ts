@@ -233,5 +233,4 @@ export const paletteFromImageTool = defineTool({
       return { colors: colors.map((c) => ({ color: c.color, share: roundTo(c.share, 4) })) };
     },
   },
-  gating: {},
 });

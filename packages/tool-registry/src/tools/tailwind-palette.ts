@@ -172,5 +172,4 @@ export const tailwindPaletteTool = defineTool({
       render: (p) => colorList(steps(p), "hex"),
     },
   ],
-  gating: {},
 });

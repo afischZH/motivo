@@ -156,5 +156,4 @@ export const starrySkyTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

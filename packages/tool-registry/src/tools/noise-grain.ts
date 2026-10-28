@@ -179,5 +179,4 @@ export const noiseGrainTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
-  gating: {},
 });

@@ -4,9 +4,9 @@ name: Deploy (Cloudflare)
 # - pull requests: uploads a new Worker version with a per-branch preview URL
 # - push to main: deploys to production (motivo-web.<subdomain>.workers.dev)
 # Needs the repository secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
-# Optional repository variables for production: NEXT_PUBLIC_CF_ANALYTICS_TOKEN,
-# NEXT_PUBLIC_SENTRY_DSN, NEXT_PUBLIC_TURNSTILE_SITE_KEY (see docs/ARCHITECTURE.md
-# and docs/SETUP-WAITLIST.md). Waitlist secrets are Worker secrets, not set here.
+# Optional repository variables: NEXT_PUBLIC_CF_ANALYTICS_TOKEN and
+# NEXT_PUBLIC_SENTRY_DSN (production only), NEXT_PUBLIC_DONATION_URL (production
+# and previews); see docs/ARCHITECTURE.md. The Worker needs no secrets.
 
 on:
   push:
@@ -68,9 +68,10 @@ jobs:
           # previews (repository variables, both optional; empty = off).
           NEXT_PUBLIC_CF_ANALYTICS_TOKEN: ${{ github.event_name == 'push' && vars.NEXT_PUBLIC_CF_ANALYTICS_TOKEN || '' }}
           NEXT_PUBLIC_SENTRY_DSN: ${{ github.event_name == 'push' && vars.NEXT_PUBLIC_SENTRY_DSN || '' }}
-          # Founders waitlist challenge. Previews build without it and therefore
-          # keep the waitlist off, although they share the Worker's secrets.
-          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ github.event_name == 'push' && vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '' }}
+          # Link to the external donation page (support page). A plain link
+          # without scripts, so previews may show it too (optional; empty =
+          # the page says the link follows soon).
+          NEXT_PUBLIC_DONATION_URL: ${{ vars.NEXT_PUBLIC_DONATION_URL || '' }}
         run: pnpm cf:build
 
       - name: Deploy production

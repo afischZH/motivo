@@ -32,7 +32,7 @@ describe("sitemap", () => {
       curatedPalettes().length +
       1 +
       CONVERTER_IDS.length +
-      1 + // Founders waitlist
+      1 + // Support (donations)
       (LEGAL_CONFIG.legalReviewed ? 2 : 0);
     expect(entries).toHaveLength(pages * ENABLED_LOCALES.length);
     expect(new Set(urls).size).toBe(urls.length);
@@ -53,10 +53,10 @@ describe("sitemap", () => {
     }
   });
 
-  it("lists the Founders page but none of the waitlist result pages", () => {
-    expect(urls).toContain("https://example.test/de/founders-warteliste");
-    expect(urls).toContain("https://example.test/en/founders-waitlist");
-    expect(urls.filter((url) => /founders-(warteliste|waitlist)\/./.test(url))).toEqual([]);
+  it("lists the support page and nothing of the retired waitlist", () => {
+    expect(urls).toContain("https://example.test/de/unterstuetzen");
+    expect(urls).toContain("https://example.test/en/support");
+    expect(urls.filter((url) => /founders/.test(url))).toEqual([]);
   });
 
   it("leaves out the legal pages while they are drafts", () => {

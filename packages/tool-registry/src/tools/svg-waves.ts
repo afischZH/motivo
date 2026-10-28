@@ -135,5 +135,4 @@ export const svgWavesTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

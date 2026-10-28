@@ -84,5 +84,4 @@ export const circleTool = defineTool({
     },
   },
   exports: ["svg", "png"],
-  gating: {},
 });

@@ -23,9 +23,6 @@ import {
   sectionFromAnySlug,
   toolIdFromSlug,
   toolSlug,
-  waitlistPageFromSlug,
-  waitlistPageSlug,
-  type WaitlistPage,
 } from "./slugs";
 
 export type AppRoute =
@@ -44,8 +41,7 @@ export type AppRoute =
   | { page: "palette"; paletteId: string }
   | { page: "imprint" }
   | { page: "privacy" }
-  | { page: "founders" }
-  | { page: "waitlist"; waitlistPage: WaitlistPage };
+  | { page: "support" };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
 export function routeHref(route: AppRoute, locale: AnyLocale) {
@@ -60,13 +56,8 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/imprint" as const;
     case "privacy":
       return "/privacy" as const;
-    case "founders":
-      return "/founders" as const;
-    case "waitlist":
-      return {
-        pathname: "/founders/[waitlistPage]" as const,
-        params: { waitlistPage: waitlistPageSlug(route.waitlistPage, locale) },
-      };
+    case "support":
+      return "/support" as const;
     case "category":
       return {
         pathname: "/tools/category/[categorySlug]" as const,
@@ -179,8 +170,7 @@ export function routeFromPathname(
   if (segments.length > 3) return undefined;
 
   const first = segments[0] ?? "";
-  // Internal folder names that differ from every localized slug.
-  const section = sectionFromAnySlug(first) ?? (first === "founders" ? "founders" : undefined);
+  const section = sectionFromAnySlug(first);
   const param = (value: string | string[] | undefined) =>
     typeof value === "string" ? value : segments[segments.length - 1];
 
@@ -221,14 +211,8 @@ export function routeFromPathname(
     const paletteId = slug ? collectionItemFromSlug("palettes", slug, locale) : undefined;
     return paletteId && segments.length === 2 ? { page: "palette", paletteId } : undefined;
   }
-  if (section === "imprint" || section === "privacy") {
+  if (section === "imprint" || section === "privacy" || section === "support") {
     return segments.length === 1 ? { page: section } : undefined;
-  }
-  if (section === "founders") {
-    if (segments.length === 1) return { page: "founders" };
-    const slug = param(params.waitlistPage);
-    const waitlistPage = slug ? waitlistPageFromSlug(slug, locale) : undefined;
-    return waitlistPage && segments.length === 2 ? { page: "waitlist", waitlistPage } : undefined;
   }
   if (section === "convert") {
     if (segments.length === 1) return { page: "convert" };

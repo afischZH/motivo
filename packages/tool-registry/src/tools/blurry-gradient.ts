@@ -201,5 +201,4 @@ export const blurryGradientTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
-  gating: {},
 });

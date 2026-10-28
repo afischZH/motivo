@@ -162,5 +162,4 @@ export const doodlesTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

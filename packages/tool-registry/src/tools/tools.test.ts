@@ -135,8 +135,8 @@ describe("built-in tool registration", () => {
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });
 
-  it.each(builtInTools.map((t) => [t.id, t] as const))("%s is fully free until M4", (_, tool) => {
-    expect(tool.gating).toEqual({});
+  it.each(builtInTools.map((t) => [t.id, t] as const))("%s has no gating (all free)", (_, tool) => {
+    expect(tool).not.toHaveProperty("gating");
   });
 });
 

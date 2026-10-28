@@ -34,11 +34,7 @@ import {
   patternIdFromSlug,
   patternSlug,
   sectionFromAnySlug,
-  WAITLIST_PAGE_SLUGS,
-  waitlistPageFromAnySlug,
-  waitlistPageFromSlug,
-  waitlistPageSlug,
-  type WaitlistPage,
+  RETIRED_SECTION_SLUGS,
   toolIdFromAnySlug,
   toolIdFromSlug,
   toolSlug,
@@ -147,52 +143,26 @@ describe("collection slug maps", () => {
   });
 });
 
-describe("Founders waitlist pages", () => {
-  it("have the documented localized slugs", () => {
-    expect(SECTION_SLUGS.founders).toEqual({ de: "founders-warteliste", en: "founders-waitlist" });
-    expect(WAITLIST_PAGE_SLUGS).toEqual({
-      confirm: { de: "bestaetigen", en: "confirm" },
-      confirmed: { de: "bestaetigt", en: "confirmed" },
-      invalid: { de: "link-ungueltig", en: "invalid-link" },
-      error: { de: "fehler", en: "error" },
-      unsubscribe: { de: "abmelden", en: "unsubscribe" },
-    });
+describe("support page", () => {
+  it("has the documented localized slugs", () => {
+    expect(SECTION_SLUGS.support).toEqual({ de: "unterstuetzen", en: "support" });
   });
 
-  it.each(ENABLED_LOCALES)("are valid, unique and resolvable in %s", (locale) => {
-    const pages = Object.keys(WAITLIST_PAGE_SLUGS) as WaitlistPage[];
-    const slugs = pages.map((page) => waitlistPageSlug(page, locale));
-    for (const slug of slugs) expect(slug).toMatch(SLUG_PATTERN);
-    expect(new Set(slugs).size).toBe(slugs.length);
-    for (const page of pages) {
-      expect(waitlistPageFromSlug(waitlistPageSlug(page, locale), locale)).toBe(page);
-      expect(waitlistPageFromAnySlug(waitlistPageSlug(page, locale))).toBe(page);
-    }
-    expect(sectionFromAnySlug(SECTION_SLUGS.founders[locale])).toBe("founders");
-    expect(waitlistPageFromAnySlug("toString")).toBeUndefined();
-  });
-
-  it("have paths that round-trip through the route model", () => {
+  it("round-trips through the route model", () => {
     for (const locale of ENABLED_LOCALES) {
-      expect(routeFromPathname("/founders", {}, locale)).toEqual({ page: "founders" });
-      expect(routePath({ page: "founders" }, locale)).toBe(
-        `/${locale}/${SECTION_SLUGS.founders[locale]}`,
-      );
-      for (const waitlistPage of Object.keys(WAITLIST_PAGE_SLUGS) as WaitlistPage[]) {
-        const path = routePath({ page: "waitlist", waitlistPage }, locale);
-        expect(path).toBe(
-          `/${locale}/${SECTION_SLUGS.founders[locale]}/${waitlistPageSlug(waitlistPage, locale)}`,
-        );
-        expect(routeFromPathname(path, {}, locale)).toEqual({ page: "waitlist", waitlistPage });
-        // Internal pathname as next-intl's usePathname reports it.
-        expect(
-          routeFromPathname(
-            "/founders/[waitlistPage]",
-            { waitlistPage: waitlistPageSlug(waitlistPage, locale) },
-            locale,
-          ),
-        ).toEqual({ page: "waitlist", waitlistPage });
-      }
+      const path = routePath({ page: "support" }, locale);
+      expect(path).toBe(`/${locale}/${SECTION_SLUGS.support[locale]}`);
+      expect(routeFromPathname(path, {}, locale)).toEqual({ page: "support" });
+      expect(routeFromPathname("/support", {}, locale)).toEqual({ page: "support" });
+      expect(sectionFromAnySlug(SECTION_SLUGS.support[locale])).toBe("support");
+    }
+  });
+
+  it("retires the Founders waitlist slugs without clashing with live sections", () => {
+    for (const [slug, section] of Object.entries(RETIRED_SECTION_SLUGS)) {
+      expect(sectionFromAnySlug(slug), slug).toBeUndefined();
+      expect(toolIdFromAnySlug(slug), slug).toBeUndefined();
+      expect(SECTION_SLUGS).toHaveProperty(section);
     }
   });
 });

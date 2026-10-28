@@ -412,7 +412,7 @@ describe("exportRaster", () => {
     );
   });
 
-  it("clamps to the licence edge and rasterises CSS tools via their preview", async () => {
+  it("clamps to the maximum edge and rasterises CSS tools via their preview", async () => {
     const env = fakeEnv();
     const out = await exportRaster(
       cssGradientTool,
@@ -444,7 +444,6 @@ describe("exportRaster", () => {
       randomize: (_r, c) => c,
       render: { kind: "text", render: () => "" },
       exports: ["png"],
-      gating: {},
     });
     await expect(exportRaster(text, {}, ctx, { format: "png" }, fakeEnv())).rejects.toBeInstanceOf(
       ExportError,

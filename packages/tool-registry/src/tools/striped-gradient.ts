@@ -161,5 +161,4 @@ export const stripedGradientTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
-  gating: {},
 });

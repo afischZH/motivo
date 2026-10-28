@@ -174,12 +174,11 @@ export function describeToolContract<S extends ParamsSchema>(
         expect(new Set(tool.category).size).toBe(tool.category.length);
       });
 
-      it("only references existing params in controls and gating", () => {
+      it("only references existing params in controls", () => {
         const known = schemaKeys(anyTool);
         const referenced = [
           ...Object.keys(tool.controls?.params ?? {}),
           ...(tool.controls?.order ?? []),
-          ...Object.keys(tool.gating.params ?? {}),
           ...(anyTool.regenerateOn ?? []),
         ];
         expect(referenced.filter((k) => !known.has(k))).toEqual([]);
@@ -333,8 +332,6 @@ export function describeToolContract<S extends ParamsSchema>(
           expect(e.id).toMatch(TOOL_ID_PATTERN);
           expect(e.labelKey.length).toBeGreaterThan(0);
         }
-        const gated = Object.keys(tool.gating.extraExports ?? {});
-        expect(gated.filter((id) => !ids.includes(id))).toEqual([]);
       });
 
       it.each(extras.map((e) => [e.id, e] as const))(

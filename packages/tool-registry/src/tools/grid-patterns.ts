@@ -166,5 +166,4 @@ export const gridPatternsTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

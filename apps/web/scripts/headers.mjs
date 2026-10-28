@@ -3,10 +3,9 @@
  * Workers Static Assets serves without the Worker) from
  * `lib/security-headers.ts`. Runs before `next build` and `next dev`.
  *
- * The CSP allows Cloudflare Web Analytics, Sentry or Turnstile only when
- * `NEXT_PUBLIC_CF_ANALYTICS_TOKEN`, `NEXT_PUBLIC_SENTRY_DSN` or
- * `NEXT_PUBLIC_TURNSTILE_SITE_KEY` is set for this build, exactly like
- * `next.config.ts`, so the file and the Worker's
+ * The CSP allows Cloudflare Web Analytics or Sentry only when
+ * `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` or `NEXT_PUBLIC_SENTRY_DSN` is set for
+ * this build, exactly like `next.config.ts`, so the file and the Worker's
  * headers come from the same environment and never disagree.
  */
 import { mkdir, writeFile } from "node:fs/promises";

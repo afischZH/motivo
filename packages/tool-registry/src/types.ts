@@ -29,7 +29,7 @@ export const TOOL_CATEGORIES = [
 export type ToolCategory = (typeof TOOL_CATEGORIES)[number];
 
 /**
- * Parameter schemas are always objects: locks, control hints and gating are
+ * Parameter schemas are always objects: locks and control hints are
  * addressed per top-level key.
  */
 export type ParamsSchema = z.ZodObject;
@@ -189,29 +189,6 @@ export interface ControlHints<P> {
   order?: readonly ParamKey<P>[];
   /** Per-param hints. */
   params?: { readonly [K in ParamKey<P>]?: ParamHint<P, K> };
-}
-
-// ---------------------------------------------------------------------------
-// Gating (enforced from M4; until then every tool is fully free)
-// ---------------------------------------------------------------------------
-
-/** Licence tiers in ascending order. A Team seat counts as `pro`. */
-export const LICENSE_TIERS = ["free", "solo", "pro"] as const;
-export type LicenseTier = (typeof LICENSE_TIERS)[number];
-
-/**
- * Minimum tier per feature. Anything not listed is free, so `{}` means the
- * whole tool is free.
- */
-export interface Gating<P> {
-  /** Minimum tier to change a param away from its default. */
-  params?: { readonly [K in ParamKey<P>]?: LicenseTier };
-  /** Minimum tier per export format. */
-  exports?: { readonly [F in ExportFormat]?: LicenseTier };
-  /** Largest export edge in pixels per tier; a missing tier means no limit. */
-  maxExportEdge?: { readonly [T in LicenseTier]?: number };
-  /** Minimum tier per extra export, by `ExtraExport.id`. */
-  extraExports?: Readonly<Record<string, LicenseTier>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -417,7 +394,6 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   exports: readonly ExportFormat[];
   /** Tool-specific text outputs, offered next to `exports`. */
   extraExports?: readonly ExtraExport<Params<S>>[];
-  gating: Gating<Params<S>>;
   /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
   /** Derives params from a user image; see `ImageInput`. */

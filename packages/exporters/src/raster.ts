@@ -614,7 +614,7 @@ export async function rasterizeSvg(
 export interface RasterExportOptions extends Omit<RasterizeOptions, "width" | "height"> {
   /** Output size; default: the design size from `ctx`. Clamped to `maxEdge`. */
   size?: RasterSizeRequest;
-  /** Largest edge in pixels (licence limit). Default `CANVAS_EDGE_MAX`. */
+  /** Largest edge in pixels (technical limit). Default `CANVAS_EDGE_MAX`. */
   maxEdge?: number;
 }
 

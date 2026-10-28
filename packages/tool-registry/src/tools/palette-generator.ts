@@ -216,5 +216,4 @@ export const paletteGeneratorTool = defineTool({
         ),
     },
   ],
-  gating: {},
 });

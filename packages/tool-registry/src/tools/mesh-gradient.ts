@@ -158,5 +158,4 @@ export const meshGradientTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
-  gating: {},
 });
