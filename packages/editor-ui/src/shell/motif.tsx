@@ -197,14 +197,27 @@ export function Motif(props: MotifProps) {
 
 type RasterOutput = Extract<MotifOutput, { kind: "raster" }>;
 
-/** Pixels of a raster motif at a display scale: device pixels, never above the design size. */
+/**
+ * Most pixels of a raster preview (4096²): a zoomed-in 8192 px design would
+ * otherwise re-render 67 MP per slider step, above the worker's export budget.
+ */
+export const RASTER_PREVIEW_MAX_PIXELS = 4096 * 4096;
+
+/**
+ * Pixels of a raster motif at a display scale: device pixels, never above
+ * the design size nor `RASTER_PREVIEW_MAX_PIXELS`.
+ */
 export function rasterPreviewSize(
   design: { width: number; height: number },
   scale: number,
   devicePixelRatio: number,
 ): { width: number; height: number } {
   const ratio = Number.isFinite(devicePixelRatio) && devicePixelRatio > 0 ? devicePixelRatio : 1;
-  const k = Math.min(1, Math.max(0, scale) * ratio);
+  const k = Math.min(
+    1,
+    Math.max(0, scale) * ratio,
+    Math.sqrt(RASTER_PREVIEW_MAX_PIXELS / Math.max(1, design.width * design.height)),
+  );
   return {
     width: Math.max(1, Math.round(design.width * k)),
     height: Math.max(1, Math.round(design.height * k)),

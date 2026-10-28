@@ -7,7 +7,7 @@ import {
 import { describe, expect, it, vi } from "vitest";
 import type { ImageDecodeResult, ImageInputServices } from "../image-input/services";
 import { createImageInputController } from "../image-input/use-image-input";
-import { rasterPreviewSize } from "../shell/motif";
+import { RASTER_PREVIEW_MAX_PIXELS, rasterPreviewSize } from "../shell/motif";
 import { renderMotif } from "../shell/render";
 import { createEditorStore } from "../store/editor-store";
 
@@ -51,6 +51,10 @@ describe("photo tools in the editor", () => {
     expect(rasterPreviewSize(design, 0.4, 2)).toEqual({ width: 1200, height: 800 });
     expect(rasterPreviewSize(design, 0.8, 2)).toEqual(design);
     expect(rasterPreviewSize(design, 0.1, Number.NaN)).toEqual({ width: 150, height: 100 });
+    // A zoomed-in 8192 px design stays within the preview budget.
+    const huge = rasterPreviewSize({ width: 8192, height: 8192 }, 1, 2);
+    expect(huge.width * huge.height).toBeLessThanOrEqual(RASTER_PREVIEW_MAX_PIXELS);
+    expect(huge).toEqual({ width: 4096, height: 4096 });
   });
 
   it("set the design size to a new photo in the same undo step", () => {
