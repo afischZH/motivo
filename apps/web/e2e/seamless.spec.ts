@@ -129,6 +129,9 @@ test.describe("seamless patterns", () => {
     await openEditor(page);
     const first = await motifSrc(page);
     const shapes = page.getByRole("radiogroup", { name: "Form" });
+    // The picker shows one pack of the shape library at a time.
+    await expect(shapes.getByRole("radio", { name: "Blume" })).toBeChecked();
+    await page.getByLabel("Form: Sammlung").selectOption({ label: "Symbole" });
     await shapes.getByRole("radio", { name: "Herz" }).click();
     await expect(shapes.getByRole("radio", { name: "Herz" })).toBeChecked();
     await expect.poll(() => motifSrc(page)).not.toBe(first);

@@ -54,23 +54,42 @@ function kindSupports(tool: AnyToolDefinition, format: ExportFormat): boolean {
 /**
  * Whether the exporters in this package can produce `format` for the tool:
  * the tool must declare it in `exports` and its render kind must support it.
+ * With `params`, the tool's `exportsFor` may narrow the formats further
+ * (e.g. image exports only for some effects).
  */
-export function supportsExport(tool: AnyToolDefinition, format: ExportFormat): boolean {
-  if (format === "gif") return supportsAnimatedExport(tool);
-  return tool.exports.includes(format) && kindSupports(tool, format);
+export function supportsExport(
+  tool: AnyToolDefinition,
+  format: ExportFormat,
+  params?: Readonly<Record<string, unknown>>,
+): boolean {
+  if (format === "gif") return supportsAnimatedExport(tool, params);
+  if (!tool.exports.includes(format) || !kindSupports(tool, format)) return false;
+  if (params === undefined || tool.exportsFor === undefined) return true;
+  // The editor only holds params that passed the tool's schema.
+  return tool.exportsFor(params as Parameters<typeof tool.randomize>[1]).includes(format);
 }
 
 /**
  * GIF is not listed in `exports`: it follows from the tool's opt-in
  * `animation` (one line per tool), and every frame is rendered as SVG, so
- * the render kind must produce one (svg, or css with a preview SVG).
+ * the render kind must produce one (svg, or css with a preview SVG). With
+ * `params`, a tool whose `exportsFor` drops raster output for these params
+ * (no PNG, or GIF named explicitly) offers no GIF either.
  */
-export function supportsAnimatedExport(tool: AnyToolDefinition): boolean {
-  return (
-    tool.animation !== undefined &&
-    tool.animation.sources.length > 0 &&
-    (tool.render.kind === "svg" || tool.render.kind === "css")
-  );
+export function supportsAnimatedExport(
+  tool: AnyToolDefinition,
+  params?: Readonly<Record<string, unknown>>,
+): boolean {
+  if (
+    tool.animation === undefined ||
+    tool.animation.sources.length === 0 ||
+    (tool.render.kind !== "svg" && tool.render.kind !== "css")
+  ) {
+    return false;
+  }
+  if (params === undefined || tool.exportsFor === undefined) return true;
+  const offered = tool.exportsFor(params as Parameters<typeof tool.randomize>[1]);
+  return offered.includes("gif") || offered.includes("png");
 }
 
 function requireFormat(tool: AnyToolDefinition, format: ExportFormat): void {

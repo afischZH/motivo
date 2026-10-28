@@ -213,7 +213,12 @@ function ControlField({ control, value, level }: ControlFieldProps) {
     case "thumbnails":
       return row(
         false,
-        <ThumbnailField {...field} control={control} value={value as OptionValue} />,
+        <ThumbnailField
+          {...field}
+          control={control}
+          value={value as OptionValue}
+          onChangeParam={level.onChange}
+        />,
         <ThumbnailValue control={control} value={value} />,
       );
     case "switch":

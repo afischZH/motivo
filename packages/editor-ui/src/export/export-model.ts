@@ -57,22 +57,27 @@ const RASTER_ORDER: readonly RasterFormat[] = ["png", "jpg", "webp"];
 /**
  * Every export the tool offers and the exporters can produce, in display
  * order: PNG, JPG, WebP, PNG tile, SVG, CSS, the tool's extra exports, GIF.
+ * With `params`, formats the tool's `exportsFor` rules out are left out.
  */
-export function listExportChoices(tool: AnyToolDefinition): ExportChoice[] {
+export function listExportChoices(
+  tool: AnyToolDefinition,
+  params?: Readonly<Record<string, unknown>>,
+): ExportChoice[] {
   const choices: ExportChoice[] = [];
+  const supports = (format: Parameters<typeof supportsExport>[1]) =>
+    supportsExport(tool, format, params);
   for (const format of RASTER_ORDER) {
-    if (supportsExport(tool, format))
-      choices.push({ id: format, kind: "raster", format, category: "image" });
+    if (supports(format)) choices.push({ id: format, kind: "raster", format, category: "image" });
   }
-  if (supportsTile(tool) && supportsExport(tool, "png")) {
+  if (supportsTile(tool) && supports("png")) {
     choices.push({ id: "png-tile", kind: "tile", format: "png", category: "image" });
   }
-  if (supportsExport(tool, "svg")) choices.push({ id: "svg", kind: "svg", category: "vector" });
-  if (supportsExport(tool, "css")) choices.push({ id: "css", kind: "css", category: "code" });
+  if (supports("svg")) choices.push({ id: "svg", kind: "svg", category: "vector" });
+  if (supports("css")) choices.push({ id: "css", kind: "css", category: "code" });
   for (const extra of listExtraExports(tool)) {
     choices.push({ id: `extra:${extra.id}`, kind: "extra", extra, category: "code" });
   }
-  if (supportsExport(tool, "gif")) {
+  if (supports("gif")) {
     choices.push({ id: "gif", kind: "gif", format: "gif", category: "animation" });
   }
   return choices;

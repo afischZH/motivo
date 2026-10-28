@@ -82,7 +82,10 @@ function digestDataUris(svg: string): string {
 for (const tool of builtInTools) {
   describeToolContract(tool);
   describePresetSnapshots(tool, {
-    normalize: (out) => (typeof out === "string" ? digestDataUris(out) : out),
+    normalize: (out) =>
+      typeof out === "string"
+        ? digestDataUris(out)
+        : (JSON.parse(digestDataUris(JSON.stringify(out))) as CssOutput),
   });
 }
 
@@ -110,6 +113,8 @@ describe("built-in tool registration", () => {
       "tints-shades",
       "tailwind-palette",
       "palette-from-image",
+      "glass-effects",
+      "bento-grid",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -419,6 +424,8 @@ describe("extra exports", () => {
       "tints-shades",
       "tailwind-palette",
       "palette-from-image",
+      "glass-effects",
+      "bento-grid",
     ]);
   });
 });

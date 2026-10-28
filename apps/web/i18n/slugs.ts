@@ -45,6 +45,8 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   },
   "palette-from-image": { de: "farbpalette-aus-bild", en: "color-palette-from-image" },
   "css-patterns": { de: "css-muster-generator", en: "css-pattern-generator" },
+  "glass-effects": { de: "glas-effekt-generator", en: "glassmorphism-generator" },
+  "bento-grid": { de: "bento-grid-generator", en: "bento-grid-generator" },
 };
 
 /**
@@ -202,6 +204,7 @@ export const CATEGORY_SLUGS: Readonly<Record<ToolCategory, LocalizedSlugs>> = {
   converters: { de: "konverter", en: "converters" },
   social: { de: "social-media", en: "social-media" },
   composer: { de: "composer", en: "composer" },
+  "css-effects": { de: "css-effekte", en: "css-effects" },
 };
 
 /** Localized segment between `tools` and a category slug. */

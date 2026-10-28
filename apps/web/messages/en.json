@@ -667,33 +667,7 @@
           "label": "Your graphic"
         },
         "shape": {
-          "label": "Shape",
-          "options": {
-            "circle": "Circle",
-            "ring": "Ring",
-            "square": "Square",
-            "diamond": "Diamond",
-            "triangle": "Triangle",
-            "hexagon": "Hexagon",
-            "star": "Star",
-            "sparkle": "Sparkle",
-            "heart": "Heart",
-            "leaf": "Leaf",
-            "drop": "Drop",
-            "wave": "Wave",
-            "plus": "Plus",
-            "cross": "Cross",
-            "arch": "Arch",
-            "flower": "Flower",
-            "clover": "Clover",
-            "moon": "Moon",
-            "semicircle": "Semicircle",
-            "pill": "Pill",
-            "chevron": "Chevron",
-            "sun": "Sun",
-            "pebble": "Pebble",
-            "dots": "Dots"
-          }
+          "label": "Shape"
         },
         "keepOriginalColors": {
           "label": "Keep original colors"
@@ -1737,6 +1711,228 @@
           }
         }
       }
+    },
+    "glass-effects": {
+      "name": "Glass and Border Effects",
+      "description": "Frosted glass, gradient borders and glows for cards and hero sections. Real CSS with a live preview, ready to copy as CSS, Tailwind or HTML.",
+      "groups": {
+        "effect": "Effect",
+        "glass": "Glass",
+        "border": "Gradient border",
+        "glow": "Glow",
+        "card": "Card",
+        "stage": "Stage"
+      },
+      "params": {
+        "effect": {
+          "label": "Effect",
+          "options": {
+            "glass": "Glass",
+            "gradient-border": "Gradient border",
+            "glow": "Glow"
+          }
+        },
+        "backdrop": {
+          "label": "Background",
+          "options": {
+            "aurora": "Aurora",
+            "shapes": "Shapes",
+            "gradient": "Gradient",
+            "dots": "Dots",
+            "grid": "Grid",
+            "stripes": "Stripes"
+          }
+        },
+        "backdropPalette": {
+          "label": "Stage colors"
+        },
+        "cardWidth": {
+          "label": "Card width"
+        },
+        "cardHeight": {
+          "label": "Card height"
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "textColor": {
+          "label": "Text color"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "tint": {
+          "label": "Tint"
+        },
+        "tintOpacity": {
+          "label": "Tint opacity"
+        },
+        "saturation": {
+          "label": "Saturation"
+        },
+        "border": {
+          "label": "Light inner border"
+        },
+        "noise": {
+          "label": "Grain"
+        },
+        "borderPalette": {
+          "label": "Border colors"
+        },
+        "borderWidth": {
+          "label": "Border width"
+        },
+        "borderAngle": {
+          "label": "Start angle"
+        },
+        "animated": {
+          "label": "Rotating border"
+        },
+        "speed": {
+          "label": "Time per turn"
+        },
+        "surface": {
+          "label": "Card color"
+        },
+        "glowColor": {
+          "label": "Glow color"
+        },
+        "glowSize": {
+          "label": "Reach"
+        },
+        "glowIntensity": {
+          "label": "Strength"
+        }
+      },
+      "presets": {
+        "frosted": "Frosted",
+        "ice": "Ice",
+        "smoke": "Smoked glass",
+        "grainy": "Grainy glass",
+        "neon-ring": "Neon ring",
+        "sunset-frame": "Sunset frame",
+        "mint-glow": "Mint glow",
+        "violet-glow": "Violet glow"
+      },
+      "advisories": {
+        "textContrast": "Text on the glass only reaches a contrast of {ratio}:1, WCAG AA needs {required}:1. Try a stronger tint or another text color."
+      },
+      "seo": {
+        "whatIs": "Glass and border effects are CSS surfaces for cards, dialogs and hero sections: frosted glass with backdrop-filter, borders with a gradient (rotating if you like) and colored glows. The tool shows the effect as real CSS on a Musterli background and gives you the code.",
+        "howTo": "Pick glass, gradient border or glow. For glass, set blur, tint, saturation, inner border and grain; for the border, its colors, width and rotation; for the glow, its color, reach and strength. Switch the background under Stage. Press Space for new variations. Copy CSS, Tailwind classes or an HTML example.",
+        "faq": {
+          "q1": {
+            "question": "Does the glass effect work in Safari?",
+            "answer": "Yes. The code also writes backdrop-filter with the -webkit- prefix, which Safari needs before version 18. Chrome, Edge and Firefox support backdrop-filter without a prefix."
+          },
+          "q2": {
+            "question": "Why is there no PNG of the glass?",
+            "answer": "Glass blurs whatever lies behind it on your page. An image would only capture the background in this tool. Gradient borders and glows can be exported as PNG or WebP."
+          },
+          "q3": {
+            "question": "What happens to the rotating border with reduced motion?",
+            "answer": "People who ask their system for less motion see a still border: the code includes a prefers-reduced-motion rule. Browsers without @property show the static border too."
+          },
+          "q4": {
+            "question": "Is text on glass readable?",
+            "answer": "That depends on the tint and the background. The tool checks the contrast of your text color on the tinted glass and shows a hint when it misses WCAG AA at 4.5:1."
+          }
+        }
+      }
+    },
+    "bento-grid": {
+      "name": "Bento Grid",
+      "description": "Rounded tiles of different sizes in a grid, without gaps. For feature sections, portfolios and social graphics, as CSS Grid, Tailwind or an image.",
+      "groups": {
+        "grid": "Grid",
+        "tiles": "Tiles"
+      },
+      "params": {
+        "columns": {
+          "label": "Columns"
+        },
+        "rows": {
+          "label": "Rows"
+        },
+        "tiles": {
+          "label": "Number of tiles"
+        },
+        "minSpan": {
+          "label": "Smallest tile (cells)"
+        },
+        "maxSpan": {
+          "label": "Largest tile (cells)"
+        },
+        "layoutSeed": {
+          "label": "Layout no.",
+          "description": "Every number gives another layout. Lock it to keep the layout while Space only rolls new colors."
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "fill": {
+          "label": "Fill",
+          "options": {
+            "single": "One color",
+            "palette-random": "Palette, random",
+            "palette-order": "Palette, in order"
+          }
+        },
+        "content": {
+          "label": "Content",
+          "options": {
+            "empty": "Empty",
+            "title": "Title",
+            "icon": "Icon",
+            "lines": "Text lines",
+            "mixed": "Mixed"
+          }
+        },
+        "breakpointColumns": {
+          "label": "Columns on narrow screens",
+          "description": "Below 768 px the code arranges the tiles in reading order in this many columns."
+        }
+      },
+      "presets": {
+        "feature-section": "Feature section 3×2",
+        "portfolio": "Portfolio",
+        "dashboard": "Dashboard",
+        "story": "Portrait story",
+        "mosaic": "Mosaic",
+        "calm": "Calm",
+        "blocks": "Blocks"
+      },
+      "seo": {
+        "whatIs": "A bento grid arranges content in tiles of different sizes, like the compartments of a bento box. The layout is popular for feature sections, portfolios, dashboards and social media graphics. The generator always fills the whole grid, without gaps.",
+        "howTo": "Set columns, rows and the number of tiles you want. The smallest and largest tile control how varied the tiles get. Press Space for a new layout, or lock the layout and roll new colors only. Export as CSS Grid with HTML, Tailwind classes, SVG or an image.",
+        "faq": {
+          "q1": {
+            "question": "Can I move single tiles?",
+            "answer": "No, Musterli is deliberately not a layout editor. Roll layouts until one fits and lock it. Columns, rows and tile sizes are set with the controls."
+          },
+          "q2": {
+            "question": "Does the grid work on phones?",
+            "answer": "Yes. Below 768 px the CSS arranges the tiles in reading order in fewer columns. Set how many under Columns on narrow screens."
+          },
+          "q3": {
+            "question": "Are there gaps in the grid?",
+            "answer": "Never. The grid is split along cell lines until it has the number of tiles you asked for. Every cell belongs to exactly one tile."
+          },
+          "q4": {
+            "question": "Do I need Tailwind for the code?",
+            "answer": "No. The CSS Grid + HTML export works in any browser without a framework. The Tailwind classes are an alternative for projects that use Tailwind."
+          }
+        }
+      }
     }
   },
   "Converters": {
@@ -1979,6 +2175,10 @@
     "composer": {
       "name": "Composer",
       "description": "Combine several motifs into one graphic."
+    },
+    "css-effects": {
+      "name": "CSS effects and layouts",
+      "description": "Glass, gradient borders, glows and bento layouts as ready-to-copy code."
     }
   },
   "PatternLibrary": {
@@ -2662,5 +2862,193 @@
     "relatedHeading": "Similar palettes",
     "backToCollection": "All color palettes",
     "ogAlt": "{palette} color palette by Musterli"
+  },
+  "Shapes": {
+    "packs": {
+      "basics": "Basics",
+      "geometric": "Geometric",
+      "organic": "Organic",
+      "blobs": "Abstract blobs",
+      "stars": "Stars and sparkles",
+      "lines": "Arrows and lines",
+      "retro": "Retro",
+      "bauhaus": "Bauhaus",
+      "nature": "Nature",
+      "symbols": "Symbols",
+      "tiles": "Tiles and quarters",
+      "decorative": "Decorative"
+    },
+    "names": {
+      "circle": "Circle",
+      "ring": "Ring",
+      "square": "Square",
+      "block": "Block",
+      "diamond": "Diamond",
+      "triangle": "Triangle",
+      "pentagon": "Pentagon",
+      "hexagon": "Hexagon",
+      "octagon": "Octagon",
+      "oval": "Oval",
+      "semicircle": "Semicircle",
+      "pill": "Pill",
+      "plus": "Plus",
+      "cross": "Cross",
+      "dots": "Dots",
+      "hexagon-ring": "Hexagon ring",
+      "triangle-ring": "Triangle ring",
+      "square-ring": "Square ring",
+      "diamond-ring": "Diamond ring",
+      "octagon-ring": "Octagon ring",
+      "hexagram": "Hexagram",
+      "octagram": "Octagram",
+      "cube": "Cube",
+      "pyramid": "Pyramid",
+      "nested-squares": "Nested squares",
+      "sierpinski": "Triangle split",
+      "checker": "Checker",
+      "hex-cluster": "Honeycomb",
+      "pinwheel": "Pinwheel",
+      "diamond-quad": "Four diamonds",
+      "pebble": "Pebble",
+      "bean": "Bean",
+      "egg": "Egg",
+      "cell": "Cell",
+      "worm": "Worm",
+      "puddle": "Puddle",
+      "petal": "Petal",
+      "seed": "Seed",
+      "comma": "Comma",
+      "spots": "Spots",
+      "twin-pebbles": "Twin pebbles",
+      "wobble-ring": "Wobbly ring",
+      "splat": "Splat",
+      "blob-1": "Blob 1",
+      "blob-2": "Blob 2",
+      "blob-3": "Blob 3",
+      "blob-4": "Blob 4",
+      "blob-5": "Blob 5",
+      "blob-6": "Blob 6",
+      "blob-7": "Blob 7",
+      "blob-8": "Blob 8",
+      "blob-9": "Blob 9",
+      "blob-10": "Blob 10",
+      "blob-11": "Blob 11",
+      "blob-12": "Blob 12",
+      "star": "Star",
+      "sparkle": "Sparkle",
+      "star-4": "Four-point star",
+      "star-6": "Six-point star",
+      "star-8": "Eight-point star",
+      "burst": "Burst",
+      "seal": "Seal",
+      "sparkle-slim": "Slim sparkle",
+      "sparkles": "Sparkles",
+      "asterisk": "Asterisk",
+      "star-round": "Rounded star",
+      "star-ring": "Star outline",
+      "twinkle": "Twinkle",
+      "star-trio": "Star trio",
+      "shooting-star": "Shooting star",
+      "chevron": "Chevron",
+      "wave": "Wave",
+      "arrow": "Arrow",
+      "arrow-diagonal": "Diagonal arrow",
+      "arrow-double": "Double arrow",
+      "arrow-turn": "Turn arrow",
+      "double-chevron": "Double chevron",
+      "caret": "Caret",
+      "stripes": "Stripes",
+      "slashes": "Slashes",
+      "zigzag": "Zigzag",
+      "wave-double": "Double wave",
+      "squiggle": "Squiggle",
+      "dashes": "Dashes",
+      "arch": "Arch",
+      "rainbow": "Rainbow",
+      "sunrise": "Sunrise",
+      "sunset": "Sunset",
+      "flower-power": "Flower power",
+      "groovy-star": "Groovy star",
+      "bolt": "Bolt",
+      "tv": "TV",
+      "boomerang": "Boomerang",
+      "orbit": "Orbit",
+      "pill-stack": "Pill stack",
+      "record": "Record",
+      "wavy-circle": "Wavy circle",
+      "split-circle": "Split circle",
+      "circle-square": "Circle in square",
+      "quarters": "Quarters",
+      "lens": "Lens",
+      "target": "Target",
+      "bars": "Bars",
+      "dome": "Dome",
+      "arc-thick": "Thick arc",
+      "quarter-arc": "Quarter arc",
+      "steps": "Steps",
+      "d-shape": "D shape",
+      "split-square": "Split square",
+      "dot-grid": "Dot grid",
+      "cross-circle": "Quartered circle",
+      "leaf": "Leaf",
+      "drop": "Drop",
+      "flower": "Flower",
+      "clover": "Clover",
+      "moon": "Moon",
+      "sun": "Sun",
+      "cloud": "Cloud",
+      "mountains": "Mountains",
+      "pine": "Pine",
+      "tulip": "Tulip",
+      "mushroom": "Mushroom",
+      "snowflake": "Snowflake",
+      "daisy": "Daisy",
+      "branch": "Branch",
+      "fish": "Fish",
+      "heart": "Heart",
+      "check": "Check mark",
+      "double-ring": "Double ring",
+      "eye": "Eye",
+      "hourglass": "Hourglass",
+      "pin": "Pin",
+      "bookmark": "Bookmark",
+      "shield": "Shield",
+      "keyhole": "Keyhole",
+      "speech": "Speech bubble",
+      "play": "Play",
+      "house": "House",
+      "spiral": "Spiral",
+      "quarter-circle": "Quarter circle",
+      "quarter-cutout": "Quarter cutout",
+      "truchet-arcs": "Truchet arcs",
+      "truchet-discs": "Truchet discs",
+      "arc-band": "Arc band",
+      "diagonal-half": "Diagonal half",
+      "diagonal-band": "Diagonal band",
+      "diagonal-stripes": "Diagonal stripes",
+      "half-rect": "Half tile",
+      "corner-square": "Corner square",
+      "checker-tile": "Checker tile",
+      "bridge": "Bridge",
+      "edge-dots": "Edge dots",
+      "corner-dots": "Corner dots",
+      "plus-band": "Cross band",
+      "t-band": "T band",
+      "wave-band": "Wave band",
+      "corner-triangle": "Corner triangle",
+      "quatrefoil": "Quatrefoil",
+      "trefoil": "Trefoil",
+      "rosette": "Rosette",
+      "scallop": "Scallop",
+      "ogee": "Ogee",
+      "zellige": "Zellige star",
+      "medallion": "Medallion",
+      "fleuron": "Fleuron",
+      "paisley": "Paisley",
+      "damask": "Damask",
+      "lace-ring": "Lace ring",
+      "bow": "Bow",
+      "mandala": "Mandala"
+    }
   }
 }

@@ -161,9 +161,12 @@ describe("animated tools in the registry", () => {
       "mesh-gradient",
       "blurry-gradient",
       "css-patterns",
+      "bento-grid",
     ]) {
       expect(ids).toContain(id);
     }
+    // Glass effects are CSS effects on a backdrop, not a motif to animate.
+    expect(ids).not.toContain("glass-effects");
   });
 
   it("the shared opt-ins are well-formed", () => {

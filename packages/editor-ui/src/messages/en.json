@@ -5,7 +5,8 @@
       "lockHint": "Locked values stay the same when you shuffle",
       "resetHint": "Double-click to reset to the default",
       "advanced": "Advanced",
-      "moreSettings": "More settings"
+      "moreSettings": "More settings",
+      "advisories": "Hints about the design"
     },
     "list": {
       "item": "Item {index}",
@@ -179,7 +180,10 @@
         "rgbList": "RGB list",
         "hslList": "HSL list",
         "tailwindConfig": "tailwind.config.js",
-        "tailwindTheme": "Tailwind v4 @theme"
+        "tailwindTheme": "Tailwind v4 @theme",
+        "css": "CSS",
+        "htmlExample": "HTML example",
+        "cssGrid": "CSS Grid + HTML"
       },
       "gif": {
         "title": "GIF settings",
@@ -318,7 +322,12 @@
       "loading": "Loading …",
       "assetsEmpty": "No logos or shapes yet.",
       "openKit": "Open the Brand Kit",
-      "useAsset": "Use {name}"
+      "useAsset": "Use {name}",
+      "shapesEmpty": "No shapes in your brand kit yet."
+    },
+    "thumbnails": {
+      "group": "{label}: collection",
+      "brandKit": "Brand Kit"
     }
   },
   "sizes": {

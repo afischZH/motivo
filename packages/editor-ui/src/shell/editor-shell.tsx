@@ -48,6 +48,7 @@ import {
 } from "./icons";
 import { PreviewStage, ZOOM_LEVELS, type Zoom } from "./preview";
 import { renderMotifCached } from "./render";
+import { ToolAdvisories } from "./advisories";
 import { ShortcutHelp } from "./shortcut-help";
 import { SizePicker } from "./size-picker";
 import { BUTTON_CLASS, ICON_BUTTON, PRIMARY_BUTTON_CLASS, TILE_CLASS } from "./styles";
@@ -117,6 +118,7 @@ export function EditorShell({
   const locale = useLocale();
   const store = useEditorStoreApi();
   const tool = useEditorStore((s) => s.tool);
+  const currentParams = useEditorStore((s) => s.params);
   const canUndo = useEditorStore(selectCanUndo);
   const canRedo = useEditorStore(selectCanRedo);
 
@@ -223,7 +225,7 @@ export function EditorShell({
   };
 
   // ⌘/Ctrl+Shift+C: the current design as PNG (DESIGN.md 4), for tools that export PNG.
-  const copyImage = supportsExport(tool, "png")
+  const copyImage = supportsExport(tool, "png", currentParams)
     ? () => {
         if (!exportServices.canCopyImage()) {
           setNotice({ tone: "error", message: t("Editor.export.copyUnavailableImage") });
@@ -431,6 +433,7 @@ export function EditorShell({
             <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
               {t("Editor.shell.settings")}
             </h2>
+            <ToolAdvisories />
             <BrandPaletteSection onApplied={confirm} />
             <ImageInputSection services={imageInputServices} />
             <AssetServicesContext.Provider value={imageInputServices}>

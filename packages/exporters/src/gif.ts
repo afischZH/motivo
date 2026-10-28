@@ -234,7 +234,10 @@ export async function exportGif<S extends ParamsSchema>(
   env?: GifEnv,
 ): Promise<GifExportResult> {
   const anyTool: AnyToolDefinition = tool;
-  if (!supportsAnimatedExport(anyTool) || !anyTool.animation?.sources.includes(options.source)) {
+  if (
+    !supportsAnimatedExport(anyTool, params as Readonly<Record<string, unknown>>) ||
+    !anyTool.animation?.sources.includes(options.source)
+  ) {
     throw new ExportError("unsupported-format", `Tool "${tool.id}" cannot export this GIF`);
   }
   const design = { width: ctx.width, height: ctx.height };

@@ -223,7 +223,7 @@ function ExportDialogBody({
   const seed = useEditorStore((s) => s.seed);
   const size = useEditorStore((s) => s.size);
 
-  const choices = useMemo(() => listExportChoices(tool), [tool]);
+  const choices = useMemo(() => listExportChoices(tool, params), [tool, params]);
   const [choiceId, setChoiceId] = useState<string | undefined>(
     () => pickInitialChoice(choices, readRemembered())?.id,
   );
