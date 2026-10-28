@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import { ToolEditor } from "@/components/editor/tool-editor";
 import type { EnabledLocale } from "@/i18n/locales";
+import { routePath } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { editorMessages } from "@/lib/client-messages";
 import { toolIdFromSlug, toolSlug } from "@/i18n/slugs";
@@ -52,7 +53,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
   return (
     <div className="flex flex-col lg:h-[calc(100dvh-3.5rem)]">
       <NextIntlClientProvider messages={editorMessages(await getMessages())}>
-        <ToolEditor toolId={toolId} />
+        <ToolEditor toolId={toolId} brandKitHref={routePath({ page: "brandKit" }, locale)} />
       </NextIntlClientProvider>
     </div>
   );

@@ -198,6 +198,20 @@ describe("my designs section", () => {
   });
 });
 
+describe("brand kit section", () => {
+  it("has the documented localized slugs and round-trips", () => {
+    expect(SECTION_SLUGS.brandKit).toEqual({ de: "brand-kit", en: "brand-kit" });
+    for (const locale of ENABLED_LOCALES) {
+      expect(sectionFromAnySlug(SECTION_SLUGS.brandKit[locale])).toBe("brandKit");
+      const path = routePath({ page: "brandKit" }, locale);
+      expect(path).toBe(`/${locale}/brand-kit`);
+      expect(routeFromPathname(path, {}, locale)).toEqual({ page: "brandKit" });
+      expect(routeFromPathname(`${path}/x`, {}, locale)).toBeUndefined();
+    }
+    expect(canonicalRedirect("/de/brand-kit")).toBeNull();
+  });
+});
+
 describe("slug map", () => {
   it("has no entries for unknown tools", () => {
     expect(Object.keys(TOOL_SLUGS).filter((id) => !toolIds.includes(id))).toEqual([]);

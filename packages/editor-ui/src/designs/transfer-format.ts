@@ -19,7 +19,9 @@ export type DesignsFileError =
   | "forbidden-keys"
   | "wrong-format"
   | "unsupported-version"
-  | "too-many";
+  | "too-many"
+  /** A brand kit file (`motivo-brandkit`): it belongs on the Brand Kit page. */
+  | "brand-kit-file";
 
 export type SkipReason = "invalid" | "unknown-tool" | "invalid-params" | "unsafe-upload";
 

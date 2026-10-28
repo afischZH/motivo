@@ -14,7 +14,8 @@
  * Thumbnails are stored as `ArrayBuffer` plus type instead of a `Blob`:
  * older Safari versions failed to store blobs in IndexedDB.
  */
-import { STORE, StorageError, defaultFactory, openDatabase, toStorageError, transact } from "./idb";
+import { createConnection, randomHexId } from "./connection";
+import { STORE, StorageError, toStorageError, transact } from "./idb";
 import {
   DESIGN_NAME_MAX,
   THUMBNAIL_MAX_BYTES,
@@ -124,12 +125,6 @@ export interface DesignStoreOptions {
 
 const PERSIST_KEY = "persist-requested";
 
-function randomHexId(): string {
-  const bytes = new Uint8Array(16);
-  globalThis.crypto.getRandomValues(bytes);
-  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
-
 function browserPersist(): (() => Promise<boolean>) | undefined {
   const storage = (globalThis as { navigator?: { storage?: StorageManager } }).navigator?.storage;
   return typeof storage?.persist === "function" ? () => storage.persist() : undefined;
@@ -177,30 +172,8 @@ export function createDesignStore(options: DesignStoreOptions = {}): DesignStore
   const now = options.now ?? Date.now;
   const randomId = options.randomId ?? randomHexId;
   const persist = options.persist ?? browserPersist();
-  const databaseName = options.databaseName;
-  let opening: Promise<IDBDatabase> | null = null;
-
-  const db = (): Promise<IDBDatabase> => {
-    if (!opening) {
-      const factory = options.indexedDB ?? defaultFactory();
-      if (!factory) {
-        return Promise.reject(new StorageError("unavailable", "IndexedDB is not available"));
-      }
-      opening = openDatabase(factory, databaseName).then((database) => {
-        // Another tab upgrades the schema: let it, reopen on next use.
-        database.onversionchange = () => {
-          database.close();
-          opening = null;
-        };
-        return database;
-      });
-      // A failed open is retried on the next call (e.g. after the user left private mode).
-      opening.catch(() => {
-        opening = null;
-      });
-    }
-    return opening;
-  };
+  const connection = createConnection(options);
+  const db = connection.db;
 
   const getRecord = async (id: string): Promise<DesignRecord | null> => {
     const database = await db();
@@ -489,10 +462,6 @@ export function createDesignStore(options: DesignStoreOptions = {}): DesignStore
       }
     },
 
-    close() {
-      const pending = opening;
-      opening = null;
-      void pending?.then((database) => database.close()).catch(() => undefined);
-    },
+    close: connection.close,
   };
 }

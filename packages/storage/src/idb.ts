@@ -7,13 +7,17 @@
 
 export const DB_NAME = "motivo";
 /** Bump with a new `upgrade` step; never change an existing step. */
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 
 export const STORE = {
   designs: "designs",
   designParams: "design-params",
   drafts: "drafts",
   meta: "meta",
+  /** Version 2 (M3-AP05): the brand kit's palettes. */
+  brandPalettes: "brand-palettes",
+  /** Version 2: brand kit logos and own shapes (sanitised SVG or re-encoded raster). */
+  brandAssets: "brand-assets",
 } as const;
 
 export type StoreName = (typeof STORE)[keyof typeof STORE];
@@ -22,9 +26,11 @@ export type StoreName = (typeof STORE)[keyof typeof STORE];
  * `unavailable`: no IndexedDB (private mode in some browsers, blocked site
  * data, very old browsers); `quota`: the browser refused more data;
  * `blocked`: another tab holds an older version open; `not-found`: the
- * record does not exist (any more); `failed`: anything else.
+ * record does not exist (any more); `limit`: a brand kit list is full;
+ * `failed`: anything else.
  */
-export type StorageErrorCode = "unavailable" | "quota" | "blocked" | "not-found" | "failed";
+export type StorageErrorCode =
+  "unavailable" | "quota" | "blocked" | "not-found" | "limit" | "failed";
 
 export class StorageError extends Error {
   readonly code: StorageErrorCode;
@@ -52,13 +58,20 @@ export function toStorageError(
   return new StorageError(fallback, message || "IndexedDB request failed", { cause: error });
 }
 
-/** Creates the object stores. `oldVersion` 0 means a fresh database. */
+/**
+ * Creates the object stores step by step. `oldVersion` 0 means a fresh
+ * database; an existing one only runs the steps it lacks, so its data stays.
+ */
 function upgrade(db: IDBDatabase, oldVersion: number): void {
   if (oldVersion < 1) {
     db.createObjectStore(STORE.designs, { keyPath: "id" });
     db.createObjectStore(STORE.designParams, { keyPath: "id" });
     db.createObjectStore(STORE.drafts, { keyPath: "toolId" });
     db.createObjectStore(STORE.meta, { keyPath: "key" });
+  }
+  if (oldVersion < 2) {
+    db.createObjectStore(STORE.brandPalettes, { keyPath: "id" });
+    db.createObjectStore(STORE.brandAssets, { keyPath: "id" });
   }
 }
 

@@ -12,7 +12,9 @@
     "./messages/de.json": "./src/messages/de.json",
     "./messages/en.json": "./src/messages/en.json",
     "./designs": "./src/designs/index.ts",
-    "./designs/thumbnail": "./src/designs/thumbnail.ts"
+    "./designs/thumbnail": "./src/designs/thumbnail.ts",
+    "./brand-kit": "./src/brand-kit/index.ts",
+    "./brand-kit/upload": "./src/brand-kit/upload.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

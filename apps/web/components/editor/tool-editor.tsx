@@ -1,7 +1,7 @@
 "use client";
 
 import { EditorShell, EditorStoreProvider } from "@motivo/editor-ui";
-import { createDesignStore } from "@motivo/storage";
+import { createBrandKitStore, createDesignStore } from "@motivo/storage";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
@@ -13,16 +13,25 @@ import { Link } from "@/i18n/client-navigation";
  * store looks the tool up in the registry. One store per page: remounting
  * with another tool id (`key`) starts fresh from that tool's defaults.
  */
-export function ToolEditor({ toolId }: { toolId: string }) {
+export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitHref: string }) {
   const t = useTranslations("ToolPage");
-  // Saved designs live in this browser only (IndexedDB, opened on first use).
+  // Saved designs and the brand kit live in this browser only (IndexedDB, opened on first use).
   const [designs] = useState(() => createDesignStore());
-  useEffect(() => () => designs.close(), [designs]);
+  const [brandKit] = useState(() => createBrandKitStore());
+  useEffect(
+    () => () => {
+      designs.close();
+      brandKit.close();
+    },
+    [designs, brandKit],
+  );
 
   return (
     <EditorStoreProvider key={toolId} options={{ toolId }}>
       <EditorShell
         designs={designs}
+        brandKit={brandKit}
+        brandKitHref={brandKitHref}
         headerStart={
           <Link
             href="/tools"

@@ -180,6 +180,15 @@ export const paletteGeneratorTool = defineTool({
   },
   // A new harmony shows at once: unlocked colours follow from the current seed.
   regenerateOn: ["harmony"],
+  // A brand palette shows exactly its colours (up to the 8 slots).
+  brandPalette(colors, current) {
+    const shown = colors.slice(0, PALETTE_SLOTS);
+    const patch: Partial<PaletteGeneratorParams> = { count: Math.max(2, shown.length) };
+    shown.forEach((c, i) => {
+      patch[SLOT_KEYS[i] as SlotKey] = c;
+    });
+    return { ...current, ...patch };
+  },
   render: {
     kind: "svg",
     render(p, { width, height }) {

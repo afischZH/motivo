@@ -1,7 +1,7 @@
 "use client";
 
 import { supportsExport } from "@motivo/exporters";
-import type { DesignStore } from "@motivo/storage";
+import type { BrandKitStore, DesignStore } from "@motivo/storage";
 import {
   TRANSPARENT,
   createRenderContext,
@@ -21,6 +21,8 @@ import {
   type ReactNode,
 } from "react";
 import { AssetServicesContext } from "../asset-input/services-context";
+import { BrandPaletteSection } from "../brand-kit/brand-palette-section";
+import { BrandKitContext, useBrandKitView } from "../brand-kit/context";
 import { EditorControls } from "../controls/control-panel";
 import type { LocalDesignController, LocalDesignView } from "../designs/local-design";
 import { useLocalDesign } from "../designs/use-local-design";
@@ -67,6 +69,14 @@ export interface EditorShellProps {
    * autosave draft and ignores `#design=` (tests, embeds).
    */
   designs?: DesignStore;
+  /**
+   * The brand kit (IndexedDB). With it, tools with colour params offer
+   * "apply brand palette", colour pickers show brand swatches and upload
+   * fields offer brand logos and shapes.
+   */
+  brandKit?: BrandKitStore;
+  /** The Brand Kit page in the current locale, linked when it is empty. */
+  brandKitHref?: string;
   className?: string;
 }
 
@@ -99,6 +109,8 @@ export function EditorShell({
   imageInputServices,
   afterExport,
   designs,
+  brandKit,
+  brandKitHref,
   className,
 }: EditorShellProps) {
   const t = useT();
@@ -141,6 +153,7 @@ export function EditorShell({
     [t, toolName, locale],
   );
   const local = useLocalDesign(store, designs, defaultName);
+  const brandView = useBrandKitView(brandKit, brandKitHref);
 
   // Announce the variant position whenever the active variant or the variant
   // count changes. Not on array identity: edits replace `variants` without
@@ -263,173 +276,180 @@ export function EditorShell({
   };
 
   return (
-    <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
-      <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
-        <div className="flex min-w-0 flex-[1_1_16rem] items-baseline gap-3">
-          {headerStart}
-          <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
-        </div>
-        {local && save && (
-          <DesignBar
-            controller={local.controller}
-            view={local.view}
-            onSave={save}
-            enabled={hydrated}
-          />
-        )}
-        <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-1">
+    <BrandKitContext.Provider value={brandView}>
+      <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
+        <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
+          <div className="flex min-w-0 flex-[1_1_16rem] items-baseline gap-3">
+            {headerStart}
+            <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
+          </div>
+          {local && save && (
+            <DesignBar
+              controller={local.controller}
+              view={local.view}
+              onSave={save}
+              enabled={hydrated}
+            />
+          )}
+          <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-1">
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={actions.undo}
+              disabled={!canUndo}
+              aria-label={t("Editor.shell.undo")}
+              title={`${t("Editor.shell.undo")} (⌘/Ctrl+Z)`}
+              aria-keyshortcuts="Control+Z Meta+Z"
+            >
+              <UndoIcon />
+            </button>
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={actions.redo}
+              disabled={!canRedo}
+              aria-label={t("Editor.shell.redo")}
+              title={`${t("Editor.shell.redo")} (⇧+⌘/Ctrl+Z)`}
+              aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
+            >
+              <RedoIcon />
+            </button>
+          </div>
           <button
             type="button"
-            className={ICON_BUTTON}
-            onClick={actions.undo}
-            disabled={!canUndo}
-            aria-label={t("Editor.shell.undo")}
-            title={`${t("Editor.shell.undo")} (⌘/Ctrl+Z)`}
-            aria-keyshortcuts="Control+Z Meta+Z"
+            className={BUTTON_CLASS}
+            onClick={actions.newVariant}
+            aria-keyshortcuts="Space"
+            data-testid="new-variant"
           >
-            <UndoIcon />
+            <ShuffleIcon />
+            {t("Editor.shell.newVariant")}
           </button>
           <button
             type="button"
             className={ICON_BUTTON}
-            onClick={actions.redo}
-            disabled={!canRedo}
-            aria-label={t("Editor.shell.redo")}
-            title={`${t("Editor.shell.redo")} (⇧+⌘/Ctrl+Z)`}
-            aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
+            onClick={actions.help}
+            aria-label={t("Editor.shortcuts.title")}
+            aria-keyshortcuts="Shift+?"
+            title={`${t("Editor.shortcuts.title")} (?)`}
           >
-            <RedoIcon />
+            <KeyboardIcon />
+          </button>
+          <span
+            role="status"
+            aria-live="polite"
+            className="text-xs text-muted-foreground"
+            data-testid="shell-flash"
+          >
+            {flash?.message}
+          </span>
+          <button
+            type="button"
+            className={BUTTON_CLASS}
+            onClick={() => void share()}
+            disabled={!hydrated}
+            title={t("Editor.share.hint")}
+            data-testid="share-link"
+          >
+            <LinkIcon />
+            {t("Editor.share.button")}
+          </button>
+          <button
+            type="button"
+            className={PRIMARY_BUTTON_CLASS}
+            onClick={actions.export}
+            aria-haspopup="dialog"
+            aria-keyshortcuts="Control+E Meta+E"
+            title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
+          >
+            <DownloadIcon />
+            {t("Editor.shell.export")}
           </button>
         </div>
-        <button
-          type="button"
-          className={BUTTON_CLASS}
-          onClick={actions.newVariant}
-          aria-keyshortcuts="Space"
-          data-testid="new-variant"
-        >
-          <ShuffleIcon />
-          {t("Editor.shell.newVariant")}
-        </button>
-        <button
-          type="button"
-          className={ICON_BUTTON}
-          onClick={actions.help}
-          aria-label={t("Editor.shortcuts.title")}
-          aria-keyshortcuts="Shift+?"
-          title={`${t("Editor.shortcuts.title")} (?)`}
-        >
-          <KeyboardIcon />
-        </button>
-        <span
-          role="status"
-          aria-live="polite"
-          className="text-xs text-muted-foreground"
-          data-testid="shell-flash"
-        >
-          {flash?.message}
-        </span>
-        <button
-          type="button"
-          className={BUTTON_CLASS}
-          onClick={() => void share()}
-          disabled={!hydrated}
-          title={t("Editor.share.hint")}
-          data-testid="share-link"
-        >
-          <LinkIcon />
-          {t("Editor.share.button")}
-        </button>
-        <button
-          type="button"
-          className={PRIMARY_BUTTON_CLASS}
-          onClick={actions.export}
-          aria-haspopup="dialog"
-          aria-keyshortcuts="Control+E Meta+E"
-          title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
-        >
-          <DownloadIcon />
-          {t("Editor.shell.export")}
-        </button>
-      </div>
 
-      {shownNotice && (
+        {shownNotice && (
+          <div
+            role={shownNotice.tone === "error" ? "alert" : "status"}
+            className={cx(
+              "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
+              shownNotice.tone === "error" ? "bg-destructive/10" : "bg-muted",
+            )}
+            data-testid="shell-notice"
+          >
+            <p className="min-w-0 flex-[1_1_16rem]">{shownNotice.message}</p>
+            {shownNotice.url !== undefined && (
+              <>
+                <label htmlFor={`${ids}-share-url`} className="sr-only">
+                  {t("Editor.share.linkLabel")}
+                </label>
+                <input
+                  id={`${ids}-share-url`}
+                  readOnly
+                  value={shownNotice.url}
+                  onFocus={(event) => event.currentTarget.select()}
+                  className="h-8 min-w-0 flex-[1_1_16rem] rounded-md border border-input bg-background px-2 text-xs"
+                />
+              </>
+            )}
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={dismissNotice}
+              aria-label={t("Editor.share.dismiss")}
+            >
+              <CloseIcon />
+            </button>
+          </div>
+        )}
+
+        {local?.view.notice && <DesignNotice controller={local.controller} view={local.view} />}
+
         <div
-          role={shownNotice.tone === "error" ? "alert" : "status"}
           className={cx(
-            "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
-            shownNotice.tone === "error" ? "bg-destructive/10" : "bg-muted",
+            "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
+            "lg:grid-cols-[13rem_minmax(0,1fr)_20rem] lg:grid-rows-[minmax(0,1fr)_auto]",
           )}
-          data-testid="shell-notice"
         >
-          <p className="min-w-0 flex-[1_1_16rem]">{shownNotice.message}</p>
-          {shownNotice.url !== undefined && (
-            <>
-              <label htmlFor={`${ids}-share-url`} className="sr-only">
-                {t("Editor.share.linkLabel")}
-              </label>
-              <input
-                id={`${ids}-share-url`}
-                readOnly
-                value={shownNotice.url}
-                onFocus={(event) => event.currentTarget.select()}
-                className="h-8 min-w-0 flex-[1_1_16rem] rounded-md border border-input bg-background px-2 text-xs"
-              />
-            </>
-          )}
-          <button
-            type="button"
-            className={ICON_BUTTON}
-            onClick={dismissNotice}
-            aria-label={t("Editor.share.dismiss")}
+          <PreviewSection
+            zoom={zoom}
+            onZoomChange={setZoom}
+            shownScale={shownScale}
+            onScaleChange={setShownScale}
+            toolName={toolName}
+          />
+          <Filmstrip
+            tool={tool}
+            onPrevious={actions.previousVariant}
+            onNext={actions.nextVariant}
+          />
+          <PresetBar />
+          <section
+            aria-labelledby={`${ids}-controls`}
+            className="border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
           >
-            <CloseIcon />
-          </button>
+            <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
+              {t("Editor.shell.settings")}
+            </h2>
+            <BrandPaletteSection onApplied={confirm} />
+            <ImageInputSection services={imageInputServices} />
+            <AssetServicesContext.Provider value={imageInputServices}>
+              <EditorControls />
+            </AssetServicesContext.Provider>
+          </section>
         </div>
-      )}
 
-      {local?.view.notice && <DesignNotice controller={local.controller} view={local.view} />}
-
-      <div
-        className={cx(
-          "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
-          "lg:grid-cols-[13rem_minmax(0,1fr)_20rem] lg:grid-rows-[minmax(0,1fr)_auto]",
-        )}
-      >
-        <PreviewSection
-          zoom={zoom}
-          onZoomChange={setZoom}
-          shownScale={shownScale}
-          onScaleChange={setShownScale}
-          toolName={toolName}
+        <p role="status" aria-live="polite" className="sr-only" data-testid="editor-announcer">
+          {announcement}
+        </p>
+        <ShortcutHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
+        <ExportDialog
+          open={exportOpen}
+          onClose={() => setExportOpen(false)}
+          services={exportServices}
+          afterExport={afterExport}
         />
-        <Filmstrip tool={tool} onPrevious={actions.previousVariant} onNext={actions.nextVariant} />
-        <PresetBar />
-        <section
-          aria-labelledby={`${ids}-controls`}
-          className="border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
-        >
-          <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
-            {t("Editor.shell.settings")}
-          </h2>
-          <ImageInputSection services={imageInputServices} />
-          <AssetServicesContext.Provider value={imageInputServices}>
-            <EditorControls />
-          </AssetServicesContext.Provider>
-        </section>
       </div>
-
-      <p role="status" aria-live="polite" className="sr-only" data-testid="editor-announcer">
-        {announcement}
-      </p>
-      <ShortcutHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
-      <ExportDialog
-        open={exportOpen}
-        onClose={() => setExportOpen(false)}
-        services={exportServices}
-        afterExport={afterExport}
-      />
-    </div>
+    </BrandKitContext.Provider>
   );
 }
 

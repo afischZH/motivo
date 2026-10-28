@@ -227,6 +227,8 @@ export const SECTION_SLUGS = {
   palettes: { de: "farbpaletten", en: "color-palettes" },
   // Saved designs in this browser: noindex, never in the sitemap.
   myDesigns: { de: "meine-designs", en: "my-designs" },
+  // The brand kit in this browser: noindex, never in the sitemap.
+  brandKit: { de: "brand-kit", en: "brand-kit" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;

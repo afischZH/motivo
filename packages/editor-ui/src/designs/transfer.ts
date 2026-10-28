@@ -12,8 +12,8 @@
  *                   params, createdAt, updatedAt }]
  *   }
  * Thumbnails are not exported: they follow from the design (same render
- * path) and are drawn again after the import. A later version may add a
- * `brandKit` key next to `designs` (M3-AP05).
+ * path) and are drawn again after the import. The brand kit travels in a
+ * file of its own (`motivo-brandkit`, see brand-kit/transfer-format.ts).
  *
  * The import treats every file as hostile:
  *  - size limit before parsing, design count limit;
@@ -49,8 +49,10 @@ import {
   type ToolRegistry,
 } from "@motivo/tool-registry";
 import * as z from "zod";
+import { BRAND_KIT_FILE_FORMAT } from "../brand-kit/transfer-format";
 import { imageDimensions } from "../image-input/dimensions";
 import { sniffImageType } from "../image-input/sniff";
+import { ForbiddenKeyError, fileFormatOf, parseUntrustedJson, utf8Length } from "../transfer/json";
 import {
   DESIGNS_FILE_FORMAT,
   DESIGNS_FILE_MAX_BYTES,
@@ -60,9 +62,6 @@ import {
   type SkipReason,
   type SkippedDesign,
 } from "./transfer-format";
-
-/** Keys that never appear in our files and could pollute prototypes when copied. */
-const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"]);
 
 export * from "./transfer-format";
 
@@ -83,30 +82,6 @@ const entrySchema = z.object({
   createdAt: timestampSchema,
   updatedAt: timestampSchema,
 });
-
-class ForbiddenKeyError extends Error {}
-
-function parseJson(text: string): unknown {
-  return JSON.parse(text, (key, value: unknown) => {
-    if (FORBIDDEN_KEYS.has(key)) throw new ForbiddenKeyError(key);
-    return value;
-  });
-}
-
-/** Byte length of a string in UTF-8, without encoding it. */
-function utf8Length(text: string): number {
-  let bytes = 0;
-  for (let i = 0; i < text.length; i++) {
-    const c = text.charCodeAt(i);
-    if (c < 0x80) bytes += 1;
-    else if (c < 0x800) bytes += 2;
-    else if (c >= 0xd800 && c <= 0xdbff) {
-      bytes += 4;
-      i++;
-    } else bytes += 3;
-  }
-  return bytes;
-}
 
 /** Param keys of a tool that hold user files (`kind: "image"`). */
 export function imageParamKeys(tool: AnyToolDefinition): string[] {
@@ -238,7 +213,7 @@ export function parseDesignsFile(
   if (text.trim() === "") return { ok: false, error: "empty" };
   let json: unknown;
   try {
-    json = parseJson(text);
+    json = parseUntrustedJson(text);
   } catch (error) {
     return {
       ok: false,
@@ -248,6 +223,8 @@ export function parseDesignsFile(
   if (typeof json !== "object" || json === null || Array.isArray(json)) {
     return { ok: false, error: "wrong-format" };
   }
+  // A brand kit file picked by mistake: say where it belongs.
+  if (fileFormatOf(json) === BRAND_KIT_FILE_FORMAT) return { ok: false, error: "brand-kit-file" };
   const header = headerSchema.safeParse(json);
   if (!header.success || header.data.format !== DESIGNS_FILE_FORMAT) {
     return { ok: false, error: "wrong-format" };

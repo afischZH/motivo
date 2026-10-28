@@ -10,8 +10,12 @@
  * Everything stays in the browser. User SVG is only ever shown through
  * `<img>` (sanitised markup as data URI), never inserted as markup.
  */
+import type { BrandAsset } from "@motivo/storage";
 import type { ImageAsset } from "@motivo/tool-registry";
+import { Popover } from "radix-ui";
 import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from "react";
+import { useBrandKit, type BrandKitView } from "../brand-kit/context";
+import { brandImageToFile } from "../brand-kit/prepare";
 import { CropDialog } from "../asset-input/crop-dialog";
 import {
   finishAsset,
@@ -88,6 +92,7 @@ export function ImageField(props: ImageFieldProps) {
   const [status, setStatus] = useState("");
   const sourceUrl = useSourceUrl(source);
   const loadToken = useRef(0);
+  const brandKit = useBrandKit();
 
   const loadFile = async (file: File) => {
     const token = ++loadToken.current;
@@ -232,6 +237,15 @@ export function ImageField(props: ImageFieldProps) {
             >
               {asset ? t("Editor.asset.replace") : t("Editor.asset.choose")}
             </label>
+            {brandKit && (
+              <BrandAssetPicker
+                kit={brandKit}
+                disabled={reading}
+                onPick={(picked) =>
+                  void loadFile(brandImageToFile(picked.image, picked.image.name || picked.name))
+                }
+              />
+            )}
             {asset && (
               <button
                 type="button"
@@ -293,5 +307,101 @@ export function ImageField(props: ImageFieldProps) {
         />
       )}
     </div>
+  );
+}
+
+/**
+ * "Aus Brand Kit": logos and own shapes of the brand kit as a source for the
+ * upload. A picked image runs through the same checks, sanitizer and crop
+ * dialog as a file from disk.
+ */
+function BrandAssetPicker(props: {
+  kit: BrandKitView;
+  disabled: boolean;
+  onPick(asset: BrandAsset): void;
+}) {
+  const t = useT();
+  const titleId = useId();
+  const [open, setOpen] = useState(false);
+  const [assets, setAssets] = useState<BrandAsset[] | null>(null);
+
+  const load = () => {
+    props.kit.listAssets().then(setAssets, () => setAssets([]));
+  };
+
+  return (
+    <Popover.Root
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        if (next) load();
+      }}
+    >
+      <Popover.Trigger
+        className={BUTTON_CLASS}
+        disabled={props.disabled}
+        data-testid="asset-brand-kit"
+      >
+        {t("Editor.brand.fromKit")}
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          sideOffset={8}
+          align="start"
+          aria-labelledby={titleId}
+          className="z-50 grid w-72 max-w-[calc(100vw-2rem)] gap-2 rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-md"
+        >
+          <p id={titleId} className="text-sm font-medium">
+            {t("Editor.brand.assetsTitle")}
+          </p>
+          {assets === null ? (
+            <p className="text-xs text-muted-foreground">{t("Editor.brand.loading")}</p>
+          ) : assets.length === 0 ? (
+            <p className="text-xs text-muted-foreground">
+              {t("Editor.brand.assetsEmpty")}{" "}
+              {props.kit.href && (
+                <a
+                  href={props.kit.href}
+                  className="rounded-sm text-link underline underline-offset-4"
+                >
+                  {t("Editor.brand.openKit")}
+                </a>
+              )}
+            </p>
+          ) : (
+            <ul className="grid max-h-64 grid-cols-3 gap-2 overflow-y-auto">
+              {assets.map((a) => (
+                <li key={a.id}>
+                  <button
+                    type="button"
+                    className={cx(
+                      "flex w-full flex-col items-center gap-1 rounded-md border border-border p-1 text-xs hover:bg-accent",
+                      FOCUS_RING,
+                    )}
+                    aria-label={t("Editor.brand.useAsset", {
+                      name: a.name || t("Editor.brand.unnamed"),
+                    })}
+                    onClick={() => {
+                      setOpen(false);
+                      props.onPick(a);
+                    }}
+                    data-testid="asset-brand-item"
+                  >
+                    <span className="flex size-14 items-center justify-center overflow-hidden rounded-sm bg-canvas">
+                      <img
+                        src={assetThumbnailUrl(a.image)}
+                        alt=""
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </span>
+                    <span className="w-full truncate">{a.name || t("Editor.brand.unnamed")}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

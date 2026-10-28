@@ -389,6 +389,14 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * locked keys and the changed param itself are kept.
    */
   regenerateOn?: readonly (keyof Params<S> & string)[];
+  /**
+   * Maps a brand palette (2 to 10 lower-case `#rrggbb` colours) onto the
+   * params, for tools whose colours need more than the generic mapping of
+   * `applyBrandPalette` (brand-palette.ts), e.g. a swatch count. Pure;
+   * returns the changed params. Locks and the schema are applied afterwards
+   * by the caller, so the hook may ignore them.
+   */
+  brandPalette?(colors: readonly string[], current: Params<S>): Partial<Params<S>>;
   /** The single render path for preview and export. `render.kind` is the render kind. */
   render: Renderer<Params<S>>;
   exports: readonly ExportFormat[];
