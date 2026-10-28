@@ -272,7 +272,20 @@ test.describe("brand kit page", () => {
         );
       expect(await overflow()).toBeLessThanOrEqual(0);
       await openEditor(page, "blob");
-      expect(await overflow()).toBeLessThanOrEqual(0);
+      // Name the widest offenders so a failure in one browser is diagnosable from the log.
+      const offenders = await page.evaluate(() => {
+        const limit = document.documentElement.clientWidth;
+        return [...document.querySelectorAll("body *")]
+          .map((el) => ({ el, right: el.getBoundingClientRect().right }))
+          .filter(({ right }) => right > limit + 0.5)
+          .slice(0, 8)
+          .map(({ el, right }) => {
+            const testId = el.getAttribute("data-testid");
+            const cls = (el.getAttribute("class") ?? "").slice(0, 80);
+            return `${el.tagName.toLowerCase()}${testId ? `[${testId}]` : ""} .${cls} right=${Math.round(right)}`;
+          });
+      });
+      expect(await overflow(), offenders.join("\n")).toBeLessThanOrEqual(0);
     });
   }
 
