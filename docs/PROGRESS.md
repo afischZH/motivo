@@ -14,7 +14,7 @@
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
-| M4c-AP01 | **Avatar- und Platzhalter-Generator** (L1) | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap01-avatar` |
+| M4c-AP01 | **Avatar- und Platzhalter-Generator** (L1) | engine-dev + ui-dev | erledigt | – | Branch `m4c/ap01-avatar`, gemergt. Zwei Tools mit gemeinsamem Engine-Modul (Leinwandgrösse gehört zum Design, nicht zu den Params): `avatar` (Initialen, gespiegeltes Identicon, Bauhaus-Komposition; Farbe und Motiv per Hash des Namens, Kreis/abgerundet/Quadrat, Füllung einfarbig, OKLCH-Verlauf oder CSS-Muster, Vordergrund automatisch per Kontrast, 7 Presets) und `placeholder-image` (beliebige Grösse plus 5 Werbeformate, Beschriftung W × H oder eigener Text, Diagonalen, Rahmen, 7 Presets). Nur System-Schriften (SVG sieht je Betriebssystem leicht anders aus, PNG nicht). Helfer in ARCHITECTURE 4.13. Tests: Engine 1174, Registry 2326, Web 695; E2E Chromium 14 plus 3 Vorschau == PNG. Offen: ZIP-Stapelexport von Namenslisten (ZIP-Helfer kommt mit AP02); `main-thread-budget.test.ts` unter Parallel-Last einmal rot (Flow, Guilloche, Low-Poly), allein grün |
 | M4c-AP02 | **Favicon- und App-Icon-Paket** (L2), ZIP ohne Library | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap02-favicon` |
 | M4c-AP03 | **Animierter CSS-Verlauf** (L3) | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap03-animated-gradient` |
 | M4c-AP04 | **Duotone und Gradient Map** (L4) und **ASCII- und Punktmatrix-Art** (L5), gemeinsame Bildeffekt-Basis im Worker | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap04-image-effects` |
