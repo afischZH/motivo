@@ -283,6 +283,7 @@
       "removedFile": "Deine Datei ist entfernt.",
       "dropNow": "Loslassen, um die Datei zu laden",
       "hint": "Zieh ein SVG, PNG, JPG oder WebP hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Die Datei bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
+      "hintRaster": "Zieh ein Foto (PNG, JPG oder WebP) hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Das Foto bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
       "thumbnail": "Deine Datei: {name}",
       "reading": "Datei wird gelesen …",
       "ready": "{name} ist zugeschnitten und im Muster.",
@@ -661,6 +662,7 @@
         "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
         "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals.",
         "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals.",
+        "raster-only": "Hier geht nur ein Bild im Format PNG, JPG oder WebP.",
         "shape-not-svg": "Shapes müssen SVG-Dateien sein. Logos dürfen auch PNG, JPG oder WebP sein."
       }
     }

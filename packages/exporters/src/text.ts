@@ -46,6 +46,9 @@ function kindSupports(tool: AnyToolDefinition, format: ExportFormat): boolean {
         format === "jpg" ||
         format === "webp"
       );
+    case "image-effect":
+      // Pixels only: the editor renders them in its raster-effect worker.
+      return format === "png" || format === "jpg" || format === "webp";
     default:
       return false;
   }

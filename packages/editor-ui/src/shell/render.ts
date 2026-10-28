@@ -6,6 +6,7 @@
  */
 import {
   createRenderContext,
+  isImageEffectTool,
   type AnyToolDefinition,
   type CanvasSize,
   type RenderKind,
@@ -46,6 +47,17 @@ export type MotifOutput =
       element?: MotifElement;
       /** Global rules (`@property`, `@keyframes`) for a stylesheet. */
       rules?: string;
+    }
+  | {
+      /**
+       * An image effect: the pixels come from the raster-effect worker
+       * (`RasterMotif`), so the output only names the design.
+       */
+      kind: "raster";
+      tool: AnyToolDefinition;
+      params: ParamValues;
+      seed: number;
+      size: CanvasSize;
     }
   | { kind: "unsupported"; renderKind: RenderKind };
 
@@ -88,6 +100,10 @@ export function renderMotif(
       if (out.rules) motif.rules = out.rules;
       return motif;
     }
+    case "image-effect":
+      return isImageEffectTool(tool)
+        ? { kind: "raster", tool, params, seed, size: { width: size.width, height: size.height } }
+        : { kind: "unsupported", renderKind: renderer.kind };
     default:
       return { kind: "unsupported", renderKind: renderer.kind };
   }

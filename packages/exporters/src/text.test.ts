@@ -4,6 +4,7 @@ import {
   createRenderContext,
   cssGradientTool,
   defineTool,
+  duotoneTool,
   glassEffectsTool,
   polkaDotsTool,
   svgWavesTool,
@@ -56,6 +57,14 @@ describe("supportsExport", () => {
     expect(supportsExport(blobTool, "svg")).toBe(true);
     expect(supportsExport(cssGradientTool, "css")).toBe(true);
     expect(supportsExport(textTool, "svg")).toBe(false);
+  });
+
+  it("offers image effects as raster formats only", () => {
+    for (const format of ["png", "jpg", "webp"] as const) {
+      expect(supportsExport(duotoneTool, format)).toBe(true);
+    }
+    expect(supportsExport(duotoneTool, "svg")).toBe(false);
+    expect(supportsExport(duotoneTool, "gif")).toBe(false);
   });
 
   it("lets params narrow the formats (exportsFor)", () => {
@@ -117,13 +126,17 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
     }
   });
 
-  it("is unaffected by an rng the caller already consumed", () => {
-    const used = ctx(5);
-    for (let i = 0; i < 10; i++) used.rng.next();
-    expect(renderDesignSvg(tool, tool.defaults, used)).toBe(
-      renderDesignSvg(tool, tool.defaults, ctx(5)),
-    );
-  });
+  // Image effects have no SVG; their determinism is tested in the tool registry.
+  it.runIf(tool.render.kind !== "image-effect")(
+    "is unaffected by an rng the caller already consumed",
+    () => {
+      const used = ctx(5);
+      for (let i = 0; i < 10; i++) used.rng.next();
+      expect(renderDesignSvg(tool, tool.defaults, used)).toBe(
+        renderDesignSvg(tool, tool.defaults, ctx(5)),
+      );
+    },
+  );
 });
 
 describe("exportSvg", () => {

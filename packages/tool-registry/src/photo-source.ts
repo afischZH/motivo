@@ -4,6 +4,10 @@
  * and tests, so every caller feeds an effect the same way.
  */
 import { resizeCover } from "@musterli/effects";
+
+// The editor worker crops photos exactly like `resizeCover` does.
+export { coverRect } from "@musterli/effects";
+import { CANVAS_EDGE_MAX, CANVAS_EDGE_MIN } from "./common";
 import { createRenderContext } from "./render";
 import type { AnyToolDefinition, CanvasSize, ImageEffectRenderer, PixelBuffer } from "./types";
 
@@ -46,6 +50,30 @@ export function photoAssetOf(tool: AnyToolDefinition, params: Values): PhotoAsse
     typeof asset.height === "number"
     ? { href: asset.href, width: asset.width, height: asset.height }
     : null;
+}
+
+/**
+ * Design size for a new photo: its pixel size, enlarged when an edge is
+ * below `CANVAS_EDGE_MIN` (aspect kept as far as the canvas limits allow).
+ * `null` for anything that is not a raster asset.
+ */
+export function photoDesignSize(value: unknown): CanvasSize | null {
+  if (typeof value !== "object" || value === null) return null;
+  const asset = value as Record<string, unknown>;
+  const { width, height } = asset;
+  if (
+    asset.kind !== "raster" ||
+    typeof width !== "number" ||
+    typeof height !== "number" ||
+    !(width > 0) ||
+    !(height > 0)
+  ) {
+    return null;
+  }
+  const k = Math.max(1, CANVAS_EDGE_MIN / Math.min(width, height));
+  const edge = (v: number) =>
+    Math.min(CANVAS_EDGE_MAX, Math.max(CANVAS_EDGE_MIN, Math.round(v * k)));
+  return { width: edge(width), height: edge(height) };
 }
 
 /** Whether the tool renders through a pixel effect (needs the photo pipeline). */
