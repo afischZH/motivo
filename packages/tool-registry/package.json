@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@motivo/engine": "workspace:*",
+    "@motivo/svg-sanitizer": "workspace:*",
     "zod": "^4.6.7"
   }
 }
