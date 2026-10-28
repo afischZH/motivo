@@ -65,7 +65,7 @@ export function BrandPaletteSection(props: BrandPaletteSectionProps) {
             </label>
             <select
               id={`${ids}-select`}
-              className={cx(INPUT_CLASS, "h-8 w-0 min-w-0 flex-1")}
+              className={cx(INPUT_CLASS, "h-8 w-0 min-w-0 flex-1 truncate")}
               value={selected.id}
               onChange={(event) => {
                 setChosen(event.currentTarget.value);

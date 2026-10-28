@@ -423,9 +423,10 @@ export function EditorShell({
             onNext={actions.nextVariant}
           />
           <PresetBar />
+          {/* WebKit counts a <select>'s clipped label text as page overflow on narrow screens. */}
           <section
             aria-labelledby={`${ids}-controls`}
-            className="border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
+            className="overflow-x-clip border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
           >
             <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
               {t("Editor.shell.settings")}
