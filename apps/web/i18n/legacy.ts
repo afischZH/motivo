@@ -11,6 +11,8 @@ import {
   categoryIdFromAnySlug,
   categorySegment,
   categorySlug,
+  collectionItemFromAnySlug,
+  collectionItemSlug,
   converterIdFromAnySlug,
   converterSlug,
   sectionFromAnySlug,
@@ -56,6 +58,11 @@ export function canonicalRedirect(pathname: string): string | null {
     const patternId = patternIdFromAnySlug(slug);
     if (!patternId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${patternSlug(patternId, locale)}`;
+  } else if (section === "gradients" || section === "palettes") {
+    // Collection item page: `/de/farbverlaeufe/<gradient slug>`.
+    const itemId = segments.length === 3 ? collectionItemFromAnySlug(section, slug) : undefined;
+    if (!itemId) return null;
+    canonical = `/${locale}/${sectionSlug(section, locale)}/${collectionItemSlug(section, itemId, locale)}`;
   } else if (section === "convert") {
     const converterId = converterIdFromAnySlug(slug);
     if (!converterId) return null;

@@ -88,6 +88,16 @@ describe("path helpers", () => {
     });
     expect(routeFromPathname("/css-patterns/nope", { patternSlug: "nope" }, "en")).toBeUndefined();
     expect(routeFromPathname("/tools/nope", { toolSlug: "nope" }, "en")).toBeUndefined();
+    expect(routeFromPathname("/gradients", {}, "de")).toEqual({ page: "gradients" });
+    expect(
+      routeFromPathname("/gradients/[gradientSlug]", { gradientSlug: "gletscher" }, "de"),
+    ).toEqual({ page: "gradient", gradientId: "glacier" });
+    expect(routeFromPathname("/en/color-palettes/lido", {}, "en")).toEqual({
+      page: "palette",
+      paletteId: "lido",
+    });
+    expect(routeFromPathname("/de/farbpaletten", {}, "de")).toEqual({ page: "palettes" });
+    expect(routeFromPathname("/palettes/nope", { paletteSlug: "nope" }, "en")).toBeUndefined();
   });
 
   it("accepts the rewritten internal path and the external path", () => {

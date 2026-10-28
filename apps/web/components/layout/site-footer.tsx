@@ -37,6 +37,16 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/gradients" className={LINK_CLASS}>
+                  {tFooter("gradients")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/palettes" className={LINK_CLASS}>
+                  {tFooter("palettes")}
+                </Link>
+              </li>
+              <li>
                 <Link href="/convert" className={LINK_CLASS}>
                   {tFooter("converters")}
                 </Link>

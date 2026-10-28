@@ -88,6 +88,94 @@ export const PATTERN_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   squares: { de: "quadrate", en: "squares" },
 };
 
+/**
+ * Curated gradient collection (`lib/collections/gradients.ts`) id to its
+ * localized slugs, used in `/[locale]/<gradients section>/<slug>`. The
+ * contract test in `slugs.test.ts` requires an entry for every gradient.
+ */
+export const GRADIENT_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
+  alpenglow: { de: "alpengluehen", en: "alpenglow" },
+  apricot: { de: "aprikose", en: "apricot" },
+  embers: { de: "glut", en: "embers" },
+  "pumpkin-patch": { de: "kuerbisfeld", en: "pumpkin-patch" },
+  terracotta: { de: "terrakotta", en: "terracotta" },
+  "cinnamon-star": { de: "zimtstern", en: "cinnamon-star" },
+  glacier: { de: "gletscher", en: "glacier" },
+  "mountain-lake": { de: "bergsee", en: "mountain-lake" },
+  "north-wind": { de: "nordwind", en: "north-wind" },
+  "rhine-falls": { de: "rheinfall", en: "rhine-falls" },
+  "foehn-sky": { de: "foehnhimmel", en: "foehn-sky" },
+  peppermint: { de: "pfefferminz", en: "peppermint" },
+  "candy-floss": { de: "zuckerwatte", en: "candy-floss" },
+  "peach-blossom": { de: "pfirsichbluete", en: "peach-blossom" },
+  "lavender-field": { de: "lavendelfeld", en: "lavender-field" },
+  "morning-dew": { de: "morgentau", en: "morning-dew" },
+  macaron: { de: "macaron", en: "macaron" },
+  "soap-bubble": { de: "seifenblase", en: "soap-bubble" },
+  kingfisher: { de: "eisvogel", en: "kingfisher" },
+  "neon-night": { de: "neonnacht", en: "neon-night" },
+  parrot: { de: "papagei", en: "parrot" },
+  hibiscus: { de: "hibiskus", en: "hibiscus" },
+  carnival: { de: "fasnacht", en: "carnival" },
+  "northern-lights": { de: "nordlicht", en: "northern-lights" },
+  observatory: { de: "sternwarte", en: "observatory" },
+  "fir-forest": { de: "tannenwald", en: "fir-forest" },
+  "deep-sea": { de: "tiefsee", en: "deep-sea" },
+  blackberry: { de: "brombeere", en: "blackberry" },
+  volcano: { de: "vulkan", en: "volcano" },
+  espresso: { de: "espresso", en: "espresso" },
+  "sea-of-fog": { de: "nebelmeer", en: "sea-of-fog" },
+  linen: { de: "leinen", en: "linen" },
+  pebble: { de: "kieselstein", en: "pebble" },
+  parchment: { de: "pergament", en: "parchment" },
+  "dawn-gray": { de: "morgengrau", en: "dawn-gray" },
+  slate: { de: "schiefer", en: "slate" },
+};
+
+/**
+ * Curated palette collection (`lib/collections/palettes.ts`) id to its
+ * localized slugs, used in `/[locale]/<palettes section>/<slug>`. The
+ * contract test in `slugs.test.ts` requires an entry for every palette.
+ */
+export const PALETTE_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
+  "clay-oven": { de: "lehmofen", en: "clay-oven" },
+  "autumn-forest": { de: "herbstwald", en: "autumn-forest" },
+  vineyard: { de: "rebberg", en: "vineyard" },
+  "spice-market": { de: "gewuerzmarkt", en: "spice-market" },
+  sandstone: { de: "sandstein", en: "sandstone" },
+  moorland: { de: "moorland", en: "moorland" },
+  lemongrass: { de: "zitronengras", en: "lemongrass" },
+  lido: { de: "seebad", en: "lido" },
+  "garden-party": { de: "gartenparty", en: "garden-party" },
+  "mint-ice": { de: "minzeis", en: "mint-ice" },
+  "spring-market": { de: "fruehlingsmarkt", en: "spring-market" },
+  "alpine-meadow": { de: "bergwiese", en: "alpine-meadow" },
+  sorbet: { de: "sorbet", en: "sorbet" },
+  "cloud-castle": { de: "wolkenschloss", en: "cloud-castle" },
+  gelato: { de: "glace", en: "gelato" },
+  watercolor: { de: "aquarell", en: "watercolor" },
+  peony: { de: "pfingstrose", en: "peony" },
+  "chalk-drawing": { de: "kreidezeichnung", en: "chalk-drawing" },
+  "pop-art": { de: "pop-art", en: "pop-art" },
+  "street-party": { de: "strassenfest", en: "street-party" },
+  signal: { de: "signal", en: "signal" },
+  hummingbird: { de: "kolibri", en: "hummingbird" },
+  workshop: { de: "werkstatt", en: "workshop" },
+  fireworks: { de: "feuerwerk", en: "fireworks" },
+  "night-train": { de: "nachtzug", en: "night-train" },
+  "ocean-trench": { de: "ozeangraben", en: "ocean-trench" },
+  fireside: { de: "kaminfeuer", en: "fireside" },
+  "velvet-curtain": { de: "samtvorhang", en: "velvet-curtain" },
+  "forest-night": { de: "waldnacht", en: "forest-night" },
+  planetarium: { de: "planetarium", en: "planetarium" },
+  concrete: { de: "beton", en: "concrete" },
+  "wool-sweater": { de: "wollpullover", en: "wool-sweater" },
+  granite: { de: "granit", en: "granite" },
+  "print-shop": { de: "druckerei", en: "print-shop" },
+  "timber-cabin": { de: "holzhaus", en: "timber-cabin" },
+  "winter-sky": { de: "winterhimmel", en: "winter-sky" },
+};
+
 /** Converter id to its localized slugs. */
 export const CONVERTER_SLUGS: Readonly<Record<ConverterId, LocalizedSlugs>> = {
   "svg-to-css": { de: "svg-zu-css", en: "svg-to-css" },
@@ -133,6 +221,8 @@ export const SECTION_SLUGS = {
   imprint: { de: "impressum", en: "imprint" },
   privacy: { de: "datenschutz", en: "privacy" },
   founders: { de: "founders-warteliste", en: "founders-waitlist" },
+  gradients: { de: "farbverlaeufe", en: "gradients" },
+  palettes: { de: "farbpaletten", en: "color-palettes" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;
@@ -263,4 +353,32 @@ export function patternIdFromSlug(slug: string, locale: AnyLocale): string | und
 export function patternIdFromAnySlug(value: string): string | undefined {
   if (Object.hasOwn(PATTERN_SLUGS, value)) return value;
   return findId(PATTERN_SLUGS, (entry) => hasSlug(entry, value));
+}
+
+/** The two curated collections: gradients and palettes. */
+export type CollectionKind = "gradients" | "palettes";
+
+const COLLECTION_SLUGS: Readonly<Record<CollectionKind, Readonly<Record<string, LocalizedSlugs>>>> =
+  { gradients: GRADIENT_SLUGS, palettes: PALETTE_SLUGS };
+
+/** Slug of a collection item in a locale. An item without an entry falls back to its id. */
+export function collectionItemSlug(kind: CollectionKind, id: string, locale: AnyLocale): string {
+  const entry = COLLECTION_SLUGS[kind][id];
+  return entry ? pick(entry, locale) : id;
+}
+
+/** Item id for the slug this locale uses, or undefined. */
+export function collectionItemFromSlug(
+  kind: CollectionKind,
+  slug: string,
+  locale: AnyLocale,
+): string | undefined {
+  return findId(COLLECTION_SLUGS[kind], (entry) => pick(entry, locale) === slug);
+}
+
+/** Item id for any known spelling (id or a slug of any locale), for redirects. */
+export function collectionItemFromAnySlug(kind: CollectionKind, value: string): string | undefined {
+  const map = COLLECTION_SLUGS[kind];
+  if (Object.hasOwn(map, value)) return value;
+  return findId(map, (entry) => hasSlug(entry, value));
 }

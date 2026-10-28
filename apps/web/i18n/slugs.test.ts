@@ -7,6 +7,8 @@ import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { curatedGradients } from "@/lib/collections/gradients";
+import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 
 import { ALL_LOCALES, ENABLED_LOCALES } from "./locales";
@@ -20,6 +22,9 @@ import {
   categoryIdFromAnySlug,
   categoryIdFromSlug,
   categorySlug,
+  collectionItemFromAnySlug,
+  GRADIENT_SLUGS,
+  PALETTE_SLUGS,
   TOOL_SLUGS,
   converterIdFromAnySlug,
   converterIdFromSlug,
@@ -116,6 +121,29 @@ describe("CSS pattern slug map", () => {
     expect(patternIdFromAnySlug("dots-duo")).toBe("dots-duo");
     expect(patternIdFromAnySlug("toString")).toBeUndefined();
     expect(sectionFromAnySlug("css-muster")).toBe("cssPatterns");
+  });
+});
+
+describe("collection slug maps", () => {
+  it("have an entry for every curated item and nothing else", () => {
+    const gradients = curatedGradients().map((g) => g.id);
+    const palettes = curatedPalettes().map((p) => p.id);
+    for (const id of gradients)
+      expect(GRADIENT_SLUGS[id], `add "${id}" to GRADIENT_SLUGS`).toBeDefined();
+    for (const id of palettes)
+      expect(PALETTE_SLUGS[id], `add "${id}" to PALETTE_SLUGS`).toBeDefined();
+    expect(Object.keys(GRADIENT_SLUGS).filter((id) => !gradients.includes(id))).toEqual([]);
+    expect(Object.keys(PALETTE_SLUGS).filter((id) => !palettes.includes(id))).toEqual([]);
+  });
+
+  it("resolve any spelling for redirects", () => {
+    expect(collectionItemFromAnySlug("gradients", "gletscher")).toBe("glacier");
+    expect(collectionItemFromAnySlug("gradients", "glacier")).toBe("glacier");
+    expect(collectionItemFromAnySlug("palettes", "lehmofen")).toBe("clay-oven");
+    expect(collectionItemFromAnySlug("palettes", "gletscher")).toBeUndefined();
+    expect(collectionItemFromAnySlug("palettes", "toString")).toBeUndefined();
+    expect(sectionFromAnySlug("farbverlaeufe")).toBe("gradients");
+    expect(sectionFromAnySlug("color-palettes")).toBe("palettes");
   });
 });
 
