@@ -2,6 +2,8 @@ import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { curatedGradients } from "@/lib/collections/gradients";
+import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 
 import { canonicalRedirect } from "./legacy";
@@ -46,6 +48,17 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/css-patterns")).toBe("/de/css-muster");
     expect(canonicalRedirect("/de/css-muster/zickzack")).toBeNull();
     expect(canonicalRedirect("/de/css-muster/nope")).toBeNull();
+  });
+
+  it("redirects gradient and palette pages to this locale's section and slug", () => {
+    expect(canonicalRedirect("/en/farbverlaeufe/alpengluehen")).toBe("/en/gradients/alpenglow");
+    expect(canonicalRedirect("/de/gradients/alpenglow")).toBe("/de/farbverlaeufe/alpengluehen");
+    expect(canonicalRedirect("/de/farbverlaeufe/alpenglow")).toBe("/de/farbverlaeufe/alpengluehen");
+    expect(canonicalRedirect("/en/farbpaletten")).toBe("/en/color-palettes");
+    expect(canonicalRedirect("/de/color-palettes/clay-oven")).toBe("/de/farbpaletten/lehmofen");
+    expect(canonicalRedirect("/de/farbpaletten/lehmofen")).toBeNull();
+    expect(canonicalRedirect("/de/farbpaletten/nope")).toBeNull();
+    expect(canonicalRedirect("/de/farbpaletten/lehmofen/mehr")).toBeNull();
   });
 
   it("redirects legal pages to this locale's slug", () => {
@@ -95,6 +108,10 @@ describe("canonicalRedirect", () => {
       ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
       { page: "patterns" },
       ...libraryPatterns().map((p): AppRoute => ({ page: "pattern", patternId: p.id })),
+      { page: "gradients" },
+      ...curatedGradients().map((g): AppRoute => ({ page: "gradient", gradientId: g.id })),
+      { page: "palettes" },
+      ...curatedPalettes().map((p): AppRoute => ({ page: "palette", paletteId: p.id })),
     ];
     for (const route of routes) {
       const paths = localizedPaths(route);

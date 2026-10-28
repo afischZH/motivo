@@ -5,6 +5,9 @@ import { ENABLED_LOCALES } from "@/i18n/locales";
 import { toolLandingPaths } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { collectionItemSlug } from "@/i18n/slugs";
+import { curatedGradients } from "@/lib/collections/gradients";
+import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 import { LEGAL_CONFIG } from "@/lib/legal/config";
 
@@ -23,6 +26,10 @@ describe("sitemap", () => {
       registry.list().length +
       1 +
       libraryPatterns().length +
+      1 +
+      curatedGradients().length +
+      1 +
+      curatedPalettes().length +
       1 +
       CONVERTER_IDS.length +
       1 + // Founders waitlist
@@ -61,6 +68,29 @@ describe("sitemap", () => {
     for (const url of urls) expect(new URL(url).origin).toBe("https://example.test");
     expect(urls).toContain("https://example.test/de/tools/kategorie/farben");
     expect(urls).toContain("https://example.test/en/convert/svg-to-css");
+  });
+
+  it("contains both collections and every item page with alternates", () => {
+    expect(urls).toContain("https://example.test/de/farbverlaeufe");
+    expect(urls).toContain("https://example.test/en/color-palettes");
+    for (const g of curatedGradients()) {
+      expect(urls).toContain(
+        `https://example.test/en/gradients/${collectionItemSlug("gradients", g.id, "en")}`,
+      );
+    }
+    for (const p of curatedPalettes()) {
+      expect(urls).toContain(
+        `https://example.test/de/farbpaletten/${collectionItemSlug("palettes", p.id, "de")}`,
+      );
+    }
+    const glacier = entries.find(
+      (e) => e.url === "https://example.test/de/farbverlaeufe/gletscher",
+    );
+    expect(glacier?.alternates?.languages).toEqual({
+      de: "https://example.test/de/farbverlaeufe/gletscher",
+      en: "https://example.test/en/gradients/glacier",
+      "x-default": "https://example.test/en/gradients/glacier",
+    });
   });
 
   it("contains the CSS pattern library and every pattern page with alternates", () => {

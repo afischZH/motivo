@@ -13,6 +13,8 @@ import { routing } from "./routing";
 import {
   categoryIdFromSlug,
   categorySlug,
+  collectionItemFromSlug,
+  collectionItemSlug,
   converterIdFromSlug,
   converterSlug,
   isCategorySegment,
@@ -36,6 +38,10 @@ export type AppRoute =
   | { page: "converter"; converterId: ConverterId }
   | { page: "patterns" }
   | { page: "pattern"; patternId: string }
+  | { page: "gradients" }
+  | { page: "gradient"; gradientId: string }
+  | { page: "palettes" }
+  | { page: "palette"; paletteId: string }
   | { page: "imprint" }
   | { page: "privacy" }
   | { page: "founders" }
@@ -87,6 +93,20 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return {
         pathname: "/css-patterns/[patternSlug]" as const,
         params: { patternSlug: patternSlug(route.patternId, locale) },
+      };
+    case "gradients":
+      return "/gradients" as const;
+    case "gradient":
+      return {
+        pathname: "/gradients/[gradientSlug]" as const,
+        params: { gradientSlug: collectionItemSlug("gradients", route.gradientId, locale) },
+      };
+    case "palettes":
+      return "/palettes" as const;
+    case "palette":
+      return {
+        pathname: "/palettes/[paletteSlug]" as const,
+        params: { paletteSlug: collectionItemSlug("palettes", route.paletteId, locale) },
       };
   }
 }
@@ -188,6 +208,18 @@ export function routeFromPathname(
     const slug = param(params.patternSlug);
     const patternId = slug ? patternIdFromSlug(slug, locale) : undefined;
     return patternId ? { page: "pattern", patternId } : undefined;
+  }
+  if (section === "gradients") {
+    if (segments.length === 1) return { page: "gradients" };
+    const slug = param(params.gradientSlug);
+    const gradientId = slug ? collectionItemFromSlug("gradients", slug, locale) : undefined;
+    return gradientId && segments.length === 2 ? { page: "gradient", gradientId } : undefined;
+  }
+  if (section === "palettes") {
+    if (segments.length === 1) return { page: "palettes" };
+    const slug = param(params.paletteSlug);
+    const paletteId = slug ? collectionItemFromSlug("palettes", slug, locale) : undefined;
+    return paletteId && segments.length === 2 ? { page: "palette", paletteId } : undefined;
   }
   if (section === "imprint" || section === "privacy") {
     return segments.length === 1 ? { page: section } : undefined;

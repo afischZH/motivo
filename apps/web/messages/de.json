@@ -1896,7 +1896,9 @@
     "converters": "Konverter",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "founders": "Founders-Warteliste"
+    "founders": "Founders-Warteliste",
+    "gradients": "Farbverläufe",
+    "palettes": "Farbpaletten"
   },
   "Legal": {
     "draftBanner": {
@@ -2155,5 +2157,448 @@
     "ignore": "Du hast dich nicht angemeldet? Dann ignoriere diese E-Mail einfach. Ohne Bestätigung löschen wir deine Adresse nach spätestens {days} Tagen.",
     "unsubscribe": "Abmelden",
     "privacy": "Datenschutz"
+  },
+  "Collections": {
+    "copy": "Kopieren",
+    "copyLabel": "{format} kopieren",
+    "copyBefore": "",
+    "copyAfter": "kopieren",
+    "copied": "Kopiert! Ab ins Projekt damit.",
+    "copiedShort": "Kopiert",
+    "copyFailed": "Das hat nicht geklappt. Markiere den Code und kopiere ihn von Hand.",
+    "copyFailedShort": "Fehlgeschlagen",
+    "colorsLabel": "Farben",
+    "colorLabel": "Farbe {index}",
+    "formats": {
+      "hex": "HEX",
+      "rgb": "RGB",
+      "oklch": "OKLCH"
+    },
+    "contrast": "Text in {text}, Kontrast {ratio}:1",
+    "black": "Schwarz",
+    "white": "Weiss",
+    "groupsLabel": "Nach Stimmung springen",
+    "openIn": "{tool} öffnen",
+    "variantPreview": "Vorschau in {tool}",
+    "gradientsTeaser": {
+      "heading": "Fertige Farbverläufe",
+      "lead": "Über 30 eigene Verläufe mit CSS-Code zum Kopieren, jeder direkt im Editor anpassbar.",
+      "link": "Zur Verlaufssammlung"
+    },
+    "palettesTeaser": {
+      "heading": "Fertige Farbpaletten",
+      "lead": "Über 30 Paletten nach Stimmung, mit HEX-, RGB- und OKLCH-Werten zum Kopieren.",
+      "link": "Zur Palettensammlung"
+    }
+  },
+  "GradientCollection": {
+    "nav": "Farbverläufe",
+    "metaTitle": "{count} Farbverläufe mit CSS-Code | Motivo",
+    "metaDescription": "{count} eigene Farbverläufe nach Stimmung: warm, kühl, pastell, leuchtend, dunkel und dezent. CSS kopieren oder im Editor als Mesh- oder verschwommenen Verlauf weiterbauen.",
+    "title": "Farbverläufe",
+    "lead": "Eine Sammlung eigener Verläufe, berechnet im OKLCH-Farbraum, damit die Übergänge sauber und ohne graue Mitte bleiben. Kopiere das CSS oder öffne einen Verlauf im Editor.",
+    "count": "{count, plural, one {# Verlauf} other {# Verläufe}}",
+    "openGenerator": "Eigenen Verlauf gestalten",
+    "ogAlt": "Auswahl an Farbverläufen von Motivo",
+    "groups": {
+      "warm": {
+        "name": "Warm",
+        "description": "Gelb, Orange und Rot für Energie und Wärme."
+      },
+      "cool": {
+        "name": "Kühl",
+        "description": "Blau, Türkis und Mint für Ruhe und Frische."
+      },
+      "pastel": {
+        "name": "Pastell",
+        "description": "Helle, weiche Töne für freundliche Flächen."
+      },
+      "vivid": {
+        "name": "Leuchtend",
+        "description": "Kräftige Farben, die auffallen."
+      },
+      "dark": {
+        "name": "Dunkel",
+        "description": "Tiefe Töne für den Dark Mode und hellen Text."
+      },
+      "subtle": {
+        "name": "Dezent",
+        "description": "Fast neutrale Verläufe für ruhige Hintergründe."
+      }
+    },
+    "items": {
+      "alpenglow": {
+        "name": "Alpenglühen",
+        "description": "Warmes Gelb, Orange und Rosenrot wie das letzte Licht auf den Gipfeln."
+      },
+      "apricot": {
+        "name": "Aprikose",
+        "description": "Sanfter Übergang von cremigem Hellgelb zu reifem Aprikosenorange."
+      },
+      "embers": {
+        "name": "Glut",
+        "description": "Ein radialer Verlauf von Goldgelb über Orange zu dunklem Rot, wie glühende Kohlen."
+      },
+      "pumpkin-patch": {
+        "name": "Kürbisfeld",
+        "description": "Kräftiges Gelb und sattes Orange, quer von links nach rechts."
+      },
+      "terracotta": {
+        "name": "Terrakotta",
+        "description": "Von hellem Ton zu gebranntem Rotbraun, erdig und ruhig."
+      },
+      "cinnamon-star": {
+        "name": "Zimtstern",
+        "description": "Helles Creme, Zimtbraun und dunkler Kakao, gemütlich wie Weihnachtsgebäck."
+      },
+      "glacier": {
+        "name": "Gletscher",
+        "description": "Fast weisses Eisblau, das nach unten in kräftiges Blau übergeht."
+      },
+      "mountain-lake": {
+        "name": "Bergsee",
+        "description": "Klares Türkis und kühles Blau wie ein See an einem Sommermorgen."
+      },
+      "north-wind": {
+        "name": "Nordwind",
+        "description": "Ein zurückhaltendes Blaugrau, frisch und gut lesbar für Text darüber."
+      },
+      "rhine-falls": {
+        "name": "Rheinfall",
+        "description": "Gischtweiss, Wassergrün und tiefes Blau in einem langen Verlauf."
+      },
+      "foehn-sky": {
+        "name": "Föhnhimmel",
+        "description": "Klares Himmelblau, das in ein weiches Violett kippt."
+      },
+      "peppermint": {
+        "name": "Pfefferminz",
+        "description": "Helles Minzgrün bis kühles Türkis, leicht und sauber."
+      },
+      "candy-floss": {
+        "name": "Zuckerwatte",
+        "description": "Zartes Rosa und Fliederblau, verspielt und weich."
+      },
+      "peach-blossom": {
+        "name": "Pfirsichblüte",
+        "description": "Ein heller Pfirsichton, der in ein warmes Rosé übergeht."
+      },
+      "lavender-field": {
+        "name": "Lavendelfeld",
+        "description": "Von hellem Flieder zu kräftigerem Lavendel, ruhig und elegant."
+      },
+      "morning-dew": {
+        "name": "Morgentau",
+        "description": "Ein Hauch Grün und ein Hauch Blau, kaum sichtbar und sehr frisch."
+      },
+      "macaron": {
+        "name": "Macaron",
+        "description": "Rosa, Vanille und Pistazie nebeneinander wie in der Konditorei."
+      },
+      "soap-bubble": {
+        "name": "Seifenblase",
+        "description": "Ein konischer Verlauf in schimmernden Pastelltönen, der sich zum Kreis schliesst."
+      },
+      "kingfisher": {
+        "name": "Eisvogel",
+        "description": "Leuchtendes Blau mit einem orangen Akzent, wie das Gefieder des Vogels."
+      },
+      "neon-night": {
+        "name": "Neonnacht",
+        "description": "Pink, Violett und Cyan wie Leuchtreklame in einer Regennacht."
+      },
+      "parrot": {
+        "name": "Papagei",
+        "description": "Limettengrün, Türkis und Blau, laut und fröhlich."
+      },
+      "hibiscus": {
+        "name": "Hibiskus",
+        "description": "Ein radialer Verlauf von Orange zu leuchtendem Pink."
+      },
+      "carnival": {
+        "name": "Fasnacht",
+        "description": "Gelb, Rot und Violett, bunt wie ein Umzug mit Guggenmusik."
+      },
+      "northern-lights": {
+        "name": "Nordlicht",
+        "description": "Grün, Türkis und Violett, wie Polarlicht über einem dunklen Himmel."
+      },
+      "observatory": {
+        "name": "Sternwarte",
+        "description": "Ein tiefes Nachtblau, das von oben her heller wird."
+      },
+      "fir-forest": {
+        "name": "Tannenwald",
+        "description": "Dunkles Tannengrün bis fast Schwarz, ruhig und edel."
+      },
+      "deep-sea": {
+        "name": "Tiefsee",
+        "description": "Von Petrolblau in die Dunkelheit, ideal hinter hellem Text."
+      },
+      "blackberry": {
+        "name": "Brombeere",
+        "description": "Sattes Beerenrot und dunkles Violett."
+      },
+      "volcano": {
+        "name": "Vulkan",
+        "description": "Glühendes Orange am unteren Rand, das nach oben in verkohltes Dunkel übergeht."
+      },
+      "espresso": {
+        "name": "Espresso",
+        "description": "Warmes Kaffeebraun bis Schwarzbraun, dezent und dunkel."
+      },
+      "sea-of-fog": {
+        "name": "Nebelmeer",
+        "description": "Helles, fast neutrales Grau mit einem Hauch Blau, wie Nebel über dem Mittelland."
+      },
+      "linen": {
+        "name": "Leinen",
+        "description": "Warmes Naturweiss, ideal als ruhiger Seitenhintergrund."
+      },
+      "pebble": {
+        "name": "Kieselstein",
+        "description": "Warmes Hellgrau, das in kühles Grau übergeht."
+      },
+      "parchment": {
+        "name": "Pergament",
+        "description": "Ein radialer Verlauf in Elfenbein und hellem Ocker."
+      },
+      "dawn-gray": {
+        "name": "Morgengrau",
+        "description": "Ein Grau mit warmem Anfang und kühlem Ende, wie der Himmel vor Sonnenaufgang."
+      },
+      "slate": {
+        "name": "Schiefer",
+        "description": "Mittleres bis dunkles Blaugrau, sachlich und modern."
+      }
+    }
+  },
+  "GradientPage": {
+    "metaTitle": "{gradient}: Farbverlauf mit CSS-Code | Motivo",
+    "metaDescription": "{description} Mit CSS- und Tailwind-Code, Farbwerten in HEX, RGB und OKLCH und Varianten als Mesh-, verschwommener oder Streifenverlauf.",
+    "heading": "Farbverlauf {gradient}",
+    "previewLabel": "Vorschau des Farbverlaufs {gradient}",
+    "openEditor": "Im Editor anpassen",
+    "openEditorHint": "Winkel, Form und Farben ändern, dann als CSS, SVG oder PNG exportieren.",
+    "colorsHeading": "Farben",
+    "colorsLead": "Die Farbstopps des Verlaufs. Ein Klick auf einen Wert kopiert ihn.",
+    "codeHeading": "Code",
+    "cssLead": "Füge die Zeilen in die Regel deines Elements ein. Die erste Zeile ist eine Ersatzfarbe, die zweite der Verlauf für alle Browser, die dritte interpoliert in OKLCH für moderne Browser.",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "variantsHeading": "Den Verlauf weiterdenken",
+    "variantsLead": "Dieselben Farben in anderen Generatoren. Jede Karte öffnet den Editor mit diesen Farben.",
+    "colorToolsHeading": "Mit den Farben weiterarbeiten",
+    "colorToolsLead": "Mach aus den Farbstopps eine Palette oder eine ganze Farbskala.",
+    "howToHeading": "So verwendest du den Verlauf",
+    "howTo": "Kopiere das CSS in die Regel des Elements, das den Verlauf tragen soll, etwa einen Abschnitt, eine Karte oder einen Button. Für Text auf dem Verlauf wähle eine Schriftfarbe, die auf allen Farbstopps genügend Kontrast hat; die Werte bei den Farben helfen dir dabei. Im Editor änderst du Winkel, Form und Übergang und exportierst den Verlauf auch als Bild.",
+    "relatedHeading": "Ähnliche Verläufe",
+    "backToCollection": "Alle Farbverläufe",
+    "ogAlt": "Farbverlauf {gradient} von Motivo"
+  },
+  "PaletteCollection": {
+    "nav": "Farbpaletten",
+    "metaTitle": "{count} Farbpaletten nach Stimmung | Motivo",
+    "metaDescription": "{count} eigene Farbpaletten: erdig, frisch, pastell, kräftig, dunkel und neutral. Mit HEX-, RGB- und OKLCH-Werten, CSS-Variablen und Tailwind-Code zum Kopieren.",
+    "title": "Farbpaletten",
+    "lead": "Paletten mit je fünf Farben, sortiert nach Stimmung. Kopiere die Werte, übernimm sie als CSS-Variablen oder mach daraus einen Verlauf.",
+    "count": "{count, plural, one {# Palette} other {# Paletten}}",
+    "openGenerator": "Eigene Palette erstellen",
+    "ogAlt": "Auswahl an Farbpaletten von Motivo",
+    "groups": {
+      "earthy": {
+        "name": "Erdig",
+        "description": "Ton, Holz, Laub und Gewürze."
+      },
+      "fresh": {
+        "name": "Frisch",
+        "description": "Grün, Wasser und Frühling."
+      },
+      "pastel": {
+        "name": "Pastell",
+        "description": "Weiche, helle Farben mit wenig Sättigung."
+      },
+      "bold": {
+        "name": "Kräftig",
+        "description": "Hohe Sättigung und starke Kontraste."
+      },
+      "dark": {
+        "name": "Dunkel",
+        "description": "Dunkle Grundtöne mit hellen Akzenten."
+      },
+      "neutral": {
+        "name": "Neutral",
+        "description": "Grau- und Naturtöne als ruhige Basis."
+      }
+    },
+    "items": {
+      "clay-oven": {
+        "name": "Lehmofen",
+        "description": "Sand, Ocker, gebrannter Ton und dunkles Braun für warme, handgemachte Marken."
+      },
+      "autumn-forest": {
+        "name": "Herbstwald",
+        "description": "Goldgelb, Orange und Rostrot mit zwei Waldgrüntönen."
+      },
+      "vineyard": {
+        "name": "Rebberg",
+        "description": "Rebblätter, Traubenrot und dunkle Erde, wie im Lavaux im Herbst."
+      },
+      "spice-market": {
+        "name": "Gewürzmarkt",
+        "description": "Kurkuma, Paprika, Zimt und ein Zweig Salbei."
+      },
+      "sandstone": {
+        "name": "Sandstein",
+        "description": "Fünf warme Beigetöne von hell bis dunkel, ideal für ruhige Oberflächen."
+      },
+      "moorland": {
+        "name": "Moorland",
+        "description": "Gedämpftes Grün, Olive und Torfbraun."
+      },
+      "lemongrass": {
+        "name": "Zitronengras",
+        "description": "Von Zitronengelb über Grasgrün bis Tannengrün."
+      },
+      "lido": {
+        "name": "Seebad",
+        "description": "Sand, Sonnengelb und drei Wasserblautöne, nach Sommer am See."
+      },
+      "garden-party": {
+        "name": "Gartenparty",
+        "description": "Rosa, Himbeere und frisches Grün."
+      },
+      "mint-ice": {
+        "name": "Minzeis",
+        "description": "Kühle Minztöne von fast Weiss bis Petrol."
+      },
+      "spring-market": {
+        "name": "Frühlingsmarkt",
+        "description": "Gelb, Rosa, Flieder und Grün mit einem dunklen Blau als Anker."
+      },
+      "alpine-meadow": {
+        "name": "Bergwiese",
+        "description": "Löwenzahn, Wiesengrün und Enzianviolett."
+      },
+      "sorbet": {
+        "name": "Sorbet",
+        "description": "Fünf Pastellkugeln: Erdbeere, Aprikose, Zitrone, Minze und Heidelbeere."
+      },
+      "cloud-castle": {
+        "name": "Wolkenschloss",
+        "description": "Helles Flieder, Himmelblau und Rosa mit einem tieferen Violett."
+      },
+      "gelato": {
+        "name": "Glace",
+        "description": "Vanille, Pfirsich, Himbeer, Pistazie und Karamell."
+      },
+      "watercolor": {
+        "name": "Aquarell",
+        "description": "Lasierende Töne in Blau, Grün, Gelb und Rosa."
+      },
+      "peony": {
+        "name": "Pfingstrose",
+        "description": "Rosa in drei Stufen und ein zartes Blattgrün."
+      },
+      "chalk-drawing": {
+        "name": "Kreidezeichnung",
+        "description": "Pastellkreide auf einer dunklen Wandtafel."
+      },
+      "pop-art": {
+        "name": "Pop-Art",
+        "description": "Gelb, Rot und Blau mit Schwarz und Weiss, laut und grafisch."
+      },
+      "street-party": {
+        "name": "Strassenfest",
+        "description": "Mango, Pink, Violett und Türkis vor einem dunklen Grund."
+      },
+      "signal": {
+        "name": "Signal",
+        "description": "Weiss, Gelb, Rot und Blau mit klaren Kontrasten, gut für Hinweise und Warnungen."
+      },
+      "hummingbird": {
+        "name": "Kolibri",
+        "description": "Smaragd, Petrol, Magenta und Orange, schillernd wie Federn."
+      },
+      "workshop": {
+        "name": "Werkstatt",
+        "description": "Papierweiss, Senfgelb, Ziegelrot, Arbeitsblau und Schwarz."
+      },
+      "fireworks": {
+        "name": "Feuerwerk",
+        "description": "Leuchtende Farben auf Nachtblau, wie am 1. August."
+      },
+      "night-train": {
+        "name": "Nachtzug",
+        "description": "Tiefe Blautöne und das warme Licht eines Abteilfensters."
+      },
+      "ocean-trench": {
+        "name": "Ozeangraben",
+        "description": "Von fast Schwarz über Petrol bis zu hellem Aqua."
+      },
+      "fireside": {
+        "name": "Kaminfeuer",
+        "description": "Russ, Glut, Flamme und warmes Licht."
+      },
+      "velvet-curtain": {
+        "name": "Samtvorhang",
+        "description": "Dunkles Weinrot, Samtrot und goldene Akzente wie im Theater."
+      },
+      "forest-night": {
+        "name": "Waldnacht",
+        "description": "Fünf Grüntöne vom dunklen Unterholz bis zum Mondlicht auf den Blättern."
+      },
+      "planetarium": {
+        "name": "Planetarium",
+        "description": "Nachthimmel, violetter Nebel, ein blauer Stern und Sternenlicht."
+      },
+      "concrete": {
+        "name": "Beton",
+        "description": "Fünf neutrale Grautöne ohne Farbstich, die Basis für jedes Interface."
+      },
+      "wool-sweater": {
+        "name": "Wollpullover",
+        "description": "Warme Grau- und Brauntöne wie ungefärbte Schafwolle."
+      },
+      "granite": {
+        "name": "Granit",
+        "description": "Kühle Grautöne mit einem leichten Blaustich."
+      },
+      "print-shop": {
+        "name": "Druckerei",
+        "description": "Papier, Tinte und ein einziges Signalrot."
+      },
+      "timber-cabin": {
+        "name": "Holzhaus",
+        "description": "Helles Holz, Naturtöne und ein dunkles Tannengrün."
+      },
+      "winter-sky": {
+        "name": "Winterhimmel",
+        "description": "Fünf kühle Blaugraustufen von Schneeweiss bis Schiefer."
+      }
+    }
+  },
+  "PalettePage": {
+    "metaTitle": "{palette}: Farbpalette mit HEX und OKLCH | Motivo",
+    "metaDescription": "{description} Alle Farben als HEX, RGB und OKLCH, dazu CSS-Variablen, Tailwind-Code und passende Verläufe.",
+    "heading": "Farbpalette {palette}",
+    "previewLabel": "Die {count} Farben der Palette {palette}",
+    "openEditor": "Im Palettengenerator öffnen",
+    "openEditorHint": "Farben sperren, mit der Leertaste neue Varianten würfeln und als Bild oder Code exportieren.",
+    "colorsHeading": "Farben",
+    "colorsLead": "Ein Klick auf einen Wert kopiert ihn. Auf jedem Farbfeld steht der Wert in der Schriftfarbe, die darauf am besten lesbar ist.",
+    "codeHeading": "Code",
+    "codeLead": "Die Palette als CSS-Variablen für jedes Projekt und als Theme für Tailwind CSS v4.",
+    "cssVariablesLabel": "CSS-Variablen",
+    "tailwindLabel": "Tailwind-Theme",
+    "gradientsHeading": "Verläufe aus dieser Palette",
+    "gradientsLead": "Dieselben Farben als Verlauf. Jede Karte öffnet den Editor mit diesen Farben.",
+    "colorToolsHeading": "Mit der Palette weiterarbeiten",
+    "colorToolsLead": "Bearbeite die Palette oder baue aus ihrer kräftigsten Farbe eine ganze Skala.",
+    "howToHeading": "So verwendest du die Palette",
+    "howTo": "Lege die hellste Farbe als Hintergrund fest und nutze die dunkelste für Text. Die kräftigen Farben dazwischen eignen sich für Buttons, Links und Hervorhebungen. Prüfe bei Text immer den Kontrast; die Angaben auf den Farbfeldern zeigen, ob Schwarz oder Weiss besser lesbar ist.",
+    "relatedHeading": "Ähnliche Paletten",
+    "backToCollection": "Alle Farbpaletten",
+    "ogAlt": "Farbpalette {palette} von Motivo"
   }
 }

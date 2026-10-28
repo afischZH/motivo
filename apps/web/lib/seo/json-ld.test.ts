@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { breadcrumbList, faqPage, serializeJsonLd, webApplication } from "./json-ld";
+import {
+  breadcrumbList,
+  collectionPage,
+  faqPage,
+  serializeJsonLd,
+  webApplication,
+} from "./json-ld";
 
 describe("serializeJsonLd", () => {
   it("cannot close the script element or open a comment", () => {
@@ -45,5 +51,32 @@ describe("schema builders", () => {
       { "@type": "ListItem", position: 1, name: "Home", item: "https://x.test/en" },
       { "@type": "ListItem", position: 2, name: "Tools", item: "https://x.test/en/tools" },
     ]);
+  });
+});
+
+describe("collectionPage", () => {
+  it("lists the items in order as an ItemList", () => {
+    const data = collectionPage({
+      name: "Gradients",
+      description: "Original gradients",
+      url: "https://x.test/en/gradients",
+      inLanguage: "en",
+      items: [
+        { name: "Glacier", url: "https://x.test/en/gradients/glacier" },
+        { name: "Slate", url: "https://x.test/en/gradients/slate" },
+      ],
+    });
+    expect(data).toMatchObject({
+      "@type": "CollectionPage",
+      isAccessibleForFree: true,
+      mainEntity: { "@type": "ItemList", numberOfItems: 2 },
+    });
+    expect(data).not.toHaveProperty("image");
+    expect((data.mainEntity as { itemListElement: unknown[] }).itemListElement[1]).toEqual({
+      "@type": "ListItem",
+      position: 2,
+      name: "Slate",
+      url: "https://x.test/en/gradients/slate",
+    });
   });
 });

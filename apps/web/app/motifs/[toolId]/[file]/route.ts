@@ -1,12 +1,15 @@
 /**
  * Static SVG motifs for landing pages and catalogue cards:
- * `/motifs/<toolId>/<default|presetId>.svg`. Prerendered at build time for
- * every registered tool, served as static files, and shared by all locales.
+ * `/motifs/<toolId>/<default|presetId>.svg`, plus the thumbnails of the
+ * curated collections (`/motifs/mesh-gradient/gradient-alpenglow.svg`).
+ * Prerendered at build time for every registered tool, served as static
+ * files, and shared by all locales.
  * Separate files instead of inline data URLs keep the HTML small (some
  * motifs weigh 100 KB and more) and let the browser lazy-load and cache them.
  */
 import { registry } from "@motivo/tool-registry";
 
+import { collectionMotifs, findCollectionMotif } from "@/lib/collections/variants";
 import { designSvg, findDesign, hasStaticMotif, staticDesigns } from "@/lib/seo/motifs";
 
 export const dynamic = "force-static";
@@ -19,14 +22,20 @@ export function generateStaticParams(): Params[] {
     .list()
     .filter(hasStaticMotif)
     .flatMap((tool) =>
-      staticDesigns(tool).map((design) => ({ toolId: tool.id, file: `${design.id}.svg` })),
+      // Defaults and presets, plus the thumbnails of the gradient and palette collections.
+      [...staticDesigns(tool), ...collectionMotifs(tool.id)].map((design) => ({
+        toolId: tool.id,
+        file: `${design.id}.svg`,
+      })),
     );
 }
 
 export async function GET(_request: Request, { params }: { params: Promise<Params> }) {
   const { toolId, file } = await params;
   const tool = registry.get(toolId);
-  const design = tool && file.endsWith(".svg") ? findDesign(tool, file.slice(0, -4)) : undefined;
+  const id = file.endsWith(".svg") ? file.slice(0, -4) : undefined;
+  const design =
+    tool && id ? (findDesign(tool, id) ?? findCollectionMotif(tool.id, id)) : undefined;
   const svg = tool && design ? designSvg(tool, design) : undefined;
   if (svg === undefined) return new Response(null, { status: 404 });
 

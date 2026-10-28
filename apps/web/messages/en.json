@@ -1896,7 +1896,9 @@
     "converters": "Converters",
     "imprint": "Imprint",
     "privacy": "Privacy",
-    "founders": "Founders waitlist"
+    "founders": "Founders waitlist",
+    "gradients": "Gradients",
+    "palettes": "Color palettes"
   },
   "Legal": {
     "draftBanner": {
@@ -2155,5 +2157,448 @@
     "ignore": "Did not sign up? Then simply ignore this email. Without confirmation we delete your address after {days} days at the latest.",
     "unsubscribe": "Unsubscribe",
     "privacy": "Privacy"
+  },
+  "Collections": {
+    "copy": "Copy",
+    "copyLabel": "Copy {format}",
+    "copyBefore": "Copy",
+    "copyAfter": "",
+    "copied": "Copied! Off to your project.",
+    "copiedShort": "Copied",
+    "copyFailed": "That did not work. Select the code and copy it by hand.",
+    "copyFailedShort": "Failed",
+    "colorsLabel": "Colors",
+    "colorLabel": "Color {index}",
+    "formats": {
+      "hex": "HEX",
+      "rgb": "RGB",
+      "oklch": "OKLCH"
+    },
+    "contrast": "Text in {text}, contrast {ratio}:1",
+    "black": "black",
+    "white": "white",
+    "groupsLabel": "Jump to a mood",
+    "openIn": "Open in {tool}",
+    "variantPreview": "Preview in {tool}",
+    "gradientsTeaser": {
+      "heading": "Ready-made gradients",
+      "lead": "More than 30 original gradients with CSS to copy, each one ready to adjust in the editor.",
+      "link": "Browse the gradient collection"
+    },
+    "palettesTeaser": {
+      "heading": "Ready-made color palettes",
+      "lead": "More than 30 palettes by mood, with HEX, RGB and OKLCH values to copy.",
+      "link": "Browse the palette collection"
+    }
+  },
+  "GradientCollection": {
+    "nav": "Gradients",
+    "metaTitle": "{count} gradients with CSS code | Motivo",
+    "metaDescription": "{count} original gradients by mood: warm, cool, pastel, vivid, dark and subtle. Copy the CSS or keep going in the editor as a mesh or blurry gradient.",
+    "title": "Gradients",
+    "lead": "A collection of original gradients, computed in the OKLCH color space so the blends stay clean without a gray middle. Copy the CSS or open a gradient in the editor.",
+    "count": "{count, plural, one {# gradient} other {# gradients}}",
+    "openGenerator": "Design your own gradient",
+    "ogAlt": "A selection of gradients by Motivo",
+    "groups": {
+      "warm": {
+        "name": "Warm",
+        "description": "Yellow, orange and red for energy and warmth."
+      },
+      "cool": {
+        "name": "Cool",
+        "description": "Blue, turquoise and mint for calm and freshness."
+      },
+      "pastel": {
+        "name": "Pastel",
+        "description": "Light, soft tones for friendly surfaces."
+      },
+      "vivid": {
+        "name": "Vivid",
+        "description": "Strong colors that stand out."
+      },
+      "dark": {
+        "name": "Dark",
+        "description": "Deep tones for dark mode and light text."
+      },
+      "subtle": {
+        "name": "Subtle",
+        "description": "Nearly neutral blends for quiet backgrounds."
+      }
+    },
+    "items": {
+      "alpenglow": {
+        "name": "Alpenglow",
+        "description": "Warm yellow, orange and rose red like the last light on the peaks."
+      },
+      "apricot": {
+        "name": "Apricot",
+        "description": "A gentle blend from creamy pale yellow to ripe apricot orange."
+      },
+      "embers": {
+        "name": "Embers",
+        "description": "A radial blend from golden yellow through orange to deep red, like glowing coals."
+      },
+      "pumpkin-patch": {
+        "name": "Pumpkin Patch",
+        "description": "Strong yellow and rich orange, running from left to right."
+      },
+      "terracotta": {
+        "name": "Terracotta",
+        "description": "From pale clay to burnt reddish brown, earthy and calm."
+      },
+      "cinnamon-star": {
+        "name": "Cinnamon Star",
+        "description": "Pale cream, cinnamon and dark cocoa, as cozy as holiday baking."
+      },
+      "glacier": {
+        "name": "Glacier",
+        "description": "Almost white ice blue that deepens into a strong blue towards the bottom."
+      },
+      "mountain-lake": {
+        "name": "Mountain Lake",
+        "description": "Clear turquoise and cool blue, like a lake on a summer morning."
+      },
+      "north-wind": {
+        "name": "North Wind",
+        "description": "A restrained blue gray, fresh and easy to read text on."
+      },
+      "rhine-falls": {
+        "name": "Rhine Falls",
+        "description": "Spray white, water green and deep blue in one long blend."
+      },
+      "foehn-sky": {
+        "name": "Foehn Sky",
+        "description": "Clear sky blue that tips into a soft violet."
+      },
+      "peppermint": {
+        "name": "Peppermint",
+        "description": "Pale mint to cool turquoise, light and clean."
+      },
+      "candy-floss": {
+        "name": "Candy Floss",
+        "description": "Soft pink and lilac blue, playful and gentle."
+      },
+      "peach-blossom": {
+        "name": "Peach Blossom",
+        "description": "A pale peach that turns into a warm rosé."
+      },
+      "lavender-field": {
+        "name": "Lavender Field",
+        "description": "From pale lilac to deeper lavender, calm and elegant."
+      },
+      "morning-dew": {
+        "name": "Morning Dew",
+        "description": "A hint of green and a hint of blue, barely there and very fresh."
+      },
+      "macaron": {
+        "name": "Macaron",
+        "description": "Pink, vanilla and pistachio side by side, like in a pastry shop."
+      },
+      "soap-bubble": {
+        "name": "Soap Bubble",
+        "description": "A conic blend of shimmering pastels that closes into a full circle."
+      },
+      "kingfisher": {
+        "name": "Kingfisher",
+        "description": "Bright blue with an orange accent, like the bird's plumage."
+      },
+      "neon-night": {
+        "name": "Neon Night",
+        "description": "Pink, violet and cyan like neon signs on a rainy night."
+      },
+      "parrot": {
+        "name": "Parrot",
+        "description": "Lime green, turquoise and blue, loud and cheerful."
+      },
+      "hibiscus": {
+        "name": "Hibiscus",
+        "description": "A radial blend from orange to vivid pink."
+      },
+      "carnival": {
+        "name": "Carnival",
+        "description": "Yellow, red and violet, as colorful as a carnival parade."
+      },
+      "northern-lights": {
+        "name": "Northern Lights",
+        "description": "Green, turquoise and violet, like an aurora over a dark sky."
+      },
+      "observatory": {
+        "name": "Observatory",
+        "description": "A deep night blue that lightens from the top."
+      },
+      "fir-forest": {
+        "name": "Fir Forest",
+        "description": "Dark fir green fading almost to black, calm and refined."
+      },
+      "deep-sea": {
+        "name": "Deep Sea",
+        "description": "From petrol blue into darkness, ideal behind light text."
+      },
+      "blackberry": {
+        "name": "Blackberry",
+        "description": "Rich berry red and dark violet."
+      },
+      "volcano": {
+        "name": "Volcano",
+        "description": "Glowing orange at the bottom edge, fading upwards into charred darkness."
+      },
+      "espresso": {
+        "name": "Espresso",
+        "description": "Warm coffee brown to near black, subtle and dark."
+      },
+      "sea-of-fog": {
+        "name": "Sea of Fog",
+        "description": "Pale, almost neutral gray with a touch of blue, like fog over the lowlands."
+      },
+      "linen": {
+        "name": "Linen",
+        "description": "Warm natural white, ideal as a quiet page background."
+      },
+      "pebble": {
+        "name": "Pebble",
+        "description": "Warm light gray turning into cool gray."
+      },
+      "parchment": {
+        "name": "Parchment",
+        "description": "A radial blend of ivory and pale ochre."
+      },
+      "dawn-gray": {
+        "name": "Dawn Gray",
+        "description": "A gray with a warm start and a cool end, like the sky before sunrise."
+      },
+      "slate": {
+        "name": "Slate",
+        "description": "Medium to dark blue gray, matter of fact and modern."
+      }
+    }
+  },
+  "GradientPage": {
+    "metaTitle": "{gradient} gradient: CSS code and colors | Motivo",
+    "metaDescription": "{description} With CSS and Tailwind code, color values in HEX, RGB and OKLCH, and variations as mesh, blurry or striped gradient.",
+    "heading": "{gradient} gradient",
+    "previewLabel": "Preview of the {gradient} gradient",
+    "openEditor": "Customize in the editor",
+    "openEditorHint": "Change angle, shape and colors, then export as CSS, SVG or PNG.",
+    "colorsHeading": "Colors",
+    "colorsLead": "The color stops of the gradient. Click a value to copy it.",
+    "codeHeading": "Code",
+    "cssLead": "Paste the lines into your element's rule. The first line is a fallback color, the second the gradient for every browser, the third interpolates in OKLCH for modern browsers.",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "variantsHeading": "Take the gradient further",
+    "variantsLead": "The same colors in other generators. Each card opens the editor with these colors.",
+    "colorToolsHeading": "Keep working with the colors",
+    "colorToolsLead": "Turn the color stops into a palette or a full color scale.",
+    "howToHeading": "How to use this gradient",
+    "howTo": "Copy the CSS into the rule of the element that should carry the gradient, for example a section, a card or a button. For text on top, pick a text color with enough contrast on every color stop; the values next to the colors help you with that. In the editor you change angle, shape and easing and can also export the gradient as an image.",
+    "relatedHeading": "Similar gradients",
+    "backToCollection": "All gradients",
+    "ogAlt": "{gradient} gradient by Motivo"
+  },
+  "PaletteCollection": {
+    "nav": "Palettes",
+    "metaTitle": "{count} color palettes by mood | Motivo",
+    "metaDescription": "{count} original color palettes: earthy, fresh, pastel, bold, dark and neutral. With HEX, RGB and OKLCH values, CSS variables and Tailwind code to copy.",
+    "title": "Color palettes",
+    "lead": "Palettes of five colors each, sorted by mood. Copy the values, use them as CSS variables or turn them into a gradient.",
+    "count": "{count, plural, one {# palette} other {# palettes}}",
+    "openGenerator": "Create your own palette",
+    "ogAlt": "A selection of color palettes by Motivo",
+    "groups": {
+      "earthy": {
+        "name": "Earthy",
+        "description": "Clay, wood, leaves and spices."
+      },
+      "fresh": {
+        "name": "Fresh",
+        "description": "Greens, water and spring."
+      },
+      "pastel": {
+        "name": "Pastel",
+        "description": "Soft, light colors with little saturation."
+      },
+      "bold": {
+        "name": "Bold",
+        "description": "High saturation and strong contrast."
+      },
+      "dark": {
+        "name": "Dark",
+        "description": "Dark base tones with light accents."
+      },
+      "neutral": {
+        "name": "Neutral",
+        "description": "Grays and natural tones as a quiet base."
+      }
+    },
+    "items": {
+      "clay-oven": {
+        "name": "Clay Oven",
+        "description": "Sand, ochre, burnt clay and dark brown for warm, handmade brands."
+      },
+      "autumn-forest": {
+        "name": "Autumn Forest",
+        "description": "Golden yellow, orange and rust with two forest greens."
+      },
+      "vineyard": {
+        "name": "Vineyard",
+        "description": "Vine leaves, grape red and dark soil, like terraced vineyards in autumn."
+      },
+      "spice-market": {
+        "name": "Spice Market",
+        "description": "Turmeric, paprika, cinnamon and a sprig of sage."
+      },
+      "sandstone": {
+        "name": "Sandstone",
+        "description": "Five warm beige tones from light to dark, ideal for calm interfaces."
+      },
+      "moorland": {
+        "name": "Moorland",
+        "description": "Muted green, olive and peat brown."
+      },
+      "lemongrass": {
+        "name": "Lemongrass",
+        "description": "From lemon yellow through grass green to fir green."
+      },
+      "lido": {
+        "name": "Lido",
+        "description": "Sand, sunny yellow and three water blues, like summer at the lake."
+      },
+      "garden-party": {
+        "name": "Garden Party",
+        "description": "Pink, raspberry and fresh green."
+      },
+      "mint-ice": {
+        "name": "Mint Ice",
+        "description": "Cool mint tones from almost white to petrol."
+      },
+      "spring-market": {
+        "name": "Spring Market",
+        "description": "Yellow, pink, lilac and green with a dark blue as anchor."
+      },
+      "alpine-meadow": {
+        "name": "Alpine Meadow",
+        "description": "Dandelion, meadow green and gentian violet."
+      },
+      "sorbet": {
+        "name": "Sorbet",
+        "description": "Five pastel scoops: strawberry, apricot, lemon, mint and blueberry."
+      },
+      "cloud-castle": {
+        "name": "Cloud Castle",
+        "description": "Pale lilac, sky blue and pink with a deeper violet."
+      },
+      "gelato": {
+        "name": "Gelato",
+        "description": "Vanilla, peach, raspberry, pistachio and caramel."
+      },
+      "watercolor": {
+        "name": "Watercolor",
+        "description": "Translucent washes of blue, green, yellow and pink."
+      },
+      "peony": {
+        "name": "Peony",
+        "description": "Pink in three steps and a soft leaf green."
+      },
+      "chalk-drawing": {
+        "name": "Chalk Drawing",
+        "description": "Pastel chalk on a dark blackboard."
+      },
+      "pop-art": {
+        "name": "Pop Art",
+        "description": "Yellow, red and blue with black and white, loud and graphic."
+      },
+      "street-party": {
+        "name": "Street Party",
+        "description": "Mango, pink, violet and turquoise against a dark ground."
+      },
+      "signal": {
+        "name": "Signal",
+        "description": "White, yellow, red and blue with clear contrast, good for notices and warnings."
+      },
+      "hummingbird": {
+        "name": "Hummingbird",
+        "description": "Emerald, petrol, magenta and orange, iridescent like feathers."
+      },
+      "workshop": {
+        "name": "Workshop",
+        "description": "Paper white, mustard, brick red, workwear blue and black."
+      },
+      "fireworks": {
+        "name": "Fireworks",
+        "description": "Bright colors on night blue, like a summer fireworks show."
+      },
+      "night-train": {
+        "name": "Night Train",
+        "description": "Deep blues and the warm light of a compartment window."
+      },
+      "ocean-trench": {
+        "name": "Ocean Trench",
+        "description": "From almost black through petrol to pale aqua."
+      },
+      "fireside": {
+        "name": "Fireside",
+        "description": "Soot, embers, flame and warm light."
+      },
+      "velvet-curtain": {
+        "name": "Velvet Curtain",
+        "description": "Dark wine, velvet red and golden accents, like a theater."
+      },
+      "forest-night": {
+        "name": "Forest Night",
+        "description": "Five greens from dark undergrowth to moonlight on the leaves."
+      },
+      "planetarium": {
+        "name": "Planetarium",
+        "description": "Night sky, violet nebula, a blue star and starlight."
+      },
+      "concrete": {
+        "name": "Concrete",
+        "description": "Five neutral grays without a tint, a base for any interface."
+      },
+      "wool-sweater": {
+        "name": "Wool Sweater",
+        "description": "Warm grays and browns like undyed sheep's wool."
+      },
+      "granite": {
+        "name": "Granite",
+        "description": "Cool grays with a slight blue tint."
+      },
+      "print-shop": {
+        "name": "Print Shop",
+        "description": "Paper, ink and a single signal red."
+      },
+      "timber-cabin": {
+        "name": "Timber Cabin",
+        "description": "Light wood, natural tones and a dark fir green."
+      },
+      "winter-sky": {
+        "name": "Winter Sky",
+        "description": "Five cool blue grays from snow white to slate."
+      }
+    }
+  },
+  "PalettePage": {
+    "metaTitle": "{palette} color palette with HEX and OKLCH | Motivo",
+    "metaDescription": "{description} Every color as HEX, RGB and OKLCH, plus CSS variables, Tailwind code and matching gradients.",
+    "heading": "{palette} color palette",
+    "previewLabel": "The {count} colors of the {palette} palette",
+    "openEditor": "Open in the palette generator",
+    "openEditorHint": "Lock colors, roll new variations with the space bar and export as image or code.",
+    "colorsHeading": "Colors",
+    "colorsLead": "Click a value to copy it. Each swatch shows its value in the text color that reads best on it.",
+    "codeHeading": "Code",
+    "codeLead": "The palette as CSS variables for any project and as a theme for Tailwind CSS v4.",
+    "cssVariablesLabel": "CSS variables",
+    "tailwindLabel": "Tailwind theme",
+    "gradientsHeading": "Gradients from this palette",
+    "gradientsLead": "The same colors as a gradient. Each card opens the editor with these colors.",
+    "colorToolsHeading": "Keep working with the palette",
+    "colorToolsLead": "Edit the palette or build a full scale from its most colorful entry.",
+    "howToHeading": "How to use this palette",
+    "howTo": "Use the lightest color as the background and the darkest for text. The strong colors in between work for buttons, links and highlights. Always check the contrast for text; the notes on the swatches show whether black or white reads better.",
+    "relatedHeading": "Similar palettes",
+    "backToCollection": "All color palettes",
+    "ogAlt": "{palette} color palette by Motivo"
   }
 }

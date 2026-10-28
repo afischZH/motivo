@@ -1,7 +1,9 @@
 /**
  * Renders the Open Graph images of every registered tool in every enabled
  * locale into `public/og/<locale>/<toolId>.png` (see `lib/seo/og.ts`), and
- * one per CSS library pattern into `public/og/<locale>/css-patterns/<id>.png`.
+ * one per CSS library pattern into `public/og/<locale>/css-patterns/<id>.png`
+ * and one per curated gradient and palette (`public/og/<locale>/gradients/`,
+ * `.../palettes/`).
  * Runs before `next build` and `next dev`. Uses `next/og` in Node, so the
  * Worker bundle never contains Satori or resvg, and the images are plain
  * static assets on Cloudflare.
@@ -17,12 +19,13 @@ register("./ts-resolve-hook.mjs", import.meta.url);
 const APP_ROOT = new URL("../", import.meta.url);
 const OUT_DIR = new URL("public/og/", APP_ROOT);
 
-const [{ registry }, motifs, og, locales, patterns, ogModule] = await Promise.all([
+const [{ registry }, motifs, og, locales, patterns, collections, ogModule] = await Promise.all([
   import("@motivo/tool-registry"),
   import("../lib/seo/motifs.ts"),
   import("../lib/seo/og.ts"),
   import("../i18n/locales.ts"),
   import("../lib/css-patterns.ts"),
+  import("../lib/collections/og.ts"),
   // next has no ESM exports map: the CommonJS entry needs its file name.
   import("next/og.js"),
 ]);
@@ -66,6 +69,23 @@ for (const locale of locales.ENABLED_LOCALES) {
     const png = Buffer.from(await new ImageResponse(element, { ...og.OG_SIZE }).arrayBuffer());
     const key = patterns.patternOgKey(spec.id);
     await writeFile(new URL(`.${og.ogImagePath(key, locale)}`, new URL("public/", APP_ROOT)), png);
+    count++;
+  }
+
+  // Curated gradients and palettes: `public/og/<locale>/<kind>/<id>.png`.
+  for (const kind of ["gradients", "palettes"]) {
+    await mkdir(new URL(`${locale}/${kind}/`, OUT_DIR), { recursive: true });
+  }
+  for (const image of collections.collectionOgImages()) {
+    const title = lookup(messages, image.nameKey);
+    if (typeof title !== "string")
+      throw new Error(`og-images: no name for ${image.key} (${locale})`);
+    const element = og.ogElement({ svg: image.svg(), brand, title });
+    const png = Buffer.from(await new ImageResponse(element, { ...og.OG_SIZE }).arrayBuffer());
+    await writeFile(
+      new URL(`.${og.ogImagePath(image.key, locale)}`, new URL("public/", APP_ROOT)),
+      png,
+    );
     count++;
   }
 }
