@@ -111,6 +111,9 @@ export function ColorPicker(props: ColorPickerProps) {
         <Popover.Content
           sideOffset={8}
           align="start"
+          // The popover is a dialog: it takes the name of the colour it edits.
+          aria-label={labelledBy ? undefined : (props.ariaLabel ?? t("Editor.color.picker"))}
+          aria-labelledby={labelledBy}
           className="z-50 grid w-56 gap-3 rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-md"
         >
           <input
