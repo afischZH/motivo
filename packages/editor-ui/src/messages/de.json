@@ -155,6 +155,7 @@
         "encodeUnsupported": "Dein Browser kann dieses Format nicht speichern. Nimm PNG oder JPG.",
         "encodeFailed": "Das Bild ist zu gross für dieses Gerät.",
         "encodeFailedHint": "Wähle eine kleinere Grösse, zum Beispiel 1× oder 2×.",
+        "tooLarge": "Dein Browser kann ein Bild dieser Grösse nicht in diesem Format erzeugen. Wähle PNG oder eine kleinere Grösse.",
         "unavailable": "Dein Browser unterstützt diesen Export nicht. Versuch es mit einem aktuellen Browser.",
         "aborted": "Export abgebrochen.",
         "unknown": "Etwas ist schiefgelaufen. Versuch es nochmals."

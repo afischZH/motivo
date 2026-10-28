@@ -209,16 +209,31 @@ test.describe("palette page", () => {
     await page.goto("/de/farbpaletten/lehmofen");
     await page.getByRole("link", { name: "Im Palettengenerator öffnen" }).click();
     await expect(page).toHaveURL(/\/de\/tools\/farbpaletten-generator#d=/);
+    // The server HTML previews the tool defaults; the editor loads the #d=
+    // design on hydration (Share is enabled from then on), and the preview
+    // follows as a deferred render. Wait for both before reading it.
+    await expect(page.getByRole("button", { name: "Teilen" })).toBeEnabled();
     await expect(page.getByTestId("shell-notice")).toHaveCount(0);
     // The preview is the tool's SVG as a data URL; it carries the palette's colours.
     const motif = page.getByTestId("preview").locator("img");
-    await expect(motif).toHaveAttribute("src", /^data:image\/svg\+xml/);
-    const src = (await motif.getAttribute("src")) ?? "";
-    const body = src.slice(src.indexOf(",") + 1);
-    const svg = src.includes(";base64,")
-      ? Buffer.from(body, "base64").toString("utf8")
-      : decodeURIComponent(body);
-    for (const hex of clayOven.colors) expect(svg.toLowerCase()).toContain(hex);
+    const previewSvg = async () => {
+      const src = (await motif.getAttribute("src")) ?? "";
+      if (!src.startsWith("data:image/svg+xml")) return "";
+      const body = src.slice(src.indexOf(",") + 1);
+      const svg = src.includes(";base64,")
+        ? Buffer.from(body, "base64").toString("utf8")
+        : decodeURIComponent(body);
+      return svg.toLowerCase();
+    };
+    await expect
+      .poll(
+        async () => {
+          const svg = await previewSvg();
+          return clayOven.colors.filter((hex) => !svg.includes(hex));
+        },
+        { message: "palette colours missing from the preview" },
+      )
+      .toEqual([]);
   });
 
   test("copies an RGB value", async ({ page, context, browserName }) => {

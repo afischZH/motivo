@@ -37,6 +37,9 @@ export function ThemeToggle({ label, hint }: { label: string; hint: string }) {
       aria-keyshortcuts="Meta+Shift+K Control+Shift+K"
       title={hint}
       data-testid="theme-toggle"
+      // The theme is only known in the browser: set once hydrated, after the
+      // shortcut listener above is bound (tests wait for it before pressing keys).
+      data-hydrated={theme === null ? undefined : "true"}
     >
       {/* Icons switch by CSS so they are correct before hydration. */}
       <MoonIcon className="dark:hidden" />

@@ -140,6 +140,7 @@ describe("error keys", () => {
       ["decode-failed", "decodeFailed"],
       ["encode-unsupported", "encodeUnsupported"],
       ["encode-failed", "encodeFailed"],
+      ["too-large", "tooLarge"],
       ["unavailable", "unavailable"],
       ["aborted", "aborted"],
     ];

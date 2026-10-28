@@ -136,7 +136,10 @@ Params + Seed ──► Renderer ──► Vorschau (DOM-SVG / Canvas / WebGL im
 
 Wichtige Regeln:
 - **Grosse Exporte** (4K/8K) in OffscreenCanvas im Worker, mit Fortschrittsanzeige und Abbruch.
-- **Max. Canvasgrösse** pro Browser beachten (Safari-Limits), bei Überschreitung kacheln.
+- **Max. Canvasgrösse** (seit M3, `packages/exporters/src/raster.ts`): Grenze ist `SAFE_CANVAS_AREA` = 4096 × 4096 px (WebKit zeichnet auf grössere Canvas und Bitmaps nichts, 8K-Exporte waren in Safari leer). Darüber gilt:
+  - **PNG in Streifen**: Das SVG-Bild wird streifenweise (höchstens die Grenzfläche, mit Worker höchstens 4 MP, ohne Worker 0.5 MP pro Streifen) mit Versatz auf ein kleines Canvas gezeichnet, per `getImageData` gelesen und an den Raster-Worker übertragen. Dort filtert ein eigener Streaming-Encoder (`png-stream.ts`, adaptive PNG-Filter wie libpng) die Zeilen und komprimiert sie mit `CompressionStream("deflate")` (zlib-Format). Höchstens ein Streifen ist unterwegs, kein Canvas und keine Bitmap hat die volle Grösse. Gemessen in Node: 8K in ca. 2 s im Worker. Ohne `CompressionStream` nimmt PNG den Weg von JPG/WebP.
+  - **JPG und WebP**: kein eigener Encoder (Aufwand, WebP praktisch nicht machbar). Sie behalten das volle Canvas, aber 9 Prüfpixel des Ergebnisses werden mit denselben Pixeln verglichen, einzeln auf ein 1 × 1 Canvas gezeichnet. Weicht ein Drittel oder mehr ab (leeres Canvas), folgt ein zweiter Versuch im Hauptthread, danach der Fehler `too-large` mit lokalisierter Meldung („PNG oder kleinere Grösse wählen“) statt einer kaputten Datei.
+  - Testhaken: `window.__motivoMaxCanvasArea` senkt die Grenze (nie höher), damit E2E-Tests den Streifenweg in Chromium bei 480 × 320 prüfen.
 - **Wasserzeichen** wird im Exporter angewendet, nie in der Vorschau versteckt "eingebrannt".
 - Jeder Export erzeugt ein `export_event` (Tool, Format, Grösse, Lizenzstufe) für Refund-Regel, Limits und Analytics.
 - **Clipboard**: `navigator.clipboard.write` mit PNG-Blob; Fallback Download.

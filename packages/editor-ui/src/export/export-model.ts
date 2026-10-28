@@ -134,6 +134,8 @@ export function exportErrorKey(error: unknown): string {
         return "encodeUnsupported";
       case "encode-failed":
         return "encodeFailed";
+      case "too-large":
+        return "tooLarge";
       case "unavailable":
         return "unavailable";
       case "aborted":

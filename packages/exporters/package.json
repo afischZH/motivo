@@ -13,6 +13,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@motivo/engine": "workspace:*",
     "@motivo/tool-registry": "workspace:*"
   },
   "devDependencies": {

@@ -155,6 +155,7 @@
         "encodeUnsupported": "Your browser cannot save this format. Use PNG or JPG.",
         "encodeFailed": "The image is too large for this device.",
         "encodeFailedHint": "Choose a smaller size, for example 1× or 2×.",
+        "tooLarge": "Your browser cannot create an image of this size in this format. Choose PNG or a smaller size.",
         "unavailable": "Your browser does not support this export. Try a current browser.",
         "aborted": "Export cancelled.",
         "unknown": "Something went wrong. Please try again."
