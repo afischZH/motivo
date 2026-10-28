@@ -5,24 +5,29 @@
  *
  *  1. `readAsset`: size limit, type by magic bytes (name and declared type
  *     are ignored), pixel count from the header; SVG is sanitised right away
- *     by the whitelist sanitizer (`@motivo/svg-sanitizer`).
+ *     by the whitelist sanitizer (`@motivo/svg-sanitizer`) in the sanitize
+ *     worker (sanitize-client.ts).
  *  2. The crop dialog picks a part (`CropRect`, fractions of the source).
- *  3. `finishAsset`: SVG is cropped by the sanitizer (new viewBox); raster
- *     pictures are cropped, downsampled and re-encoded in the image worker.
+ *  3. `finishAsset`: SVG is cropped by the sanitizer (new viewBox) in the
+ *     same worker, which also prepares it for rendering (`primeSvgAsset`, so
+ *     renders never sanitise it on the main thread); raster pictures are
+ *     cropped, downsampled and re-encoded in the image worker.
  */
-import { sanitizeSvg, type SvgRect } from "@motivo/svg-sanitizer";
+import type { SvgRect } from "@motivo/svg-sanitizer";
 import {
   IMAGE_ASSET_MAX_SVG_LENGTH,
   IMAGE_ASSET_RASTER_MAX_EDGE,
   imageAssetSchema,
+  primeSvgAsset,
   type ImageAsset,
 } from "@motivo/tool-registry";
 import { checkImageBytes, checkImageSize, type ImageInputError } from "../image-input/check";
 import type { ImageInputServices } from "../image-input/services";
 import { cropToSource, type CropRect } from "./crop";
+import { createSvgSanitizer, type SvgSanitizer } from "./sanitize-client";
 
 /** Every way an upload can fail; keys of `Editor.asset.errors`. */
-export type AssetError = ImageInputError | "svg-too-large" | "svg-invalid";
+export type AssetError = ImageInputError | "svg-too-large" | "svg-invalid" | "svg-timeout";
 
 /** `accept` of the file input (a hint only; the bytes decide). */
 export const ASSET_ACCEPT = "image/png,image/jpeg,image/webp,image/svg+xml,.svg";
@@ -46,8 +51,26 @@ export type AssetSource =
       height: number;
     };
 
-export type AssetReadResult = { ok: true; source: AssetSource } | { ok: false; error: AssetError };
-export type AssetFinishResult = { ok: true; asset: ImageAsset } | { ok: false; error: AssetError };
+/** `aborted`: the caller cancelled (a newer file, unmount); not shown. */
+export type AssetReadResult =
+  { ok: true; source: AssetSource } | { ok: false; error: AssetError | "aborted" };
+export type AssetFinishResult =
+  { ok: true; asset: ImageAsset } | { ok: false; error: AssetError | "aborted" };
+
+/** Sanitizer on the main thread, for callers without a worker (tests, scripts). */
+let fallbackSanitizer: SvgSanitizer | null = null;
+const mainThreadSanitizer = (): SvgSanitizer =>
+  (fallbackSanitizer ??= createSvgSanitizer({
+    createWorker: async () => null,
+    setTimeout: (fn, ms) => globalThis.setTimeout(fn, ms),
+    clearTimeout: (handle) => globalThis.clearTimeout(handle as ReturnType<typeof setTimeout>),
+  }));
+
+export interface ReadAssetOptions {
+  /** Sanitizer to use (the browser one runs in a worker). Default: main thread. */
+  svg?: SvgSanitizer | undefined;
+  signal?: AbortSignal | undefined;
+}
 
 const fileName = (file: { name?: string }): string => (file.name ?? "").slice(0, 200);
 
@@ -59,7 +82,10 @@ export function sourceSize(source: AssetSource): { width: number; height: number
 }
 
 /** Reads and checks a file. Never throws. */
-export async function readAsset(file: Blob & { name?: string }): Promise<AssetReadResult> {
+export async function readAsset(
+  file: Blob & { name?: string },
+  options: ReadAssetOptions = {},
+): Promise<AssetReadResult> {
   const sizeError = checkImageSize(file.size);
   if (sizeError) return { ok: false, error: sizeError };
   let bytes: Uint8Array;
@@ -74,16 +100,9 @@ export async function readAsset(file: Blob & { name?: string }): Promise<AssetRe
 
   if (checked.mime === "image/svg+xml") {
     if (bytes.length > IMAGE_ASSET_MAX_SVG_LENGTH) return { ok: false, error: "svg-too-large" };
-    let text: string;
-    try {
-      text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-    } catch {
-      return { ok: false, error: "svg-invalid" };
-    }
-    const clean = sanitizeSvg(text, { maxLength: IMAGE_ASSET_MAX_SVG_LENGTH });
-    if (!clean.ok) {
-      return { ok: false, error: clean.error === "too-large" ? "svg-too-large" : "svg-invalid" };
-    }
+    const sanitizer = options.svg ?? mainThreadSanitizer();
+    const clean = await sanitizer.read(bytes, IMAGE_ASSET_MAX_SVG_LENGTH, options.signal);
+    if (!clean.ok) return clean;
     return {
       ok: true,
       source: { kind: "svg", name, svg: clean.svg, viewBox: clean.viewBox, removed: clean.removed },
@@ -110,13 +129,17 @@ export async function readAsset(file: Blob & { name?: string }): Promise<AssetRe
 export async function finishAsset(
   source: AssetSource,
   crop: CropRect,
-  services: Pick<ImageInputServices, "crop">,
+  services: Pick<ImageInputServices, "crop"> & { svg?: SvgSanitizer | undefined },
+  signal?: AbortSignal,
 ): Promise<AssetFinishResult> {
   let asset: ImageAsset;
   if (source.kind === "svg") {
     const rect = cropToSource(crop, source.viewBox);
-    const clean = sanitizeSvg(source.svg, { crop: rect, maxLength: IMAGE_ASSET_MAX_SVG_LENGTH });
-    if (!clean.ok) return { ok: false, error: "svg-invalid" };
+    const sanitizer = services.svg ?? mainThreadSanitizer();
+    const clean = await sanitizer.crop(source.svg, rect, IMAGE_ASSET_MAX_SVG_LENGTH, signal);
+    if (!clean.ok) return clean;
+    // Renders find the sanitizer pass and the recolour template ready (cache by content).
+    if (clean.prepared) primeSvgAsset({ ...clean.prepared, input: clean.svg, svg: clean.svg });
     asset = {
       kind: "svg",
       svg: clean.svg,

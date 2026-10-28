@@ -47,8 +47,9 @@ export const backgroundSchema = z
  * only on the device (`ToolDefinition.localParams`), never in share links.
  *
  * - `svg`: the output of `@motivo/svg-sanitizer` (cropped already); tools
- *   must sanitise it again before use (cheap, cached) and embed it only as
- *   an image, never as markup;
+ *   must sanitise it again before use through `svgAssetFor` (svg-asset.ts:
+ *   prepared in the editor's worker, a cache hit on render) and embed it
+ *   only as an image, never as markup;
  * - `raster`: the cropped, downsampled picture as a PNG or JPEG data URI.
  *
  * `width`/`height` are the size of the (cropped) image in its own units.

@@ -5,8 +5,10 @@
  *
  * Uploads live in the `upload` param, which is a local param: never in
  * share links (reset to `null`, the design then shows the built-in shape).
- * SVG uploads are sanitised again before every use (a cached no-op for
- * sanitizer output) and only ever embedded as images.
+ * SVG uploads are sanitised again before every use and only ever embedded
+ * as images. The pass and the recoloured copies come from `svgAssetFor`
+ * (../svg-asset.ts): the editor prepares them in its sanitize worker, so a
+ * render only joins strings on the main thread.
  */
 import {
   SEAMLESS_SHAPES,
@@ -20,11 +22,11 @@ import {
   type SeamlessLayout,
   type SeamlessMotif,
 } from "@motivo/engine";
-import { sanitizeSvgCached } from "@motivo/svg-sanitizer";
 import * as z from "zod";
 import { colorSchema, imageAssetSchema, visualParamsSchema, type ImageAsset } from "../common";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
+import { recolorSvgAsset, svgAssetFor } from "../svg-asset";
 import type { Preset, RenderContext } from "../types";
 import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
 
@@ -131,9 +133,9 @@ function uploadMotif(p: SeamlessPatternsParams, upload: ImageAsset): ResolvedMot
       aspect: upload.width / upload.height,
     };
   }
-  // Defence in depth: whatever arrives in params is sanitised again (cached).
-  const clean = sanitizeSvgCached(upload.svg);
-  if (!clean.ok) return null;
+  // Defence in depth: whatever arrives in params is sanitised again (prepared once).
+  const clean = svgAssetFor(upload.svg);
+  if (!clean) return null;
   const aspect = clean.width / clean.height;
   if (!mono)
     return { motif: { kind: "image", hrefs: [dataUriOf(clean.svg)], tint: false }, colors, aspect };
@@ -141,9 +143,9 @@ function uploadMotif(p: SeamlessPatternsParams, upload: ImageAsset): ResolvedMot
   const used = colors.slice(0, budget);
   const hrefs: string[] = [];
   for (const color of used) {
-    const recolored = sanitizeSvgCached(upload.svg, { recolor: color });
-    if (!recolored.ok) return null;
-    hrefs.push(dataUriOf(recolored.svg));
+    const recolored = recolorSvgAsset(clean, color);
+    if (recolored === null) return null;
+    hrefs.push(dataUriOf(recolored));
   }
   return { motif: { kind: "image", hrefs, tint: false }, colors: used, aspect };
 }
