@@ -27,7 +27,12 @@ import {
   type RenderContext,
   type ToolDefinition,
 } from "@musterli/tool-registry";
-import { RasterEffectError, rasterEffectClient, type RasterEffectClient } from "./client";
+import {
+  RasterEffectError,
+  rasterEffectClient,
+  retainRasterEffectClient,
+  type RasterEffectClient,
+} from "./client";
 import { IMAGE_EFFECT_MAX_PIXELS, type EffectEncodeOptions } from "./protocol";
 
 export { IMAGE_EFFECT_MAX_PIXELS };
@@ -75,6 +80,7 @@ export async function exportImageEffect(
     );
   });
   let blob: Blob;
+  const release = retainRasterEffectClient();
   try {
     blob = await Promise.race([job, aborted]);
   } catch (error) {
@@ -85,6 +91,8 @@ export async function exportImageEffect(
       `Image effect export failed: ${code}`,
       { cause: error },
     );
+  } finally {
+    release();
   }
   options.onProgress?.(1);
   return {

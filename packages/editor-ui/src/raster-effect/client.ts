@@ -261,6 +261,41 @@ export function createRasterEffectClient(env: RasterEffectEnv): RasterEffectClie
 }
 
 let shared: RasterEffectClient | null = null;
+let users = 0;
+let idleTimer: ReturnType<typeof setTimeout> | null = null;
+
+/**
+ * After the last user lets go, the page-wide client waits this long, then
+ * ends its workers: each holds up to two decoded photos (12 MP is about
+ * 48 MB as a bitmap), which should not outlive the photo tool.
+ */
+export const EFFECT_IDLE_DISPOSE_MS = 30_000;
+
+/**
+ * Marks the page-wide client as in use (raster motifs while mounted, exports
+ * while running). Returns the release function; once nobody holds the
+ * client for `EFFECT_IDLE_DISPOSE_MS`, it is disposed and recreated on next use.
+ */
+export function retainRasterEffectClient(): () => void {
+  users++;
+  if (idleTimer !== null) {
+    globalThis.clearTimeout(idleTimer);
+    idleTimer = null;
+  }
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    users--;
+    if (users > 0) return;
+    idleTimer = globalThis.setTimeout(() => {
+      idleTimer = null;
+      if (users > 0 || shared === null) return;
+      shared.dispose();
+      shared = null;
+    }, EFFECT_IDLE_DISPOSE_MS);
+  };
+}
 
 /** The page-wide client with real workers (created on first use). Browser only. */
 export function rasterEffectClient(): RasterEffectClient {

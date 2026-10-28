@@ -2,8 +2,11 @@ import { CANVAS_EDGE_MAX, createRenderContext, duotoneTool } from "@musterli/too
 import { describe, expect, it, vi } from "vitest";
 import {
   EFFECT_EXPORT_TIMEOUT_MS,
+  EFFECT_IDLE_DISPOSE_MS,
   RasterEffectError,
   createRasterEffectClient,
+  rasterEffectClient,
+  retainRasterEffectClient,
   type EffectWorkerLike,
   type RasterEffectClient,
   type RasterEffectEnv,
@@ -197,5 +200,33 @@ describe("exportImageEffect", () => {
     );
     controller.abort();
     await expect(pending).rejects.toMatchObject({ code: "aborted" });
+  });
+});
+
+describe("page-wide client", () => {
+  it("ends its workers once nobody has used it for a while", () => {
+    vi.useFakeTimers();
+    try {
+      const first = rasterEffectClient();
+      const release = retainRasterEffectClient();
+      const exporting = retainRasterEffectClient();
+      release();
+      release();
+      vi.advanceTimersByTime(EFFECT_IDLE_DISPOSE_MS * 2);
+      // Still held by the export (a second release is a no-op).
+      expect(rasterEffectClient()).toBe(first);
+      exporting();
+      vi.advanceTimersByTime(EFFECT_IDLE_DISPOSE_MS - 1);
+      expect(rasterEffectClient()).toBe(first);
+      // A new user within the grace period keeps it.
+      const again = retainRasterEffectClient();
+      vi.advanceTimersByTime(EFFECT_IDLE_DISPOSE_MS * 2);
+      expect(rasterEffectClient()).toBe(first);
+      again();
+      vi.advanceTimersByTime(EFFECT_IDLE_DISPOSE_MS);
+      expect(rasterEffectClient()).not.toBe(first);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

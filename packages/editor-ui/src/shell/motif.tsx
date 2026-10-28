@@ -10,7 +10,11 @@ import {
   type CSSProperties,
 } from "react";
 import { cx } from "../controls/primitives";
-import { rasterEffectClient, type RasterEffectJob } from "../raster-effect/client";
+import {
+  rasterEffectClient,
+  retainRasterEffectClient,
+  type RasterEffectJob,
+} from "../raster-effect/client";
 import {
   canUseObjectUrls,
   largeDataUrls,
@@ -244,6 +248,9 @@ function RasterMotif({
   const pump = useRef<{ busy: boolean; next: RasterEffectJob | null }>({ busy: false, next: null });
   const dpr = typeof window === "undefined" ? 1 : window.devicePixelRatio;
   const out = rasterPreviewSize(output.size, scale, dpr);
+
+  // Keeps the workers (and their decoded photos) only while photo tools are shown.
+  useEffect(() => retainRasterEffectClient(), []);
 
   useEffect(() => {
     const state = pump.current;
