@@ -25,4 +25,5 @@ export * from "./tools/svg-charts";
 export * from "./tools/mesh-gradient";
 export * from "./tools/blurry-gradient";
 export * from "./tools/striped-gradient";
+export * from "./shapes";
 export * from "./tools/seamless-patterns";

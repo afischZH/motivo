@@ -16,17 +16,8 @@ import { Popover } from "radix-ui";
 import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from "react";
 import { useBrandKit, type BrandKitView } from "../brand-kit/context";
 import { brandImageToFile } from "../brand-kit/prepare";
-import { CropDialog } from "../asset-input/crop-dialog";
-import {
-  finishAsset,
-  readAsset,
-  sourceSize,
-  ASSET_ACCEPT,
-  type AssetError,
-  type AssetSource,
-} from "../asset-input/prepare";
-import { useAssetServices, useSvgSanitizer } from "../asset-input/services-context";
-import type { CropRect } from "../asset-input/crop";
+import { ASSET_ACCEPT } from "../asset-input/prepare";
+import { useAssetLoader } from "../asset-input/use-asset-loader";
 import { useT } from "../i18n";
 import { isTextTarget } from "../image-input/image-input-panel";
 import { CloseIcon } from "../shell/icons";
@@ -42,79 +33,24 @@ export interface ImageFieldProps {
   onCommit?(): void;
 }
 
-/** Shows the source in the crop dialog: object URL for raster, data URI for sanitised SVG. */
-function useSourceUrl(source: AssetSource | null): string | null {
-  const objectUrl = useMemo(() => {
-    if (!source || source.kind !== "raster" || typeof URL.createObjectURL !== "function") {
-      return null;
-    }
-    return URL.createObjectURL(new Blob([source.bytes as BlobPart], { type: source.mime }));
-  }, [source]);
-  useEffect(
-    () => () => {
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    },
-    [objectUrl],
-  );
-  if (!source) return null;
-  if (source.kind === "svg") return svgDataUrl(source.svg);
-  return objectUrl ?? "";
-}
-
 export function assetThumbnailUrl(asset: ImageAsset): string {
   return asset.kind === "svg" ? svgDataUrl(asset.svg) : asset.href;
-}
-
-/** Aborts the previous controller whenever a new one is taken, and on unmount. */
-function useAbortSlot(): () => AbortSignal {
-  const current = useRef<AbortController | null>(null);
-  useEffect(() => () => current.current?.abort(), []);
-  return () => {
-    current.current?.abort();
-    current.current = new AbortController();
-    return current.current.signal;
-  };
 }
 
 export function ImageField(props: ImageFieldProps) {
   const t = useT();
   const ids = useId();
   const fileRef = useRef<HTMLInputElement>(null);
-  const getServices = useAssetServices();
-  const getSanitizer = useSvgSanitizer();
-  const nextSignal = useAbortSlot();
   const [dragging, setDragging] = useState(false);
-  const [reading, setReading] = useState(false);
-  const [error, setError] = useState<AssetError | null>(null);
-  const [source, setSource] = useState<AssetSource | null>(null);
-  const [applying, setApplying] = useState(false);
-  const [cropError, setCropError] = useState<AssetError | null>(null);
-  const [status, setStatus] = useState("");
-  const sourceUrl = useSourceUrl(source);
-  const loadToken = useRef(0);
   const brandKit = useBrandKit();
-
-  const loadFile = async (file: File) => {
-    const token = ++loadToken.current;
-    setError(null);
-    setStatus(t("Editor.asset.reading"));
-    setReading(true);
-    const result = await readAsset(file, { svg: getSanitizer(), signal: nextSignal() });
-    if (token !== loadToken.current) return;
-    setReading(false);
-    if (!result.ok) {
-      setStatus("");
-      if (result.error !== "aborted") setError(result.error);
-      return;
-    }
-    setStatus(
-      result.source.kind === "svg" && result.source.removed > 0
-        ? t("Editor.asset.removed", { count: result.source.removed })
-        : "",
-    );
-    setCropError(null);
-    setSource(result.source);
-  };
+  const loader = useAssetLoader({
+    onAsset: (asset) => {
+      props.onChange(asset);
+      props.onCommit?.();
+    },
+    onClose: () => fileRef.current?.focus(),
+  });
+  const { loadFile, reading, error, status } = loader;
   const loadRef = useRef(loadFile);
   useEffect(() => {
     loadRef.current = loadFile;
@@ -138,35 +74,6 @@ export function ImageField(props: ImageFieldProps) {
     event.preventDefault();
     if (over) event.dataTransfer.dropEffect = "copy";
     setDragging(over);
-  };
-
-  const closeCrop = () => {
-    setSource(null);
-    setApplying(false);
-    setCropError(null);
-    fileRef.current?.focus();
-  };
-
-  const apply = async (crop: CropRect) => {
-    if (!source) return;
-    setApplying(true);
-    setCropError(null);
-    const result = await finishAsset(
-      source,
-      crop,
-      { crop: getServices().crop, svg: getSanitizer() },
-      nextSignal(),
-    );
-    if (!result.ok) {
-      setApplying(false);
-      if (result.error !== "aborted") setCropError(result.error);
-      return;
-    }
-    const name = result.asset.name || t("Editor.asset.yourFile");
-    props.onChange(result.asset);
-    props.onCommit?.();
-    setStatus(t("Editor.asset.ready", { name }));
-    closeCrop();
   };
 
   const asset = props.value;
@@ -253,7 +160,7 @@ export function ImageField(props: ImageFieldProps) {
                 onClick={() => {
                   props.onChange(null);
                   props.onCommit?.();
-                  setStatus(t("Editor.asset.removedFile"));
+                  loader.setStatus(t("Editor.asset.removedFile"));
                   fileRef.current?.focus();
                 }}
                 data-testid="asset-remove"
@@ -286,7 +193,7 @@ export function ImageField(props: ImageFieldProps) {
             type="button"
             className={cx(ICON_BUTTON, FOCUS_RING)}
             onClick={() => {
-              setError(null);
+              loader.clearError();
               fileRef.current?.focus();
             }}
             aria-label={t("Editor.asset.dismiss")}
@@ -295,17 +202,7 @@ export function ImageField(props: ImageFieldProps) {
           </button>
         </div>
       )}
-      {source && sourceUrl !== null && (
-        <CropDialog
-          src={sourceUrl}
-          size={sourceSize(source)}
-          name={source.name}
-          busy={applying}
-          error={cropError ? t(`Editor.asset.errors.${cropError}`) : null}
-          onApply={(crop) => void apply(crop)}
-          onCancel={closeCrop}
-        />
-      )}
+      {loader.dialog}
     </div>
   );
 }
