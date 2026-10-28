@@ -4,13 +4,23 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M4 (Flaggschiff-Muster, Code-Tools, Launch), freigegeben von Andreas 2026-10-28 07:51. Branch `m4/launch` ab `main`. M3 abgenommen und live seit 2026-10-28 07:45 (PR #4, Merge 1acdf92), Name jetzt **Musterli**.
+- **Meilenstein**: M4b (Generative Welle, 6 Tools), freigegeben von Andreas 2026-10-28 12:10. Branch `m5/generative` ab `main`. M4 live seit 2026-10-28 11:45 (PR #9, Merge 19d7d19); AP08 (Launch-Vorbereitung) noch offen.
 - **Letzte Sitzung**: 2026-10-28 (Cloud-Sitzung)
-- **Nächster Schritt**: AP01, AP04, AP05 und AP06 parallel; AP02 und AP03 nach AP01 (Shape-API). Offen für Andreas bis zum Launch: Domain musterli.app mit Cloudflare verbinden, Impressum-Angaben, Analytics-Token, Sentry-DSN, juristische Prüfung (Rechtstexte, Nutzungsbedingungen), Markenprüfung.
+- **Nächster Schritt**: M4b-AP01 bis AP04 parallel in Worktrees, danach AP05 Integration. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung, Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M4: Flaggschiff-Muster, Code-Tools und Launch (freigegeben 2026-10-28)
+### M4b: Generative Welle (freigegeben 2026-10-28)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M4b-AP01 | **Höhenlinien** (K1, `topo-lines`) und **Flow Fields** (K2, `flow-field`), gemeinsames Rauschfeld | engine-dev | in Arbeit | – | Branch `m4b/ap01-topo-flow` |
+| M4b-AP02 | **Low-Poly und Voronoi** (K3, `low-poly`) und **Terrazzo** (K5, `terrazzo`), gemeinsame Punkt- und Polygon-Bausteine | engine-dev | in Arbeit | – | Branch `m4b/ap02-lowpoly-terrazzo` |
+| M4b-AP03 | **Guilloche** (K4, `guilloche`) | engine-dev | in Arbeit | – | Branch `m4b/ap03-guilloche` |
+| M4b-AP04 | **Screenshot-Verschönerer** (K6, `screenshot-beautifier`) | ui-dev + engine-dev | in Arbeit | – | Branch `m4b/ap04-screenshot` |
+| M4b-AP05 | Integration, Changelog, QA in 3 Browsern (CI), Code- und Security-Review | Orchestrator + reviewer | offen | AP01 bis AP04 | |
+
+### M4: Flaggschiff-Muster, Code-Tools und Launch (freigegeben 2026-10-28, live 2026-10-28)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
