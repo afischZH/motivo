@@ -12,7 +12,7 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-border">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4">
         <Link
           href="/"
           aria-label={t("homeLink")}
@@ -20,8 +20,8 @@ export function SiteHeader() {
         >
           {t("brand")}
         </Link>
-        <div className="flex items-center gap-4">
-          <nav aria-label={t("mainNav")} className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <nav aria-label={t("mainNav")} className="flex items-center gap-3 sm:gap-4">
             <Link
               href="/tools"
               className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"

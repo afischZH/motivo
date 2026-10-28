@@ -23,6 +23,14 @@ async function previewSrc(page: Page): Promise<string> {
   return (await preview(page).getAttribute("src")) ?? "";
 }
 
+/** Rolls a new variant and returns its preview once it is rendered. */
+async function newVariant(page: Page): Promise<string> {
+  const before = await previewSrc(page);
+  await page.getByTestId("new-variant").click();
+  await expect.poll(() => previewSrc(page)).not.toBe(before);
+  return previewSrc(page);
+}
+
 /** Names the design and saves it with the button; returns the saved id. */
 async function saveDesign(page: Page, name: string): Promise<string> {
   await page.getByTestId("design-name").fill(name);
@@ -53,11 +61,7 @@ async function requestsDuring(page: Page, action: () => Promise<void>): Promise<
 test.describe("saving designs locally", () => {
   test("save, reload, reopen, rename, duplicate and delete without a server", async ({ page }) => {
     await openEditor(page);
-    const initial = await previewSrc(page);
-    await page.getByTestId("new-variant").click();
-    // Wait until the new variant is rendered before remembering it.
-    await expect.poll(() => previewSrc(page)).not.toBe(initial);
-    const src = await previewSrc(page);
+    const src = await newVariant(page);
 
     const name = "E2E Blob 7f3a";
     const requests = await requestsDuring(page, async () => {
@@ -151,9 +155,7 @@ test.describe("saving designs locally", () => {
   test("restores the draft on return and can start over", async ({ page }) => {
     await openEditor(page);
     const start = await previewSrc(page);
-    await page.getByTestId("new-variant").click();
-    const changed = await previewSrc(page);
-    expect(changed).not.toBe(start);
+    const changed = await newVariant(page);
     // The draft is written after a short pause.
     await page.waitForTimeout(1500);
 
@@ -171,8 +173,7 @@ test.describe("saving designs locally", () => {
 
   test("a share link wins over the draft, which is only offered", async ({ page }) => {
     await openEditor(page);
-    await page.getByTestId("new-variant").click();
-    const draft = await previewSrc(page);
+    const draft = await newVariant(page);
     await page.waitForTimeout(1500);
 
     const blob = registry.get("blob");
@@ -219,10 +220,7 @@ test.describe("saving designs locally", () => {
 test.describe("moving designs with a file", () => {
   test("exports all designs and imports them into a fresh browser", async ({ page, browser }) => {
     await openEditor(page);
-    const initial = await previewSrc(page);
-    await page.getByTestId("new-variant").click();
-    await expect.poll(() => previewSrc(page)).not.toBe(initial);
-    const src = await previewSrc(page);
+    const src = await newVariant(page);
     await saveDesign(page, "Travelling blob");
     await page.goto(MY_DESIGNS);
     await expect(page.getByTestId("design-card")).toHaveCount(1);
