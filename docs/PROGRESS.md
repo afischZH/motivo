@@ -16,7 +16,7 @@
 |---|---|---|---|---|---|
 | M4b-AP01 | **Höhenlinien** (K1, `topo-lines`) und **Flow Fields** (K2, `flow-field`), gemeinsames Rauschfeld | engine-dev | in Arbeit | – | Branch `m4b/ap01-topo-flow` |
 | M4b-AP02 | **Low-Poly und Voronoi** (K3, `low-poly`) und **Terrazzo** (K5, `terrazzo`), gemeinsame Punkt- und Polygon-Bausteine | engine-dev | in Arbeit | – | Branch `m4b/ap02-lowpoly-terrazzo` |
-| M4b-AP03 | **Guilloche** (K4, `guilloche`) | engine-dev | in Arbeit | – | Branch `m4b/ap03-guilloche` |
+| M4b-AP03 | **Guilloche** (K4, `guilloche`) | engine-dev | erledigt (Cross-Browser in AP05) | – | Branch `m4b/ap03-guilloche`, gemergt. 3 Kurvenfamilien (Weave, Spirograph, Harmonisch), 3 Layouts (Rosette, Band kachelbar, Rahmen), 5 Farbmodi, 7 Presets; neuer Helfer `engine/src/sampling.ts` (adaptive Abtastung, relative Pfade auf 0,1 px, Punktbudget 120 000, SVG unter ca. 1,1 MB, Standard 85 KB in ca. 15 ms). GIF über "time" (erste Nutzung) und "colors", kein CSS-Export. Tests: Engine 1001, Registry 1839, Exporter 205, Editor-UI 823, Web 634; E2E Chromium 13. Offen: Presets können keine Leinwandgrösse setzen (Band zentriert auf 1200²), Snapshots +870 KB |
 | M4b-AP04 | **Screenshot-Verschönerer** (K6, `screenshot-beautifier`) | ui-dev + engine-dev | in Arbeit | – | Branch `m4b/ap04-screenshot` |
 | M4b-AP05 | Integration, Changelog, QA in 3 Browsern (CI), Code- und Security-Review | Orchestrator + reviewer | offen | AP01 bis AP04 | |
 
