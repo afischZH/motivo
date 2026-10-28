@@ -33,6 +33,8 @@ describe("static motifs", () => {
         expect(await staticMotifSvg(tool, design)).toBe(svg);
       }
     },
+    // Image effects encode a PNG per design (twice); slow on a busy CI runner.
+    60_000,
   );
 
   it("wraps image effects as a compressed PNG of the sample", async () => {
