@@ -219,7 +219,9 @@ waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECUR
 /de/konverter, /en/convert              Konverter-Übersicht
 /de/konverter/[slug], /en/convert/[slug]   Konverter (z. B. /de/konverter/svg-zu-css)
 /[locale]/community/...                 Packs, Paletten, Templates (ISR)
-/[locale]/gradients, /palettes, /wallpapers   Programmatic-SEO-Sammlungen
+/de/farbverlaeufe, /en/gradients      Gradient-Sammlung (seit M3-AP09), je Verlauf /…/[slug]
+/de/farbpaletten, /en/color-palettes  Paletten-Sammlung (seit M3-AP09), je Palette /…/[slug]
+/[locale]/wallpapers                   Programmatic-SEO-Sammlung (später)
 /[locale]/blog, /changelog, /pricing
 /app/dashboard, /app/brand, /app/settings, /app/license   (nicht indexiert; Lizenz, Belege, Credits)
 /api/v1/...                             Öffentliche API
@@ -255,6 +257,15 @@ waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECUR
 - **Kein next-intl im Browser auf Landingpages** (seit M2-AP12): Das Layout hat keinen `NextIntlClientProvider`. Sprachumschalter und Theme-Schalter erhalten ihre Texte als Props von Server-Komponenten, `Link` aus `i18n/navigation.tsx` ist eine async Server-Komponente, die den lokalisierten Pfad auf dem Server berechnet (`compilePath` in `i18n/paths.ts`, gleiches Ergebnis wie `getPathname` von next-intl, per Test für alle Routen geprüft) und ein schlichtes `next/link` rendert. Der Sprachumschalter rechnet ebenfalls mit `compilePath` und den Next-Hooks. So lädt eine Landingpage den Nachrichten-Formatierer von next-intl nicht (rund 43 KB roh, 13 KB gzip weniger JS). Client-Komponenten mit eigenen Texten (Editor, Konverter, Warteliste) bringen ihren Provider mit und importieren `Link` aus `i18n/client-navigation.ts`; `i18n/navigation.test.ts` wacht darüber.
 - **Prefetch erst bei Absicht** (seit M2-AP12): Next lädt sonst für jeden sichtbaren Link sofort RSC-Daten und die JS-Chunks der Zielseite (Editor, Konverter), auf dem Katalog über ein Dutzend Anfragen nach dem Laden. Beide `Link`-Varianten (`i18n/intent-link.tsx`, `i18n/intl-intent-link.tsx`) setzen `prefetch={false}`, bis der Zeiger den Link berührt, er den Fokus erhält oder eine Berührung beginnt; danach gilt das Standardverhalten. Ein explizites `prefetch` gewinnt immer.
 - Share-Links: Params im URL-Hash komprimiert (z. B. `lz-string`), damit ein Design ohne Account teilbar ist.
+
+**Sammlungsseiten (seit M3-AP09)**
+- **Daten** in `apps/web/lib/collections/`: `gradients.ts` (36 Verläufe in 6 Stimmungsgruppen) und `palettes.ts` (36 Paletten zu 5 Farben in 6 Gruppen), alle eigene Zusammenstellungen. Farben sind OKLCH-Tupel, HEX entsteht mit `oklchToHex` der Engine; ein Test verlangt, dass jede Definition im sRGB-Gamut liegt (sonst wiche HEX sichtbar vom Gedachten ab). Namen und Beschreibungen stehen in `messages/*.json` unter `GradientCollection.items.<id>` bzw. `PaletteCollection.items.<id>`, Seitentexte unter `Collections`, `GradientPage`, `PalettePage`.
+- **Slugs** in `i18n/slugs.ts`: `SECTION_SLUGS.gradients` (`farbverlaeufe`/`gradients`), `SECTION_SLUGS.palettes` (`farbpaletten`/`color-palettes`) sowie `GRADIENT_SLUGS` und `PALETTE_SLUGS` je Eintrag und Sprache (Vertragstest wie bei Tools). `AppRoute` kennt `gradients`, `gradient`, `palettes`, `palette`; fremdsprachige Slugs leitet `legacy.ts` mit 308 um.
+- **Seiten** statisch (`dynamicParams = false`), reine Server-Komponenten ohne next-intl im Browser; einziges eigenes Client-JS ist der Kopier-Knopf. Übersicht: Gruppen mit Sprunglinks, Karten mit Inline-CSS-Vorschau (Verlauf bzw. Farbstreifen, keine Bilder), `CollectionPage`- plus `ItemList`-JSON-LD. Detailseite: Vorschau, Farben mit HEX/RGB/OKLCH und Kontrast zum Kopieren, Code (CSS und Tailwind bzw. CSS-Variablen und Tailwind-Theme), Varianten-Kacheln, Farbtools, Anleitung, verwandte Einträge (gleiche Gruppe zuerst), `BreadcrumbList`.
+- **Editor-Links** über den bestehenden Share-Hash `#d=…` (`lib/collections/variants.ts`, `links.ts`): ein Verlauf öffnet sich in CSS-Verlauf, Mesh, Blurry und Streifen sowie in Palette, Abstufungen und Tailwind-Palette; eine Palette in CSS-Verlauf, Mesh, Blurry und den drei Farbtools. Ein Test prüft, dass jedes Variantendesign das Tool-Schema besteht und sich aus dem Hash unverändert zurücklesen lässt.
+- **Vorschauen** der Mesh-, Blurry- und Streifen-Kacheln sind Motivdateien wie bei den Presets (`/motifs/<toolId>/gradient-<id>.svg`, `palette-<id>.svg`, statisch aus `collectionMotifs`). **OG-Bilder** rendert `scripts/og-images.mjs` zusätzlich nach `public/og/<locale>/gradients/<id>.png` und `.../palettes/<id>.png`; die Übersichten nutzen das OG-Bild des passenden Tools.
+- **Verlinkung**: Footer, Kategorie-Seiten (Farbverläufe, Farben) und Landingpages der passenden Tools zeigen einen Teaser (`CollectionTeaser`); die Sitemap führt Übersichten und Einträge mit `hreflang`. Kleine Vorschauen im Teaser kommen als Props (`lib/collections/teaser.ts`): Auf der Kategorie-Seite hätte der Import der Sammlungsdaten den gemeinsamen Server-Chunk ein weiteres Mal kopiert (rund 90 KiB gzip im Worker), darum zeigt der Teaser dort nur Text und Link.
+- **Worker**: AP09 vergrössert ihn von 2068 auf 2189 KiB gzip (Texte DE/EN, neue Routen und Seiten-Chunks).
 
 ## 8. Öffentliche API (P2)
 
