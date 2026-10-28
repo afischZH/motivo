@@ -23,7 +23,12 @@ const MAX_OBJECT_URLS = 24;
 
 const URL_OPEN = 'url("';
 const URL_CLOSE = '")';
-const BASE64_DATA = /^data:([a-z]+\/[a-z0-9.+-]+);base64,/i;
+/**
+ * Raster pictures only: a blob: URL belongs to the app's origin, so a data
+ * URI of another type (HTML, SVG with script) must never become one, even if
+ * a tool's output carried it (M4b-AP05; tools emit only checked PNG and JPEG).
+ */
+const BASE64_DATA = /^data:(image\/(?:png|jpeg|webp|gif|avif));base64,/i;
 
 /**
  * Calls `visit` with the start, end and text of each large base64 data URI

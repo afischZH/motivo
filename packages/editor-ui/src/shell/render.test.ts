@@ -82,6 +82,28 @@ describe("svgDataUrl", () => {
 });
 
 describe("parseCssDeclarations", () => {
+  it("stays linear for many escapes and an unterminated quote (M4b-AP05)", () => {
+    // Searching the closing quote again per character made both quadratic
+    // (about 1e11 steps for 400 KB of escapes).
+    const escapes = "\\a".repeat(200_000);
+    const css = `content: "${escapes}";\ncolor: red;\nbackground: url("x;y");`;
+    const start = performance.now();
+    const decls = parseCssDeclarations(css);
+    const open = parseCssDeclarations(`content: "${"a".repeat(400_000)};\ncolor: red`);
+    expect(performance.now() - start).toBeLessThan(500);
+    expect(decls.map(([p]) => p)).toEqual(["content", "color", "background"]);
+    expect(decls[2]?.[1]).toEqual(['url("x;y")']);
+    // An unterminated quote swallows the rest, as in CSS.
+    expect(open.map(([p]) => p)).toEqual(["content"]);
+  });
+
+  it("skips escaped quotes inside a value", () => {
+    expect(parseCssDeclarations('content: "a\\";b"; color: red')).toEqual([
+      ["content", ['"a\\";b"']],
+      ["color", ["red"]],
+    ]);
+  });
+
   it("groups repeated properties in source order", () => {
     const css = "background-color: #fff;\nbackground-image: a;\nbackground-image: b;";
     expect(parseCssDeclarations(css)).toEqual([

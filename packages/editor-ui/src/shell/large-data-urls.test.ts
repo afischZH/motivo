@@ -25,6 +25,14 @@ describe("large data URIs in CSS previews", () => {
     expect(largeDataUrls(parseCssDeclarations(svg))).toEqual([]);
   });
 
+  it("never turns a non-raster data URI into a same-origin blob URL", () => {
+    const body = "A".repeat(LARGE_DATA_URL);
+    for (const type of ["text/html", "image/svg+xml", "application/javascript"]) {
+      const value = `background-image: url("data:${type};base64,${body}");`;
+      expect(largeDataUrls(parseCssDeclarations(value)), type).toEqual([]);
+    }
+  });
+
   it("leaves the picture out until it is decoded, then shows it through a blob URL", async () => {
     const decls = parseCssDeclarations(css);
     const before = withObjectUrls(decls, [big]);
