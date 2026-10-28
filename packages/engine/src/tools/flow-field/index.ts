@@ -43,14 +43,20 @@ export type FlowColorMode = (typeof FLOW_COLOR_MODES)[number];
 
 /** Field grid cells along the shorter edge. */
 export const FLOW_GRID_RESOLUTION = 160;
-export const FLOW_GRID_CELLS_MAX = 64_000;
+/**
+ * Upper bound of field grid cells for any aspect ratio (16:9 at 160 cells
+ * along the shorter edge needs about 47 900; M4b-AP05: was 64 000).
+ */
+export const FLOW_GRID_CELLS_MAX = 48_000;
 export const FLOW_LINES_MAX = 4000;
 /** Integration steps per line and direction. */
 export const FLOW_LINE_STEPS_MAX = 600;
 /** Integration steps of all lines together (bounds the render time). */
-export const FLOW_STEPS_MAX = 150_000;
+export const FLOW_STEPS_MAX = 80_000;
+/** Budget units of an integration step with the separation check (`FLOW_STEPS_MAX`). */
+export const FLOW_CHECKED_STEP_COST = 2;
 /** Output path points (about 10 to 12 bytes each, so well under 1.5 MB of SVG). */
-export const FLOW_POINTS_MAX = 90_000;
+export const FLOW_POINTS_MAX = 30_000;
 /** Colour steps of the angle and position modes (one path element per step). */
 const COLOR_BINS = 24;
 /** Length of the gap that travels along each line during the animation, as a share of the line. */
@@ -81,18 +87,39 @@ export interface FlowField {
   readonly originY: number;
 }
 
+/** Field grid cell in px: `FLOW_GRID_RESOLUTION` along the shorter edge, at most `FLOW_GRID_CELLS_MAX` cells. */
+export function flowGridCell(width: number, height: number): number {
+  const short = Math.max(1, Math.min(width, height));
+  let cell = short / FLOW_GRID_RESOLUTION;
+  const count = (c: number): number => (Math.ceil(width / c) + 5) * (Math.ceil(height / c) + 5);
+  if (count(cell) > FLOW_GRID_CELLS_MAX) {
+    cell *= Math.sqrt(count(cell) / FLOW_GRID_CELLS_MAX);
+    while (count(cell) > FLOW_GRID_CELLS_MAX) cell *= 1.02;
+  }
+  return cell;
+}
+
+/** The field grid spans at least this many cells per length unit (see `flowUnit`). */
+const FLOW_UNIT_CELLS = 80;
+
+/**
+ * Length unit of every size param (scale, spacing, step, length): the
+ * shorter edge, or for very elongated canvases (where the grid cap makes the
+ * cells larger) `FLOW_UNIT_CELLS` cells. Without it a 8192 × 16 canvas with
+ * 1 % spacing asked for 5 million seed points (over 10 s, M4b-AP05).
+ */
+export function flowUnit(width: number, height: number): number {
+  const short = Math.max(1, Math.min(width, height));
+  return Math.max(short, flowGridCell(width, height) * FLOW_UNIT_CELLS);
+}
+
 /** Samples the direction field. Consumes one noise permutation and two offsets. */
 export function flowField(o: FlowFieldOptions): FlowField {
   const noise = createNoise2D(o.rng);
   const offX = o.rng.float(0, 200);
   const offY = o.rng.float(0, 200);
-  const short = Math.max(1, Math.min(o.width, o.height));
-  let cell = short / FLOW_GRID_RESOLUTION;
-  const count = (c: number): number => (Math.ceil(o.width / c) + 5) * (Math.ceil(o.height / c) + 5);
-  if (count(cell) > FLOW_GRID_CELLS_MAX) {
-    cell *= Math.sqrt(count(cell) / FLOW_GRID_CELLS_MAX);
-    while (count(cell) > FLOW_GRID_CELLS_MAX) cell *= 1.02;
-  }
+  const short = flowUnit(o.width, o.height);
+  const cell = flowGridCell(o.width, o.height);
   const cols = Math.ceil(o.width / cell) + 5;
   const rows = Math.ceil(o.height / cell) + 5;
   const originX = -2 * cell;
@@ -198,9 +225,32 @@ export interface FlowLine {
   readonly angle: number;
 }
 
+/**
+ * Seed candidates at most: Poisson-disk seeds cost about 3 µs each on the
+ * main thread (Bridson), grid seeds a fraction of that. Beyond, the seeds are
+ * spaced wider than the lines (M4b-AP05).
+ */
+export const FLOW_POISSON_SEEDS_MAX = 4_000;
+export const FLOW_GRID_SEEDS_MAX = 12_000;
+/** Points per spacing² of Bridson's sampling (measured about 0.68). */
+const POISSON_DENSITY = 0.7;
+
+/** Seed spacing in px: the line spacing, or wider when the seeds would exceed their cap. */
+export function flowSeedSpacing(
+  width: number,
+  height: number,
+  spacing: number,
+  seeding: FlowSeeding,
+): number {
+  const [density, max] =
+    seeding === "poisson" ? [POISSON_DENSITY, FLOW_POISSON_SEEDS_MAX] : [1, FLOW_GRID_SEEDS_MAX];
+  return Math.max(spacing, Math.sqrt((density * width * height) / max));
+}
+
 /** Seed candidates in random order. */
 function seedPoints(o: FlowLinesOptions, rng: Rng): { x: number; y: number }[] {
-  const { width: w, height: h, spacing } = o;
+  const { width: w, height: h } = o;
+  const spacing = flowSeedSpacing(w, h, o.spacing, o.seeding);
   if (o.seeding === "random") {
     return Array.from({ length: Math.min(o.maxLines, FLOW_LINES_MAX) }, () => ({
       x: rng.float(0, w),
@@ -244,7 +294,7 @@ export function flowLines(field: FlowField, o: FlowLinesOptions): FlowLine[] {
 
   // Spatial hash of all accepted points (and the line being traced) as linked
   // lists in typed arrays: `head` per bucket, `next` per point.
-  const short = Math.max(1, Math.min(o.width, o.height));
+  const short = flowUnit(o.width, o.height);
   const hashCell = Math.max(dTest, short / 300, 0.5);
   const hc = Math.ceil((maxX - minX) / hashCell) + 1;
   const hr = Math.ceil((maxY - minY) / hashCell) + 1;
@@ -302,6 +352,8 @@ export function flowLines(field: FlowField, o: FlowLinesOptions): FlowLine[] {
   const dir: [number, number] = [0, 0];
   const mid: [number, number] = [0, 0];
   let stepsLeft = FLOW_STEPS_MAX;
+  // A step that keeps its distance to other lines (hash lookup) costs about three plain ones.
+  const stepCost = check ? FLOW_CHECKED_STEP_COST : 1;
   const limit = Math.min(Math.max(Math.floor(o.maxLines), 1), FLOW_LINES_MAX);
   // A seed needs the full spacing around it (Jobard-Lefer's d_sep), the line then keeps d_test.
   const seedDistance = check ? o.spacing * Math.min(1, o.separation + 0.25) : 0;
@@ -320,7 +372,7 @@ export function flowLines(field: FlowField, o: FlowLinesOptions): FlowLine[] {
       let x = seed.x;
       let y = seed.y;
       for (let s = 1; s <= maxSteps && stepsLeft > 0; s++) {
-        stepsLeft--;
+        stepsLeft -= stepCost;
         if (!flowDirection(field, x, y, dir)) break;
         const mx = x + sign * dir[0] * h * 0.5;
         const my = y + sign * dir[1] * h * 0.5;
@@ -426,7 +478,7 @@ export interface FlowSvgOptions {
 
 export function flowSvg(o: FlowSvgOptions): string {
   const { width: w, height: h } = o;
-  const short = Math.max(1, Math.min(w, h));
+  const short = flowUnit(w, h);
   // Fixed order of rng use: field, then one seed for lines and one for colours,
   // so changing the colours never moves a line.
   const field = flowField({

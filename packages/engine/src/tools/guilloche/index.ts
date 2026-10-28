@@ -42,8 +42,20 @@ export const GUILLOCHE_COLOR_MODES = ["single", "alternate", "blend", "iris", "a
  */
 export type GuillocheColorMode = (typeof GUILLOCHE_COLOR_MODES)[number];
 
-/** Most line points per image (7 to 9 bytes each in the SVG, so at most about 1.1 MB). */
-export const GUILLOCHE_POINT_BUDGET = 120_000;
+/**
+ * Most line points per image (7 to 9 bytes each in the SVG, so at most about
+ * 0.35 MB). Sampling, mapping and writing cost about 1 µs per point on the
+ * main thread, so this bounds the render time (M4b-AP05: was 120 000, and
+ * extreme params ran up to four passes over it, 0.2 to 0.7 s). Above every
+ * preset (Spirograph has about 29 500).
+ */
+export const GUILLOCHE_POINT_BUDGET = 36_000;
+/**
+ * Even steps of all lines together at most twice this (the grid before
+ * refinement). Kept apart from the point budget so the presets keep their
+ * sampling; a grid over the point budget is never drawn (see `guillocheSvg`).
+ */
+export const GUILLOCHE_STEP_BUDGET = 120_000;
 /** Default flatness tolerance in px: midpoints never stray further from their chord. */
 export const GUILLOCHE_TOLERANCE = 0.2;
 /** Even steps per oscillation of the fastest wave, before adaptive refinement. */
@@ -354,6 +366,59 @@ interface Pass {
   readonly maxDepth: number;
 }
 
+/** The canvas curve of a line, one period of the layout per unit of t. */
+function lineCurve(plan: LinePlan, mapper: GuillocheMapper, periods: number): (t: number) => Vec2 {
+  return (t: number): Vec2 => {
+    const b = guillochePoint(plan.wave, t, plan.phase);
+    return mapper.map(b.u / periods, b.v);
+  };
+}
+
+/** Even steps of a line before refinement. */
+function lineStepCount(plan: LinePlan, periods: number, stepCap: number): number {
+  return Math.min(stepCap, Math.ceil(waveCount(plan.wave) * periods * STEPS_PER_WAVE) + 16);
+}
+
+/** Even steps probed per layer to estimate how much a pass refines. */
+const PROBE_STEPS = 48;
+
+/**
+ * Points a pass would draw, estimated from the first `PROBE_STEPS` steps of
+ * the first line of every layer (the lines of a layer differ only in phase,
+ * and every line repeats its waves, so the share of refined steps carries
+ * over). Costs a few hundred curve points instead of a whole pass.
+ */
+function estimatePoints(
+  o: GuillocheSvgOptions,
+  plans: readonly LinePlan[],
+  pass: Pass,
+  stepCap: number,
+): number {
+  const mapper = guillocheMapper(o);
+  const periods = o.layout === "rosette" ? 1 : Math.max(1, Math.round(o.repeats));
+  const perLayer = new Map<number, { plan: LinePlan; lines: number }>();
+  for (const plan of plans) {
+    const entry = perLayer.get(plan.layer);
+    if (entry) entry.lines++;
+    else perLayer.set(plan.layer, { plan, lines: 1 });
+  }
+  // `along` splits every line into chunks, each with its own start point.
+  const chunkStarts = o.colorMode === "along" ? alongSteps(o.colors.length) * periods : 1;
+  let total = 0;
+  for (const { plan, lines } of perLayer.values()) {
+    const steps = lineStepCount(plan, periods, stepCap);
+    const n = Math.min(steps, PROBE_STEPS);
+    const pts = sampleCurve(lineCurve(plan, mapper, periods), 0, (periods * n) / steps, {
+      steps: n,
+      tolerance: pass.tolerance,
+      maxDepth: pass.maxDepth,
+    });
+    const perStep = (pts.length - 1) / n;
+    total += lines * (perStep * steps + (plan.color === undefined ? chunkStarts : 1));
+  }
+  return total;
+}
+
 function renderLines(
   o: GuillocheSvgOptions,
   plans: readonly LinePlan[],
@@ -379,18 +444,18 @@ function renderLines(
     if (list) list.push(d);
     else groups.set(color, [d]);
   };
-  const options = (n: number) => ({ steps: n, tolerance: pass.tolerance, maxDepth: pass.maxDepth });
+  // A single line can hold more points than the whole budget: stop it there as well.
+  const options = (n: number) => ({
+    steps: n,
+    tolerance: pass.tolerance,
+    maxDepth: pass.maxDepth,
+    maxPoints: budget - points + 2,
+  });
 
   for (const [i, plan] of plans.entries()) {
     if (points > budget) return { groups, points, over: true, done: i / plans.length };
-    const curve = (t: number): Vec2 => {
-      const b = guillochePoint(plan.wave, t, plan.phase);
-      return mapper.map(b.u / periods, b.v);
-    };
-    const lineSteps = Math.min(
-      stepCap,
-      Math.ceil(waveCount(plan.wave) * periods * STEPS_PER_WAVE) + 16,
-    );
+    const curve = lineCurve(plan, mapper, periods);
+    const lineSteps = lineStepCount(plan, periods, stepCap);
     const t0 = -overshoot;
     const t1 = periods + overshoot;
     if (plan.color !== undefined) {
@@ -417,22 +482,26 @@ function renderLines(
 /**
  * The whole guilloche as an SVG document. Lines share one group with the
  * stroke settings; paths are grouped by colour (one `<path>` per colour).
- * Keeps to `pointBudget`: the even grid per line is capped (all lines
- * together at most half the budget), and a pass that goes over the budget
- * stops early and is retried with a looser tolerance, finally without
- * refinement. Extreme params stay fast and the SVG small.
+ * Keeps to `pointBudget`: a cheap estimate picks the finest tolerance whose
+ * points fit, that pass is drawn once (stopped if it overshoots after all)
+ * and the even grid with fewer steps is the last resort. Extreme params stay
+ * within the main-thread budget and the SVG small (M4b-AP05).
  */
 export function guillocheSvg(o: GuillocheSvgOptions): string {
   const { width: w, height: h } = o;
   const budget = Math.max(1000, o.pointBudget ?? GUILLOCHE_POINT_BUDGET);
+  const gridBudget = Math.max(1000, o.pointBudget ?? GUILLOCHE_STEP_BUDGET);
   const gradientId =
     o.colorMode === "iris"
       ? stableId("gi", `${o.colors.join(",")}|${o.gradientAngle}|${w}|${h}`)
       : "";
   const gradientRef = `url(#${gradientId})`;
   const plans = planLines(o, gradientRef);
-  // Even grid per line: at most half the budget over all lines, so the last pass always fits.
-  const stepCap = Math.max(8, Math.floor(budget / Math.max(1, plans.length) / 2) - 1);
+  // Even grid per line: all lines together at most half the step budget.
+  const lineCount = Math.max(1, plans.length);
+  const stepCap = Math.max(8, Math.floor(gridBudget / lineCount / 2) - 1);
+  // A grid that always fits the point budget: the last resort.
+  const smallCap = Math.max(8, Math.floor(budget / lineCount / 2) - 1);
 
   const tolerance = Math.max(o.tolerance ?? GUILLOCHE_TOLERANCE, 0.01);
   const passes: Pass[] = [
@@ -441,12 +510,13 @@ export function guillocheSvg(o: GuillocheSvgOptions): string {
     { tolerance: tolerance * 16, maxDepth: 3 },
     { tolerance, maxDepth: 0 },
   ];
-  let out = renderLines(o, plans, passes[0] as Pass, stepCap, budget);
-  for (let i = 1; i < passes.length && out.over; i++) {
-    // Far over the budget (extrapolated from the lines drawn so far): go straight to the even grid.
-    const estimate = out.points / Math.max(out.done, 1e-3);
-    if (estimate > budget * 6) i = passes.length - 1;
-    out = renderLines(o, plans, passes[i] as Pass, stepCap, budget);
+  // The finest pass whose estimate fits is drawn once; drawing stops at the
+  // budget plus a margin, and then (estimate off) the small grid follows.
+  // At most one full pass plus the small grid, instead of up to four passes.
+  const chosen = passes.find((pass) => estimatePoints(o, plans, pass, stepCap) <= budget);
+  let out = chosen ? renderLines(o, plans, chosen, stepCap, Math.ceil(budget * 1.15)) : undefined;
+  if (!out || out.over) {
+    out = renderLines(o, plans, passes[passes.length - 1] as Pass, smallCap, budget);
   }
 
   const defs = gradientId

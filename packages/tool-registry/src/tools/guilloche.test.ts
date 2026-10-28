@@ -85,7 +85,7 @@ describe("guilloche render", () => {
     expect(svg.length).toBeLessThan(GUILLOCHE_POINT_BUDGET * 10);
     expect(svg.length).toBeLessThan(1_500_000);
     expect(checkSvg(svg)).toEqual([]);
-    // Generous for shared CI runners; locally about 0.2 s.
+    // Generous for shared CI runners; locally about 25 ms (0.2 s before M4b-AP05).
     expect(ms).toBeLessThan(2000);
   });
 });

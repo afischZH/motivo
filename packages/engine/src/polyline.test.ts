@@ -135,6 +135,18 @@ describe("slicePolyline", () => {
 });
 
 describe("numberFormatter", () => {
+  it("writes tenths exactly like String of the rounded value (fast path, M4b-AP05)", () => {
+    const f = numberFormatter(1);
+    const reference = (v: number): string => {
+      const r = Math.round(v * 10) / 10;
+      return r === 0 || !Number.isFinite(r) ? "0" : String(r);
+    };
+    const values = [0, -0, 0.04, -0.04, 0.05, -0.05, 0.15, 1, -1, 9.95, 12.34, -7.65, 19999.94];
+    values.push(19999.96, 25000.5, -25000.5, 1e21, Number.NaN, Infinity, -Infinity);
+    for (let i = 0; i < 20000; i++) values.push(Math.sin(i) * 9000 + i * 0.0137);
+    for (const v of values) expect(f(v), String(v)).toBe(reference(v));
+  });
+
   it("rounds, trims and avoids negative zero", () => {
     const f = numberFormatter(1);
     expect([1.25, 3, -0.04, 0.30000000000000004, 1234.56, -7.75].map(f)).toEqual([

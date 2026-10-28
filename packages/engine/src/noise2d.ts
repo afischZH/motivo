@@ -50,8 +50,11 @@ export function createNoise2D(rng: Rng): Noise2D {
     const bb = perm[p1 + yi + 1] ?? 0;
     const u = fade(tx);
     const v = fade(ty);
-    const x1 = grad(aa, tx, ty) + (grad(ba, tx - 1, ty) - grad(aa, tx, ty)) * u;
-    const x2 = grad(ab, tx, ty - 1) + (grad(bb, tx - 1, ty - 1) - grad(ab, tx, ty - 1)) * u;
+    // Each corner once (same arithmetic as the textbook form, which evaluates two corners twice).
+    const gaa = grad(aa, tx, ty);
+    const gab = grad(ab, tx, ty - 1);
+    const x1 = gaa + (grad(ba, tx - 1, ty) - gaa) * u;
+    const x2 = gab + (grad(bb, tx - 1, ty - 1) - gab) * u;
     return (x1 + (x2 - x1) * v) * AMPLITUDE;
   };
 }

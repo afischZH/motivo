@@ -64,8 +64,17 @@ export function scatterDisks(o: ScatterDisksOptions): Disk[] {
   const areaW = w + 2 * pad;
   const areaH = h + 2 * pad;
   const rMin = Math.min(...o.classes.filter((c) => c.radius > 0).map((c) => c.radius));
-  // Not below half the largest radius, so large disks touch only a few cells.
-  const target = Math.max(rMin * 2, rMax / 2, Math.sqrt((areaW * areaH) / MAX_GRID_CELLS), 1e-6);
+  // Not below half the largest radius, so large disks touch only a few cells, and not
+  // below the smallest radius plus the gap, so a check visits only a few cells even when
+  // the gap is much wider than the disks (tiny chips with a 20 px gap visited about 60
+  // cells per candidate, 45 ms per render; M4b-AP05). The checks are exact either way.
+  const target = Math.max(
+    rMin * 2,
+    rMax / 2,
+    rMin + g,
+    Math.sqrt((areaW * areaH) / MAX_GRID_CELLS),
+    1e-6,
+  );
   const cols = Math.max(1, Math.floor(areaW / target));
   const rows = Math.max(1, Math.floor(areaH / target));
   const cw = areaW / cols;

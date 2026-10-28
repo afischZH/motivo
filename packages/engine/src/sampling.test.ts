@@ -14,6 +14,15 @@ describe("chordDistance", () => {
 });
 
 describe("sampleCurve", () => {
+  it("stops at maxPoints", () => {
+    const line = (t: number): Vec2 => ({ x: t, y: Math.sin(40 * t) * 100 });
+    const all = sampleCurve(line, 0, 10, { steps: 200, tolerance: 0.01 });
+    expect(all.length).toBeGreaterThan(400);
+    const cut = sampleCurve(line, 0, 10, { steps: 200, tolerance: 0.01, maxPoints: 300 });
+    expect(cut.length).toBeLessThan(300 + 2 ** 5 + 1);
+    expect(cut).toEqual(all.slice(0, cut.length));
+  });
+
   const circle =
     (r: number) =>
     (t: number): Vec2 => ({

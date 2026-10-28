@@ -7,6 +7,7 @@
  * A polygon is a list of vertices without the closing repeat. Orientation is
  * free unless a function says otherwise.
  */
+import { tenthsFormatter } from "../polyline";
 import type { Rng } from "../rng";
 import type { Vec2 } from "../vec";
 
@@ -172,10 +173,17 @@ export function starPolygon(rng: Rng, o: StarPolygonOptions): Vec2[] {
  * `formatNumber` except at exact half steps, where the binary value decides.
  */
 export function formatCoord(v: number, precision = 1): string {
+  return precision === 1 ? coordTenths(v) : roundedText(v, precision);
+}
+
+function roundedText(v: number, precision: number): string {
   const k = 10 ** precision;
   const r = Math.round(v * k) / k;
   return r === 0 ? "0" : String(r);
 }
+
+/** One decimal through cached digit strings (same text, about twice as fast; M4b-AP05). */
+const coordTenths = tenthsFormatter((v) => roundedText(v, 1));
 
 const pt = (p: Vec2, precision: number): string =>
   `${formatCoord(p.x, precision)} ${formatCoord(p.y, precision)}`;

@@ -17,6 +17,8 @@ export interface SampleCurveOptions {
   readonly tolerance: number;
   /** How often one step may be halved, default 5. */
   readonly maxDepth?: number;
+  /** Stop once this many points are out (the result then ends early). Default: no limit. */
+  readonly maxPoints?: number;
 }
 
 /** Distance of `p` from the line through `a` and `b` (or from `a` if they meet). */
@@ -41,6 +43,7 @@ export function sampleCurve(
   const steps = Math.max(1, Math.floor(options.steps));
   const tol = Math.max(options.tolerance, 1e-6);
   const maxDepth = Math.max(0, Math.floor(options.maxDepth ?? 5));
+  const maxPoints = options.maxPoints ?? Infinity;
   const out: Vec2[] = [];
   let prev = curve(t0);
   out.push(prev);
@@ -58,7 +61,7 @@ export function sampleCurve(
     out.push(pb);
   };
 
-  for (let i = 1; i <= steps; i++) {
+  for (let i = 1; i <= steps && out.length < maxPoints; i++) {
     const t = i === steps ? t1 : t0 + ((t1 - t0) * i) / steps;
     const p = curve(t);
     refine(t0 + ((t1 - t0) * (i - 1)) / steps, prev, t, p, 0);

@@ -41,7 +41,7 @@ export const LOW_POLY_GRADIENTS = ["linear", "radial", "mesh"] as const;
 export type LowPolyGradient = (typeof LOW_POLY_GRADIENTS)[number];
 
 /** Most points per design (sites plus frame). Keeps SVG size and render time bounded. */
-export const LOW_POLY_POINTS_MAX = 2000;
+export const LOW_POLY_POINTS_MAX = 1400;
 /** Smallest spacing between points in px. */
 export const LOW_POLY_SPACING_MIN_PX = 6;
 /** Points per area of Poisson-disk sampling, times spacing² (measured, rounded up). */

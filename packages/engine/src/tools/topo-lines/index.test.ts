@@ -1,10 +1,15 @@
 import { describe, expect, it } from "vitest";
+import { marchingSquares } from "../../contours";
+import { pointCount } from "../../polyline";
 import { createRng } from "../../rng";
 import {
+  TOPO_CROSSINGS_MAX,
   TOPO_GRID_CELLS_MAX,
   TOPO_POINTS_MAX,
+  topoCrossings,
   topoField,
   topoLevels,
+  topoSampler,
   topoSvg,
   type TopoSvgOptions,
 } from "./index";
@@ -59,6 +64,51 @@ describe("topoField", () => {
       const f = topoField({ ...base, width, height, rng: createRng(1) });
       expect(f.cols * f.rows).toBeLessThanOrEqual(TOPO_GRID_CELLS_MAX + 4 * (f.cols + f.rows));
     }
+  });
+});
+
+describe("main-thread budget (M4b-AP05)", () => {
+  const extreme = { scale: 0.15, octaves: 6, roughness: 1, warp: 1 };
+
+  it("counts exactly the points Marching Squares makes", () => {
+    const f = topoField({ ...base, ...extreme, rng: createRng(2) });
+    const levels = topoLevels(f.min, f.max, 12);
+    let traced = 0;
+    for (const l of levels) {
+      for (const c of marchingSquares(f.values, f.cols, f.rows, l.value)) {
+        traced += pointCount(c.points);
+      }
+    }
+    expect(topoCrossings(f, levels)).toBe(traced);
+    expect(topoCrossings(f, [])).toBe(0);
+  });
+
+  it("does not turn every cell of a very elongated canvas into a contour", () => {
+    // Before, the feature size followed the 16 px edge: 670 000 crossings, 0.4 s.
+    for (const [width, height] of [
+      [8192, 16],
+      [16, 8192],
+    ] as const) {
+      const f = topoField({ ...base, width, height, rng: createRng(1) });
+      expect(topoCrossings(f, topoLevels(f.min, f.max, 18))).toBeLessThan(TOPO_CROSSINGS_MAX * 2);
+    }
+  });
+
+  it("samples coarser until extreme params fit the crossings budget", () => {
+    const o = { ...base, ...extreme, width: 1920, height: 1080, rng: createRng(1) };
+    const sample = topoSampler(o);
+    const fine = sample();
+    expect(topoCrossings(fine, topoLevels(fine.min, fine.max, 40))).toBeGreaterThan(
+      TOPO_CROSSINGS_MAX,
+    );
+    const coarse = sample(2);
+    expect(coarse.cell).toBeCloseTo(fine.cell * 2, 9);
+    expect(topoCrossings(coarse, topoLevels(coarse.min, coarse.max, 40))).toBeLessThan(
+      topoCrossings(fine, topoLevels(fine.min, fine.max, 40)),
+    );
+    // The whole render keeps to the output budget (bands and lines share the path data).
+    const svg = topoSvg({ ...o, levels: 40, style: "bands-lines" });
+    expect(coordinates(svg).length / 2).toBeLessThanOrEqual(4 * TOPO_POINTS_MAX * 1.02);
   });
 });
 

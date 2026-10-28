@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   GUILLOCHE_CURVES,
+  GUILLOCHE_POINT_BUDGET,
   alongSteps,
   bandEdges,
   guillocheMapper,
@@ -11,6 +12,18 @@ import {
   type GuillocheSvgOptions,
   type GuillocheWave,
 } from "./index";
+
+/** Points of all subpaths: each `M` starts one, each pair of relative numbers adds one. */
+function points(svg: string): number {
+  let n = 0;
+  for (const m of svg.matchAll(/ d="([^"]*)"/g)) {
+    for (const sub of (m[1] ?? "").split("M").slice(1)) {
+      const rel = sub.split("l")[1] ?? "";
+      n += 1 + (rel.match(/-?(?:\d+\.?\d*|\.\d+)/g)?.length ?? 0) / 2;
+    }
+  }
+  return n;
+}
 
 const wave = (
   curve: GuillocheWave["curve"],
@@ -284,6 +297,34 @@ describe("guillocheSvg", () => {
     const svg = guillocheSvg(heavy);
     expect(svg.length).toBeLessThan(1_500_000);
     expect(svg).not.toMatch(/NaN|Infinity|undefined/);
+    // M4b-AP05: one pass picked by estimate, so at most the budget plus its margin
+    // (one relative step is at least two characters plus a separator).
+    expect(points(svg)).toBeLessThanOrEqual(GUILLOCHE_POINT_BUDGET * 1.15 + 400);
+  });
+
+  it("draws a single line with a huge grid within the budget (M4b-AP05)", () => {
+    // Two lines share half the step budget: a single line could hold far more points
+    // than the whole budget; drawing stops there and the small grid follows.
+    const svg = guillocheSvg({
+      ...base,
+      width: 8192,
+      height: 4608,
+      layout: "frame",
+      repeats: 48,
+      inner: 0,
+      outer: 1,
+      layers: [
+        {
+          ...wave("spiro", { petals: 1, frequency: 96, amplitude: 1 }),
+          lines: 1,
+          spread: 1,
+          phase: 0,
+        },
+        { ...wave("harmonic", { petals: 1, frequency: 96 }), lines: 1, spread: 1, phase: 0 },
+      ],
+      lineWidth: 0.25,
+    });
+    expect(points(svg)).toBeLessThanOrEqual(GUILLOCHE_POINT_BUDGET * 1.15 + 400);
   });
 
   it("a smaller budget gives a smaller file", () => {

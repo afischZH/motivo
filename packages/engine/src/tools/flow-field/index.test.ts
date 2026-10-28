@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import { pointCount } from "../../polyline";
 import { createRng } from "../../rng";
 import {
+  FLOW_GRID_SEEDS_MAX,
+  FLOW_POISSON_SEEDS_MAX,
+  flowSeedSpacing,
+  flowUnit,
   FLOW_GRID_CELLS_MAX,
   FLOW_LINES_MAX,
   FLOW_POINTS_MAX,
@@ -188,6 +192,8 @@ describe("flowLines", () => {
       seeding: "grid",
       separation: 0,
       maxLines: 2000,
+      // Short lines: 1080 lines of 200 px would exceed the step budget.
+      length: 60,
       rng: createRng(3),
     });
     expect(lines.length).toBe(Math.round(480 / 12) * Math.round(320 / 12));
@@ -289,5 +295,45 @@ describe("flowSvg", () => {
       .reduce((a, b) => a + b, 0);
     expect(numbers / 2).toBeLessThanOrEqual(FLOW_POINTS_MAX + 2500);
     expect(svg.length).toBeLessThan(1_500_000);
+  });
+});
+
+describe("main-thread budget (M4b-AP05)", () => {
+  it("measures sizes in the shorter edge unless the canvas is very elongated", () => {
+    expect(flowUnit(1920, 1080)).toBe(1080);
+    expect(flowUnit(1080, 1920)).toBe(1080);
+    // 8192 × 16 with 1 % spacing asked for 5 million seed points (over 10 s).
+    expect(flowUnit(8192, 16)).toBeGreaterThan(100);
+    expect(flowUnit(16, 8192)).toBe(flowUnit(8192, 16));
+  });
+
+  it("caps the seed candidates on any canvas", () => {
+    for (const [w, h] of [
+      [1920, 1080],
+      [8192, 8192],
+      [8192, 16],
+    ] as const) {
+      const unit = flowUnit(w, h);
+      const poisson = flowSeedSpacing(w, h, unit * 0.01, "poisson");
+      expect((0.7 * w * h) / poisson ** 2).toBeLessThanOrEqual(FLOW_POISSON_SEEDS_MAX * 1.001);
+      const grid = flowSeedSpacing(w, h, unit * 0.01, "grid");
+      expect((w * h) / grid ** 2).toBeLessThanOrEqual(FLOW_GRID_SEEDS_MAX * 1.001);
+    }
+    // Wide spacing stays as it is.
+    expect(flowSeedSpacing(1920, 1080, 50, "poisson")).toBe(50);
+  });
+
+  it("keeps extreme params on an elongated canvas within the output budget", () => {
+    const svg = flowSvg({
+      ...svgOpts,
+      width: 8192,
+      height: 16,
+      spacing: 1,
+      length: 200,
+      step: 1,
+      maxLines: FLOW_LINES_MAX,
+      rng: createRng(1),
+    });
+    expect(svg.length).toBeLessThan(FLOW_POINTS_MAX * 14);
   });
 });

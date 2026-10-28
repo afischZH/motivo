@@ -27,10 +27,24 @@ export type TopoColorMode = (typeof TOPO_COLOR_MODES)[number];
 
 /** Grid cells along the shorter edge (finer grids only cost time, the smoothing hides facets). */
 export const TOPO_GRID_RESOLUTION = 128;
-/** Upper bound of grid cells for any aspect ratio. */
-export const TOPO_GRID_CELLS_MAX = 64_000;
-/** Upper bound of path points in the output (about 17 bytes each in `Q` curves, so under 1.5 MB of SVG). */
-export const TOPO_POINTS_MAX = 50_000;
+/**
+ * Upper bound of grid cells for any aspect ratio. Sampling costs up to ten
+ * noise evaluations per cell (6 octaves plus domain warp), so this bounds the
+ * main-thread time; 16:9 at 128 cells along the shorter edge needs about
+ * 30 300 (M4b-AP05: was 64 000, about 25 ms of sampling for very wide canvases).
+ */
+export const TOPO_GRID_CELLS_MAX = 32_000;
+/**
+ * The feature size refers to at least this many grid cells (see `topoUnit`).
+ */
+const TOPO_UNIT_CELLS = 64;
+/**
+ * Upper bound of path points in the output (about 17 bytes each in `Q` curves,
+ * so under 0.5 MB of SVG per style). Writing the path data costs about 1 µs
+ * per point, so this bounds the main-thread time; above every preset at its
+ * default size (Marble has about 24 000).
+ */
+export const TOPO_POINTS_MAX = 25_000;
 export const TOPO_LEVELS_MAX = 40;
 /** Line width factor of highlighted (index) lines. */
 export const TOPO_MAJOR_FACTOR = 2.5;
@@ -67,55 +81,119 @@ export interface TopoField {
 const PAD = -1e9;
 
 /**
- * Samples the height field. Consumes the rng draws of one noise permutation
- * plus four offsets, independent of size and params.
+ * Contour crossings (Marching Squares output points) a field may produce
+ * over all levels. Extreme params (40 levels on a rough, small-scale field)
+ * would make several times as many; the field is then sampled on a coarser
+ * grid (`topoSvg`), so tracing and output stay within the main-thread budget
+ * (M4b-AP05). Above every preset at its default size.
  */
-export function topoField(o: TopoFieldOptions): TopoField {
+export const TOPO_CROSSINGS_MAX = 64_000;
+
+/** Grid cell in px for a canvas: `TOPO_GRID_RESOLUTION` along the shorter edge, at most `TOPO_GRID_CELLS_MAX` cells. */
+export function topoGridCell(width: number, height: number): number {
+  const short = Math.max(1, Math.min(width, height));
+  let cell = short / TOPO_GRID_RESOLUTION;
+  const inner = (c: number): number => (Math.ceil(width / c) + 3) * (Math.ceil(height / c) + 3);
+  if (inner(cell) > TOPO_GRID_CELLS_MAX) {
+    cell *= Math.sqrt(inner(cell) / TOPO_GRID_CELLS_MAX);
+    while (inner(cell) > TOPO_GRID_CELLS_MAX) cell *= 1.02;
+  }
+  return cell;
+}
+
+/**
+ * Length unit of the feature size: the shorter edge, or for very elongated
+ * canvases (where the grid cap makes the cells larger) `TOPO_UNIT_CELLS`
+ * cells, so the field is never much finer than the grid that samples it (a
+ * 8192 × 16 canvas would otherwise turn every cell into a contour, about
+ * 0.4 s of tracing).
+ */
+function topoUnit(width: number, height: number): number {
+  const short = Math.max(1, Math.min(width, height));
+  return Math.max(short, topoGridCell(width, height) * TOPO_UNIT_CELLS);
+}
+
+/**
+ * Draws the noise and offsets of a height field (one noise permutation plus
+ * four offsets, independent of size and params) and returns a function that
+ * samples it on the grid, `cellFactor` (at least 1) times coarser.
+ */
+export function topoSampler(o: TopoFieldOptions): (cellFactor?: number) => TopoField {
   const noise = createNoise2D(o.rng);
   const ox = o.rng.float(0, 200);
   const oy = o.rng.float(0, 200);
   const wx = o.rng.float(0, 200);
   const wy = o.rng.float(0, 200);
-  const short = Math.max(1, Math.min(o.width, o.height));
-  let cell = short / TOPO_GRID_RESOLUTION;
-  const inner = (c: number): number => (Math.ceil(o.width / c) + 3) * (Math.ceil(o.height / c) + 3);
-  if (inner(cell) > TOPO_GRID_CELLS_MAX) {
-    cell *= Math.sqrt(inner(cell) / TOPO_GRID_CELLS_MAX);
-    while (inner(cell) > TOPO_GRID_CELLS_MAX) cell *= 1.02;
-  }
-  // Real samples from one cell before the canvas to one cell after it, plus the pad ring.
-  const cols = Math.ceil(o.width / cell) + 3 + 2;
-  const rows = Math.ceil(o.height / cell) + 3 + 2;
-  const originX = -2 * cell;
-  const originY = -2 * cell;
-  const freq = 1 / (short * Math.max(o.scale, 0.01));
+  const freq = 1 / (topoUnit(o.width, o.height) * Math.max(o.scale, 0.01));
   const gain = 0.35 + 0.35 * Math.min(Math.max(o.roughness, 0), 1);
   const warp = Math.min(Math.max(o.warp, 0), 1) * 1.6;
   const octaves = Math.max(1, Math.floor(o.octaves));
-  const values = new Float64Array(cols * rows);
-  let min = Infinity;
-  let max = -Infinity;
+  return (cellFactor = 1) => {
+    const cell = topoGridCell(o.width, o.height) * Math.max(1, cellFactor);
+    // Real samples from one cell before the canvas to one cell after it, plus the pad ring.
+    const cols = Math.ceil(o.width / cell) + 3 + 2;
+    const rows = Math.ceil(o.height / cell) + 3 + 2;
+    const originX = -2 * cell;
+    const originY = -2 * cell;
+    const values = new Float64Array(cols * rows);
+    let min = Infinity;
+    let max = -Infinity;
+    for (let j = 0; j < rows; j++) {
+      for (let i = 0; i < cols; i++) {
+        if (i === 0 || j === 0 || i === cols - 1 || j === rows - 1) {
+          values[j * cols + i] = PAD;
+          continue;
+        }
+        let x = (originX + i * cell) * freq + ox;
+        let y = (originY + j * cell) * freq + oy;
+        if (warp > 0) {
+          const qx = fbm2D(noise, x + wx, y + wy, { octaves: 2 });
+          const qy = fbm2D(noise, x + wy + 5.2, y + wx + 1.3, { octaves: 2 });
+          x += warp * qx;
+          y += warp * qy;
+        }
+        const v = fbm2D(noise, x, y, { octaves, gain });
+        values[j * cols + i] = v;
+        if (v < min) min = v;
+        if (v > max) max = v;
+      }
+    }
+    return { values, cols, rows, cell, originX, originY, min, max };
+  };
+}
+
+/** Samples the height field on the regular grid (see `topoSampler`). */
+export function topoField(o: TopoFieldOptions): TopoField {
+  return topoSampler(o)();
+}
+
+/**
+ * Contour points Marching Squares makes for `levels` on the field: the
+ * number of levels between the two ends of every grid edge (the pad ring
+ * is below all levels). Linear in the cells, so it is cheap to check before tracing.
+ */
+export function topoCrossings(field: TopoField, levels: readonly { value: number }[]): number {
+  const { values, cols, rows } = field;
+  const n = levels.length;
+  if (n === 0) return 0;
+  const first = levels[0]?.value ?? 0;
+  const spacing = n > 1 ? ((levels[n - 1]?.value ?? 0) - first) / (n - 1) : 0;
+  // Index of the first level above v (levels are evenly spaced and ascending).
+  const rank = (v: number): number =>
+    spacing > 0
+      ? Math.min(n, Math.max(0, Math.floor((v - first) / spacing) + 1))
+      : v >= first
+        ? 1
+        : 0;
+  let total = 0;
   for (let j = 0; j < rows; j++) {
     for (let i = 0; i < cols; i++) {
-      if (i === 0 || j === 0 || i === cols - 1 || j === rows - 1) {
-        values[j * cols + i] = PAD;
-        continue;
-      }
-      let x = (originX + i * cell) * freq + ox;
-      let y = (originY + j * cell) * freq + oy;
-      if (warp > 0) {
-        const qx = fbm2D(noise, x + wx, y + wy, { octaves: 2 });
-        const qy = fbm2D(noise, x + wy + 5.2, y + wx + 1.3, { octaves: 2 });
-        x += warp * qx;
-        y += warp * qy;
-      }
-      const v = fbm2D(noise, x, y, { octaves, gain });
-      values[j * cols + i] = v;
-      if (v < min) min = v;
-      if (v > max) max = v;
+      const r = rank(values[j * cols + i] ?? 0);
+      if (i + 1 < cols) total += Math.abs(rank(values[j * cols + i + 1] ?? 0) - r);
+      if (j + 1 < rows) total += Math.abs(rank(values[(j + 1) * cols + i] ?? 0) - r);
     }
   }
-  return { values, cols, rows, cell, originX, originY, min, max };
+  return total;
 }
 
 /**
@@ -233,8 +311,19 @@ export interface TopoSvgOptions extends TopoFieldOptions {
 
 export function topoSvg(o: TopoSvgOptions): string {
   const { width: w, height: h } = o;
-  const field = topoField(o);
+  const sample = topoSampler(o);
   const count = Math.min(Math.max(Math.floor(o.levels), 1), TOPO_LEVELS_MAX);
+  // Over the crossings budget, sample coarser (crossings fall about linearly with the cell
+  // size). Counted at t = 0, so all animation frames share one grid.
+  let field = sample();
+  let factor = 1;
+  for (let k = 0; k < 4; k++) {
+    const crossings = topoCrossings(field, topoLevels(field.min, field.max, count));
+    if (crossings <= TOPO_CROSSINGS_MAX) break;
+    // Aim below the cap: the second sampling already cost part of the budget.
+    factor *= Math.min(4, crossings / (TOPO_CROSSINGS_MAX * 0.75));
+    field = sample(factor);
+  }
   const t = o.t !== undefined && Number.isFinite(o.t) ? o.t - Math.floor(o.t) : 0;
   const levels = topoLevels(field.min, field.max, count, t);
   const traced = traceLevels(field, levels);
@@ -256,21 +345,23 @@ export function topoSvg(o: TopoSvgOptions): string {
   const isMajor = (position: number): boolean => major > 0 && Math.round(position) % major === 0;
   const fmt = (v: number): string => formatNumber(v, 2);
 
+  // Path data once per level: bands and the lines on top of them share it.
+  const data = traced.map((level) => level.loops.map((l) => smoothPathData(l, true)).join(""));
   let body = svgBackground(o.background, w, h);
   if (o.style !== "lines") {
     let bands = "";
-    for (const level of traced) {
+    for (const [i, level] of traced.entries()) {
       if (level.loops.length === 0) continue;
-      const d = level.loops.map((l) => smoothPathData(l, true)).join("");
+      const d = data[i] ?? "";
       bands += `<path d="${d}" fill="${colorAt(level.position)}"/>`;
     }
     if (bands) body += `<g fill-rule="evenodd">${bands}</g>`;
   }
   if (o.style !== "bands" && sw > 0) {
     let lines = "";
-    for (const level of traced) {
+    for (const [i, level] of traced.entries()) {
       if (level.loops.length === 0) continue;
-      const d = level.loops.map((l) => smoothPathData(l, true)).join("");
+      const d = data[i] ?? "";
       const stroke = o.style === "lines" ? colorAt(level.position) : o.lineColor;
       const width = isMajor(level.position) ? sw * TOPO_MAJOR_FACTOR : sw;
       lines += `<path d="${d}" stroke="${stroke}"${width !== sw ? ` stroke-width="${fmt(width)}"` : ""}/>`;

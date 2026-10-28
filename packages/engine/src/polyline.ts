@@ -12,9 +12,40 @@
  */
 export function numberFormatter(precision: number): (v: number) => string {
   const k = 10 ** Math.min(Math.max(Math.round(precision), 0), 6);
-  return (v: number): string => {
+  const general = (v: number): string => {
     const r = Math.round(v * k) / k;
     return r === 0 || !Number.isFinite(r) ? "0" : String(r);
+  };
+  return k === 10 ? tenthsFormatter(general) : general;
+}
+
+/** Decimal text of the integers below `INTEGER_TEXT_MAX`, built on first use. */
+let integerText: string[] | undefined;
+const INTEGER_TEXT_MAX = 20_000;
+const TENTHS_TEXT = [".0", ".1", ".2", ".3", ".4", ".5", ".6", ".7", ".8", ".9"];
+
+/**
+ * One decimal from integer parts and cached digit strings: the same text as
+ * `String(Math.round(v * 10) / 10)` (unit-tested), about twice as fast. The
+ * coordinates of long paths are mostly this (M4b-AP05: 20 % of the render
+ * time of Topo Lines went to `String` on doubles).
+ */
+export function tenthsFormatter(fallback: (v: number) => string): (v: number) => string {
+  if (!integerText) {
+    integerText = new Array<string>(INTEGER_TEXT_MAX);
+    for (let i = 0; i < INTEGER_TEXT_MAX; i++) integerText[i] = String(i);
+  }
+  const ints = integerText;
+  const limit = INTEGER_TEXT_MAX * 10;
+  return (v: number): string => {
+    const n = Math.round(v * 10);
+    if (!(n > -limit && n < limit)) return fallback(v);
+    if (n === 0) return "0";
+    const a = n < 0 ? -n : n;
+    const d = a % 10;
+    const whole = ints[(a - d) / 10] as string;
+    const s = d === 0 ? whole : whole + (TENTHS_TEXT[d] as string);
+    return n < 0 ? `-${s}` : s;
   };
 }
 
