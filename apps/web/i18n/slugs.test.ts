@@ -12,6 +12,7 @@ import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 
 import { ALL_LOCALES, ENABLED_LOCALES } from "./locales";
+import { canonicalRedirect } from "./legacy";
 import { routeFromPathname, routePath } from "./paths";
 import {
   CATEGORY_SEGMENT,
@@ -179,6 +180,21 @@ describe("legal sections", () => {
     expect(new Set(all).size).toBe(all.length);
     expect(sectionFromAnySlug(SECTION_SLUGS.imprint[locale])).toBe("imprint");
     expect(sectionFromAnySlug(SECTION_SLUGS.privacy[locale])).toBe("privacy");
+  });
+});
+
+describe("my designs section", () => {
+  it("has the documented localized slugs and round-trips", () => {
+    expect(SECTION_SLUGS.myDesigns).toEqual({ de: "meine-designs", en: "my-designs" });
+    for (const locale of ENABLED_LOCALES) {
+      expect(sectionFromAnySlug(SECTION_SLUGS.myDesigns[locale])).toBe("myDesigns");
+      const path = routePath({ page: "myDesigns" }, locale);
+      expect(path).toBe(`/${locale}/${SECTION_SLUGS.myDesigns[locale]}`);
+      expect(routeFromPathname(path, {}, locale)).toEqual({ page: "myDesigns" });
+    }
+    expect(canonicalRedirect("/de/my-designs")).toBe("/de/meine-designs");
+    expect(canonicalRedirect("/en/meine-designs")).toBe("/en/my-designs");
+    expect(canonicalRedirect("/de/meine-designs")).toBeNull();
   });
 });
 

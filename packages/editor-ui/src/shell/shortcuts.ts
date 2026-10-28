@@ -17,7 +17,8 @@ export type ShortcutAction =
   | "zoom100"
   | "help"
   | "export"
-  | "copyImage";
+  | "copyImage"
+  | "save";
 
 /** The parts of a `KeyboardEvent` the matcher reads. */
 export interface ShortcutKeyEvent {
@@ -38,6 +39,7 @@ export function matchShortcut(event: ShortcutKeyEvent): ShortcutAction | null {
     if (key === "z") return event.shiftKey ? "redo" : "undo";
     if (key === "y" && event.ctrlKey && !event.metaKey && !event.shiftKey) return "redo";
     if (key === "e" && !event.shiftKey) return "export";
+    if (key === "s" && !event.shiftKey) return "save";
     if (key === "c" && event.shiftKey) return "copyImage";
     return null;
   }
@@ -166,6 +168,8 @@ export function isShortcutBlocked(target: EventTarget | null, action: ShortcutAc
   if (!isElement(target)) return false;
   // Open dialogs and popovers (shortcut help, colour picker) own the keyboard.
   if (target.closest(DIALOG_SELECTOR)) return true;
+  // Saving works while typing too (e.g. right after editing the name).
+  if (action === "save") return false;
   if (isEditableTarget(target)) return true;
   switch (action) {
     case "newVariant":
@@ -198,6 +202,7 @@ export const NON_REPEATING_ACTIONS: ReadonlySet<ShortcutAction> = new Set([
   "help",
   "export",
   "copyImage",
+  "save",
   "zoomFit",
   "zoom100",
 ]);
@@ -225,6 +230,7 @@ export const SHORTCUT_HELP: readonly ShortcutHelpEntry[] = [
   { action: "nextVariant", keys: [["→"]] },
   { action: "zoomFit", keys: [["0"]] },
   { action: "zoom100", keys: [["1"]] },
+  { action: "save", keys: [["mod", "S"]] },
   { action: "export", keys: [["mod", "E"]] },
   { action: "copyImage", keys: [["mod", "shift", "C"]] },
   { action: "theme", keys: [["mod", "shift", "K"]] },

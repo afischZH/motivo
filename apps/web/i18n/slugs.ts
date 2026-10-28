@@ -225,6 +225,8 @@ export const SECTION_SLUGS = {
   support: { de: "unterstuetzen", en: "support" },
   gradients: { de: "farbverlaeufe", en: "gradients" },
   palettes: { de: "farbpaletten", en: "color-palettes" },
+  // Saved designs in this browser: noindex, never in the sitemap.
+  myDesigns: { de: "meine-designs", en: "my-designs" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;

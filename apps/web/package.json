@@ -21,6 +21,7 @@
     "@motivo/editor-ui": "workspace:*",
     "@motivo/engine": "workspace:*",
     "@motivo/exporters": "workspace:*",
+    "@motivo/storage": "workspace:*",
     "@motivo/svg-sanitizer": "workspace:*",
     "@motivo/tool-registry": "workspace:*",
     "@opennextjs/cloudflare": "^1.20.13",

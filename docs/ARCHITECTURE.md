@@ -146,11 +146,18 @@ Wichtige Regeln:
 
 ## 6. Lokale Datenhaltung (seit 2026-10-28)
 
-- **Designs**: IndexedDB im Browser, je Eintrag `{ id, toolId, version, params, seed, size, name, createdAt, updatedAt, thumbnail (WebP-Blob, ca. 400 px) }`. Uploads (`localParams`) dürfen lokal mitgespeichert werden, verlassen das Gerät aber nur per Datei-Export.
+- **Designs** (seit M3-AP03): Paket `@motivo/storage`, IndexedDB ohne Library, Datenbank `motivo` (Version 1) mit vier Stores:
+  - `designs`: Übersicht `{ id, toolId, toolVersion, name, seed, size, createdAt, updatedAt, thumbnail }`. Das Vorschaubild liegt als `ArrayBuffer` plus Typ vor (WebP, ca. 400 px an der langen Kante; PNG, wo der Browser kein WebP kodiert), damit Safari keine Blob-Probleme in IndexedDB hat.
+  - `design-params`: Parameter je Design, getrennt, damit die Übersicht keine grossen Uploads laden muss. Uploads (`localParams`) werden lokal mitgespeichert, verlassen das Gerät aber nur per Datei-Export, nie im Teilen-Link.
+  - `drafts`: ein Autosave-Entwurf pro Tool (nach 800 ms Pause, ausserdem bei `pagehide`/`visibilitychange`).
+  - `meta`: merkt sich, dass `navigator.storage.persist()` schon angefragt wurde (einmal, beim ersten Speichern).
+  - Gelesene Datensätze laufen erneut durch Zod (`schema.ts`); Fehler werden als `StorageError` mit Code (`unavailable`, `quota`, `blocked`, `not-found`, `failed`) gemeldet und in der UI übersetzt.
+- **Editor** (`@motivo/editor-ui/designs`): `createLocalDesignController` hält Name, Status und Hinweise. Beim Start gilt: `#design=<id>` öffnet ein gespeichertes Design (neuerer Entwurf wird nur angeboten), ein Teilen-Link `#d=` gewinnt immer (Entwurf nur angeboten), ohne Hash wird der Entwurf wiederhergestellt. Der Hash wird per `history.replaceState` gesetzt; die Id geht nie an einen Server. Vorschaubilder entstehen über denselben Render-Pfad wie Vorschau und Export (`renderDesignSvg` + `rasterizeSvg`).
+- **Meine Designs**: Seite `/[locale]/meine-designs` bzw. `/my-designs` (Slug in `slugs.ts`), noindex, nicht in der Sitemap; reiner Client-Code.
 - **Brand Kit**: ebenfalls IndexedDB (Paletten, Logos, eigene Shapes). Nutzer-SVG immer durch `@motivo/svg-sanitizer` (im Worker), Darstellung nur per `<img>`/`<image>`.
-- **Gerätewechsel**: Export/Import als versionierte JSON-Datei, beim Import mit Zod validiert, Grössenlimit, SVGs erneut sanitisiert.
-- **Persistenz**: `navigator.storage.persist()` anfragen; Hinweis, dass gelöschte Browserdaten die Designs entfernen.
-- Kein Server, keine Cookies, keine Kosten pro Nutzer.
+- **Gerätewechsel**: Datei `motivo-designs-v1-JJJJ-MM-TT.json` (`{ format: "motivo-designs", version: 1, exportedAt, designs }`, ohne Vorschaubilder). Import im Web Worker (Fallback im Hauptthread, Timeout 60 s): höchstens 20 MB und 2000 Designs, JSON-Reviver verwirft `__proto__`, `constructor`, `prototype`; Hülle per Zod, Parameter per Tool-Schema und `migrateParams`; SVG-Uploads erneut sanitisiert, Rasterbilder per Magic Bytes und Kopfmassen geprüft. Ungültige Designs werden mit Grund übersprungen, exakte Duplikate ignoriert, Id-Konflikte erhalten eine neue Id, Zeitstempel in der Zukunft werden gekappt.
+- **Persistenz**: `navigator.storage.persist()` anfragen; Hinweis in "Meine Designs", dass gelöschte Browserdaten die Designs entfernen und wie man sie per Datei überträgt.
+- Kein Server, keine Cookies, keine Kosten pro Nutzer. Die E2E-Tests prüfen, dass beim Speichern keine Anfrage Designdaten enthält.
 
 ## 6a. Datenmodell Postgres / Supabase (überholt 2026-10-28, nur Referenz)
 

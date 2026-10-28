@@ -137,3 +137,12 @@ export const EyeOffIcon = () => (
     <path d="m2 2 20 20" />
   </Icon>
 );
+
+/** A floppy disk, drawn with simple strokes. */
+export const SaveIcon = () => (
+  <Icon>
+    <path d="M5 3h11l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />
+    <path d="M7 3v5h8V3" />
+    <path d="M7 21v-7h10v7" />
+  </Icon>
+);

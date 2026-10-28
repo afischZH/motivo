@@ -103,7 +103,8 @@
         "theme": "Hell und Dunkel wechseln",
         "help": "Diese Übersicht",
         "export": "Export öffnen",
-        "copyImage": "Als PNG in die Zwischenablage"
+        "copyImage": "Als PNG in die Zwischenablage",
+        "save": "Speichern"
       }
     },
     "export": {
@@ -292,5 +293,102 @@
     "tablet": "Tablet",
     "a4-portrait": "A4 hoch",
     "a4-landscape": "A4 quer"
+  },
+  "Designs": {
+    "nav": "Meine Designs",
+    "errors": {
+      "unavailable": "In diesem Browser kann Motivo nichts speichern, zum Beispiel in einem privaten Fenster oder wenn Websitedaten blockiert sind.",
+      "quota": "Der Speicher dieses Browsers ist voll. Lösche alte Designs oder exportiere sie als Datei.",
+      "blocked": "Motivo ist noch in einem anderen Tab mit einer älteren Version offen. Schliesse den Tab und versuch es nochmals.",
+      "failed": "Das hat nicht geklappt. Versuch es nochmals.",
+      "not-found": "Dieses Design gibt es in diesem Browser nicht (mehr).",
+      "other-tool": "Dieses Design gehört zu einem anderen Tool.",
+      "invalid": "Dieses Design lässt sich mit der aktuellen Version nicht mehr öffnen."
+    },
+    "editor": {
+      "group": "Design speichern",
+      "nameLabel": "Name des Designs",
+      "namePlaceholder": "Unbenanntes Design",
+      "save": "Speichern",
+      "saving": "Speichert …",
+      "saveHint": "Nur in diesem Browser speichern",
+      "saved": "Gespeichert, nur in diesem Browser.",
+      "statusSaved": "Gespeichert",
+      "statusChanged": "Geändert",
+      "defaultName": "{tool} vom {date}",
+      "restore": "Wiederherstellen",
+      "startNew": "Neu beginnen",
+      "dismiss": "Hinweis schliessen",
+      "notices": {
+        "draft-restored": "Dein letzter Entwurf ist wieder da.",
+        "draft-available": "Du hast hier noch einen Entwurf, der nicht gespeichert ist.",
+        "outdated": "Dieses Design stammt von einer älteren Version des Tools und kann leicht anders aussehen."
+      }
+    },
+    "page": {
+      "metaTitle": "Meine Designs",
+      "metaDescription": "Deine gespeicherten Motive, nur in diesem Browser.",
+      "title": "Meine Designs",
+      "intro": "Deine Designs liegen nur in diesem Browser auf diesem Gerät. Es gibt kein Konto und keinen Server.",
+      "storageHint": "Wenn du die Browserdaten löschst, sind auch die Designs weg. Sichere sie darum ab und zu als Datei. Mit dieser Datei holst du sie auch auf ein anderes Gerät oder in einen anderen Browser.",
+      "loading": "Designs werden geladen …",
+      "searchLabel": "Designs durchsuchen",
+      "searchPlaceholder": "Nach Name oder Tool suchen",
+      "count": "{count, plural, =0 {Keine Designs} one {# Design} other {# Designs}}",
+      "shown": "{shown} von {count} Designs",
+      "exportAll": "Alle exportieren",
+      "import": "Importieren",
+      "importing": "Importiert …",
+      "emptyTitle": "Noch keine Designs",
+      "emptyText": "Öffne ein Tool, gestalte etwas und drück auf Speichern (⌘/Ctrl+S). Deine Designs erscheinen dann hier.",
+      "emptyCta": "Zu den Tools",
+      "noResults": "Kein Design passt zu „{query}“.",
+      "open": "Öffnen",
+      "openLabel": "{name} im Editor öffnen",
+      "rename": "Umbenennen",
+      "renameLabel": "Neuer Name für {name}",
+      "renameSave": "Übernehmen",
+      "cancel": "Abbrechen",
+      "duplicate": "Duplizieren",
+      "delete": "Löschen",
+      "actionsLabel": "Aktionen für {name}",
+      "copyName": "{name} (Kopie)",
+      "deleteTitle": "Design löschen?",
+      "deleteText": "„{name}“ wird aus diesem Browser gelöscht.",
+      "deleteConfirm": "Löschen",
+      "deleted": "„{name}“ gelöscht.",
+      "undo": "Rückgängig",
+      "restored": "„{name}“ ist wieder da.",
+      "duplicated": "Kopie von „{name}“ erstellt.",
+      "renamed": "Umbenannt in „{name}“.",
+      "updated": "Geändert am {date}",
+      "thumbnailAlt": "Vorschau von {name}",
+      "noThumbnail": "Keine Vorschau",
+      "exported": "{count, plural, one {# Design} other {# Designs}} als Datei gespeichert.",
+      "exportEmpty": "Es gibt noch nichts zu exportieren.",
+      "imported": "{added, plural, =0 {Nichts importiert} one {# Design importiert} other {# Designs importiert}}.",
+      "importDuplicates": "{count, plural, one {# Design war} other {# Designs waren}} schon vorhanden.",
+      "importSkipped": "{count, plural, one {# Design wurde} other {# Designs wurden}} übersprungen:",
+      "skippedItem": "{name}: {reason}",
+      "skippedUnnamed": "Eintrag {index}: {reason}",
+      "skipReasons": {
+        "invalid": "ungültige Daten",
+        "unknown-tool": "unbekanntes Tool",
+        "invalid-params": "ungültige Einstellungen",
+        "unsafe-upload": "unsichere oder beschädigte Datei im Design"
+      },
+      "importErrors": {
+        "too-large": "Die Datei ist zu gross. Höchstens 20 MB sind erlaubt.",
+        "empty": "Die Datei ist leer.",
+        "malformed": "Die Datei ist beschädigt oder kein JSON.",
+        "forbidden-keys": "Die Datei enthält unzulässige Einträge und wurde nicht importiert.",
+        "wrong-format": "Das ist keine Designdatei von Motivo.",
+        "unsupported-version": "Diese Datei stammt von einer neueren Version von Motivo.",
+        "too-many": "Die Datei enthält zu viele Designs (höchstens 2000).",
+        "timeout": "Das Prüfen der Datei hat zu lange gedauert.",
+        "aborted": "Import abgebrochen."
+      },
+      "dismiss": "Meldung schliessen"
+    }
   }
 }
