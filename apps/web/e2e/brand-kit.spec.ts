@@ -272,34 +272,34 @@ test.describe("brand kit page", () => {
         );
       expect(await overflow()).toBeLessThanOrEqual(0);
       await openEditor(page, "blob");
-      // Name the widest offenders so a failure in one browser is diagnosable from the log.
+      // Name every box past the right edge so a failure in one browser is diagnosable from the log.
       const offenders = await page.evaluate(() => {
         const limit = document.documentElement.clientWidth;
-        const clipped = (el: Element) => {
-          for (let p = el.parentElement; p; p = p.parentElement) {
-            const style = getComputedStyle(p);
-            if (
-              style.overflowX !== "visible" &&
-              p !== document.body &&
-              p !== document.documentElement
-            )
-              return true;
-          }
-          return false;
+        const describe = (el: Element) => {
+          const testId = el.getAttribute("data-testid");
+          const cls = (el.getAttribute("class") ?? "").slice(0, 60);
+          const style = getComputedStyle(el);
+          const box = el.getBoundingClientRect();
+          return `${el.tagName.toLowerCase()}${testId ? `[${testId}]` : ""} .${cls} pos=${style.position} ox=${style.overflowX} x=${Math.round(box.left)}..${Math.round(box.right)}`;
         };
-        const wide = (el: Element | null) => !!el && el.getBoundingClientRect().right > limit + 0.5;
-        return (
-          [...document.querySelectorAll("body *")]
-            // Outermost offenders only: the parent fits, the element does not, nothing clips it.
-            .filter((el) => wide(el) && !wide(el.parentElement) && !clipped(el))
-            .map((el) => ({ el, right: el.getBoundingClientRect().right }))
-            .slice(0, 8)
-            .map(({ el, right }) => {
-              const testId = el.getAttribute("data-testid");
-              const cls = (el.getAttribute("class") ?? "").slice(0, 80);
-              return `${el.tagName.toLowerCase()}${testId ? `[${testId}]` : ""} .${cls} right=${Math.round(right)}`;
-            })
-        );
+        const lines = [
+          `body ${describe(document.body)}`,
+          `scrollWidth=${document.documentElement.scrollWidth}`,
+        ];
+        for (const el of document.querySelectorAll("body *")) {
+          if (el.getBoundingClientRect().right > limit + 0.5) lines.push(describe(el));
+        }
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          const right = range.getBoundingClientRect().right;
+          if (right > limit + 0.5)
+            lines.push(
+              `text "${(node.textContent ?? "").slice(0, 40)}" in ${node.parentElement ? describe(node.parentElement) : "?"} right=${Math.round(right)}`,
+            );
+        }
+        return lines.slice(0, 40);
       });
       expect(await overflow(), offenders.join("\n")).toBeLessThanOrEqual(0);
     });
