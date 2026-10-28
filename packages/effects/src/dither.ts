@@ -140,17 +140,51 @@ export function applyDither(input: PixelBuffer, o: DitherOptions): PixelBuffer {
   return o.mode === "tone" ? ditherTone(input, o, colors) : ditherColor(input, o, colors);
 }
 
-/** Error rows of a diffusion pass (current row and two below), with 2 cells of padding per side. */
-function errorRows(width: number, channels: number): Float32Array[] {
-  const n = (width + 4) * channels;
-  return [new Float32Array(n), new Float32Array(n), new Float32Array(n)];
-}
+/**
+ * Error buffer of a diffusion pass: three rolling rows (the current one and
+ * two below, the kernels reach no further), each with 2 cells of padding
+ * per side, so taps never need a bounds check (padding is never read).
+ * `taps` holds the kernel as offsets into the buffer per row parity.
+ */
+class ErrorRows {
+  readonly buf: Float32Array;
+  private readonly stride: number;
+  private readonly dx: Int32Array;
+  private readonly dy: Int32Array;
+  readonly weights: Float64Array;
+  readonly count: number;
+  /** Buffer offsets of the taps for the current row, scanning right / left. */
+  readonly right: Int32Array;
+  readonly left: Int32Array;
+  /** Offset of the current row's cell 0. */
+  row = 0;
 
-/** Moves to the next row: the first error row is cleared and becomes the last. */
-function nextErrorRow(rows: Float32Array[]): void {
-  const done = rows.shift() as Float32Array;
-  done.fill(0);
-  rows.push(done);
+  constructor(
+    width: number,
+    private readonly channels: number,
+    kernel: DiffusionKernel,
+  ) {
+    this.stride = (width + 4) * channels;
+    this.buf = new Float32Array(this.stride * 3);
+    this.count = kernel.taps.length;
+    this.dx = Int32Array.from(kernel.taps, (t) => t[0]);
+    this.dy = Int32Array.from(kernel.taps, (t) => t[1]);
+    this.weights = Float64Array.from(kernel.taps, (t) => t[2]);
+    this.right = new Int32Array(this.count);
+    this.left = new Int32Array(this.count);
+  }
+
+  /** Prepares row `y` (clears the row two below, which is reused). */
+  start(y: number): void {
+    const c = this.channels;
+    this.row = (y % 3) * this.stride + 2 * c;
+    this.buf.fill(0, ((y + 2) % 3) * this.stride, ((y + 2) % 3) * this.stride + this.stride);
+    for (let k = 0; k < this.count; k++) {
+      const base = ((y + (this.dy[k] ?? 0)) % 3) * this.stride + 2 * c - this.row;
+      this.right[k] = base + (this.dx[k] ?? 0) * c;
+      this.left[k] = base - (this.dx[k] ?? 0) * c;
+    }
+  }
 }
 
 function ditherTone(input: PixelBuffer, o: DitherOptions, colors: readonly Rgb[]): PixelBuffer {
@@ -207,25 +241,27 @@ function ditherTone(input: PixelBuffer, o: DitherOptions, colors: readonly Rgb[]
     return out;
   }
   const kernel = DIFFUSION_KERNELS[o.algorithm as DiffusionAlgorithm];
-  const err = errorRows(width, 1);
+  const err = new ErrorRows(width, 1, kernel);
+  const buf = err.buf;
+  const weights = err.weights;
+  const taps = err.count;
   for (let y = 0; y < height; y++) {
+    err.start(y);
     const reverse = o.serpentine && y % 2 === 1;
-    const row0 = err[0] as Float32Array;
+    const offsets = reverse ? err.left : err.right;
     for (let s = 0; s < width; s++) {
       const x = reverse ? width - 1 - s : s;
       const p = (y * width + x) * 4;
-      const v = target(p) + (row0[x + 2] ?? 0);
+      const at = err.row + x;
+      const v = target(p) + (buf[at] ?? 0);
       const k = nearest(v);
       put(p, k);
       const e = (v - (levels[k] ?? 0)) / kernel.divisor;
-      for (const [dx, dy, wt] of kernel.taps) {
-        const xx = reverse ? x - dx : x + dx;
-        if (xx < 0 || xx >= width) continue;
-        const row = err[dy] as Float32Array;
-        row[xx + 2] = (row[xx + 2] ?? 0) + e * wt;
+      for (let t = 0; t < taps; t++) {
+        const i = at + (offsets[t] ?? 0);
+        buf[i] = (buf[i] ?? 0) + e * (weights[t] ?? 0);
       }
     }
-    nextErrorRow(err);
   }
   return out;
 }
@@ -282,35 +318,36 @@ function ditherColor(input: PixelBuffer, o: DitherOptions, colors: readonly Rgb[
     return out;
   }
   const kernel = DIFFUSION_KERNELS[o.algorithm as DiffusionAlgorithm];
-  const err = errorRows(width, 3);
+  const err = new ErrorRows(width, 3, kernel);
+  const buf = err.buf;
+  const weights = err.weights;
+  const taps = err.count;
   const clamp = (v: number) =>
     v < -DITHER_ERROR_CLAMP ? -DITHER_ERROR_CLAMP : v > DITHER_ERROR_CLAMP ? DITHER_ERROR_CLAMP : v;
   for (let y = 0; y < height; y++) {
+    err.start(y);
     const reverse = o.serpentine && y % 2 === 1;
-    const row0 = err[0] as Float32Array;
+    const offsets = reverse ? err.left : err.right;
     for (let s = 0; s < width; s++) {
       const x = reverse ? width - 1 - s : s;
       const p = (y * width + x) * 4;
-      const q = (x + 2) * 3;
-      const r = (toned[data[p] ?? 0] ?? 0) + clamp(row0[q] ?? 0);
-      const g = (toned[data[p + 1] ?? 0] ?? 0) + clamp(row0[q + 1] ?? 0);
-      const b = (toned[data[p + 2] ?? 0] ?? 0) + clamp(row0[q + 2] ?? 0);
+      const at = err.row + x * 3;
+      const r = (toned[data[p] ?? 0] ?? 0) + clamp(buf[at] ?? 0);
+      const g = (toned[data[p + 1] ?? 0] ?? 0) + clamp(buf[at + 1] ?? 0);
+      const b = (toned[data[p + 2] ?? 0] ?? 0) + clamp(buf[at + 2] ?? 0);
       const k = nearest(r, g, b);
       put(p, k);
       const er = (r - (flat[k * 3] ?? 0)) / kernel.divisor;
       const eg = (g - (flat[k * 3 + 1] ?? 0)) / kernel.divisor;
       const eb = (b - (flat[k * 3 + 2] ?? 0)) / kernel.divisor;
-      for (const [dx, dy, wt] of kernel.taps) {
-        const xx = reverse ? x - dx : x + dx;
-        if (xx < 0 || xx >= width) continue;
-        const row = err[dy] as Float32Array;
-        const t = (xx + 2) * 3;
-        row[t] = (row[t] ?? 0) + er * wt;
-        row[t + 1] = (row[t + 1] ?? 0) + eg * wt;
-        row[t + 2] = (row[t + 2] ?? 0) + eb * wt;
+      for (let t = 0; t < taps; t++) {
+        const i = at + (offsets[t] ?? 0);
+        const wt = weights[t] ?? 0;
+        buf[i] = (buf[i] ?? 0) + er * wt;
+        buf[i + 1] = (buf[i + 1] ?? 0) + eg * wt;
+        buf[i + 2] = (buf[i + 2] ?? 0) + eb * wt;
       }
     }
-    nextErrorRow(err);
   }
   return out;
 }
