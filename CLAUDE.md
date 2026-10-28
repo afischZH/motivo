@@ -44,7 +44,7 @@
 - Serverseitige Fetches auf Nutzer-URLs nur mit SSRF-Schutz (keine privaten IP-Ranges, Timeouts, Grössenlimit).
 
 ### Gratis und spendenfinanziert
-- **Keine Konten, kein Login, keine Zahlungsintegration** (kein Stripe, keine Lizenzen, keine Credits, kein Gating, keine Wasserzeichen). Spenden nur als Link zu einem externen Anbieter.
+- **Keine Konten, kein Login, keine Zahlungsintegration** (kein Stripe, keine Lizenzen, keine Credits, kein Gating, keine Wasserzeichen). Spenden nur als Link zu einem externen Anbieter; einzige Ausnahme ist der Ko-fi-Spendenknopf (Script von Ko-fi) auf der Startseite (Entscheid Andreas 2026-10-28). Keine weiteren fremden Scripts ohne Entscheid Andreas.
 - **Keine laufenden Kosten pro Nutzer.** Alles clientseitig: Rendern, Exportieren, Speichern (IndexedDB), Brand Kit, Uploads. Keine Server-Endpunkte, die Nutzerdaten speichern.
 - Funktionen mit Kosten pro Nutzer (KI, Server-Speicher, API, Server-Rendering) nur mit Entscheid Andreas und fixem Budget mit hartem Tageslimit.
 - Keine Cookies, keine Personendaten auf unseren Servern.
