@@ -159,11 +159,11 @@ class ErrorRows {
   /** Offset of the current row's cell 0. */
   row = 0;
 
-  constructor(
-    width: number,
-    private readonly channels: number,
-    kernel: DiffusionKernel,
-  ) {
+  // No parameter properties: Node's type stripping (OG image script) cannot run them.
+  private readonly channels: number;
+
+  constructor(width: number, channels: number, kernel: DiffusionKernel) {
+    this.channels = channels;
     this.stride = (width + 4) * channels;
     this.buf = new Float32Array(this.stride * 3);
     this.count = kernel.taps.length;
