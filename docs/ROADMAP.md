@@ -63,6 +63,7 @@ Gesamtüberblick:
 - [ ] Export-Events protokollieren
 - [x] Tools: **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients**, **Blob Composition**, **Doodle Backgrounds**, **SVG Charts**
 - [x] Programmatic-SEO: Gradient- und Paletten-Sammlungsseiten
+- [ ] Tool **Seamless Patterns** (aus M4 vorgezogen): 4 Kachel-Modi, eigene Shapes, SVG/Bild-Upload mit Zuschnitt nur im Browser
 
 **DoD**: Nutzer kann sich anmelden, Design speichern, auf anderem Gerät öffnen, Brand-Palette in jedem Tool nutzen. Sicherheitstest: fremde Designs per ID nicht lesbar.
 
@@ -76,7 +77,7 @@ Gesamtüberblick:
 - [ ] Bereich `/app/license`: Lizenz, Belege, Credit-Saldo, Upgrade-Button
 - [ ] Pricing-Seite: Lifetime-Vergleich, Phasenpreis mit ehrlichem Restkontingent, Währungsumschalter, Vergleich "Lifetime vs. Abo über 3 Jahre", FAQ zu "Was heisst Lifetime?"
 - [ ] Founders-Warteliste per E-Mail über Launch informieren (exklusiver Zugang zu Founders-Preisen)
-- [ ] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing), **Seamless Patterns** (4 Tiling-Modi, Bild/SVG-Upload, Crop)
+- [ ] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing); **Seamless Patterns** in M3 vorgezogen (M3-AP12)
 - [ ] Eigene Shape-Bibliothek (Startziel 150+ Shapes, 12 Packs) + Custom Packs aus Brand Kit
 - [ ] **GIF-Export** im Worker
 - [ ] AGB inkl. Lifetime-Definition, Fair Use, Exit-Versprechen, Lizenzbedingungen, 14-Tage-Refund-Prozess (juristisch prüfen lassen)
