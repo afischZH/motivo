@@ -35,6 +35,7 @@ import { cx } from "../controls/primitives";
 import { useT } from "../i18n";
 import { findMatchingPresetId, selectCanRedo, selectCanUndo } from "../store/editor-store";
 import { useEditorStore, useEditorStoreApi } from "../store/react";
+import { valuesEqual } from "../store/values";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -43,6 +44,7 @@ import {
   CloseIcon,
   LinkIcon,
   RedoIcon,
+  ResetIcon,
   SaveIcon,
   ShuffleIcon,
   UndoIcon,
@@ -433,9 +435,12 @@ export function EditorShell({
             aria-labelledby={`${ids}-controls`}
             className="overflow-x-clip border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
           >
-            <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
-              {t("Editor.shell.settings")}
-            </h2>
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h2 id={`${ids}-controls`} className="text-sm font-semibold">
+                {t("Editor.shell.settings")}
+              </h2>
+              <ResetAllButton />
+            </div>
             <ToolAdvisories />
             <BrandPaletteSection onApplied={confirm} />
             <SuggestionsSection onApplied={confirm} />
@@ -458,6 +463,26 @@ export function EditorShell({
         />
       </div>
     </BrandKitContext.Provider>
+  );
+}
+
+/** Back to the tool defaults in one undoable step; disabled while nothing differs. */
+function ResetAllButton() {
+  const t = useT();
+  const changed = useEditorStore((s) => !valuesEqual(s.params, s.tool.defaults));
+  const resetParams = useEditorStore((s) => s.resetParams);
+  return (
+    <button
+      type="button"
+      className={cx(BUTTON_CLASS, "h-7 border-transparent px-2 text-xs text-muted-foreground")}
+      onClick={resetParams}
+      disabled={!changed}
+      title={t("Editor.controls.resetAllHint")}
+      data-testid="reset-all"
+    >
+      <ResetIcon />
+      {t("Editor.controls.resetAll")}
+    </button>
   );
 }
 

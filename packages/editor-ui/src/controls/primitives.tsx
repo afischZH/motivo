@@ -2,6 +2,7 @@
 
 import { useState, type KeyboardEvent, type ReactNode } from "react";
 import { useT } from "../i18n";
+import { InfoIcon, ResetIcon } from "../shell/icons";
 
 /** Joins class names, skipping falsy values. */
 export function cx(...classes: (string | false | null | undefined)[]): string {
@@ -42,29 +43,78 @@ export interface ControlRowProps {
   /** Render the label as `<label htmlFor>` (single inputs) or a plain element (groups). */
   labelFor: boolean;
   lock?: { locked: boolean; onToggle(): void };
+  /** Shown while the value differs from the default. */
+  onReset?: () => void;
   /** Shown next to the label, e.g. the current value. */
   aside?: ReactNode;
   children: ReactNode;
   controlKey: string;
 }
 
-/** Label row with optional lock, the control, and optional help text. */
+/**
+ * Help texts up to this length stay visible under the control; longer ones
+ * fold behind an info button so the panel stays scannable. Screen readers
+ * get the text either way through `aria-describedby`.
+ */
+export const INLINE_DESCRIPTION_MAX = 90;
+
+/**
+ * Pointer devices see the unlocked lock only on hover or focus of its row;
+ * touch screens (no hover) always see it. A locked lock always shows.
+ */
+const QUIET_UNTIL_ROW_HOVER =
+  "[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover/row:opacity-100 [@media(hover:hover)]:group-focus-within/row:opacity-100 focus-visible:opacity-100 transition-opacity duration-150 ease-out";
+
+/** Label row with optional reset, help and lock, the control, and optional help text. */
 export function ControlRow(props: ControlRowProps) {
+  const t = useT();
+  const [helpOpen, setHelpOpen] = useState(false);
   const labelClass = "min-w-0 truncate text-sm font-medium text-foreground";
+  const folded =
+    props.description !== undefined && props.description.length > INLINE_DESCRIPTION_MAX;
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)] gap-1.5" data-control={props.controlKey}>
+    <div
+      className="group/row grid grid-cols-[minmax(0,1fr)] gap-1.5"
+      data-control={props.controlKey}
+    >
       <div className="flex min-h-7 items-center justify-between gap-2">
-        {props.labelFor ? (
-          <label id={props.ids.label} htmlFor={props.ids.input} className={labelClass}>
-            {props.label}
-          </label>
-        ) : (
-          <span id={props.ids.label} className={labelClass}>
-            {props.label}
-          </span>
-        )}
+        <div className="flex min-w-0 items-center gap-0.5">
+          {props.labelFor ? (
+            <label id={props.ids.label} htmlFor={props.ids.input} className={labelClass}>
+              {props.label}
+            </label>
+          ) : (
+            <span id={props.ids.label} className={labelClass}>
+              {props.label}
+            </span>
+          )}
+          {folded && (
+            <button
+              type="button"
+              className={cx(ICON_BUTTON_CLASS, "size-6 [&_svg]:size-3.5")}
+              aria-expanded={helpOpen}
+              aria-controls={props.ids.description}
+              aria-label={t("Editor.controls.showHelp", { label: props.label })}
+              onClick={() => setHelpOpen((open) => !open)}
+            >
+              <InfoIcon />
+            </button>
+          )}
+        </div>
         <div className="flex items-center gap-1">
           {props.aside}
+          {props.onReset && (
+            <button
+              type="button"
+              className={ICON_BUTTON_CLASS}
+              aria-label={t("Editor.controls.reset", { label: props.label })}
+              title={t("Editor.controls.resetShort")}
+              onClick={props.onReset}
+              data-reset=""
+            >
+              <ResetIcon />
+            </button>
+          )}
           {props.lock && (
             <LockButton
               label={props.label}
@@ -76,7 +126,11 @@ export function ControlRow(props: ControlRowProps) {
       </div>
       {props.children}
       {props.description !== undefined && props.ids.description && (
-        <p id={props.ids.description} className="text-xs text-muted-foreground">
+        <p
+          id={props.ids.description}
+          hidden={folded && !helpOpen}
+          className="text-xs text-pretty text-muted-foreground"
+        >
           {props.description}
         </p>
       )}
@@ -86,14 +140,18 @@ export function ControlRow(props: ControlRowProps) {
 
 /**
  * Toggle button for "keep when shuffling". The label stays constant and
- * `aria-pressed` carries the state.
+ * `aria-pressed` carries the state. Unlocked it stays quiet until its row
+ * is hovered or focused; locked it shows in the accent colour.
  */
 export function LockButton(props: { label: string; locked: boolean; onToggle(): void }) {
   const t = useT();
   return (
     <button
       type="button"
-      className={ICON_BUTTON_CLASS}
+      className={cx(
+        ICON_BUTTON_CLASS,
+        props.locked ? "text-link aria-pressed:text-link" : QUIET_UNTIL_ROW_HOVER,
+      )}
       aria-pressed={props.locked}
       aria-label={t("Editor.controls.lock", { label: props.label })}
       title={t("Editor.controls.lockHint")}
