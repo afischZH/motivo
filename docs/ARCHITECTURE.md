@@ -128,6 +128,14 @@ Jedes Tool mit Farb-Params bietet "Brand-Palette anwenden", ohne eigenen Code (`
 - **Store** (`applyBrandPalette` in `editor-store.ts`): ein Undo-Schritt; die geänderten Farb-Params werden gesperrt, damit die Leertaste (`randomize`) die Markenfarben behält (Locks sind nicht Teil der Undo-Historie).
 - **Shell**: `BrandKitContext` (optional, ohne Brand Kit erscheint nichts) liefert Paletten an den Abschnitt "Brand-Palette" (Auswahl, Standard vorausgewählt) und an jeden Color-Picker (Brand-Swatches). Upload-Felder (`kind: "image"`) bieten Logos und Shapes aus dem Brand Kit an; sie laufen durch dieselbe Pipeline wie ein Datei-Upload (Sanitizer im Worker, Zuschnitt).
 
+### 4.5 Code-first-Effekte: Element, Exporte je Params, Hinweise (ab M4-AP06)
+Drei optionale, generische Erweiterungen, zuerst genutzt von Glas- und Rahmen-Effekten (`docs/TOOLS.md` J2). Die Shell enthält dafür keinen Tool-Code.
+- **`CssOutput.element`** (`CssElement`): ein Element über der CSS-Fläche (Position und Grösse in px, eigene Deklarationen, `content` als Kästchen relativ dazu). Die Vorschau zeichnet es als echtes `div` auf der Bühne, damit `backdrop-filter` wirkt; die Kästchen liegen als Geschwister darüber (gleiche Versätze wie im SVG-Zwilling, unabhängig von der Rahmenbreite). `motionCss` (Animation) setzt die Vorschau nur, wenn `prefers-reduced-motion` nicht `reduce` ist (und erst nach der Hydration).
+- **`CssOutput.rules`**: globale Regeln (`@property`, `@keyframes`) als `<style href precedence>` (React 19 hebt sie in den `<head>` und legt gleiche Regeln zusammen). Sie dürfen nur von Konstanten des Tools abhängen. CSP unverändert (`style-src 'unsafe-inline'` deckt Style-Elemente ab).
+- **`ToolDefinition.exportsFor(params)`**: Teilmenge von `exports` für die aktuellen Params (Glas nur Code, Rahmen und Glow auch PNG/WebP). `supportsExport(tool, format, params?)` und `listExportChoices(tool, params?)` berücksichtigen sie; der Export-Dialog und das Kürzel „als PNG kopieren“ übergeben die Params.
+- **`ToolDefinition.advisories(params, ctx)`**: Hinweise zu den aktuellen Params (`{ id, messageKey, values }`), rein und billig. Die Shell zeigt sie über den Einstellungen in einer `role="status"`-Region (aria-live polite), ohne Hinweise nichts.
+- Neue Kategorie `css-effects` („CSS-Effekte und Layouts“, Slugs `css-effekte`/`css-effects`) für die Tools aus J.
+
 ## 5. Render- und Export-Pipeline
 
 ```

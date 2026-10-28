@@ -5,7 +5,8 @@
       "lockHint": "Gesperrte Werte bleiben beim Neu würfeln erhalten",
       "resetHint": "Doppelklick setzt den Standardwert",
       "advanced": "Erweitert",
-      "moreSettings": "Weitere Einstellungen"
+      "moreSettings": "Weitere Einstellungen",
+      "advisories": "Hinweise zum Design"
     },
     "list": {
       "item": "Element {index}",
@@ -176,7 +177,10 @@
         "rgbList": "RGB-Liste",
         "hslList": "HSL-Liste",
         "tailwindConfig": "tailwind.config.js",
-        "tailwindTheme": "Tailwind v4 @theme"
+        "tailwindTheme": "Tailwind v4 @theme",
+        "css": "CSS",
+        "htmlExample": "HTML-Beispiel",
+        "cssGrid": "CSS Grid + HTML"
       }
     },
     "share": {

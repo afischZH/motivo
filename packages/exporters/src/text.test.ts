@@ -4,6 +4,7 @@ import {
   createRenderContext,
   cssGradientTool,
   defineTool,
+  glassEffectsTool,
   polkaDotsTool,
   svgWavesTool,
   type AnyToolDefinition,
@@ -57,15 +58,30 @@ describe("supportsExport", () => {
     expect(supportsExport(blobTool, "gif")).toBe(false);
     expect(supportsExport(textTool, "svg")).toBe(false);
   });
+
+  it("lets params narrow the formats (exportsFor)", () => {
+    const glass = glassEffectsTool.defaults;
+    const glow = { ...glass, effect: "glow" as const };
+    expect(supportsExport(glassEffectsTool, "png")).toBe(true);
+    expect(supportsExport(glassEffectsTool, "png", glass)).toBe(false);
+    expect(supportsExport(glassEffectsTool, "png", glow)).toBe(true);
+    expect(supportsExport(glassEffectsTool, "webp", glow)).toBe(true);
+    expect(supportsExport(glassEffectsTool, "jpg", glow)).toBe(false);
+    expect(supportsExport(blobTool, "svg", blobTool.defaults)).toBe(true);
+  });
 });
 
 describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyToolDefinition) => {
-  it("exports well-formed SVG equal to the preview render", () => {
-    const svg = exportSvg(tool, tool.defaults, ctx());
-    expect(checkSvg(svg)).toEqual([]);
-    expect(svg).toBe(renderDesignSvg(tool, tool.defaults, ctx()));
-    expect(svg).toContain('width="320" height="240"');
-  });
+  // Code-first tools without an SVG export (glass effects) are covered by renderDesignSvg below.
+  it.runIf(supportsExport(tool, "svg"))(
+    "exports well-formed SVG equal to the preview render",
+    () => {
+      const svg = exportSvg(tool, tool.defaults, ctx());
+      expect(checkSvg(svg)).toEqual([]);
+      expect(svg).toBe(renderDesignSvg(tool, tool.defaults, ctx()));
+      expect(svg).toContain('width="320" height="240"');
+    },
+  );
 
   // Colour tools offer code via extra exports instead of an SVG background.
   it.runIf(supportsExport(tool, "css"))("exports CSS declarations", () => {
@@ -77,7 +93,9 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
   it("is unaffected by an rng the caller already consumed", () => {
     const used = ctx(5);
     for (let i = 0; i < 10; i++) used.rng.next();
-    expect(exportSvg(tool, tool.defaults, used)).toBe(exportSvg(tool, tool.defaults, ctx(5)));
+    expect(renderDesignSvg(tool, tool.defaults, used)).toBe(
+      renderDesignSvg(tool, tool.defaults, ctx(5)),
+    );
   });
 });
 

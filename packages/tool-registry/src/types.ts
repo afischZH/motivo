@@ -24,6 +24,7 @@ export const TOOL_CATEGORIES = [
   "converters",
   "social",
   "composer",
+  "css-effects",
 ] as const;
 
 export type ToolCategory = (typeof TOOL_CATEGORIES)[number];
@@ -208,12 +209,54 @@ export interface RenderContext {
   t?: number;
 }
 
+/** A box inside a `CssElement`, positioned in CSS px relative to it (e.g. sample text bars). */
+export interface CssBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  /** CSS declarations of the box, without a selector. */
+  css: string;
+}
+
+/**
+ * An element drawn on top of the `css` box (the stage), for code-first
+ * effects whose subject is a component, not a background: a glass card, a
+ * gradient border. The preview renders it as a real element, so effects
+ * like `backdrop-filter` act on the stage behind it.
+ */
+export interface CssElement {
+  /** Position and size in CSS px at the render size. */
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  /** CSS declarations of the element, without a selector. */
+  css: string;
+  /**
+   * Animation declarations (e.g. `animation: ...`). The preview applies them
+   * only when the viewer allows motion (`prefers-reduced-motion`), the
+   * exports guard them with a media query.
+   */
+  motionCss?: string;
+  /** Boxes inside the element, in paint order. */
+  content?: readonly CssBox[];
+}
+
 /** Output of a CSS renderer. */
 export interface CssOutput {
   /** CSS declarations (e.g. `background-image: ...;`), without a selector. */
   css: string;
   /** Optional SVG equivalent for preview and SVG/PNG export. */
   previewSvg?: string;
+  /** Optional element on top of the box; see `CssElement`. */
+  element?: CssElement;
+  /**
+   * Global rules the output needs (`@property`, `@keyframes`), installed by
+   * the preview as a stylesheet. Must not depend on anything but constants
+   * of the tool: several previews may share the rules on one page.
+   */
+  rules?: string;
 }
 
 /** Pure SVG string renderer; runs on the server and in workers. */
@@ -417,6 +460,27 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   tile?: TileRenderer<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
+  /**
+   * The subset of `exports` offered for these params, when it depends on
+   * them (e.g. image exports only for some effects). Pure. Default: all.
+   */
+  exportsFor?(params: Params<S>): readonly ExportFormat[];
+  /**
+   * Hints about the current params shown above the controls (e.g. text that
+   * misses WCAG contrast). Pure and cheap; `values` fill the message's
+   * placeholders. An empty list shows nothing.
+   */
+  advisories?(params: Params<S>, ctx: RenderContext): readonly ToolAdvisory[];
+}
+
+/** A hint about the current params; see `ToolDefinition.advisories`. */
+export interface ToolAdvisory {
+  /** Stable id, unique within the tool. */
+  id: string;
+  /** i18n key of the message. */
+  messageKey: string;
+  /** Placeholder values of the message. */
+  values?: Readonly<Record<string, string | number>>;
 }
 
 /** A tool of any schema, as stored in a registry. */

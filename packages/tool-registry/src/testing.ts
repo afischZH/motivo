@@ -391,7 +391,9 @@ export function describePresetSnapshots<S extends ParamsSchema>(
           Object.fromEntries(
             extras.map((e) => [
               e.id,
-              e.render(anyTool.schema.parse(p.params), createRenderContext(p.seed ?? seed, size)),
+              normalize(
+                e.render(anyTool.schema.parse(p.params), createRenderContext(p.seed ?? seed, size)),
+              ),
             ]),
           ),
         ]),

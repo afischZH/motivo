@@ -46,4 +46,7 @@ export const EXTRA_EXPORT_LABELS = {
   hslList: "Editor.export.extras.hslList",
   tailwindConfig: "Editor.export.extras.tailwindConfig",
   tailwindTheme: "Editor.export.extras.tailwindTheme",
+  css: "Editor.export.extras.css",
+  htmlExample: "Editor.export.extras.htmlExample",
+  cssGrid: "Editor.export.extras.cssGrid",
 } as const;
