@@ -63,8 +63,8 @@ Gesamtüberblick:
 - [x] Warteliste, Supabase- und Resend-Anbindung sowie Gating-Reste entfernen; alles gratis ohne Limits
 - [ ] Designs lokal speichern (IndexedDB), Autosave-Entwurf, Übersicht "Meine Designs" mit Suche, Duplizieren, Löschen, Vorschaubild
 - [ ] Export und Import aller Designs als Datei (JSON, versioniert, beim Import validiert) für andere Geräte
-- [ ] Brand Kit lokal: Paletten (max. 10 Farben), Logos, eigene SVG-Shapes (**Sanitizer!**), Export/Import als Datei
-- [ ] Brand-Palette in jedem Tool nutzbar
+- [x] Brand Kit lokal: Paletten (max. 10 Farben), Logos, eigene SVG-Shapes (**Sanitizer!**), Export/Import als Datei
+- [x] Brand-Palette in jedem Tool nutzbar
 - [x] Seite "Unterstützen" mit Link zum externen Spendenanbieter, dezenter Hinweis in Footer und Export-Dialog (DE/EN)
 
 **DoD**: Design ohne Konto speichern, nach Neuladen wieder öffnen, per Datei auf ein anderes Gerät übertragen; Brand-Palette in jedem Tool nutzbar; importierte Dateien und SVGs werden strikt validiert bzw. sanitisiert; keine Anfrage an einen eigenen Server beim Speichern (E2E prüft das).
