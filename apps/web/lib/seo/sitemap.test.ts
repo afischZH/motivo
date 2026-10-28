@@ -63,6 +63,10 @@ describe("sitemap", () => {
     expect(urls.filter((url) => /\/(meine-designs|my-designs)/.test(url))).toEqual([]);
   });
 
+  it("never lists the personal brand kit page", () => {
+    expect(urls.filter((url) => /\/brand-kit/.test(url))).toEqual([]);
+  });
+
   it("leaves out the legal pages while they are drafts", () => {
     const legal = urls.filter((url) => /\/(impressum|imprint|datenschutz|privacy)$/.test(url));
     expect(legal).toHaveLength(LEGAL_CONFIG.legalReviewed ? 4 : 0);

@@ -50,6 +50,7 @@ export const routing = defineRouting({
     "/palettes": sectionPath("palettes"),
     "/palettes/[paletteSlug]": sectionPath("palettes", "/[paletteSlug]"),
     "/my-designs": sectionPath("myDesigns"),
+    "/brand-kit": sectionPath("brandKit"),
     "/imprint": sectionPath("imprint"),
     "/privacy": sectionPath("privacy"),
     "/support": sectionPath("support"),

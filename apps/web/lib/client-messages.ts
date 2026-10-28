@@ -26,6 +26,9 @@ export const EDITOR_CLIENT_NAMESPACES = [
 /** "Meine Designs": only its own texts (tool names come as props). */
 export const MY_DESIGNS_CLIENT_NAMESPACES = ["Designs"] as const;
 
+/** Brand Kit page: only its own texts. */
+export const BRAND_KIT_CLIENT_NAMESPACES = ["BrandKit"] as const;
+
 /** The given top-level namespaces; missing ones are skipped. */
 export function pickMessages(messages: Messages, namespaces: readonly string[]): Messages {
   return Object.fromEntries(
