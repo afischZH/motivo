@@ -47,6 +47,8 @@ export interface EditorShellProps {
   exportServices?: ExportServices;
   /** Decoding and analysis of user images (tools with `imageInput`); replaceable in tests. */
   imageInputServices?: ImageInputServices;
+  /** Quiet line in the export dialog after a successful export (see `ExportDialog`). */
+  afterExport?: ReactNode;
   className?: string;
 }
 
@@ -77,6 +79,7 @@ export function EditorShell({
   headerStart,
   exportServices = browserExportServices,
   imageInputServices,
+  afterExport,
   className,
 }: EditorShellProps) {
   const t = useT();
@@ -370,6 +373,7 @@ export function EditorShell({
         open={exportOpen}
         onClose={() => setExportOpen(false)}
         services={exportServices}
+        afterExport={afterExport}
       />
     </div>
   );

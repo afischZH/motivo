@@ -330,3 +330,51 @@ describe("ExportDialog errors", () => {
     );
   });
 });
+
+describe("ExportDialog afterExport", () => {
+  function setupWithHint(services: ExportServices) {
+    const store = createEditorStore({ toolId: "blob", size: { width: 1080, height: 1350 } });
+    renderWithIntl(
+      <EditorStoreProvider store={store}>
+        <ExportDialog
+          open
+          onClose={() => undefined}
+          services={services}
+          afterExport={<a href="/de/unterstuetzen">Unterstützen</a>}
+        />
+      </EditorStoreProvider>,
+    );
+  }
+
+  it("shows the hint only after a successful download", () => {
+    setupWithHint(fakeServices());
+    expect(screen.queryByTestId("export-after")).toBeNull();
+    fireEvent.click(formatRadio("SVG"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    expect(screen.getByTestId("export-after").textContent).toBe("Unterstützen");
+  });
+
+  it("shows the hint after copying code", async () => {
+    setupWithHint(fakeServices());
+    fireEvent.click(formatRadio("CSS"));
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(screen.getByTestId("export-after")).toBeTruthy());
+  });
+
+  it("stays hidden when the export fails or the copy is denied", async () => {
+    setupWithHint(
+      fakeServices({
+        exportRaster: vi.fn(async () => {
+          throw new ExportError("encode-failed", "encode-failed");
+        }),
+        copyText: async () => ({ ok: false, reason: "denied" }),
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(alert().textContent).not.toBe(""));
+    fireEvent.click(formatRadio("SVG"));
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(alert().textContent).toContain("Zwischenablage"));
+    expect(screen.queryByTestId("export-after")).toBeNull();
+  });
+});

@@ -125,6 +125,12 @@ export interface ExportDialogProps {
   open: boolean;
   onClose(): void;
   services?: ExportServices;
+  /**
+   * A quiet line shown under the actions once something was downloaded or
+   * copied (the app passes its donation hint). Never shown before, never
+   * blocks anything; gone when the dialog closes.
+   */
+  afterExport?: ReactNode;
 }
 
 /**
@@ -136,6 +142,7 @@ export function ExportDialog({
   open,
   onClose,
   services = browserExportServices,
+  afterExport,
 }: ExportDialogProps) {
   const t = useT();
   const titleId = useId();
@@ -174,7 +181,7 @@ export function ExportDialog({
           {t("Editor.export.close")}
         </button>
       </div>
-      {open && <ExportDialogBody services={services} />}
+      {open && <ExportDialogBody services={services} afterExport={afterExport} />}
     </dialog>
   );
 }
@@ -185,7 +192,13 @@ type Status =
   | { kind: "done"; message: string }
   | { kind: "error"; message: string; hint?: string };
 
-function ExportDialogBody({ services }: { services: ExportServices }) {
+function ExportDialogBody({
+  services,
+  afterExport,
+}: {
+  services: ExportServices;
+  afterExport: ReactNode;
+}) {
   const t = useT();
   const id = useId();
   const tool = useEditorStore((s) => s.tool);
@@ -203,6 +216,8 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
   const [qualityPercent, setQualityPercent] = useState<Partial<Record<RasterFormat, number>>>({});
   const [jpgBackground, setJpgBackground] = useState(() => defaultJpgBackground(params.background));
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  // Something was downloaded or copied since the dialog opened.
+  const [exported, setExported] = useState(false);
   // The body only mounts in the browser (after opening), so feature detection is safe here.
   const [clipboard] = useState(() => ({
     text: services.canCopyText(),
@@ -296,6 +311,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
         const result = await startRaster(raster, "download");
         services.downloadBlob(result.blob, result.filename);
         setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+        setExported(true);
       } catch (error) {
         fail(error);
       } finally {
@@ -310,6 +326,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
       exportFilename(tool.id, seed, extension, suffix),
     );
     setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+    setExported(true);
   };
 
   const copy = async () => {
@@ -329,6 +346,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
       const result = await pending;
       finishRaster();
       const key = clipboardErrorKey(result);
+      if (key === null) setExported(true);
       setStatus(
         key === null
           ? { kind: "done", message: t("Editor.export.copied") }
@@ -339,6 +357,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     if (!text?.ok) return;
     const result = await services.copyText(text.value);
     const key = clipboardErrorKey(result);
+    if (key === null) setExported(true);
     setStatus(
       key === null
         ? { kind: "done", message: t("Editor.export.copied") }
@@ -476,6 +495,11 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
             {t("Editor.export.download")}
           </button>
         </div>
+        {exported && afterExport !== undefined && (
+          <div className="text-right text-xs text-muted-foreground" data-testid="export-after">
+            {afterExport}
+          </div>
+        )}
       </div>
     </div>
   );

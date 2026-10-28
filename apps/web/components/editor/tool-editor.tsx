@@ -25,6 +25,22 @@ export function ToolEditor({ toolId }: { toolId: string }) {
             {t("allTools")}
           </Link>
         }
+        // Quiet donation hint after a successful export (M3-AP14). A new tab,
+        // so the design in the editor stays as it is.
+        afterExport={t.rich("supportHint", {
+          link: (chunks) => (
+            <Link
+              href="/support"
+              target="_blank"
+              rel="noopener"
+              className="rounded-control text-link underline underline-offset-4"
+              data-testid="export-support-link"
+            >
+              {chunks}
+              <span className="sr-only"> {t("newTab")}</span>
+            </Link>
+          ),
+        })}
       />
     </EditorStoreProvider>
   );
