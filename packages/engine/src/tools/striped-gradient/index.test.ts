@@ -79,6 +79,16 @@ describe("stripedGradientSvg", () => {
     expect(svg).toContain('<stop offset="0" stop-color="#ff0000"/>');
   });
 
+  it("defines identical band gradients once, so every id is unique", () => {
+    for (const o of [{ offset: 0 }, { offset: 0, alternate: true }]) {
+      const svg = stripedGradientSvg(opts(o));
+      const ids = [...svg.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]);
+      expect(new Set(ids).size).toBe(ids.length);
+      expect(svg.match(/<linearGradient /g)).toHaveLength(o.alternate ? 2 : 1);
+      expect(svg.match(/<rect /g)).toHaveLength(6);
+    }
+  });
+
   it("adds one shared shading gradient and a shading rect per band", () => {
     const svg = stripedGradientSvg(opts({ shading: 1 }));
     const id = /<linearGradient id="(s\w+)" x1="0" y1="0" x2="1" y2="0">/.exec(svg)?.[1];

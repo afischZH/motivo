@@ -59,7 +59,7 @@ const NAME_START = /[A-Za-z_:]/;
 
 /**
  * Light well-formedness check for generated SVG (no DOM in Node): single root
- * `<svg>` with xmlns and a size, balanced tags, quoted attributes, and no
+ * `<svg>` with xmlns and a size, balanced tags, quoted attributes, unique ids and no
  * leaked `NaN`/`undefined`/`Infinity`. Returns a list of problems, empty if fine.
  */
 export function checkSvg(svg: string): string[] {
@@ -81,6 +81,13 @@ export function checkSvg(svg: string): string[] {
   const text = src.replace(/data:[\w/+.-]+;base64,[A-Za-z0-9+/=]*/g, "data:");
   for (const bad of ["NaN", "undefined", "Infinity", "null"]) {
     if (new RegExp(`\\b${bad}\\b`).test(text)) problems.push(`contains "${bad}"`);
+  }
+
+  const ids = new Set<string>();
+  for (const m of src.matchAll(/\sid="([^"]*)"/g)) {
+    const id = m[1] ?? "";
+    if (ids.has(id)) problems.push(`duplicate id "${id}"`);
+    ids.add(id);
   }
 
   const stack: string[] = [];

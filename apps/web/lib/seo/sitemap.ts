@@ -2,7 +2,8 @@
  * Sitemap entries: every indexable content page in every enabled locale,
  * each with its hreflang alternates (same set as the page's `<link>` tags).
  * Built from the registry, the category list, the CSS pattern library, the
- * curated gradient and palette collections and the converter ids, never from a hand-written list. Editor pages are reachable from every landing
+ * curated gradient and palette collections and the converter ids, never
+ * from a hand-written list. Editor pages are reachable from every landing
  * page and stay indexable, but the sitemap points crawlers at the landing
  * pages, which carry the text.
  */

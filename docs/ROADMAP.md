@@ -61,7 +61,7 @@ Gesamtüberblick:
 - [ ] Dashboard: Raster, Ordner, Suche, Duplizieren, Löschen
 - [ ] Brand Kit v1: Paletten (max. 10 Farben), Logos, Upload eigener SVG-Shapes (**Sanitizer!**)
 - [ ] Export-Events protokollieren
-- [ ] Tools: **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients**, **Blob Composition**, **Doodle Backgrounds**, **SVG Charts**
+- [x] Tools: **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients**, **Blob Composition**, **Doodle Backgrounds**, **SVG Charts**
 - [x] Programmatic-SEO: Gradient- und Paletten-Sammlungsseiten
 
 **DoD**: Nutzer kann sich anmelden, Design speichern, auf anderem Gerät öffnen, Brand-Palette in jedem Tool nutzen. Sicherheitstest: fremde Designs per ID nicht lesbar.

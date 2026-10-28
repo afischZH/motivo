@@ -100,6 +100,7 @@ export function stripedGradientSvg(o: StripedGradientOptions): string {
   let defs = "";
   let body = "";
   let shadeId = "";
+  const seen = new Set<string>();
   if (shading > 0) {
     const a = formatNumber(shading, 3);
     // Same colour on both sides of each fade: no grey fringe without premultiplied alpha.
@@ -118,7 +119,12 @@ export function stripedGradientSvg(o: StripedGradientOptions): string {
       `<linearGradient x1="0" y1="${f(b.y1)}" x2="0" y2="${f(b.y2)}" gradientUnits="userSpaceOnUse">` +
       `${flip ? backward : forward}</linearGradient>`;
     const id = stableId("v", gradient);
-    defs += gradient.replace("<linearGradient ", `<linearGradient id="${id}" `);
+    // Bands with the same shift (offset 0, or every second band when
+    // alternating) share one definition: an id must be unique in the document.
+    if (!seen.has(id)) {
+      seen.add(id);
+      defs += gradient.replace("<linearGradient ", `<linearGradient id="${id}" `);
+    }
     // Each band overlaps the next by one unit, so anti-aliased edges leave no hairline.
     const last = i === bands.length - 1;
     const w = f(last ? b.width : b.width + 1);
