@@ -46,6 +46,7 @@ import { perspectiveGridTool } from "./perspective-grid";
 import { halftoneTool } from "./halftone";
 import { cmykHalftoneTool } from "./cmyk-halftone";
 import { ditherTool } from "./dither";
+import { shaderGradientTool } from "./shader-gradient";
 
 export {
   blobTool,
@@ -90,6 +91,7 @@ export {
   halftoneTool,
   cmykHalftoneTool,
   ditherTool,
+  shaderGradientTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -164,6 +166,8 @@ export {
   ditherGrid,
   ditherPalette,
 } from "./dither";
+export type { ShaderGradientParams } from "./shader-gradient";
+export { shaderGradientOptions } from "./shader-gradient";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -209,6 +213,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   halftoneTool,
   cmykHalftoneTool,
   ditherTool,
+  shaderGradientTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

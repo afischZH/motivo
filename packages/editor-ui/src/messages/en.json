@@ -387,6 +387,9 @@
         "failed": "The capture did not work. Upload a screenshot instead.",
         "unsupported": "Your browser cannot capture the view. Upload a screenshot instead."
       }
+    },
+    "shader": {
+      "unavailable": "This browser cannot draw the shader because WebGL2 is missing. Turn on hardware acceleration or use a current browser such as Chrome, Edge, Firefox or Safari."
     }
   },
   "sizes": {

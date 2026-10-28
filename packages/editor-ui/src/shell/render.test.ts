@@ -38,10 +38,17 @@ describe("renderMotif", () => {
     expect(props).toContain("background-image");
   });
 
-  it("reports render kinds without a preview", () => {
+  it("names WebGL designs for the shader worker", () => {
     const tool = { ...fixtureTool, render: { kind: "webgl", fragment: "", uniforms: () => ({}) } };
+    const params = fixtureTool.defaults;
+    const out = renderMotif(tool as never, params, 3, { width: 10, height: 10 });
+    expect(out).toEqual({ kind: "shader", tool, params, seed: 3, size: { width: 10, height: 10 } });
+  });
+
+  it("reports render kinds without a preview", () => {
+    const tool = { ...fixtureTool, render: { kind: "future" } };
     const out = renderMotif(tool as never, fixtureTool.defaults, 1, { width: 10, height: 10 });
-    expect(out).toEqual({ kind: "unsupported", renderKind: "webgl" });
+    expect(out).toEqual({ kind: "unsupported", renderKind: "future" });
   });
 });
 

@@ -174,6 +174,8 @@ describe("animated tools in the registry", () => {
     expect(ids).not.toContain("contrast-checker");
     // Animated gradient: time frames drawn by its SVG twin, plus colours.
     expect(ids).toContain("animated-gradient");
+    // Shader gradient: loop frames drawn by the shader, plus colours.
+    expect(ids).toContain("shader-gradient");
   });
 
   it("the shared opt-ins are well-formed", () => {
@@ -191,8 +193,8 @@ describe("animated tools in the registry", () => {
           expect(tool.animation?.frame).toBeTypeOf("function");
           expect(tool.animation?.customLabelKey).toBeTruthy();
         }
-        // The exporters render frames as SVG.
-        expect(["svg", "css"]).toContain(tool.render.kind);
+        // The exporters render frames as SVG, or WebGL tools in the shader worker.
+        expect(["svg", "css", "webgl"]).toContain(tool.render.kind);
         expect(tool.exports).not.toContain("gif");
       });
 

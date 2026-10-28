@@ -2,14 +2,20 @@
   "name": "@musterli/shaders",
   "version": "0.0.0",
   "private": true,
-  "description": "GLSL sources and uniform schemas",
+  "description": "GLSL sources, uniform packing, CPU twins and the WebGL2 runtime",
   "type": "module",
+  "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./runtime": "./src/runtime.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@musterli/effects": "workspace:*",
+    "@musterli/engine": "workspace:*"
   },
   "devDependencies": {
     "@musterli/config": "workspace:*"

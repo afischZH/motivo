@@ -72,6 +72,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   halftone: { de: "halftone-generator", en: "halftone-generator" },
   "cmyk-halftone": { de: "cmyk-raster-generator", en: "cmyk-halftone-generator" },
   dither: { de: "dithering-generator", en: "dither-generator" },
+  "shader-gradient": { de: "shader-farbverlauf-generator", en: "shader-gradient-generator" },
 };
 
 /**

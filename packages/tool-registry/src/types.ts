@@ -349,14 +349,59 @@ export interface Canvas2dRenderer<P> {
   render(target: unknown, params: P, ctx: RenderContext): void;
 }
 
-/** Shader uniform values. Placeholder until the shaders package exists. */
+/**
+ * Shader uniform values (same as `UniformValue` of `@musterli/shaders`):
+ * numbers for float, int and uint uniforms (the shader's declaration
+ * decides), booleans, and flat number arrays for vectors and arrays.
+ */
 export type UniformValue = number | boolean | readonly number[];
 
-/** Placeholder until the first shader tool (M5). */
+/** What a CPU twin of a shader renders; see `WebglRenderer.reference`. */
+export interface WebglReferenceInput {
+  /** The tool's uniforms for these params (same object the GPU gets). */
+  uniforms: Readonly<Record<string, UniformValue>>;
+  /** RGBA palette texture (256 texels), `null` without `palette`. */
+  palette: Uint8Array | null;
+  /** Output pixels (`u_resolution`). */
+  out: CanvasSize;
+  /** Design size of the render context (`u_design`). */
+  design: CanvasSize;
+  /** Part of the output to render, origin top left; default all of it. */
+  tile?: { x: number; y: number; width: number; height: number };
+}
+
+/**
+ * A fragment shader rendered per pixel on the GPU (docs/ARCHITECTURE.md
+ * 4.15). The editor runs it in its shader worker (WebGL2 on an
+ * `OffscreenCanvas`) for the preview and, in tiles, for every export, so
+ * preview and export share the shader and the uniforms.
+ */
 export interface WebglRenderer<P> {
   kind: "webgl";
+  /**
+   * GLSL ES 3.00 fragment shader built on `GLSL_PRELUDE` of
+   * `@musterli/shaders`: the runtime sets `u_resolution`, `u_tileOrigin`,
+   * `u_tileSize`, `u_design` and `u_palette`; `musterliPixel()` is the
+   * output pixel independent of the tile layout. Deterministic: no time
+   * or randomness of its own, the seed comes in through uniforms.
+   */
   fragment: string;
+  /** Uniforms for the params; pure. `ctx.t` is the loop time of an animation frame. */
   uniforms(params: P, ctx: RenderContext): Readonly<Record<string, UniformValue>>;
+  /** Colours of the ramp texture `u_palette` (256 texels, mixed in OKLab). */
+  palette?(params: P): readonly string[];
+  /**
+   * Seconds of one loop of the live preview, which then animates `ctx.t`
+   * from 0 to 1 (only the main preview, only when the viewer allows
+   * motion). 0 or absent: a still picture. Exports never animate.
+   */
+  loopSeconds?(params: P): number;
+  /**
+   * CPU twin of the shader for places without WebGL (static motifs at
+   * build time, contract tests). Must compute the same picture; RGBA, top
+   * row first, `tile` size.
+   */
+  reference?(input: WebglReferenceInput): PixelBuffer;
 }
 
 /** Structural subset of `ImageData`, so effects run in workers and in Node tests. */

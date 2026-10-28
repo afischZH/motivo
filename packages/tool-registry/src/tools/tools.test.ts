@@ -155,6 +155,7 @@ describe("built-in tool registration", () => {
       "halftone",
       "cmyk-halftone",
       "dither",
+      "shader-gradient",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
@@ -174,6 +175,7 @@ describe("built-in tool registration", () => {
       "blurry-gradient",
       "striped-gradient",
       "animated-gradient",
+      "shader-gradient",
     ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",

@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     "@musterli/effects",
     "@musterli/tool-registry",
     "@musterli/exporters",
+    "@musterli/shaders",
     "@musterli/editor-ui",
     "@musterli/svg-sanitizer",
   ],
