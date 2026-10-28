@@ -4,11 +4,20 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M4c (Kleine Welle, 5 Tools), freigegeben von Andreas 2026-10-28 17:34 ("Erst Welle, dann M5"). Branch `m4c/wave` ab `main`. M4b live seit 2026-10-28 (PR #11, Website-Mockups PR #12, Merge d52361a); M4-AP08 (Launch-Vorbereitung) noch offen.
+- **Meilenstein**: M5 (WebGL und Bildeffekte, ohne Video), freigegeben von Andreas 2026-10-28 19:39 ("Ohne Video-Export"). Branch `m5/wave` ab `main`. M4c live seit 2026-10-28 19:25 (PR #15, Merge 5f4ab20); M4-AP08 (Launch-Vorbereitung) noch offen.
 - **Letzte Sitzung**: 2026-10-28 (Cloud-Sitzung)
-- **Nächster Schritt**: M4c-AP01 bis AP04 parallel in Worktrees, danach AP05 Integration und Review, dann M5-Plan an Andreas. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
+- **Nächster Schritt**: M5-AP01 bis AP03 parallel in Worktrees, danach AP04 Integration und Review. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
+
+### M5: WebGL und Bildeffekte (freigegeben 2026-10-28, ohne Video)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M5-AP01 | WebGL2-Wrapper in `packages/shaders`, **Shader Gradient** (C4), Kachel-Export 4K/8K | engine-dev + ui-dev | in Arbeit | – | Branch `m5/ap01-shader-gradient` |
+| M5-AP02 | **Halftone** (E2), **CMYK Halftone** (E3), **Dither** (E4) auf der Bildeffekt-Grundlage | engine-dev + ui-dev | in Arbeit | – | Branch `m5/ap02-halftone-dither` |
+| M5-AP03 | **3D Perspective Grid** (D4) mit Animation (GIF) | engine-dev + ui-dev | in Arbeit | – | Branch `m5/ap03-perspective-grid` |
+| M5-AP04 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | AP01 bis AP03 | |
 
 ### M4c: Kleine Welle (freigegeben 2026-10-28)
 
