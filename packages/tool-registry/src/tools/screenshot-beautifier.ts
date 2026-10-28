@@ -11,6 +11,14 @@
  * the same picture the tool itself would draw). The picker lists the
  * presets of `BACKDROP_TOOLS` grouped by tool, so new presets of those
  * tools appear here without code.
+ *
+ * M4b-AP07: website mockups. `device` puts the screenshot on a self-drawn
+ * laptop, desktop monitor, tablet or phone, or on a responsive set of two
+ * to four of them (engine `mockupScene`). One screenshot is enough: every
+ * device without its own upload shows it, cropped to its screen from the
+ * top. The live view (`liveView`) shows the entered https address in
+ * sandboxed frames inside the devices and turns a screen capture of them
+ * into the uploads; it is a local param like the uploads and the address.
  */
 import {
   SCREENSHOT_ALIGNS,
@@ -18,10 +26,18 @@ import {
   SCREENSHOT_PADDING_MAX,
   SCREENSHOT_THEMES,
   SCREENSHOT_URL_MAX,
+  MOCKUP_ARRANGEMENTS,
+  MOCKUP_BAR_DEVICES,
+  MOCKUP_CAMERAS,
+  MOCKUP_FINISHES,
   cssGradient,
   formatNumber,
+  mockupScene,
   randomPalette,
   screenshotScene,
+  svgDocument,
+  type MockupDevice,
+  type MockupScene,
   type ScreenshotScene,
   type ScreenshotImage,
 } from "@musterli/engine";
@@ -40,7 +56,17 @@ import { keepLocked, parseToolParams } from "../randomize";
 import { defineTool } from "../registry";
 import { createRenderContext } from "../render";
 import { imageAssetHref } from "../svg-asset";
-import type { AnyToolDefinition, CssOutput, OptionGroup, Preset, ToolSizePreset } from "../types";
+import type {
+  AnyToolDefinition,
+  CssBox,
+  CssOutput,
+  LiveFrame,
+  OptionGroup,
+  Preset,
+  RenderContext,
+  ToolAdvisory,
+  ToolSizePreset,
+} from "../types";
 import { blobCompositionTool } from "./blob-composition";
 import { blurryGradientTool } from "./blurry-gradient";
 import { gridPatternsTool } from "./grid-patterns";
@@ -54,6 +80,36 @@ const ID = "screenshot-beautifier";
 
 export const SCREENSHOT_BACKGROUND_TYPES = ["solid", "gradient", "musterli"] as const;
 export const SCREENSHOT_BACKDROP_COLORS = ["preset", "palette"] as const;
+
+/** Devices of a responsive set (two to four), by the `device` value that picks it. */
+export const MOCKUP_SETS = {
+  responsive: ["desktop", "laptop", "tablet", "phone"],
+  "desktop-tablet-phone": ["desktop", "tablet", "phone"],
+  "laptop-tablet-phone": ["laptop", "tablet", "phone"],
+  "desktop-phone": ["desktop", "phone"],
+  "laptop-phone": ["laptop", "phone"],
+  "tablet-phone": ["tablet", "phone"],
+} as const satisfies Record<string, readonly MockupDevice[]>;
+export type MockupSet = keyof typeof MOCKUP_SETS;
+export const MOCKUP_SET_IDS = Object.keys(MOCKUP_SETS) as [MockupSet, ...MockupSet[]];
+
+/**
+ * `none`: the plain screenshot (with optional window bar); then single
+ * devices and responsive sets. One param, so share links stay short.
+ */
+export const SCREENSHOT_DEVICES = [
+  "none",
+  "laptop",
+  "desktop",
+  "tablet",
+  "phone",
+  ...MOCKUP_SET_IDS,
+] as const;
+export type ScreenshotDevice = (typeof SCREENSHOT_DEVICES)[number];
+
+/** Whether a `device` value is a responsive set. */
+export const isMockupSet = (device: string): device is MockupSet =>
+  Object.prototype.hasOwnProperty.call(MOCKUP_SETS, device);
 
 /**
  * Background tools whose presets the picker offers. Each renders SVG from
@@ -111,6 +167,16 @@ const schema = z.object({
   palette: paletteSchema,
   gradientAngle: z.number().min(0).max(360),
   backgroundColor: colorSchema,
+  /** M4b-AP07: the plain screenshot or a device mockup. */
+  device: z.enum(SCREENSHOT_DEVICES),
+  layout: z.enum(MOCKUP_ARRANGEMENTS),
+  finish: z.enum(MOCKUP_FINISHES),
+  camera: z.enum(MOCKUP_CAMERAS),
+  /** Own screenshots for tablet and phone in a responsive set. Local only. */
+  screenshotTablet: screenshotAssetSchema.nullable(),
+  screenshotPhone: screenshotAssetSchema.nullable(),
+  /** Shows the address live inside the devices (editor only). Local only. */
+  live: z.boolean(),
 });
 
 export type ScreenshotBeautifierParams = z.output<typeof schema>;
@@ -135,7 +201,25 @@ const defaults: ScreenshotBeautifierParams = {
   palette: ["#1e1b4b", "#7c3aed", "#ec4899", "#38bdf8"],
   gradientAngle: 135,
   backgroundColor: "#eef2f7",
+  device: "none",
+  layout: "cascade",
+  finish: "silver",
+  camera: "island",
+  screenshotTablet: null,
+  screenshotPhone: null,
+  live: false,
 };
+
+/** Params added by M4b-AP07: older links and designs get their defaults. */
+const MOCKUP_KEYS = [
+  "device",
+  "layout",
+  "finish",
+  "camera",
+  "screenshotTablet",
+  "screenshotPhone",
+  "live",
+] as const;
 
 const preset = (
   id: string,
@@ -152,6 +236,9 @@ const SIZE_PRESETS: readonly ToolSizePreset[] = [
   { id: "product-hunt", width: 1270, height: 760, nameKey: `tools.${ID}.sizes.product-hunt` },
   { id: "linkedin", width: 1200, height: 627, nameKey: `tools.${ID}.sizes.linkedin` },
   { id: "docs", width: 1920, height: 1200, nameKey: `tools.${ID}.sizes.docs` },
+  // Mockups: Dribbble shots are 4:3 (1600 × 1200); a square suits Instagram and portfolios.
+  { id: "dribbble", width: 1600, height: 1200, nameKey: `tools.${ID}.sizes.dribbble` },
+  { id: "square", width: 1600, height: 1600, nameKey: `tools.${ID}.sizes.square` },
 ];
 
 // ---------------------------------------------------------------------------
@@ -252,25 +339,35 @@ export function backgroundMarkup(
   );
 }
 
+type ScreenshotAsset = NonNullable<ScreenshotBeautifierParams["screenshot"]>;
+
 /** The screenshot as an engine image; `undefined` for the placeholder or a rejected SVG. */
 function screenshotImage(p: ScreenshotBeautifierParams): ScreenshotImage | undefined {
-  const asset = p.screenshot;
+  return assetImage(p.screenshot);
+}
+
+function assetImage(asset: ScreenshotAsset | null): ScreenshotImage | undefined {
   if (!asset) return undefined;
   const href = imageAssetHref(asset);
   if (!href || !(asset.width > 0 && asset.height > 0)) return undefined;
   return { href, width: asset.width, height: asset.height };
 }
 
-/** One-entry memo: a multi-megabyte data URI is checked once per picture, not per render. */
-let lastHref = "";
-let lastCssHref = "";
+/** Small memo: a multi-megabyte data URI is checked once per picture, not per render. */
+const cssHrefs = new Map<string, string>();
+/** Three uploads (mockups) plus one spare. */
+const CSS_HREF_ENTRIES = 4;
 /** The picture's data URI for CSS `url("…")`; valid ones contain no quotes, backslashes or newlines. */
 function cssHref(href: string): string {
-  if (href !== lastHref) {
-    lastHref = href;
-    lastCssHref = /["\\\n\r]/.test(href) ? href.replace(/["\\\n\r]/g, "") : href;
+  const hit = cssHrefs.get(href);
+  if (hit !== undefined) return hit;
+  const safe = /["\\\n\r]/.test(href) ? href.replace(/["\\\n\r]/g, "") : href;
+  cssHrefs.set(href, safe);
+  if (cssHrefs.size > CSS_HREF_ENTRIES) {
+    const oldest = cssHrefs.keys().next().value;
+    if (oldest !== undefined) cssHrefs.delete(oldest);
   }
-  return lastCssHref;
+  return safe;
 }
 
 /**
@@ -307,6 +404,205 @@ function sceneOutput(scene: ScreenshotScene, image: ScreenshotImage | undefined)
 }
 
 // ---------------------------------------------------------------------------
+// Mockups (M4b-AP07)
+// ---------------------------------------------------------------------------
+
+/** The devices of a design, or `null` for the plain screenshot. */
+export function mockupDevices(p: ScreenshotBeautifierParams): readonly MockupDevice[] | null {
+  if (p.device === "none") return null;
+  if (isMockupSet(p.device)) return MOCKUP_SETS[p.device];
+  return [p.device];
+}
+
+/** Image param that holds the picture of a device class. */
+export type ScreenshotParam = "screenshot" | "screenshotTablet" | "screenshotPhone";
+
+/** Where each device looks for its picture first, then the fallbacks in order. */
+const PICTURE_ORDER: Readonly<
+  Record<MockupDevice, readonly [ScreenshotParam, ScreenshotParam, ScreenshotParam]>
+> = {
+  desktop: ["screenshot", "screenshotTablet", "screenshotPhone"],
+  laptop: ["screenshot", "screenshotTablet", "screenshotPhone"],
+  tablet: ["screenshotTablet", "screenshot", "screenshotPhone"],
+  phone: ["screenshotPhone", "screenshotTablet", "screenshot"],
+};
+
+/**
+ * The param a device's own picture belongs in. A single device always uses
+ * the main upload; in a set, tablet and phone have their own (optional).
+ */
+export function deviceParam(p: ScreenshotBeautifierParams, device: MockupDevice): ScreenshotParam {
+  return isMockupSet(p.device) ? PICTURE_ORDER[device][0] : "screenshot";
+}
+
+/**
+ * The picture each device shows: its own upload, else any other one (one
+ * screenshot is enough), else none (the placeholder website).
+ */
+export function mockupImages(
+  p: ScreenshotBeautifierParams,
+  devices: readonly MockupDevice[],
+): Partial<Record<MockupDevice, ScreenshotImage>> {
+  const out: Partial<Record<MockupDevice, ScreenshotImage>> = {};
+  for (const device of devices) {
+    const order: readonly ScreenshotParam[] = isMockupSet(p.device)
+      ? PICTURE_ORDER[device]
+      : ["screenshot"];
+    for (const key of order) {
+      const image = assetImage(p[key]);
+      if (image) {
+        out[device] = image;
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+/** `border-radius` from top left, top right, bottom right, bottom left. */
+const radiiCss = (r: readonly number[]): string =>
+  r.every((v) => v === r[0])
+    ? `${formatNumber(r[0] ?? 0, 2)}px`
+    : r.map((v) => `${formatNumber(v, 2)}px`).join(" ");
+
+const svgBackground = (doc: string): string =>
+  `background-image: url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(doc)}");\n` +
+  "background-size: 100% 100%;\nbackground-repeat: no-repeat;";
+
+/**
+ * Preview and exports of a mockup. Without uploads the stage is the whole
+ * picture. With uploads the stage holds the background and the first
+ * device; a transparent element over the whole canvas carries the rest in
+ * paint order as boxes: each picture as a box of its own (the browser
+ * decodes it once), each run of vector parts in between as a full-size SVG
+ * box. Devices in front therefore cover the pictures behind them exactly
+ * as in the SVG ("preview == PNG" in E2E).
+ */
+function mockupOutput(scene: MockupScene, width: number, height: number): CssOutput {
+  const [first, ...rest] = scene.layers;
+  if (!rest.some((l) => l.kind === "picture")) {
+    return { css: svgBackground(scene.svg), previewSvg: scene.svg };
+  }
+  const defs = `<defs>${scene.defs}</defs>`;
+  const doc = (body: string) => svgDocument(width, height, `${defs}${body}`);
+  const stage = first?.kind === "svg" ? first.body : "";
+  const n = (v: number) => formatNumber(v, 2);
+  const content: CssBox[] = rest.map((l) =>
+    l.kind === "svg"
+      ? { x: 0, y: 0, width, height, css: svgBackground(doc(l.body)) }
+      : {
+          x: l.box.x,
+          y: l.box.y,
+          width: l.box.width,
+          height: l.box.height,
+          css: [
+            `background-image: url("${cssHref(l.href)}");`,
+            "background-repeat: no-repeat;",
+            `background-position: ${n(l.image.x)}px ${n(l.image.y)}px;`,
+            `background-size: ${n(l.image.width)}px ${n(l.image.height)}px;`,
+            `border-radius: ${radiiCss(l.radii)};`,
+          ].join("\n"),
+        },
+  );
+  return {
+    css: svgBackground(doc(stage)),
+    previewSvg: scene.svg,
+    element: { x: 0, y: 0, width, height, css: "background: transparent;", content },
+  };
+}
+
+function renderMockup(
+  p: ScreenshotBeautifierParams,
+  ctx: RenderContext,
+  devices: readonly MockupDevice[],
+): MockupScene {
+  return mockupScene({
+    width: ctx.width,
+    height: ctx.height,
+    padding: p.padding,
+    align: p.align,
+    devices,
+    arrangement: p.layout,
+    backgroundSvg: backgroundMarkup(p, ctx.seed, ctx.width, ctx.height),
+    images: mockupImages(p, devices),
+    finish: p.finish,
+    camera: p.camera,
+    frame: p.frame,
+    theme: p.theme,
+    url: p.url,
+    shadow: p.shadow,
+    shadowColor: p.shadowColor,
+    accent: PLACEHOLDER_ACCENT,
+  });
+}
+
+/**
+ * The address as an https URL for the live view, or `null`. Display text
+ * becomes `https://` plus the text; anything but https, credentials in the
+ * URL or a host without a dot (except `localhost`) is refused.
+ */
+export function liveUrl(text: string): string | null {
+  const trimmed = text.trim();
+  if (!trimmed || /\s/.test(trimmed)) return null;
+  const withScheme = /^[a-z][a-z0-9+.-]*:/i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  // No `URL` here (no DOM types in the registry); a strict pattern does: no credentials, no odd characters.
+  const m = LIVE_URL.exec(withScheme);
+  if (!m) return null;
+  const host = (m[1] ?? "").toLowerCase();
+  if (!host.includes(".") && host !== "localhost") return null;
+  if (host.split(".").some((label) => !label || label.startsWith("-") || label.endsWith("-"))) {
+    return null;
+  }
+  return `https://${host}${m[2] ?? ""}${m[3] || "/"}`;
+}
+
+/** https, host of letters, digits, dots and hyphens, optional port, then path, query, fragment. */
+const LIVE_URL = /^https:\/\/([a-z0-9.-]{1,253})(:\d{1,5})?([/?#][^\s"'<>\\^`{|}]*)?$/i;
+
+/** Whether the address reads like a web address (gentle check: it is display text). */
+export function looksLikeAddress(text: string): boolean {
+  const t = text.trim();
+  if (!t) return true;
+  return liveUrl(t.replace(/^http:\/\//i, "https://")) !== null;
+}
+
+/**
+ * Live frames, back to front like their devices. Each image param receives
+ * the view of the first device that uses it (the larger viewport); a second
+ * device on the same param (desktop and laptop) shows the page but is not
+ * captured (`param` empty).
+ */
+export function liveFrames(p: ScreenshotBeautifierParams, ctx: RenderContext): LiveFrame[] {
+  const devices = mockupDevices(p);
+  const url = p.live ? liveUrl(p.url) : null;
+  if (!devices || !url) return [];
+  const scene = renderMockup(p, ctx, devices);
+  // `devices` follows MOCKUP_DEVICES (desktop before laptop), not paint order.
+  const owner = new Map<ScreenshotParam, MockupDevice>();
+  for (const device of devices) {
+    const param = deviceParam(p, device);
+    if (!owner.has(param)) owner.set(param, device);
+  }
+  return scene.screens.map((s) => {
+    const param = deviceParam(p, s.device);
+    return {
+      id: s.device,
+      url,
+      x: s.rect.x,
+      y: s.rect.y,
+      width: s.rect.width,
+      height: s.rect.height,
+      radii: s.radii,
+      viewportWidth: s.viewport.width,
+      viewportHeight: s.viewport.height,
+      occluders: s.occluders,
+      param: owner.get(param) === s.device ? param : "",
+      titleKey: `tools.${ID}.params.device.options.${s.device}`,
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Controls
 // ---------------------------------------------------------------------------
 
@@ -328,11 +624,33 @@ const usesPalette = (p: ScreenshotBeautifierParams) =>
   p.backgroundType === "gradient" ||
   (p.backgroundType === "musterli" && p.backdropColors === "palette");
 
-/** Params added later stay valid; an unknown backdrop (a preset removed upstream) falls back. */
+const isMockup = (p: ScreenshotBeautifierParams) => p.device !== "none";
+const isPlain = (p: ScreenshotBeautifierParams) => p.device === "none";
+const isSet = (p: ScreenshotBeautifierParams) => isMockupSet(p.device);
+const hasDevice = (device: MockupDevice) => (p: ScreenshotBeautifierParams) =>
+  mockupDevices(p)?.includes(device) ?? false;
+/** The bar (and so the address) shows on plain screenshots and on desktop and laptop screens. */
+const showsBar = (p: ScreenshotBeautifierParams) =>
+  mockupDevices(p)?.some((d) => MOCKUP_BAR_DEVICES.has(d)) ?? true;
+
+/**
+ * Params added later stay valid (M4b-AP07 adds the mockup params with their
+ * defaults); an unknown backdrop (a preset removed upstream) falls back.
+ */
 function migrateParams(raw: Readonly<Record<string, unknown>>): unknown {
+  let out: Record<string, unknown> | null = null;
+  for (const key of MOCKUP_KEYS) {
+    if (!(key in raw)) {
+      out ??= { ...raw };
+      out[key] = defaults[key];
+    }
+  }
   const backdrop = raw.backdrop;
-  if (typeof backdrop !== "string" || BACKDROP_BY_ID.has(backdrop)) return raw;
-  return { ...raw, backdrop: defaults.backdrop };
+  if (typeof backdrop === "string" && !BACKDROP_BY_ID.has(backdrop)) {
+    out ??= { ...raw };
+    out.backdrop = defaults.backdrop;
+  }
+  return out ?? raw;
 }
 
 export const screenshotBeautifierTool = defineTool({
@@ -343,8 +661,8 @@ export const screenshotBeautifierTool = defineTool({
   defaults,
   defaultSize: { width: 1600, height: 900 },
   sizePresets: SIZE_PRESETS,
-  // The picture and the address typed for it never leave the device.
-  localParams: ["screenshot", "url"],
+  // The pictures, the address typed for them and the live view never leave the device.
+  localParams: ["screenshot", "url", "screenshotTablet", "screenshotPhone", "live"],
   migrateParams,
   presets: [
     preset("aurora", {}),
@@ -417,21 +735,91 @@ export const screenshotBeautifierTool = defineTool({
       borderColor: "#ffffff",
       borderOpacity: 12,
     }),
+    // M4b-AP07: website mockups.
+    preset("mockup-responsive", {
+      device: "responsive",
+      layout: "cascade",
+      finish: "silver",
+      theme: "light",
+      shadow: 55,
+      padding: 7,
+    }),
+    preset("mockup-laptop", {
+      device: "laptop",
+      finish: "graphite",
+      backgroundType: "solid",
+      backgroundColor: "#e9edf3",
+      theme: "light",
+      shadow: 45,
+      shadowColor: "#334155",
+      padding: 10,
+    }),
+    preset("mockup-phone", {
+      device: "phone",
+      finish: "white",
+      camera: "island",
+      backgroundType: "gradient",
+      palette: ["#22d3ee", "#6366f1", "#a855f7"],
+      gradientAngle: 150,
+      theme: "light",
+      shadow: 60,
+      shadowColor: "#1e1b4b",
+      padding: 8,
+    }),
+    preset("mockup-desktop", {
+      device: "desktop",
+      finish: "silver",
+      backdrop: "blurry-gradient/ocean",
+      theme: "dark",
+      shadow: 50,
+      padding: 9,
+    }),
+    preset("mockup-row", {
+      device: "laptop-tablet-phone",
+      layout: "row",
+      finish: "graphite",
+      backdrop: "starry-sky/midnight",
+      theme: "dark",
+      shadow: 70,
+      shadowColor: "#000000",
+      padding: 8,
+    }),
+    preset("mockup-focus", {
+      device: "responsive",
+      layout: "focus",
+      finish: "white",
+      camera: "notch",
+      backgroundType: "solid",
+      backgroundColor: "#f1f5f9",
+      frame: "window",
+      theme: "light",
+      shadow: 40,
+      shadowColor: "#475569",
+      padding: 6,
+    }),
   ],
   controls: {
     groups: [
+      { id: "device", labelKey: `tools.${ID}.groups.device` },
       { id: "screenshot", labelKey: `tools.${ID}.groups.screenshot` },
       { id: "frame", labelKey: `tools.${ID}.groups.frame` },
       { id: "style", labelKey: `tools.${ID}.groups.style` },
       { id: "background", labelKey: `tools.${ID}.groups.background` },
     ],
     order: [
+      "device",
+      "layout",
+      "finish",
+      "camera",
       "screenshot",
+      "screenshotTablet",
+      "screenshotPhone",
       "padding",
       "align",
       "frame",
       "theme",
       "url",
+      "live",
       "radius",
       "shadow",
       "shadowColor",
@@ -447,12 +835,53 @@ export const screenshotBeautifierTool = defineTool({
       "backgroundColor",
     ],
     params: {
+      device: {
+        group: "device",
+        kind: "select",
+        optionLabelKeys: optionLabels(ID, "device", SCREENSHOT_DEVICES),
+        descriptionKey: `tools.${ID}.params.device.description`,
+      },
+      layout: {
+        group: "device",
+        kind: "segmented",
+        optionLabelKeys: optionLabels(ID, "layout", MOCKUP_ARRANGEMENTS),
+        visibleWhen: isSet,
+      },
+      finish: {
+        group: "device",
+        kind: "segmented",
+        optionLabelKeys: optionLabels(ID, "finish", MOCKUP_FINISHES),
+        visibleWhen: isMockup,
+      },
+      camera: {
+        group: "device",
+        kind: "segmented",
+        optionLabelKeys: optionLabels(ID, "camera", MOCKUP_CAMERAS),
+        visibleWhen: hasDevice("phone"),
+      },
       screenshot: {
         group: "screenshot",
         kind: "image",
         lockable: false,
         descriptionKey: `tools.${ID}.params.screenshot.description`,
         image: { maxEdge: SCREENSHOT_ASSET_RASTER_MAX_EDGE },
+      },
+      screenshotTablet: {
+        group: "screenshot",
+        kind: "image",
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.screenshotTablet.description`,
+        // Several upload fields are visible: a paste goes to the main one only.
+        image: { maxEdge: SCREENSHOT_ASSET_RASTER_MAX_EDGE, paste: false },
+        visibleWhen: (p) => isSet(p) && hasDevice("tablet")(p),
+      },
+      screenshotPhone: {
+        group: "screenshot",
+        kind: "image",
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.screenshotPhone.description`,
+        image: { maxEdge: SCREENSHOT_ASSET_RASTER_MAX_EDGE, paste: false },
+        visibleWhen: (p) => isSet(p) && hasDevice("phone")(p),
       },
       padding: { group: "screenshot", unit: "%", step: 0.5 },
       align: {
@@ -464,6 +893,7 @@ export const screenshotBeautifierTool = defineTool({
         group: "frame",
         kind: "segmented",
         optionLabelKeys: optionLabels(ID, "frame", SCREENSHOT_FRAMES),
+        visibleWhen: showsBar,
       },
       theme: {
         group: "frame",
@@ -475,17 +905,28 @@ export const screenshotBeautifierTool = defineTool({
         group: "frame",
         lockable: false,
         descriptionKey: `tools.${ID}.params.url.description`,
-        visibleWhen: (p) => p.frame !== "none",
+        visibleWhen: (p) => isMockup(p) || p.frame !== "none",
       },
-      radius: { group: "style", unit: "px" },
+      live: {
+        group: "frame",
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.live.description`,
+        visibleWhen: isMockup,
+      },
+      radius: { group: "style", unit: "px", visibleWhen: isPlain },
       shadow: { group: "style", unit: "%" },
       shadowColor: { group: "style", visibleWhen: (p) => p.shadow > 0 },
-      border: { group: "style", unit: "px" },
-      borderColor: { group: "style", visibleWhen: (p) => p.border > 0 },
-      borderOpacity: { group: "style", unit: "%", visibleWhen: (p) => p.border > 0 },
+      border: { group: "style", unit: "px", visibleWhen: isPlain },
+      borderColor: { group: "style", visibleWhen: (p) => isPlain(p) && p.border > 0 },
+      borderOpacity: {
+        group: "style",
+        unit: "%",
+        visibleWhen: (p) => isPlain(p) && p.border > 0,
+      },
       highlight: {
         group: "style",
         descriptionKey: `tools.${ID}.params.highlight.description`,
+        visibleWhen: isPlain,
       },
       backgroundType: {
         group: "background",
@@ -542,9 +983,26 @@ export const screenshotBeautifierTool = defineTool({
       backdropColors: "palette" as const,
     };
   },
+  advisories(p) {
+    const out: ToolAdvisory[] = [];
+    const url = p.url.trim();
+    if (p.live && isMockup(p) && !liveUrl(url)) {
+      out.push({ id: "live-url", messageKey: `tools.${ID}.advisories.liveUrl` });
+    } else if (isMockup(p) && showsBar(p) && p.frame === "browser" && !looksLikeAddress(url)) {
+      out.push({ id: "url", messageKey: `tools.${ID}.advisories.url` });
+    }
+    return out;
+  },
+  liveView: {
+    frames: liveFrames,
+    // The captured pictures replace the frames, so the preview shows what the export will be.
+    afterCapture: { live: false },
+  },
   render: {
     kind: "css",
     render(p, ctx) {
+      const devices = mockupDevices(p);
+      if (devices) return mockupOutput(renderMockup(p, ctx, devices), ctx.width, ctx.height);
       const image = screenshotImage(p);
       const scene = screenshotScene({
         width: ctx.width,

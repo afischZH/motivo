@@ -13,6 +13,8 @@ export const LEGAL_SECTIONS = {
     "errors",
     "cookies",
     "local",
+    // Live view of the screenshot beautifier (M4b-AP07; legal review pending).
+    "liveView",
     "share",
     "contact",
     "donations",

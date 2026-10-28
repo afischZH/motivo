@@ -109,7 +109,13 @@ describe("uploads", () => {
     expect(shape.safeParse({ ...raster, width: 3840, height: 2160 }).success).toBe(true);
     expect(shape.safeParse({ ...raster, width: 3841, height: 2160 }).success).toBe(false);
     expect(shape.safeParse({ ...raster, href: "data:text/html;base64,PHA+" }).success).toBe(false);
-    expect(tool.localParams).toEqual(["screenshot", "url"]);
+    expect(tool.localParams).toEqual([
+      "screenshot",
+      "url",
+      "screenshotTablet",
+      "screenshotPhone",
+      "live",
+    ]);
   });
 });
 

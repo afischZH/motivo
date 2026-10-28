@@ -269,7 +269,8 @@ export function fitBarText(text: string, maxWidth: number, fontSize: number): st
   return `${chars.slice(0, max - 1).join("")}…`;
 }
 
-function barMarkup(
+/** The self-drawn window or browser bar in `bar` (also used by the device mockups). */
+export function barMarkup(
   bar: ScreenshotRect,
   frame: ScreenshotFrame,
   theme: ScreenshotTheme,
@@ -406,16 +407,22 @@ export interface ScreenshotOptions extends Omit<ScreenshotLayoutOptions, "aspect
 /** Characters an attribute value must not contain unescaped. */
 const NEEDS_ESCAPE = /[&<>"']/;
 
-/** One-entry memo: a multi-megabyte data URI is scanned once per picture, not per render. */
-let lastHref = "";
-let lastSafeHref = "";
-function attributeHref(href: string): string {
-  if (href !== lastHref) {
-    lastHref = href;
-    // Base64 data URIs (checked by the schema) need no escaping; anything else is escaped.
-    lastSafeHref = NEEDS_ESCAPE.test(href) ? escapeXml(href) : href;
+/** Small memo: a multi-megabyte data URI is scanned once per picture, not per render. */
+const safeHrefs = new Map<string, string>();
+/** Up to three uploads (device mockups) plus one spare. */
+const SAFE_HREF_ENTRIES = 4;
+/** The picture's href for an XML attribute (escaped unless it is a plain data URI). */
+export function attributeHref(href: string): string {
+  const hit = safeHrefs.get(href);
+  if (hit !== undefined) return hit;
+  // Base64 data URIs (checked by the schema) need no escaping; anything else is escaped.
+  const safe = NEEDS_ESCAPE.test(href) ? escapeXml(href) : href;
+  safeHrefs.set(href, safe);
+  if (safeHrefs.size > SAFE_HREF_ENTRIES) {
+    const oldest = safeHrefs.keys().next().value;
+    if (oldest !== undefined) safeHrefs.delete(oldest);
   }
-  return lastSafeHref;
+  return safe;
 }
 
 /** Where the picture sits, for previews that show it as a layer of its own. */

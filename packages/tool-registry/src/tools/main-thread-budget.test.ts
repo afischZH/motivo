@@ -180,6 +180,18 @@ const CASES: readonly WorstCase[] = [
     params: { backgroundType: "musterli", backdrop: "mesh-gradient/nebula", shadow: 100 },
     sizes: [HUGE, WIDE],
   },
+  {
+    // M4b-AP07: four devices with placeholder websites (the most vector work) on a mesh.
+    tool: screenshotBeautifierTool,
+    params: {
+      device: "responsive",
+      deviceSet: "all",
+      backgroundType: "musterli",
+      backdrop: "mesh-gradient/nebula",
+      shadow: 100,
+    },
+    sizes: [HD, HUGE, WIDE, TALL],
+  },
 ];
 
 function fastest(c: WorstCase, size: CanvasSize): number {

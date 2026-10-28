@@ -358,6 +358,19 @@
       "limit": "Du hast {max} Kacheln geändert, mehr geht nicht. Setz eine zurück, um eine weitere zu ändern.",
       "resetDone": "Kachel zurückgesetzt.",
       "resetAllDone": "Alle Kacheln zurückgesetzt."
+    },
+    "live": {
+      "hint": "Bleibt die Ansicht leer, erlaubt die Website kein Einbetten. Lade dann einen Screenshot hoch.",
+      "unsupported": "Dein Browser kann die Ansicht nicht aufnehmen.",
+      "capture": "Ansicht übernehmen",
+      "capturing": "Wähl im Dialog diesen Tab. Die Ansicht wird aufgenommen.",
+      "done": "{count, plural, one {Ein Bild übernommen.} other {# Bilder übernommen.}} Die Live-Ansicht ist aus, die Vorschau zeigt jetzt dein Bild.",
+      "frameTitle": "Live-Ansicht: {device}",
+      "errors": {
+        "denied": "Aufnahme abgebrochen. Ohne Freigabe kann Musterli die Ansicht nicht übernehmen.",
+        "failed": "Die Aufnahme hat nicht geklappt. Lade stattdessen einen Screenshot hoch.",
+        "unsupported": "Dein Browser kann die Ansicht nicht aufnehmen. Lade einen Screenshot hoch."
+      }
     }
   },
   "sizes": {

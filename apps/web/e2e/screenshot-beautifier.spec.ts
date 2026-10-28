@@ -5,6 +5,11 @@
  * screenshot does not block the main thread. Axe in light and dark mode,
  * no horizontal overflow at 375 px. "Preview == PNG" for the placeholder
  * runs in preview-export.spec.ts.
+ *
+ * M4b-AP07: website mockups. One screenshot fills a responsive set and the
+ * PNG export equals the preview; the live view loads a page in sandboxed
+ * frames (a local test page, routed) and "Take this view" captures it with
+ * a stubbed `getDisplayMedia` stream into the mockup.
  */
 import { readFile, writeFile } from "node:fs/promises";
 import { deflateSync } from "node:zlib";
@@ -14,6 +19,7 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { toolSlug } from "../i18n/slugs";
 import { enableClipboard } from "./support/clipboard";
+import { comparePngs } from "./support/compare";
 import { decodePng, encodeRgbPng } from "./support/png";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
@@ -75,6 +81,56 @@ function screenshot4k(): Buffer {
 }
 
 const RED: [number, number, number] = [225, 29, 72];
+const GREEN: [number, number, number] = [22, 163, 74];
+
+/** A tall "website" screenshot: horizontal colour bands, so a wrong crop shows. */
+function bandsPng(width: number, height: number): Buffer {
+  const bands: [number, number, number][] = [
+    [30, 64, 175],
+    [250, 204, 21],
+    [225, 29, 72],
+    [22, 163, 74],
+  ];
+  const data = new Uint8Array(width * height * 3);
+  for (let y = 0; y < height; y++) {
+    const rgb = bands[Math.floor(y / 480) % bands.length] ?? RED;
+    for (let x = 0; x < width; x++) data.set(rgb, (y * width + x) * 3);
+  }
+  return encodeRgbPng(data, width, height);
+}
+
+/** Backgrounds of the mockup's picture boxes (raster pictures, not the SVG device boxes). */
+async function mockupPictures(page: Page): Promise<string[]> {
+  const boxes = page.getByTestId("preview").locator("[data-motif-element] ~ div");
+  const all = await boxes.evaluateAll((els) =>
+    els.map((el) => (el as HTMLElement).style.backgroundImage.slice(0, 40)),
+  );
+  return all.filter((b) => /data:image\/png|blob:/.test(b));
+}
+
+/** The live view's test page (routed, never fetched from the network). */
+const LIVE_PAGE = "https://live.example.test/";
+async function routeLivePage(page: Page) {
+  await page.route(`${LIVE_PAGE}**`, (route) =>
+    route.fulfill({
+      contentType: "text/html",
+      body: '<!doctype html><html lang="en"><title>Live test</title><body style="margin:0;background:#16a34a"><main><h1 style="color:#fff">Live test page</h1></main></body></html>',
+    }),
+  );
+}
+
+/** Share of pixels within `tol` of `rgb`. */
+function shareOf(png: { data: Uint8Array }, rgb: [number, number, number], tol = 12): number {
+  let n = 0;
+  for (let i = 0; i < png.data.length; i += 4) {
+    const d =
+      Math.abs((png.data[i] ?? 0) - rgb[0]) +
+      Math.abs((png.data[i + 1] ?? 0) - rgb[1]) +
+      Math.abs((png.data[i + 2] ?? 0) - rgb[2]);
+    if (d < tol) n++;
+  }
+  return n / (png.data.length / 4);
+}
 
 /** The stage box of the preview (CSS output: stage as background, picture as element on top). */
 const stage = (page: Page): Locator =>
@@ -135,6 +191,35 @@ async function choose(dialog: Locator, name: string) {
   const id = await radio.getAttribute("id");
   await dialog.locator(`label[for="${id}"]`).click();
   await expect(radio).toBeChecked();
+}
+
+async function exportPng(page: Page, scale?: string): Promise<Buffer> {
+  const dialog = await openExport(page);
+  await choose(dialog, "PNG");
+  if (scale) await choose(dialog, scale);
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    dialog.getByTestId("export-download").click(),
+  ]);
+  return readFile(await download.path());
+}
+
+/** Sets the design size, one edge at a time (each confirmed by the preview label). */
+async function setSize(page: Page, width: number, height: number) {
+  const label = (w: number | string, h: number | string) =>
+    page.getByRole("img", { name: new RegExp(`${w} × ${h} px`) });
+  await expect(async () => {
+    const field = page.getByLabel("Width", { exact: true });
+    await field.fill(String(width));
+    await field.press("Enter");
+    await expect(label(width, "\\d+")).toBeVisible({ timeout: 2000 });
+  }).toPass({ timeout: 15_000 });
+  await expect(async () => {
+    const field = page.getByLabel("Height", { exact: true });
+    await field.fill(String(height));
+    await field.press("Enter");
+    await expect(label(width, height)).toBeVisible({ timeout: 2000 });
+  }).toPass({ timeout: 15_000 });
 }
 
 test.describe("screenshot beautifier", () => {
@@ -274,7 +359,25 @@ test.describe("screenshot beautifier", () => {
         .setInputFiles({ name: "app.png", mimeType: "image/png", buffer: solidPng(64, 40, RED) });
       await applyCrop(page, "de");
       await expect(page.getByTestId("asset-thumbnail")).toBeVisible();
-      const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
+      // M4b-AP07: as a responsive website mockup (device, layout, finish, extra uploads, live bar).
+      await page.getByLabel("Gerät", { exact: true }).selectOption("responsive");
+      await expect.poll(() => mockupPictures(page)).toHaveLength(4);
+      await routeLivePage(page);
+      await page.getByLabel("Adresse oder Titel").fill(LIVE_PAGE);
+      await page.getByLabel("Live-Ansicht", { exact: true }).click();
+      await expect(page.getByTestId("live-bar")).toBeVisible();
+      const frames = page.locator("[data-live-frame] iframe");
+      await expect(frames).toHaveCount(4);
+      // Each frame has its own name; what the framed website contains is not ours to check.
+      for (const title of await frames.evaluateAll((els) =>
+        els.map((el) => (el as HTMLIFrameElement).title),
+      )) {
+        expect(title).toMatch(/^Live-Ansicht: (Monitor|Laptop|Tablet|Smartphone)$/);
+      }
+      const results = await new AxeBuilder({ page })
+        .withTags(AXE_TAGS)
+        .exclude("[data-live-frame] iframe")
+        .analyze();
       expect(results.violations).toEqual([]);
     });
   }
@@ -282,9 +385,154 @@ test.describe("screenshot beautifier", () => {
   test("has no horizontal overflow at 375 px", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 800 });
     await openEditor(page, "de");
+    await page.getByLabel("Gerät", { exact: true }).selectOption("responsive");
+    await routeLivePage(page);
+    await page.getByLabel("Adresse oder Titel").fill(LIVE_PAGE);
+    await page.getByLabel("Live-Ansicht", { exact: true }).click();
+    await expect(page.getByTestId("live-bar")).toBeVisible();
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
     expect(overflow).toBe(0);
+  });
+  test("fills a responsive set with one screenshot; the PNG equals the preview", async ({
+    page,
+  }, testInfo) => {
+    await openEditor(page);
+    await chooseFile(page, {
+      name: "site.png",
+      mimeType: "image/png",
+      buffer: bandsPng(1440, 2400),
+    });
+    await page.getByLabel("Device", { exact: true }).selectOption("responsive");
+    // One upload, four devices: every screen shows a crop of it.
+    await expect.poll(() => mockupPictures(page)).toHaveLength(4);
+    for (const b of await mockupPictures(page)) expect(b).toContain("data:image/png");
+    await page.getByLabel("Address or title").fill("https://example.com/");
+    await expect.poll(() => stageSvg(page)).toContain("example.com");
+    expect(await stageSvg(page)).not.toContain("https://example");
+
+    const SIZE = { width: 480, height: 320 };
+    await setSize(page, SIZE.width, SIZE.height);
+    await page.locator("body").press("1");
+    await expect(page.getByRole("button", { name: "100%" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    const shown = page.getByTestId("preview").locator(":scope > div[aria-hidden='true']");
+    await expect(shown).toHaveCSS("width", `${SIZE.width}px`);
+    const box = await shown.boundingBox();
+    if (!box) throw new Error("preview has no bounding box");
+    const preview = await page.screenshot({
+      animations: "disabled",
+      scale: "css",
+      clip: { x: Math.round(box.x), y: Math.round(box.y), ...SIZE },
+    });
+    const exported = await exportPng(page, `1× (${SIZE.width} × ${SIZE.height})`);
+    const result = await comparePngs(page, preview, exported, 24);
+    await testInfo.attach("preview.png", { body: preview, contentType: "image/png" });
+    await testInfo.attach("export.png", { body: exported, contentType: "image/png" });
+    await testInfo.attach("diff.png", {
+      body: Buffer.from(result.diffPng.split(",")[1] ?? "", "base64"),
+      contentType: "image/png",
+    });
+    await writeFile(testInfo.outputPath("preview.png"), preview);
+    await writeFile(testInfo.outputPath("export.png"), exported);
+    await writeFile(
+      testInfo.outputPath("diff.png"),
+      Buffer.from(result.diffPng.split(",")[1] ?? "", "base64"),
+    );
+    expect({ width: result.width, height: result.height }).toEqual(SIZE);
+    // A hard band edge downscaled about 5× lands on a different row in the CSS
+    // preview than on the export canvas; where it meets a device edge one row
+    // is "stray" (Chromium: one row of about 140 px, 0.13 %). A missing or
+    // moved picture changes thousands of pixels.
+    expect(result.strayRatio).toBeLessThanOrEqual(0.002);
+    expect(result.diffRatio).toBeLessThanOrEqual(0.02);
+    expect(result.meanDiffOffEdges).toBeLessThanOrEqual(2);
+    // Top of the page ("above the fold"): the first band shows on the screens.
+    expect(shareOf(decodePng(exported), [30, 64, 175])).toBeGreaterThan(0.02);
+  });
+
+  test("shows the address live and takes the view into the mockup", async ({ page }) => {
+    await routeLivePage(page);
+    // A fake tab capture: a canvas stream painted green at the window size.
+    await page.addInitScript(
+      ({ rgb }) => {
+        const w = window as unknown as {
+          __capture: { calls: unknown[]; tracks: MediaStreamTrack[] };
+        };
+        w.__capture = { calls: [], tracks: [] };
+        navigator.mediaDevices.getDisplayMedia = async (options?: DisplayMediaStreamOptions) => {
+          w.__capture.calls.push(options);
+          const canvas = document.createElement("canvas");
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          const ctx = canvas.getContext("2d");
+          const paint = () => {
+            if (!ctx) return;
+            ctx.fillStyle = `rgb(${rgb.join(",")})`;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          };
+          paint();
+          const timer = setInterval(paint, 30);
+          const stream = canvas.captureStream(30);
+          for (const t of stream.getTracks()) {
+            w.__capture.tracks.push(t);
+            const stop = t.stop.bind(t);
+            t.stop = () => {
+              clearInterval(timer);
+              stop();
+            };
+          }
+          return stream;
+        };
+      },
+      { rgb: GREEN },
+    );
+    await openEditor(page);
+    await page.getByRole("button", { name: "Laptop", exact: true }).click();
+    await page.getByLabel("Address or title").fill("live.example.test/");
+    await page.getByLabel("Live view", { exact: true }).click();
+
+    const frame = page.locator("[data-live-frame] iframe");
+    await expect(frame).toHaveCount(1);
+    await expect(frame).toHaveAttribute("src", LIVE_PAGE);
+    await expect(frame).toHaveAttribute(
+      "sandbox",
+      "allow-scripts allow-same-origin allow-forms allow-popups",
+    );
+    await expect(frame).toHaveAttribute("referrerpolicy", "no-referrer");
+    // The page loads inside the frame (the CSP opens frame-src https: on this route).
+    await expect(
+      page
+        .frameLocator("[data-live-frame] iframe")
+        .getByRole("heading", { name: "Live test page" }),
+    ).toBeVisible();
+    await expect(page.getByTestId("live-bar")).toContainText(
+      "If the view stays empty, the website does not allow embedding.",
+    );
+
+    await page.getByTestId("live-capture").click();
+    // Afterwards the live view is off, so the frames and the bar are gone.
+    await expect(page.getByTestId("live-bar")).toHaveCount(0, { timeout: 15_000 });
+    await expect(page.locator("[data-live-frame]")).toHaveCount(0);
+    const capture = await page.evaluate(() => {
+      const c = (
+        window as unknown as { __capture: { calls: unknown[]; tracks: MediaStreamTrack[] } }
+      ).__capture;
+      return { calls: c.calls, states: c.tracks.map((t) => t.readyState) };
+    });
+    expect(capture.calls).toEqual([
+      { video: true, audio: false, preferCurrentTab: true, selfBrowserSurface: "include" },
+    ]);
+    // Tracks are stopped right after the capture.
+    expect(capture.states).toEqual(["ended"]);
+    // The captured picture is the laptop's screenshot now.
+    await expect.poll(() => mockupPictures(page)).toHaveLength(1);
+    await expect(page.getByTestId("asset-thumbnail")).toBeVisible();
+
+    const png = decodePng(await exportPng(page));
+    expect(shareOf(png, GREEN)).toBeGreaterThan(0.1);
   });
 });

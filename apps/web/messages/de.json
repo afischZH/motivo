@@ -2763,17 +2763,67 @@
     },
     "screenshot-beautifier": {
       "name": "Screenshot-Verschönerer",
-      "description": "Leg deinen Screenshot auf einen schönen Hintergrund, mit Abstand, runden Ecken, weichem Schatten und Browser-Fenster. Fertig für Doku, Social Media und Product Hunt.",
+      "description": "Leg deinen Screenshot auf einen schönen Hintergrund oder zeig deine Website als Mockup auf Laptop, Monitor, Tablet und Smartphone. Fertig für Doku, Social Media und Product Hunt.",
       "groups": {
+        "device": "Gerät",
         "screenshot": "Screenshot",
         "frame": "Fenster",
         "style": "Rand und Schatten",
         "background": "Hintergrund"
       },
       "params": {
+        "device": {
+          "label": "Gerät",
+          "description": "Zeig deinen Screenshot pur oder als Website-Mockup auf einem Gerät oder einem responsiven Set aus mehreren Geräten.",
+          "options": {
+            "none": "Nur Screenshot",
+            "laptop": "Laptop",
+            "desktop": "Monitor",
+            "tablet": "Tablet",
+            "phone": "Smartphone",
+            "responsive": "Responsive-Set: alle vier",
+            "desktop-tablet-phone": "Set: Monitor, Tablet, Smartphone",
+            "laptop-tablet-phone": "Set: Laptop, Tablet, Smartphone",
+            "desktop-phone": "Set: Monitor und Smartphone",
+            "laptop-phone": "Set: Laptop und Smartphone",
+            "tablet-phone": "Set: Tablet und Smartphone"
+          }
+        },
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "cascade": "Gestaffelt",
+            "row": "Reihe",
+            "focus": "Bühne"
+          }
+        },
+        "finish": {
+          "label": "Gerätefarbe",
+          "options": {
+            "silver": "Silber",
+            "graphite": "Graphit",
+            "white": "Weiss"
+          }
+        },
+        "camera": {
+          "label": "Kamera",
+          "options": {
+            "island": "Insel",
+            "notch": "Kerbe",
+            "none": "Ohne"
+          }
+        },
         "screenshot": {
           "label": "Dein Screenshot",
-          "description": "PNG, JPG, WebP oder SVG bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V (Mac: Cmd+V) ein. Es bleibt in deinem Browser, Teilen-Links lassen es weg."
+          "description": "PNG, JPG, WebP oder SVG bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V (Mac: Cmd+V) ein. Bei Geräten reicht ein Screenshot für alle. Es bleibt in deinem Browser, Teilen-Links lassen es weg."
+        },
+        "screenshotTablet": {
+          "label": "Screenshot fürs Tablet",
+          "description": "Optional. Ohne eigenes Bild zeigt das Tablet deinen Screenshot, oben ausgerichtet auf den Bildschirm zugeschnitten."
+        },
+        "screenshotPhone": {
+          "label": "Screenshot fürs Smartphone",
+          "description": "Optional. Ohne eigenes Bild zeigt das Smartphone den Tablet-Screenshot oder deinen Haupt-Screenshot, oben ausgerichtet zugeschnitten."
         },
         "padding": {
           "label": "Abstand"
@@ -2807,7 +2857,11 @@
         },
         "url": {
           "label": "Adresse oder Titel",
-          "description": "Steht in der Leiste. Bleibt auf deinem Gerät, Teilen-Links lassen sie weg."
+          "description": "Steht in der Leiste, nur als Text. Bleibt auf deinem Gerät, Teilen-Links lassen sie weg."
+        },
+        "live": {
+          "label": "Live-Ansicht",
+          "description": "Lädt die Adresse direkt in den Geräten (nur https). Mit «Ansicht übernehmen» unter der Vorschau wird daraus dein Bild. Die Website sieht dabei deine IP-Adresse, Musterli nicht."
         },
         "radius": {
           "label": "Eckenradius"
@@ -2859,6 +2913,10 @@
           "label": "Hintergrundfarbe"
         }
       },
+      "advisories": {
+        "liveUrl": "Für die Live-Ansicht braucht es eine https-Adresse, zum Beispiel example.com.",
+        "url": "Das sieht nicht wie eine Web-Adresse aus. Sie steht trotzdem so in der Leiste, wie du sie schreibst."
+      },
       "presets": {
         "aurora": "Polarlicht",
         "clean": "Schlicht",
@@ -2866,17 +2924,25 @@
         "ocean": "Ozean",
         "paper": "Papier",
         "waves": "Wellen",
-        "night-sky": "Nachthimmel"
+        "night-sky": "Nachthimmel",
+        "mockup-responsive": "Responsive",
+        "mockup-laptop": "Laptop",
+        "mockup-phone": "Smartphone",
+        "mockup-desktop": "Monitor",
+        "mockup-row": "Geräte-Reihe",
+        "mockup-focus": "Bühne"
       },
       "sizes": {
         "wide": "16:9 (X, Präsentation)",
         "product-hunt": "Product Hunt",
         "linkedin": "LinkedIn",
-        "docs": "16:10 (Dokumentation)"
+        "docs": "16:10 (Dokumentation)",
+        "dribbble": "Dribbble (4:3)",
+        "square": "Quadrat"
       },
       "seo": {
-        "whatIs": "Ein Screenshot-Verschönerer setzt ein nacktes Bildschirmfoto in Szene. Das Bild liegt auf einem Hintergrund und bekommt Abstand, runde Ecken, einen weichen Schatten und auf Wunsch eine Fenster- oder Browserleiste mit Adresse. So wirken Screenshots in Dokumentationen, Blogbeiträgen, auf Social Media und auf Product Hunt sauber und einheitlich.",
-        "howTo": "Zieh deinen Screenshot in den Editor, wähl eine Datei oder füg ihn mit Ctrl+V ein. Wähl dann Rahmen, Abstand, Ecken, Schatten und einen Hintergrund: eine Farbe, einen Verlauf oder einen Musterli-Hintergrund wie Mesh, Blurry oder Wellen. Die Leertaste würfelt einen neuen Hintergrund, dein Bild bleibt. Exportiere als PNG, JPG, WebP oder SVG oder kopier das Ergebnis direkt in die Zwischenablage.",
+        "whatIs": "Ein Screenshot-Verschönerer setzt ein nacktes Bildschirmfoto in Szene. Das Bild liegt auf einem Hintergrund und bekommt Abstand, runde Ecken, einen weichen Schatten und auf Wunsch eine Fenster- oder Browserleiste mit Adresse. So wirken Screenshots in Dokumentationen, Blogbeiträgen, auf Social Media und auf Product Hunt sauber und einheitlich. Als Website-Mockup zeigt es deine Seite auf einem Laptop, Monitor, Tablet oder Smartphone, als responsives Mockup auch auf mehreren Geräten zugleich.",
+        "howTo": "Zieh deinen Screenshot in den Editor, wähl eine Datei oder füg ihn mit Ctrl+V ein. Wähl dann Rahmen, Abstand, Ecken, Schatten und einen Hintergrund: eine Farbe, einen Verlauf oder einen Musterli-Hintergrund wie Mesh, Blurry oder Wellen. Die Leertaste würfelt einen neuen Hintergrund, dein Bild bleibt. Exportiere als PNG, JPG, WebP oder SVG oder kopier das Ergebnis direkt in die Zwischenablage. Für ein Mockup wählst du unter Gerät einen Laptop, Monitor, Tablet, ein Smartphone oder ein Responsive-Set und tippst die Adresse für die Browserleiste ein.",
         "faq": {
           "q1": "Wird mein Screenshot hochgeladen?",
           "a1": "Nein. Das Bild wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten weder das Bild noch die Adresse in der Leiste. Speicherst du das Design, bleibt alles lokal in deinem Browser.",
@@ -2885,7 +2951,9 @@
           "q3": "Welche Grösse passt für Product Hunt, X oder LinkedIn?",
           "a3": "Im Grössenmenü findest du fertige Formate: 1270 × 760 für Product Hunt, 1600 × 900 für X und Präsentationen, 1200 × 627 für LinkedIn und 1920 × 1200 für Dokumentationen. Der Screenshot passt sich automatisch an.",
           "q4": "Was steckt im SVG-Export?",
-          "a4": "Hintergrund, Schatten und Fensterleiste sind Vektoren, dein Screenshot ist als Bild (data-URI) eingebettet. Die Datei braucht nichts weiter, ist aber etwa so gross wie dein Bild."
+          "a4": "Hintergrund, Schatten und Fensterleiste sind Vektoren, dein Screenshot ist als Bild (data-URI) eingebettet. Die Datei braucht nichts weiter, ist aber etwa so gross wie dein Bild.",
+          "q5": "Wie mache ich ein responsives Mockup meiner Website?",
+          "a5": "Wähl unter Gerät «Responsive-Set». Ein Screenshot reicht: Jedes Gerät zeigt ihn, oben ausgerichtet auf seinen Bildschirm zugeschnitten. Für Tablet und Smartphone kannst du eigene Screenshots hochladen. Mit der Live-Ansicht lädt dein Browser die Website direkt in die Geräte, «Ansicht übernehmen» macht daraus Bilder. Manche Websites erlauben kein Einbetten, dann lädst du einen Screenshot hoch."
         }
       }
     }
@@ -3325,6 +3393,13 @@
           "paragraphs": [
             "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst.",
             "Bilder, die du in einem Tool verwendest (zum Beispiel ein eigenes Motiv in Seamless Patterns) oder ins Brand Kit legst, werden ebenfalls nie hochgeladen. Speicherst du das Design oder das Brand Kit, bleiben sie in deinem Browser (siehe oben). Sie verlassen dein Gerät nur, wenn du selbst eine Datei exportierst, und sind nie Teil eines Teilen-Links."
+          ]
+        },
+        "liveView": {
+          "heading": "Live-Ansicht im Screenshot-Verschönerer",
+          "paragraphs": [
+            "Schaltest du im Screenshot-Verschönerer die Live-Ansicht ein, lädt dein Browser die Website, deren Adresse du eingegeben hast, direkt von deren Server in einem abgeschotteten Rahmen. Diese Website erhält dabei wie bei jedem Aufruf technisch notwendige Daten wie deine IP-Adresse, Datum und Uhrzeit und deinen User Agent, und für sie gilt ihre eigene Datenschutzerklärung. Über Musterli läuft dabei nichts, und wir erfahren die Adresse nicht.",
+            "Mit «Ansicht übernehmen» nimmt dein Browser nach deiner Freigabe ein Bild dieses Tabs auf. Die Aufnahme wird sofort beendet und nur in deinem Browser verarbeitet. Das Bild wird wie ein hochgeladener Screenshot behandelt: Es bleibt auf deinem Gerät und ist nie Teil eines Teilen-Links."
           ]
         },
         "share": {
