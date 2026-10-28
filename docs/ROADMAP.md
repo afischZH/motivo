@@ -111,12 +111,12 @@ Die restlichen fünf Ideen aus der Ideenliste, rein im Browser, ohne neue Librar
 
 ## M5: WebGL, Bildeffekte (Entscheid Andreas 2026-10-28: ohne Video)
 
-- [ ] WebGL2-Wrapper, Shader-Hot-Reload im Dev-Modus
-- [ ] **Shader Gradient Editor** inkl. Presets (Liquid, Silk, Streaked, Grainy), Dithering, Grain, Vignette
-- [ ] Hochauflösender Export (4K/8K) via Kachel-Rendering
-- [ ] **3D Perspective Grid** (inkl. Animation als GIF)
-- [ ] Bildeffekt-Pipeline im Worker: **Halftone**, **CMYK Halftone**, **Dither**
-- [ ] Changelog, QA in Chrome, Code- und Security-Review
+- [x] WebGL2-Wrapper (ohne Hot Reload, GLSL als TS-Strings)
+- [x] **Shader Gradient Editor** inkl. Presets (Liquid, Silk, Streaked, Grainy), Dithering, Grain, Vignette
+- [x] Hochauflösender Export (4K/8K) via Kachel-Rendering
+- [x] **3D Perspective Grid** (inkl. Animation als GIF)
+- [x] Bildeffekt-Pipeline im Worker: **Halftone**, **CMYK Halftone**, **Dither**
+- [x] Changelog, QA in Chrome, Code- und Security-Review
 
 **DoD**: Shader-Vorschau == PNG-Export in Chrome (auch 4K/8K über Kacheln); Effekt-Vorschau bleibt bei 12-MP-Bildern flüssig (UI-Thread nie > 50 ms blockiert); ohne WebGL2 klare Meldung statt leerer Fläche.
 
