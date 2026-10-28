@@ -16,7 +16,7 @@
 |---|---|---|---|---|---|
 | M5-AP01 | WebGL2-Wrapper in `packages/shaders`, **Shader Gradient** (C4), Kachel-Export 4K/8K | engine-dev + ui-dev | in Arbeit | – | Branch `m5/ap01-shader-gradient` |
 | M5-AP02 | **Halftone** (E2), **CMYK Halftone** (E3), **Dither** (E4) auf der Bildeffekt-Grundlage | engine-dev + ui-dev | in Arbeit | – | Branch `m5/ap02-halftone-dither` |
-| M5-AP03 | **3D Perspective Grid** (D4) mit Animation (GIF) | engine-dev + ui-dev | in Arbeit | – | Branch `m5/ap03-perspective-grid` |
+| M5-AP03 | **3D Perspective Grid** (D4) mit Animation (GIF) | engine-dev + ui-dev | erledigt | – | Branch `m5/ap03-perspective-grid`, gemergt. Tool `perspective-grid` (Kategorie Hintergründe, Slugs `perspektivgitter-generator`/`perspective-grid-generator`, 8 Presets): eigene 3D-Projektion ohne Library als SVG, Linien zwischen Nahebene und kurz vor dem Horizont geschnitten (Zufallstest ohne NaN), ein Verlauf blendet alle Linien zum Horizont aus, `taper`, optionale Decke, Sonne mit Streifen, Sterne, Berge, Dunst, Himmel; Glow wie `meshBlurPlan` begrenzt. GIF-Quelle «Bewegung» nahtlos, Bild 0 = Vorschau; Vorschau selbst bewegt sich nicht. Entscheide: Kamerahöhe und Linienabstand ein Regler (nur das Verhältnis zählt); «Neigung» = schräger Horizont; Raster endet vor dem Horizont gegen Moiré. Schlimmster Fall 5 bis 9 ms, SVG höchstens ca. 130 KB. Tests: Engine 1250, Registry 2698; E2E Chromium 8 plus 2 Vorschau == PNG. Helfer ARCHITECTURE 4.17 |
 | M5-AP04 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | AP01 bis AP03 | |
 
 ### M4c: Kleine Welle (freigegeben 2026-10-28)
