@@ -51,14 +51,19 @@ jobs:
         run: pnpm build
 
   e2e:
-    name: E2E (Playwright)
+    name: E2E (Playwright, ${{ matrix.browser }})
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        # One job per browser, in parallel (a single job with all three no
+        # longer fits the timeout). Draft PRs and main: Chromium only.
+        browser: ${{ fromJSON(github.event_name == 'pull_request' && !github.event.pull_request.draft && '["chromium", "firefox", "webkit"]' || '["chromium"]') }}
     env:
       # Placeholder donation link, so e2e/support.spec.ts checks the button
       # (without it, the spec checks the "link follows soon" state instead).
       NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
-      ALL_BROWSERS: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
     steps:
       - uses: actions/checkout@v5
 
@@ -71,24 +76,21 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: |
-          if [ "$ALL_BROWSERS" = "true" ]; then browsers="chromium firefox webkit"; else browsers="chromium"; fi
-          pnpm --filter @musterli/web exec playwright install --with-deps $browsers
+      - name: Install Playwright browser
+        run: pnpm --filter @musterli/web exec playwright install --with-deps ${{ matrix.browser }}
 
       # The Playwright web server runs `next start` in CI, so the app must be built first.
       - name: Build
         run: pnpm build
 
       - name: Run E2E tests
-        run: |
-          if [ "$ALL_BROWSERS" = "true" ]; then pnpm test:e2e; else pnpm test:e2e:chromium; fi
+        run: pnpm --filter @musterli/web exec playwright test --project=${{ matrix.browser }}
 
       - name: Upload Playwright report
         if: ${{ failure() }}
         uses: actions/upload-artifact@v5
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: |
             apps/web/playwright-report/
             apps/web/test-results/
