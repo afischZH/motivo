@@ -103,6 +103,27 @@ function scene(X: number, Y: number, tops: readonly Float64Array[], x: number, o
 }
 
 /** The scene without texture at `width` × `height` (RGB floats, 3 per pixel). */
+/**
+ * The scene at the detail size, memoised for the last few sizes: it is the
+ * expensive part (noise per pixel) and callers ask for the same few sizes
+ * again and again (preview, presets, motifs). Read-only for callers.
+ */
+const sceneCache = new Map<string, Float32Array>();
+const SCENE_CACHE_SIZE = 4;
+
+function cachedScene(width: number, height: number): Float32Array {
+  const key = `${width}x${height}`;
+  const hit = sceneCache.get(key);
+  if (hit) return hit;
+  const scene = sceneRgb(width, height);
+  if (sceneCache.size >= SCENE_CACHE_SIZE) {
+    const oldest = sceneCache.keys().next().value;
+    if (oldest !== undefined) sceneCache.delete(oldest);
+  }
+  sceneCache.set(key, scene);
+  return scene;
+}
+
 function sceneRgb(width: number, height: number): Float32Array {
   const w = width;
   const h = height;
@@ -158,7 +179,7 @@ export function demoPhoto(width: number, height: number): PixelBuffer {
   const k = Math.min(1, DEMO_DETAIL_EDGE / Math.max(w, h));
   const lw = Math.max(1, Math.round(w * k));
   const lh = Math.max(1, Math.round(h * k));
-  const src = sceneRgb(lw, lh);
+  const src = cachedScene(lw, lh);
   const d = buf.data;
   const fx = lw / w;
   const fy = lh / h;
