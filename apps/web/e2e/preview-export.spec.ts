@@ -374,3 +374,125 @@ test.describe("preview equals PNG export", () => {
     });
   }
 });
+
+/**
+ * Large exports of blurred motifs (M3-AP07 follow-up): browsers clamp the
+ * standard deviation of `feGaussianBlur` in output pixels (Chromium about
+ * 520 px), so a 4× export of a strong blur used to come out sharper than the
+ * preview. The mesh gradient now renders large blurs as an upscaled raster
+ * field. The 8K export, scaled down to the preview size, must match the
+ * preview (Meadow has no grain, which scaling down would average away).
+ */
+test.describe("large export equals the preview", () => {
+  const DESIGN = { width: 1920, height: 1080 };
+  /** Mean channel difference allowed (the clamped filter gave about 3.2 in Chromium). */
+  const MAX_MEAN = 1.5;
+  /** Largest single channel difference allowed (smooth content, no edges). */
+  const MAX_CHANNEL = 8;
+
+  test("mesh-gradient (Meadow) at 8K", async ({ page }, testInfo) => {
+    test.slow();
+    await page.goto(`/en/tools/${toolSlug("mesh-gradient", "en")}`);
+    await expect(page.getByRole("button", { name: "Share" })).toBeEnabled();
+    const preset = page.getByRole("button", { name: "Meadow", exact: true });
+    await preset.click();
+    await expect(preset).toHaveAttribute("aria-pressed", "true");
+
+    const label = (w: number | string, h: number | string) =>
+      page.getByRole("img", { name: new RegExp(`${w} × ${h} px`) });
+    await expect(async () => {
+      const width = page.getByLabel("Width", { exact: true });
+      await width.fill(String(DESIGN.width));
+      await width.press("Enter");
+      await expect(label(DESIGN.width, "\\d+")).toBeVisible({ timeout: 2000 });
+    }).toPass({ timeout: 15_000 });
+    await expect(async () => {
+      const height = page.getByLabel("Height", { exact: true });
+      await height.fill(String(DESIGN.height));
+      await height.press("Enter");
+      await expect(label(DESIGN.width, DESIGN.height)).toBeVisible({ timeout: 2000 });
+    }).toPass({ timeout: 15_000 });
+
+    const shown = motif(page, false);
+    await expect(shown).toBeVisible();
+    await expect
+      .poll(() => shown.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth))
+      .toBeGreaterThan(0);
+    const box = await shown.boundingBox();
+    if (!box) throw new Error("preview has no bounding box");
+    // Whole pixels strictly inside the (possibly fractional) preview box.
+    const clip = {
+      x: Math.ceil(box.x),
+      y: Math.ceil(box.y),
+      width: Math.floor(box.x + box.width) - Math.ceil(box.x),
+      height: Math.floor(box.y + box.height) - Math.ceil(box.y),
+    };
+    const preview = await page.screenshot({ animations: "disabled", scale: "css", clip });
+
+    const dialog = page.getByRole("dialog", { name: "Export" });
+    await expect(async () => {
+      await page.getByRole("button", { name: "Export", exact: true }).click();
+      await expect(dialog).toBeVisible({ timeout: 1000 });
+    }).toPass();
+    await choose(dialog, "PNG");
+    await choose(dialog, "4× (7680 × 4320)");
+    const [download] = await Promise.all([
+      page.waitForEvent("download", { timeout: 60_000 }),
+      dialog.getByRole("button", { name: "Download" }).click(),
+    ]);
+    const exported = await readFile(await download.path());
+
+    const result = await page.evaluate(
+      async ({ p64, e64, box, clip }) => {
+        const bitmap = async (b64: string) =>
+          createImageBitmap(
+            new Blob([Uint8Array.from(atob(b64), (c) => c.charCodeAt(0))], { type: "image/png" }),
+          );
+        const [p, e] = await Promise.all([bitmap(p64), bitmap(e64)]);
+        const pixels = (source: ImageBitmap, sx: number, sy: number, sw: number, sh: number) => {
+          const canvas = document.createElement("canvas");
+          canvas.width = clip.width;
+          canvas.height = clip.height;
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          if (!ctx) throw new Error("no 2d context");
+          ctx.imageSmoothingQuality = "high";
+          ctx.drawImage(source, sx, sy, sw, sh, 0, 0, clip.width, clip.height);
+          return ctx.getImageData(0, 0, clip.width, clip.height).data;
+        };
+        // The part of the export that the clipped preview shows.
+        const k = e.width / box.width;
+        const a = pixels(
+          e,
+          (clip.x - box.x) * k,
+          (clip.y - box.y) * k,
+          clip.width * k,
+          clip.height * k,
+        );
+        const b = pixels(p, 0, 0, p.width, p.height);
+        let sum = 0;
+        let max = 0;
+        for (let i = 0; i < a.length; i++) {
+          if (i % 4 === 3) continue;
+          const d = Math.abs((a[i] ?? 0) - (b[i] ?? 0));
+          sum += d;
+          if (d > max) max = d;
+        }
+        return { width: e.width, height: e.height, mean: sum / ((a.length / 4) * 3), max };
+      },
+      {
+        p64: preview.toString("base64"),
+        e64: exported.toString("base64"),
+        box: { x: box.x, y: box.y, width: box.width, height: box.height },
+        clip,
+      },
+    );
+    await testInfo.attach("preview.png", { body: preview, contentType: "image/png" });
+    testInfo.annotations.push({
+      type: "pixel-diff",
+      description: `mean ${result.mean.toFixed(3)}, max ${result.max}`,
+    });
+    expect({ width: result.width, height: result.height }).toEqual({ width: 7680, height: 4320 });
+    expect(result.mean, "mean channel difference").toBeLessThanOrEqual(MAX_MEAN);
+    expect(result.max, "largest channel difference").toBeLessThanOrEqual(MAX_CHANNEL);
+  });
+});
