@@ -2957,6 +2957,200 @@
           "a5": "Wähl unter Gerät «Responsive-Set». Ein Screenshot reicht: Jedes Gerät zeigt ihn, oben ausgerichtet auf seinen Bildschirm zugeschnitten. Für Tablet und Smartphone kannst du eigene Screenshots hochladen. Mit der Live-Ansicht lädt dein Browser die Website direkt in die Geräte, «Ansicht übernehmen» macht daraus Bilder. Manche Websites erlauben kein Einbetten, dann lädst du einen Screenshot hoch."
         }
       }
+    },
+    "favicon-generator": {
+      "name": "Favicon-Generator",
+      "description": "Favicons und App-Icons aus Buchstabe, Form oder Logo. Mit einem Klick als Paket mit allen Grössen, Manifest und HTML-Code.",
+      "groups": {
+        "view": "Ansicht",
+        "content": "Inhalt",
+        "background": "Hintergrund",
+        "form": "Form",
+        "dark": "Dunkelmodus",
+        "app": "App und Manifest"
+      },
+      "params": {
+        "variant": {
+          "label": "Variante",
+          "options": {
+            "standard": "Standard",
+            "dark": "Dunkel",
+            "apple": "Apple Touch",
+            "maskable": "Maskable"
+          }
+        },
+        "content": {
+          "label": "Inhalt",
+          "options": {
+            "text": "Text",
+            "shape": "Form",
+            "image": "Logo"
+          }
+        },
+        "text": {
+          "label": "Text",
+          "description": "Ein bis vier Zeichen, zum Beispiel eine Initiale."
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "logoTint": {
+          "label": "In Vordergrundfarbe einfärben"
+        },
+        "shape": {
+          "label": "Form"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "textSize": {
+          "label": "Textgrösse"
+        },
+        "foreground": {
+          "label": "Vordergrund"
+        },
+        "backgroundType": {
+          "label": "Hintergrund",
+          "options": {
+            "solid": "Einfarbig",
+            "gradient": "Verlauf",
+            "pattern": "Muster",
+            "transparent": "Transparent"
+          }
+        },
+        "backgroundColor": {
+          "label": "Grundfarbe"
+        },
+        "gradientColors": {
+          "label": "Verlaufsfarben"
+        },
+        "gradientType": {
+          "label": "Verlaufsart",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial"
+          }
+        },
+        "gradientAngle": {
+          "label": "Winkel"
+        },
+        "pattern": {
+          "label": "Muster",
+          "options": {
+            "dots": "Punkte",
+            "grid": "Raster",
+            "stripes": "Streifen",
+            "diagonal": "Diagonal",
+            "checks": "Karo"
+          }
+        },
+        "patternColor": {
+          "label": "Musterfarbe"
+        },
+        "patternDensity": {
+          "label": "Musterdichte"
+        },
+        "corner": {
+          "label": "Kachelform",
+          "options": {
+            "square": "Quadrat",
+            "rounded": "Abgerundet",
+            "squircle": "Squircle",
+            "circle": "Kreis"
+          }
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "padding": {
+          "label": "Innenabstand"
+        },
+        "darkMode": {
+          "label": "Eigene Farben im Dunkelmodus",
+          "description": "favicon.svg wechselt dann automatisch, wenn der Browser dunkel eingestellt ist."
+        },
+        "darkForeground": {
+          "label": "Vordergrund dunkel"
+        },
+        "darkBackground": {
+          "label": "Hintergrund dunkel"
+        },
+        "appName": {
+          "label": "App-Name"
+        },
+        "shortName": {
+          "label": "Kurzname",
+          "description": "Steht unter dem Icon auf dem Startbildschirm, bis 12 Zeichen."
+        },
+        "themeColor": {
+          "label": "Theme-Farbe"
+        },
+        "appBackground": {
+          "label": "App-Hintergrund",
+          "description": "Für den Startbildschirm und als Fläche hinter transparenten Apple- und Maskable-Icons."
+        }
+      },
+      "advisories": {
+        "darkOff": "Die dunkle Variante braucht eigene Farben. Schalte unter Dunkelmodus die eigenen Farben ein.",
+        "noLogo": "Lade ein Logo hoch oder wähle eines aus deinem Brand Kit. Bis dahin zeigt das Icon den Text."
+      },
+      "presets": {
+        "monogram": "Monogramm",
+        "gradient": "Verlauf",
+        "badge": "Abzeichen",
+        "pattern": "Muster",
+        "minimal": "Minimal",
+        "code": "Code",
+        "leaf": "Blatt"
+      },
+      "sizes": {
+        "icon-512": "Icon",
+        "icon-1024": "Icon gross (App Store)",
+        "icon-192": "Android",
+        "apple-touch": "Apple Touch Icon"
+      },
+      "bundles": {
+        "iconPack": {
+          "label": "Icon-Paket (ZIP)",
+          "description": "favicon.ico (16, 32, 48 px), favicon.svg, Apple Touch Icon, App-Icons in 192 und 512 px, ein Maskable-Icon, site.webmanifest und der HTML-Code für den head.",
+          "snippet": "HTML für den head"
+        }
+      },
+      "seo": {
+        "whatIs": "Ein Favicon ist das kleine Bild im Browser-Tab, in Lesezeichen und im Verlauf. Smartphones zeigen dazu ein App-Icon, wenn jemand deine Website auf dem Startbildschirm ablegt. Moderne Websites brauchen dafür mehrere Dateien: favicon.ico für ältere Browser, favicon.svg in jeder Grösse und für den Dunkelmodus, ein Apple Touch Icon, Icons für Android und ein Manifest. Der Favicon-Generator erstellt alles aus einem einzigen Entwurf.",
+        "howTo": "Wähle als Inhalt einen Buchstaben, eine Form aus der Bibliothek oder dein eigenes Logo. Lege Hintergrund (Farbe, Verlauf, Muster oder transparent), Kachelform und Innenabstand fest. Mit der Leertaste würfelst du neue Farben. Schalte bei Bedarf eigene Farben für den Dunkelmodus ein und trage unter App und Manifest Name und Farben ein. Exportiere dann das Icon-Paket als ZIP, kopiere die Dateien in den Stammordner deiner Website und füge den HTML-Code in den head ein.",
+        "faq": {
+          "q1": {
+            "question": "Welche Dateien sind im Icon-Paket?",
+            "answer": "favicon.ico mit 16, 32 und 48 px, favicon.svg, apple-touch-icon.png (180 px), icon-192.png, icon-512.png, icon-512-maskable.png für Android, site.webmanifest und head-snippet.html mit den passenden Tags. Das sind die Dateien, die aktuelle Browser und Smartphones tatsächlich nutzen."
+          },
+          "q2": {
+            "question": "Was ist ein Maskable-Icon?",
+            "answer": "Android schneidet App-Icons in Kreise, Tropfen oder abgerundete Quadrate. Ein Maskable-Icon füllt deshalb die ganze Fläche, und der Inhalt liegt in der sicheren Zone, einem Kreis mit 80 % Durchmesser. Die Variante Maskable zeigt dir, wie es aussieht."
+          },
+          "q3": {
+            "question": "Wie funktioniert das Favicon im Dunkelmodus?",
+            "answer": "Mit eigenen Farben im Dunkelmodus enthält favicon.svg beide Varianten. Der Browser wählt sie selbst über prefers-color-scheme. Dazu bekommt das HTML eine zweite theme-color für dunkle Oberflächen."
+          },
+          "q4": {
+            "question": "Wird mein Logo hochgeladen?",
+            "answer": "Nein. Alles passiert in deinem Browser, auch das Packen des ZIP. Dein Logo landet nicht im Teilen-Link; SVG-Dateien werden vorher von Scripts und externen Verweisen befreit."
+          },
+          "q5": {
+            "question": "Warum sieht der Buchstabe auf einem anderen Gerät leicht anders aus?",
+            "answer": "Text nutzt die Systemschriften des Geräts, damit keine Schriftdateien nötig sind. Die PNG-Dateien entstehen mit den Schriften deines Computers. Für ein exakt gleiches Ergebnis überall nimm eine Form oder dein Logo als SVG."
+          }
+        }
+      }
     }
   },
   "Converters": {
@@ -3211,6 +3405,10 @@
     "css-effects": {
       "name": "CSS-Effekte und Layouts",
       "description": "Glas, Verlaufsrahmen, Leuchten und Bento-Layouts als fertiger Code zum Kopieren."
+    },
+    "icons": {
+      "name": "Icons",
+      "description": "Favicons und App-Icons in allen Grössen, die Browser und Smartphones brauchen."
     }
   },
   "PatternLibrary": {

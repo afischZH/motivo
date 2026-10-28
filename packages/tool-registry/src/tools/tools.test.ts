@@ -140,7 +140,9 @@ describe("built-in tool registration", () => {
       "low-poly",
       "terrazzo",
       "screenshot-beautifier",
+      "favicon-generator",
     ]);
+    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual(["screenshot-beautifier"]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",

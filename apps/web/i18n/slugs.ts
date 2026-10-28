@@ -59,6 +59,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "low-poly": { de: "low-poly-und-voronoi-generator", en: "low-poly-voronoi-generator" },
   terrazzo: { de: "terrazzo-muster-generator", en: "terrazzo-pattern-generator" },
   "screenshot-beautifier": { de: "screenshot-verschoenerer", en: "screenshot-beautifier" },
+  "favicon-generator": { de: "favicon-generator", en: "favicon-generator" },
 };
 
 /**
@@ -217,6 +218,7 @@ export const CATEGORY_SLUGS: Readonly<Record<ToolCategory, LocalizedSlugs>> = {
   social: { de: "social-media", en: "social-media" },
   composer: { de: "composer", en: "composer" },
   "css-effects": { de: "css-effekte", en: "css-effects" },
+  icons: { de: "icons", en: "icons" },
 };
 
 /** Localized segment between `tools` and a category slug. */

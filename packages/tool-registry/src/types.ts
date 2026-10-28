@@ -25,6 +25,7 @@ export const TOOL_CATEGORIES = [
   "social",
   "composer",
   "css-effects",
+  "icons",
 ] as const;
 
 export type ToolCategory = (typeof TOOL_CATEGORIES)[number];
@@ -406,6 +407,63 @@ export interface ExtraExport<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Bundles (multi-file exports)
+// ---------------------------------------------------------------------------
+
+/**
+ * One file of a bundle. Image files are rendered by the exporter through
+ * the tool's own `render` (one render path) at their pixel size, with the
+ * design's seed and `params` (default: the current params), then encoded.
+ */
+export type BundleFile<P> =
+  /** UTF-8 text (manifest, HTML snippet, an SVG the tool built with its engine). */
+  | { readonly kind: "text"; readonly path: string; readonly text: string }
+  /** The design rendered at `width` × `height` as PNG. */
+  | {
+      readonly kind: "png";
+      readonly path: string;
+      readonly width: number;
+      readonly height: number;
+      readonly params?: P;
+    }
+  /** An `.ico` with one PNG image per square size (1 to 256 px). */
+  | {
+      readonly kind: "ico";
+      readonly path: string;
+      readonly sizes: readonly number[];
+      readonly params?: P;
+    };
+
+/** Text shown in the export dialog next to a bundle, ready to copy (e.g. HTML head tags). */
+export interface BundleSnippet<P> {
+  /** i18n key of the code label. */
+  labelKey: string;
+  language: CodeLanguage;
+  /** Pure and deterministic. */
+  render(params: P, ctx: RenderContext): string;
+}
+
+/**
+ * A multi-file export, downloaded as one ZIP (e.g. the icon pack of the
+ * favicon generator). Offered in the export dialog's "Bundle" group.
+ */
+export interface BundleExport<P> {
+  /** Stable kebab-case id, unique within the tool; also the file name suffix. */
+  id: string;
+  /** i18n key of the label in the export dialog. */
+  labelKey: string;
+  /** i18n key of a one-line description shown when the bundle is chosen. */
+  descriptionKey?: string;
+  /**
+   * The files in archive order. Pure and cheap (no rendering here); paths
+   * are relative, `/` separated and unique.
+   */
+  files(params: P, ctx: RenderContext): readonly BundleFile<P>[];
+  /** Optional copyable text shown in the dialog. */
+  snippet?: BundleSnippet<P>;
+}
+
+// ---------------------------------------------------------------------------
 // Editable preview regions
 // ---------------------------------------------------------------------------
 
@@ -634,6 +692,11 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   exports: readonly ExportFormat[];
   /** Tool-specific text outputs, offered next to `exports`. */
   extraExports?: readonly ExtraExport<Params<S>>[];
+  /**
+   * Multi-file exports downloaded as one ZIP (icon pack); see
+   * `BundleExport`. Needs SVG output (svg, or css with a preview SVG).
+   */
+  bundles?: readonly BundleExport<Params<S>>[];
   /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
   /** Derives params from a user image; see `ImageInput`. */

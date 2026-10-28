@@ -59,6 +59,15 @@ function referencedKeys(tool: AnyToolDefinition): string[] {
   const keys = [`tools.${tool.id}.name`, `tools.${tool.id}.description`];
   keys.push(...paramKeys(tool.id, tool.schema.shape, tool.controls));
   for (const preset of tool.presets) keys.push(preset.nameKey);
+  for (const size of tool.sizePresets ?? []) keys.push(size.nameKey);
+  for (const hint of Object.values(tool.controls?.params ?? {})) {
+    if (hint?.descriptionKey !== undefined) keys.push(hint.descriptionKey);
+  }
+  for (const bundle of tool.bundles ?? []) {
+    keys.push(bundle.labelKey);
+    if (bundle.descriptionKey !== undefined) keys.push(bundle.descriptionKey);
+    if (bundle.snippet) keys.push(bundle.snippet.labelKey);
+  }
   return keys;
 }
 

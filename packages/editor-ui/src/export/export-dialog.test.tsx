@@ -5,7 +5,7 @@ import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
 import { EditorStoreProvider } from "../store/react";
 import { createFixtureRegistry } from "../test/fixture-tool";
 import { fakeServices } from "../test/fake-services";
-import { renderWithIntl } from "../test/render";
+import { fixtureMessages, renderWithIntl } from "../test/render";
 import { EXPORT_FORMAT_STORAGE_KEY, ExportDialog, type ExportServices } from "./export-dialog";
 
 type RasterArgs = Parameters<ExportServices["exportRaster"]>;
@@ -535,5 +535,100 @@ describe("ExportDialog afterExport", () => {
     fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
     await waitFor(() => expect(alert().textContent).toContain("Zwischenablage"));
     expect(screen.queryByTestId("export-after")).toBeNull();
+  });
+});
+
+describe("ExportDialog bundle", () => {
+  const bundleMessages = {
+    ...fixtureMessages,
+    tools: {
+      ...fixtureMessages.tools,
+      "favicon-generator": {
+        sizes: {
+          "icon-512": "Icon 512",
+          "icon-1024": "Icon 1024",
+          "icon-192": "Android 192",
+          "apple-touch": "Apple Touch 180",
+        },
+        bundles: {
+          iconPack: {
+            label: "Icon-Paket (ZIP)",
+            description: "Alle Grössen für Browser und Apps.",
+            snippet: "HTML für den head",
+          },
+        },
+      },
+    },
+  };
+
+  function setupFavicon(services: ExportServices) {
+    const store = createEditorStore({
+      toolId: "favicon-generator",
+      size: { width: 512, height: 512 },
+    });
+    renderWithIntl(
+      <EditorStoreProvider store={store}>
+        <ExportDialog open onClose={() => undefined} services={services} />
+      </EditorStoreProvider>,
+      bundleMessages,
+    );
+    return store;
+  }
+
+  it("lists the files, shows the snippet and downloads the ZIP", async () => {
+    const services = fakeServices();
+    setupFavicon(services);
+    fireEvent.click(formatRadio("Icon-Paket (ZIP)"));
+    const files = within(screen.getByTestId("export-bundle-files"))
+      .getAllByRole("listitem")
+      .map((li) => li.textContent);
+    expect(files).toEqual([
+      "favicon.ico",
+      "favicon.svg",
+      "apple-touch-icon.png",
+      "icon-192.png",
+      "icon-512.png",
+      "icon-512-maskable.png",
+      "site.webmanifest",
+      "head-snippet.html",
+    ]);
+    expect(screen.getByText("Inhalt des ZIP (8 Dateien)")).toBeTruthy();
+    expect(screen.getByTestId("export-code").textContent).toContain(
+      '<link rel="manifest" href="/site.webmanifest">',
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(status().textContent).toBe("Kopiert! Ab ins Projekt damit."));
+    expect(services.copyText.mock.calls[0]?.[0]).toContain('<link rel="icon" href="/favicon.svg"');
+
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(status().textContent).toBe("Heruntergeladen."));
+    const [tool, id, , ctx] = services.exportBundle.mock.calls[0] as Parameters<
+      ExportServices["exportBundle"]
+    >;
+    expect([tool.id, id, ctx.width, ctx.height]).toEqual([
+      "favicon-generator",
+      "icon-pack",
+      512,
+      512,
+    ]);
+    expect(services.downloadBlob.mock.calls[0]?.[1]).toBe(
+      "musterli-favicon-generator-icon-pack.zip",
+    );
+    expect(window.localStorage.getItem(EXPORT_FORMAT_STORAGE_KEY)).toBe("bundle:icon-pack");
+  });
+
+  it("reports a failed bundle export", async () => {
+    const services = fakeServices({
+      exportBundle: () => Promise.reject(new ExportError("unavailable", "no worker")),
+    });
+    setupFavicon(services);
+    fireEvent.click(formatRadio("Icon-Paket (ZIP)"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Dein Browser unterstützt diesen Export nicht. Versuch es mit einem aktuellen Browser.",
+      ),
+    );
   });
 });

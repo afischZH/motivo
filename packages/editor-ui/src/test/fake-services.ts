@@ -37,6 +37,14 @@ export function fakeServices(overrides: Partial<ExportServices> = {}): FakeServi
           filename: `musterli-${tool.id}.gif`,
         })),
     ),
+    exportBundle: vi.fn<ExportServices["exportBundle"]>(
+      overrides.exportBundle ??
+        (async (tool, id) => ({
+          blob: new Blob(["PK"], { type: "application/zip" }),
+          filename: `musterli-${tool.id}-${id}.zip`,
+          paths: ["favicon.ico"],
+        })),
+    ),
     downloadBlob: vi.fn<ExportServices["downloadBlob"]>(
       overrides.downloadBlob ?? (() => undefined),
     ),

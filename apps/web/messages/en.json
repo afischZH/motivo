@@ -2957,6 +2957,200 @@
           "a5": "Choose “Responsive set” under Device. One screenshot is enough: every device shows it, cropped to its screen from the top. You can add separate screenshots for tablet and phone. With the live view your browser loads the website right into the devices, and “Take this view” turns it into pictures. Some websites do not allow embedding; then upload a screenshot."
         }
       }
+    },
+    "favicon-generator": {
+      "name": "Favicon Generator",
+      "description": "Favicons and app icons from a letter, a shape or your logo. One click gives you a pack with every size, the manifest and the HTML.",
+      "groups": {
+        "view": "View",
+        "content": "Content",
+        "background": "Background",
+        "form": "Shape",
+        "dark": "Dark mode",
+        "app": "App and manifest"
+      },
+      "params": {
+        "variant": {
+          "label": "Variant",
+          "options": {
+            "standard": "Standard",
+            "dark": "Dark",
+            "apple": "Apple touch",
+            "maskable": "Maskable"
+          }
+        },
+        "content": {
+          "label": "Content",
+          "options": {
+            "text": "Text",
+            "shape": "Shape",
+            "image": "Logo"
+          }
+        },
+        "text": {
+          "label": "Text",
+          "description": "One to four characters, for example an initial."
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "logoTint": {
+          "label": "Paint in the foreground color"
+        },
+        "shape": {
+          "label": "Shape"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "textSize": {
+          "label": "Text size"
+        },
+        "foreground": {
+          "label": "Foreground"
+        },
+        "backgroundType": {
+          "label": "Background",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "pattern": "Pattern",
+            "transparent": "Transparent"
+          }
+        },
+        "backgroundColor": {
+          "label": "Base color"
+        },
+        "gradientColors": {
+          "label": "Gradient colors"
+        },
+        "gradientType": {
+          "label": "Gradient type",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial"
+          }
+        },
+        "gradientAngle": {
+          "label": "Angle"
+        },
+        "pattern": {
+          "label": "Pattern",
+          "options": {
+            "dots": "Dots",
+            "grid": "Grid",
+            "stripes": "Stripes",
+            "diagonal": "Diagonal",
+            "checks": "Checks"
+          }
+        },
+        "patternColor": {
+          "label": "Pattern color"
+        },
+        "patternDensity": {
+          "label": "Pattern density"
+        },
+        "corner": {
+          "label": "Tile shape",
+          "options": {
+            "square": "Square",
+            "rounded": "Rounded",
+            "squircle": "Squircle",
+            "circle": "Circle"
+          }
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "darkMode": {
+          "label": "Own colors in dark mode",
+          "description": "favicon.svg then switches by itself when the browser uses a dark theme."
+        },
+        "darkForeground": {
+          "label": "Dark foreground"
+        },
+        "darkBackground": {
+          "label": "Dark background"
+        },
+        "appName": {
+          "label": "App name"
+        },
+        "shortName": {
+          "label": "Short name",
+          "description": "Shown under the icon on the home screen, up to 12 characters."
+        },
+        "themeColor": {
+          "label": "Theme color"
+        },
+        "appBackground": {
+          "label": "App background",
+          "description": "For the splash screen and behind transparent Apple and maskable icons."
+        }
+      },
+      "advisories": {
+        "darkOff": "The dark variant needs its own colors. Turn on own colors under Dark mode.",
+        "noLogo": "Upload a logo or pick one from your Brand Kit. Until then the icon shows the text."
+      },
+      "presets": {
+        "monogram": "Monogram",
+        "gradient": "Gradient",
+        "badge": "Badge",
+        "pattern": "Pattern",
+        "minimal": "Minimal",
+        "code": "Code",
+        "leaf": "Leaf"
+      },
+      "sizes": {
+        "icon-512": "Icon",
+        "icon-1024": "Large icon (App Store)",
+        "icon-192": "Android",
+        "apple-touch": "Apple touch icon"
+      },
+      "bundles": {
+        "iconPack": {
+          "label": "Icon pack (ZIP)",
+          "description": "favicon.ico (16, 32, 48 px), favicon.svg, Apple touch icon, app icons at 192 and 512 px, a maskable icon, site.webmanifest and the HTML for the head.",
+          "snippet": "HTML for the head"
+        }
+      },
+      "seo": {
+        "whatIs": "A favicon is the small picture in the browser tab, in bookmarks and in the history. Phones show an app icon when someone adds your website to the home screen. Modern websites need several files for this: favicon.ico for older browsers, favicon.svg for every size and dark mode, an Apple touch icon, icons for Android and a manifest. The favicon generator creates all of them from one design.",
+        "howTo": "Choose a letter, a shape from the library or your own logo as the content. Set the background (color, gradient, pattern or transparent), the tile shape and the padding. Press Space for new colors. Turn on own colors for dark mode if you like and enter the name and colors under App and manifest. Then export the icon pack as a ZIP, copy the files to the root folder of your website and paste the HTML into the head.",
+        "faq": {
+          "q1": {
+            "question": "Which files are in the icon pack?",
+            "answer": "favicon.ico with 16, 32 and 48 px, favicon.svg, apple-touch-icon.png (180 px), icon-192.png, icon-512.png, icon-512-maskable.png for Android, site.webmanifest and head-snippet.html with the matching tags. These are the files current browsers and phones actually use."
+          },
+          "q2": {
+            "question": "What is a maskable icon?",
+            "answer": "Android cuts app icons into circles, drops or rounded squares. A maskable icon therefore fills the whole area and keeps its content in the safe zone, a circle with 80 % diameter. The Maskable variant shows you how it looks."
+          },
+          "q3": {
+            "question": "How does the favicon work in dark mode?",
+            "answer": "With own colors in dark mode, favicon.svg holds both variants and the browser picks one through prefers-color-scheme. The HTML gets a second theme-color for dark interfaces as well."
+          },
+          "q4": {
+            "question": "Is my logo uploaded?",
+            "answer": "No. Everything happens in your browser, including packing the ZIP. Your logo is not part of the share link, and SVG files are cleaned of scripts and external references first."
+          },
+          "q5": {
+            "question": "Why does the letter look slightly different on another device?",
+            "answer": "Text uses the device's system fonts, so no font files are needed. The PNG files are drawn with the fonts of your computer. For an identical result everywhere, use a shape or your logo as SVG."
+          }
+        }
+      }
     }
   },
   "Converters": {
@@ -3211,6 +3405,10 @@
     "css-effects": {
       "name": "CSS effects and layouts",
       "description": "Glass, gradient borders, glows and bento layouts as ready-to-copy code."
+    },
+    "icons": {
+      "name": "Icons",
+      "description": "Favicons and app icons in every size browsers and phones need."
     }
   },
   "PatternLibrary": {
