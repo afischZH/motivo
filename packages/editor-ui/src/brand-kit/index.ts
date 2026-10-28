@@ -26,6 +26,7 @@ export {
   BRAND_KIT_FILE_MAX_BYTES,
   BRAND_KIT_FILE_VERSION,
   brandKitFileName,
+  brandKitFileTexts,
   buildBrandKitFile,
   type BrandKitFile,
   type BrandKitFileError,

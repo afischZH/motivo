@@ -2160,13 +2160,15 @@
         "cookies": {
           "heading": "Keine Cookies, nur lokale Einstellungen",
           "paragraphs": [
-            "Motivo setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen."
+            "Motivo setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen.",
+            "Designs, die du speicherst, automatische Entwürfe im Editor und dein Brand Kit (Paletten, Logos, Shapes) legt Motivo in der Datenbank deines Browsers ab (IndexedDB). Auch diese Daten bleiben auf deinem Gerät und werden nicht an uns gesendet. Du löschst sie in Motivo selbst oder, wie die Einstellungen, über die Browser-Einstellungen."
           ]
         },
         "local": {
           "heading": "Bilder bleiben in deinem Browser",
           "paragraphs": [
-            "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst."
+            "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst.",
+            "Bilder, die du in einem Tool verwendest (zum Beispiel ein eigenes Motiv in Seamless Patterns) oder ins Brand Kit legst, werden ebenfalls nie hochgeladen. Speicherst du das Design oder das Brand Kit, bleiben sie in deinem Browser (siehe oben). Sie verlassen dein Gerät nur, wenn du selbst eine Datei exportierst, und sind nie Teil eines Teilen-Links."
           ]
         },
         "share": {

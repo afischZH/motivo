@@ -4,6 +4,7 @@
  * transfer.ts for the format and the import rules.
  */
 import type { ImportedDesign } from "@motivo/storage";
+import { packIntoFiles, partFileName, stringifyEach } from "../transfer/json";
 
 export const DESIGNS_FILE_FORMAT = "motivo-designs";
 export const DESIGNS_FILE_VERSION = 1;
@@ -84,9 +85,27 @@ export function buildDesignsFile(
   };
 }
 
-/** `motivo-designs-v1-2026-10-28.json` (local date). */
-export function designsFileName(date: Date): string {
+/**
+ * The export as file texts, each at most `maxBytes` so that it can be
+ * imported again: designs with large uploads are split over several files.
+ * Serialises in slices so the page stays responsive.
+ */
+export async function designsFileTexts(
+  designs: readonly DesignsFileEntry[],
+  exportedAt: number,
+  maxBytes: number = DESIGNS_FILE_MAX_BYTES,
+): Promise<string[]> {
+  const { designs: entries, ...envelope } = buildDesignsFile(designs, exportedAt);
+  const head = `${JSON.stringify(envelope).slice(0, -1)},"designs":[`;
+  return packIntoFiles(await stringifyEach(entries), (_, body) => `${head}${body}]}`, maxBytes);
+}
+
+/**
+ * `motivo-designs-v1-2026-10-28.json` (local date); an export in several
+ * files numbers them `…-2026-10-28-1.json`, `-2.json` and so on.
+ */
+export function designsFileName(date: Date, part = 0, parts = 1): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   const day = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  return `${DESIGNS_FILE_FORMAT}-v${DESIGNS_FILE_VERSION}-${day}.json`;
+  return partFileName(`${DESIGNS_FILE_FORMAT}-v${DESIGNS_FILE_VERSION}-${day}`, part, parts);
 }

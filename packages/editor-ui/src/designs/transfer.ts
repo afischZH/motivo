@@ -107,12 +107,19 @@ function base64Head(data: string): Uint8Array | null {
   }
 }
 
-/** Whether a raster upload really is the PNG or JPEG it claims, within the size limit. */
+/**
+ * Whether a raster upload really is the PNG or JPEG it claims, within the
+ * size limit. The base64 must be padded (as every encoder writes it): a
+ * length of 4n + 1 passes the character check but makes `atob` throw when
+ * the image is turned back into a file (brand kit, upload fields).
+ */
 export function isSafeRasterHref(href: string): boolean {
   const match = RASTER_HREF.exec(href);
   if (!match) return false;
   const declared = match[1];
-  const bytes = base64Head(match[2] ?? "");
+  const data = match[2] ?? "";
+  if (data.length % 4 !== 0) return false;
+  const bytes = base64Head(data);
   if (!bytes) return false;
   const actual = sniffImageType(bytes);
   if (actual !== declared) return false;

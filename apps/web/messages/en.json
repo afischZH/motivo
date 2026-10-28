@@ -2160,13 +2160,15 @@
         "cookies": {
           "heading": "No cookies, only local settings",
           "paragraphs": [
-            "Motivo sets no cookies. So you don’t have to pick your theme and your preferred export format every time, your browser keeps these two settings in local storage (localStorage). They stay on your device, are not sent to us, and you can delete them at any time in your browser settings."
+            "Motivo sets no cookies. So you don’t have to pick your theme and your preferred export format every time, your browser keeps these two settings in local storage (localStorage). They stay on your device, are not sent to us, and you can delete them at any time in your browser settings.",
+            "Designs you save, the editor’s automatic drafts and your Brand Kit (palettes, logos, shapes) are kept in your browser’s database (IndexedDB). This data also stays on your device and is not sent to us. You can delete it in Motivo itself or, like the settings, in your browser settings."
           ]
         },
         "local": {
           "heading": "Images stay in your browser",
           "paragraphs": [
-            "When you load an image or file into a converter or create a color palette from an image, the file is processed only in your browser. It is neither uploaded nor stored, and it is gone as soon as you close the tab."
+            "When you load an image or file into a converter or create a color palette from an image, the file is processed only in your browser. It is neither uploaded nor stored, and it is gone as soon as you close the tab.",
+            "Images you use in a tool (for example your own motif in Seamless Patterns) or add to your Brand Kit are never uploaded either. If you save the design or the Brand Kit, they stay in your browser (see above). They only leave your device when you export a file yourself, and they are never part of a share link."
           ]
         },
         "share": {

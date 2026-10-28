@@ -15,7 +15,7 @@ import {
   BRAND_SHAPES_MAX,
   StorageError,
   brandKitFileName,
-  buildBrandKitFile,
+  brandKitFileTexts,
   createBrandKitStore,
   normalizeBrandHex,
   readBrandKitFile,
@@ -249,11 +249,21 @@ export function BrandKit() {
         if (kit.palettes.length === 0 && kit.assets.length === 0) {
           return { tone: "info", text: t("page.exportEmpty") };
         }
-        const file = buildBrandKitFile(kit, Date.now());
-        const blob = new Blob([JSON.stringify(file)], { type: "application/json" });
+        // Several files when large logos make one too large to import again.
+        const texts = await brandKitFileTexts(kit, Date.now());
         const { downloadBlob } = await import("@motivo/exporters");
-        downloadBlob(blob, brandKitFileName(new Date()));
-        return { tone: "info", text: t("page.exported") };
+        const date = new Date();
+        texts.forEach((text, part) => {
+          const blob = new Blob([text], { type: "application/json" });
+          downloadBlob(blob, brandKitFileName(date, part, texts.length));
+        });
+        return {
+          tone: "info",
+          text:
+            texts.length > 1
+              ? t("page.exportedParts", { files: texts.length })
+              : t("page.exported"),
+        };
       } finally {
         setBusy(null);
       }

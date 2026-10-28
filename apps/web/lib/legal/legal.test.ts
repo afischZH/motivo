@@ -53,7 +53,16 @@ describe.each([
 
   it("covers the required topics in the privacy policy", () => {
     const text = JSON.stringify(messages.Legal.privacy);
-    for (const term of ["Cloudflare", "Sentry", "localStorage", "#", "EU"]) {
+    // IndexedDB: saved designs, drafts and the brand kit (M3-AP03 to AP05).
+    for (const term of [
+      "Cloudflare",
+      "Sentry",
+      "localStorage",
+      "IndexedDB",
+      "Brand Kit",
+      "#",
+      "EU",
+    ]) {
       expect(text).toContain(term);
     }
   });
