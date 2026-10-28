@@ -21,9 +21,9 @@ const SIZE = { width: 320, height: 200 };
 /** Output of one frame as a comparable string (SVG, or the CSS plus its preview SVG). */
 function frameOutput(
   tool: ReturnType<typeof registry.list>[number],
-  frame: { params: unknown; seed: number },
+  frame: { params: unknown; seed: number; t?: number },
 ): string {
-  const out = renderStatic(tool, frame.params, frame.seed, SIZE);
+  const out = renderStatic(tool, frame.params, frame.seed, SIZE, frame.t);
   return typeof out === "string" ? out : JSON.stringify(out);
 }
 

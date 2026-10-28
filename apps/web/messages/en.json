@@ -2270,6 +2270,136 @@
           "a4": "Shadows pick up some of the color around them. That is why Musterli darkens the hue of the background by default. You can still pick your own color."
         }
       }
+    },
+    "guilloche": {
+      "name": "Guilloche",
+      "description": "Fine interlaced line work like on banknotes and certificates: rosettes, borders and frames. Export as SVG, image or GIF.",
+      "params": {
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "rosette": "Rosette",
+            "band": "Band (tileable)",
+            "frame": "Frame"
+          }
+        },
+        "repeats": {
+          "label": "Repeats"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "inner": {
+          "label": "Inner edge",
+          "description": "Rosette and frame: distance from the center relative to half the shorter edge. Band: height above the bottom edge relative to the image height."
+        },
+        "outer": {
+          "label": "Outer edge",
+          "description": "Rosette and frame: distance from the center relative to half the shorter edge. Band: height above the bottom edge relative to the image height."
+        },
+        "curve": {
+          "label": "Curve",
+          "options": {
+            "weave": "Weave",
+            "spiro": "Spirograph",
+            "harmonic": "Harmonic"
+          }
+        },
+        "lines": {
+          "label": "Lines"
+        },
+        "petals": {
+          "label": "Petals",
+          "description": "How often the base shape appears per turn or per repeat."
+        },
+        "frequency": {
+          "label": "Swings",
+          "description": "How often every line swings between the edges per turn or per repeat."
+        },
+        "amplitude": {
+          "label": "Depth"
+        },
+        "spread": {
+          "label": "Offset",
+          "description": "How far the lines are shifted against each other. At 1 they are spread evenly."
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "colorMode": {
+          "label": "Coloring",
+          "description": "Blend: each line in one color, spread across the lines. Iris print: one gradient across the whole image. Along: the color changes along every line.",
+          "options": {
+            "single": "One color",
+            "alternate": "Alternating",
+            "blend": "Blend",
+            "iris": "Iris print",
+            "along": "Along"
+          }
+        },
+        "gradientAngle": {
+          "label": "Iris print angle"
+        },
+        "overlay": {
+          "label": "Show second layer"
+        },
+        "overlayCurve": {
+          "label": "Curve"
+        },
+        "overlayLines": {
+          "label": "Lines"
+        },
+        "overlayPetals": {
+          "label": "Petals"
+        },
+        "overlayFrequency": {
+          "label": "Swings"
+        },
+        "overlayAmplitude": {
+          "label": "Depth"
+        },
+        "overlayColor": {
+          "label": "Color"
+        }
+      },
+      "groups": {
+        "overlay": "Second layer"
+      },
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Certificate",
+        "voucher": "Voucher",
+        "spirograph": "Spirograph",
+        "seal": "Seal",
+        "lace": "Lace",
+        "ribbon": "Border"
+      },
+      "seo": {
+        "whatIs": "Guilloche is the name for fine, interlaced line patterns as you know them from banknotes, share certificates, diplomas and vouchers. They used to be engraved into metal with rose engine lathes; today they come from simple formulas: lines swinging between two edges, spirographs made of rotating pointers and overlaid sine waves. The generator computes everything right in your browser.",
+        "howTo": "Pick a layout: rosette for a seal or watermark, band for a tileable border, or frame for the edge of a certificate. Then set the curve, the number of lines, petals and swings, place the inner and outer edge and choose colors, including an iris print or a blend along the lines. Press the space bar for new variations. Export as SVG, PNG, JPG, WebP or as an animated GIF.",
+        "faq": {
+          "q1": {
+            "question": "Can I use the patterns for real banknotes or ID documents?",
+            "answer": "No. The patterns are decorative and offer no protection against counterfeiting. Use them for certificates, vouchers, invitations, labels, packaging or backgrounds."
+          },
+          "q2": {
+            "question": "How do I make a border that repeats?",
+            "answer": "Choose the band layout and a wide, low format such as 1600 × 200 pixels. Set the inner edge close to 0 and the outer edge close to 1. The band joins seamlessly on the left and right, so you can place it side by side as often as you like."
+          },
+          "q3": {
+            "question": "Why does my pattern look like a solid area?",
+            "answer": "With many lines and many swings the lines sit very close together. Reduce the number of lines or swings, or make the lines thinner."
+          },
+          "q4": {
+            "question": "How large is the SVG file?",
+            "answer": "Curves are sampled just finely enough to look smooth and stored with one decimal place. Typical patterns are 50 to 250 KB; even extreme settings stay below about 1.5 MB."
+          },
+          "q5": {
+            "question": "What does the animation show?",
+            "answer": "In a GIF export with motion, the phase of every line moves once all the way around. The pattern seems to flow, and the loop has no jump."
+          }
+        }
+      }
     }
   },
   "Converters": {

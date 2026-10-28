@@ -2270,6 +2270,136 @@
           "a4": "Schatten nehmen etwas von der Farbe der Umgebung an. Musterli dunkelt darum standardmässig den Farbton des Hintergrunds ab. Du kannst die Farbe aber auch selbst wählen."
         }
       }
+    },
+    "guilloche": {
+      "name": "Guilloche",
+      "description": "Feine, verschlungene Linien wie auf Banknoten und Urkunden: Rosetten, Bordüren und Rahmen. Als SVG, Bild oder GIF exportieren.",
+      "params": {
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "rosette": "Rosette",
+            "band": "Band (kachelbar)",
+            "frame": "Rahmen"
+          }
+        },
+        "repeats": {
+          "label": "Wiederholungen"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "inner": {
+          "label": "Innenkante",
+          "description": "Rosette und Rahmen: Abstand von der Mitte, gemessen an der halben kürzeren Seite. Band: Höhe über dem unteren Rand, gemessen an der Bildhöhe."
+        },
+        "outer": {
+          "label": "Aussenkante",
+          "description": "Rosette und Rahmen: Abstand von der Mitte, gemessen an der halben kürzeren Seite. Band: Höhe über dem unteren Rand, gemessen an der Bildhöhe."
+        },
+        "curve": {
+          "label": "Kurve",
+          "options": {
+            "weave": "Geflecht",
+            "spiro": "Spirograph",
+            "harmonic": "Harmonische"
+          }
+        },
+        "lines": {
+          "label": "Linien"
+        },
+        "petals": {
+          "label": "Blätter",
+          "description": "Wie oft sich die Grundform pro Umlauf oder pro Wiederholung zeigt."
+        },
+        "frequency": {
+          "label": "Schwingungen",
+          "description": "Wie oft jede Linie pro Umlauf oder pro Wiederholung zwischen den Kanten hin und her schwingt."
+        },
+        "amplitude": {
+          "label": "Tiefe"
+        },
+        "spread": {
+          "label": "Versatz",
+          "description": "Wie weit die Linien gegeneinander verschoben sind. Bei 1 verteilen sie sich gleichmässig."
+        },
+        "lineWidth": {
+          "label": "Linienstärke"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "description": "Verlauf: jede Linie in einer Farbe, über die Linien verteilt. Irisdruck: ein Farbverlauf quer über das ganze Bild. Entlang: die Farbe wechselt entlang jeder Linie.",
+          "options": {
+            "single": "Eine Farbe",
+            "alternate": "Abwechselnd",
+            "blend": "Verlauf",
+            "iris": "Irisdruck",
+            "along": "Entlang"
+          }
+        },
+        "gradientAngle": {
+          "label": "Winkel des Irisdrucks"
+        },
+        "overlay": {
+          "label": "Zweite Ebene zeigen"
+        },
+        "overlayCurve": {
+          "label": "Kurve"
+        },
+        "overlayLines": {
+          "label": "Linien"
+        },
+        "overlayPetals": {
+          "label": "Blätter"
+        },
+        "overlayFrequency": {
+          "label": "Schwingungen"
+        },
+        "overlayAmplitude": {
+          "label": "Tiefe"
+        },
+        "overlayColor": {
+          "label": "Farbe"
+        }
+      },
+      "groups": {
+        "overlay": "Zweite Ebene"
+      },
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Urkunde",
+        "voucher": "Gutschein",
+        "spirograph": "Spirograph",
+        "seal": "Siegel",
+        "lace": "Spitze",
+        "ribbon": "Bordüre"
+      },
+      "seo": {
+        "whatIs": "Guilloche nennt man feine, ineinander verschlungene Linienmuster, wie du sie von Banknoten, Wertpapieren, Urkunden und Gutscheinen kennst. Früher wurden sie mit Guillochiermaschinen in Metall graviert, heute entstehen sie aus einfachen Formeln: Linien, die zwischen zwei Kanten schwingen, Spirographen aus kreisenden Zeigern und überlagerte Sinuswellen. Der Generator rechnet alles direkt in deinem Browser.",
+        "howTo": "Wähle eine Anordnung: Rosette für ein Siegel oder Wasserzeichen, Band für eine kachelbare Bordüre oder Rahmen für den Rand einer Urkunde. Stelle dann Kurve, Anzahl Linien, Blätter und Schwingungen ein, setze Innen- und Aussenkante und wähle die Farben, auch als Irisdruck oder Verlauf entlang der Linien. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, PNG, JPG, WebP oder als animiertes GIF.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich die Muster für echte Banknoten oder Ausweise verwenden?",
+            "answer": "Nein. Die Muster sind dekorativ und bieten keinen Schutz vor Fälschungen. Nutze sie für Urkunden, Gutscheine, Einladungen, Etiketten, Verpackungen oder Hintergründe."
+          },
+          "q2": {
+            "question": "Wie mache ich eine Bordüre, die sich wiederholt?",
+            "answer": "Wähle die Anordnung Band und ein breites, niedriges Format, zum Beispiel 1600 × 200 Pixel. Setze die Innenkante nahe 0 und die Aussenkante nahe 1. Das Band schliesst links und rechts nahtlos an, du kannst es also beliebig oft nebeneinander setzen."
+          },
+          "q3": {
+            "question": "Warum wirkt mein Muster wie eine volle Fläche?",
+            "answer": "Bei vielen Linien und vielen Schwingungen liegen die Linien sehr dicht. Reduziere die Anzahl Linien oder Schwingungen, oder mache die Linien dünner."
+          },
+          "q4": {
+            "question": "Wie gross wird die SVG-Datei?",
+            "answer": "Die Kurven werden gerade so fein abgetastet, dass sie glatt wirken, und mit einer Nachkommastelle gespeichert. Typische Muster sind 50 bis 250 KB gross, auch extreme Einstellungen bleiben unter rund 1.5 MB."
+          },
+          "q5": {
+            "question": "Was zeigt die Animation?",
+            "answer": "Beim GIF-Export mit Bewegung verschiebt sich die Phase jeder Linie einmal ganz herum. Das Muster scheint zu fliessen, und die Schleife läuft ohne Sprung."
+          }
+        }
+      }
     }
   },
   "Converters": {

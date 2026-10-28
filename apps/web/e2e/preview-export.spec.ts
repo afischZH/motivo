@@ -102,6 +102,9 @@ const CASES: Case[] = [
   { toolId: "css-shadow", css: true },
   { toolId: "css-shadow", preset: "Inner", css: true },
   { toolId: "css-shadow", preset: "Floating", css: true },
+  // M4b-AP03: hundreds of thin, crossing strokes (blend), spirograph loops coloured along the lines.
+  { toolId: "guilloche" },
+  { toolId: "guilloche", preset: "Spirograph" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

@@ -118,6 +118,7 @@ describe("built-in tool registration", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "guilloche",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -141,6 +142,7 @@ describe("built-in tool registration", () => {
       "grid-patterns",
       "confetti",
       "dieter-dots",
+      "guilloche",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });
