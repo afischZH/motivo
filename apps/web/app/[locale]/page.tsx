@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import type React from "react";
 
 import { HeroPreview } from "@/components/home/hero-preview";
+import { KofiWidget } from "@/components/home/kofi-widget";
 import { CheckIcon, DeviceIcon, HeartIcon, SparkIcon } from "@/components/home/icons";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
@@ -29,6 +30,7 @@ import { hasStaticMotif, motifPath, staticDesigns } from "@/lib/seo/motifs";
 import { faqPage } from "@/lib/seo/json-ld";
 import { pageOpenGraph } from "@/lib/seo/page-meta";
 import { toolKeys } from "@/lib/seo/tool-content";
+import { kofiPageId, telemetryEnv } from "@/lib/telemetry/config";
 import { cn } from "@/lib/utils";
 
 type HomePageProps = Readonly<{ params: Promise<{ locale: string }> }>;
@@ -71,6 +73,8 @@ export default async function HomePage({ params }: HomePageProps) {
     answer: text(`Home.faq.q${i + 1}.answer`),
   }));
 
+  const kofi = kofiPageId(telemetryEnv());
+
   return (
     <div className="flex flex-col">
       <JsonLdScript data={faqPage(faq, locale)} />
@@ -81,6 +85,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <HowItWorks text={text} />
       <Faq faq={faq} text={text} />
       <ClosingCta locale={locale} text={text} />
+      {kofi && <KofiWidget pageId={kofi} label={t("Home.kofiButton")} />}
     </div>
   );
 }
