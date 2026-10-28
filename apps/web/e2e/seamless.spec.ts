@@ -8,6 +8,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { toolSlug } from "../i18n/slugs";
+import { enableClipboard } from "./support/clipboard";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const TOOL = "seamless-patterns";
@@ -145,8 +146,9 @@ test.describe("seamless patterns", () => {
   test("uploads a PNG with the crop dialog and leaves it out of share links", async ({
     page,
     context,
+    browserName,
   }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await enableClipboard(context, browserName);
     await openEditor(page);
     const before = await motifSrc(page);
     await page.getByLabel("Datei wählen").setInputFiles({

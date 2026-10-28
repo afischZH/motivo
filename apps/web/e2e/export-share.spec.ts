@@ -1,14 +1,9 @@
 import { readFile } from "node:fs/promises";
 
 import AxeBuilder from "@axe-core/playwright";
-import {
-  expect,
-  test,
-  type BrowserContext,
-  type Download,
-  type Locator,
-  type Page,
-} from "@playwright/test";
+import { expect, test, type Download, type Locator, type Page } from "@playwright/test";
+
+import { enableClipboard } from "./support/clipboard";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
@@ -20,34 +15,6 @@ async function motifSrc(page: Page): Promise<string> {
   const img = motif(page);
   await expect(img).toBeVisible();
   return (await img.getAttribute("src")) ?? "";
-}
-
-/**
- * Clipboard permissions exist only in Chromium. Firefox and WebKit get an
- * in-memory stand-in for navigator.clipboard text so the flows stay testable.
- */
-async function enableClipboard(context: BrowserContext, browserName: string) {
-  if (browserName === "chromium") {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-    return;
-  }
-  await context.addInitScript(() => {
-    let text = "";
-    const clipboard = navigator.clipboard ?? ({} as Clipboard);
-    Object.defineProperty(clipboard, "writeText", {
-      configurable: true,
-      value: async (value: string) => {
-        text = value;
-      },
-    });
-    Object.defineProperty(clipboard, "readText", {
-      configurable: true,
-      value: async () => text,
-    });
-    if (!navigator.clipboard) {
-      Object.defineProperty(navigator, "clipboard", { configurable: true, value: clipboard });
-    }
-  });
 }
 
 /** Opens the editor and waits until it is hydrated (shortcuts and hash loading are bound). */
