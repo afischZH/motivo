@@ -109,10 +109,10 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 - **Vorschau**: im Worker in Anzeigegrösse (höchstens 2048 px Kante). Mit `speed` > 0 läuft die Hauptvorschau als Schleife (höchstens 30 Bilder pro Sekunde, eine Anfrage unterwegs), aber nur wenn der Betrachter Bewegung erlaubt (`prefers-reduced-motion`); sonst und in Vorschaubildern zeigt sie das Standbild `time`.
 - **Exporte**: PNG, JPG, WebP in jeder Grösse bis 8192 px Kante (Kacheln von höchstens 1024 × 1024 px; PNG über den Streaming-Encoder ohne volles Canvas, JPG und WebP über ein 2D-Canvas bis 50 MP), Kopieren als PNG, GIF über `animation` mit der Quelle `time` (Bild i bei t = i/n, nahtlos) und `colors`. Kein SVG und kein CSS: Das Bild entsteht pro Pixel.
 - **Ohne WebGL2**: Die Vorschau zeigt eine lokalisierte Meldung statt einer leeren Fläche, Exporte melden `unavailable`.
-- **Statische Motive** (Landing-Seite, Katalog, OG-Bilder): Der Build läuft in Node ohne WebGL. Darum gibt es eine CPU-Referenz desselben Algorithmus in TypeScript (`renderShaderGradientCpu`, gleiche Uniforms, gleiche Hash- und Rauschfunktionen in `Math.imul`), die nur für statische Motive und Unit-Tests rechnet (480 px Kante, als PNG in SVG). Abweichungen zur GPU liegen im Rundungsbereich von float32; ein E2E-Test vergleicht das Motiv mit der Editor-Vorschau.
+- **Statische Motive** (Landing-Seite, Katalog, OG-Bilder): Der Build läuft in Node ohne WebGL. Darum gibt es eine CPU-Referenz desselben Algorithmus in TypeScript (`renderShaderGradientCpu`, gleiche Uniforms, gleiche Hash- und Rauschfunktionen in `Math.imul`), die nur für statische Motive und Unit-Tests rechnet (480 px Kante, als PNG in SVG). Abweichungen zur GPU liegen im Rundungsbereich von float32 (gemessen in Chromium mit SwiftShader: im Mittel 0.005 Stufen, höchstens 1 Stufe pro Kanal).
 - **Brand-Palette**: generisch (die ganze Palette, höchstens 6 Farben).
 - **Leertaste**: würfelt Palette (harmonisch in OKLCH, 3 bis 5 Farben), Frequenz, Amplitude, Warping, Winkel und Phase, über den Seed das Rauschen; Stil, Dithering, Körnung, Vignette, Zoom, Detail und Tempo bleiben.
-- **Vorlagen** (8): Flüssig, Seide, Schlieren, Körnig, Marmor, Wellenringe, Polarlicht, Retro-Dither.
+- **Vorlagen** (8, je ein Stil plus Retro-Dither): Flüssiges Violett (`liquid`), Graue Seide (`silk`), Morgenschlieren (`streaked`), Körniger Sommer (`grainy`, Körnung 45 %), Marmor (`marble`), Lagune (`ripple`), Polarlicht (`aurora`), Retro-Dithering (`retro-dither`: Flüssig mit Bayer 4×4, 5 Stufen, Zelle 4 px).
 
 ## D. Backgrounds
 
