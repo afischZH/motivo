@@ -64,6 +64,8 @@ describe("canonicalRedirect", () => {
   it("redirects legal pages to this locale's slug", () => {
     expect(canonicalRedirect("/de/imprint")).toBe("/de/impressum");
     expect(canonicalRedirect("/en/datenschutz")).toBe("/en/privacy");
+    expect(canonicalRedirect("/en/nutzungsbedingungen")).toBe("/en/terms");
+    expect(canonicalRedirect("/de/terms")).toBe("/de/nutzungsbedingungen");
     expect(canonicalRedirect("/de/impressum")).toBeNull();
     expect(canonicalRedirect("/de/impressum/svg-to-css")).toBeNull();
   });
@@ -100,6 +102,7 @@ describe("canonicalRedirect", () => {
       { page: "convert" },
       { page: "imprint" },
       { page: "privacy" },
+      { page: "terms" },
       { page: "support" },
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),

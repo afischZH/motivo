@@ -113,6 +113,8 @@ describe("path helpers", () => {
     expect(routeFromPathname("/imprint", {}, "de")).toEqual({ page: "imprint" });
     expect(routeFromPathname("/de/impressum", {}, "de")).toEqual({ page: "imprint" });
     expect(routeFromPathname("/en/privacy", {}, "en")).toEqual({ page: "privacy" });
+    expect(routeFromPathname("/de/nutzungsbedingungen", {}, "de")).toEqual({ page: "terms" });
+    expect(routeFromPathname("/en/terms", {}, "en")).toEqual({ page: "terms" });
     expect(routeFromPathname("/de/datenschutz/x", {}, "de")).toBeUndefined();
   });
 });

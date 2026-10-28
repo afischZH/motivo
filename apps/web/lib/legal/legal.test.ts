@@ -25,12 +25,15 @@ describe("legal config", () => {
       expect(missingOperatorFields().filter((f) => !["registerId", "vatId"].includes(f))).toEqual(
         [],
       );
+      expect(isPlaceholder(LEGAL_CONFIG.terms.jurisdiction)).toBe(false);
     }
   });
 
   it("has an ISO date as last update", () => {
-    expect(LEGAL_CONFIG.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    expect(Number.isNaN(Date.parse(LEGAL_CONFIG.lastUpdated))).toBe(false);
+    for (const date of [LEGAL_CONFIG.lastUpdated, LEGAL_CONFIG.terms.lastUpdated]) {
+      expect(date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(Number.isNaN(Date.parse(date))).toBe(false);
+    }
   });
 });
 
@@ -48,7 +51,7 @@ describe.each([
       for (const p of section.paragraphs) expect(p.trim().length).toBeGreaterThan(20);
     }
     const after = OPERATOR_AFTER[page];
-    if (after !== null) expect(LEGAL_SECTIONS[page]).toContain(after);
+    if (typeof after === "string") expect(LEGAL_SECTIONS[page]).toContain(after);
   });
 
   it("covers the required topics in the privacy policy", () => {
@@ -65,6 +68,24 @@ describe.each([
     ]) {
       expect(text).toContain(term);
     }
+  });
+
+  it("covers the required topics in the terms of use", () => {
+    const { sections } = messages.Legal.terms;
+    const text = JSON.stringify(messages.Legal.terms);
+    for (const term of ["CC0 1.0", "Ko-fi", "{jurisdiction}", "<privacy>", "<support>"]) {
+      expect(text).toContain(term);
+    }
+    // The free licence for exports is the point of the page.
+    expect(sections.exports.paragraphs.join(" ")).toMatch(
+      locale === "de" ? /kommerziell/ : /commercially/,
+    );
+  });
+
+  it("uses only the link tags the legal page renders", () => {
+    const text = JSON.stringify(messages.Legal);
+    const tags = [...text.matchAll(/<\/?([a-z]+)>/g)].map((m) => m[1]);
+    for (const tag of tags) expect(["imprint", "privacy", "support"]).toContain(tag);
   });
 
   it("describes donations generically and no retired service", () => {

@@ -3,7 +3,7 @@
  * them in here once; both pages and both languages read from this object.
  * Values in square brackets are placeholders and render as such.
  *
- * While `legalReviewed` is false, both legal pages show a "draft, pending
+ * While `legalReviewed` is false, the legal pages show a "draft, pending
  * legal review" banner, are `noindex` and stay out of the sitemap. Set it to
  * true only after a lawyer has checked the texts in `messages/*.json`
  * (namespace `Legal`).
@@ -24,6 +24,12 @@ export interface LegalConfig {
   legalReviewed: boolean;
   lastUpdated: string;
   operator: Operator;
+  terms: {
+    /** ISO date of the current terms of use (they change independently). */
+    lastUpdated: string;
+    /** Place of jurisdiction, e.g. "Zürich"; fills `{jurisdiction}` in the terms. */
+    jurisdiction: string;
+  };
 }
 
 export const LEGAL_CONFIG: LegalConfig = {
@@ -44,6 +50,10 @@ export const LEGAL_CONFIG: LegalConfig = {
     registerId: "[UID/Handelsregister]",
     /** VAT number or empty while not VAT-registered. */
     vatId: "[MWST-Nr.]",
+  },
+  terms: {
+    lastUpdated: "2026-10-28",
+    jurisdiction: "[Gerichtsstand]",
   },
 };
 

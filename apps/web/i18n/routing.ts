@@ -53,6 +53,7 @@ export const routing = defineRouting({
     "/brand-kit": sectionPath("brandKit"),
     "/imprint": sectionPath("imprint"),
     "/privacy": sectionPath("privacy"),
+    "/terms": sectionPath("terms"),
     "/support": sectionPath("support"),
   },
   // hreflang and canonical come from the Metadata API (lib/seo), which knows
