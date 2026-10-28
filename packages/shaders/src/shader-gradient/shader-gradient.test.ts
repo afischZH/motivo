@@ -27,6 +27,13 @@ const BASE: ShaderGradientOptions = {
   seed: 1,
 };
 
+/**
+ * Byte-exact comparison as one string: `toEqual` on large typed arrays walks
+ * every element through the matcher and is slow on a busy CI runner.
+ */
+const bytes = (data: Uint8Array | Uint8ClampedArray): string =>
+  Buffer.from(data.buffer, data.byteOffset, data.byteLength).toString("base64");
+
 const PALETTE = paletteTextureData(["#1e1b4b", "#7c3aed", "#f472b6", "#fde68a"]);
 const DESIGN = { width: 160, height: 100 };
 
@@ -95,10 +102,10 @@ describe("shaderGradientUniforms", () => {
 describe("renderShaderGradientCpu", () => {
   it("is deterministic and depends on the seed and the time", () => {
     const a = render({});
-    expect(render({}).data).toEqual(a.data);
-    expect(render({ seed: 2 }).data).not.toEqual(a.data);
-    expect(render({}, DESIGN, 0.3).data).not.toEqual(a.data);
-    expect(render({}, DESIGN, 1).data).toEqual(render({}, DESIGN, 0).data);
+    expect(bytes(render({}).data)).toBe(bytes(a.data));
+    expect(bytes(render({ seed: 2 }).data)).not.toBe(bytes(a.data));
+    expect(bytes(render({}, DESIGN, 0.3).data)).not.toBe(bytes(a.data));
+    expect(bytes(render({}, DESIGN, 1).data)).toBe(bytes(render({}, DESIGN, 0).data));
   });
 
   it("renders every style opaque and with more than one colour", () => {
@@ -128,8 +135,8 @@ describe("renderShaderGradientCpu", () => {
         });
         for (let r = 0; r < tile.height; r++) {
           const a = ((tile.y + r) * DESIGN.width + tile.x) * 4;
-          expect(part.data.subarray(r * tile.width * 4, (r + 1) * tile.width * 4)).toEqual(
-            full.data.subarray(a, a + tile.width * 4),
+          expect(bytes(part.data.subarray(r * tile.width * 4, (r + 1) * tile.width * 4))).toBe(
+            bytes(full.data.subarray(a, a + tile.width * 4)),
           );
         }
       }
