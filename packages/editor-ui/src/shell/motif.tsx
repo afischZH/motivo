@@ -38,7 +38,10 @@ function useLargeDataUrls(output: MotifOutput): SwapUrls {
     if (output.kind !== "css" || !canUseObjectUrls()) return [];
     const el = output.element;
     const lists = [output.declarations];
-    if (el) lists.push(el.declarations, el.motion, ...el.content.map((b) => b.declarations));
+    if (el) {
+      lists.push(el.declarations, el.motion);
+      for (const b of el.content) lists.push(b.declarations, ...(b.motion ? [b.motion] : []));
+    }
     return [...new Set(lists.flatMap(largeDataUrls))];
   }, [output]);
   const [, setDecoded] = useState(0);
@@ -157,6 +160,7 @@ function MotifElementView({
           key={i}
           style={{
             ...cssToStyle(swapUrls(b.declarations), supports),
+            ...(motionAllowed && b.motion ? cssToStyle(swapUrls(b.motion), supports) : {}),
             ...absolute({ ...b, x: element.x + b.x, y: element.y + b.y }),
           }}
         />
