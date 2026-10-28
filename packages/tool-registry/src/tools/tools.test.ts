@@ -143,7 +143,9 @@ describe("built-in tool registration", () => {
       "avatar",
       "placeholder-image",
       "animated-gradient",
+      "favicon-generator",
     ]);
+    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
       "screenshot-beautifier",
       "avatar",

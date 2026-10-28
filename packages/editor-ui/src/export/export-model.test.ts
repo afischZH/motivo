@@ -44,6 +44,17 @@ describe("listExportChoices", () => {
     ]);
   });
 
+  it("lists bundles last, in their own category", () => {
+    expect(ids("favicon-generator")).toEqual(["png", "webp", "svg", "bundle:icon-pack"]);
+    const tool = registry.get("favicon-generator");
+    if (!tool) throw new Error("favicon-generator");
+    expect(listExportChoices(tool).at(-1)).toMatchObject({
+      kind: "bundle",
+      category: "bundle",
+      bundle: { id: "icon-pack", snippet: { language: "html" } },
+    });
+  });
+
   it("only offers what the tool declares", () => {
     expect(listExportChoices(fixtureTool as never).map((c) => c.id)).toEqual(["svg"]);
   });

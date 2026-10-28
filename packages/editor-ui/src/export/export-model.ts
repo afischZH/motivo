@@ -8,10 +8,12 @@ import {
   GIF_EDGE_DEFAULT,
   GIF_FRAMES_DEFAULT,
   isExportError,
+  listBundles,
   listExtraExports,
   resolveRasterSize,
   supportsExport,
   supportsTile,
+  type BundleInfo,
   type ClipboardResult,
   planGif,
   type ExtraExportInfo,
@@ -26,14 +28,18 @@ import {
   type CanvasSize,
 } from "@musterli/tool-registry";
 
-/** Card groups of the format choice (docs/DESIGN.md 6: Bild, Vektor, Code, Animation). */
-export type ExportCategory = "image" | "vector" | "code" | "animation";
+/**
+ * Card groups of the format choice (docs/DESIGN.md 6: Bild, Vektor, Code,
+ * Animation; Paket for multi-file bundles since M4c-AP02).
+ */
+export type ExportCategory = "image" | "vector" | "code" | "animation" | "bundle";
 
 export const EXPORT_CATEGORIES: readonly ExportCategory[] = [
   "image",
   "vector",
   "code",
   "animation",
+  "bundle",
 ];
 
 export type ExportChoice =
@@ -44,7 +50,9 @@ export type ExportChoice =
   | { id: "css"; kind: "css"; category: "code" }
   | { id: `extra:${string}`; kind: "extra"; extra: ExtraExportInfo; category: "code" }
   /** Animated GIF (tools with `animation`). */
-  | { id: "gif"; kind: "gif"; format: "gif"; category: "animation" };
+  | { id: "gif"; kind: "gif"; format: "gif"; category: "animation" }
+  /** Several files as one ZIP (tools with `bundles`, e.g. the icon pack). */
+  | { id: `bundle:${string}`; kind: "bundle"; bundle: BundleInfo; category: "bundle" };
 
 /** Text outputs: shown as code, copied as text. */
 export type TextChoice = Extract<ExportChoice, { kind: "svg" | "css" | "extra" }>;
@@ -56,7 +64,8 @@ const RASTER_ORDER: readonly RasterFormat[] = ["png", "jpg", "webp"];
 
 /**
  * Every export the tool offers and the exporters can produce, in display
- * order: PNG, JPG, WebP, PNG tile, SVG, CSS, the tool's extra exports, GIF.
+ * order: PNG, JPG, WebP, PNG tile, SVG, CSS, the tool's extra exports, GIF,
+ * the tool's bundles.
  * With `params`, formats the tool's `exportsFor` rules out are left out.
  */
 export function listExportChoices(
@@ -79,6 +88,9 @@ export function listExportChoices(
   }
   if (supports("gif")) {
     choices.push({ id: "gif", kind: "gif", format: "gif", category: "animation" });
+  }
+  for (const bundle of listBundles(tool)) {
+    choices.push({ id: `bundle:${bundle.id}`, kind: "bundle", bundle, category: "bundle" });
   }
   return choices;
 }

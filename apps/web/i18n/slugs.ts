@@ -65,6 +65,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
     de: "animierter-farbverlauf-generator",
     en: "animated-gradient-generator",
   },
+  "favicon-generator": { de: "favicon-generator", en: "favicon-generator" },
 };
 
 /**
@@ -223,6 +224,7 @@ export const CATEGORY_SLUGS: Readonly<Record<ToolCategory, LocalizedSlugs>> = {
   social: { de: "social-media", en: "social-media" },
   composer: { de: "composer", en: "composer" },
   "css-effects": { de: "css-effekte", en: "css-effects" },
+  icons: { de: "icons", en: "icons" },
 };
 
 /** Localized segment between `tools` and a category slug. */

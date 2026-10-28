@@ -138,6 +138,8 @@ const CASES: Case[] = [
   { toolId: "animated-gradient", preset: "Radar", css: true, reducedMotion: true, maxMeanDiff: 4 },
   { toolId: "animated-gradient", preset: "Chameleon", css: true, reducedMotion: true },
   { toolId: "animated-gradient", preset: "Lava lamp", css: true, reducedMotion: true },
+  // M4c-AP02 favicon-generator: the icon is a square with transparent sides
+  // on this wide canvas, so its comparison runs square in favicon-generator.spec.ts.
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

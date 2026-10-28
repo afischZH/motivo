@@ -68,7 +68,7 @@ export type AvatarParams = z.output<typeof schema>;
 
 const defaults: AvatarParams = {
   background: TRANSPARENT,
-  palette: ["#e07a5f", "#3d405b", "#81b29a", "#f2cc8f", "#6d597a", "#355070", "#b56576", "#2a9d8f"],
+  palette: ["#e07a5f", "#3d405b", "#81b29a", "#f2cc8f", "#6d597a", "#2a9d8f"],
   style: "initials",
   name: "Ada Lovelace",
   letters: 2,

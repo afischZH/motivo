@@ -131,7 +131,8 @@
         "image": "Bild",
         "vector": "Vektor",
         "code": "Code",
-        "animation": "Animation"
+        "animation": "Animation",
+        "bundle": "Paket"
       },
       "formats": {
         "png": "PNG",
@@ -170,6 +171,10 @@
       "copyOnlyPng": "Bilder lassen sich nur als PNG kopieren.",
       "copyUnavailableText": "Dein Browser kann nicht direkt kopieren. Lade die Datei herunter.",
       "copyUnavailableImage": "Dein Browser kann keine Bilder in die Zwischenablage legen. Lade das PNG herunter.",
+      "copyBundleNone": "Dieses Paket hat keinen Text zum Kopieren. Lade das ZIP herunter.",
+      "bundle": {
+        "files": "Inhalt des ZIP ({count} Dateien)"
+      },
       "errors": {
         "unsupportedFormat": "Dieses Format gibt es für dieses Tool nicht.",
         "decodeFailed": "Das Motiv liess sich nicht in ein Bild umwandeln. Versuch es nochmals oder exportiere als SVG.",

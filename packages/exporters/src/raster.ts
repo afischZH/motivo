@@ -36,6 +36,7 @@ import {
   type EncodeResponse,
   type StripMessage,
   type StripReply,
+  type ZipMessage,
 } from "./raster-encode";
 import {
   MIME_TYPES,
@@ -104,7 +105,7 @@ export interface MainCanvasLike {
 export interface WorkerLike {
   onmessage: ((event: MessageEvent<EncodeResponse | StripReply>) => void) | null;
   onerror: ((event: ErrorEvent) => void) | null;
-  postMessage(message: EncodeRequest | StripMessage, transfer: Transferable[]): void;
+  postMessage(message: EncodeRequest | StripMessage | ZipMessage, transfer: Transferable[]): void;
   terminate(): void;
 }
 

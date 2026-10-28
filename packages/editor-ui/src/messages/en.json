@@ -131,7 +131,8 @@
         "image": "Image",
         "vector": "Vector",
         "code": "Code",
-        "animation": "Animation"
+        "animation": "Animation",
+        "bundle": "Bundle"
       },
       "formats": {
         "png": "PNG",
@@ -170,6 +171,10 @@
       "copyOnlyPng": "Images can only be copied as PNG.",
       "copyUnavailableText": "Your browser cannot copy directly. Download the file instead.",
       "copyUnavailableImage": "Your browser cannot put images on the clipboard. Download the PNG instead.",
+      "copyBundleNone": "This bundle has no text to copy. Download the ZIP.",
+      "bundle": {
+        "files": "Contents of the ZIP ({count} files)"
+      },
       "errors": {
         "unsupportedFormat": "This tool does not offer that format.",
         "decodeFailed": "The design could not be turned into an image. Try again or export as SVG.",
