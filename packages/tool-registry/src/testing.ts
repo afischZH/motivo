@@ -9,6 +9,8 @@ import * as z from "zod";
 import { DEFAULT_CANVAS_SIZE } from "./common";
 import { itemLockKey, parseItemLockKey } from "./randomize";
 import { TOOL_ID_PATTERN } from "./registry";
+import { pixelDigest } from "@musterli/effects";
+import { fitSize, isImageEffectTool, renderImageEffect } from "./photo-source";
 import { createRenderContext } from "./render";
 import type {
   AnyToolDefinition,
@@ -32,10 +34,15 @@ export interface ContractOptions {
 /** What a static renderer returns, for comparisons and snapshots. */
 export type StaticRenderOutput = string | CssOutput;
 
+/** Longest edge image effects are rendered at in static checks (digest only). */
+export const IMAGE_EFFECT_TEST_EDGE = 96;
+
 /**
  * Renders svg, css and text tools once with a fresh context (with the
- * animation time `t` of a "time" frame, if given). Returns
- * `undefined` for kinds that need a browser (canvas2d, webgl, image-effect).
+ * animation time `t` of a "time" frame, if given). Image effects run on
+ * their sample picture at a small size (`IMAGE_EFFECT_TEST_EDGE`) and
+ * return `pixels <digest>`. Returns `undefined` for kinds that need a
+ * browser (canvas2d, webgl).
  */
 export function renderStatic(
   tool: AnyToolDefinition,
@@ -52,6 +59,11 @@ export function renderStatic(
     case "text":
     case "css":
       return tool.render.render(p, ctx);
+    case "image-effect": {
+      if (!isImageEffectTool(tool)) return undefined;
+      const out = renderImageEffect(tool, p, seed, size, fitSize(size, IMAGE_EFFECT_TEST_EDGE));
+      return `pixels ${pixelDigest(out)}`;
+    }
     default:
       return undefined;
   }
@@ -317,7 +329,7 @@ export function describeToolContract<S extends ParamsSchema>(
         for (const p of tool.presets) {
           const out = renderStatic(anyTool, p.params, p.seed ?? seed, size);
           const svg = typeof out === "string" ? out : out?.previewSvg;
-          if (tool.render.kind !== "text" && svg !== undefined) {
+          if ((tool.render.kind === "svg" || tool.render.kind === "css") && svg !== undefined) {
             expect(checkSvg(svg), `preset ${p.id}`).toEqual([]);
           }
         }

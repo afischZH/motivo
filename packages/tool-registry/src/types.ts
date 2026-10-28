@@ -188,6 +188,12 @@ export interface ImageHint {
    * true; set false when several upload fields are visible at once.
    */
   readonly paste?: boolean;
+  /**
+   * Accept raster pictures only (PNG, JPEG, WebP): an SVG file is refused
+   * with a message. For photo effects, whose pixels are processed in a
+   * worker that cannot draw SVG.
+   */
+  readonly rasterOnly?: boolean;
 }
 
 /** A named group of options of a thumbnail picker. */
@@ -360,7 +366,16 @@ export interface PixelBuffer {
   readonly data: Uint8ClampedArray;
 }
 
-/** Placeholder until the first image effect (M2). Runs in a Web Worker. */
+/**
+ * A pixel effect on a photo (docs/ARCHITECTURE.md 4.14). `input` is the
+ * source picture (the user's photo, or `PhotoSource.sample`), already
+ * cropped to cover the design and scaled to the render resolution; `ctx`
+ * keeps the design size, so `input.width / ctx.width` is the scale of a
+ * preview. Must be pure and deterministic (randomness only from
+ * `ctx.seed`, independent of the resolution): the editor runs it in a
+ * worker at the preview resolution and again at full size for the export,
+ * so the same size gives the same pixels. Requires `photoSource`.
+ */
 export interface ImageEffectRenderer<P> {
   kind: "image-effect";
   render(input: PixelBuffer, params: P, ctx: RenderContext): PixelBuffer;
@@ -590,6 +605,32 @@ export interface ImageInput<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Photo source
+// ---------------------------------------------------------------------------
+
+/**
+ * Where a photo tool takes its picture from (docs/ARCHITECTURE.md 4.14): an
+ * upload param, or a built-in picture while that param is empty. Used by
+ * image effects (`render.kind === "image-effect"`: the picture is the render
+ * input) and by `imageInput` tools that analyse it (the picture feeds
+ * `derive`, instead of the separate image picker).
+ */
+export interface PhotoSource<P> {
+  /**
+   * Upload param (`kind: "image"`, raster, listed in `localParams`) holding
+   * the user's photo; its default (`null`) means the sample. A new photo
+   * sets the design size to the photo size.
+   */
+  param: ParamKey<P>;
+  /**
+   * The built-in picture at exactly `width` × `height` pixels: procedural,
+   * pure and deterministic (no stock photo). Called with the design size
+   * fitted into `PHOTO_SAMPLE_MAX_EDGE`.
+   */
+  sample(width: number, height: number): PixelBuffer;
+}
+
+// ---------------------------------------------------------------------------
 // Animation (GIF export)
 // ---------------------------------------------------------------------------
 
@@ -704,6 +745,11 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   bundles?: readonly BundleExport<Params<S>>[];
   /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
+  /** The picture of a photo tool (upload param or built-in sample); see `PhotoSource`. */
+  // Spelled out instead of `PhotoSource<Params<S>>`: TypeScript measures the
+  // generic interface as contravariant (`keyof P`), which would make every
+  // tool unassignable to `AnyToolDefinition`; the structural form compares fine.
+  photoSource?: { param: ParamKey<Params<S>>; sample: PhotoSource<unknown>["sample"] };
   /** Derives params from a user image; see `ImageInput`. */
   imageInput?: ImageInput<Params<S>>;
   /**

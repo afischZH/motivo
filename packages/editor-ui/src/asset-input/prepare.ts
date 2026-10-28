@@ -27,10 +27,13 @@ import { cropToSource, type CropRect } from "./crop";
 import { createSvgSanitizer, type SvgSanitizer } from "./sanitize-client";
 
 /** Every way an upload can fail; keys of `Editor.asset.errors`. */
-export type AssetError = ImageInputError | "svg-too-large" | "svg-invalid" | "svg-timeout";
+export type AssetError =
+  ImageInputError | "svg-too-large" | "svg-invalid" | "svg-timeout" | "raster-only";
 
 /** `accept` of the file input (a hint only; the bytes decide). */
 export const ASSET_ACCEPT = "image/png,image/jpeg,image/webp,image/svg+xml,.svg";
+/** `accept` of a photo field (`ImageHint.rasterOnly`). */
+export const RASTER_ASSET_ACCEPT = "image/png,image/jpeg,image/webp";
 
 export type AssetSource =
   | {
@@ -70,6 +73,8 @@ export interface ReadAssetOptions {
   /** Sanitizer to use (the browser one runs in a worker). Default: main thread. */
   svg?: SvgSanitizer | undefined;
   signal?: AbortSignal | undefined;
+  /** Refuse SVG with `raster-only` (photo fields), before sanitising anything. */
+  rasterOnly?: boolean | undefined;
 }
 
 const fileName = (file: { name?: string }): string => (file.name ?? "").slice(0, 200);
@@ -102,6 +107,7 @@ export async function readAsset(
   const name = fileName(file);
 
   if (checked.mime === "image/svg+xml") {
+    if (options.rasterOnly === true) return { ok: false, error: "raster-only" };
     if (bytes.length > IMAGE_ASSET_MAX_SVG_LENGTH) return { ok: false, error: "svg-too-large" };
     const sanitizer = options.svg ?? mainThreadSanitizer();
     const clean = await sanitizer.read(bytes, IMAGE_ASSET_MAX_SVG_LENGTH, options.signal);
@@ -134,6 +140,8 @@ export interface AssetOutputOptions {
   maxEdge?: number;
   /** Re-encode rasters as JPEG. */
   photo?: boolean;
+  /** Refuse SVG files (`ImageHint.rasterOnly`). */
+  rasterOnly?: boolean;
   /** Schema that must accept the asset. Default `imageAssetSchema`. */
   schema?: { safeParse(value: unknown): { success: boolean; data?: unknown } };
 }

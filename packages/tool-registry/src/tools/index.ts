@@ -40,6 +40,8 @@ import { avatarTool } from "./avatar";
 import { placeholderImageTool } from "./placeholder-image";
 import { animatedGradientTool } from "./animated-gradient";
 import { faviconGeneratorTool } from "./favicon-generator";
+import { duotoneTool } from "./duotone";
+import { asciiArtTool } from "./ascii-art";
 
 export {
   blobTool,
@@ -78,6 +80,8 @@ export {
   placeholderImageTool,
   animatedGradientTool,
   faviconGeneratorTool,
+  duotoneTool,
+  asciiArtTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -135,6 +139,10 @@ export {
   faviconThemeColor,
   iconPackFiles,
 } from "./favicon-generator";
+export type { DuotoneParams } from "./duotone";
+export { duotoneStops } from "./duotone";
+export type { AsciiArtParams } from "./ascii-art";
+export { asciiStyle, sampleAsciiGrid } from "./ascii-art";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -174,6 +182,8 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   placeholderImageTool,
   animatedGradientTool,
   faviconGeneratorTool,
+  duotoneTool,
+  asciiArtTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

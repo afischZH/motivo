@@ -4,11 +4,13 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   useSyncExternalStore,
   type CSSProperties,
 } from "react";
 import { cx } from "../controls/primitives";
+import { rasterEffectClient, type RasterEffectJob } from "../raster-effect/client";
 import {
   canUseObjectUrls,
   largeDataUrls,
@@ -185,7 +187,103 @@ export interface MotifProps {
  * inline markup); CSS is applied as an inline style to a box of the render
  * size, scaled with a transform so px-based declarations stay exact.
  */
-export function Motif({ output, width, height, scale, className }: MotifProps) {
+export function Motif(props: MotifProps) {
+  return props.output.kind === "raster" ? (
+    <RasterMotif {...props} output={props.output} />
+  ) : (
+    <VectorMotif {...props} />
+  );
+}
+
+type RasterOutput = Extract<MotifOutput, { kind: "raster" }>;
+
+/** Pixels of a raster motif at a display scale: device pixels, never above the design size. */
+export function rasterPreviewSize(
+  design: { width: number; height: number },
+  scale: number,
+  devicePixelRatio: number,
+): { width: number; height: number } {
+  const ratio = Number.isFinite(devicePixelRatio) && devicePixelRatio > 0 ? devicePixelRatio : 1;
+  const k = Math.min(1, Math.max(0, scale) * ratio);
+  return {
+    width: Math.max(1, Math.round(design.width * k)),
+    height: Math.max(1, Math.round(design.height * k)),
+  };
+}
+
+/**
+ * An image effect (docs/ARCHITECTURE.md 4.14): rendered by the raster-effect
+ * worker at the displayed resolution and drawn into a canvas. One request in
+ * flight per motif; changes meanwhile collapse into the latest one, and the
+ * last picture stays visible until the next arrives. `data-rendered` and
+ * `data-design` hold the pixel and design size of the picture shown
+ * (end-to-end tests wait for them).
+ */
+function RasterMotif({
+  output,
+  width,
+  height,
+  scale,
+  className,
+}: MotifProps & { output: RasterOutput }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const [shown, setShown] = useState(false);
+  const pump = useRef<{ busy: boolean; next: RasterEffectJob | null }>({ busy: false, next: null });
+  const dpr = typeof window === "undefined" ? 1 : window.devicePixelRatio;
+  const out = rasterPreviewSize(output.size, scale, dpr);
+
+  useEffect(() => {
+    const state = pump.current;
+    state.next = {
+      tool: output.tool,
+      params: output.params,
+      seed: output.seed,
+      design: output.size,
+      out: { width: out.width, height: out.height },
+    };
+    const step = () => {
+      const job = state.next;
+      if (state.busy || !job) return;
+      state.next = null;
+      state.busy = true;
+      void rasterEffectClient()
+        .preview(job)
+        .then((bitmap) => {
+          const canvas = ref.current;
+          if (canvas) {
+            // Resized only now: changing the size clears the canvas.
+            if (canvas.width !== bitmap.width) canvas.width = bitmap.width;
+            if (canvas.height !== bitmap.height) canvas.height = bitmap.height;
+            canvas.getContext("2d")?.drawImage(bitmap, 0, 0);
+            canvas.dataset.rendered = `${bitmap.width}x${bitmap.height}`;
+            canvas.dataset.design = `${job.design.width}x${job.design.height}`;
+            setShown(true);
+          }
+          bitmap.close();
+        })
+        .catch(() => undefined)
+        .finally(() => {
+          state.busy = false;
+          step();
+        });
+    };
+    step();
+  }, [output, out.width, out.height]);
+
+  return (
+    <canvas
+      ref={ref}
+      aria-hidden="true"
+      width={1}
+      height={1}
+      className={cx("block max-w-none select-none", !shown && "bg-muted", className)}
+      style={{ width: width * scale, height: height * scale }}
+      data-raster-motif=""
+    />
+  );
+}
+
+function VectorMotif({ output, width, height, scale, className }: MotifProps) {
   const supports = useCssSupports();
   const swapUrls = useLargeDataUrls(output);
   const declarations = output.kind === "css" ? output.declarations : null;

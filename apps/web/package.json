@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@musterli/editor-ui": "workspace:*",
+    "@musterli/effects": "workspace:*",
     "@musterli/engine": "workspace:*",
     "@musterli/exporters": "workspace:*",
     "@musterli/storage": "workspace:*",

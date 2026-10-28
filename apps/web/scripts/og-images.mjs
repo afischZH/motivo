@@ -47,7 +47,7 @@ for (const locale of locales.ENABLED_LOCALES) {
   for (const tool of registry.list()) {
     if (!motifs.hasStaticMotif(tool)) continue;
     const design = motifs.findDesign(tool, motifs.DEFAULT_MOTIF);
-    const svg = design && motifs.designSvg(tool, design);
+    const svg = design && (await motifs.staticMotifSvg(tool, design));
     const title = lookup(messages, `tools.${tool.id}.name`);
     if (!svg || typeof title !== "string") {
       throw new Error(`og-images: cannot render ${tool.id} (${locale})`);

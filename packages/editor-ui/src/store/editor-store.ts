@@ -22,6 +22,7 @@ import {
   canvasSizeSchema,
   keepLocked,
   parseToolParams,
+  photoDesignSize,
   registry as defaultRegistry,
   seedSchema,
   type AnyToolDefinition,
@@ -443,7 +444,10 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const s = get();
         if (!Object.prototype.hasOwnProperty.call(s.tool.schema.shape, key)) return;
         if (valuesEqual(s.params[key], value)) return;
-        change({ params: regenerated(s, key, { ...s.params, [key]: value }) }, key);
+        const params = regenerated(s, key, { ...s.params, [key]: value });
+        // A new photo of a photo tool sets the design size (same undo step).
+        const size = key === s.tool.photoSource?.param ? photoDesignSize(value) : null;
+        change(size ? { params, size } : { params }, key);
       },
 
       setParams(patch, options) {

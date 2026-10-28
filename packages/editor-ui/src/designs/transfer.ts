@@ -161,8 +161,8 @@ const MAX_ASSET_DEPTH = 3;
  * One upload, or a plain object or array holding uploads (e.g. the per-tile
  * images of the Bento grid): every SVG sanitised again, every raster checked.
  * Returns the value itself when nothing changed, `UNSAFE` for a bad file.
- * Rasters may be up to the largest edge any upload schema allows (3840 px);
- * the tool schema has already checked the declared size per param.
+ * The tool schema has already checked the declared size per param; the
+ * picture's own header may not exceed it (nor `UPLOAD_RASTER_MAX_EDGE`).
  */
 function resanitizeValue(value: unknown, depth: number): unknown {
   if (typeof value !== "object" || value === null) return value;
@@ -174,7 +174,14 @@ function resanitizeValue(value: unknown, depth: number): unknown {
     return clean.svg === asset.svg ? value : { ...asset, svg: clean.svg };
   }
   if (asset.kind === "raster") {
-    return typeof asset.href === "string" && isSafeRasterHref(asset.href, UPLOAD_RASTER_MAX_EDGE)
+    // The picture may not be larger than declared (the schema checked the
+    // declared size per param); uploads are encoded at exactly that size.
+    const { width, height } = value as { width?: unknown; height?: unknown };
+    const declared =
+      typeof width === "number" && typeof height === "number"
+        ? Math.min(UPLOAD_RASTER_MAX_EDGE, Math.max(width, height))
+        : UPLOAD_RASTER_MAX_EDGE;
+    return typeof asset.href === "string" && isSafeRasterHref(asset.href, declared)
       ? value
       : UNSAFE;
   }

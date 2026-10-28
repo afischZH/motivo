@@ -10,8 +10,9 @@
  * The logic is a small framework-free controller (unit-testable without
  * React); `useImageInput` binds it to a component.
  */
-import type { AnyToolDefinition, PixelBuffer } from "@musterli/tool-registry";
+import { photoAssetOf, type AnyToolDefinition, type PixelBuffer } from "@musterli/tool-registry";
 import { useEffect, useMemo, useSyncExternalStore } from "react";
+import { decodeDataUri } from "../raster-effect/protocol";
 import type { EditorState, EditorStoreApi } from "../store/editor-store";
 import type { ImageInputError } from "./check";
 import type { ImageDecodeResult, ImageDeriveResult, ImageInputServices } from "./services";
@@ -123,6 +124,56 @@ export function createImageInputController(
     runDerive();
   };
 
+  /**
+   * `photoSource` tools: the picture is the photo param, not this
+   * controller's picker. Without a photo the derived params go back to
+   * their defaults (the tool renders its sample itself); with one, the
+   * photo is decoded like a file and analysed.
+   */
+  const photoParam = tool.photoSource?.param;
+  let photoAsset: unknown = undefined;
+  const syncPhoto = (): void => {
+    if (!input || !running || photoParam === undefined) return;
+    const state = store.getState();
+    const value = state.params[photoParam];
+    if (value === photoAsset) return;
+    photoAsset = value;
+    const asset = photoAssetOf(tool, state.params);
+    if (!asset) {
+      const defaults = tool.defaults as Readonly<Record<string, unknown>>;
+      const patch: Record<string, unknown> = {};
+      for (const key of input.derivedKeys) patch[key] = defaults[key];
+      generation++;
+      busy = false;
+      queued = false;
+      state.applyDerived(patch);
+      update({ pixels: null, source: { kind: "sample" }, status: "idle", error: null });
+      return;
+    }
+    const file = decodeDataUri(asset.href);
+    if (!file) {
+      update({ status: "idle", error: "decode-failed" });
+      return;
+    }
+    generation++;
+    busy = false;
+    queued = false;
+    const gen = generation;
+    const name = (value as { name?: unknown }).name;
+    update({ status: "loading", error: null });
+    void services
+      .decode(new Blob([file.bytes as BlobPart], { type: file.mime }), input.maxEdge)
+      .catch((): ImageDecodeResult => ({ ok: false, error: "decode-failed" }))
+      .then((result) => {
+        if (gen !== generation) return;
+        if (!result.ok) {
+          update({ status: "idle", error: result.error });
+          return;
+        }
+        activate(result.pixels, { kind: "user", name: typeof name === "string" ? name : "" });
+      });
+  };
+
   return {
     start() {
       if (!input) return () => undefined;
@@ -130,6 +181,20 @@ export function createImageInputController(
       generation++;
       busy = false;
       queued = false;
+      if (photoParam !== undefined) {
+        photoAsset = undefined;
+        syncPhoto();
+        const unsubscribe = store.subscribe((s, prev) => {
+          if (s.params[photoParam] !== prev.params[photoParam]) syncPhoto();
+          else if (deriveKey(tool, s) !== deriveKey(tool, prev)) runDerive();
+        });
+        return () => {
+          running = false;
+          generation++;
+          unsubscribe();
+          services.dispose();
+        };
+      }
       // The sample is the starting picture. Re-deriving syncs the derived
       // params with it (a share link may bring another seed or count).
       activate(input.sample(), { kind: "sample" });

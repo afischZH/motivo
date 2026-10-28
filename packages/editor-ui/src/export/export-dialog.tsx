@@ -46,6 +46,7 @@ import {
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";
+import { exportDesignRaster } from "../raster-effect/export";
 import type { ParamValues } from "../store/editor-store";
 import { useEditorStore } from "../store/react";
 import {
@@ -81,6 +82,7 @@ import { useBackdropClose } from "../shell/use-backdrop-close";
 
 /** Browser side effects of the dialog, replaceable in tests. */
 export interface ExportServices {
+  /** Image-effect tools render in the raster-effect worker (`exportDesignRaster`). */
   exportRaster: typeof exportRaster;
   /** Repeat tile of seamless tools (scale only, the tile has its own size). */
   exportRasterTile: typeof exportRasterTile;
@@ -96,7 +98,7 @@ export interface ExportServices {
 }
 
 export const browserExportServices: ExportServices = {
-  exportRaster,
+  exportRaster: exportDesignRaster,
   exportRasterTile,
   exportGif,
   exportBundle,

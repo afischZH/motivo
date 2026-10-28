@@ -4,6 +4,7 @@
   "private": true,
   "description": "Pixel effects on ImageData (worker-safe, deterministic)",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./src/index.ts"
   },
@@ -13,5 +14,8 @@
   },
   "devDependencies": {
     "@musterli/config": "workspace:*"
+  },
+  "dependencies": {
+    "@musterli/engine": "workspace:*"
   }
 }
