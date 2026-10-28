@@ -14,5 +14,5 @@ tools: [low-poly, terrazzo]
 **New: Terrazzo Pattern.**
 
 - Angular chips, pebbles or both in two or three size classes, spread without overlap, plus speckles and fine grain.
-- Color weights through the main color share, brand palettes that keep the base color.
+- A main color weight decides how often the first color appears; brand palettes keep the base color.
 - A seamless tile by default: chips at the edge continue on the opposite side. Export as CSS background, PNG tile, SVG, PNG, JPG, WebP and GIF.

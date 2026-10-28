@@ -2411,7 +2411,7 @@
           "label": "Spacing"
         },
         "dominance": {
-          "label": "Main color share"
+          "label": "Main color weight"
         },
         "speckles": {
           "label": "Speckles"
@@ -2443,7 +2443,7 @@
           },
           "q3": {
             "question": "Can I use my brand colors?",
-            "answer": "Yes. Apply a brand palette from your Brand Kit; the base color stays. The main color share decides how often the first color appears."
+            "answer": "Yes. Apply a brand palette from your Brand Kit; the base color stays. The main color weight decides how often the first color appears."
           },
           "q4": {
             "question": "How large does the SVG get?",

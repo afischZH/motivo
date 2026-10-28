@@ -8,6 +8,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { toolSlug } from "../i18n/slugs";
+import { enableClipboard } from "./support/clipboard";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
@@ -58,13 +59,18 @@ test.describe("low poly", () => {
 });
 
 test.describe("terrazzo", () => {
-  test("exports the seamless tile as CSS and PNG tile", async ({ page }) => {
+  test("exports the seamless tile as CSS and PNG tile", async ({ page, context, browserName }) => {
+    await enableClipboard(context, browserName);
     await openEditor(page, "terrazzo", "en");
     const dialog = await openExport(page);
     await choose(dialog, "CSS");
-    const code = dialog.getByTestId("export-code");
-    await expect(code).toContainText("background-size: 480px 480px;");
-    await expect(code).toContainText("background-repeat: repeat;");
+    // The code preview is cut after a few KB (grain tile), so read the copy.
+    await expect(dialog.getByTestId("export-code")).toContainText("background-image: url(");
+    await dialog.getByRole("button", { name: "Copy", exact: true }).click();
+    await expect(dialog.getByRole("status")).toHaveText("Copied! Off to your project.");
+    const css = await page.evaluate(() => navigator.clipboard.readText());
+    expect(css).toContain("background-size: 480px 480px;");
+    expect(css).toContain("background-repeat: repeat;");
 
     await choose(dialog, "PNG tile");
     await expect(dialog.getByTestId("export-output-size")).toHaveText(/^Result: \d+ × \d+ px\.$/);
