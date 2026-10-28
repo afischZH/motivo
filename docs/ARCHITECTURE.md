@@ -159,6 +159,13 @@ Eigene Formen für alle Tools mit Shapes (`packages/engine/src/shapes/`, Lizenz 
 - **Zellen-Ids in Geometric Patterns**: `<Zeile>-<Spalte>` der Grundzelle plus `.<Viertel 0-3>` pro Teilung (0 oben links, 1 oben rechts, 2 unten links, 3 unten rechts), Muster `^\d{1,3}-\d{1,3}(\.[0-3]){0,4}$`. Die Id hängt nur von der Position im Raster ab: stabil bei Farbe, Form, Pack, Drehung, Abständen, Kontur und Bildgrösse (solange `columns` und das Seitenverhältnis gleich bleiben), im Uniform-Modus auch bei neuem Seed. Ändert sich das Raster, bleiben fremde Ids gespeichert und zählen zur Grenze (128), wirken aber nicht.
 - **Mehrfachauswahl im Thumbnail-Picker**: Ein Array-Param aus Enum-Werten mit Vorschau wird zum Thumbnail-Raster mit Kontrollkästchen (`ThumbnailControl.multiple = { min, max }` aus dem Schema, `toggleChoice` hält die Grenzen ein); `optionGroups` gelten wie beim Einzelwert.
 
+### 4.9 Geometrie-Helfer der Engine (ab M4b-AP02)
+Gemeinsame, reine Bausteine in `packages/engine/src/geometry/` (über `@musterli/engine` exportiert), zuerst genutzt von Low-Poly/Voronoi (K3) und Terrazzo (K5); ohne Library, alle mit Eigenschaftstests.
+- **Polygone** (`polygon.ts`): `polygonArea`, `polygonCentroid`, `clipPolygonHalfPlane` und `clipPolygonToRect` (Sutherland-Hodgman), `insetConvexPolygon` (Kanten nach innen versetzt, für Fugen), `starPolygon` (zufälliges sternförmiges Polygon im umschliessenden Kreis, nie selbstüberschneidend), Pfaddaten `polygonPathData`, `roundedPolygonPathData` (Ecken mit quadratischer Kurve), `smoothPolygonPathData` (Kiesel), `formatCoord` (schnelles Runden für lange Pfadlisten).
+- **Delaunay** (`delaunay.ts`): Bowyer-Watson mit Geister-Dreiecken statt Super-Dreieck (vollständige Hülle), Walk-Suche, Schlangenreihenfolge; `triangulationNeighbours`.
+- **Voronoi** (`voronoi.ts`): `voronoiCells(sites, rect)` per Halbebenen-Schnitt mit Sicherheitsradius; die Zellen kacheln das Rechteck exakt.
+- **Scheiben ohne Überlappung** (`scatter.ts`): `scatterDisks` (Pfeilwurf, Grössenklassen, Mindestabstand, optional Torus für nahtlose Kacheln) und `wrapCopies` (Kopien über Kachelränder).
+
 ## 5. Render- und Export-Pipeline
 
 ```

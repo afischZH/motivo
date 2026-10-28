@@ -14,6 +14,7 @@ import { colorSchema, paletteSchema } from "./common";
 import { registry } from "./index";
 import { parseToolParams } from "./randomize";
 import { defineTool } from "./registry";
+import { createRenderContext } from "./render";
 import { renderStatic } from "./testing";
 
 const SIZE = { width: 320, height: 200 };
@@ -21,8 +22,15 @@ const SIZE = { width: 320, height: 200 };
 /** Output of one frame as a comparable string (SVG, or the CSS plus its preview SVG). */
 function frameOutput(
   tool: ReturnType<typeof registry.list>[number],
-  frame: { params: unknown; seed: number },
+  frame: { params: unknown; seed: number; t?: number },
 ): string {
+  if (frame.t !== undefined && tool.render.kind === "svg") {
+    // Time frames (first used by Low-Poly): the renderer reads `ctx.t`.
+    return tool.render.render(
+      tool.schema.parse(frame.params),
+      createRenderContext(frame.seed, SIZE, frame.t),
+    );
+  }
   const out = renderStatic(tool, frame.params, frame.seed, SIZE);
   return typeof out === "string" ? out : JSON.stringify(out);
 }

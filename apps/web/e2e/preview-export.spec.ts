@@ -102,6 +102,12 @@ const CASES: Case[] = [
   { toolId: "css-shadow", css: true },
   { toolId: "css-shadow", preset: "Inner", css: true },
   { toolId: "css-shadow", preset: "Floating", css: true },
+  // M4b-AP02: hundreds of abutting triangles (seam strokes), Voronoi cells
+  // with gaps and rounded corners, Terrazzo as an SVG pattern with grain.
+  { toolId: "low-poly" },
+  { toolId: "low-poly", preset: "Mosaic" },
+  { toolId: "terrazzo" },
+  { toolId: "terrazzo", preset: "Pebbles" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

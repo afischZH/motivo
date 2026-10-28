@@ -118,6 +118,8 @@ describe("built-in tool registration", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "low-poly",
+      "terrazzo",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -141,6 +143,8 @@ describe("built-in tool registration", () => {
       "grid-patterns",
       "confetti",
       "dieter-dots",
+      "low-poly",
+      "terrazzo",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });
