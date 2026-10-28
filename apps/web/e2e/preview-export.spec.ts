@@ -102,6 +102,21 @@ const CASES: Case[] = [
   { toolId: "css-shadow", css: true },
   { toolId: "css-shadow", preset: "Inner", css: true },
   { toolId: "css-shadow", preset: "Floating", css: true },
+  // M4b-AP03: hundreds of thin, crossing strokes (blend), spirograph loops coloured along the lines.
+  { toolId: "guilloche" },
+  { toolId: "guilloche", preset: "Spirograph" },
+  // M4b-AP01: hundreds of thin contour lines and filled even-odd bands; flow
+  // lines as strokes and as tapered fills.
+  { toolId: "topo-lines" },
+  { toolId: "topo-lines", preset: "Lagoon" },
+  { toolId: "flow-field" },
+  { toolId: "flow-field", preset: "Whirlpool" },
+  // M4b-AP02: hundreds of abutting triangles (seam strokes), Voronoi cells
+  // with gaps and rounded corners, Terrazzo as an SVG pattern with grain.
+  { toolId: "low-poly" },
+  { toolId: "low-poly", preset: "Mosaic" },
+  { toolId: "terrazzo" },
+  { toolId: "terrazzo", preset: "Pebbles" },
   // M4b-AP04: nested backdrop SVG of another tool, layered blurred shadows,
   // clipped placeholder, window bar with text; solid background with border.
   { toolId: "screenshot-beautifier", css: true },

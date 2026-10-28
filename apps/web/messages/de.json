@@ -2271,6 +2271,496 @@
         }
       }
     },
+    "guilloche": {
+      "name": "Guilloche",
+      "description": "Feine, verschlungene Linien wie auf Banknoten und Urkunden: Rosetten, Bordüren und Rahmen. Als SVG, Bild oder GIF exportieren.",
+      "params": {
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "rosette": "Rosette",
+            "band": "Band (kachelbar)",
+            "frame": "Rahmen"
+          }
+        },
+        "repeats": {
+          "label": "Wiederholungen"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "inner": {
+          "label": "Innenkante",
+          "description": "Rosette und Rahmen: Abstand von der Mitte, gemessen an der halben kürzeren Seite. Band: Höhe über dem unteren Rand, gemessen an der Bildhöhe."
+        },
+        "outer": {
+          "label": "Aussenkante",
+          "description": "Rosette und Rahmen: Abstand von der Mitte, gemessen an der halben kürzeren Seite. Band: Höhe über dem unteren Rand, gemessen an der Bildhöhe."
+        },
+        "curve": {
+          "label": "Kurve",
+          "options": {
+            "weave": "Geflecht",
+            "spiro": "Spirograph",
+            "harmonic": "Harmonische"
+          }
+        },
+        "lines": {
+          "label": "Linien"
+        },
+        "petals": {
+          "label": "Blätter",
+          "description": "Wie oft sich die Grundform pro Umlauf oder pro Wiederholung zeigt."
+        },
+        "frequency": {
+          "label": "Schwingungen",
+          "description": "Wie oft jede Linie pro Umlauf oder pro Wiederholung zwischen den Kanten hin und her schwingt."
+        },
+        "amplitude": {
+          "label": "Tiefe"
+        },
+        "spread": {
+          "label": "Versatz",
+          "description": "Wie weit die Linien gegeneinander verschoben sind. Bei 1 verteilen sie sich gleichmässig."
+        },
+        "lineWidth": {
+          "label": "Linienstärke"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "description": "Verlauf: jede Linie in einer Farbe, über die Linien verteilt. Irisdruck: ein Farbverlauf quer über das ganze Bild. Entlang: die Farbe wechselt entlang jeder Linie.",
+          "options": {
+            "single": "Eine Farbe",
+            "alternate": "Abwechselnd",
+            "blend": "Verlauf",
+            "iris": "Irisdruck",
+            "along": "Entlang"
+          }
+        },
+        "gradientAngle": {
+          "label": "Winkel des Irisdrucks"
+        },
+        "overlay": {
+          "label": "Zweite Ebene zeigen"
+        },
+        "overlayCurve": {
+          "label": "Kurve"
+        },
+        "overlayLines": {
+          "label": "Linien"
+        },
+        "overlayPetals": {
+          "label": "Blätter"
+        },
+        "overlayFrequency": {
+          "label": "Schwingungen"
+        },
+        "overlayAmplitude": {
+          "label": "Tiefe"
+        },
+        "overlayColor": {
+          "label": "Farbe"
+        }
+      },
+      "groups": {
+        "overlay": "Zweite Ebene"
+      },
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Urkunde",
+        "voucher": "Gutschein",
+        "spirograph": "Spirograph",
+        "seal": "Siegel",
+        "lace": "Spitze",
+        "ribbon": "Bordüre"
+      },
+      "seo": {
+        "whatIs": "Guilloche nennt man feine, ineinander verschlungene Linienmuster, wie du sie von Banknoten, Wertpapieren, Urkunden und Gutscheinen kennst. Früher wurden sie mit Guillochiermaschinen in Metall graviert, heute entstehen sie aus einfachen Formeln: Linien, die zwischen zwei Kanten schwingen, Spirographen aus kreisenden Zeigern und überlagerte Sinuswellen. Der Generator rechnet alles direkt in deinem Browser.",
+        "howTo": "Wähle eine Anordnung: Rosette für ein Siegel oder Wasserzeichen, Band für eine kachelbare Bordüre oder Rahmen für den Rand einer Urkunde. Stelle dann Kurve, Anzahl Linien, Blätter und Schwingungen ein, setze Innen- und Aussenkante und wähle die Farben, auch als Irisdruck oder Verlauf entlang der Linien. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, PNG, JPG, WebP oder als animiertes GIF.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich die Muster für echte Banknoten oder Ausweise verwenden?",
+            "answer": "Nein. Die Muster sind dekorativ und bieten keinen Schutz vor Fälschungen. Nutze sie für Urkunden, Gutscheine, Einladungen, Etiketten, Verpackungen oder Hintergründe."
+          },
+          "q2": {
+            "question": "Wie mache ich eine Bordüre, die sich wiederholt?",
+            "answer": "Wähle die Anordnung Band und ein breites, niedriges Format, zum Beispiel 1600 × 200 Pixel. Setze die Innenkante nahe 0 und die Aussenkante nahe 1. Das Band schliesst links und rechts nahtlos an, du kannst es also beliebig oft nebeneinander setzen."
+          },
+          "q3": {
+            "question": "Warum wirkt mein Muster wie eine volle Fläche?",
+            "answer": "Bei vielen Linien und vielen Schwingungen liegen die Linien sehr dicht. Reduziere die Anzahl Linien oder Schwingungen, oder mache die Linien dünner."
+          },
+          "q4": {
+            "question": "Wie gross wird die SVG-Datei?",
+            "answer": "Die Kurven werden gerade so fein abgetastet, dass sie glatt wirken, und mit einer Nachkommastelle gespeichert. Typische Muster sind 50 bis 250 KB gross, auch extreme Einstellungen bleiben unter rund 1.5 MB."
+          },
+          "q5": {
+            "question": "Was zeigt die Animation?",
+            "answer": "Beim GIF-Export mit Bewegung verschiebt sich die Phase jeder Linie einmal ganz herum. Das Muster scheint zu fliessen, und die Schleife läuft ohne Sprung."
+          }
+        }
+      }
+    },
+    "topo-lines": {
+      "name": "Höhenlinien",
+      "description": "Topografische Linien wie auf einer Landkarte, als Konturen oder gefüllte Höhenstufen. Als SVG, Bild oder GIF exportieren.",
+      "params": {
+        "scale": {
+          "label": "Massstab"
+        },
+        "octaves": {
+          "label": "Detailstufen"
+        },
+        "roughness": {
+          "label": "Rauheit"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "levels": {
+          "label": "Anzahl Linien"
+        },
+        "style": {
+          "label": "Darstellung",
+          "options": {
+            "lines": "Linien",
+            "bands": "Flächen",
+            "bands-lines": "Flächen und Linien"
+          }
+        },
+        "lineWidth": {
+          "label": "Linienbreite"
+        },
+        "majorEvery": {
+          "label": "Hauptlinie alle",
+          "description": "Jede n-te Linie wird breiter gezeichnet, wie die Zählkurven einer Landkarte. 0 schaltet sie aus."
+        },
+        "colorMode": {
+          "label": "Farbverlauf",
+          "options": {
+            "gradient": "Von tief nach hoch",
+            "cycle": "Farben im Wechsel"
+          }
+        },
+        "lineColor": {
+          "label": "Linienfarbe"
+        }
+      },
+      "presets": {
+        "survey": "Vermessung",
+        "lagoon": "Lagune",
+        "night-map": "Nachtkarte",
+        "terraces": "Terrassen",
+        "marble": "Marmor",
+        "alpine": "Hochalpin",
+        "candy": "Zuckerwatte"
+      },
+      "seo": {
+        "whatIs": "Höhenlinien verbinden Punkte gleicher Höhe, so wie auf einer Wanderkarte. Musterli erzeugt dafür ein zufälliges Gelände aus Rauschen und zeichnet seine Konturen in gleichmässigen Abständen. Das Ergebnis passt als ruhiger Hintergrund für Websites, Präsentationen, Poster oder Verpackungen und bleibt als SVG gestochen scharf.",
+        "howTo": "Wähle mit Massstab, Detailstufen, Rauheit und Verzerrung die Form des Geländes und lege fest, wie viele Linien es geben soll. Zeig nur Linien, gefüllte Höhenstufen oder beides, und hebe jede n-te Linie als Hauptlinie hervor. Mit der Leertaste würfelst du ein neues Gelände. Exportiere als SVG, PNG, JPG, WebP oder als GIF, in dem die Linien langsam wandern.",
+        "faq": {
+          "q1": {
+            "question": "Sind die Höhenlinien echte Kartendaten?",
+            "answer": "Nein. Das Gelände entsteht aus mathematischem Rauschen und ist frei erfunden. Darum kannst du die Grafik ohne Lizenzfragen verwenden, und jeder Seed ergibt eine neue Landschaft."
+          },
+          "q2": {
+            "question": "Wie gross wird die SVG-Datei?",
+            "answer": "Bei den Standardwerten meist zwischen 100 und 400 KB. Musterli vereinfacht die Linien und rundet Koordinaten. Viele Linien, viele Detailstufen und Flächen mit Linien zusammen machen die Datei grösser, sie bleibt aber in jedem Fall unter etwa 1,5 MB."
+          },
+          "q3": {
+            "question": "Was bewirkt die Verzerrung?",
+            "answer": "Sie verschiebt das Gelände mit einem zweiten Rauschen in sich selbst. Kleine Werte machen die Formen organischer, grosse Werte ergeben fliessende Muster, die an Marmor oder Holzmaserung erinnern."
+          },
+          "q4": {
+            "question": "Kann ich die Farben meiner Marke verwenden?",
+            "answer": "Ja. Mit einer Brand-Palette aus deinem Brand Kit übernimmt das Tool deine Farben für die Linien oder Höhenstufen und wählt die dunkelste Farbe für die Linien über den Flächen."
+          }
+        }
+      }
+    },
+    "flow-field": {
+      "name": "Flow Fields",
+      "description": "Tausende Linien folgen einem unsichtbaren Strömungsfeld, wie Wind, Wasser oder Haar. Als SVG, Bild oder GIF exportieren.",
+      "params": {
+        "mode": {
+          "label": "Feld",
+          "options": {
+            "noise": "Rauschen",
+            "curl": "Wirbel"
+          }
+        },
+        "scale": {
+          "label": "Massstab"
+        },
+        "octaves": {
+          "label": "Detailstufen"
+        },
+        "turbulence": {
+          "label": "Unruhe"
+        },
+        "direction": {
+          "label": "Hauptrichtung"
+        },
+        "seeding": {
+          "label": "Startpunkte",
+          "options": {
+            "poisson": "Gleichmässig verteilt",
+            "grid": "Raster",
+            "random": "Zufällig"
+          }
+        },
+        "spacing": {
+          "label": "Linienabstand"
+        },
+        "separation": {
+          "label": "Mindestabstand",
+          "description": "Anteil des Linienabstands, den Linien zueinander halten. Bei 0 dürfen sich Linien berühren und kreuzen."
+        },
+        "length": {
+          "label": "Linienlänge"
+        },
+        "step": {
+          "label": "Schrittweite"
+        },
+        "maxLines": {
+          "label": "Höchstens Linien"
+        },
+        "lineWidth": {
+          "label": "Linienbreite"
+        },
+        "taper": {
+          "label": "Strichform",
+          "options": {
+            "none": "Gleich breit",
+            "tail": "Zum Ende dünner",
+            "both": "Beidseitig spitz"
+          }
+        },
+        "colorMode": {
+          "label": "Farbe nach",
+          "options": {
+            "palette": "Zufällig aus Palette",
+            "angle": "Richtung",
+            "position": "Position"
+          }
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        }
+      },
+      "presets": {
+        "current": "Strömung",
+        "silk": "Seide",
+        "whirlpool": "Strudel",
+        "breeze": "Brise",
+        "ink": "Tusche",
+        "meadow": "Wiese",
+        "dune": "Wüstenwind"
+      },
+      "seo": {
+        "whatIs": "Ein Flow Field ist ein Feld aus Richtungen, das jedem Punkt der Fläche einen Winkel zuordnet. Lässt man viele Linien diesem Feld folgen, entstehen Bilder, die an Wind, Strömungen, Fell oder Seide erinnern. Musterli berechnet das Feld aus Rauschen oder aus Wirbeln und hält auf Wunsch einen Mindestabstand ein, damit sich die Linien nicht verklumpen.",
+        "howTo": "Wähle das Feld, den Massstab und die Unruhe, dann Startpunkte, Linienabstand und Länge. Strichform, Linienbreite und Deckkraft bestimmen den Charakter, die Farben kommen aus der Palette, aus der Richtung oder aus der Position. Mit der Leertaste würfelst du eine neue Variante. Exportiere als SVG, PNG, JPG, WebP oder als GIF mit wandernden Strichen.",
+        "faq": {
+          "q1": {
+            "question": "Was ist der Unterschied zwischen Rauschen und Wirbel?",
+            "answer": "Beim Rauschen zeigen die Linien grob in eine Hauptrichtung und weichen je nach Unruhe davon ab. Das Wirbelfeld leitet die Richtungen aus einem Rauschen ab, sodass Linien kreisen und nie in einem Punkt zusammenlaufen."
+          },
+          "q2": {
+            "question": "Wozu dient der Mindestabstand?",
+            "answer": "Eine Linie endet, sobald sie einer anderen zu nahe kommt. So verteilen sich die Linien gleichmässig über die Fläche. Mit 0 dürfen sie sich überlagern, was mit geringer Deckkraft weiche, haarartige Strukturen ergibt."
+          },
+          "q3": {
+            "question": "Wie gross wird die SVG-Datei?",
+            "answer": "Bei den Standardwerten meist unter 300 KB. Musterli vereinfacht jede Linie und rundet Koordinaten. Anzahl Linien, Schritte und Punkte sind begrenzt, damit die Datei unter etwa 1,5 MB bleibt und die Vorschau flüssig reagiert."
+          },
+          "q4": {
+            "question": "Wie sieht die GIF-Animation aus?",
+            "answer": "Bei der Quelle Bewegung werden die Linien zu Strichen, die entlang des Feldes wandern. Die Schleife läuft nahtlos. Alternativ wechseln neue Varianten oder die Farben."
+          }
+        }
+      }
+    },
+    "low-poly": {
+      "name": "Low Poly und Voronoi",
+      "description": "Facettierte Hintergründe aus Dreiecken oder Voronoi-Zellen, eingefärbt mit einem Verlauf aus deiner Palette. Export als SVG, Bild oder GIF.",
+      "groups": {
+        "lines": "Linien"
+      },
+      "params": {
+        "mode": {
+          "label": "Art",
+          "options": {
+            "delaunay": "Dreiecke",
+            "voronoi": "Voronoi-Zellen"
+          }
+        },
+        "distribution": {
+          "label": "Punkte",
+          "options": {
+            "poisson": "Natürlich",
+            "grid": "Raster"
+          }
+        },
+        "spacing": {
+          "label": "Punktabstand"
+        },
+        "jitter": {
+          "label": "Unregelmässigkeit"
+        },
+        "gap": {
+          "label": "Fuge"
+        },
+        "rounding": {
+          "label": "Eckenrundung"
+        },
+        "gradient": {
+          "label": "Verlauf",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "mesh": "Mesh"
+          }
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "variance": {
+          "label": "Farbvariation"
+        },
+        "lighting": {
+          "label": "Licht"
+        },
+        "lightAngle": {
+          "label": "Lichtrichtung"
+        },
+        "strokeWidth": {
+          "label": "Linienbreite"
+        },
+        "strokeColor": {
+          "label": "Linienfarbe"
+        },
+        "strokeOpacity": {
+          "label": "Liniendeckkraft"
+        }
+      },
+      "presets": {
+        "crystal": "Kristall",
+        "ember": "Glut",
+        "glacier": "Gletscher",
+        "wireframe": "Drahtgitter",
+        "mosaic": "Mosaik",
+        "stained-glass": "Kirchenfenster",
+        "cells": "Zellen",
+        "dusk": "Dämmerung"
+      },
+      "seo": {
+        "whatIs": "Low Poly ist ein facettierter Look aus flachen Dreiecken, wie bei einem geschliffenen Edelstein oder einem Papiermodell. Voronoi-Zellen teilen die Fläche in organische Felder um verstreute Punkte, ähnlich wie trockene Erde oder ein Mosaik. Beides ergibt markante Hintergründe für Websites, Präsentationen, Plakate und Social Posts.",
+        "howTo": "Wähle Dreiecke oder Voronoi-Zellen, stelle den Punktabstand ein und bestimme einen Verlauf aus deinen Farben. Licht gibt eine plastische Wirkung, Linien ergeben ein Drahtgitter, Fuge und Eckenrundung machen Mosaiksteine daraus. Mit der Leertaste würfelst du eine neue Anordnung. Exportiere als SVG, PNG, JPG, WebP, CSS oder animiertes GIF.",
+        "faq": {
+          "q1": {
+            "question": "Wie entstehen die Dreiecke?",
+            "answer": "Die Punkte werden mit Poisson-Disk-Sampling gleichmässig verteilt (oder als leicht verschobenes Raster) und per Delaunay-Triangulation verbunden: Kein Umkreis eines Dreiecks enthält einen anderen Punkt. So entstehen kaum dünne Splitter."
+          },
+          "q2": {
+            "question": "Was sind Voronoi-Zellen?",
+            "answer": "Jede Zelle umfasst den Teil der Fläche, der näher bei ihrem Punkt liegt als bei jedem anderen Punkt. Die Zellen werden auf die Bildfläche zugeschnitten, die ganze Fläche ist also bedeckt."
+          },
+          "q3": {
+            "question": "Woher kommen die Farben?",
+            "answer": "Jede Fläche erhält die Farbe des Verlaufs in ihrer Mitte. Farbvariation und Licht ändern die Helligkeit pro Fläche; das Licht nutzt ein zufälliges Relief und die eingestellte Lichtrichtung."
+          },
+          "q4": {
+            "question": "Kann ich das animieren?",
+            "answer": "Ja. Der GIF-Export lässt die Punkte auf kleinen Schleifen wandern (Bewegung), wechselt die Farben oder zeigt neue Anordnungen."
+          },
+          "q5": {
+            "question": "Lässt sich das SVG bearbeiten?",
+            "answer": "Ja. Jede Fläche ist ein einfacher Pfad mit eigener Füllfarbe, ohne Filter und ohne Transformationen."
+          }
+        }
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo-Muster",
+      "description": "Terrazzo-Flächen mit Steinsplittern in mehreren Grössen, Sprenkeln und feiner Körnung. Nahtlose Kacheln für CSS oder Export als SVG und Bild.",
+      "groups": {
+        "effects": "Oberfläche"
+      },
+      "params": {
+        "seamless": {
+          "label": "Nahtlose Kachel"
+        },
+        "tileSize": {
+          "label": "Kachelgrösse"
+        },
+        "chipSize": {
+          "label": "Steingrösse"
+        },
+        "sizeClasses": {
+          "label": "Grössenklassen"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "density": {
+          "label": "Bedeckung"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "angular": "Kantig",
+            "pebble": "Kiesel",
+            "mixed": "Gemischt"
+          }
+        },
+        "irregularity": {
+          "label": "Unregelmässigkeit"
+        },
+        "gap": {
+          "label": "Abstand"
+        },
+        "dominance": {
+          "label": "Anteil Hauptfarbe"
+        },
+        "speckles": {
+          "label": "Sprenkel"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "venetian": "Venezianisch",
+        "midnight": "Mitternacht",
+        "pastel": "Pastell",
+        "pebbles": "Kiesel",
+        "pop": "Pop",
+        "granite": "Granit"
+      },
+      "seo": {
+        "whatIs": "Terrazzo ist ein Boden- und Wandbelag aus Stein- und Glassplittern in einem Bindemittel, glatt geschliffen. Als Grafik ergibt er ein lebendiges, haptisches Muster für Verpackungen, Websites, Plakate und Produktmockups.",
+        "howTo": "Wähle kantige Steine, Kiesel oder eine Mischung und stelle Steingrösse, Anzahl Grössenklassen und Bedeckung ein. Bestimme Grundfarbe und Steinfarben; die erste Farbe kann überwiegen. Sprenkel und Körnung geben eine natürliche Oberfläche. Lass die nahtlose Kachel für Muster eingeschaltet und exportiere die Kachel als CSS oder PNG, oder die ganze Fläche als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Überlappen sich die Steine?",
+            "answer": "Nein. Jeder Stein hat einen umschliessenden Kreis, und ein neuer Stein landet nur dort, wo er den eingestellten Abstand zu allen anderen einhält. Zuerst kommen die grossen Steine, dann füllen mittlere und kleine die Lücken."
+          },
+          "q2": {
+            "question": "Wie funktioniert die nahtlose Kachel?",
+            "answer": "Steine, die über einen Kachelrand ragen, gehen auf der gegenüberliegenden Seite weiter. Die Kachel lässt sich deshalb in jede Richtung ohne sichtbare Naht wiederholen, als CSS-Hintergrund oder als PNG-Kachel."
+          },
+          "q3": {
+            "question": "Kann ich meine Markenfarben verwenden?",
+            "answer": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an, die Grundfarbe bleibt. Der Anteil Hauptfarbe bestimmt, wie oft die erste Farbe vorkommt."
+          },
+          "q4": {
+            "question": "Wie gross wird das SVG?",
+            "answer": "Höchstens 2000 Steine und 2500 Sprenkel pro Kachel. Auf sehr grossen Flächen werden stattdessen die Steine grösser, damit das SVG kompakt bleibt."
+          }
+        }
+      }
+    },
     "screenshot-beautifier": {
       "name": "Screenshot-Verschönerer",
       "description": "Leg deinen Screenshot auf einen schönen Hintergrund, mit Abstand, runden Ecken, weichem Schatten und Browser-Fenster. Fertig für Doku, Social Media und Product Hunt.",

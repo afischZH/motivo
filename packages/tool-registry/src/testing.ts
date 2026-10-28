@@ -33,7 +33,8 @@ export interface ContractOptions {
 export type StaticRenderOutput = string | CssOutput;
 
 /**
- * Renders svg, css and text tools once with a fresh context. Returns
+ * Renders svg, css and text tools once with a fresh context (with the
+ * animation time `t` of a "time" frame, if given). Returns
  * `undefined` for kinds that need a browser (canvas2d, webgl, image-effect).
  */
 export function renderStatic(
@@ -41,10 +42,11 @@ export function renderStatic(
   params: unknown,
   seed: number,
   size: CanvasSize,
+  t?: number,
 ): StaticRenderOutput | undefined {
   // The tool is type-erased here; params are validated by the caller's schema.
   const p = tool.schema.parse(params);
-  const ctx = createRenderContext(seed, size);
+  const ctx = createRenderContext(seed, size, t);
   switch (tool.render.kind) {
     case "svg":
     case "text":
