@@ -110,7 +110,8 @@
       "heading": "Bereit für dein erstes Motiv?",
       "text": "In zehn Sekunden vom Klick zum fertigen Hintergrund.",
       "button": "Jetzt ausprobieren"
-    }
+    },
+    "kofiButton": "Spenden"
   },
   "NotFound": {
     "title": "Seite nicht gefunden",
@@ -2723,15 +2724,18 @@
         "donations": {
           "heading": "Spenden",
           "paragraphs": [
-            "Musterli ist gratis und finanziert sich über freiwillige Spenden. Auf der Seite «Unterstützen» verlinken wir auf einen externen Spendenanbieter. Musterli selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
-            "Erst wenn du dem Link folgst, verlässt du Musterli. Für die Bearbeitung deiner Daten beim Spendenanbieter ist dieser verantwortlich, und es gilt seine Datenschutzerklärung. Der Anbieter teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ihm ausdrücklich zur Weitergabe an uns überlässt."
+            "Musterli ist gratis und finanziert sich über freiwillige Spenden. Wir nutzen dafür Ko-fi, einen Dienst der Ko-fi Labs Limited mit Sitz im Vereinigten Königreich. Musterli selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
+            "Auf der Startseite zeigen wir einen Spenden-Knopf von Ko-fi. Dafür lädt dein Browser beim Aufruf der Startseite ein Script, ein Stylesheet und ein Logo von storage.ko-fi.com. Dabei erhält Ko-fi technisch notwendige Daten wie deine IP-Adresse, Datum und Uhrzeit, die Adresse der Seite und deinen User Agent. Schriften von Google laden wir dabei bewusst nicht. Der Knopf selbst setzt auf Musterli keine Cookies und nutzt keinen lokalen Speicher.",
+            "Erst wenn du auf den Knopf klickst, öffnet sich das Spendenformular von ko-fi.com in einem eingebetteten Fenster. Auf der Seite «Unterstützen» verlinken wir ausserdem direkt auf Ko-fi. Für alles, was im Spendenformular oder auf ko-fi.com geschieht, ist Ko-fi verantwortlich. Ko-fi und seine Zahlungsdienste können dort Cookies setzen, und es gilt die Datenschutzerklärung von Ko-fi. Ko-fi teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ausdrücklich zur Weitergabe an uns angibst.",
+            "Wir binden den Spenden-Knopf ein, weil wir an einer einfachen Möglichkeit, Musterli zu unterstützen, ein berechtigtes Interesse haben (Art. 6 Abs. 1 lit. f DSGVO)."
           ]
         },
         "transfer": {
           "heading": "Bekanntgabe ins Ausland",
           "paragraphs": [
             "Cloudflare und Sentry haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
-            "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen."
+            "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen.",
+            "Ko-fi hat seinen Sitz im Vereinigten Königreich. Für das Vereinigte Königreich haben die EU-Kommission und der Bundesrat einen angemessenen Datenschutz festgestellt. Ko-fi und seine Zahlungsdienste können Daten auch in den USA bearbeiten."
           ]
         },
         "retention": {

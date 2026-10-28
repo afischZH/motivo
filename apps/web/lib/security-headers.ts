@@ -22,20 +22,31 @@ import { NO_EXTERNAL_SERVICES, type ExternalServices } from "./telemetry/config"
  * enables it (`telemetry/config.ts`: its environment variable is set), so
  * previews and local builds keep the strict self-only policy.
  */
-const EXTERNAL: Record<keyof ExternalServices, { script: string[]; connect: string[] }> = {
+type SourceKind = "script" | "style" | "img" | "connect" | "frame";
+
+const EXTERNAL: Record<keyof ExternalServices, Partial<Record<SourceKind, string[]>>> = {
   // Cloudflare Web Analytics, manual embedding (site not proxied by Cloudflare).
   analytics: {
     script: ["https://static.cloudflareinsights.com"],
     connect: ["https://cloudflareinsights.com"],
   },
   // Sentry EU ingest. The SDK itself is bundled and loaded from 'self'.
-  sentry: { script: [], connect: ["https://*.ingest.de.sentry.io"] },
+  sentry: { connect: ["https://*.ingest.de.sentry.io"] },
+  // Ko-fi floating donate widget (home page): script, wrapper stylesheet and
+  // logo from the CDN; the donation form opens in an iframe on ko-fi.com.
+  // The button iframes are about:blank and inherit this policy.
+  kofi: {
+    script: ["https://storage.ko-fi.com"],
+    style: ["https://storage.ko-fi.com"],
+    img: ["https://storage.ko-fi.com"],
+    frame: ["https://ko-fi.com"],
+  },
 };
 
-function external(services: ExternalServices, kind: "script" | "connect"): string[] {
+function external(services: ExternalServices, kind: SourceKind): string[] {
   return (Object.keys(EXTERNAL) as (keyof ExternalServices)[])
     .filter((service) => services[service])
-    .flatMap((service) => EXTERNAL[service][kind]);
+    .flatMap((service) => EXTERNAL[service][kind] ?? []);
 }
 
 export interface SecurityHeaderOptions {
@@ -103,13 +114,17 @@ export function contentSecurityPolicy({
     // CSS tool previews, swatches) and Radix injects <style> for scroll
     // locking. CSS cannot run script; the remaining risk is CSS-based data
     // exfiltration, limited by img-src/connect-src/font-src below.
-    "style-src": ["'self'", "'unsafe-inline'"],
+    "style-src": ["'self'", "'unsafe-inline'", ...external(enabled, "style")],
     // Previews, thumbnails and user SVGs are data: URIs; exports are blob: URLs.
-    "img-src": ["'self'", "data:", "blob:"],
+    "img-src": ["'self'", "data:", "blob:", ...external(enabled, "img")],
     "font-src": ["'self'"],
     // Dev only: the HMR websocket (Safari does not match ws: against 'self').
     "connect-src": ["'self'", ...(dev ? ["ws:"] : []), ...external(enabled, "connect")],
     "worker-src": ["'self'", "blob:"],
+    // Only with a framed service; otherwise default-src 'self' applies.
+    ...(external(enabled, "frame").length > 0
+      ? { "frame-src": ["'self'", ...external(enabled, "frame")] }
+      : {}),
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
     "form-action": ["'self'"],

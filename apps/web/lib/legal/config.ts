@@ -35,7 +35,7 @@ export interface LegalConfig {
 export const LEGAL_CONFIG: LegalConfig = {
   legalReviewed: false,
   /** ISO date of the current version of the texts, shown as "last updated". */
-  lastUpdated: "2026-10-27",
+  lastUpdated: "2026-10-28",
   operator: {
     /** Person or company responsible for the site. */
     name: "[Name]",

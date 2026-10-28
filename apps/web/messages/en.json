@@ -110,7 +110,8 @@
       "heading": "Ready for your first motif?",
       "text": "Ten seconds from click to finished background.",
       "button": "Try it now"
-    }
+    },
+    "kofiButton": "Donate"
   },
   "NotFound": {
     "title": "Page not found",
@@ -2723,15 +2724,18 @@
         "donations": {
           "heading": "Donations",
           "paragraphs": [
-            "Musterli is free and funded by voluntary donations. On the “Support” page we link to an external donation provider. Musterli itself accepts no payments and receives neither payment nor account details from you.",
-            "You only leave Musterli when you follow the link. The donation provider is responsible for processing your data there, and its privacy policy applies. The provider may tell us the amount donated and any details you explicitly choose to share with us."
+            "Musterli is free and funded by voluntary donations. We use Ko-fi for this, a service of Ko-fi Labs Limited, based in the United Kingdom. Musterli itself accepts no payments and receives neither payment nor account details from you.",
+            "On the home page we show a donate button from Ko-fi. For this, your browser loads a script, a stylesheet and a logo from storage.ko-fi.com when you open the home page. Ko-fi receives technically necessary data such as your IP address, date and time, the page address and your user agent. We deliberately do not load Google fonts for it. The button itself sets no cookies on Musterli and uses no local storage.",
+            "Only when you click the button does the donation form from ko-fi.com open in an embedded window. The “Support” page also links directly to Ko-fi. Ko-fi is responsible for everything that happens in the donation form or on ko-fi.com. Ko-fi and its payment providers may set cookies there, and Ko-fi’s privacy policy applies. Ko-fi may tell us the amount donated and any details you explicitly choose to share with us.",
+            "We embed the donate button because we have a legitimate interest in offering a simple way to support Musterli (Art. 6(1)(f) GDPR)."
           ]
         },
         "transfer": {
           "heading": "Transfers abroad",
           "paragraphs": [
             "Cloudflare and Sentry are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
-            "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out."
+            "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out.",
+            "Ko-fi is based in the United Kingdom. The European Commission and the Swiss Federal Council have recognised the United Kingdom as providing adequate data protection. Ko-fi and its payment providers may also process data in the USA."
           ]
         },
         "retention": {

@@ -1,6 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { analyticsToken, externalServices, sentryDsn, type TelemetryEnv } from "./config";
+import {
+  analyticsToken,
+  externalServices,
+  kofiPageId,
+  sentryDsn,
+  type TelemetryEnv,
+} from "./config";
 import { beaconConfig, telemetryPlan } from "./plan";
 import {
   createLazyReporter,
@@ -20,30 +26,52 @@ const ALL: TelemetryEnv = {
   ...PROD,
   NEXT_PUBLIC_CF_ANALYTICS_TOKEN: TOKEN,
   NEXT_PUBLIC_SENTRY_DSN: DSN,
+  NEXT_PUBLIC_DONATION_URL: "https://ko-fi.com/afisch",
 };
 
 describe("telemetry config", () => {
   it("is off without environment variables", () => {
     expect(analyticsToken(PROD)).toBeNull();
     expect(sentryDsn(PROD)).toBeNull();
-    expect(externalServices(PROD)).toEqual({ analytics: false, sentry: false });
+    expect(externalServices(PROD)).toEqual({ analytics: false, sentry: false, kofi: false });
     expect(externalServices({ ...PROD, NEXT_PUBLIC_CF_ANALYTICS_TOKEN: " " })).toEqual({
       analytics: false,
       sentry: false,
+      kofi: false,
     });
   });
 
   it("is on with valid variables", () => {
     expect(analyticsToken(ALL)).toBe(TOKEN);
     expect(sentryDsn(ALL)).toBe(DSN);
-    expect(externalServices(ALL)).toEqual({ analytics: true, sentry: true });
+    expect(kofiPageId(ALL)).toBe("afisch");
+    expect(externalServices(ALL)).toEqual({ analytics: true, sentry: true, kofi: true });
   });
 
   it("is always off in next dev", () => {
     expect(externalServices({ ...ALL, NODE_ENV: "development" })).toEqual({
       analytics: false,
       sentry: false,
+      kofi: false,
     });
+  });
+
+  it("enables the Ko-fi widget only for an https link to a Ko-fi page", () => {
+    const kofi = (url: string) => kofiPageId({ ...PROD, NEXT_PUBLIC_DONATION_URL: url });
+    expect(kofi("https://ko-fi.com/afisch/")).toBe("afisch");
+    expect(kofi("https://www.ko-fi.com/a_b9")).toBe("a_b9");
+    for (const url of [
+      "",
+      "http://ko-fi.com/afisch",
+      "https://donate.example/musterli",
+      "https://ko-fi.com.evil.example/afisch",
+      "https://user@ko-fi.com/afisch",
+      "https://ko-fi.com/",
+      "https://ko-fi.com/a/b",
+      "https://ko-fi.com/a'b",
+    ]) {
+      expect(kofi(url)).toBeNull();
+    }
   });
 
   it("rejects malformed tokens and DSNs outside the EU region", () => {

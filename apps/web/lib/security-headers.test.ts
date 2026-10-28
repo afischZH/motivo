@@ -94,12 +94,12 @@ describe("securityHeaders", () => {
 });
 
 describe("external services", () => {
-  const both = { analytics: true, sentry: true };
-  const none = { analytics: false, sentry: false };
+  const both = { analytics: true, sentry: true, kofi: true };
+  const none = { analytics: false, sentry: false, kofi: false };
 
   it("adds no third-party origin unless a service is enabled", () => {
     const csp = contentSecurityPolicy({ dev: false });
-    expect(csp).not.toMatch(/cloudflareinsights|sentry/);
+    expect(csp).not.toMatch(/cloudflareinsights|sentry|ko-fi|frame-src/);
     expect(contentSecurityPolicy({ dev: false, services: none })).toBe(csp);
   });
 
@@ -123,9 +123,30 @@ describe("external services", () => {
     expect(csp.get("connect-src")).toEqual(["'self'", "https://*.ingest.de.sentry.io"]);
   });
 
-  it("needs no frame-src: no service embeds a frame", () => {
+  it("allows the Ko-fi widget's CDN and donation frame only with Ko-fi", () => {
+    const csp = directives(
+      contentSecurityPolicy({ dev: false, services: { ...none, kofi: true } }),
+    );
+    expect(csp.get("script-src")).toEqual([
+      "'self'",
+      "'unsafe-inline'",
+      "https://storage.ko-fi.com",
+    ]);
+    expect(csp.get("style-src")).toEqual([
+      "'self'",
+      "'unsafe-inline'",
+      "https://storage.ko-fi.com",
+    ]);
+    expect(csp.get("img-src")).toEqual(["'self'", "data:", "blob:", "https://storage.ko-fi.com"]);
+    expect(csp.get("frame-src")).toEqual(["'self'", "https://ko-fi.com"]);
+    expect(csp.get("connect-src")).toEqual(["'self'"]);
+    // No Google Fonts: the widget is drawn with an empty stylesheet list.
+    expect([...csp.values()].flat()).not.toContain("https://fonts.googleapis.com");
+  });
+
+  it("never lets other sites frame Musterli", () => {
     const csp = contentSecurityPolicy({ dev: false, services: both });
-    expect(csp).not.toMatch(/frame-src|challenges\.cloudflare/);
+    expect(csp).not.toMatch(/challenges\.cloudflare/);
     expect(directives(csp).get("frame-ancestors")).toEqual(["'none'"]);
   });
 
@@ -145,7 +166,7 @@ describe("public/_headers", () => {
   // Static assets on Cloudflare skip the Worker, so they need this file.
   // scripts/headers.mjs writes it before every build from the same env.
   it("carries exactly the Worker's production headers", () => {
-    for (const services of [undefined, { analytics: true, sentry: true }]) {
+    for (const services of [undefined, { analytics: true, sentry: true, kofi: true }]) {
       const file = cloudflareHeadersFile(services);
       const expected = securityHeaders({ dev: false, ...(services ? { services } : {}) });
       expect(file.split("\n").slice(0, 3)).toEqual([
@@ -158,13 +179,15 @@ describe("public/_headers", () => {
   });
 
   it("allows external services only when the build enables them", () => {
-    expect(cloudflareHeadersFile()).not.toMatch(/cloudflareinsights|sentry|challenges/);
-    expect(cloudflareHeadersFile({ analytics: true, sentry: false })).toContain(
+    const none = { analytics: false, sentry: false, kofi: false };
+    expect(cloudflareHeadersFile()).not.toMatch(/cloudflareinsights|sentry|challenges|ko-fi/);
+    expect(cloudflareHeadersFile({ ...none, analytics: true })).toContain(
       "https://static.cloudflareinsights.com",
     );
-    expect(cloudflareHeadersFile({ analytics: false, sentry: true })).toContain(
+    expect(cloudflareHeadersFile({ ...none, sentry: true })).toContain(
       "https://*.ingest.de.sentry.io",
     );
+    expect(cloudflareHeadersFile({ ...none, kofi: true })).toContain("https://ko-fi.com");
   });
 });
 
