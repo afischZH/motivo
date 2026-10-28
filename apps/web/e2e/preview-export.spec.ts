@@ -105,6 +105,12 @@ const CASES: Case[] = [
   // M4b-AP03: hundreds of thin, crossing strokes (blend), spirograph loops coloured along the lines.
   { toolId: "guilloche" },
   { toolId: "guilloche", preset: "Spirograph" },
+  // M4b-AP01: hundreds of thin contour lines and filled even-odd bands; flow
+  // lines as strokes and as tapered fills.
+  { toolId: "topo-lines" },
+  { toolId: "topo-lines", preset: "Lagoon" },
+  { toolId: "flow-field" },
+  { toolId: "flow-field", preset: "Whirlpool" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

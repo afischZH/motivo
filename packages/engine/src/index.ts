@@ -34,3 +34,8 @@ export * from "./tools/contrast-checker";
 export * from "./tools/css-shadow";
 export * from "./sampling";
 export * from "./tools/guilloche";
+export * from "./noise2d";
+export * from "./polyline";
+export * from "./contours";
+export * from "./tools/topo-lines";
+export * from "./tools/flow-field";

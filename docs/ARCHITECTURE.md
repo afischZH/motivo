@@ -159,6 +159,13 @@ Eigene Formen für alle Tools mit Shapes (`packages/engine/src/shapes/`, Lizenz 
 - **Zellen-Ids in Geometric Patterns**: `<Zeile>-<Spalte>` der Grundzelle plus `.<Viertel 0-3>` pro Teilung (0 oben links, 1 oben rechts, 2 unten links, 3 unten rechts), Muster `^\d{1,3}-\d{1,3}(\.[0-3]){0,4}$`. Die Id hängt nur von der Position im Raster ab: stabil bei Farbe, Form, Pack, Drehung, Abständen, Kontur und Bildgrösse (solange `columns` und das Seitenverhältnis gleich bleiben), im Uniform-Modus auch bei neuem Seed. Ändert sich das Raster, bleiben fremde Ids gespeichert und zählen zur Grenze (128), wirken aber nicht.
 - **Mehrfachauswahl im Thumbnail-Picker**: Ein Array-Param aus Enum-Werten mit Vorschau wird zum Thumbnail-Raster mit Kontrollkästchen (`ThumbnailControl.multiple = { min, max }` aus dem Schema, `toggleChoice` hält die Grenzen ein); `optionGroups` gelten wie beim Einzelwert.
 
+### 4.9 Generative Bausteine (ab M4b-AP01)
+Gemeinsame, reine Helfer in `packages/engine` für die Tools der generativen Welle (`docs/TOOLS.md` K), je mit Unit-Tests:
+- **`noise2d.ts`**: `createNoise2D(rng)` (2D-Gradientenrauschen nach Perlin, acht Gradienten, Permutation per Fisher-Yates aus dem Seed, Periode 256, Wertebereich [-1, 1]) und `fbm2D(noise, x, y, { octaves, gain, lacunarity })` (normiert).
+- **`contours.ts`**: `marchingSquares(values, cols, rows, level)` liefert Konturen als flache Punktlisten in Rasterkoordinaten, offen oder geschlossen; Sattel über den Zellmittelwert. Ein Rand mit sehr tiefen Werten schliesst alle Konturen. Interne Puffer werden zwischen Aufrufen wiederverwendet (nur berührte Einträge werden zurückgesetzt).
+- **`polyline.ts`**: Polylinien als flache Arrays `[x0, y0, x1, y1, ...]`; `simplifyPolyline` (Ramer-Douglas-Peucker, offen und geschlossen), `subdividePolyline`, `slicePolyline` (Teilstück nach Bogenlänge), `polylineLength`, `polylinePathData` (implizites Lineto), `smoothPathData` (quadratischer B-Spline über `Q`), `numberFormatter` (schnelles Runden ohne `toFixed`). In heissen Schleifen `Math.sqrt` statt `Math.hypot` (in V8 mehrfach langsamer).
+- **Budgets**: Generative Tools rechnen in Einheiten der kürzeren Kante und begrenzen Raster, Linien, Schritte und Pfadpunkte mit exportierten Konstanten, damit Renderzeit und SVG-Grösse auch bei 8K beschränkt bleiben (Vorschau rendert im Hauptthread).
+
 ## 5. Render- und Export-Pipeline
 
 ```

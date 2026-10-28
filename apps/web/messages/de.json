@@ -2400,6 +2400,185 @@
           }
         }
       }
+    },
+    "topo-lines": {
+      "name": "Höhenlinien",
+      "description": "Topografische Linien wie auf einer Landkarte, als Konturen oder gefüllte Höhenstufen. Als SVG, Bild oder GIF exportieren.",
+      "params": {
+        "scale": {
+          "label": "Massstab"
+        },
+        "octaves": {
+          "label": "Detailstufen"
+        },
+        "roughness": {
+          "label": "Rauheit"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "levels": {
+          "label": "Anzahl Linien"
+        },
+        "style": {
+          "label": "Darstellung",
+          "options": {
+            "lines": "Linien",
+            "bands": "Flächen",
+            "bands-lines": "Flächen und Linien"
+          }
+        },
+        "lineWidth": {
+          "label": "Linienbreite"
+        },
+        "majorEvery": {
+          "label": "Hauptlinie alle",
+          "description": "Jede n-te Linie wird breiter gezeichnet, wie die Zählkurven einer Landkarte. 0 schaltet sie aus."
+        },
+        "colorMode": {
+          "label": "Farbverlauf",
+          "options": {
+            "gradient": "Von tief nach hoch",
+            "cycle": "Farben im Wechsel"
+          }
+        },
+        "lineColor": {
+          "label": "Linienfarbe"
+        }
+      },
+      "presets": {
+        "survey": "Vermessung",
+        "lagoon": "Lagune",
+        "night-map": "Nachtkarte",
+        "terraces": "Terrassen",
+        "marble": "Marmor",
+        "alpine": "Hochalpin",
+        "candy": "Zuckerwatte"
+      },
+      "seo": {
+        "whatIs": "Höhenlinien verbinden Punkte gleicher Höhe, so wie auf einer Wanderkarte. Musterli erzeugt dafür ein zufälliges Gelände aus Rauschen und zeichnet seine Konturen in gleichmässigen Abständen. Das Ergebnis passt als ruhiger Hintergrund für Websites, Präsentationen, Poster oder Verpackungen und bleibt als SVG gestochen scharf.",
+        "howTo": "Wähle mit Massstab, Detailstufen, Rauheit und Verzerrung die Form des Geländes und lege fest, wie viele Linien es geben soll. Zeig nur Linien, gefüllte Höhenstufen oder beides, und hebe jede n-te Linie als Hauptlinie hervor. Mit der Leertaste würfelst du ein neues Gelände. Exportiere als SVG, PNG, JPG, WebP oder als GIF, in dem die Linien langsam wandern.",
+        "faq": {
+          "q1": {
+            "question": "Sind die Höhenlinien echte Kartendaten?",
+            "answer": "Nein. Das Gelände entsteht aus mathematischem Rauschen und ist frei erfunden. Darum kannst du die Grafik ohne Lizenzfragen verwenden, und jeder Seed ergibt eine neue Landschaft."
+          },
+          "q2": {
+            "question": "Wie gross wird die SVG-Datei?",
+            "answer": "Bei den Standardwerten meist zwischen 100 und 400 KB. Musterli vereinfacht die Linien und rundet Koordinaten. Viele Linien, viele Detailstufen und Flächen mit Linien zusammen machen die Datei grösser, sie bleibt aber in jedem Fall unter etwa 1,5 MB."
+          },
+          "q3": {
+            "question": "Was bewirkt die Verzerrung?",
+            "answer": "Sie verschiebt das Gelände mit einem zweiten Rauschen in sich selbst. Kleine Werte machen die Formen organischer, grosse Werte ergeben fliessende Muster, die an Marmor oder Holzmaserung erinnern."
+          },
+          "q4": {
+            "question": "Kann ich die Farben meiner Marke verwenden?",
+            "answer": "Ja. Mit einer Brand-Palette aus deinem Brand Kit übernimmt das Tool deine Farben für die Linien oder Höhenstufen und wählt die dunkelste Farbe für die Linien über den Flächen."
+          }
+        }
+      }
+    },
+    "flow-field": {
+      "name": "Flow Fields",
+      "description": "Tausende Linien folgen einem unsichtbaren Strömungsfeld, wie Wind, Wasser oder Haar. Als SVG, Bild oder GIF exportieren.",
+      "params": {
+        "mode": {
+          "label": "Feld",
+          "options": {
+            "noise": "Rauschen",
+            "curl": "Wirbel"
+          }
+        },
+        "scale": {
+          "label": "Massstab"
+        },
+        "octaves": {
+          "label": "Detailstufen"
+        },
+        "turbulence": {
+          "label": "Unruhe"
+        },
+        "direction": {
+          "label": "Hauptrichtung"
+        },
+        "seeding": {
+          "label": "Startpunkte",
+          "options": {
+            "poisson": "Gleichmässig verteilt",
+            "grid": "Raster",
+            "random": "Zufällig"
+          }
+        },
+        "spacing": {
+          "label": "Linienabstand"
+        },
+        "separation": {
+          "label": "Mindestabstand",
+          "description": "Anteil des Linienabstands, den Linien zueinander halten. Bei 0 dürfen sich Linien berühren und kreuzen."
+        },
+        "length": {
+          "label": "Linienlänge"
+        },
+        "step": {
+          "label": "Schrittweite"
+        },
+        "maxLines": {
+          "label": "Höchstens Linien"
+        },
+        "lineWidth": {
+          "label": "Linienbreite"
+        },
+        "taper": {
+          "label": "Strichform",
+          "options": {
+            "none": "Gleich breit",
+            "tail": "Zum Ende dünner",
+            "both": "Beidseitig spitz"
+          }
+        },
+        "colorMode": {
+          "label": "Farbe nach",
+          "options": {
+            "palette": "Zufällig aus Palette",
+            "angle": "Richtung",
+            "position": "Position"
+          }
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        }
+      },
+      "presets": {
+        "current": "Strömung",
+        "silk": "Seide",
+        "whirlpool": "Strudel",
+        "breeze": "Brise",
+        "ink": "Tusche",
+        "meadow": "Wiese",
+        "dune": "Wüstenwind"
+      },
+      "seo": {
+        "whatIs": "Ein Flow Field ist ein Feld aus Richtungen, das jedem Punkt der Fläche einen Winkel zuordnet. Lässt man viele Linien diesem Feld folgen, entstehen Bilder, die an Wind, Strömungen, Fell oder Seide erinnern. Musterli berechnet das Feld aus Rauschen oder aus Wirbeln und hält auf Wunsch einen Mindestabstand ein, damit sich die Linien nicht verklumpen.",
+        "howTo": "Wähle das Feld, den Massstab und die Unruhe, dann Startpunkte, Linienabstand und Länge. Strichform, Linienbreite und Deckkraft bestimmen den Charakter, die Farben kommen aus der Palette, aus der Richtung oder aus der Position. Mit der Leertaste würfelst du eine neue Variante. Exportiere als SVG, PNG, JPG, WebP oder als GIF mit wandernden Strichen.",
+        "faq": {
+          "q1": {
+            "question": "Was ist der Unterschied zwischen Rauschen und Wirbel?",
+            "answer": "Beim Rauschen zeigen die Linien grob in eine Hauptrichtung und weichen je nach Unruhe davon ab. Das Wirbelfeld leitet die Richtungen aus einem Rauschen ab, sodass Linien kreisen und nie in einem Punkt zusammenlaufen."
+          },
+          "q2": {
+            "question": "Wozu dient der Mindestabstand?",
+            "answer": "Eine Linie endet, sobald sie einer anderen zu nahe kommt. So verteilen sich die Linien gleichmässig über die Fläche. Mit 0 dürfen sie sich überlagern, was mit geringer Deckkraft weiche, haarartige Strukturen ergibt."
+          },
+          "q3": {
+            "question": "Wie gross wird die SVG-Datei?",
+            "answer": "Bei den Standardwerten meist unter 300 KB. Musterli vereinfacht jede Linie und rundet Koordinaten. Anzahl Linien, Schritte und Punkte sind begrenzt, damit die Datei unter etwa 1,5 MB bleibt und die Vorschau flüssig reagiert."
+          },
+          "q4": {
+            "question": "Wie sieht die GIF-Animation aus?",
+            "answer": "Bei der Quelle Bewegung werden die Linien zu Strichen, die entlang des Feldes wandern. Die Schleife läuft nahtlos. Alternativ wechseln neue Varianten oder die Farben."
+          }
+        }
+      }
     }
   },
   "Converters": {

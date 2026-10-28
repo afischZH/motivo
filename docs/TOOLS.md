@@ -247,12 +247,25 @@ Kleine Tools für die Entwickler-Persona: Ergebnis ist in erster Linie Code zum 
 Entscheid Andreas 2026-10-28. Alle Tools rein clientseitig, deterministisch über den Seed, nur allgemein bekannte Algorithmen (Clean-Room). Jede Spezifikation schreibt der umsetzende Agent in seinen Abschnitt.
 
 ### K1. Höhenlinien (Topo Lines) · M4b · G
-
-(Spezifikation folgt mit M4b-AP01)
+- **Zweck**: Topografische Konturen wie auf einer Landkarte, als Linien, gefüllte Höhenstufen oder beides. Tool-ID `topo-lines`, Kategorien Hintergründe und Muster, Standardgrösse 1920 × 1080.
+- **Parameter**: `scale` (Strukturgrösse 15 bis 150 % der kürzeren Kante), `octaves` (1 bis 6), `roughness` (fBm-Gain 0.35 bis 0.7), `warp` (Domain Warping 0 bis 1), `levels` (3 bis 40 Linien), `style` (`lines` | `bands` | `bands-lines`), `lineWidth` (0.25 bis 8 px), `majorEvery` (jede n-te Linie 2.5-mal breiter als Hauptlinie, 0 = aus), `colorMode` (`gradient` von tief nach hoch in OKLCH | `cycle` Palettenfarben im Wechsel), `lineColor` (Linien über Flächen), `palette`, `background`.
+- **Algorithmus**: 2D-Gradientenrauschen (`createNoise2D`, Permutation aus dem Seed) als fBm, optional verzerrt mit einem zweiten fBm (2 Oktaven). Abtastung auf einem Raster mit 128 Zellen an der kürzeren Kante (höchstens 64 000 Zellen bei jedem Seitenverhältnis), das eine Zelle über die Fläche hinausreicht und von einem Ring sehr tiefer Werte umgeben ist: So sind alle Konturen geschlossen, und Flächen lassen sich als Schleifen füllen. Niveaus gleichmässig zwischen Minimum und Maximum des Felds. Marching Squares (`marchingSquares`, Sattel über den Zellmittelwert) je Niveau, dann Ramer-Douglas-Peucker (0.2 Zellen), lange Segmente wieder geteilt (höchstens 3 Zellen, damit die Glättung keine Ecke in die Fläche schneidet), Ausgabe als quadratischer B-Spline (`Q` von Kantenmitte zu Kantenmitte, Grenzkurve von Chaikin). Specks unter 5 Rohpunkten fallen weg.
+- **Flächen**: pro Niveau ein Pfad mit allen Schleifen, `fill-rule="evenodd"`, von tief nach hoch gestapelt; unter dem ersten Niveau bleibt der Hintergrund sichtbar (transparent möglich). Bei `bands-lines` liegen die Linien in `lineColor` darüber.
+- **Budget**: Aufwand unabhängig von der Bildgrösse (Raster und Punkte begrenzt). Höchstens 50 000 Pfadpunkte (`TOPO_POINTS_MAX`, rund 17 Byte pro Punkt als `Q`-Kurve); darüber fallen die kleinsten Schleifen zuerst weg (ein Durchgang, deterministisch). Gemessen in Node: Standardwerte rund 30 ms und 180 KB SVG, Extremwerte (40 Linien, 6 Oktaven, volle Verzerrung) rund 120 ms und unter 1.5 MB im Linienmodus (Flächen und Linien zusammen bis doppelt so viel). Koordinaten auf 0.1 px gerundet.
+- **Nahtlos kachelbar**: nicht umgesetzt (ein periodisches Feld mit Verzerrung und freiem Seitenverhältnis wäre nicht billig).
+- **Brand-Palette**: Hook `brandPalette` setzt die Palette und als `lineColor` die dunkelste Markenfarbe (OKLCH-Helligkeit).
+- **Exporte**: SVG, PNG, JPG, WebP; GIF mit den Quellen `time` (Niveaus wandern um einen Abstand pro Schleife nach oben, Farben folgen der Position, Bild 0 = Vorschau, nahtlos), `seeds` und `colors`. Kein CSS-Export (data-URI wäre zu gross).
+- **Presets**: Vermessung, Lagune, Nachtkarte, Terrassen, Marmor, Hochalpin, Zuckerwatte.
 
 ### K2. Flow Fields · M4b · G
-
-(Spezifikation folgt mit M4b-AP01)
+- **Zweck**: Viele Linien folgen einem unsichtbaren Richtungsfeld (Wind, Wasser, Haar, Seide). Tool-ID `flow-field`, Kategorien Hintergründe und Muster, Standardgrösse 1920 × 1080.
+- **Parameter**: `mode` (`noise`: Winkel = `direction` + `turbulence` × 2π × fBm | `curl`: Rotation eines fBm-Potentials, divergenzfrei, Linien laufen nie zusammen), `scale` (10 bis 200 % der kürzeren Kante), `octaves` (1 bis 5), `turbulence` (0 bis 2), `direction` (0 bis 360°), `seeding` (`poisson` Bridson | `grid` mit Jitter | `random`), `spacing` (1 bis 10 %), `separation` (0 bis 1, Anteil von `spacing`), `length` (5 bis 200 %), `step` (1 bis 10 ‰), `maxLines` (50 bis 4000), `lineWidth` (0.25 bis 16 px), `taper` (`none` | `tail` | `both`), `colorMode` (`palette` zufällig | `angle` Richtung am Startpunkt, zyklisch | `position` diagonal), `opacity` (10 bis 100 %), `palette`, `background`.
+- **Algorithmus**: Feld einmal auf einem Raster abgetastet (160 Zellen an der kürzeren Kante, höchstens 64 000), Richtung bilinear interpoliert und normiert. Startpunkte in zufälliger Reihenfolge, Linien in beide Richtungen mit Runge-Kutta 2. Ordnung. Mit `separation` > 0 gleichmässig verteilte Stromlinien nach Jobard und Lefer: ein Startpunkt braucht `spacing × min(1, separation + 0.25)` Abstand, eine Linie endet bei weniger als `separation × spacing` zu einer anderen oder zu einem älteren Teil von sich selbst (Raumhash in typisierten Arrays). Mit 0 dürfen Linien sich berühren und kreuzen. Linien mit weniger als 3 Punkten fallen weg, Linien enden am Rand plus zweifacher Linienbreite oder wo das Feld verschwindet.
+- **Ausgabe**: RDP mit 0.02 % der kürzeren Kante, gerade Segmente (`M x y x y ...`), Koordinaten auf 0.1 px. Ohne Verjüngung als Konturen mit runden Enden, mit Verjüngung als gefüllte Umrisse (Halbbreite × Profil: `tail` (1 − s)^0.8, `both` sin(πs)^0.6, Minimum 8 %). Ein Pfad pro Farbe (höchstens 24 Farbstufen bei Richtung und Position), Deckkraft als `stroke-opacity`/`fill-opacity`.
+- **Budget**: Aufwand unabhängig von der Bildgrösse. Höchstens 4000 Linien, 600 Schritte je Linie und Richtung, 150 000 Schritte insgesamt, 90 000 Pfadpunkte (rund 11 Byte pro Punkt). Gemessen in Node: Standardwerte rund 30 ms und 80 KB SVG, Extremwerte rund 120 ms und unter 1.5 MB.
+- **Brand-Palette**: generische Zuordnung (Palette).
+- **Exporte**: SVG, PNG, JPG, WebP; GIF mit den Quellen `time` (eine Lücke von 35 % der Linienlänge wandert durch jede Linie, Bild 0 = Vorschau, nahtlos), `seeds` und `colors`. Kein CSS-Export.
+- **Presets**: Strömung, Seide, Strudel, Brise, Tusche, Wiese, Wüstenwind.
 
 ### K3. Low-Poly und Voronoi · M4b · G
 

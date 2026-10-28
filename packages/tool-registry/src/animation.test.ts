@@ -200,11 +200,16 @@ describe("animated tools in the registry", () => {
           for (const frame of frames) {
             expect(parseToolParams(tool, frame.params).success).toBe(true);
           }
-          const first = frameOutput(tool, frames[0] as { params: unknown; seed: number });
+          const first = frameOutput(
+            tool,
+            frames[0] as { params: unknown; seed: number; t?: number },
+          );
           // Frame 0 is the design as shown in the preview.
           expect(first).toBe(frameOutput(tool, { params: tool.defaults, seed: 1 }));
           const distinct = new Set(
-            frames.map((f) => frameOutput(tool, f as { params: unknown; seed: number })),
+            frames.map((f) =>
+              frameOutput(tool, f as { params: unknown; seed: number; t?: number }),
+            ),
           );
           expect(distinct.size).toBeGreaterThan(1);
         });
