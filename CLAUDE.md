@@ -14,7 +14,7 @@
 | `docs/PROGRESS.md` | Aktueller Stand, Arbeitspakete, Blocker | Zu Beginn jeder Sitzung |
 | `docs/ROADMAP.md` | Meilensteine, Checklisten, Definition of Done | **Immer zuerst**: aktuellen Meilenstein bestimmen |
 | `docs/ARCHITECTURE.md` | Stack, Monorepo, Tool-Interface, Datenmodell, Sicherheit | Vor jeder Code-Änderung |
-| `docs/TOOLS.md` | Spezifikation jedes Tools (Parameter, Algorithmus, Exporte, Gating) | Vor Arbeit an einem Tool |
+| `docs/TOOLS.md` | Spezifikation jedes Tools (Parameter, Algorithmus, Exporte) | Vor Arbeit an einem Tool |
 | `docs/DESIGN.md` | Layout, Controls, Shortcuts, Tokens, Microcopy | Vor UI-Arbeit |
 | `docs/PRODUCT.md` | Vision, Personas, Pläne, Nicht-Ziele | Bei Scope-Fragen |
 | `docs/ANALYSE.md` | Reverse Engineering des Vorbilds | Hintergrund, bei Feature-Fragen |
@@ -24,13 +24,13 @@
 1. **Meilenstein für Meilenstein.** Arbeite nur an Aufgaben des aktuellen Meilensteins in `ROADMAP.md`. Hake Checkboxen ab, wenn erledigt und getestet.
 2. **Kleine Schritte.** Pro Aufgabe: kurz planen, umsetzen, Tests schreiben/ausführen, typecheck + lint, dann committen (Conventional Commits, z. B. `feat(engine): add blob generator`).
 3. **Erst fragen, dann bauen**, wenn: eine Anforderung unklar ist, eine neue Dependency mit > 50 KB gzip nötig wäre, das Datenmodell geändert werden muss, oder etwas den Nicht-Zielen in `PRODUCT.md` widerspricht.
-4. **Nichts erfinden.** Bei APIs von Libraries (Next.js, Supabase, Stripe, WebCodecs, Konva, Figma) die aktuelle offizielle Doku prüfen statt aus dem Gedächtnis zu arbeiten. Versionen in `package.json` sind die Wahrheit.
+4. **Nichts erfinden.** Bei APIs von Libraries (Next.js, OpenNext/Cloudflare, WebCodecs, IndexedDB, Konva, Figma) die aktuelle offizielle Doku prüfen statt aus dem Gedächtnis zu arbeiten. Versionen in `package.json` sind die Wahrheit.
 5. **Doku nachführen.** Wenn sich eine Entscheidung ändert, die betroffene Datei in `docs/` im selben Commit aktualisieren und unten im Entscheidungslog eintragen.
 
 ## Nicht verhandelbare Regeln
 
 ### Architektur
-- **Jedes Tool ist eine `ToolDefinition`** in `packages/tool-registry` (Zod-Schema, Defaults, Presets, `randomize`, `render`, `exports`, `gating`). Keine Tool-spezifische Logik in der Editor-Shell.
+- **Jedes Tool ist eine `ToolDefinition`** in `packages/tool-registry` (Zod-Schema, Defaults, Presets, `randomize`, `render`, `exports`). Keine Tool-spezifische Logik in der Editor-Shell.
 - **Ein Render-Pfad**: Vorschau und Export verwenden dieselbe Render-Funktion.
 - **Deterministisch**: In `packages/engine`, `packages/effects`, `packages/shaders` niemals `Math.random()`, `Date.now()` oder DOM-Zugriffe. Zufall nur über den übergebenen seeded `Rng`.
 - **Rechenintensives in Web Worker** (Bildeffekte, GIF, Video, grosse Exporte). UI-Thread nie länger als 50 ms blockieren.
@@ -75,15 +75,13 @@ pnpm test:e2e           # Playwright (alle Browser)
 pnpm test:e2e:chromium  # Playwright nur Chromium
 pnpm --filter @motivo/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
 pnpm lint && pnpm typecheck
-pnpm db:migrate         # entfällt ab 2026-10-28 (keine Datenbank), wird mit der Warteliste entfernt
-pnpm db:types           # entfällt ab 2026-10-28
 ```
 
 ## Neues Tool hinzufügen (Checkliste)
 
 1. Spezifikation in `docs/TOOLS.md` lesen.
 2. Generator in `packages/engine/src/tools/<tool-id>/` (rein, testbar) bzw. `packages/effects` oder `packages/shaders`.
-3. `ToolDefinition` in `packages/tool-registry/src/tools/<tool-id>.ts` mit Schema, Defaults, mindestens 6 Presets, `randomize`, `gating`.
+3. `ToolDefinition` in `packages/tool-registry/src/tools/<tool-id>.ts` mit Schema, Defaults, mindestens 6 Presets, `randomize`.
 4. In der Registry registrieren.
 5. i18n-Keys: Name, Kurzbeschreibung, Control-Labels, SEO-Texte (Was ist, Anleitung, 3 bis 5 FAQ).
 6. Tests: Schema, Snapshots pro Preset, Export-Smoke-Test.
@@ -115,9 +113,11 @@ pnpm db:types           # entfällt ab 2026-10-28
 | 2026-10-27 | URL-Slugs zentral in `apps/web/i18n/slugs.ts`, hreflang über Metadata API, alte Pfade per 308 im Proxy | Eine Datenquelle für Proxy, Server und Client; next-intl-Link-Header kennen keine Slugs; M1-Share-Links bleiben gültig (Details `docs/ARCHITECTURE.md` Abschnitt 7) |
 | 2026-10-27 | CSP ohne Nonces, mit `'unsafe-inline'` für Scripts und Styles; Header aus `lib/security-headers.ts` (next.config, proxy, `public/_headers`) | Nonces erzwingen dynamisches Rendering; Next setzt auf statischen Seiten seitenspezifische Inline-Scripts, ein Hash würde `'unsafe-inline'` abschalten. Theme-Hash liegt bereit (`lib/csp-hash.ts`) |
 | 2026-10-27 | OG-Bilder als Build-Schritt (`scripts/og-images.mjs`) statt `next/og` im Worker | `next/og` hätte das Worker-Bundle von ca. 1.5 auf 2.6 MiB gzip vergrössert (Gratis-Limit 3 MiB); statisch = keine Kosten pro Anfrage |
-| 2026-10-27 | (überholt 2026-10-28, wird entfernt) Founders-Warteliste: Supabase (eu-central-2) und Resend per `fetch` ohne SDK; Zugriff nur über SECURITY-DEFINER-Funktionen (RLS ohne Policies); Migrations- und RLS-Tests mit PGlite und nachgebildeten Supabase-Rollen | Keine neue Laufzeit-Dependency, Tests ohne Docker in CI; Details `docs/ARCHITECTURE.md` Abschnitt 14 |
+| 2026-10-27 | (überholt 2026-10-28, entfernt in M3-AP13) Founders-Warteliste: Supabase (eu-central-2) und Resend per `fetch` ohne SDK; Zugriff nur über SECURITY-DEFINER-Funktionen (RLS ohne Policies); Migrations- und RLS-Tests mit PGlite und nachgebildeten Supabase-Rollen | Keine neue Laufzeit-Dependency, Tests ohne Docker in CI; Details `docs/ARCHITECTURE.md` Abschnitt 14 |
 | 2026-10-27 | hreflang x-default zeigt auf EN; Indexierung nur auf dem Host von `NEXT_PUBLIC_SITE_URL`, sonst `X-Robots-Tag: noindex` | Internationaler Standard; Preview-Deployments dürfen nicht im Index landen |
 | 2026-10-28 | Sammlungsseiten (Verläufe, Paletten) als eigene Daten in `apps/web/lib/collections/`, Farben als OKLCH-Tupel im sRGB-Gamut, statisch generiert, Editor-Links über den Share-Hash | Clean-Room, keine laufenden Kosten, ein Render-Pfad; Kategorie-Seiten zeigen den Teaser ohne Vorschauen, sonst +90 KiB gzip im Worker (Details `docs/ARCHITECTURE.md` Abschnitt 7) |
 | 2026-10-28 | Mesh-Verlauf: bei grosser Unschärfe zeichnet die Engine die Flächen selbst als kleines PNG statt `feGaussianBlur` (`meshBlurPlan`, Grenze σ 200 px bei 8192 px) | Browser kappen σ bei ca. 270 bis 520 px, grosse Exporte wichen sonst sichtbar von der Vorschau ab; schneller und weniger Speicher, ein Render-Pfad bleibt |
 | 2026-10-28 | **Komplett gratis und spendenfinanziert**: keine Konten, keine Zahlungen, keine Lizenzen, keine Credits; Speichern und Brand Kit lokal (IndexedDB plus Datei-Export); Warteliste und Supabase/Resend entfallen; ersetzt die Lifetime-Entscheide vom 2026-10-27 | Entscheid Andreas; keine laufenden Kosten pro Nutzer, keine Personendaten, kein Zahlungs- und Steueraufwand |
 | 2026-10-28 | Rasterexport über 4096² px: PNG in Streifen mit eigenem Streaming-Encoder, JPG/WebP mit Prüfpixeln und Fehlermeldung `too-large` | WebKit zeichnet grössere Canvas und Bitmaps leer; keine neue Dependency |
+| 2026-10-28 | Gating-Feld aus `ToolDefinition` und allen Tools entfernt (statt überall `{}`), Lizenzstufen-Typen gelöscht; Warteliste, `packages/db`, `supabase/`, API-Routen und Turnstile ausgebaut; alte Warteliste-URLs per 308 auf "Unterstützen" | Alles gratis ohne Limits; ein Feld ohne Bedeutung lädt zu neuem Gating ein. Worker 2284 ► 2194 KiB gzip (M3-AP13) |
+| 2026-10-28 | Spenden-Link als Build-Variable `NEXT_PUBLIC_DONATION_URL` (nur https, ohne Zugangsdaten, `lib/donation.ts`); ohne Variable zeigt die Seite "Spenden-Link folgt bald"; Hinweis im Export-Dialog über generischen Slot `afterExport` der Editor-Shell, öffnet in neuem Tab | Reiner Link ohne Script, CSP unverändert; Anbieter wechselbar ohne Code; Editor-Shell bleibt app-neutral (M3-AP14) |

@@ -50,7 +50,7 @@ Gesamtüberblick:
 - [x] i18n mit next-intl (DE, EN zuerst; FR, IT vorbereitet), lokalisierte Slugs, `hreflang`
 - [x] SEO-Landingpage-Template pro Tool (Inhalte aus i18n-Dateien), Katalog, Kategorie-Seiten, Sitemap, strukturierte Daten, OG-Bilder pro Tool und Sprache (beim Build gerendert, siehe `ARCHITECTURE.md` Abschnitt 7)
 - [ ] Startseite, Impressum, Datenschutz (nDSG/DSGVO), cookiefreie Analytics, Sentry (im Code fertig; offen: juristische Prüfung der Rechtstexte, Analytics- und Sentry-Variablen durch Andreas)
-- ~~**Founders-Warteliste**~~ entfällt (Entscheid 2026-10-28: keine Zahlungen); Code wird in M3 entfernt
+- ~~**Founders-Warteliste**~~ entfällt (Entscheid 2026-10-28: keine Zahlungen); Code in M3-AP13 entfernt
 - [ ] Lighthouse ≥ 95 (Performance, SEO, A11y) auf Landingpages (Performance 95 bis 99 und A11y 100 lokal gemessen; SEO erst auf dem Produktions-Host messbar, wegen noindex auf allen anderen Hosts)
 
 **DoD**: Live unter eigener Domain, 15+ Tools, alle Seiten in DE und EN indexierbar, Search Console eingerichtet.
@@ -60,12 +60,12 @@ Gesamtüberblick:
 - [x] Tools: **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients**, **Blob Composition**, **Doodle Backgrounds**, **SVG Charts**
 - [x] Programmatic-SEO: Gradient- und Paletten-Sammlungsseiten
 - [x] Tool **Seamless Patterns** (aus M4 vorgezogen): 4 Kachel-Modi, eigene Shapes, SVG/Bild-Upload mit Zuschnitt nur im Browser (Cross-Browser in CI grün)
-- [ ] Warteliste, Supabase- und Resend-Anbindung sowie Gating-Reste entfernen; alles gratis ohne Limits
+- [x] Warteliste, Supabase- und Resend-Anbindung sowie Gating-Reste entfernen; alles gratis ohne Limits
 - [ ] Designs lokal speichern (IndexedDB), Autosave-Entwurf, Übersicht "Meine Designs" mit Suche, Duplizieren, Löschen, Vorschaubild
 - [ ] Export und Import aller Designs als Datei (JSON, versioniert, beim Import validiert) für andere Geräte
 - [ ] Brand Kit lokal: Paletten (max. 10 Farben), Logos, eigene SVG-Shapes (**Sanitizer!**), Export/Import als Datei
 - [ ] Brand-Palette in jedem Tool nutzbar
-- [ ] Seite "Unterstützen" mit Link zum externen Spendenanbieter, dezenter Hinweis in Footer und Export-Dialog (DE/EN)
+- [x] Seite "Unterstützen" mit Link zum externen Spendenanbieter, dezenter Hinweis in Footer und Export-Dialog (DE/EN)
 
 **DoD**: Design ohne Konto speichern, nach Neuladen wieder öffnen, per Datei auf ein anderes Gerät übertragen; Brand-Palette in jedem Tool nutzbar; importierte Dateien und SVGs werden strikt validiert bzw. sanitisiert; keine Anfrage an einen eigenen Server beim Speichern (E2E prüft das).
 

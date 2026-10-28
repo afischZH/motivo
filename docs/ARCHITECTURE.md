@@ -2,7 +2,7 @@
 
 > Versionen von Frameworks und Libraries sind **bei Projektstart zu prüfen** (Stand Wissen: Mitte 2026). Wo eine Library als Empfehlung genannt ist, gilt: zuerst kurz die aktuelle Doku und den Wartungsstatus checken.
 
-> **Grundentscheid 2026-10-28**: Motivo ist komplett gratis und spendenfinanziert, ohne Konten und ohne Zahlungen (`PRODUCT.md` Abschnitt 6). Supabase, Stripe, Lizenzen, Credits, öffentliche API und KI entfallen. Die betroffenen Abschnitte (6 Datenmodell, 8 API, 9 KI, 14 Warteliste) sind als überholt markiert und bleiben nur als Referenz stehen.
+> **Grundentscheid 2026-10-28**: Motivo ist komplett gratis und spendenfinanziert, ohne Konten und ohne Zahlungen (`PRODUCT.md` Abschnitt 6). Supabase, Stripe, Lizenzen, Credits, öffentliche API und KI entfallen. Die betroffenen Abschnitte (6a Datenmodell, 8 API, 9 KI) sind als überholt markiert und bleiben nur als Referenz stehen; Warteliste, `packages/db` und `supabase/` sind seit M3-AP13 entfernt.
 
 ## 1. Leitprinzipien
 
@@ -54,7 +54,6 @@ motivo/
 │  ├─ tool-registry/       # Tool-Definitionen (Schema, Defaults, Presets, Meta, SEO-Texte-Keys)
 │  ├─ editor-ui/           # Editor-Shell, Auto-Controls aus Zod-Schema
 │  ├─ ui/                  # Design-System (shadcn-basiert, Tokens)
-│  ├─ db/                  # Supabase-Typen, Queries, Migrationen
 │  └─ config/              # tsconfig, eslint, tailwind preset
 └─ docs/                   # diese Planungsdokumente
 ```
@@ -82,7 +81,6 @@ export interface ToolDefinition<S extends z.ZodTypeAny> {
   randomize: (rng: Rng, current: z.infer<S>, locks: Set<keyof z.infer<S>>) => z.infer<S>;
   render: Renderer<z.infer<S>>;       // siehe unten
   exports: ExportFormat[];
-  gating: Gating<z.infer<S>>;          // welche Params/Exporte/Grössen sind Pro
   needsImageInput?: boolean;           // Halftone, Dither ...
   supportsAnimation?: boolean;         // GIF/Video
 }
@@ -142,8 +140,8 @@ Wichtige Regeln:
   - **PNG in Streifen**: Das SVG-Bild wird streifenweise (höchstens die Grenzfläche, mit Worker höchstens 4 MP, ohne Worker 0.5 MP pro Streifen) mit Versatz auf ein kleines Canvas gezeichnet, per `getImageData` gelesen und an den Raster-Worker übertragen. Dort filtert ein eigener Streaming-Encoder (`png-stream.ts`, adaptive PNG-Filter wie libpng) die Zeilen und komprimiert sie mit `CompressionStream("deflate")` (zlib-Format). Höchstens ein Streifen ist unterwegs, kein Canvas und keine Bitmap hat die volle Grösse. Gemessen in Node: 8K in ca. 2 s im Worker. Ohne `CompressionStream` nimmt PNG den Weg von JPG/WebP.
   - **JPG und WebP**: kein eigener Encoder (Aufwand, WebP praktisch nicht machbar). Sie behalten das volle Canvas, aber 9 Prüfpixel des Ergebnisses werden mit denselben Pixeln verglichen, einzeln auf ein 1 × 1 Canvas gezeichnet. Weicht ein Drittel oder mehr ab (leeres Canvas), folgt ein zweiter Versuch im Hauptthread, danach der Fehler `too-large` mit lokalisierter Meldung („PNG oder kleinere Grösse wählen“) statt einer kaputten Datei.
   - Testhaken: `window.__motivoMaxCanvasArea` senkt die Grenze (nie höher), damit E2E-Tests den Streifenweg in Chromium bei 480 × 320 prüfen.
-- **Wasserzeichen** wird im Exporter angewendet, nie in der Vorschau versteckt "eingebrannt".
-- Jeder Export erzeugt ein `export_event` (Tool, Format, Grösse, Lizenzstufe) für Refund-Regel, Limits und Analytics.
+- **Kein Wasserzeichen, keine Exportlimits** (seit 2026-10-28, `PRODUCT.md` 6): Grössengrenzen sind nur technisch (`CANVAS_EDGE_MAX` 8192 px). Exporte werden nicht protokolliert. Das frühere Feld `gating` der `ToolDefinition` ist seit M3-AP13 entfernt.
+- Nach einem erfolgreichen Download oder Kopieren zeigt der Export-Dialog eine leise Zeile aus dem generischen Slot `afterExport` der Editor-Shell; die App füllt ihn mit dem Spendenhinweis (Link auf "Unterstützen", neuer Tab). Kein Popup, keine Sperre.
 - **Clipboard**: `navigator.clipboard.write` mit PNG-Blob; Fallback Download.
 
 ## 6. Lokale Datenhaltung (seit 2026-10-28)
@@ -193,7 +191,6 @@ api_keys        (id, user_id, name, key_hash, last4, scopes text[], created_at, 
 api_usage       (api_key_id, day date, count int, pk(api_key_id, day))
 ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, tokens_out, created_at)
 
-waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECURITY-DEFINER-Funktionen (Abschnitt 14)
 ```
 
 **Sicherheit**
@@ -208,18 +205,17 @@ waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECUR
   - **Testkorpus** (`packages/svg-sanitizer/src/sanitize.test.ts`): Script als Element, in CDATA und mit `xlink`, `onload`, Gross-/Kleinschreibung bei Handlern, `foreignObject` mit HTML, `javascript:` direkt und per Entity kodiert, externe und data-URI-`use`, CSS-`url()` und `@import`, `style`-Attribut mit `url()`, `expression()`, externe `fill`/`filter`-Referenzen, `feImage`, `animate`/`set` auf `href`, SVG- und HTML-data-URIs in `<image>`, `iframe`, HTML-Namensraum, Umschalten des Default-Namensraums, XXE und Billion Laughs, verschachtelte und rekursive `use`, Grenzen, Idempotenz. Dazu `bypass.test.ts` aus dem Security-Review: kodierte `javascript:`-Varianten (Tab, Zeilenumbruch, `&#x6A;`), CDATA, Kommentare und PIs, Gross-/Kleinschreibung, Präfix- und Namensraum-Tricks, `xml:base`, `href` gegen `xlink:href`, `use` auf entfernte Inhalte, `set`/`animate` auf `xlink:href`, getarnte data-URIs, `url()` in `mask`/`clip-path`/`marker` in allen Schreibweisen, Anführungszeichen-Ausbrüche und DoS-Fälle mit Zeitgrenze.
   - **Im Editor** (Seamless Patterns): Datei per Magic Bytes und Grösse prüfen, SVG sofort sanitizen, Zuschnitt erneut über den Sanitizer, beim Rendern noch einmal (Verteidigung in der Tiefe). Sanitizen und Zuschneiden laufen in einem eigenen kleinen Worker (`asset-input/sanitize.worker.ts`, lazy beim ersten SVG geladen, Timeout 10 s, abbrechbar; bei Timeout oder Abbruch wird der Worker beendet und beim nächsten Aufruf neu gestartet). Nur wo es keine Worker gibt oder der Worker nicht startet, läuft derselbe reine Code im Haupt-Thread. Der Worker bereitet das zugeschnittene SVG auch fürs Rendern vor (`prepareSvgAsset` in `tool-registry/src/svg-asset.ts`: Sanitizer-Durchgang plus Umfärbe-Vorlage aus zwei Durchgängen mit #000000 und #ffffff); der Editor legt das Ergebnis im Cache nach Inhalt ab (`primeSvgAsset`). Rendern ist dann nur ein Cache-Treffer und ein String-Join pro Farbe, das Ergebnis ist zeichengleich mit `sanitizeSvg(svg, { recolor })` (Unit-Test). Fehlt der Eintrag (anderer Realm, verdrängt), bereitet `svgAssetFor` ihn neu vor: sicher, aber langsamer (Eingabe ist dann bereits Sanitizer-Ausgabe, die Kosten sind linear in der Grösse). Nutzer-SVG erscheint nur als `<image>`-data-URI in unserem SVG, das selbst per `<img>` angezeigt wird; nie als Markup, nie per `dangerouslySetInnerHTML`. Rasterbilder werden im Worker dekodiert, zugeschnitten und neu kodiert (höchstens 1024 px, nur PNG oder JPEG als data-URI, vom Schema geprüft).
   - **Lokale Params** (`ToolDefinition.localParams`): Params mit Nutzerdateien gehen nie in Teilen-Links (Share-Codec setzt sie wie `derivedKeys` auf den Standard zurück, die Shell zeigt beim Teilen einen Hinweis), werden nie an einen Server geschickt und nicht gespeichert. Vorlagen und die Leertaste lassen sie stehen.
-- Stripe-Webhooks mit Signaturprüfung, idempotent verarbeiten (Unique-Key auf `stripe_checkout_id`).
 - **Security-Header** (M2-AP11) kommen aus einer Quelle, `apps/web/lib/security-headers.ts`, und werden an drei Stellen gesetzt: `next.config.ts` `headers()` (HTML, RSC), `proxy.ts` (Redirects, die OpenNext sonst ohne `headers()` ausliefert) und `public/_headers` (Dateien, die Cloudflare Workers Static Assets ohne Worker ausliefert). Seit M2-AP09 ist `public/_headers` nicht mehr eingecheckt: `scripts/headers.mjs` schreibt die Datei vor jedem `next build` und `next dev` aus demselben Modul und denselben Umgebungsvariablen wie `next.config.ts` (manuell: `pnpm --filter @motivo/web headers:write`). So stimmen Worker und Static Assets immer überein, auch wenn Analytics oder Sentry pro Build an- oder abgeschaltet sind.
   - CSP (Produktion): `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests`.
   - Weitere: `Strict-Transport-Security: max-age=63072000; includeSubDomains` (ohne `preload`, bis die Domain feststeht), `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (Kamera, Mikrofon, Standort, Zahlung, USB, Sensoren, Topics gesperrt; Zwischenablage erlaubt), `Cross-Origin-Opener-Policy: same-origin`.
   - **Warum `'unsafe-inline'` bei Scripts**: Statisch vorgerenderte App-Router-Seiten enthalten neben dem Theme-Script seitenspezifische Inline-Scripts von Next (Turbopack-Bootstrap, React-Flight-Daten `self.__next_f.push`). Diese lassen sich nur mit Nonces erlauben, und Nonces erzwingen dynamisches Rendering (Next.js-Doku "Content Security Policy"). Ein Hash in der Policy würde `'unsafe-inline'` im Browser abschalten und die Hydration brechen. Der sha256-Hash des Theme-Scripts wird trotzdem in `lib/csp-hash.ts` aus demselben String berechnet und getestet, damit der Wechsel ein Einzeiler ist, sobald Next statische Inline-Scripts hashen kann. Schutz gegen XSS liefern weiterhin: kein Nutzer-HTML im DOM, Nutzer-SVG nur per `<img>`, kein `eval` (auch Zod läuft `jitless`), keine fremden Script-Quellen.
   - **Warum `'unsafe-inline'` bei Styles**: React rendert `style`-Attribute ins statische HTML (Vorschaugrössen, CSS-Tool-Vorschau, Farbfelder), Radix setzt `<style>` für die Scroll-Sperre. CSS führt keinen Code aus; Datenabfluss per CSS ist durch `img-src`, `font-src` und `connect-src` begrenzt.
   - Nur in `next dev`: `'unsafe-eval'` (React-Debugging) und `ws:` (HMR), ohne `upgrade-insecure-requests`. Ein Unit-Test stellt sicher, dass das nie in Produktion landet.
-  - Lokale Variante für E2E mit `next start` auf `http://localhost` und `127.0.0.1`: ohne `upgrade-insecure-requests`, HSTS `max-age=0`, COOP `unsafe-none` (WebKit und Firefox). Sie gilt nur, wenn der Host lokal ist **und** der Header `CF-Connecting-IP` fehlt (`isLocalRequest`, `missing`-Bedingung in `localHostHeaderRule`). Grund (Security-Review M2-AP12): OpenNext übernimmt ein vom Client gesendetes `X-Forwarded-Host` als `Host`, bevor Next die `has`-Regeln prüft; mit `X-Forwarded-Host: localhost` hätte sonst jede Anfrage an die Produktion die gelockerte Variante erhalten. Cloudflare setzt `CF-Connecting-IP` bei jeder Anfrage aus dem Internet an den Worker selbst (dieselbe Annahme wie beim Rate-Limit der Warteliste).
-  - Fremde Ursprünge stehen pro Dienst in `EXTERNAL` und landen nur in der CSP, wenn der Build den Dienst aktiviert (`lib/telemetry/config.ts`, Abschnitt 13): Cloudflare Web Analytics (`script-src https://static.cloudflareinsights.com`, `connect-src https://cloudflareinsights.com`) Sentry EU (`connect-src https://*.ingest.de.sentry.io`) und seit M2-AP10 Cloudflare Turnstile für die Warteliste (`script-src` und `frame-src https://challenges.cloudflare.com`, Abschnitt 14; `frame-src` steht nur dann in der Policy). In `next dev` nie. Unit-Tests prüfen beide Fälle, E2E prüft, dass ohne Variablen kein fremder Ursprung in der CSP steht.
+  - Lokale Variante für E2E mit `next start` auf `http://localhost` und `127.0.0.1`: ohne `upgrade-insecure-requests`, HSTS `max-age=0`, COOP `unsafe-none` (WebKit und Firefox). Sie gilt nur, wenn der Host lokal ist **und** der Header `CF-Connecting-IP` fehlt (`isLocalRequest`, `missing`-Bedingung in `localHostHeaderRule`). Grund (Security-Review M2-AP12): OpenNext übernimmt ein vom Client gesendetes `X-Forwarded-Host` als `Host`, bevor Next die `has`-Regeln prüft; mit `X-Forwarded-Host: localhost` hätte sonst jede Anfrage an die Produktion die gelockerte Variante erhalten. Cloudflare setzt `CF-Connecting-IP` bei jeder Anfrage aus dem Internet an den Worker selbst.
+  - Fremde Ursprünge stehen pro Dienst in `EXTERNAL` und landen nur in der CSP, wenn der Build den Dienst aktiviert (`lib/telemetry/config.ts`, Abschnitt 13): Cloudflare Web Analytics (`script-src https://static.cloudflareinsights.com`, `connect-src https://cloudflareinsights.com`) und Sentry EU (`connect-src https://*.ingest.de.sentry.io`). Cloudflare Turnstile (Warteliste) ist seit M3-AP13 entfernt, die Policy hat kein `frame-src` mehr. Der Spenden-Link ist ein gewöhnlicher Link ohne Script und braucht keinen CSP-Eintrag. In `next dev` nie. Unit-Tests prüfen beide Fälle, E2E prüft, dass ohne Variablen kein fremder Ursprung in der CSP steht.
   - E2E (`e2e/csp.spec.ts`) prüft Header, Durchsetzung und dass Startseite, Editor (PNG-Export im Worker, Kopieren) und Konverter keine CSP-Verletzung auslösen.
 
-**Lifetime-Kauf und Credits (Ablauf)**
+**Lifetime-Kauf und Credits (Ablauf)** (überholt 2026-10-28, nicht geplant)
 - Stripe Checkout im Modus **Einmalzahlung** (`mode=payment`), mit Rechnungserstellung für Firmenkunden. Kein Abo, kein Customer Portal nötig; Belege und Rechnungen im eigenen Bereich `/app/license` anzeigen.
 - Webhook `checkout.session.completed` ► `purchases` schreiben ► `licenses` anlegen bzw. Upgrade umsetzen ► bei Phasenpreis `price_phases.sold_units` atomar erhöhen (Transaktion, damit Founders-Kontingent nie überverkauft wird).
 - Refund (`charge.refunded`) ► Lizenz auf `refunded`, Entitlements fallen auf Free zurück, gespeicherte Designs bleiben lesbar.
@@ -243,9 +239,8 @@ waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECUR
 /de/farbverlaeufe, /en/gradients      Gradient-Sammlung (seit M3-AP09), je Verlauf /…/[slug]
 /de/farbpaletten, /en/color-palettes  Paletten-Sammlung (seit M3-AP09), je Palette /…/[slug]
 /[locale]/wallpapers                   Programmatic-SEO-Sammlung (später)
-/[locale]/blog, /changelog, /pricing
-/app/dashboard, /app/brand, /app/settings, /app/license   (nicht indexiert; Lizenz, Belege, Credits)
-/api/v1/...                             Öffentliche API
+/de/unterstuetzen, /en/support        Spendenseite (seit M3-AP14)
+/[locale]/blog, /changelog
 ```
 
 - Lokalisierte Slugs (z. B. `/de/geometrische-muster-generator`), `hreflang`, Sitemap pro Sprache.
@@ -272,10 +267,11 @@ waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECUR
 - **Ausspielung auf Cloudflare**: `open-next.config.ts` nutzt den Static-Assets-Incremental-Cache mit Cache Interception. Vorgerenderte Seiten, Motive, Sitemap und Robots kommen ohne Rendering aus den Workers Static Assets (`x-opennext-cache: HIT`), OG-Bilder sind gewöhnliche Assets. Revalidierung (ISR) ist damit nicht möglich; sobald ISR-Seiten kommen, auf den R2-Cache wechseln.
 - **Sitemap und Robots**: `app/sitemap.ts` (statisch) listet Startseite, Katalog, Kategorien, Landingpages, Konverter-Übersicht und Konverter in jeder Sprache, jeweils mit denselben `hreflang`-Alternativen wie die Seite (`lib/seo/sitemap.ts`). Editor-Seiten bleiben indexierbar, stehen aber nicht in der Sitemap, weil die Landingpages den Text tragen. `app/robots.ts` erlaubt alles und verweist auf die Sitemap.
 - **Keine Indexierung ausserhalb der Produktion**: `next.config.ts` setzt per `headers()`-Regel mit `missing: host` auf jedem Host ausser dem Produktions-Host (Host von `NEXT_PUBLIC_SITE_URL`, sonst der workers.dev-Fallback) `X-Robots-Tag: noindex, nofollow` (`lib/seo/indexing.ts`). Das trifft Worker-Previews (`<alias>-motivo-web.<subdomain>.workers.dev`), lokale Server und später die workers.dev-URL, sobald eine eigene Domain kanonisch ist, ohne Build-Flag pro Umgebung. Die Regel greift auch für vorgerenderte Seiten, Sitemap und Robots (mit OpenNext in workerd geprüft). Bewusst kein `Disallow` in `robots.txt`, sonst sähen Crawler den Header nicht. Tests: `lib/seo/indexing.test.ts`, `e2e/seo.spec.ts`.
-- **Startseite** (seit M2-AP09, `app/[locale]/page.tsx`, statisch): Hero mit drei Motiven der Tools selbst (`/motifs/...`, das grosse Motiv mit `fetchpriority=high`, sanfte Bewegung nur mit `motion-safe`), Nutzenversprechen (gratis, alles im Browser, Lifetime-Lizenz *geplant*, ohne Preise), Kategorien aus `populatedCategories()`, ausgewählte Tools, "So funktioniert's", FAQ (mit `FAQPage`-JSON-LD) und Abschluss-CTA. Die Tool-Auswahl steht in `lib/home.ts`; `home.test.ts` verlangt, dass jede ID registriert und statisch renderbar ist.
+- **Startseite** (seit M2-AP09, `app/[locale]/page.tsx`, statisch): Hero mit drei Motiven der Tools selbst (`/motifs/...`, das grosse Motiv mit `fetchpriority=high`, sanfte Bewegung nur mit `motion-safe`), Nutzenversprechen (gratis, alles im Browser, getragen von Spenden mit Link auf "Unterstützen", ohne Preise; seit M3-AP13 ohne Warteliste), Kategorien aus `populatedCategories()`, ausgewählte Tools, "So funktioniert's", FAQ (mit `FAQPage`-JSON-LD) und Abschluss-CTA. Die Tool-Auswahl steht in `lib/home.ts`; `home.test.ts` verlangt, dass jede ID registriert und statisch renderbar ist.
+- **Unterstützen** (seit M3-AP14, `app/[locale]/support/page.tsx`, statisch): `SECTION_SLUGS.support` (`unterstuetzen`/`support`), hreflang, Sitemap, Breadcrumbs, kein eigenes OG-Bild (wie die Startseite). Der Knopf verlinkt auf `NEXT_PUBLIC_DONATION_URL` (Build-Variable, `lib/donation.ts`: nur absolute https-URLs ohne Zugangsdaten, sonst gilt sie als leer); ohne gültige Variable zeigt die Seite "Spenden-Link folgt bald" statt eines Knopfs. Link mit `rel="noopener noreferrer"`, kein Script, kein Widget, CSP unverändert. Deploy: Repository-Variable, für Produktion und Previews. Alte Warteliste-Pfade (`founders-warteliste`, `founders-waitlist`, `founders`, auch Unterseiten) leitet `legacy.ts` per 308 hierher um (`RETIRED_SECTION_SLUGS`). Footer-Link "Motivo unterstützen", Karte "Getragen von Spenden" auf der Startseite.
 - **Rechtliche Seiten** (`app/[locale]/imprint`, `app/[locale]/privacy`, `components/legal/legal-page.tsx`): Slugs über `SECTION_SLUGS` (`impressum`/`imprint`, `datenschutz`/`privacy`, Vertragstest in `slugs.test.ts`), fremde Schreibweisen leitet `legacy.ts` um. Betreiberangaben stehen einmal in `lib/legal/config.ts` (`LEGAL_CONFIG.operator`, Platzhalter in eckigen Klammern), Texte in `messages/*.json` unter `Legal`. Solange `legalReviewed` false ist, zeigen beide Seiten das Banner "Entwurf, juristisch zu prüfen", haben `robots: noindex` und fehlen in der Sitemap.
 - **Client-Messages**: `NextIntlClientProvider` ohne `messages` serialisiert alle Texte in jede Seite (rund 60 KB pro Sprache inklusive SEO- und Rechtstexte). `lib/client-messages.ts` gibt Konverter-Seiten nur `Converters`, Editor-Seiten `ToolPage`, `Editor`, `sizes` und `tools` (ohne `tools.*.seo`). Das HTML der Startseite sank dadurch von 138 auf 75 KB.
-- **Kein next-intl im Browser auf Landingpages** (seit M2-AP12): Das Layout hat keinen `NextIntlClientProvider`. Sprachumschalter und Theme-Schalter erhalten ihre Texte als Props von Server-Komponenten, `Link` aus `i18n/navigation.tsx` ist eine async Server-Komponente, die den lokalisierten Pfad auf dem Server berechnet (`compilePath` in `i18n/paths.ts`, gleiches Ergebnis wie `getPathname` von next-intl, per Test für alle Routen geprüft) und ein schlichtes `next/link` rendert. Der Sprachumschalter rechnet ebenfalls mit `compilePath` und den Next-Hooks. So lädt eine Landingpage den Nachrichten-Formatierer von next-intl nicht (rund 43 KB roh, 13 KB gzip weniger JS). Client-Komponenten mit eigenen Texten (Editor, Konverter, Warteliste) bringen ihren Provider mit und importieren `Link` aus `i18n/client-navigation.ts`; `i18n/navigation.test.ts` wacht darüber.
+- **Kein next-intl im Browser auf Landingpages** (seit M2-AP12): Das Layout hat keinen `NextIntlClientProvider`. Sprachumschalter und Theme-Schalter erhalten ihre Texte als Props von Server-Komponenten, `Link` aus `i18n/navigation.tsx` ist eine async Server-Komponente, die den lokalisierten Pfad auf dem Server berechnet (`compilePath` in `i18n/paths.ts`, gleiches Ergebnis wie `getPathname` von next-intl, per Test für alle Routen geprüft) und ein schlichtes `next/link` rendert. Der Sprachumschalter rechnet ebenfalls mit `compilePath` und den Next-Hooks. So lädt eine Landingpage den Nachrichten-Formatierer von next-intl nicht (rund 43 KB roh, 13 KB gzip weniger JS). Client-Komponenten mit eigenen Texten (Editor, Konverter) bringen ihren Provider mit und importieren `Link` aus `i18n/client-navigation.ts`; `i18n/navigation.test.ts` wacht darüber.
 - **Prefetch erst bei Absicht** (seit M2-AP12): Next lädt sonst für jeden sichtbaren Link sofort RSC-Daten und die JS-Chunks der Zielseite (Editor, Konverter), auf dem Katalog über ein Dutzend Anfragen nach dem Laden. Beide `Link`-Varianten (`i18n/intent-link.tsx`, `i18n/intl-intent-link.tsx`) setzen `prefetch={false}`, bis der Zeiger den Link berührt, er den Fokus erhält oder eine Berührung beginnt; danach gilt das Standardverhalten. Ein explizites `prefetch` gewinnt immer.
 - Share-Links: Params im URL-Hash komprimiert (z. B. `lz-string`), damit ein Design ohne Account teilbar ist.
 
@@ -323,7 +319,7 @@ GET  /api/v1/tools/{toolId}/schema
 - Tool-Seite: JS für Erstaufruf < 200 KB gzip; WebGL/Konva/gifenc nur dynamisch laden.
 - Vektor-Vorschau neu rendern < 16 ms bei typischen Params; sonst Debounce + Worker.
 - Bildeffekte immer im Worker; Vorschau auf herunterskaliertem Bild, Export in voller Grösse.
-- Thumbnails beim Speichern clientseitig als WebP (400 px) erzeugen und in Supabase Storage ablegen.
+- Thumbnails beim Speichern clientseitig als WebP (400 px) erzeugen und lokal in IndexedDB ablegen.
 
 ## 12. Qualitätssicherung
 
@@ -331,7 +327,7 @@ GET  /api/v1/tools/{toolId}/schema
 - **Visuelle Regression** mit Playwright (Chromium, WebKit, Firefox) für Vorschau == Export.
 - **Schema-Tests**: `defaults` und alle `presets` müssen `schema.parse` bestehen.
 - **Barrierefreiheit**: axe-Checks in CI, alle Controls per Tastatur bedienbar.
-- **Sicherheit**: SVG-Sanitizer mit bekannten XSS-Payloads testen; RLS-Policies mit Tests (pgTAP oder Supabase-Testhelper).
+- **Sicherheit**: SVG-Sanitizer mit bekannten XSS-Payloads testen; Importdateien (Designs, Brand Kit) mit manipulierten Fällen testen.
 
 ## 13. Statistik und Fehler-Monitoring (seit M2-AP09)
 
@@ -352,45 +348,6 @@ Beide Dienste sind **aus**, solange ihre öffentliche Umgebungsvariable beim Bui
 
 **Cookies**: Das Sprach-Cookie von next-intl ist aus (`localeCookie: false`); `/` wählt die Sprache nur nach `Accept-Language`. Lokal gespeichert werden nur Design (Theme) und zuletzt genutztes Exportformat im localStorage.
 
-## 14. Founders-Warteliste (seit M2-AP10, überholt 2026-10-28, Code wird in M3 entfernt)
+## 14. Founders-Warteliste (entfernt)
 
-E-Mail-Warteliste mit Double-Opt-in für die Founders-Lizenzen (`docs/PRODUCT.md` 6.2), mit ehrlichem Zähler der bestätigten Anmeldungen. Speicher: Supabase (Region Zürich `eu-central-2`), Versand: Resend (Gratis-Tarif). Beide nur per `fetch`, ohne SDK und ohne neue Laufzeit-Dependency (neu in `apps/web`: `zod` und `@motivo/db`, beide schon im Monorepo; neu als devDependency in `packages/db`: `@electric-sql/pglite` 0.5.12 für Tests). Einrichtung durch den Owner: `docs/SETUP-WAITLIST.md`.
-
-**Ein/Aus**: Die Funktion ist aus, solange eine der Laufzeit-Variablen `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `WAITLIST_FROM_EMAIL` fehlt (`lib/waitlist/config.ts`, pro Request gelesen, auf Cloudflare als Worker-Secrets). Dann antwortet `GET /api/waitlist/count` mit `{ enabled: false }`, das Formular zeigt "Die Warteliste öffnet bald", `POST` gibt 503. Die Seiten sind statisch; das Formular fragt beim Laden den Zähler-Endpunkt und entscheidet erst dann. `TURNSTILE_SECRET_KEY` (Laufzeit) und `NEXT_PUBLIC_TURNSTILE_SITE_KEY` (Build) schalten die Sicherheitsprüfung zusammen ein; der Site-Key öffnet die CSP für `https://challenges.cloudflare.com` (`script-src`, `frame-src`), im selben Muster wie Analytics und Sentry (Abschnitt 13, `EXTERNAL` in `lib/security-headers.ts`, `scripts/headers.mjs`). In `next dev` ist Turnstile immer aus. Ist nur einer der beiden Turnstile-Schlüssel vorhanden, bleibt die Warteliste aus, damit Formular und Server nie auseinanderlaufen. Das hält auch Worker-Previews aus: Sie teilen die Secrets der Produktion, werden aber ohne `NEXT_PUBLIC_*`-Variablen gebaut (`deploy.yml` setzt den Site-Key nur beim Push auf `main`).
-
-**Datenmodell** (`supabase/migrations/20261027120000_founders_waitlist.sql`):
-
-```sql
-waitlist_signups     (id uuid pk, email text unique null (kleingeschrieben, null nach Abmeldung),
-                      locale, status pending|confirmed|unsubscribed, consent_version,
-                      confirm_token_hash, token_expires_at, unsubscribe_token_hash,
-                      send_count, last_sent_at, created_at, confirmed_at, unsubscribed_at)
-waitlist_rate_limits (key_hash, window_start, hits, pk(key_hash, window_start))
-```
-
-- **RLS an, keine Policies**, alle Tabellenrechte für `anon`, `authenticated` und `service_role` entzogen. Niemand liest Zeilen direkt über die Data API.
-- Der Server ruft nur schmale `SECURITY DEFINER`-Funktionen mit `search_path = ''` auf, ausführbar nur durch `service_role`: `waitlist_request_signup` (liefert `send`, `skip` oder `rate_limited`), `waitlist_confirm`, `waitlist_unsubscribe`, `waitlist_mail_failed`. Einzige Funktion für `anon`: `waitlist_confirmed_count()` (nur die Zahl).
-- **Keine IP-Adresse gespeichert**: Rate-Limit pro Stunde (10 Anfragen) auf einem HMAC-SHA-256 der IP, Schlüssel aus dem Server-Secret plus UTC-Tag (`lib/waitlist/crypto.ts`), nach einem Tag gelöscht. Nur `CF-Connecting-IP` zählt (von Cloudflare gesetzt). IPv6-Adressen zählen pro /64-Präfix (ein Anschluss erhält meist ein ganzes /64, sonst liesse sich das Limit durch Adresswechsel umgehen), IPv4-gemappte IPv6-Adressen als IPv4. Lokal ohne IP kein IP-Limit.
-- Tokens: 32 Zufallsbytes (base64url), gespeichert nur als SHA-256; Bestätigung 48 h gültig und einmalig. Unbestätigte Anmeldungen werden 30 Tage nach der letzten Mail gelöscht. Abmelden löscht die Adresse sofort (Zeile bleibt als anonymer Zähler).
-- Kostenbremse: höchstens 5 Mails pro Adresse, 10 Minuten Sperrfrist zwischen zwei Mails, höchstens 90 Bestätigungsmails pro UTC-Tag insgesamt (Resend gratis: 100 pro Tag, 3000 pro Monat). Die Grenzen stehen in der Migration und in `WAITLIST_DB_LIMITS` (`packages/db/src/waitlist.ts`); ein Test hält beide gleich.
-
-**API** (`app/api/waitlist/...`, Logik in `lib/waitlist/handlers.ts`, testbar ohne Next):
-
-| Route | Zweck |
-|---|---|
-| `POST /api/waitlist` | Anmeldung. Nur JSON (max. 4 KB), Zod-Schema, Honeypot-Feld, Turnstile-Siteverify falls Secret gesetzt. Antwort immer `202 { status: "pending" }` für neue, offene und bestätigte Adressen; die Mail geht per `after()` nach der Antwort raus, damit auch die Antwortzeit nichts verrät. Fehler: 400 `invalid`/`captcha`, 415, 413, 429 `rate_limited`, 503 `disabled`/`unavailable`. |
-| `POST /api/waitlist/confirm` | Einmal-Bestätigung per Knopf auf der Seite `/<sprache>/founders-warteliste/bestaetigen#token=…`, auf die die Mail verlinkt. Nur JSON (`{ token }`, sonst 415), Antwort `200 confirmed`, `404 invalid`, `400 invalid` (Format), 503. Kein GET: Mail-Sicherheitsscanner öffnen Links und dürften sonst das Double Opt-in für fremde Adressen abschliessen (M2-AP12). |
-| `POST /api/waitlist/unsubscribe` | Abmelden per Knopf (JSON) und als RFC-8058-One-Click (`List-Unsubscribe-Post`). Kein GET, damit Link-Scanner niemanden abmelden. |
-| `GET /api/waitlist/count` | `{ enabled, confirmed, seats }`, 60 s im Isolate-Speicher und per `Cache-Control` gecacht. |
-
-- Logs enthalten nur Dienst und HTTP-Status, nie Adresse, Token, Schlüssel oder Antwort-Bodies (Postgres-Fehler können die Zeile samt Adresse zurückgeben).
-- Supabase-Schlüssel: neue Secret-Keys (`sb_secret_…`) nur im Header `apikey`, alte `service_role`-JWTs zusätzlich als `Authorization: Bearer` (Supabase-Doku "Understanding API keys").
-- E-Mail (`lib/waitlist/email.ts`, Texte `WaitlistEmail`): Text plus einfaches HTML, keine Bilder, keine externen Ressourcen, keine Zählpixel, Links nur auf die eigene Domain (`NEXT_PUBLIC_SITE_URL`). `Idempotency-Key` pro Token. Open- und Click-Tracking müssen bei Resend für die Domain aus sein.
-
-**UI**: Abschnitt auf der Startseite (vor den FAQ) und Seite `/de/founders-warteliste`, `/en/founders-waitlist` (`SECTION_SLUGS.founders`, in der Sitemap). Preis "Lifetime-Lizenz ab 49 CHF oder EUR" mit Hinweis "unverbindlicher Richtwert, kein Angebot". Zähler "X von 300 Founders-Plätzen vorgemerkt" nur, wenn die Funktion an ist und die Zahl vorliegt; ab 300 ein eigener Text. Formular mit Label, Einwilligung mit Link zur Datenschutzerklärung, Fehler per `aria-invalid`/`aria-describedby` und Fokus, API-Fehler in `role="alert"`, Erfolg fokussiert. Seiten `/<sprache>/founders-warteliste/<bestaetigen|bestaetigt|link-ungueltig|fehler|abmelden>` (`WAITLIST_PAGE_SLUGS`, noindex, nicht in der Sitemap). Bestätigungs- und Abmeldeseite lesen das Token aus dem URL-Fragment `#token=` (geht nie an einen Server), entfernen es sofort aus der Adresszeile und handeln erst auf Knopfdruck (POST). Nach der Bestätigung wechselt die Seite auf `bestaetigt` oder `link-ungueltig`; Fehler bleiben mit erneutem Versuch auf der Seite. Alle Texte sind als "juristisch zu prüfen" markiert; die Datenschutzerklärung hat einen Abschnitt `waitlist`.
-
-**Tests**
-- `packages/db/src/waitlist.test.ts`: Migration in PGlite (Postgres 18 als WASM, ohne Docker) mit nachgebildeten Supabase-Rollen und Default-Grants (`packages/db/src/testing/database.ts`). Prüft RLS ohne Policies, keine Tabellenrechte für alle drei Rollen, Funktionsrechte, `SECURITY DEFINER` mit leerem `search_path`, Idempotenz, Sperrfrist, Mail-Obergrenzen, Ablauf, Einmal-Bestätigung, Abmeldung mit Löschung, Rate-Limits und Aufräumen. Der lokale Supabase-Stack (Docker) lief in der Cloud-Sitzung nicht; vor dem ersten Deploy die Migration zusätzlich mit `supabase db reset` prüfen.
-- `apps/web/lib/waitlist/waitlist.test.ts`: echte Handler und Supabase-Client, `fetch` auf dieselbe Migration in PGlite umgeleitet, Resend und Turnstile gefälscht. Aus ohne Variablen, ganzer Ablauf mit Variablen, gleiche Antwort für jede Adresse, keine personenbezogenen Daten in Logs.
-- `apps/web/lib/waitlist/client-bundle.test.ts`: kein `"use client"`-Modul erreicht über Imports ein Server-Modul der Warteliste; nach einem Build enthält `.next/static` keine Secret-Namen, Secret-Werte (falls beim Build gesetzt) oder Backend-Endpunkte.
-- `e2e/waitlist.spec.ts`: aus ohne Secrets (echte API), an mit gemockter API im Browser, Tastatur, axe, Ergebnisseiten.
+Die Warteliste (M2-AP10, Supabase, Resend, Turnstile) ist mit dem Gratis-Entscheid vom 2026-10-28 in M3-AP13 vollständig entfernt worden; alte URLs leiten auf "Unterstützen" um (Abschnitt 7), Details stehen in der Git-Historie.

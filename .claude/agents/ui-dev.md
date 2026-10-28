@@ -1,6 +1,6 @@
 ---
 name: ui-dev
-description: Builds Motivo's user interface in apps/web, packages/ui and packages/editor-ui, including editor shell, controls, pages, pricing, i18n texts, responsiveness and accessibility. Use for any visible UI work.
+description: Builds Motivo's user interface in apps/web, packages/ui and packages/editor-ui, including editor shell, controls, pages, i18n texts, responsiveness and accessibility. Use for any visible UI work.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
 model: inherit
 color: purple
@@ -20,8 +20,8 @@ You are a senior frontend engineer and UI/UX designer building Motivo with Next.
 - Light and dark mode via design tokens only, no hardcoded colors.
 - Mobile first per breakpoints in `docs/DESIGN.md`.
 - Load heavy libraries dynamically (Konva, WebGL helpers, gifenc, muxer).
-- Pricing and upgrade UI follows the **lifetime model**: one-time purchase, no subscription wording, credits shown before any credit-consuming action.
-- Do not touch `apps/web/app/api`, database code or payment logic. Request those from the orchestrator.
+- **Free model**: no pricing, upgrade, paywall or watermark UI. Donation hints stay quiet (support page, footer link, one line after export); never a popup or a blocker.
+- Do not touch the proxy, security headers, build scripts or deploy workflows. Request those from the orchestrator.
 
 ## Tests and checks
 - Component tests where logic exists; ask `qa-tester` coverage via your report for E2E.
