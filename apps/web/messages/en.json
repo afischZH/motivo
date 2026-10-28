@@ -3697,6 +3697,111 @@
           "a5": "Yes. The export offers plain text for README files, code comments and terminals, plus an HTML snippet with inline styles that brings its colors and the monospace font along."
         }
       }
+    },
+    "shader-gradient": {
+      "name": "Shader Gradient",
+      "description": "Liquid, silky and grainy gradients from a GPU shader. With domain warping, Bayer dithering, grain and vignette. PNG, JPG and WebP up to 8K, plus seamless GIF loops.",
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "liquid": "Liquid",
+            "silk": "Silk",
+            "streaked": "Streaked",
+            "grainy": "Grainy",
+            "marble": "Marble",
+            "ripple": "Ripple",
+            "aurora": "Aurora"
+          }
+        },
+        "frequency": {
+          "label": "Frequency"
+        },
+        "amplitude": {
+          "label": "Contrast"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "detail": {
+          "label": "Detail"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "zoom": {
+          "label": "Zoom"
+        },
+        "time": {
+          "label": "Moment",
+          "description": "Position in the loop. Every export shows exactly this moment, and the GIF loop starts here."
+        },
+        "speed": {
+          "label": "Speed",
+          "description": "How fast the preview moves. 0 stops it. With reduced motion turned on in your system, the preview always stands still."
+        },
+        "dither": {
+          "label": "Dithering",
+          "options": {
+            "off": "Off",
+            "bayer2": "2×2",
+            "bayer4": "4×4",
+            "bayer8": "8×8"
+          }
+        },
+        "levels": {
+          "label": "Color steps"
+        },
+        "ditherScale": {
+          "label": "Dither cell"
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Motion",
+        "texture": "Texture"
+      },
+      "presets": {
+        "liquid": "Liquid violet",
+        "silk": "Grey silk",
+        "streaked": "Morning streaks",
+        "grainy": "Grainy summer",
+        "marble": "Marble",
+        "ripple": "Lagoon",
+        "aurora": "Aurora",
+        "retro-dither": "Retro dither"
+      },
+      "seo": {
+        "whatIs": "A shader gradient is a gradient computed by a small program right on your graphics card. Instead of a few fixed color stops, it builds a living field of noise, bends it with domain warping and then runs it through your colors. The result is liquid, silky or grainy backgrounds that need no image as a starting point. Musterli renders everything in your browser, nothing leaves your device.",
+        "howTo": "Pick a style such as Liquid, Silk or Aurora and choose two to six colors. Shape the field with frequency, warp and angle, then give it a surface with grain, vignette and Bayer dithering. Press Space for new colors and a new shape. The moment slider picks the still frame for exports. Then export a PNG, JPG or WebP up to 8K, or a seamless GIF loop.",
+        "faq": {
+          "q1": {
+            "question": "Do I need a special graphics card?",
+            "answer": "No. Any current browser with WebGL2 will do, and Chrome, Edge, Firefox and Safari have supported it for years. If WebGL2 is missing, for example because hardware acceleration is turned off, Musterli shows a notice instead of an empty area."
+          },
+          "q2": {
+            "question": "Does the export look exactly like the preview?",
+            "answer": "Yes. Preview and export run the same shader with the same values. Musterli renders large exports up to 8K in tiles, and grain and dithering stay exactly where they are in the preview."
+          },
+          "q3": {
+            "question": "What does Bayer dithering do?",
+            "answer": "It reduces the gradient to a few color steps and spreads the transitions in a regular dot pattern. That gives a retro look like old computers and printers, and it prevents visible banding in soft gradients."
+          },
+          "q4": {
+            "question": "Can I use the gradient as an animation?",
+            "answer": "The GIF export draws a seamless loop whose first frame is exactly your still image. The preview moves at the speed you set, unless you have turned on reduced motion in your system."
+          },
+          "q5": {
+            "question": "Does the same gradient always look the same?",
+            "answer": "Yes. The noise depends only on the seed and your settings. A share link or a saved design gives the same picture on every device."
+          }
+        }
+      }
     }
   },
   "Converters": {

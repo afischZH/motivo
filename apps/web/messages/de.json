@@ -3697,6 +3697,111 @@
           "a5": "Ja. Im Export findest du reinen Text für README-Dateien, Code-Kommentare und Terminals sowie ein HTML-Snippet mit Inline-Stilen, das Farben und Monospace-Schrift mitbringt."
         }
       }
+    },
+    "shader-gradient": {
+      "name": "Shader-Farbverlauf",
+      "description": "Fliessende, seidige und körnige Verläufe aus einem Shader auf der Grafikkarte. Mit Domain Warping, Bayer-Dithering, Körnung und Vignette. PNG, JPG und WebP bis 8K, dazu nahtlose GIF-Schleifen.",
+      "params": {
+        "style": {
+          "label": "Stil",
+          "options": {
+            "liquid": "Flüssig",
+            "silk": "Seide",
+            "streaked": "Schlieren",
+            "grainy": "Körnig",
+            "marble": "Marmor",
+            "ripple": "Wellen",
+            "aurora": "Polarlicht"
+          }
+        },
+        "frequency": {
+          "label": "Frequenz"
+        },
+        "amplitude": {
+          "label": "Kontrast"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "detail": {
+          "label": "Feinheit"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "zoom": {
+          "label": "Zoom"
+        },
+        "time": {
+          "label": "Zeitpunkt",
+          "description": "Stelle in der Schleife. Jeder Export zeigt genau diesen Zeitpunkt, die GIF-Schleife beginnt hier."
+        },
+        "speed": {
+          "label": "Tempo",
+          "description": "Wie schnell sich die Vorschau bewegt. 0 hält sie an. Bei reduzierter Bewegung im System steht die Vorschau immer still."
+        },
+        "dither": {
+          "label": "Dithering",
+          "options": {
+            "off": "Aus",
+            "bayer2": "2×2",
+            "bayer4": "4×4",
+            "bayer8": "8×8"
+          }
+        },
+        "levels": {
+          "label": "Farbstufen"
+        },
+        "ditherScale": {
+          "label": "Rastergrösse"
+        },
+        "grain": {
+          "label": "Körnung"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Bewegung",
+        "texture": "Oberfläche"
+      },
+      "presets": {
+        "liquid": "Flüssiges Violett",
+        "silk": "Graue Seide",
+        "streaked": "Morgenschlieren",
+        "grainy": "Körniger Sommer",
+        "marble": "Marmor",
+        "ripple": "Lagune",
+        "aurora": "Polarlicht",
+        "retro-dither": "Retro-Dithering"
+      },
+      "seo": {
+        "whatIs": "Ein Shader-Farbverlauf ist ein Verlauf, den ein kleines Programm direkt auf der Grafikkarte berechnet. Statt weniger fester Farbstopps entsteht ein lebendiges Feld aus Rauschen, das sich mit Domain Warping verbiegt und dann deine Farben durchläuft. So entstehen flüssige, seidige oder körnige Hintergründe, die keine Bilddatei als Vorlage brauchen. Musterli rechnet alles in deinem Browser, nichts verlässt dein Gerät.",
+        "howTo": "Wähl einen Stil wie Flüssig, Seide oder Polarlicht und such zwei bis sechs Farben aus. Mit Frequenz, Verzerrung und Winkel formst du das Feld, mit Körnung, Vignette und Bayer-Dithering gibst du ihm eine Oberfläche. Die Leertaste würfelt neue Farben und eine neue Form. Mit dem Zeitpunkt wählst du das Standbild für den Export. Exportier danach als PNG, JPG oder WebP bis 8K oder als nahtlose GIF-Schleife.",
+        "faq": {
+          "q1": {
+            "question": "Brauche ich eine besondere Grafikkarte?",
+            "answer": "Nein. Jeder aktuelle Browser mit WebGL2 reicht, das können Chrome, Edge, Firefox und Safari seit Jahren. Fehlt WebGL2, etwa weil die Hardwarebeschleunigung abgeschaltet ist, zeigt Musterli einen Hinweis statt einer leeren Fläche."
+          },
+          "q2": {
+            "question": "Sieht der Export genauso aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export nutzen denselben Shader mit denselben Werten. Grosse Exporte bis 8K rechnet Musterli in Kacheln, Körnung und Dithering bleiben dabei an derselben Stelle wie in der Vorschau."
+          },
+          "q3": {
+            "question": "Was bringt das Bayer-Dithering?",
+            "answer": "Es reduziert den Verlauf auf wenige Farbstufen und verteilt die Übergänge in einem regelmässigen Punktraster. Das ergibt einen Retro-Look wie bei alten Computern und Druckern und verhindert sichtbare Streifen in weichen Verläufen."
+          },
+          "q4": {
+            "question": "Kann ich den Verlauf animiert verwenden?",
+            "answer": "Der GIF-Export zeichnet eine nahtlose Schleife, deren erstes Bild genau dein Standbild ist. Die Vorschau bewegt sich mit dem eingestellten Tempo, ausser du hast im System weniger Bewegung eingestellt."
+          },
+          "q5": {
+            "question": "Sieht derselbe Verlauf immer gleich aus?",
+            "answer": "Ja. Das Rauschen hängt nur vom Seed und von deinen Einstellungen ab. Ein Teilen-Link oder ein gespeichertes Design ergibt darum auf jedem Gerät dasselbe Bild."
+          }
+        }
+      }
     }
   },
   "Converters": {

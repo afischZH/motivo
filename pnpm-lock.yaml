@@ -278,6 +278,9 @@ importers:
       '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
+      '@musterli/shaders':
+        specifier: workspace:*
+        version: link:../shaders
       '@musterli/svg-sanitizer':
         specifier: workspace:*
         version: link:../svg-sanitizer

@@ -19,6 +19,7 @@
   "dependencies": {
     "@musterli/effects": "workspace:*",
     "@musterli/engine": "workspace:*",
+    "@musterli/shaders": "workspace:*",
     "@musterli/svg-sanitizer": "workspace:*",
     "zod": "^4.6.7"
   }
