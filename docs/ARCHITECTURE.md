@@ -2,11 +2,13 @@
 
 > Versionen von Frameworks und Libraries sind **bei Projektstart zu prüfen** (Stand Wissen: Mitte 2026). Wo eine Library als Empfehlung genannt ist, gilt: zuerst kurz die aktuelle Doku und den Wartungsstatus checken.
 
+> **Grundentscheid 2026-10-28**: Motivo ist komplett gratis und spendenfinanziert, ohne Konten und ohne Zahlungen (`PRODUCT.md` Abschnitt 6). Supabase, Stripe, Lizenzen, Credits, öffentliche API und KI entfallen. Die betroffenen Abschnitte (6 Datenmodell, 8 API, 9 KI, 14 Warteliste) sind als überholt markiert und bleiben nur als Referenz stehen.
+
 ## 1. Leitprinzipien
 
 1. **Ein Render-Pfad**: Vorschau und Export nutzen exakt denselben Code. (MagicPattern hatte laut Changelog Bugs, weil Vorschau und Export auseinanderliefen.)
 2. **Deterministisch**: Jedes Ergebnis ist vollständig beschrieben durch `{ toolId, version, params, seed }`. Gleiche Eingabe ergibt immer dasselbe Bild. Das ermöglicht Speichern als kleines JSON, Share-Links, API und Undo.
-3. **Client-first Rendering**: Rechenarbeit läuft im Browser (SVG, Canvas 2D, WebGL2, Web Worker). Server nur für Auth, Persistenz, Billing, Community, API und KI.
+3. **Client-first Rendering**: Rechenarbeit läuft im Browser (SVG, Canvas 2D, WebGL2, Web Worker). Server nur für statische Seiten und Share-Links; keine Konten, keine Nutzerdaten auf dem Server (seit 2026-10-28).
 4. **Schema-getriebene Tools**: Ein Tool ist eine Datei mit Parameter-Schema und Render-Funktion. Die UI baut sich daraus automatisch. Nur so skaliert eine kleine Crew auf 30+ Tools.
 5. **Isomorphe Engine**: Die Generatoren sind reines TypeScript ohne DOM-Abhängigkeit (wo möglich), damit sie im Browser, im Worker, auf dem Server (API) und in Plugins laufen.
 
@@ -26,11 +28,11 @@
 | GIF | **gifenc** (im Worker) | Klein, schnell |
 | Video | **WebCodecs** + Muxer (**Mediabunny**, Nachfolger von mp4-muxer/webm-muxer; prüfen), Fallback `MediaRecorder` für WebM | Clientseitiger MP4/WebM-Export |
 | Social-Editor/Composer | **Konva** (`react-konva`) | Ebenen, Transformationen, Text, Export |
-| Backend/DB | **Supabase** (Postgres, Auth, Storage, RLS, Edge Functions), Region EU (Zürich-Region prüfen, sonst Frankfurt) | Schnell, RLS-Sicherheit, EU-Datenhaltung |
-| Payments | **Stripe** (Checkout als Einmalzahlung, Tax, Rechnungen; TWINT, Karten, Apple/Google Pay in Checkout aktivieren, Verfügbarkeit pro Methode prüfen) | Standard, CH-tauglich; Einmalzahlungen sind einfacher als Abos |
+| Backend/DB | (überholt 2026-10-28: keine Datenbank; Speichern lokal per IndexedDB, siehe Abschnitt 6) ~~**Supabase** (Postgres, Auth, Storage, RLS, Edge Functions), Region EU (Zürich-Region prüfen, sonst Frankfurt) | Schnell, RLS-Sicherheit, EU-Datenhaltung~~ |
+| Payments | (überholt 2026-10-28: keine Zahlungen; Spenden nur als Link zu externem Anbieter) ~~**Stripe** (Checkout als Einmalzahlung, Tax, Rechnungen; TWINT, Karten, Apple/Google Pay in Checkout aktivieren, Verfügbarkeit pro Methode prüfen) | Standard, CH-tauglich; Einmalzahlungen sind einfacher als Abos~~ |
 | Hosting | **Cloudflare Workers** via OpenNext (`@opennextjs/cloudflare`) | Entscheid 2026-10-27, siehe Entscheidungslog in `CLAUDE.md` |
-| Server-Rasterisierung (API) | **@resvg/resvg-js** (Node) bzw. `resvg-wasm` (Edge) | SVG zu PNG ohne Headless-Browser |
-| KI | LLM via API mit **strukturiertem Output** (JSON gegen Zod-Schema) | KI erzeugt Parameter, keine Pixel |
+| Server-Rasterisierung (API, entfällt 2026-10-28) | **@resvg/resvg-js** (Node) bzw. `resvg-wasm` (Edge) | SVG zu PNG ohne Headless-Browser |
+| KI (entfällt 2026-10-28) | LLM via API mit **strukturiertem Output** (JSON gegen Zod-Schema) | KI erzeugt Parameter, keine Pixel |
 | i18n | **next-intl** | DE/FR/IT/EN, lokalisierte Slugs für SEO |
 | Analytics | **Cloudflare Web Analytics** (cookiefrei, gratis; Entscheid 2026-10-27, siehe Abschnitt 13) | nDSG-freundlich, kein Cookie-Banner nötig |
 | Fehler | **Sentry** (EU-Region, nur clientseitige Fehler, Gratis-Tarif; Abschnitt 13) | |
@@ -144,7 +146,15 @@ Wichtige Regeln:
 - Jeder Export erzeugt ein `export_event` (Tool, Format, Grösse, Lizenzstufe) für Refund-Regel, Limits und Analytics.
 - **Clipboard**: `navigator.clipboard.write` mit PNG-Blob; Fallback Download.
 
-## 6. Datenmodell (Postgres / Supabase)
+## 6. Lokale Datenhaltung (seit 2026-10-28)
+
+- **Designs**: IndexedDB im Browser, je Eintrag `{ id, toolId, version, params, seed, size, name, createdAt, updatedAt, thumbnail (WebP-Blob, ca. 400 px) }`. Uploads (`localParams`) dürfen lokal mitgespeichert werden, verlassen das Gerät aber nur per Datei-Export.
+- **Brand Kit**: ebenfalls IndexedDB (Paletten, Logos, eigene Shapes). Nutzer-SVG immer durch `@motivo/svg-sanitizer` (im Worker), Darstellung nur per `<img>`/`<image>`.
+- **Gerätewechsel**: Export/Import als versionierte JSON-Datei, beim Import mit Zod validiert, Grössenlimit, SVGs erneut sanitisiert.
+- **Persistenz**: `navigator.storage.persist()` anfragen; Hinweis, dass gelöschte Browserdaten die Designs entfernen.
+- Kein Server, keine Cookies, keine Kosten pro Nutzer.
+
+## 6a. Datenmodell Postgres / Supabase (überholt 2026-10-28, nur Referenz)
 
 ```sql
 profiles        (id uuid pk = auth.users.id, display_name, locale, created_at)
@@ -278,7 +288,7 @@ waitlist_signups, waitlist_rate_limits   -- Founders-Warteliste, nur über SECUR
 - **Verlinkung**: Footer, Kategorie-Seiten (Farbverläufe, Farben) und Landingpages der passenden Tools zeigen einen Teaser (`CollectionTeaser`); die Sitemap führt Übersichten und Einträge mit `hreflang`. Kleine Vorschauen im Teaser kommen als Props (`lib/collections/teaser.ts`): Auf der Kategorie-Seite hätte der Import der Sammlungsdaten den gemeinsamen Server-Chunk ein weiteres Mal kopiert (rund 90 KiB gzip im Worker), darum zeigt der Teaser dort nur Text und Link.
 - **Worker**: AP09 vergrössert ihn von 2068 auf 2189 KiB gzip (Texte DE/EN, neue Routen und Seiten-Chunks).
 
-## 8. Öffentliche API (P2)
+## 8. Öffentliche API (überholt 2026-10-28, nicht geplant)
 
 ```
 POST /api/v1/render/{toolId}
@@ -294,7 +304,7 @@ GET  /api/v1/tools/{toolId}/schema
 - Caching: Hash aus `{toolId, version, params, seed, size, format}` als ETag/CDN-Key.
 - Zugang nur mit Lifetime Pro; Abrechnung pro Render über Credits (Cache-Treffer kostenlos), damit die API die Lifetime-Ökonomie nicht belastet.
 
-## 9. KI-Funktionen (P2)
+## 9. KI-Funktionen (überholt 2026-10-28, nicht geplant)
 
 1. **Describe it**: Prompt + Tool-ID ► LLM mit strukturiertem Output gegen das Tool-Schema ► Validierung mit Zod ► Params im Editor anwenden. Nie freien Code ausführen.
 2. **Brand Kit aus URL**: Server lädt Seite (mit Timeouts, Grössenlimit, SSRF-Schutz: keine privaten IP-Ranges), extrahiert Farben aus CSS/Logo, Fonts aus `@font-face`/Google-Fonts-Links, schlägt Palette vor.
@@ -304,8 +314,8 @@ GET  /api/v1/tools/{toolId}/schema
 
 ## 10. Plugins (P2)
 
-- **Figma-Plugin**: Plugin-UI ist ein iframe, das eine abgespeckte Editor-Route lädt (`/embed/tools/[tool]`). Ergebnis per `postMessage` an den Plugin-Code, dort `figma.createNodeFromSvg()` (Vektor) bzw. `figma.createImage()` (Raster). Auth über Device-Code oder API-Key.
-- **Framer-Plugin**: analog, Framer Plugin API; Login via API-Key (wie beim Vorbild).
+- **Figma-Plugin**: Plugin-UI ist ein iframe, das eine abgespeckte Editor-Route lädt (`/embed/tools/[tool]`). Ergebnis per `postMessage` an den Plugin-Code, dort `figma.createNodeFromSvg()` (Vektor) bzw. `figma.createImage()` (Raster). Kein Login nötig (Motivo hat keine Konten).
+- **Framer-Plugin**: analog, Framer Plugin API; ohne Login.
 - Gemeinsames `embed`-Layout ohne Navigation, mit Message-Bridge-Package.
 
 ## 11. Performance-Budget
@@ -342,7 +352,7 @@ Beide Dienste sind **aus**, solange ihre öffentliche Umgebungsvariable beim Bui
 
 **Cookies**: Das Sprach-Cookie von next-intl ist aus (`localeCookie: false`); `/` wählt die Sprache nur nach `Accept-Language`. Lokal gespeichert werden nur Design (Theme) und zuletzt genutztes Exportformat im localStorage.
 
-## 14. Founders-Warteliste (seit M2-AP10)
+## 14. Founders-Warteliste (seit M2-AP10, überholt 2026-10-28, Code wird in M3 entfernt)
 
 E-Mail-Warteliste mit Double-Opt-in für die Founders-Lizenzen (`docs/PRODUCT.md` 6.2), mit ehrlichem Zähler der bestätigten Anmeldungen. Speicher: Supabase (Region Zürich `eu-central-2`), Versand: Resend (Gratis-Tarif). Beide nur per `fetch`, ohne SDK und ohne neue Laufzeit-Dependency (neu in `apps/web`: `zod` und `@motivo/db`, beide schon im Monorepo; neu als devDependency in `packages/db`: `@electric-sql/pglite` 0.5.12 für Tests). Einrichtung durch den Owner: `docs/SETUP-WAITLIST.md`.
 

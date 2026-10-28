@@ -4,7 +4,7 @@
 
 **Motivo** (Arbeitstitel) ist eine Web-Toolbox mit 30+ Generatoren für Muster, Verläufe, Hintergründe, Bildeffekte und Farben. Nutzer erzeugen per Klick (Leertaste = neue Variante) markengerechte Grafiken und exportieren sie als PNG/JPG/WebP, SVG, CSS, GIF, MP4/WebM oder Code. Inspiriert vom Funktionsumfang von magicpattern.design, aber **eigenständig umgesetzt** (Clean-Room, siehe unten).
 
-**Geschäftsmodell: Lifetime, kein Abo.** Free-Stufe plus einmalig gekaufte Lizenzen (Solo, Pro, Team). KI und API laufen über Credits. Details in `docs/PRODUCT.md` Abschnitt 6.
+**Finanzierung: komplett gratis, spendenfinanziert.** Keine Konten, keine Zahlungen, keine Lizenzen, keine Credits, keine Bezahlschranke. Speichern und Brand Kit nur lokal im Browser. Details in `docs/PRODUCT.md` Abschnitt 6.
 
 ## Pflichtlektüre vor jeder Aufgabe
 
@@ -37,17 +37,17 @@
 - **Schwere Libraries dynamisch laden** (`next/dynamic`, `import()`), z. B. Konva, gifenc, Muxer, three.js.
 
 ### Sicherheit
-- **RLS auf jeder Tabelle**, Policies mit Tests.
+- Falls je wieder eine Datenbank dazukommt: **RLS auf jeder Tabelle**, Policies mit Tests.
 - **SVG-Uploads immer sanitizen** (keine Scripts, Event-Handler, `foreignObject`, externen Referenzen). Nie Nutzer-SVG unsanitized per `dangerouslySetInnerHTML` rendern.
 - Secrets nur in Umgebungsvariablen, nie im Client-Bundle (nur `NEXT_PUBLIC_*` ist öffentlich und darf nichts Geheimes enthalten).
-- API-Keys nur gehasht speichern. Stripe-Webhooks mit Signaturprüfung und idempotent.
-- Serverseitige Fetches auf Nutzer-URLs (Brand Kit aus URL) nur mit SSRF-Schutz (keine privaten IP-Ranges, Timeouts, Grössenlimit).
+- Importierte Dateien (Designs, Brand Kit) strikt validieren (Zod, Grössenlimit), nie ungeprüft übernehmen.
+- Serverseitige Fetches auf Nutzer-URLs nur mit SSRF-Schutz (keine privaten IP-Ranges, Timeouts, Grössenlimit).
 
-### Lifetime-Ökonomie
-- **Keine Abo-Logik bauen** (keine Stripe Subscriptions, keine wiederkehrenden Preise). Alle Käufe sind Einmalzahlungen.
-- **Jede Funktion mit laufenden Kosten pro Nutzer** (KI, API, serverseitiges Rendering, grosse Speicherung) braucht vor der Umsetzung eine Kostenschätzung und läuft über das Credit-System (`credit_ledger`) oder ein Fair-Use-Limit. Im Zweifel fragen.
-- Neue Features standardmässig **clientseitig** umsetzen, damit sie keine laufenden Kosten erzeugen.
-- Credit-Saldo nie direkt überschreiben, nur Ledger-Einträge anfügen.
+### Gratis und spendenfinanziert
+- **Keine Konten, kein Login, keine Zahlungsintegration** (kein Stripe, keine Lizenzen, keine Credits, kein Gating, keine Wasserzeichen). Spenden nur als Link zu einem externen Anbieter.
+- **Keine laufenden Kosten pro Nutzer.** Alles clientseitig: Rendern, Exportieren, Speichern (IndexedDB), Brand Kit, Uploads. Keine Server-Endpunkte, die Nutzerdaten speichern.
+- Funktionen mit Kosten pro Nutzer (KI, Server-Speicher, API, Server-Rendering) nur mit Entscheid Andreas und fixem Budget mit hartem Tageslimit.
+- Keine Cookies, keine Personendaten auf unseren Servern.
 
 ### Code-Qualität
 - TypeScript `strict`, kein `any` ohne Kommentar mit Begründung.
@@ -75,8 +75,8 @@ pnpm test:e2e           # Playwright (alle Browser)
 pnpm test:e2e:chromium  # Playwright nur Chromium
 pnpm --filter @motivo/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
 pnpm lint && pnpm typecheck
-pnpm db:migrate         # Supabase-Migrationen lokal anwenden (ab M3)
-pnpm db:types           # Supabase-Typen generieren (ab M3)
+pnpm db:migrate         # entfällt ab 2026-10-28 (keine Datenbank), wird mit der Warteliste entfernt
+pnpm db:types           # entfällt ab 2026-10-28
 ```
 
 ## Neues Tool hinzufügen (Checkliste)
@@ -103,10 +103,10 @@ pnpm db:types           # Supabase-Typen generieren (ab M3)
 
 | Datum | Entscheidung | Begründung |
 |---|---|---|
-| 2026-10-27 | Next.js + Supabase + Stripe, Monorepo mit pnpm/Turborepo | SEO-Seiten + interaktiver Editor + Plugins teilen sich Engine-Code |
+| 2026-10-27 | Next.js (Supabase und Stripe überholt 2026-10-28), Monorepo mit pnpm/Turborepo | SEO-Seiten + interaktiver Editor + Plugins teilen sich Engine-Code |
 | 2026-10-27 | Client-first Rendering, schema-getriebene Tools | Tiefe Betriebskosten, 30+ Tools mit kleiner Crew wartbar |
 | 2026-10-27 | Arbeitstitel "Motivo" | Vor Launch Marke/Domain prüfen |
-| 2026-10-27 | Lifetime-Lizenzen statt Abos, KI/API über Credits, Preistreppe Founders/Early Bird/Regulär | Klare Differenzierung, keine Abo-Müdigkeit; laufende Kosten bleiben dank Client-Rendering und Credits gedeckt |
+| 2026-10-27 | (überholt 2026-10-28) Lifetime-Lizenzen statt Abos, KI/API über Credits, Preistreppe Founders/Early Bird/Regulär | Klare Differenzierung, keine Abo-Müdigkeit; laufende Kosten bleiben dank Client-Rendering und Credits gedeckt |
 | 2026-10-27 | Hosting auf Cloudflare Workers via OpenNext statt Vercel | Entscheid Andreas; Preview-Deployments pro PR über Cloudflare |
 | 2026-10-27 | TypeScript auf 6.0.x gepinnt (nicht 7.x) | typescript-eslint unterstützt aktuell nur TypeScript < 6.1; bei Support upgraden |
 | 2026-10-27 | Deploy über GitHub Actions statt Cloudflare Workers Builds | Workers Builds konnte das Repo wiederholt nicht klonen; Actions-Deploy ist unabhängig davon und zeigt Preview-URL im PR |
@@ -115,8 +115,9 @@ pnpm db:types           # Supabase-Typen generieren (ab M3)
 | 2026-10-27 | URL-Slugs zentral in `apps/web/i18n/slugs.ts`, hreflang über Metadata API, alte Pfade per 308 im Proxy | Eine Datenquelle für Proxy, Server und Client; next-intl-Link-Header kennen keine Slugs; M1-Share-Links bleiben gültig (Details `docs/ARCHITECTURE.md` Abschnitt 7) |
 | 2026-10-27 | CSP ohne Nonces, mit `'unsafe-inline'` für Scripts und Styles; Header aus `lib/security-headers.ts` (next.config, proxy, `public/_headers`) | Nonces erzwingen dynamisches Rendering; Next setzt auf statischen Seiten seitenspezifische Inline-Scripts, ein Hash würde `'unsafe-inline'` abschalten. Theme-Hash liegt bereit (`lib/csp-hash.ts`) |
 | 2026-10-27 | OG-Bilder als Build-Schritt (`scripts/og-images.mjs`) statt `next/og` im Worker | `next/og` hätte das Worker-Bundle von ca. 1.5 auf 2.6 MiB gzip vergrössert (Gratis-Limit 3 MiB); statisch = keine Kosten pro Anfrage |
-| 2026-10-27 | Founders-Warteliste: Supabase (eu-central-2) und Resend per `fetch` ohne SDK; Zugriff nur über SECURITY-DEFINER-Funktionen (RLS ohne Policies); Migrations- und RLS-Tests mit PGlite und nachgebildeten Supabase-Rollen | Keine neue Laufzeit-Dependency, Tests ohne Docker in CI; Details `docs/ARCHITECTURE.md` Abschnitt 14 |
+| 2026-10-27 | (überholt 2026-10-28, wird entfernt) Founders-Warteliste: Supabase (eu-central-2) und Resend per `fetch` ohne SDK; Zugriff nur über SECURITY-DEFINER-Funktionen (RLS ohne Policies); Migrations- und RLS-Tests mit PGlite und nachgebildeten Supabase-Rollen | Keine neue Laufzeit-Dependency, Tests ohne Docker in CI; Details `docs/ARCHITECTURE.md` Abschnitt 14 |
 | 2026-10-27 | hreflang x-default zeigt auf EN; Indexierung nur auf dem Host von `NEXT_PUBLIC_SITE_URL`, sonst `X-Robots-Tag: noindex` | Internationaler Standard; Preview-Deployments dürfen nicht im Index landen |
 | 2026-10-28 | Sammlungsseiten (Verläufe, Paletten) als eigene Daten in `apps/web/lib/collections/`, Farben als OKLCH-Tupel im sRGB-Gamut, statisch generiert, Editor-Links über den Share-Hash | Clean-Room, keine laufenden Kosten, ein Render-Pfad; Kategorie-Seiten zeigen den Teaser ohne Vorschauen, sonst +90 KiB gzip im Worker (Details `docs/ARCHITECTURE.md` Abschnitt 7) |
 | 2026-10-28 | Mesh-Verlauf: bei grosser Unschärfe zeichnet die Engine die Flächen selbst als kleines PNG statt `feGaussianBlur` (`meshBlurPlan`, Grenze σ 200 px bei 8192 px) | Browser kappen σ bei ca. 270 bis 520 px, grosse Exporte wichen sonst sichtbar von der Vorschau ab; schneller und weniger Speicher, ein Render-Pfad bleibt |
+| 2026-10-28 | **Komplett gratis und spendenfinanziert**: keine Konten, keine Zahlungen, keine Lizenzen, keine Credits; Speichern und Brand Kit lokal (IndexedDB plus Datei-Export); Warteliste und Supabase/Resend entfallen; ersetzt die Lifetime-Entscheide vom 2026-10-27 | Entscheid Andreas; keine laufenden Kosten pro Nutzer, keine Personendaten, kein Zahlungs- und Steueraufwand |
 | 2026-10-28 | Rasterexport über 4096² px: PNG in Streifen mit eigenem Streaming-Encoder, JPG/WebP mit Prüfpixeln und Fehlermeldung `too-large` | WebKit zeichnet grössere Canvas und Bitmaps leer; keine neue Dependency |
