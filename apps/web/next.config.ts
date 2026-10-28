@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-import { localHostHeaderRule, securityHeaders } from "./lib/security-headers";
+import { liveViewHeaderRules, localHostHeaderRule, securityHeaders } from "./lib/security-headers";
 import { noindexHeaderRule } from "./lib/seo/indexing";
 import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
@@ -39,6 +39,8 @@ const nextConfig: NextConfig = {
       { source: "/:path*", headers: securityHeaders(options) },
       // `next start` on http://localhost (E2E): no https upgrade, no HSTS.
       localHostHeaderRule(options),
+      // Screenshot beautifier only: live view frames (any https page) and tab capture.
+      ...liveViewHeaderRules(options),
       noindexHeaderRule(),
     ];
   },

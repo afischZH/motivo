@@ -10,9 +10,14 @@ import {
   contentSecurityPolicy,
   isLocalHost,
   isLocalRequest,
+  LIVE_VIEW_PATHS,
+  liveViewHeaderRules,
   localHostHeaderRule,
   securityHeaders,
 } from "./security-headers";
+import { toolSlug } from "../i18n/slugs";
+import { ENABLED_LOCALES } from "../i18n/locales";
+
 import { themeInitScript } from "./theme";
 
 function directives(csp: string): Map<string, string[]> {
@@ -252,5 +257,75 @@ describe("local hosts", () => {
     expect(cloudflareHeadersFile()).toContain("upgrade-insecure-requests");
     expect(cloudflareHeadersFile()).toContain("max-age=63072000");
     expect(cloudflareHeadersFile()).toContain("Cross-Origin-Opener-Policy: same-origin");
+  });
+});
+
+describe("live view pages (M4b-AP07)", () => {
+  const base = directives(contentSecurityPolicy({ dev: false }));
+  const live = directives(contentSecurityPolicy({ dev: false, live: true }));
+  const perms = (o: { live?: boolean }) =>
+    new Map(securityHeaders({ dev: false, ...o }).map((h) => [h.key, h.value])).get(
+      "Permissions-Policy",
+    ) ?? "";
+
+  it("are exactly the screenshot beautifier in every enabled locale", () => {
+    expect([...LIVE_VIEW_PATHS].sort()).toEqual(
+      ENABLED_LOCALES.map((l) => `/${l}/tools/${toolSlug("screenshot-beautifier", l)}`).sort(),
+    );
+  });
+
+  it("frame any https page there, and nothing else changes in the policy", () => {
+    expect(live.get("frame-src")).toEqual(["'self'", "https:"]);
+    expect(base.has("frame-src")).toBe(false);
+    for (const [name, values] of base) {
+      if (name !== "frame-src") expect(live.get(name), name).toEqual(values);
+    }
+    expect(live.get("frame-ancestors")).toEqual(["'none'"]);
+    // Plain http pages stay blocked (no mixed content, no http:).
+    expect(live.get("frame-src")).not.toContain("http:");
+  });
+
+  it("allow screen capture only there, for the page itself", () => {
+    expect(perms({})).toContain("display-capture=()");
+    expect(perms({ live: true })).toContain("display-capture=(self)");
+    expect(perms({ live: true }).replace("display-capture=(self)", "display-capture=()")).toBe(
+      perms({}),
+    );
+  });
+
+  it("get route rules with only the changed headers, after the site-wide rules", () => {
+    const rules = liveViewHeaderRules({ dev: false });
+    expect(rules.map((r) => r.source)).toEqual(LIVE_VIEW_PATHS.flatMap((p) => [p, p]));
+    for (const rule of rules) {
+      expect(rule.headers.map((h) => h.key).sort()).toEqual([
+        "Content-Security-Policy",
+        "Permissions-Policy",
+      ]);
+      const csp = rule.headers.find((h) => h.key === "Content-Security-Policy")?.value ?? "";
+      expect(directives(csp).get("frame-src")).toEqual(["'self'", "https:"]);
+    }
+    // The local variant keeps http://localhost working (no https upgrade).
+    const local = rules.filter((r) => "has" in r);
+    expect(local).toHaveLength(LIVE_VIEW_PATHS.length);
+    for (const rule of local) {
+      const csp = rule.headers.find((h) => h.key === "Content-Security-Policy")?.value ?? "";
+      expect(csp).not.toContain("upgrade-insecure-requests");
+    }
+  });
+
+  it("are in public/_headers with the site-wide values detached first", () => {
+    const file = cloudflareHeadersFile();
+    for (const path of LIVE_VIEW_PATHS) {
+      const block = file.slice(file.indexOf(`\n${path}\n`));
+      expect(block).toContain("  ! Content-Security-Policy\n");
+      expect(block).toContain("  ! Permissions-Policy\n");
+      expect(block).toContain(
+        `  Content-Security-Policy: ${contentSecurityPolicy({ dev: false, live: true })}\n`,
+      );
+    }
+    // Site-wide rule unchanged: no frame-src, no capture.
+    const site = file.slice(0, file.indexOf(`\n${LIVE_VIEW_PATHS[0]}\n`));
+    expect(site).not.toContain("frame-src");
+    expect(site).toContain("display-capture=()");
   });
 });

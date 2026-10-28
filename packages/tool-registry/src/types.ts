@@ -675,6 +675,49 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * placeholders. An empty list shows nothing.
    */
   advisories?(params: Params<S>, ctx: RenderContext): readonly ToolAdvisory[];
+  /**
+   * Live view of a website inside the preview (screenshot beautifier,
+   * M4b-AP07): sandboxed frames over parts of the preview and a capture
+   * that turns what they show into image params. See `LiveView`.
+   */
+  liveView?: LiveView<Params<S>>;
+}
+
+/**
+ * One live frame: a web page shown in a sandboxed `<iframe>` over a part of
+ * the preview, at its own CSS viewport and scaled down to fit.
+ */
+export interface LiveFrame {
+  /** Stable id within the design (e.g. the device). */
+  readonly id: string;
+  /** The page; an absolute https URL the tool has checked. */
+  readonly url: string;
+  /** Where the page shows, in design px. */
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  /** Corner radii in design px: top left, top right, bottom right, bottom left. */
+  readonly radii: readonly [number, number, number, number];
+  /** CSS viewport of the page; the frame is scaled by `width / viewportWidth`. */
+  readonly viewportWidth: number;
+  readonly viewportHeight: number;
+  /**
+   * SVG path data (design px) of what the design paints on top of this
+   * area (devices in front, a camera cut-out); the frame is masked there.
+   */
+  readonly occluders: readonly string[];
+  /** Image param (`kind: "image"`) that receives the captured view. */
+  readonly param: string;
+  /** i18n key of the frame's accessible title (e.g. the device name). */
+  readonly titleKey: string;
+}
+
+export interface LiveView<P> {
+  /** Frames for the current params; empty when the live view is off. Pure and cheap. */
+  frames(params: P, ctx: RenderContext): readonly LiveFrame[];
+  /** Params set together with the captured pictures (e.g. turning the live view off). */
+  afterCapture?: Partial<P>;
 }
 
 /** A hint about the current params; see `ToolDefinition.advisories`. */

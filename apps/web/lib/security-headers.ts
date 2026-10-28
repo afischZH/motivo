@@ -11,6 +11,12 @@
  *   Not checked in: `scripts/headers.mjs` writes it before `next build` and
  *   `next dev` from this module and the same environment variables.
  *
+ * One route-specific variant (`live`, M4b-AP07): the screenshot beautifier
+ * pages (`LIVE_VIEW_PATHS`) may frame any https page and capture their own
+ * tab. next.config adds it with `liveViewHeaderRules`, `_headers` with a
+ * rule per path; the proxy only answers redirects, which keep the
+ * site-wide set (the target page then gets its own headers).
+ *
  * Pure strings, safe for the proxy runtime. The theme script hash lives in
  * `csp-hash.ts` (node:crypto) and is not part of the policy yet.
  */
@@ -61,7 +67,23 @@ export interface SecurityHeaderOptions {
    * script, so pages never hydrate. Also relaxes COOP (see securityHeaders).
    */
   local?: boolean;
+  /**
+   * Pages with the live view of the screenshot beautifier (M4b-AP07,
+   * `LIVE_VIEW_PATHS`): frames may show any https page and the page may
+   * capture its own tab (`display-capture`). Never site-wide.
+   */
+  live?: boolean;
 }
+
+/**
+ * Pages that get the live-view variant (`SecurityHeaderOptions.live`): the
+ * screenshot beautifier in every enabled locale. Pinned to the slugs in
+ * `i18n/slugs.ts` by a test (this module stays free of app imports).
+ */
+export const LIVE_VIEW_PATHS: readonly string[] = [
+  "/de/tools/screenshot-verschoenerer",
+  "/en/tools/screenshot-beautifier",
+];
 
 /**
  * Hosts served over plain http during local and CI runs, as a Next `has`
@@ -98,6 +120,7 @@ export function contentSecurityPolicy({
   dev,
   services = NO_EXTERNAL_SERVICES,
   local = false,
+  live = false,
 }: SecurityHeaderOptions): string {
   const enabled = dev ? NO_EXTERNAL_SERVICES : services;
   const directives: Record<string, string[]> = {
@@ -121,10 +144,14 @@ export function contentSecurityPolicy({
     // Dev only: the HMR websocket (Safari does not match ws: against 'self').
     "connect-src": ["'self'", ...(dev ? ["ws:"] : []), ...external(enabled, "connect")],
     "worker-src": ["'self'", "blob:"],
-    // Only with a framed service; otherwise default-src 'self' applies.
-    ...(external(enabled, "frame").length > 0
-      ? { "frame-src": ["'self'", ...external(enabled, "frame")] }
-      : {}),
+    // Only with a framed service or the live view; otherwise default-src 'self' applies.
+    // Live view: the visitor's browser loads the page the user typed, any https origin,
+    // in a sandboxed iframe (live-view.tsx); nothing passes through Musterli.
+    ...(live
+      ? { "frame-src": ["'self'", "https:"] }
+      : external(enabled, "frame").length > 0
+        ? { "frame-src": ["'self'", ...external(enabled, "frame")] }
+        : {}),
     "object-src": ["'none'"],
     "base-uri": ["'self'"],
     "form-action": ["'self'"],
@@ -136,18 +163,24 @@ export function contentSecurityPolicy({
   return parts.join("; ");
 }
 
-/** Powerful features nobody on the site needs. Clipboard and fullscreen stay allowed. */
-const PERMISSIONS_POLICY = [
-  "accelerometer=()",
-  "browsing-topics=()",
-  "camera=()",
-  "geolocation=()",
-  "gyroscope=()",
-  "magnetometer=()",
-  "microphone=()",
-  "payment=()",
-  "usb=()",
-].join(", ");
+/**
+ * Powerful features nobody on the site needs. Clipboard and fullscreen stay
+ * allowed; screen capture only on the live-view pages, for the page itself.
+ */
+function permissionsPolicy(live: boolean): string {
+  return [
+    "accelerometer=()",
+    "browsing-topics=()",
+    "camera=()",
+    `display-capture=${live ? "(self)" : "()"}`,
+    "geolocation=()",
+    "gyroscope=()",
+    "magnetometer=()",
+    "microphone=()",
+    "payment=()",
+    "usb=()",
+  ].join(", ");
+}
 
 export interface Header {
   key: string;
@@ -167,7 +200,7 @@ export function securityHeaders(options: SecurityHeaderOptions): Header[] {
     // Legacy fallback for frame-ancestors 'none'.
     { key: "X-Frame-Options", value: "DENY" },
     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-    { key: "Permissions-Policy", value: PERMISSIONS_POLICY },
+    { key: "Permissions-Policy", value: permissionsPolicy(options.live === true) },
     // Local: unsafe-none (the browser default). With same-origin, Firefox swaps
     // the process on the first navigation and Playwright's context-level
     // colorScheme emulation does not reach the new document.
@@ -194,6 +227,34 @@ export function localHostHeaderRule(options: SecurityHeaderOptions) {
 }
 
 /**
+ * next.config `headers()` rules for the live-view pages (`LIVE_VIEW_PATHS`):
+ * only the headers that differ from the site-wide set (CSP with
+ * `frame-src https:`, Permissions-Policy with `display-capture=(self)`), for
+ * remote and for local hosts. Listed after the site-wide and local rules,
+ * since the last matching rule wins for a header key.
+ */
+export function liveViewHeaderRules(options: SecurityHeaderOptions) {
+  const changed = (base: Header[], live: Header[]) => {
+    const before = new Map(base.map(({ key, value }) => [key, value]));
+    return live.filter(({ key, value }) => before.get(key) !== value);
+  };
+  const remote = changed(securityHeaders(options), securityHeaders({ ...options, live: true }));
+  const local = changed(
+    securityHeaders({ ...options, local: true }),
+    securityHeaders({ ...options, local: true, live: true }),
+  );
+  return LIVE_VIEW_PATHS.flatMap((source) => [
+    { source, headers: remote },
+    {
+      source,
+      has: [{ type: "host" as const, value: LOCAL_HOST_PATTERN }],
+      missing: [{ type: "header" as const, key: EDGE_REQUEST_HEADER }],
+      headers: local,
+    },
+  ]);
+}
+
+/**
  * Content of `public/_headers` for Cloudflare Workers Static Assets
  * (production values for the services this build enables). Written by
  * `scripts/headers.mjs` before every build from the same environment
@@ -203,11 +264,23 @@ export function cloudflareHeadersFile(services: ExternalServices = NO_EXTERNAL_S
   const lines = securityHeaders({ dev: false, services }).map(
     ({ key, value }) => `  ${key}: ${value}`,
   );
+  // Live-view pages: Cloudflare joins repeated headers with commas, so the
+  // site-wide CSP and Permissions-Policy are detached ("! Name") first.
+  const base = new Map(securityHeaders({ dev: false, services }).map((h) => [h.key, h.value]));
+  const live = securityHeaders({ dev: false, services, live: true }).filter(
+    ({ key, value }) => base.get(key) !== value,
+  );
+  const liveRules = LIVE_VIEW_PATHS.flatMap((path) => [
+    path,
+    ...live.map(({ key }) => `  ! ${key}`),
+    ...live.map(({ key, value }) => `  ${key}: ${value}`),
+  ]);
   return [
     "# Generated from lib/security-headers.ts by scripts/headers.mjs at build time. Do not edit.",
     "# Applies to files served by Workers Static Assets; the Worker sets the same headers via next.config.ts.",
     "/*",
     ...lines,
+    ...liveRules,
     "",
   ].join("\n");
 }

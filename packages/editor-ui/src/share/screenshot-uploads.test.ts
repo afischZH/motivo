@@ -79,6 +79,32 @@ describe("screenshot beautifier: local only", () => {
     expect(p.radius).toBe(20);
   });
 
+  it("leaves the tablet and phone screenshots and the live view out of share links (M4b-AP07)", () => {
+    const params: ScreenshotBeautifierParams = {
+      ...screenshotBeautifierTool.defaults,
+      device: "laptop-tablet-phone",
+      screenshot: shot(1440, 3000),
+      screenshotTablet: shot(820, 2000),
+      screenshotPhone: shot(390, 1600),
+      url: "intranet.example/secret",
+      live: true,
+    };
+    const enc = encodeDesign({ toolId: screenshotBeautifierTool.id, params, seed: 1, size });
+    expect(enc.ok).toBe(true);
+    if (!enc.ok) return;
+    const json = payload(enc.value);
+    expect(json).not.toMatch(/secret|base64|intranet|"screenshot(Tablet|Phone)?":|"live":/);
+    const dec = decodeDesign(enc.value);
+    expect(dec.ok).toBe(true);
+    if (!dec.ok) return;
+    const p = dec.design.params as ScreenshotBeautifierParams;
+    expect(p.screenshotTablet).toBeNull();
+    expect(p.screenshotPhone).toBeNull();
+    expect(p.live).toBe(false);
+    // The mockup itself is shared.
+    expect(p.device).toBe("laptop-tablet-phone");
+  });
+
   it("imports a saved 4K screenshot but nothing larger", () => {
     const edge = SCREENSHOT_ASSET_RASTER_MAX_EDGE;
     const ok = parseDesignsFile(

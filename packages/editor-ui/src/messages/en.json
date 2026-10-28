@@ -358,6 +358,19 @@
       "limit": "You have changed {max} tiles, the limit. Reset one to change another.",
       "resetDone": "Tile reset.",
       "resetAllDone": "All tiles reset."
+    },
+    "live": {
+      "hint": "If the view stays empty, the website does not allow embedding. Upload a screenshot instead.",
+      "unsupported": "Your browser cannot capture the view.",
+      "capture": "Take this view",
+      "capturing": "Choose this tab in the dialog. The view is being captured.",
+      "done": "{count, plural, one {One picture taken.} other {# pictures taken.}} The live view is off; the preview now shows your picture.",
+      "frameTitle": "Live view: {device}",
+      "errors": {
+        "denied": "Capture cancelled. Without your permission Musterli cannot take the view.",
+        "failed": "The capture did not work. Upload a screenshot instead.",
+        "unsupported": "Your browser cannot capture the view. Upload a screenshot instead."
+      }
     }
   },
   "sizes": {
