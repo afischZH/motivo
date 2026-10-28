@@ -179,6 +179,13 @@ describe("shader worker handler", () => {
     );
     expect(await errorOf({ out: { width: 0, height: 10 } })).toBe("invalid-request");
     expect(await errorOf({ t: 1.5 })).toBe("invalid-request");
+    const encode = (e: unknown) => ({ encode: e as ShaderRenderRequest["encode"] });
+    expect(await errorOf(encode({ mime: "image/gif" }))).toBe("invalid-request");
+    expect(await errorOf(encode({ mime: "image/jpeg", quality: 2 }))).toBe("invalid-request");
+    expect(await errorOf(encode({ mime: "image/jpeg", quality: Number.NaN }))).toBe(
+      "invalid-request",
+    );
+    expect(await errorOf(encode(null))).toBe("invalid-request");
     expect(await errorOf({ params: { ...shader.defaults, style: "nope" } })).toBe(
       "invalid-request",
     );

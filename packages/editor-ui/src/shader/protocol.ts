@@ -111,11 +111,24 @@ function isSize(value: unknown, max: number): value is CanvasSize {
   return isEdge(width, max) && isEdge(height, max);
 }
 
+const ENCODE_MIMES: ReadonlySet<unknown> = new Set(["image/png", "image/jpeg", "image/webp"]);
+
+/** A known format and, if given, a quality in 0..1. */
+function isEncodeOptions(value: unknown): value is ShaderEncodeOptions {
+  if (typeof value !== "object" || value === null) return false;
+  const { mime, quality } = value as Record<string, unknown>;
+  return (
+    ENCODE_MIMES.has(mime) &&
+    (quality === undefined ||
+      (typeof quality === "number" && Number.isFinite(quality) && quality >= 0 && quality <= 1))
+  );
+}
+
 /**
  * Whether a request is well-formed for `tool`: a WebGL tool, sizes in range
- * (bitmaps at most `SHADER_FRAME_MAX_EDGE`), `t` in 0..1 and params the
- * tool's schema accepts. Requests only come from the editor; this is
- * defence in depth.
+ * (bitmaps at most `SHADER_FRAME_MAX_EDGE`), `t` in 0..1, a known output
+ * format and params the tool's schema accepts. Requests only come from the
+ * editor; this is defence in depth.
  */
 export function isValidShaderRequest(
   tool: AnyToolDefinition,
@@ -124,6 +137,7 @@ export function isValidShaderRequest(
   const outMax = request.encode ? CANVAS_EDGE_MAX : SHADER_FRAME_MAX_EDGE;
   return (
     isWebglTool(tool) &&
+    (request.encode === undefined || isEncodeOptions(request.encode)) &&
     isSize(request.design, CANVAS_EDGE_MAX) &&
     isSize(request.out, outMax) &&
     Number.isFinite(request.seed) &&
