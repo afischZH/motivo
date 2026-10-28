@@ -137,6 +137,8 @@ describe("built-in tool registration", () => {
       "guilloche",
       "topo-lines",
       "flow-field",
+      "low-poly",
+      "terrazzo",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -163,6 +165,8 @@ describe("built-in tool registration", () => {
       "guilloche",
       "topo-lines",
       "flow-field",
+      "low-poly",
+      "terrazzo",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });

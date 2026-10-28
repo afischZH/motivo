@@ -2579,6 +2579,187 @@
           }
         }
       }
+    },
+    "low-poly": {
+      "name": "Low Poly und Voronoi",
+      "description": "Facettierte Hintergründe aus Dreiecken oder Voronoi-Zellen, eingefärbt mit einem Verlauf aus deiner Palette. Export als SVG, Bild oder GIF.",
+      "groups": {
+        "lines": "Linien"
+      },
+      "params": {
+        "mode": {
+          "label": "Art",
+          "options": {
+            "delaunay": "Dreiecke",
+            "voronoi": "Voronoi-Zellen"
+          }
+        },
+        "distribution": {
+          "label": "Punkte",
+          "options": {
+            "poisson": "Natürlich",
+            "grid": "Raster"
+          }
+        },
+        "spacing": {
+          "label": "Punktabstand"
+        },
+        "jitter": {
+          "label": "Unregelmässigkeit"
+        },
+        "gap": {
+          "label": "Fuge"
+        },
+        "rounding": {
+          "label": "Eckenrundung"
+        },
+        "gradient": {
+          "label": "Verlauf",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "mesh": "Mesh"
+          }
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "variance": {
+          "label": "Farbvariation"
+        },
+        "lighting": {
+          "label": "Licht"
+        },
+        "lightAngle": {
+          "label": "Lichtrichtung"
+        },
+        "strokeWidth": {
+          "label": "Linienbreite"
+        },
+        "strokeColor": {
+          "label": "Linienfarbe"
+        },
+        "strokeOpacity": {
+          "label": "Liniendeckkraft"
+        }
+      },
+      "presets": {
+        "crystal": "Kristall",
+        "ember": "Glut",
+        "glacier": "Gletscher",
+        "wireframe": "Drahtgitter",
+        "mosaic": "Mosaik",
+        "stained-glass": "Kirchenfenster",
+        "cells": "Zellen",
+        "dusk": "Dämmerung"
+      },
+      "seo": {
+        "whatIs": "Low Poly ist ein facettierter Look aus flachen Dreiecken, wie bei einem geschliffenen Edelstein oder einem Papiermodell. Voronoi-Zellen teilen die Fläche in organische Felder um verstreute Punkte, ähnlich wie trockene Erde oder ein Mosaik. Beides ergibt markante Hintergründe für Websites, Präsentationen, Plakate und Social Posts.",
+        "howTo": "Wähle Dreiecke oder Voronoi-Zellen, stelle den Punktabstand ein und bestimme einen Verlauf aus deinen Farben. Licht gibt eine plastische Wirkung, Linien ergeben ein Drahtgitter, Fuge und Eckenrundung machen Mosaiksteine daraus. Mit der Leertaste würfelst du eine neue Anordnung. Exportiere als SVG, PNG, JPG, WebP, CSS oder animiertes GIF.",
+        "faq": {
+          "q1": {
+            "question": "Wie entstehen die Dreiecke?",
+            "answer": "Die Punkte werden mit Poisson-Disk-Sampling gleichmässig verteilt (oder als leicht verschobenes Raster) und per Delaunay-Triangulation verbunden: Kein Umkreis eines Dreiecks enthält einen anderen Punkt. So entstehen kaum dünne Splitter."
+          },
+          "q2": {
+            "question": "Was sind Voronoi-Zellen?",
+            "answer": "Jede Zelle umfasst den Teil der Fläche, der näher bei ihrem Punkt liegt als bei jedem anderen Punkt. Die Zellen werden auf die Bildfläche zugeschnitten, die ganze Fläche ist also bedeckt."
+          },
+          "q3": {
+            "question": "Woher kommen die Farben?",
+            "answer": "Jede Fläche erhält die Farbe des Verlaufs in ihrer Mitte. Farbvariation und Licht ändern die Helligkeit pro Fläche; das Licht nutzt ein zufälliges Relief und die eingestellte Lichtrichtung."
+          },
+          "q4": {
+            "question": "Kann ich das animieren?",
+            "answer": "Ja. Der GIF-Export lässt die Punkte auf kleinen Schleifen wandern (Bewegung), wechselt die Farben oder zeigt neue Anordnungen."
+          },
+          "q5": {
+            "question": "Lässt sich das SVG bearbeiten?",
+            "answer": "Ja. Jede Fläche ist ein einfacher Pfad mit eigener Füllfarbe, ohne Filter und ohne Transformationen."
+          }
+        }
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo-Muster",
+      "description": "Terrazzo-Flächen mit Steinsplittern in mehreren Grössen, Sprenkeln und feiner Körnung. Nahtlose Kacheln für CSS oder Export als SVG und Bild.",
+      "groups": {
+        "effects": "Oberfläche"
+      },
+      "params": {
+        "seamless": {
+          "label": "Nahtlose Kachel"
+        },
+        "tileSize": {
+          "label": "Kachelgrösse"
+        },
+        "chipSize": {
+          "label": "Steingrösse"
+        },
+        "sizeClasses": {
+          "label": "Grössenklassen"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "density": {
+          "label": "Bedeckung"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "angular": "Kantig",
+            "pebble": "Kiesel",
+            "mixed": "Gemischt"
+          }
+        },
+        "irregularity": {
+          "label": "Unregelmässigkeit"
+        },
+        "gap": {
+          "label": "Abstand"
+        },
+        "dominance": {
+          "label": "Anteil Hauptfarbe"
+        },
+        "speckles": {
+          "label": "Sprenkel"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "venetian": "Venezianisch",
+        "midnight": "Mitternacht",
+        "pastel": "Pastell",
+        "pebbles": "Kiesel",
+        "pop": "Pop",
+        "granite": "Granit"
+      },
+      "seo": {
+        "whatIs": "Terrazzo ist ein Boden- und Wandbelag aus Stein- und Glassplittern in einem Bindemittel, glatt geschliffen. Als Grafik ergibt er ein lebendiges, haptisches Muster für Verpackungen, Websites, Plakate und Produktmockups.",
+        "howTo": "Wähle kantige Steine, Kiesel oder eine Mischung und stelle Steingrösse, Anzahl Grössenklassen und Bedeckung ein. Bestimme Grundfarbe und Steinfarben; die erste Farbe kann überwiegen. Sprenkel und Körnung geben eine natürliche Oberfläche. Lass die nahtlose Kachel für Muster eingeschaltet und exportiere die Kachel als CSS oder PNG, oder die ganze Fläche als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Überlappen sich die Steine?",
+            "answer": "Nein. Jeder Stein hat einen umschliessenden Kreis, und ein neuer Stein landet nur dort, wo er den eingestellten Abstand zu allen anderen einhält. Zuerst kommen die grossen Steine, dann füllen mittlere und kleine die Lücken."
+          },
+          "q2": {
+            "question": "Wie funktioniert die nahtlose Kachel?",
+            "answer": "Steine, die über einen Kachelrand ragen, gehen auf der gegenüberliegenden Seite weiter. Die Kachel lässt sich deshalb in jede Richtung ohne sichtbare Naht wiederholen, als CSS-Hintergrund oder als PNG-Kachel."
+          },
+          "q3": {
+            "question": "Kann ich meine Markenfarben verwenden?",
+            "answer": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an, die Grundfarbe bleibt. Der Anteil Hauptfarbe bestimmt, wie oft die erste Farbe vorkommt."
+          },
+          "q4": {
+            "question": "Wie gross wird das SVG?",
+            "answer": "Höchstens 2000 Steine und 2500 Sprenkel pro Kachel. Auf sehr grossen Flächen werden stattdessen die Steine grösser, damit das SVG kompakt bleibt."
+          }
+        }
+      }
     }
   },
   "Converters": {

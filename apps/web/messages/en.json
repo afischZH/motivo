@@ -2579,6 +2579,187 @@
           }
         }
       }
+    },
+    "low-poly": {
+      "name": "Low Poly & Voronoi",
+      "description": "Faceted backgrounds from triangles or Voronoi cells, colored by a gradient through your palette. Export as SVG, image or GIF.",
+      "groups": {
+        "lines": "Lines"
+      },
+      "params": {
+        "mode": {
+          "label": "Mode",
+          "options": {
+            "delaunay": "Triangles",
+            "voronoi": "Voronoi cells"
+          }
+        },
+        "distribution": {
+          "label": "Points",
+          "options": {
+            "poisson": "Natural",
+            "grid": "Grid"
+          }
+        },
+        "spacing": {
+          "label": "Point spacing"
+        },
+        "jitter": {
+          "label": "Jitter"
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "rounding": {
+          "label": "Corner rounding"
+        },
+        "gradient": {
+          "label": "Gradient",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "mesh": "Mesh"
+          }
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "variance": {
+          "label": "Color variation"
+        },
+        "lighting": {
+          "label": "Lighting"
+        },
+        "lightAngle": {
+          "label": "Light direction"
+        },
+        "strokeWidth": {
+          "label": "Line width"
+        },
+        "strokeColor": {
+          "label": "Line color"
+        },
+        "strokeOpacity": {
+          "label": "Line opacity"
+        }
+      },
+      "presets": {
+        "crystal": "Crystal",
+        "ember": "Ember",
+        "glacier": "Glacier",
+        "wireframe": "Wireframe",
+        "mosaic": "Mosaic",
+        "stained-glass": "Stained glass",
+        "cells": "Cells",
+        "dusk": "Dusk"
+      },
+      "seo": {
+        "whatIs": "Low poly is a faceted look made of flat triangles, like a cut gem or a paper model. Voronoi cells split the surface into organic regions around scattered points, like dry earth or a mosaic. Both make striking backgrounds for websites, slides, posters and social posts.",
+        "howTo": "Pick triangles or Voronoi cells, set the point spacing and choose a gradient through your colors. Add light for a sculpted look, lines for a wireframe, or a gap and rounded corners for mosaic tiles. Press Space for a new arrangement. Export as SVG, PNG, JPG, WebP, CSS or animated GIF.",
+        "faq": {
+          "q1": {
+            "question": "How are the triangles made?",
+            "answer": "Points are spread evenly with Poisson-disk sampling (or a jittered grid) and connected by a Delaunay triangulation: no triangle's circumcircle contains another point, which avoids thin slivers."
+          },
+          "q2": {
+            "question": "What are Voronoi cells?",
+            "answer": "Each cell holds the part of the surface that is closer to its point than to any other point. The cells are clipped to the canvas, so the whole image is covered."
+          },
+          "q3": {
+            "question": "Where do the colors come from?",
+            "answer": "Each face takes the color of the gradient at its center. Color variation and lighting change the brightness per face; lighting uses a random relief and the light direction you set."
+          },
+          "q4": {
+            "question": "Can I animate it?",
+            "answer": "Yes. The GIF export can let the points drift on small loops (Motion), cycle the colors or show new arrangements."
+          },
+          "q5": {
+            "question": "Is the SVG editable?",
+            "answer": "Yes. Every face is a plain path with its own fill color, without filters or transforms."
+          }
+        }
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo Pattern",
+      "description": "Terrazzo surfaces with stone chips in several sizes, speckles and fine grain. Seamless tiles for CSS, or export as SVG and image.",
+      "groups": {
+        "effects": "Finish"
+      },
+      "params": {
+        "seamless": {
+          "label": "Seamless tile"
+        },
+        "tileSize": {
+          "label": "Tile size"
+        },
+        "chipSize": {
+          "label": "Chip size"
+        },
+        "sizeClasses": {
+          "label": "Size classes"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "density": {
+          "label": "Coverage"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "angular": "Angular",
+            "pebble": "Pebbles",
+            "mixed": "Mixed"
+          }
+        },
+        "irregularity": {
+          "label": "Irregularity"
+        },
+        "gap": {
+          "label": "Spacing"
+        },
+        "dominance": {
+          "label": "Main color weight"
+        },
+        "speckles": {
+          "label": "Speckles"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "venetian": "Venetian",
+        "midnight": "Midnight",
+        "pastel": "Pastel",
+        "pebbles": "Pebbles",
+        "pop": "Pop",
+        "granite": "Granite"
+      },
+      "seo": {
+        "whatIs": "Terrazzo is a floor and wall material made of stone and glass chips set in a binder and ground smooth. As a graphic it makes a lively, tactile pattern for packaging, websites, posters and product mockups.",
+        "howTo": "Choose angular chips, pebbles or a mix, then set the chip size, the number of size classes and how much of the surface they cover. Pick a base color and chip colors; the first color can dominate. Add speckles and grain for a natural finish. Keep Seamless tile on for patterns and export the tile as CSS or PNG, or the whole canvas as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Do the chips overlap?",
+            "answer": "No. Each chip has a bounding circle, and a new chip is only placed where it keeps the set spacing to all others. Large chips come first, then medium and small ones fill the gaps."
+          },
+          "q2": {
+            "question": "How does the seamless tile work?",
+            "answer": "Chips that cross an edge of the tile continue on the opposite side. The tile repeats in every direction without visible seams, as a CSS background or as a PNG tile."
+          },
+          "q3": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. Apply a brand palette from your Brand Kit; the base color stays. The main color weight decides how often the first color appears."
+          },
+          "q4": {
+            "question": "How large does the SVG get?",
+            "answer": "At most 2000 chips and 2500 speckles per tile. On very large surfaces the chips grow instead, so the SVG stays compact."
+          }
+        }
+      }
     }
   },
   "Converters": {

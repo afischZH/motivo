@@ -56,6 +56,8 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   guilloche: { de: "guilloche-generator", en: "guilloche-pattern-generator" },
   "topo-lines": { de: "hoehenlinien-generator", en: "topographic-pattern-generator" },
   "flow-field": { de: "flow-field-generator", en: "flow-field-generator" },
+  "low-poly": { de: "low-poly-und-voronoi-generator", en: "low-poly-voronoi-generator" },
+  terrazzo: { de: "terrazzo-muster-generator", en: "terrazzo-pattern-generator" },
 };
 
 /**

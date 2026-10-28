@@ -39,3 +39,6 @@ export * from "./polyline";
 export * from "./contours";
 export * from "./tools/topo-lines";
 export * from "./tools/flow-field";
+export * from "./geometry";
+export * from "./tools/low-poly";
+export * from "./tools/terrazzo";

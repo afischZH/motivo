@@ -166,6 +166,13 @@ Gemeinsame, reine Helfer in `packages/engine` für die Tools der generativen Wel
 - **`polyline.ts`**: Polylinien als flache Arrays `[x0, y0, x1, y1, ...]`; `simplifyPolyline` (Ramer-Douglas-Peucker, offen und geschlossen), `subdividePolyline`, `slicePolyline` (Teilstück nach Bogenlänge), `polylineLength`, `polylinePathData` (implizites Lineto), `smoothPathData` (quadratischer B-Spline über `Q`), `numberFormatter` (schnelles Runden ohne `toFixed`). In heissen Schleifen `Math.sqrt` statt `Math.hypot` (in V8 mehrfach langsamer).
 - **Budgets**: Generative Tools rechnen in Einheiten der kürzeren Kante und begrenzen Raster, Linien, Schritte und Pfadpunkte mit exportierten Konstanten, damit Renderzeit und SVG-Grösse auch bei 8K beschränkt bleiben (Vorschau rendert im Hauptthread).
 
+### 4.10 Geometrie-Helfer der Engine (ab M4b-AP02)
+Gemeinsame, reine Bausteine in `packages/engine/src/geometry/` (über `@musterli/engine` exportiert), zuerst genutzt von Low-Poly/Voronoi (K3) und Terrazzo (K5); ohne Library, alle mit Eigenschaftstests.
+- **Polygone** (`polygon.ts`): `polygonArea`, `polygonCentroid`, `clipPolygonHalfPlane` und `clipPolygonToRect` (Sutherland-Hodgman), `insetConvexPolygon` (Kanten nach innen versetzt, für Fugen), `starPolygon` (zufälliges sternförmiges Polygon im umschliessenden Kreis, nie selbstüberschneidend), Pfaddaten `polygonPathData`, `roundedPolygonPathData` (Ecken mit quadratischer Kurve), `smoothPolygonPathData` (Kiesel), `formatCoord` (schnelles Runden für lange Pfadlisten).
+- **Delaunay** (`delaunay.ts`): Bowyer-Watson mit Geister-Dreiecken statt Super-Dreieck (vollständige Hülle), Walk-Suche, Schlangenreihenfolge; `triangulationNeighbours`.
+- **Voronoi** (`voronoi.ts`): `voronoiCells(sites, rect)` per Halbebenen-Schnitt mit Sicherheitsradius; die Zellen kacheln das Rechteck exakt.
+- **Scheiben ohne Überlappung** (`scatter.ts`): `scatterDisks` (Pfeilwurf, Grössenklassen, Mindestabstand, optional Torus für nahtlose Kacheln) und `wrapCopies` (Kopien über Kachelränder).
+
 ## 5. Render- und Export-Pipeline
 
 ```

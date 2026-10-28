@@ -33,6 +33,8 @@ import { cssShadowTool } from "./css-shadow";
 import { guillocheTool } from "./guilloche";
 import { topoLinesTool } from "./topo-lines";
 import { flowFieldTool } from "./flow-field";
+import { lowPolyTool } from "./low-poly";
+import { terrazzoTool } from "./terrazzo";
 
 export {
   blobTool,
@@ -64,6 +66,8 @@ export {
   guillocheTool,
   topoLinesTool,
   flowFieldTool,
+  lowPolyTool,
+  terrazzoTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -105,6 +109,8 @@ export type { CssShadowParams } from "./css-shadow";
 export type { GuillocheParams } from "./guilloche";
 export type { TopoLinesParams } from "./topo-lines";
 export type { FlowFieldParams } from "./flow-field";
+export type { LowPolyParams } from "./low-poly";
+export type { TerrazzoParams } from "./terrazzo";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -137,6 +143,8 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   guillocheTool,
   topoLinesTool,
   flowFieldTool,
+  lowPolyTool,
+  terrazzoTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);
