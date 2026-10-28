@@ -143,6 +143,9 @@ importers:
       '@musterli/exporters':
         specifier: workspace:*
         version: link:../exporters
+      '@musterli/shaders':
+        specifier: workspace:*
+        version: link:../shaders
       '@musterli/storage':
         specifier: workspace:*
         version: link:../storage

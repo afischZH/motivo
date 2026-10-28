@@ -47,6 +47,7 @@ import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "rea
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";
 import { exportDesignRaster } from "../raster-effect/export";
+import { exportDesignGif } from "../shader/export";
 import type { ParamValues } from "../store/editor-store";
 import { useEditorStore } from "../store/react";
 import {
@@ -86,7 +87,10 @@ export interface ExportServices {
   exportRaster: typeof exportRaster;
   /** Repeat tile of seamless tools (scale only, the tile has its own size). */
   exportRasterTile: typeof exportRasterTile;
-  /** Animated GIF (tools with `animation`); frames are encoded in a worker. */
+  /**
+   * Animated GIF (tools with `animation`); frames are encoded in a worker.
+   * WebGL tools draw their frames in the shader worker (`exportDesignGif`).
+   */
   exportGif: typeof exportGif;
   /** Multi-file bundle as ZIP (tools with `bundles`); encoded in the raster worker. */
   exportBundle: typeof exportBundle;
@@ -100,7 +104,7 @@ export interface ExportServices {
 export const browserExportServices: ExportServices = {
   exportRaster: exportDesignRaster,
   exportRasterTile,
-  exportGif,
+  exportGif: exportDesignGif,
   exportBundle,
   downloadBlob,
   copyText,

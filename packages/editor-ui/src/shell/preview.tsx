@@ -138,7 +138,13 @@ export function PreviewStage(props: PreviewStageProps) {
                 {props.unsupportedText}
               </div>
             ) : (
-              <Motif output={props.output} width={size.width} height={size.height} scale={scale} />
+              <Motif
+                output={props.output}
+                width={size.width}
+                height={size.height}
+                scale={scale}
+                animate
+              />
             ))}
         </div>
         {/* Outside the role="img" box: an image's children are hidden from assistive tech. */}

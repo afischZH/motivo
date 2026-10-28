@@ -21,6 +21,7 @@ import {
 } from "@musterli/exporters";
 import {
   isImageEffectTool,
+  isWebglTool,
   type AnyToolDefinition,
   type Params,
   type ParamsSchema,
@@ -33,6 +34,7 @@ import {
   retainRasterEffectClient,
   type RasterEffectClient,
 } from "./client";
+import { exportShader } from "../shader/export";
 import { IMAGE_EFFECT_MAX_PIXELS, type EffectEncodeOptions } from "./protocol";
 
 export { IMAGE_EFFECT_MAX_PIXELS };
@@ -104,7 +106,10 @@ export async function exportImageEffect(
   };
 }
 
-/** `exportRaster` for every tool: image effects through the worker, the rest as SVG. */
+/**
+ * `exportRaster` for every tool: image effects through the raster-effect
+ * worker, WebGL tools through the shader worker, the rest as SVG.
+ */
 export function exportDesignRaster<S extends ParamsSchema>(
   tool: ToolDefinition<S>,
   params: Params<S>,
@@ -113,7 +118,8 @@ export function exportDesignRaster<S extends ParamsSchema>(
   env?: RasterEnv,
 ): Promise<RasterExportResult> {
   const anyTool: AnyToolDefinition = tool;
-  return isImageEffectTool(anyTool)
-    ? exportImageEffect(anyTool, params as Readonly<Record<string, unknown>>, ctx, options)
-    : exportRaster(tool, params, ctx, options, env);
+  const values = params as Readonly<Record<string, unknown>>;
+  if (isImageEffectTool(anyTool)) return exportImageEffect(anyTool, values, ctx, options);
+  if (isWebglTool(anyTool)) return exportShader(anyTool, values, ctx, options);
+  return exportRaster(tool, params, ctx, options, env);
 }

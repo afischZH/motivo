@@ -385,6 +385,9 @@
         "failed": "Die Aufnahme hat nicht geklappt. Lade stattdessen einen Screenshot hoch.",
         "unsupported": "Dein Browser kann die Ansicht nicht aufnehmen. Lade einen Screenshot hoch."
       }
+    },
+    "shader": {
+      "unavailable": "Dieser Browser kann den Shader nicht zeichnen, weil WebGL2 fehlt. Aktiviere die Hardwarebeschleunigung oder nimm einen aktuellen Browser wie Chrome, Edge, Firefox oder Safari."
     }
   },
   "sizes": {
