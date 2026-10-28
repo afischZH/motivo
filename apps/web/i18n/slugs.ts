@@ -59,6 +59,8 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "low-poly": { de: "low-poly-und-voronoi-generator", en: "low-poly-voronoi-generator" },
   terrazzo: { de: "terrazzo-muster-generator", en: "terrazzo-pattern-generator" },
   "screenshot-beautifier": { de: "screenshot-verschoenerer", en: "screenshot-beautifier" },
+  duotone: { de: "duotone-generator", en: "duotone-generator" },
+  "ascii-art": { de: "ascii-art-generator", en: "ascii-art-generator" },
 };
 
 /**
