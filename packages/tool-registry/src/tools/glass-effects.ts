@@ -8,6 +8,8 @@
 import {
   GLASS_BACKDROPS,
   GLASS_EFFECTS,
+  GLASS_IMAGE_FITS,
+  IMAGE_POSITIONS,
   bestTextColor,
   createRng,
   deriveSeed,
@@ -22,11 +24,19 @@ import {
   pngDataUri,
   randomPalette,
   type Declaration,
+  type GlassImage,
   type GlassOptions,
   type GlassResult,
 } from "@musterli/engine";
 import * as z from "zod";
-import { colorSchema, paletteSchema } from "../common";
+import {
+  PHOTO_ASSET_RASTER_MAX_EDGE,
+  assetPlaceholderName,
+  colorSchema,
+  paletteSchema,
+  photoAssetSchema,
+} from "../common";
+import { imageAssetHref } from "../svg-asset";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
 import type { CssOutput, Preset, RenderContext } from "../types";
@@ -42,6 +52,12 @@ const schema = z.object({
   effect: z.enum(GLASS_EFFECTS),
   backdrop: z.enum(GLASS_BACKDROPS),
   backdropPalette: paletteSchema,
+  /** The user's own stage picture; `null` = the generated backdrop. Local only. */
+  backgroundImage: photoAssetSchema.nullable(),
+  imageFit: z.enum(GLASS_IMAGE_FITS),
+  imagePosition: z.enum(IMAGE_POSITIONS),
+  /** Code exports carry the picture as a data URI instead of a placeholder file name. */
+  embedImage: z.boolean(),
   cardWidth: z.int().min(20).max(95),
   cardHeight: z.int().min(20).max(95),
   radius: z.int().min(0).max(96),
@@ -70,6 +86,10 @@ const defaults: GlassEffectsParams = {
   effect: "glass",
   backdrop: "aurora",
   backdropPalette: ["#1e1b4b", "#7c3aed", "#db2777", "#2563eb"],
+  backgroundImage: null,
+  imageFit: "cover",
+  imagePosition: "center",
+  embedImage: false,
   cardWidth: 50,
   cardHeight: 45,
   radius: 24,
@@ -106,9 +126,32 @@ function grainHref(seed: number, noise: number): string | undefined {
   );
 }
 
+/** Placeholder base name of the stage picture in code exports. */
+export const GLASS_IMAGE_PLACEHOLDER = "your-image";
+
+function stageImage(p: GlassEffectsParams): GlassImage | undefined {
+  const asset = p.backgroundImage;
+  if (!asset) return undefined;
+  const href = imageAssetHref(asset);
+  if (!href) return undefined;
+  return {
+    href,
+    fit: p.imageFit,
+    position: p.imagePosition,
+    codeUrl: p.embedImage ? href : assetPlaceholderName(GLASS_IMAGE_PLACEHOLDER, asset),
+  };
+}
+
 function options(p: GlassEffectsParams, ctx: RenderContext): GlassOptions {
   const href = p.effect === "glass" ? grainHref(ctx.seed, p.noise) : undefined;
-  return { ...p, width: ctx.width, height: ctx.height, ...(href ? { grainHref: href } : {}) };
+  const image = stageImage(p);
+  return {
+    ...p,
+    width: ctx.width,
+    height: ctx.height,
+    ...(href ? { grainHref: href } : {}),
+    ...(image ? { image } : {}),
+  };
 }
 
 const decls = (list: readonly Declaration[]): string =>
@@ -139,6 +182,10 @@ const scene = (p: GlassEffectsParams, ctx: RenderContext) => {
 };
 
 const isGlass = (p: GlassEffectsParams) => p.effect === "glass";
+const hasImage = (p: GlassEffectsParams) => p.backgroundImage !== null;
+
+/** Params added after the first release (share links and designs from before lack them). */
+const ADDED_IN_AP06B = ["backgroundImage", "imageFit", "imagePosition", "embedImage"] as const;
 const isBorder = (p: GlassEffectsParams) => p.effect === "gradient-border";
 const isGlow = (p: GlassEffectsParams) => p.effect === "glow";
 
@@ -149,6 +196,15 @@ export const glassEffectsTool = defineTool({
   schema,
   defaults,
   defaultSize: { width: 1200, height: 800 },
+  // The picture never leaves the device; its fit, position and embed choice
+  // mean nothing without it, so they stay local too (short share links).
+  localParams: ["backgroundImage", "imageFit", "imagePosition", "embedImage"],
+  migrateParams(raw) {
+    if (ADDED_IN_AP06B.every((key) => key in raw)) return raw;
+    const out: Record<string, unknown> = { ...raw };
+    for (const key of ADDED_IN_AP06B) if (!(key in out)) out[key] = defaults[key];
+    return out;
+  },
   presets: [
     preset("frosted", {}),
     preset("ice", {
@@ -261,6 +317,10 @@ export const glassEffectsTool = defineTool({
       "shadow",
       "cardWidth",
       "cardHeight",
+      "backgroundImage",
+      "imageFit",
+      "imagePosition",
+      "embedImage",
       "backdrop",
       "backdropPalette",
     ],
@@ -296,9 +356,35 @@ export const glassEffectsTool = defineTool({
       shadow: { group: "card", unit: "%" },
       cardWidth: { group: "card", unit: "%", advanced: true },
       cardHeight: { group: "card", unit: "%", advanced: true },
+      backgroundImage: {
+        group: "stage",
+        kind: "image",
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.backgroundImage.description`,
+        image: { maxEdge: PHOTO_ASSET_RASTER_MAX_EDGE, photo: true },
+      },
+      imageFit: {
+        group: "stage",
+        kind: "segmented",
+        optionLabelKeys: optionLabels(ID, "imageFit", GLASS_IMAGE_FITS),
+        visibleWhen: hasImage,
+      },
+      imagePosition: {
+        group: "stage",
+        optionLabelKeys: optionLabels(ID, "imagePosition", IMAGE_POSITIONS),
+        visibleWhen: hasImage,
+      },
+      embedImage: {
+        group: "stage",
+        advanced: true,
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.embedImage.description`,
+        visibleWhen: hasImage,
+      },
       backdrop: {
         group: "stage",
         optionLabelKeys: optionLabels(ID, "backdrop", GLASS_BACKDROPS),
+        visibleWhen: (p) => !hasImage(p),
       },
       backdropPalette: { group: "stage" },
     },
@@ -374,6 +460,10 @@ export const glassEffectsTool = defineTool({
   ],
   advisories(p, ctx) {
     const o = options(p, ctx);
+    // The pixels of a picture are unknown here: say so instead of guessing.
+    if (o.image && p.effect === "glass") {
+      return [{ id: "image-contrast", messageKey: `tools.${ID}.advisories.imageContrast` }];
+    }
     const ratio = glassTextContrast(o, glassStageColors(ctx.rng, o));
     if (ratio >= AA_RATIO) return [];
     return [

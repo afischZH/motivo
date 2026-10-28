@@ -1913,6 +1913,31 @@
         },
         "glowIntensity": {
           "label": "Strength"
+        },
+        "backgroundImage": {
+          "label": "Own background picture",
+          "description": "Replaces the stage with your picture (PNG, JPG, WebP or SVG). It stays in your browser, share links leave it out and the code points to a placeholder."
+        },
+        "imageFit": {
+          "label": "Picture size",
+          "options": {
+            "cover": "Fill",
+            "contain": "Show all"
+          }
+        },
+        "imagePosition": {
+          "label": "Alignment",
+          "options": {
+            "center": "Center",
+            "top": "Top",
+            "bottom": "Bottom",
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "embedImage": {
+          "label": "Embed picture in the code",
+          "description": "Writes the picture into the code as a data URI instead of a placeholder. The code gets much longer."
         }
       },
       "presets": {
@@ -1926,7 +1951,8 @@
         "violet-glow": "Violet glow"
       },
       "advisories": {
-        "textContrast": "Text on the glass only reaches a contrast of {ratio}:1, WCAG AA needs {required}:1. Try a stronger tint or another text color."
+        "textContrast": "Text on the glass only reaches a contrast of {ratio}:1, WCAG AA needs {required}:1. Try a stronger tint or another text color.",
+        "imageContrast": "With your own picture, Musterli cannot check the contrast of the text. Check it yourself, for example with a stronger tint."
       },
       "seo": {
         "whatIs": "Glass and border effects are CSS surfaces for cards, dialogs and hero sections: frosted glass with backdrop-filter, borders with a gradient (rotating if you like) and colored glows. The tool shows the effect as real CSS on a Musterli background and gives you the code.",
@@ -2008,6 +2034,20 @@
         "breakpointColumns": {
           "label": "Columns on narrow screens",
           "description": "Below 768 px the code arranges the tiles in reading order in this many columns."
+        },
+        "backgroundImage": {
+          "label": "Grid background picture",
+          "description": "Sits behind all tiles. Stays in your browser, share links leave it out."
+        },
+        "imagePosition": {
+          "label": "Alignment",
+          "options": {
+            "center": "Center",
+            "top": "Top",
+            "bottom": "Bottom",
+            "left": "Left",
+            "right": "Right"
+          }
         }
       },
       "presets": {
@@ -2038,7 +2078,25 @@
           "q4": {
             "question": "Do I need Tailwind for the code?",
             "answer": "No. The CSS Grid + HTML export works in any browser without a framework. The Tailwind classes are an alternative for projects that use Tailwind."
+          },
+          "q5": {
+            "question": "Can I put text, icons and pictures into the tiles?",
+            "answer": "Yes. Click a tile in the preview, or pick it with Tab and the arrow keys. You can set a title, a subtitle, an icon, your own graphic and a background picture. Pictures stay in your browser: share links leave them out, and the code points to placeholder files you replace with your pictures."
           }
+        }
+      },
+      "tile": {
+        "title": "Edit tile",
+        "label": "Tile {index}, {cols} × {rows} cells",
+        "fields": {
+          "title": "Title",
+          "subtitle": "Subtitle",
+          "showIcon": "Show icon",
+          "icon": "Icon",
+          "graphic": "Own graphic",
+          "graphicPosition": "Graphic alignment",
+          "graphicSize": "Graphic size",
+          "background": "Tile background picture"
         }
       }
     },

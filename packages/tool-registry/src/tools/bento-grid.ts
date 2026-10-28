@@ -3,10 +3,33 @@
  * fill a grid without gaps; Space rolls a new arrangement. The layout comes
  * from `layoutSeed`, so locking it keeps the arrangement while colours
  * change. No free layout editor (PRODUCT.md non-goals): locks and re-roll only.
+ *
+ * M4-AP06b: content per tile (title, subtitle, icon, own graphic, background
+ * picture) and a picture behind the grid, edited through the generic
+ * `regionEditor` (click a tile in the preview, or the keyboard picker).
+ *
+ * Tile keys: `t<n>`, n = 1-based position of the tile in reading order
+ * (row of its top-left cell, then column), as `bentoLayout` returns tiles.
+ * For a given layout the keys are stable (colours, gap, radius, size and
+ * seed do not move them). When the layout changes (new `layoutSeed`,
+ * columns, rows, tile count, spans), content stays with its number: the
+ * first tile keeps the first tile's content, and so on. Content whose
+ * number is beyond the new tile count stays stored (and counts towards the
+ * limit) but is not drawn; it shows again when the layout has that many
+ * tiles. "Reset all" removes it.
+ *
+ * Text and icons (`tileContent`) are ordinary params: undo, share links,
+ * saved designs. Uploaded pictures (`tileImages`, `backgroundImage`) are
+ * local params: saved designs keep them on the device, share links never
+ * carry them. Code exports reference pictures by placeholder file names.
  */
 import {
   BENTO_CONTENTS,
   BENTO_FILLS,
+  IMAGE_POSITIONS,
+  SHAPE_IDS,
+  shapePath,
+  tileRect,
   bentoHtml,
   bentoLayout,
   bentoSvg,
@@ -16,14 +39,29 @@ import {
   paintTiles,
   randomPalette,
   type BentoCodeOptions,
+  type BentoExtras,
+  type BentoPicture,
+  type BentoTile,
+  type BentoUserContent,
   type PaintedTile,
 } from "@musterli/engine";
 import * as z from "zod";
-import { backgroundSchema, paletteSchema } from "../common";
+import {
+  IMAGE_ASSET_MAX_RASTER_LENGTH,
+  PHOTO_ASSET_RASTER_MAX_EDGE,
+  assetPlaceholderName,
+  backgroundSchema,
+  imageAssetSchema,
+  paletteSchema,
+  photoAssetSchema,
+  type ImageAsset,
+} from "../common";
 import { keepLocked } from "../randomize";
 import { SEED_AND_COLOR_ANIMATION } from "../animation";
-import { defineTool } from "../registry";
-import type { Preset, RenderContext } from "../types";
+import { defineRegionEditor, defineTool } from "../registry";
+import { SHAPE_OPTION_LABEL_KEYS, shapePackGroups, shapePreview } from "../shapes";
+import { imageAssetHref } from "../svg-asset";
+import type { Preset, PreviewRegion, RenderContext } from "../types";
 import { COMMON_GROUPS, COMMON_LABELS, EXTRA_EXPORT_LABELS, optionLabels } from "./shared";
 
 const ID = "bento-grid";
@@ -33,6 +71,72 @@ export const BENTO_LAYOUT_SEED_MAX = 999_999;
 
 /** Viewport width below which the code exports switch to the narrow layout. */
 const BREAKPOINT = 768;
+
+/** Most tiles a layout can have (8 × 8), and so the most tiles with content. */
+export const BENTO_TILES_MAX = 64;
+/** Most tiles with uploaded pictures (graphic or background). */
+export const BENTO_TILE_IMAGES_MAX = 24;
+/** Most characters of all uploaded tile pictures together (about 9 MB of base64). */
+export const BENTO_TILE_IMAGES_BUDGET = 2 * IMAGE_ASSET_MAX_RASTER_LENGTH;
+export const BENTO_TITLE_MAX = 80;
+export const BENTO_SUBTITLE_MAX = 160;
+
+/** `t1` to `t64`: the tile's 1-based position in reading order. */
+export const BENTO_TILE_KEY_PATTERN = /^t(?:[1-9]|[1-5][0-9]|6[0-4])$/;
+export const bentoTileKey = (index: number): string => `t${index + 1}`;
+const tileKeySchema = z.string().max(3).regex(BENTO_TILE_KEY_PATTERN);
+
+/** Text and icon of one tile (shareable). Strict: unknown fields are rejected. */
+export const tileContentSchema = z.strictObject({
+  title: z.string().max(BENTO_TITLE_MAX),
+  subtitle: z.string().max(BENTO_SUBTITLE_MAX),
+  showIcon: z.boolean(),
+  icon: z.enum(SHAPE_IDS),
+  graphicPosition: z.enum(IMAGE_POSITIONS),
+  /** Size of the own graphic in percent of the free area. */
+  graphicSize: z.int().min(20).max(100),
+});
+export type TileContent = z.output<typeof tileContentSchema>;
+
+/** Uploaded pictures of one tile (local only). */
+export const tileImagesSchema = z.strictObject({
+  graphic: imageAssetSchema.nullable(),
+  background: imageAssetSchema.nullable(),
+});
+export type TileImages = z.output<typeof tileImagesSchema>;
+
+const assetLength = (a: ImageAsset | null): number =>
+  a === null ? 0 : a.kind === "svg" ? a.svg.length : a.href.length;
+
+export const tileContentRecordSchema = z
+  .record(tileKeySchema, tileContentSchema)
+  .refine((r) => Object.keys(r).length <= BENTO_TILES_MAX, {
+    message: `At most ${BENTO_TILES_MAX} tiles with content`,
+  });
+
+export const tileImagesRecordSchema = z
+  .record(tileKeySchema, tileImagesSchema)
+  .refine((r) => Object.keys(r).length <= BENTO_TILE_IMAGES_MAX, {
+    message: `At most ${BENTO_TILE_IMAGES_MAX} tiles with pictures`,
+  })
+  .refine(
+    (r) =>
+      Object.values(r).reduce(
+        (n, v) => n + assetLength(v.graphic) + assetLength(v.background),
+        0,
+      ) <= BENTO_TILE_IMAGES_BUDGET,
+    { message: "Tile pictures too large together" },
+  );
+
+const EMPTY_CONTENT: TileContent = {
+  title: "",
+  subtitle: "",
+  showIcon: false,
+  icon: "star",
+  graphicPosition: "center",
+  graphicSize: 100,
+};
+const EMPTY_IMAGES: TileImages = { graphic: null, background: null };
 
 const schema = z.object({
   columns: z.int().min(2).max(8),
@@ -49,6 +153,12 @@ const schema = z.object({
   background: backgroundSchema,
   content: z.enum(BENTO_CONTENTS),
   breakpointColumns: z.int().min(1).max(4),
+  /** The user's text and icons per tile key; see the module comment. */
+  tileContent: tileContentRecordSchema,
+  /** The user's pictures per tile key. Local only. */
+  tileImages: tileImagesRecordSchema,
+  /** Picture behind the whole grid (cover). Local only. */
+  backgroundImage: photoAssetSchema.nullable(),
 });
 
 export type BentoGridParams = z.output<typeof schema>;
@@ -68,7 +178,13 @@ const defaults: BentoGridParams = {
   background: "#f8fafc",
   content: "mixed",
   breakpointColumns: 2,
+  tileContent: {},
+  tileImages: {},
+  backgroundImage: null,
 };
+
+/** Params added in M4-AP06b (links and designs from before lack them). */
+const ADDED_IN_AP06B = ["tileContent", "tileImages", "backgroundImage"] as const;
 
 const preset = (id: string, params: Partial<BentoGridParams>): Preset<BentoGridParams> => ({
   id,
@@ -76,18 +192,206 @@ const preset = (id: string, params: Partial<BentoGridParams>): Preset<BentoGridP
   params: { ...defaults, ...params },
 });
 
+/** The arrangement: depends on the layout params only (cached per params object). */
+const layouts = new WeakMap<BentoGridParams, readonly BentoTile[]>();
+function layoutOf(p: BentoGridParams): readonly BentoTile[] {
+  let tiles = layouts.get(p);
+  if (!tiles) {
+    tiles = bentoLayout(createRng(p.layoutSeed), {
+      columns: p.columns,
+      rows: p.rows,
+      tiles: p.tiles,
+      minSpan: p.minSpan,
+      maxSpan: Math.max(p.minSpan, p.maxSpan),
+    }).tiles;
+    layouts.set(p, tiles);
+  }
+  return tiles;
+}
+
 function painted(p: BentoGridParams, ctx: RenderContext): PaintedTile[] {
-  const layout = bentoLayout(createRng(p.layoutSeed), {
-    columns: p.columns,
-    rows: p.rows,
-    tiles: p.tiles,
-    minSpan: p.minSpan,
-    maxSpan: Math.max(p.minSpan, p.maxSpan),
-  });
   // Colours and placeholders follow the design seed, the arrangement the layout seed.
   const rng = createRng(deriveSeed(ctx.seed, "bento-paint"));
-  return paintTiles(rng, layout.tiles, p.palette, p.fill, p.content);
+  return paintTiles(rng, layoutOf(p), p.palette, p.fill, p.content);
 }
+
+function picture(asset: ImageAsset | null, placeholder: string): BentoPicture | undefined {
+  if (!asset) return undefined;
+  const href = imageAssetHref(asset);
+  return href ? { href, codeUrl: assetPlaceholderName(placeholder, asset) } : undefined;
+}
+
+/** The user's content per tile (reading order) for the engine; `undefined` without any. */
+export function bentoExtras(p: BentoGridParams, count: number): BentoExtras | undefined {
+  const hasTiles = Object.keys(p.tileContent).length > 0 || Object.keys(p.tileImages).length > 0;
+  if (!hasTiles && !p.backgroundImage) return undefined;
+  const contents: (BentoUserContent | undefined)[] = [];
+  for (let i = 0; i < count; i++) {
+    const key = bentoTileKey(i);
+    const c = p.tileContent[key];
+    const im = p.tileImages[key];
+    if (!c && !im) {
+      contents.push(undefined);
+      continue;
+    }
+    const content = c ?? EMPTY_CONTENT;
+    const graphic = picture(im?.graphic ?? null, `tile-${i + 1}-graphic`);
+    const background = picture(im?.background ?? null, `tile-${i + 1}-background`);
+    contents.push({
+      title: content.title,
+      subtitle: content.subtitle,
+      ...(content.showIcon ? { icon: shapePath(content.icon) } : {}),
+      ...(graphic
+        ? { graphic: { ...graphic, position: content.graphicPosition, size: content.graphicSize } }
+        : {}),
+      ...(background ? { background } : {}),
+    });
+  }
+  const backgroundImage = picture(p.backgroundImage, "bento-background");
+  return { contents, ...(backgroundImage ? { backgroundImage } : {}) };
+}
+
+// ---------------------------------------------------------------------------
+// Tile editor (generic region editor of the shell)
+// ---------------------------------------------------------------------------
+
+/** Values of the tile popover: text and icon plus the local pictures. */
+const tileFormSchema = tileContentSchema.extend({
+  graphic: imageAssetSchema.nullable(),
+  background: imageAssetSchema.nullable(),
+});
+type TileValues = z.output<typeof tileFormSchema>;
+const tilePatchSchema = tileFormSchema.partial();
+
+/** The record without one key. */
+const without = <T>(r: Readonly<Record<string, T>>, key: string): Record<string, T> =>
+  Object.fromEntries(Object.entries(r).filter(([k]) => k !== key));
+
+const same = (a: object, b: object): boolean =>
+  Object.entries(a).every(([k, v]) => (b as Record<string, unknown>)[k] === v);
+
+function tileRegion(
+  p: BentoGridParams,
+  t: BentoTile,
+  i: number,
+  ctx: RenderContext,
+): PreviewRegion {
+  const key = bentoTileKey(i);
+  const r = tileRect(t, codeOptions(p, ctx));
+  return {
+    id: key,
+    x: r.x,
+    y: r.y,
+    width: r.width,
+    height: r.height,
+    labelKey: `tools.${ID}.tile.label`,
+    labelValues: { index: i + 1, cols: t.colSpan, rows: t.rowSpan },
+    edited: key in p.tileContent || key in p.tileImages,
+  };
+}
+
+const editedKeys = (p: BentoGridParams): Set<string> =>
+  new Set([...Object.keys(p.tileContent), ...Object.keys(p.tileImages)]);
+
+const regionEditor = defineRegionEditor<BentoGridParams, TileValues>({
+  titleKey: `tools.${ID}.tile.title`,
+  schema: tileFormSchema,
+  controls: {
+    order: [
+      "title",
+      "subtitle",
+      "showIcon",
+      "icon",
+      "graphic",
+      "graphicPosition",
+      "graphicSize",
+      "background",
+    ],
+    params: {
+      title: { labelKey: `tools.${ID}.tile.fields.title`, lockable: false },
+      subtitle: { labelKey: `tools.${ID}.tile.fields.subtitle`, lockable: false },
+      showIcon: { labelKey: `tools.${ID}.tile.fields.showIcon`, lockable: false },
+      icon: {
+        kind: "thumbnails",
+        labelKey: `tools.${ID}.tile.fields.icon`,
+        optionLabelKeys: SHAPE_OPTION_LABEL_KEYS,
+        optionGroups: shapePackGroups(),
+        optionPreview: (value) => shapePreview(value, "#334155", "#f1f5f9"),
+        visibleWhen: (v) => v.showIcon,
+        lockable: false,
+      },
+      graphic: {
+        kind: "image",
+        labelKey: `tools.${ID}.tile.fields.graphic`,
+        lockable: false,
+      },
+      graphicPosition: {
+        labelKey: `tools.${ID}.tile.fields.graphicPosition`,
+        optionLabelKeys: optionLabels(ID, "imagePosition", IMAGE_POSITIONS),
+        visibleWhen: (v) => v.graphic !== null,
+        lockable: false,
+      },
+      graphicSize: {
+        labelKey: `tools.${ID}.tile.fields.graphicSize`,
+        unit: "%",
+        step: 5,
+        visibleWhen: (v) => v.graphic !== null,
+        lockable: false,
+      },
+      background: {
+        kind: "image",
+        labelKey: `tools.${ID}.tile.fields.background`,
+        lockable: false,
+        // Two upload fields in the popover: a pasted picture goes to the graphic.
+        image: { paste: false },
+      },
+    },
+  },
+  regions: (p, ctx) => layoutOf(p).map((t, i) => tileRegion(p, t, i, ctx)),
+  values(p, id) {
+    const index = Number(id.slice(1)) - 1;
+    if (!BENTO_TILE_KEY_PATTERN.test(id) || index >= layoutOf(p).length) return undefined;
+    return { ...EMPTY_CONTENT, ...p.tileContent[id], ...EMPTY_IMAGES, ...p.tileImages[id] };
+  },
+  set(p, id, patch, ctx) {
+    const current = regionEditor.values(p, id, ctx) as TileValues | undefined;
+    if (!current) return p;
+    const parsed = tilePatchSchema.safeParse(patch);
+    if (!parsed.success) return p;
+    const changes = Object.fromEntries(
+      Object.entries(parsed.data).filter(([, v]) => v !== undefined),
+    );
+    const next = { ...current, ...changes } as TileValues;
+    const { graphic, background, ...text } = next;
+    const content: TileContent = text;
+    const images: TileImages = { graphic, background };
+    const keys = editedKeys(p);
+    if (!keys.has(id) && keys.size >= BENTO_TILES_MAX) return p;
+
+    const tileContent = same(content, EMPTY_CONTENT)
+      ? without(p.tileContent, id)
+      : { ...p.tileContent, [id]: content };
+    const tileImages =
+      graphic === null && background === null
+        ? without(p.tileImages, id)
+        : { ...p.tileImages, [id]: images };
+
+    const contentOk = tileContentRecordSchema.safeParse(tileContent);
+    const imagesOk = tileImagesRecordSchema.safeParse(tileImages);
+    if (!contentOk.success || !imagesOk.success) return p;
+    return { ...p, tileContent: contentOk.data, tileImages: imagesOk.data };
+  },
+  reset(p, id) {
+    if (id === null) {
+      if (editedKeys(p).size === 0) return p;
+      return { ...p, tileContent: {}, tileImages: {} };
+    }
+    if (!(id in p.tileContent) && !(id in p.tileImages)) return p;
+    return { ...p, tileContent: without(p.tileContent, id), tileImages: without(p.tileImages, id) };
+  },
+  editedCount: (p) => editedKeys(p).size,
+  maxEdited: BENTO_TILES_MAX,
+});
 
 function codeOptions(p: BentoGridParams, ctx: RenderContext): BentoCodeOptions {
   return {
@@ -111,6 +415,14 @@ export const bentoGridTool = defineTool({
   schema,
   defaults,
   defaultSize: { width: 1200, height: 800 },
+  localParams: ["tileImages", "backgroundImage"],
+  migrateParams(raw) {
+    if (ADDED_IN_AP06B.every((key) => key in raw)) return raw;
+    const out: Record<string, unknown> = { ...raw };
+    for (const key of ADDED_IN_AP06B) if (!(key in out)) out[key] = defaults[key];
+    return out;
+  },
+  regionEditor,
   presets: [
     preset("feature-section", {
       columns: 3,
@@ -222,6 +534,7 @@ export const bentoGridTool = defineTool({
       "palette",
       "fill",
       "background",
+      "backgroundImage",
       "content",
       "gap",
       "radius",
@@ -246,6 +559,15 @@ export const bentoGridTool = defineTool({
       palette: { group: "colors", labelKey: COMMON_LABELS.palette },
       fill: { group: "colors", optionLabelKeys: optionLabels(ID, "fill", BENTO_FILLS) },
       background: { group: "colors", labelKey: COMMON_LABELS.background },
+      backgroundImage: {
+        group: "colors",
+        kind: "image",
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.backgroundImage.description`,
+        image: { maxEdge: PHOTO_ASSET_RASTER_MAX_EDGE, photo: true },
+      },
+      tileContent: { kind: "hidden" },
+      tileImages: { kind: "hidden" },
       content: { group: "tiles", optionLabelKeys: optionLabels(ID, "content", BENTO_CONTENTS) },
       gap: { group: "tiles", unit: "px" },
       radius: { group: "tiles", unit: "px" },
@@ -263,7 +585,8 @@ export const bentoGridTool = defineTool({
   render: {
     kind: "svg",
     render(p, ctx) {
-      return bentoSvg(painted(p, ctx), codeOptions(p, ctx));
+      const tiles = painted(p, ctx);
+      return bentoSvg(tiles, codeOptions(p, ctx), bentoExtras(p, tiles.length));
     },
   },
   exports: ["svg", "png", "jpg", "webp"],
@@ -274,7 +597,8 @@ export const bentoGridTool = defineTool({
       labelKey: EXTRA_EXPORT_LABELS.cssGrid,
       language: "html",
       render(p, ctx) {
-        return bentoHtml(painted(p, ctx), codeOptions(p, ctx));
+        const tiles = painted(p, ctx);
+        return bentoHtml(tiles, codeOptions(p, ctx), bentoExtras(p, tiles.length));
       },
     },
     {
@@ -282,7 +606,8 @@ export const bentoGridTool = defineTool({
       labelKey: EXTRA_EXPORT_LABELS.tailwind,
       language: "html",
       render(p, ctx) {
-        return bentoTailwind(painted(p, ctx), codeOptions(p, ctx));
+        const tiles = painted(p, ctx);
+        return bentoTailwind(tiles, codeOptions(p, ctx), bentoExtras(p, tiles.length));
       },
     },
   ],

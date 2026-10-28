@@ -41,3 +41,31 @@ export function bboxGradientVector(angleDeg: number): string {
   const f = (v: number): string => formatNumber(v, 3);
   return `x1="${f(0.5 - dx)}" y1="${f(0.5 - dy)}" x2="${f(0.5 + dx)}" y2="${f(0.5 + dy)}"`;
 }
+
+/** Characters XML forbids: C0 controls except tab and newlines, U+FFFE, U+FFFF. */
+// eslint-disable-next-line no-control-regex -- matching control characters is the point
+const XML_INVALID = /[\u0000-\u0008\u000b\u000c\u000e-\u001f￾￿]/g;
+/** Lone surrogate halves (not valid in XML either). */
+const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/g;
+
+/**
+ * Escapes text for XML and HTML, in content and in quoted attributes
+ * (`&`, `<`, `>`, `"`, `'`), and drops characters XML forbids, so user text
+ * can never break out of an element or attribute or corrupt the document.
+ */
+export function escapeXml(text: string): string {
+  return text
+    .replace(XML_INVALID, "")
+    .replace(LONE_SURROGATE, "")
+    .replace(/[&<>"']/g, (c) =>
+      c === "&"
+        ? "&amp;"
+        : c === "<"
+          ? "&lt;"
+          : c === ">"
+            ? "&gt;"
+            : c === '"'
+              ? "&quot;"
+              : "&#39;",
+    );
+}

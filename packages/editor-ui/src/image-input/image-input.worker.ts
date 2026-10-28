@@ -50,6 +50,11 @@ async function encodeCrop(
   if (!ctx) throw new Error("No 2D context");
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = "high";
+  if (mime === "image/jpeg") {
+    // JPEG has no alpha: transparent parts become white instead of black.
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+  }
   ctx.drawImage(bitmap, crop.x, crop.y, crop.width, crop.height, 0, 0, width, height);
   const blob = await canvas.convertToBlob(
     mime === "image/jpeg" ? { type: mime, quality: CROP_JPEG_QUALITY } : { type: mime },

@@ -230,7 +230,7 @@
         "other-tool": "This link belongs to another tool. You are seeing the default settings.",
         "outdated": "This link comes from an older version. The design may look slightly different."
       },
-      "localLeftOut": "Your own file is not in the link, it stays on your device. Anyone opening the link sees the pattern with the chosen shape."
+      "localLeftOut": "Your own files are not in the link, they stay on your device. Anyone opening the link sees the design without them."
     },
     "imageInput": {
       "title": "Image",
@@ -257,12 +257,12 @@
       }
     },
     "asset": {
-      "none": "No file of your own, the chosen shape is used",
+      "none": "No file of your own",
       "yourFile": "Your file",
       "choose": "Choose file",
       "replace": "Replace",
       "remove": "Remove",
-      "removedFile": "Your file is removed. The pattern uses the chosen shape again.",
+      "removedFile": "Your file is removed.",
       "dropNow": "Drop to load the file",
       "hint": "Drag an SVG, PNG, JPG or WebP here, paste it with Ctrl+V or choose a file (up to 5 MB). The file stays on your device, is not uploaded and is not shared in links.",
       "thumbnail": "Your file: {name}",
@@ -284,7 +284,7 @@
       },
       "crop": {
         "title": "Crop",
-        "hint": "Choose the part of {name} that becomes the motif of the pattern.",
+        "hint": "Choose the part of {name} you want to use.",
         "frame": "Crop frame",
         "frameLabel": "Crop: left {x} %, top {y} %, width {w} %, height {h} %",
         "keys": "Arrow keys move the frame, hold Alt to resize, hold Shift for bigger steps.",

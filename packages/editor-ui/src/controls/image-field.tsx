@@ -16,7 +16,7 @@ import { Popover } from "radix-ui";
 import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from "react";
 import { useBrandKit, type BrandKitView } from "../brand-kit/context";
 import { brandImageToFile } from "../brand-kit/prepare";
-import { ASSET_ACCEPT } from "../asset-input/prepare";
+import { ASSET_ACCEPT, type AssetOutputOptions } from "../asset-input/prepare";
 import { useAssetLoader } from "../asset-input/use-asset-loader";
 import { useT } from "../i18n";
 import { isTextTarget } from "../image-input/image-input-panel";
@@ -31,6 +31,24 @@ export interface ImageFieldProps {
   value: ImageAsset | null;
   onChange(value: ImageAsset | null): void;
   onCommit?(): void;
+  /** Encoding and limits (`ImageHint`); default: 1024 px, PNG or JPEG, `imageAssetSchema`. */
+  output?: AssetOutputOptions;
+  /** Takes images pasted anywhere in the editor (default true). */
+  paste?: boolean;
+}
+
+/**
+ * Whether a paste anywhere in the editor is meant for this field: never into
+ * text fields, and while a modal dialog or popover is open only for fields
+ * inside it (a tile popover must not fill the panel's field behind it).
+ */
+export function pasteBelongsTo(field: Element | null, target: EventTarget | null): boolean {
+  if (isTextTarget(target)) return false;
+  if (!field) return true;
+  const modal = field.ownerDocument.querySelector(
+    '[role="dialog"][data-state="open"], dialog[open]',
+  );
+  return modal === null || modal.contains(field);
 }
 
 export function assetThumbnailUrl(asset: ImageAsset): string {
@@ -43,12 +61,14 @@ export function ImageField(props: ImageFieldProps) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const brandKit = useBrandKit();
+  const rootRef = useRef<HTMLDivElement>(null);
   const loader = useAssetLoader({
     onAsset: (asset) => {
       props.onChange(asset);
       props.onCommit?.();
     },
     onClose: () => fileRef.current?.focus(),
+    ...(props.output ? { output: props.output } : {}),
   });
   const { loadFile, reading, error, status } = loader;
   const loadRef = useRef(loadFile);
@@ -57,9 +77,11 @@ export function ImageField(props: ImageFieldProps) {
   });
 
   // Paste a picture anywhere in the editor, except into text fields.
+  const pasteEnabled = props.paste !== false;
   useEffect(() => {
+    if (!pasteEnabled) return;
     const onPaste = (event: ClipboardEvent) => {
-      if (isTextTarget(event.target)) return;
+      if (event.defaultPrevented || !pasteBelongsTo(rootRef.current, event.target)) return;
       const file = [...(event.clipboardData?.files ?? [])].find((f) => f.type.startsWith("image/"));
       if (!file) return;
       event.preventDefault();
@@ -67,7 +89,7 @@ export function ImageField(props: ImageFieldProps) {
     };
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
-  }, []);
+  }, [pasteEnabled]);
 
   const onDrag = (event: DragEvent<HTMLDivElement>, over: boolean) => {
     if (![...event.dataTransfer.types].includes("Files")) return;
@@ -82,7 +104,7 @@ export function ImageField(props: ImageFieldProps) {
   const name = asset ? asset.name || t("Editor.asset.yourFile") : null;
 
   return (
-    <div className="grid min-w-0 gap-2" data-testid="asset-field">
+    <div ref={rootRef} className="grid min-w-0 gap-2" data-testid="asset-field">
       <div
         role="group"
         aria-labelledby={props.ids.label}

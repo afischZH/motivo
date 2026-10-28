@@ -313,6 +313,8 @@ function ControlField({ control, value, level }: ControlFieldProps) {
           label={label}
           value={(value ?? null) as ImageAsset | null}
           onChange={onChange}
+          output={{ maxEdge: control.maxEdge, photo: control.photo, schema: control.schema }}
+          paste={control.paste}
           {...(level.onCommit ? { onCommit: level.onCommit } : {})}
         />,
       );

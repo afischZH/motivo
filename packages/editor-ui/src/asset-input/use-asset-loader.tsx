@@ -13,7 +13,14 @@ import { useT } from "../i18n";
 import { svgDataUrl } from "../shell/render";
 import type { CropRect } from "./crop";
 import { CropDialog } from "./crop-dialog";
-import { finishAsset, readAsset, sourceSize, type AssetError, type AssetSource } from "./prepare";
+import {
+  finishAsset,
+  readAsset,
+  sourceSize,
+  type AssetError,
+  type AssetOutputOptions,
+  type AssetSource,
+} from "./prepare";
 import { useAssetServices, useSvgSanitizer } from "./services-context";
 
 /** Shows the source in the crop dialog: object URL for raster, data URI for sanitised SVG. */
@@ -51,6 +58,8 @@ export interface AssetLoaderOptions {
   onAsset(asset: ImageAsset): void;
   /** The crop dialog closed (applied or cancelled): put the focus back. */
   onClose?(): void;
+  /** Encoding and limits of the finished asset (`ImageHint` of the field). */
+  output?: AssetOutputOptions;
 }
 
 export interface AssetLoader {
@@ -117,6 +126,7 @@ export function useAssetLoader(options: AssetLoaderOptions): AssetLoader {
       crop,
       { crop: getServices().crop, svg: getSanitizer() },
       nextSignal(),
+      options.output,
     );
     if (!result.ok) {
       setApplying(false);

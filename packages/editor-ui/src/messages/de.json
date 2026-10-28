@@ -230,7 +230,7 @@
         "other-tool": "Dieser Link gehört zu einem anderen Tool. Du siehst die Standardeinstellungen.",
         "outdated": "Dieser Link stammt aus einer älteren Version. Das Motiv kann leicht anders aussehen."
       },
-      "localLeftOut": "Deine eigene Datei ist nicht im Link, sie bleibt auf deinem Gerät. Wer den Link öffnet, sieht das Muster mit der gewählten Form."
+      "localLeftOut": "Deine eigenen Dateien sind nicht im Link, sie bleiben auf deinem Gerät. Wer den Link öffnet, sieht das Design ohne sie."
     },
     "imageInput": {
       "title": "Bild",
@@ -257,12 +257,12 @@
       }
     },
     "asset": {
-      "none": "Keine eigene Datei, es wird die gewählte Form verwendet",
+      "none": "Keine eigene Datei",
       "yourFile": "Deine Datei",
       "choose": "Datei wählen",
       "replace": "Ersetzen",
       "remove": "Entfernen",
-      "removedFile": "Deine Datei ist entfernt. Das Muster verwendet wieder die gewählte Form.",
+      "removedFile": "Deine Datei ist entfernt.",
       "dropNow": "Loslassen, um die Datei zu laden",
       "hint": "Zieh ein SVG, PNG, JPG oder WebP hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Die Datei bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
       "thumbnail": "Deine Datei: {name}",
@@ -284,7 +284,7 @@
       },
       "crop": {
         "title": "Zuschneiden",
-        "hint": "Wähl den Teil von {name}, der als Motiv ins Muster kommt.",
+        "hint": "Wähl den Teil von {name}, den du verwenden willst.",
         "frame": "Zuschnitt",
         "frameLabel": "Zuschnitt: links {x} %, oben {y} %, Breite {w} %, Höhe {h} %",
         "keys": "Pfeiltasten verschieben den Rahmen, mit Alt änderst du die Grösse, mit Shift geht es in grösseren Schritten.",

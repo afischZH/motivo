@@ -1913,6 +1913,31 @@
         },
         "glowIntensity": {
           "label": "Stärke"
+        },
+        "backgroundImage": {
+          "label": "Eigenes Hintergrundbild",
+          "description": "Ersetzt die Bühne durch dein Bild (PNG, JPG, WebP oder SVG). Es bleibt in deinem Browser, im Teilen-Link fehlt es, und der Code verweist auf einen Platzhalter."
+        },
+        "imageFit": {
+          "label": "Bildgrösse",
+          "options": {
+            "cover": "Füllen",
+            "contain": "Ganz zeigen"
+          }
+        },
+        "imagePosition": {
+          "label": "Ausrichtung",
+          "options": {
+            "center": "Mitte",
+            "top": "Oben",
+            "bottom": "Unten",
+            "left": "Links",
+            "right": "Rechts"
+          }
+        },
+        "embedImage": {
+          "label": "Bild in den Code einbetten",
+          "description": "Schreibt das Bild als data-URI in den Code statt eines Platzhalters. Der Code wird dadurch viel länger."
         }
       },
       "presets": {
@@ -1926,7 +1951,8 @@
         "violet-glow": "Violettes Leuchten"
       },
       "advisories": {
-        "textContrast": "Text auf dem Glas erreicht nur {ratio}:1 Kontrast, für WCAG AA brauchst du {required}:1. Wähle eine kräftigere Tönung oder eine andere Textfarbe."
+        "textContrast": "Text auf dem Glas erreicht nur {ratio}:1 Kontrast, für WCAG AA brauchst du {required}:1. Wähle eine kräftigere Tönung oder eine andere Textfarbe.",
+        "imageContrast": "Bei einem eigenen Bild kann Musterli den Kontrast des Texts nicht prüfen. Kontrolliere ihn selbst, zum Beispiel mit einer kräftigeren Tönung."
       },
       "seo": {
         "whatIs": "Glas- und Rahmen-Effekte sind CSS-Oberflächen für Karten, Dialoge und Hero-Bereiche: Milchglas mit backdrop-filter, Rahmen mit Farbverlauf (auf Wunsch drehend) und farbiges Leuchten. Das Tool zeigt den Effekt als echtes CSS auf einem Musterli-Hintergrund und liefert den Code dazu.",
@@ -2008,6 +2034,20 @@
         "breakpointColumns": {
           "label": "Spalten auf schmalen Bildschirmen",
           "description": "Unter 768 px Breite ordnet der Code die Kacheln in Lesereihenfolge in so vielen Spalten an."
+        },
+        "backgroundImage": {
+          "label": "Hintergrundbild des Rasters",
+          "description": "Liegt hinter allen Kacheln. Bleibt in deinem Browser, im Teilen-Link fehlt es."
+        },
+        "imagePosition": {
+          "label": "Ausrichtung",
+          "options": {
+            "center": "Mitte",
+            "top": "Oben",
+            "bottom": "Unten",
+            "left": "Links",
+            "right": "Rechts"
+          }
         }
       },
       "presets": {
@@ -2038,7 +2078,25 @@
           "q4": {
             "question": "Brauche ich Tailwind für den Code?",
             "answer": "Nein. Der Export CSS Grid + HTML läuft in jedem Browser ohne Framework. Die Tailwind-Klassen sind eine Alternative für Projekte mit Tailwind."
+          },
+          "q5": {
+            "question": "Kann ich Text, Symbole und Bilder in die Kacheln setzen?",
+            "answer": "Ja. Klicke in der Vorschau auf eine Kachel oder wähle sie mit Tab und den Pfeiltasten. Du kannst Titel, Untertitel, ein Symbol, eine eigene Grafik und ein Hintergrundbild setzen. Bilder bleiben in deinem Browser: Im Teilen-Link fehlen sie, und der Code verweist auf Platzhalter-Dateien, die du durch deine Bilder ersetzt."
           }
+        }
+      },
+      "tile": {
+        "title": "Kachel bearbeiten",
+        "label": "Kachel {index}, {cols} × {rows} Zellen",
+        "fields": {
+          "title": "Titel",
+          "subtitle": "Untertitel",
+          "showIcon": "Symbol zeigen",
+          "icon": "Symbol",
+          "graphic": "Eigene Grafik",
+          "graphicPosition": "Ausrichtung der Grafik",
+          "graphicSize": "Grösse der Grafik",
+          "background": "Hintergrundbild der Kachel"
         }
       }
     },

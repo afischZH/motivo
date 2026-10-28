@@ -158,6 +158,27 @@ export interface ControlHint<P> {
    * sanitizer and crop dialog as an upload.
    */
   brandShapesParam?: string;
+  /** For `kind: "image"`: how the upload is prepared; see `ImageHint`. */
+  image?: ImageHint;
+}
+
+/**
+ * Options of an upload field (`kind: "image"`). The param schema must
+ * accept what the field produces (`photoAssetSchema` for `maxEdge` 2048).
+ */
+export interface ImageHint {
+  /** Longest edge of a raster upload after downsampling. Default 1024. */
+  readonly maxEdge?: number;
+  /**
+   * Re-encode raster uploads as JPEG (transparency flattened onto white),
+   * for backgrounds where a large PNG would be needlessly heavy.
+   */
+  readonly photo?: boolean;
+  /**
+   * Whether the field takes images pasted anywhere in the editor. Default
+   * true; set false when several upload fields are visible at once.
+   */
+  readonly paste?: boolean;
 }
 
 /** A named group of options of a thumbnail picker. */

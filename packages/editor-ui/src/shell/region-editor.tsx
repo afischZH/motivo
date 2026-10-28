@@ -262,6 +262,16 @@ export function RegionLayer({ tool, editor, params, seed, size }: RegionLayerPro
             collisionPadding={12}
             aria-labelledby={`${ids}-title`}
             aria-describedby={`${ids}-region`}
+            onEscapeKeyDown={(event) => {
+              // Escape in a nested native dialog (the crop dialog of an upload field) closes that one only.
+              // Radix listens on the document and its preventDefault also cancels the native
+              // dialog's own Escape handling, so the dialog gets its cancel event from here.
+              const nested = (event.target as Element | null)?.closest?.("dialog[open]");
+              if (nested) {
+                event.preventDefault();
+                nested.dispatchEvent(new Event("cancel", { cancelable: true }));
+              }
+            }}
             onCloseAutoFocus={(event) => {
               event.preventDefault();
               pickerRef.current?.focus();

@@ -16,7 +16,7 @@ import { formatNumber } from "../../curves";
 import { contrastRatio } from "../../palette/contrast";
 import type { RgbaBuffer } from "../../png";
 import type { Rng } from "../../rng";
-import { stableId, svgDocument } from "../../svg";
+import { escapeXml, stableId, svgDocument } from "../../svg";
 import { cssGradient, cssGradientLayers, type CssGradientOptions } from "../css-gradient";
 import { cssPattern } from "../css-patterns";
 import { grainTile } from "../noise-grain/tile";
@@ -27,6 +27,36 @@ export type GlassEffect = (typeof GLASS_EFFECTS)[number];
 /** Stages the card is shown on: Musterli backgrounds built by other engine tools. */
 export const GLASS_BACKDROPS = ["aurora", "shapes", "gradient", "dots", "grid", "stripes"] as const;
 export type GlassBackdrop = (typeof GLASS_BACKDROPS)[number];
+
+/** How the user's own stage picture fills the canvas (CSS `background-size`). */
+export const GLASS_IMAGE_FITS = ["cover", "contain"] as const;
+export type GlassImageFit = (typeof GLASS_IMAGE_FITS)[number];
+
+/** Anchor of the stage picture (CSS `background-position`, SVG `preserveAspectRatio`). */
+export const IMAGE_POSITIONS = ["center", "top", "bottom", "left", "right"] as const;
+export type ImagePosition = (typeof IMAGE_POSITIONS)[number];
+
+/** `preserveAspectRatio` alignment of a position. */
+export const IMAGE_POSITION_ALIGN: Readonly<Record<ImagePosition, string>> = {
+  center: "xMidYMid",
+  top: "xMidYMin",
+  bottom: "xMidYMax",
+  left: "xMinYMid",
+  right: "xMaxYMid",
+};
+
+/** The user's own picture as the stage (instead of a generated backdrop). */
+export interface GlassImage {
+  /** Data URI of the picture (sanitised SVG or re-encoded raster); preview and SVG twin only. */
+  readonly href: string;
+  readonly fit: GlassImageFit;
+  readonly position: ImagePosition;
+  /**
+   * URL written into code exports: a placeholder file name such as
+   * `your-image.jpg` (default), or `href` when the user embeds the picture.
+   */
+  readonly codeUrl: string;
+}
 
 /** Custom property and keyframes of the rotating border (namespaced, used verbatim in exports). */
 export const BORDER_ANGLE_PROPERTY = "--musterli-border-angle";
@@ -42,6 +72,8 @@ export interface GlassOptions {
   readonly backdrop: GlassBackdrop;
   /** Stage colours, 2 or more hex colours. */
   readonly backdropPalette: readonly string[];
+  /** The user's picture as the stage; replaces `backdrop` (base colour from the palette). */
+  readonly image?: GlassImage;
   /** Card size in percent of the canvas. */
   readonly cardWidth: number;
   readonly cardHeight: number;
@@ -97,6 +129,11 @@ export interface CardBox {
 export interface GlassResult {
   /** Declarations of the stage (the canvas box). */
   readonly stageCss: string;
+  /**
+   * The stage as written into code exports: equal to `stageCss` except for
+   * the user's picture, which becomes `GlassImage.codeUrl`.
+   */
+  readonly stageCodeCss: string;
   readonly card: {
     readonly x: number;
     readonly y: number;
@@ -261,7 +298,36 @@ function patternStage(o: GlassOptions, kind: keyof typeof STAGE_PATTERNS): Stage
   return { css: out.css, body: svgBody(out.svg), colors: [background, ink] };
 }
 
+/** CSS declarations of the picture stage for a given URL. */
+function imageStageCss(base: string, img: GlassImage, url: string): string {
+  return [
+    `background-color: ${base};`,
+    `background-image: url("${url}");`,
+    `background-size: ${img.fit};`,
+    `background-position: ${img.position};`,
+    "background-repeat: no-repeat;",
+  ].join("\n");
+}
+
+/** Quotes and backslashes cannot occur in data URIs or our placeholders; dropped to be safe. */
+const cssUrl = (url: string): string => url.replace(/["\\\n\r]/g, "");
+
+function imageStage(o: GlassOptions, img: GlassImage): Stage {
+  const base = color(o.backdropPalette, 0);
+  const align = IMAGE_POSITION_ALIGN[img.position];
+  const mode = img.fit === "cover" ? "slice" : "meet";
+  return {
+    css: imageStageCss(base, img, cssUrl(img.href)),
+    body:
+      `<rect width="${f(o.width)}" height="${f(o.height)}" fill="${base}"/>` +
+      `<image width="${f(o.width)}" height="${f(o.height)}" preserveAspectRatio="${align} ${mode}" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="${escapeXml(img.href)}"/>`,
+    // Unknown pixels: the contrast check cannot judge a picture.
+    colors: [],
+  };
+}
+
 function stage(rng: Rng, o: GlassOptions): Stage {
+  if (o.image) return imageStage(o, o.image);
   switch (o.backdrop) {
     case "aurora":
       return softBlobsStage(rng, o, false);
@@ -596,8 +662,10 @@ export function glassEffect(rng: Rng, o: GlassOptions): GlassResult {
   const c = cardRect(o);
   const r = Math.min(o.radius, c.w / 2, c.h / 2);
   const content = contentBoxes(o, c.w, c.h);
+  const base = color(o.backdropPalette, 0);
   return {
     stageCss: st.css,
+    stageCodeCss: o.image ? imageStageCss(base, o.image, cssUrl(o.image.codeUrl)) : st.css,
     card: {
       x: c.x,
       y: c.y,
@@ -729,7 +797,7 @@ export function glassTailwind(result: GlassResult, o: GlassOptions): string {
  */
 export function glassHtml(result: GlassResult, o: GlassOptions): string {
   const cls = GLASS_CLASS_NAMES[o.effect];
-  const stageDecls: Declaration[] = result.stageCss
+  const stageDecls: Declaration[] = result.stageCodeCss
     .split("\n")
     .map((line) => line.trim().replace(/;$/, ""))
     .filter((line) => line.length > 0)
@@ -751,9 +819,14 @@ export function glassHtml(result: GlassResult, o: GlassOptions): string {
     ["width", `min(${px(result.card.width)}, 90vw)`],
     ["padding", "2rem"],
   ]);
+  const picture = o.image;
+  const note =
+    picture && picture.codeUrl !== picture.href
+      ? `/* Replace ${cssUrl(picture.codeUrl)} with the path to your own picture. */\n`
+      : "";
   return [
     "<style>",
-    stageRule,
+    `${note}${stageRule}`,
     "",
     card,
     "",

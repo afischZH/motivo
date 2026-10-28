@@ -50,7 +50,13 @@ export interface ImageInputServices {
    * Cuts `crop` (source pixels) out of a checked raster image, scales it to
    * at most `maxEdge` and encodes it as a PNG or JPEG data URI (worker).
    */
-  crop(bytes: Uint8Array, mime: string, crop: PixelRect, maxEdge: number): Promise<ImageCropResult>;
+  crop(
+    bytes: Uint8Array,
+    mime: string,
+    crop: PixelRect,
+    maxEdge: number,
+    opaque?: boolean,
+  ): Promise<ImageCropResult>;
   /** Stops the worker. */
   dispose(): void;
 }
@@ -75,6 +81,7 @@ export interface ImageInputEnv {
     mime: string,
     crop: PixelRect,
     maxEdge: number,
+    opaque?: boolean,
   ): Promise<{ href: string; width: number; height: number }>;
   setTimeout(fn: () => void, ms: number): unknown;
   clearTimeout(handle: unknown): void;
@@ -219,11 +226,14 @@ export function createImageInputServices(env: ImageInputEnv): ImageInputServices
       return patch ? { ok: true, patch } : { ok: false, error: "no-result" };
     },
 
-    async crop(bytes, mime, rect, maxEdge) {
+    async crop(bytes, mime, rect, maxEdge, opaque = false) {
       const here = async (): Promise<ImageCropResult> => {
         if (!env.cropOnMainThread) return { ok: false, error: "decode-failed" };
         try {
-          return { ok: true, ...(await env.cropOnMainThread(bytes, mime, rect, maxEdge)) };
+          return {
+            ok: true,
+            ...(await env.cropOnMainThread(bytes, mime, rect, maxEdge, opaque)),
+          };
         } catch {
           return { ok: false, error: "decode-failed" };
         }
@@ -231,7 +241,7 @@ export function createImageInputServices(env: ImageInputEnv): ImageInputServices
       // Copied, not transferred: the main-thread fallback may still need the bytes.
       const copy = bytes.slice().buffer as ArrayBuffer;
       const reply = await call(
-        { type: "crop", bytes: copy, mime, crop: rect, maxEdge },
+        { type: "crop", bytes: copy, mime, crop: rect, maxEdge, ...(opaque ? { opaque } : {}) },
         CROP_TIMEOUT_MS,
       );
       if ("failure" in reply) {
@@ -257,6 +267,7 @@ async function cropWithImage(
   mime: string,
   rect: PixelRect,
   maxEdge: number,
+  opaque = false,
 ): Promise<{ href: string; width: number; height: number }> {
   const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mime }));
   try {
@@ -272,8 +283,12 @@ async function cropWithImage(
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("No 2D context");
     ctx.imageSmoothingQuality = "high";
+    const type = cropMime(mime, opaque);
+    if (type === "image/jpeg") {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, size.width, size.height);
+    }
     ctx.drawImage(img, crop.x, crop.y, crop.width, crop.height, 0, 0, size.width, size.height);
-    const type = cropMime(mime);
     const blob = await new Promise<Blob | null>((resolve) =>
       canvas.toBlob(resolve, type, type === "image/jpeg" ? CROP_JPEG_QUALITY : undefined),
     );

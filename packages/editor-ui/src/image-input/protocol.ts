@@ -35,6 +35,8 @@ export type ImageWorkerRequest =
       crop: PixelRect;
       /** Longest edge of the output. */
       maxEdge: number;
+      /** Always JPEG, transparency flattened onto white (background pictures). */
+      opaque?: boolean;
     }
   | {
       id: number;
@@ -84,9 +86,9 @@ export interface ImageWorkerEnv {
   lookup(toolId: string): AnyToolDefinition | undefined;
 }
 
-/** Output type for an upload of type `mime`. */
-export function cropMime(mime: string): CropMime {
-  return mime === "image/jpeg" ? "image/jpeg" : "image/png";
+/** Output type for an upload of type `mime` (`opaque`: always JPEG). */
+export function cropMime(mime: string, opaque = false): CropMime {
+  return opaque || mime === "image/jpeg" ? "image/jpeg" : "image/png";
 }
 
 /**
@@ -158,7 +160,13 @@ async function handleCrop(
   try {
     const crop = clampPixelRect(request.crop, bitmap.width, bitmap.height);
     const size = fitWithin(crop.width, crop.height, request.maxEdge);
-    const out = await encode(bitmap, crop, size.width, size.height, cropMime(request.mime));
+    const out = await encode(
+      bitmap,
+      crop,
+      size.width,
+      size.height,
+      cropMime(request.mime, request.opaque === true),
+    );
     if (out.mime !== "image/png" && out.mime !== "image/jpeg") {
       return { id, type: "crop", ok: false, error: "decode-failed" };
     }

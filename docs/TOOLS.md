@@ -209,6 +209,14 @@ Kleine Tools für die Entwickler-Persona: Ergebnis ist in erster Linie Code zum 
 - Browser-Support geprüft gegen `@mdn/browser-compat-data` 8.1.7 (Stand 2026-10-22, Datenquelle der MDN-Tabellen): `backdrop-filter` Chrome 76, Edge 79, Firefox 103, Safari/iOS 18 ohne Präfix (ab 9 mit `-webkit-`); `@property` Chrome/Edge 85, Firefox 128, Safari 16.4; `conic-gradient` Chrome 69, Firefox 83, Safari 12.1; `prefers-reduced-motion` überall seit Jahren.
 - 8 Vorlagen: Milchglas, Eis, Rauchglas, Körniges Glas, Neonring, Abendrot-Rahmen, Minzleuchten, Violettes Leuchten. Leertaste würfelt Bühne, Farben, Unschärfe, Tönung usw., der Effekt bleibt; die Textfarbe wird passend zur neuen Fläche gewählt.
 
+**J2 erweitert (M4-AP06b, eigenes Hintergrundbild, Entscheid Andreas 2026-10-28)**:
+- Params `backgroundImage` (PNG, JPG, WebP oder SVG; `photoAssetSchema`), `imageFit` (`cover` füllen, `contain` ganz zeigen), `imagePosition` (Mitte, oben, unten, links, rechts), `embedImage` (erweitert). Mit Bild ersetzt es die Bühne, `backdrop` ist ausgeblendet.
+- Upload über die Seamless-Pipeline: Magic Bytes, Raster im Worker neu kodiert, höchstens 2048 px Kante, immer als JPEG (Transparenz auf Weiss, `ImageHint.photo`), SVG über den Sanitizer im Worker; Zuschnitt optional.
+- Alle vier Params sind `localParams`: nie im Teilen-Link (der Link bleibt kurz), im gespeicherten Design schon.
+- Rendern: SVG-Zwilling mit `<image preserveAspectRatio="<Ausrichtung> slice|meet">` auf einer Grundfläche; PNG/WebP für Rahmen und Glow über denselben Render-Pfad. Vorschau als CSS mit `background: url(…) <Position> / cover|contain no-repeat`.
+- Code-Exporte (CSS, Tailwind, HTML) verwenden einen Platzhalter `your-image.jpg` bzw. `.svg` mit Kommentar "Replace … with the path to your own picture."; nur mit `embedImage` steht das Bild als data-URI im Code.
+- Hinweis `image-contrast` (Glas mit Bild): der Kontrast lässt sich über einem Foto nicht schätzen, also selbst prüfen.
+
 ### J3. Bento-Grid-Generator · M4 · G
 - **Zweck**: Layouts im "Bento"-Stil (ungleich grosse, abgerundete Kacheln in einem Raster) für Feature-Sektionen, Portfolios und Social-Grafiken. Leertaste = neue Aufteilung.
 - **Parameter**: `columns` (2 bis 8), `rows` (2 bis 8), `tiles` (Zielanzahl Kacheln), `minSpan`/`maxSpan` (kleinste und grösste Kachel in Zellen), `gap`, `radius`, `padding`, `fill` (eine Farbe, Palette zufällig, Palette der Reihe nach, Musterli-Design pro Kachel als Referenz in P2), Kachelinhalt als Platzhalter (leer, Titel-Balken, Icon-Kreis, Linien als Textersatz).
@@ -222,6 +230,15 @@ Kleine Tools für die Entwickler-Persona: Ergebnis ist in erster Linie Code zum 
 - Locks plus Neu-Würfeln: Die Aufteilung hängt am Param `layoutSeed` (Zahlenfeld mit Schloss), Farben und Platzhalter am Design-Seed. Leertaste = neue Aufteilung und Palette; mit gesperrter Aufteilung nur neue Farben. Keine Sperre einzelner Kacheln (wäre ein Layout-Editor).
 - Parameter wie Spezifikation, ohne Musterli-Design pro Kachel (P2) und ohne React-Export (P2). `fill`: eine Farbe, Palette zufällig (nie zweimal dieselbe Farbe hintereinander), Palette der Reihe nach; Inhalt: leer, Titel, Symbol, Textzeilen, gemischt (Farbe der Platzhalter mit bestem Kontrast zur Kachel).
 - Exporte: CSS Grid + HTML (Kacheln mit `--col`, `--row`, `--col-span`, `--row-span`, Seitenverhältnis der Leinwand; unter 768 px `breakpointColumns` Spalten, feste Zeilenhöhe, Lesereihenfolge), Tailwind (schmal als Basis, volles Layout ab `md:`), SVG, PNG, JPG, WebP. 7 Vorlagen: Feature-Sektion 3×2, Portfolio, Dashboard, Hochformat Story, Mosaik, Ruhig, Blöcke.
+
+**J3 erweitert (M4-AP06b, Kachelinhalte, Entscheid Andreas 2026-10-28)**:
+- Pro Kachel Titel (höchstens 80 Zeichen) und Untertitel (160), Symbol aus der Formenbibliothek (Picker mit Packs), eigene Grafik (eingepasst, `graphicPosition` oben/Mitte/unten, `graphicSize` 20 bis 100 %) und Kachel-Hintergrundbild (füllend, mit dunklem Verlauf unten und weisser Schrift). Dazu ein Hintergrundbild für das ganze Raster (`backgroundImage`, Foto bis 2048 px).
+- Bearbeiten per Klick auf die Kachel über den generischen `regionEditor` (ARCHITECTURE 4.8): Popover "Kachel bearbeiten" mit allen Feldern, "Kachel zurücksetzen", "Alle zurücksetzen". Kein freier Layout-Editor.
+- Modell: `tileContent: Record<Kachel-Key, {title?, subtitle?, showIcon?, icon?, graphicPosition?, graphicSize?}>` (Text und Symbole, im Teilen-Link) und `tileImages: Record<Kachel-Key, {graphic?, background?}>` (Uploads, lokal). Strikte Objekte, höchstens 64 Einträge, Bilder höchstens 24 und zusammen 12 MB data-URI.
+- **Kachel-Key**: `t<n>`, n = 1-basierte Nummer der Kachel in Lesereihenfolge aus `bentoLayout` (Muster `t1` bis `t64`). Für ein Layout stabil (Farben, Abstände, Radius, Grösse ändern nichts). Beim Neu-Würfeln des Layouts bleibt der Inhalt bei der Nummer: Kachel 1 behält ihren Inhalt, auch wenn sie jetzt woanders liegt. Inhalte über der aktuellen Kachelzahl bleiben gespeichert, werden nicht gezeichnet, zählen aber zur Grenze; "Alle zurücksetzen" entfernt sie.
+- Text: Typo-Stufen 12/14/16/20/24/32/48 je nach Kachelgrösse, System-Schriftstapel, Umbruch nach geschätzter Zeichenbreite (0.56 em), Kürzung mit "…"; im SVG als `<text>` mit escaptem Inhalt (auch Steuerzeichen und einzelne Surrogates entfernt), nie `foreignObject`. Bilder als `<image>`-data-URI.
+- Exporte: SVG/PNG/JPG/WebP zeigen alles. CSS Grid + HTML und Tailwind enthalten Titel, Untertitel und Symbol als escaptes HTML (`<h3>`, `<p>`, Inline-SVG-Pfad) und Bilder als Platzhalter (`tile-<n>-graphic.svg|png|jpg`, `tile-<n>-background.…`, `bento-background.jpg`) mit HTML-Kommentar. GIF bleibt wie bisher (Seed- und Farbvarianten über denselben Render-Pfad, Inhalte inklusive).
+- Ohne Inhalte sind alle Exporte byte-gleich mit vorher (Snapshots unverändert).
 
 ---
 

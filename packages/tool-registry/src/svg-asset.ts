@@ -21,7 +21,9 @@
  * here on demand: still correct, just slower. Pure and DOM-free; safe in
  * workers and on the server.
  */
+import { svgBase64DataUri } from "@musterli/engine";
 import { sanitizeSvg, type SvgRect } from "@musterli/svg-sanitizer";
+import type { ImageAsset } from "./common";
 
 export interface PreparedSvgAsset {
   /** The input this entry is for (sanitizer output: canonical). */
@@ -134,4 +136,28 @@ export function recolorSvgAsset(asset: PreparedSvgAsset, color: string): string 
 /** Test helper: forgets all prepared entries. */
 export function clearSvgAssetCache(): void {
   cache.clear();
+}
+
+/** Data URIs of sanitised uploads, by sanitizer output (small LRU). */
+const assetUris = new Map<string, string>();
+const ASSET_URI_ENTRIES = 32;
+
+/**
+ * Data URI of an upload for `<image>` and CSS `url()`: a raster as is, an
+ * SVG sanitised again (`svgAssetFor`, a cache hit after the editor primed
+ * it) and base64-encoded. `null` when the sanitizer rejects the SVG.
+ */
+export function imageAssetHref(asset: ImageAsset): string | null {
+  if (asset.kind === "raster") return asset.href;
+  const clean = svgAssetFor(asset.svg);
+  if (!clean) return null;
+  const uri = assetUris.get(clean.svg) ?? svgBase64DataUri(clean.svg);
+  // Most recently used last; the oldest entry goes first.
+  assetUris.delete(clean.svg);
+  assetUris.set(clean.svg, uri);
+  if (assetUris.size > ASSET_URI_ENTRIES) {
+    const oldest = assetUris.keys().next().value;
+    if (oldest !== undefined) assetUris.delete(oldest);
+  }
+  return uri;
 }

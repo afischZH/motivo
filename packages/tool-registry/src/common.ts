@@ -63,8 +63,15 @@ export const IMAGE_ASSET_RASTER_MAX_EDGE = 1024;
 const assetDimension = z.number().positive().max(1_000_000);
 const assetName = z.string().max(200);
 
-export const imageAssetSchema = z
-  .discriminatedUnion("kind", [
+/** Data URI of a re-encoded raster upload (PNG or JPEG, padded base64). */
+export const RASTER_HREF_PATTERN = /^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/;
+
+/**
+ * Schema of an upload with its own raster limits (longest edge, data URI
+ * length). Register the result with `controlKindRegistry` as `kind: "image"`.
+ */
+export function imageAssetSchemaWith(limits: { maxEdge: number; maxRasterLength: number }) {
+  return z.discriminatedUnion("kind", [
     z.object({
       kind: z.literal("svg"),
       svg: z.string().min(1).max(IMAGE_ASSET_MAX_SVG_LENGTH),
@@ -74,16 +81,40 @@ export const imageAssetSchema = z
     }),
     z.object({
       kind: z.literal("raster"),
-      href: z
-        .string()
-        .max(IMAGE_ASSET_MAX_RASTER_LENGTH)
-        .regex(/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/),
-      width: z.int().min(1).max(IMAGE_ASSET_RASTER_MAX_EDGE),
-      height: z.int().min(1).max(IMAGE_ASSET_RASTER_MAX_EDGE),
+      href: z.string().max(limits.maxRasterLength).regex(RASTER_HREF_PATTERN),
+      width: z.int().min(1).max(limits.maxEdge),
+      height: z.int().min(1).max(limits.maxEdge),
       name: assetName,
     }),
-  ])
-  .register(controlKindRegistry, { kind: "image" });
+  ]);
+}
+
+export const imageAssetSchema = imageAssetSchemaWith({
+  maxEdge: IMAGE_ASSET_RASTER_MAX_EDGE,
+  maxRasterLength: IMAGE_ASSET_MAX_RASTER_LENGTH,
+}).register(controlKindRegistry, { kind: "image" });
+
+/** Longest edge of a background picture (`photoAssetSchema`). */
+export const PHOTO_ASSET_RASTER_MAX_EDGE = 2048;
+/** About 6.7 MB of JPEG: plenty for a 2048 px photo at quality 0.9. */
+export const PHOTO_ASSET_MAX_RASTER_LENGTH = 9_000_000;
+
+/**
+ * A background picture (stage of Glass Effects, Bento backgrounds): up to
+ * 2048 px, uploaded with `ImageHint` `{ maxEdge: 2048, photo: true }` so
+ * rasters arrive as JPEG. Same shape as `ImageAsset`.
+ */
+export const photoAssetSchema = imageAssetSchemaWith({
+  maxEdge: PHOTO_ASSET_RASTER_MAX_EDGE,
+  maxRasterLength: PHOTO_ASSET_MAX_RASTER_LENGTH,
+}).register(controlKindRegistry, { kind: "image" });
+
+/** Placeholder file name of an upload in code exports (`your-image.jpg`, `.png`, `.svg`). */
+export function assetPlaceholderName(base: string, asset: { kind: string; href?: string }): string {
+  const ext =
+    asset.kind === "svg" ? "svg" : asset.href?.startsWith("data:image/png") ? "png" : "jpg";
+  return `${base}.${ext}`;
+}
 
 export type ImageAsset = z.output<typeof imageAssetSchema>;
 

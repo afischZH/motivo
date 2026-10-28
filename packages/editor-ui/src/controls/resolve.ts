@@ -5,6 +5,7 @@
  */
 import {
   PALETTE_MAX,
+  IMAGE_ASSET_RASTER_MAX_EDGE,
   PALETTE_MIN,
   controlKindRegistry,
   type AnyToolDefinition,
@@ -135,7 +136,20 @@ export interface SimpleControl extends ControlBase {
 
 /** Kinds without a component yet (M1): resolved so callers can see them, rendered as nothing. */
 export interface PendingControl extends ControlBase {
-  kind: "shape" | "image";
+  kind: "shape";
+}
+
+/** An upload field (`kind: "image"`) with the options of its `ImageHint`. */
+export interface ImageControl extends ControlBase {
+  kind: "image";
+  /** Longest edge of a raster upload. */
+  maxEdge: number;
+  /** Re-encode rasters as JPEG. */
+  photo: boolean;
+  /** Takes images pasted anywhere in the editor. */
+  paste: boolean;
+  /** The param schema: the final judge of a finished upload. */
+  schema: z.ZodType;
 }
 
 export type ResolvedControl =
@@ -147,6 +161,7 @@ export type ResolvedControl =
   | TextControl
   | PaletteControl
   | SimpleControl
+  | ImageControl
   | PendingControl;
 
 export interface ResolvedGroup {
@@ -407,8 +422,16 @@ export function resolveControl(
     case "background":
       return { ...base, kind };
     case "shape":
-    case "image":
       return { ...base, kind };
+    case "image":
+      return {
+        ...base,
+        kind,
+        maxEdge: hint.image?.maxEdge ?? IMAGE_ASSET_RASTER_MAX_EDGE,
+        photo: hint.image?.photo === true,
+        paste: hint.image?.paste !== false,
+        schema: schema as z.ZodType,
+      };
   }
 }
 
