@@ -127,7 +127,8 @@
     "metaTitle": "{tool} | Musterli",
     "allTools": "All generators",
     "supportHint": "Enjoying Musterli? <link>Support the project</link>.",
-    "newTab": "(opens in a new tab)"
+    "newTab": "(opens in a new tab)",
+    "termsHint": "<link>Free to use, commercially too</link>."
   },
   "tools": {
     "common": {
@@ -2394,7 +2395,8 @@
     "privacy": "Privacy",
     "support": "Support Musterli",
     "gradients": "Gradients",
-    "palettes": "Color palettes"
+    "palettes": "Color palettes",
+    "terms": "Terms of use"
   },
   "Support": {
     "metaTitle": "Support Musterli",
@@ -2585,6 +2587,77 @@
           "heading": "Changes",
           "paragraphs": [
             "We update this policy when the website or the services we use change. The version published on this page applies."
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Terms of use",
+      "metaTitle": "Terms of use",
+      "metaDescription": "The rules for Musterli in short: free and without warranty, everything stays in your browser, and you may use your exports freely, commercially too.",
+      "intro": "In short: Musterli is free, your designs stay on your device, and you may use whatever you export freely, commercially too and without attribution.",
+      "sections": {
+        "scope": {
+          "heading": "What this covers",
+          "paragraphs": [
+            "These terms apply to the use of musterli.app with all its generators, converters and collections (together “Musterli”). By using Musterli, you agree to them. Who runs Musterli is stated in the <imprint>imprint</imprint>."
+          ]
+        },
+        "free": {
+          "heading": "Free and without warranty",
+          "paragraphs": [
+            "Musterli is free. You need no account, and there are no paid features.",
+            "We provide Musterli as it is. We do our best to keep everything working and the site online, but we cannot promise it. Nor do we promise that results are free of errors or fit for a particular purpose. Check your exports yourself before you use them, for example colour contrast, resolution or print requirements. Features may change or go away.",
+            "As far as the law permits, we are not liable for damage arising from the use of Musterli, for example lost designs or lost profits. For damage caused intentionally or through gross negligence, we are liable as the law provides."
+          ]
+        },
+        "local": {
+          "heading": "Everything runs in your browser",
+          "paragraphs": [
+            "Musterli computes, exports and saves right in your browser. Saved designs, drafts and your Brand Kit live on your device only, not on our servers. Images and logos you upload never leave your device.",
+            "That is why backups are up to you: if you clear your browser data or switch devices, locally saved designs are gone. You can back them up with the file export in “My designs” and in the Brand Kit. Everything else about data is explained in the <privacy>privacy policy</privacy>."
+          ]
+        },
+        "exports": {
+          "heading": "You may use your exports freely",
+          "paragraphs": [
+            "Graphics, animations, colour palettes and code (for example SVG, CSS or Tailwind) that you create with Musterli are yours to use freely: privately and commercially, modified or unmodified, in your own projects and in work for others. Attribution is not required, though of course it is welcome.",
+            "Musterli makes no claims on your exports. To the extent we hold any rights in them at all, we waive them irrevocably, worldwide and as far as the law allows. In spirit this matches the Creative Commons “CC0 1.0 Universal” dedication. The same applies to the gradients and colour palettes in our collections.",
+            "This waiver only covers what you export. The website itself, meaning its texts, design, program code and the Musterli name and logo, remains protected. Because the generators work with settings and randomness, others may create identical or similar graphics. We therefore cannot give you an exclusive right to a motif."
+          ]
+        },
+        "uploads": {
+          "heading": "Your content",
+          "paragraphs": [
+            "You are responsible for the content you use in Musterli, for example logos, images, shapes or lettering. Only use content you hold the necessary rights to, and nothing unlawful.",
+            "Musterli acquires no rights in your content, which is processed in your browser only. If an export contains your own content or that of third parties, their rights continue to apply to those parts. The waiver above does not cover them."
+          ]
+        },
+        "fair": {
+          "heading": "Fair use",
+          "paragraphs": [
+            "Use Musterli in a way that keeps it working for everyone else. In particular, automated mass requests (for example by bots or scrapers), attempts to get around security measures, and anything that disrupts operation are not allowed.",
+            "In case of misuse we may restrict or block access, also without prior notice."
+          ]
+        },
+        "donations": {
+          "heading": "Donations",
+          "paragraphs": [
+            "Musterli is funded by voluntary donations. A donation is a gift: it gets you no extra features and no claim to any particular service, and Musterli stays the same for everyone.",
+            "Donations go through an external provider, currently Ko-fi. Musterli itself accepts no payments. The provider’s terms and privacy policy apply to your donation. More on the <support>Support Musterli</support> page."
+          ]
+        },
+        "law": {
+          "heading": "Applicable law and jurisdiction",
+          "paragraphs": [
+            "Swiss law applies. The place of jurisdiction is {jurisdiction}, unless mandatory legal provisions say otherwise, for example to protect consumers."
+          ]
+        },
+        "changes": {
+          "heading": "Changes",
+          "paragraphs": [
+            "We may adapt these terms, for example when Musterli gains new features. The version on this page applies, and the date at the top shows when it was last updated.",
+            "We will never withdraw the waiver for exports you have already created."
           ]
         }
       }

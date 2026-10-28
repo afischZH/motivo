@@ -39,7 +39,9 @@ export function sitemapRoutes(): AppRoute[] {
     ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
     { page: "support" },
     // Draft legal pages are noindex and stay out until the legal review.
-    ...(legalPagesIndexable() ? [{ page: "imprint" } as const, { page: "privacy" } as const] : []),
+    ...(legalPagesIndexable()
+      ? [{ page: "imprint" } as const, { page: "privacy" } as const, { page: "terms" } as const]
+      : []),
   ];
 }
 

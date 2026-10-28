@@ -127,7 +127,8 @@
     "metaTitle": "{tool} | Musterli",
     "allTools": "Alle Generatoren",
     "supportHint": "Gefällt dir Musterli? <link>Unterstütze das Projekt</link>.",
-    "newTab": "(öffnet in neuem Tab)"
+    "newTab": "(öffnet in neuem Tab)",
+    "termsHint": "<link>Frei nutzbar, auch kommerziell</link>."
   },
   "tools": {
     "common": {
@@ -2394,7 +2395,8 @@
     "privacy": "Datenschutz",
     "support": "Musterli unterstützen",
     "gradients": "Farbverläufe",
-    "palettes": "Farbpaletten"
+    "palettes": "Farbpaletten",
+    "terms": "Nutzungsbedingungen"
   },
   "Support": {
     "metaTitle": "Musterli unterstützen",
@@ -2585,6 +2587,77 @@
           "heading": "Änderungen",
           "paragraphs": [
             "Wir passen diese Erklärung an, wenn sich die Website oder die eingesetzten Dienste ändern. Es gilt die Fassung, die auf dieser Seite veröffentlicht ist."
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Nutzungsbedingungen",
+      "metaTitle": "Nutzungsbedingungen",
+      "metaDescription": "Die Regeln für Musterli in Kürze: gratis und ohne Gewähr, alles bleibt in deinem Browser, deine Exporte darfst du frei verwenden, auch kommerziell.",
+      "intro": "Kurz gesagt: Musterli ist gratis, deine Designs bleiben auf deinem Gerät, und was du exportierst, darfst du frei verwenden, auch kommerziell und ohne Namensnennung.",
+      "sections": {
+        "scope": {
+          "heading": "Worum es geht",
+          "paragraphs": [
+            "Diese Bedingungen gelten für die Nutzung von musterli.app mit allen Generatoren, Konvertern und Sammlungen (zusammen «Musterli»). Wenn du Musterli nutzt, bist du mit ihnen einverstanden. Wer Musterli betreibt, steht im <imprint>Impressum</imprint>."
+          ]
+        },
+        "free": {
+          "heading": "Gratis und ohne Gewähr",
+          "paragraphs": [
+            "Musterli ist gratis. Du brauchst kein Konto, und es gibt keine kostenpflichtigen Funktionen.",
+            "Wir stellen Musterli so zur Verfügung, wie es ist. Wir geben uns Mühe, dass alles funktioniert und die Website erreichbar ist, können das aber nicht zusichern. Ebenso wenig sichern wir zu, dass Ergebnisse fehlerfrei sind oder sich für einen bestimmten Zweck eignen. Prüfe Exporte vor der Verwendung selbst, etwa Farbkontraste, Auflösung oder Druckvorgaben. Funktionen können sich ändern oder wegfallen.",
+            "Soweit das Gesetz es zulässt, haften wir nicht für Schäden aus der Nutzung von Musterli, zum Beispiel für verlorene Designs oder entgangenen Gewinn. Für absichtlich oder grobfahrlässig verursachte Schäden haften wir nach dem Gesetz."
+          ]
+        },
+        "local": {
+          "heading": "Alles läuft in deinem Browser",
+          "paragraphs": [
+            "Musterli berechnet, exportiert und speichert direkt in deinem Browser. Gespeicherte Designs, Entwürfe und dein Brand Kit liegen nur auf deinem Gerät, nicht auf unseren Servern. Bilder und Logos, die du hochlädst, verlassen dein Gerät nicht.",
+            "Um Sicherungen kümmerst du dich darum selbst: Löschst du die Browserdaten oder wechselst du das Gerät, sind lokal gespeicherte Designs weg. Mit dem Datei-Export unter «Meine Designs» und im Brand Kit kannst du sie sichern. Was sonst mit Daten geschieht, steht in der <privacy>Datenschutzerklärung</privacy>."
+          ]
+        },
+        "exports": {
+          "heading": "Deine Exporte darfst du frei verwenden",
+          "paragraphs": [
+            "Grafiken, Animationen, Farbpaletten und Code (zum Beispiel SVG, CSS oder Tailwind), die du mit Musterli erzeugst, darfst du frei verwenden: privat und kommerziell, verändert oder unverändert, in eigenen Projekten und in Aufträgen für andere. Eine Namensnennung ist nicht nötig, aber natürlich willkommen.",
+            "Musterli erhebt keine Ansprüche an deinen Exporten. Soweit uns daran überhaupt Rechte zustehen, verzichten wir darauf unwiderruflich, weltweit und so weit, wie das Gesetz es erlaubt. Das entspricht sinngemäss der Freigabe «CC0 1.0 Universal» von Creative Commons. Dasselbe gilt für die Farbverläufe und Farbpaletten aus unseren Sammlungen.",
+            "Die Freigabe betrifft nur, was du exportierst. Die Website selbst, also Texte, Gestaltung, Programmcode sowie Name und Logo von Musterli, bleibt geschützt. Weil die Generatoren mit Einstellungen und Zufall arbeiten, können andere gleiche oder ähnliche Grafiken erzeugen. Ein exklusives Recht an einem Motiv können wir dir darum nicht verschaffen."
+          ]
+        },
+        "uploads": {
+          "heading": "Deine Inhalte",
+          "paragraphs": [
+            "Für Inhalte, die du in Musterli verwendest, bist du selbst verantwortlich, zum Beispiel für Logos, Bilder, Formen oder Schriftzüge. Verwende nur Inhalte, an denen du die nötigen Rechte hast, und nichts Rechtswidriges.",
+            "An deinen Inhalten erwirbt Musterli keine Rechte, sie werden nur in deinem Browser verarbeitet. Enthält ein Export eigene Inhalte oder solche von Dritten, gelten für diese Teile weiterhin deren Rechte. Die Freigabe oben deckt sie nicht ab."
+          ]
+        },
+        "fair": {
+          "heading": "Faire Nutzung",
+          "paragraphs": [
+            "Nutze Musterli so, dass es auch für alle anderen funktioniert. Nicht erlaubt sind insbesondere massenhafte automatisierte Abrufe (zum Beispiel durch Bots oder Scraper), Versuche, Sicherheitsmassnahmen zu umgehen, und alles, was den Betrieb stört.",
+            "Bei Missbrauch dürfen wir den Zugriff einschränken oder sperren, auch ohne Vorankündigung."
+          ]
+        },
+        "donations": {
+          "heading": "Spenden",
+          "paragraphs": [
+            "Musterli finanziert sich über freiwillige Spenden. Eine Spende ist ein Geschenk: Du erhältst dafür keine zusätzlichen Funktionen und keinen Anspruch auf bestimmte Leistungen, und Musterli bleibt für alle gleich.",
+            "Spenden laufen über einen externen Anbieter, derzeit Ko-fi. Musterli selbst nimmt keine Zahlungen entgegen. Für deine Spende gelten die Bedingungen und die Datenschutzerklärung des Anbieters. Mehr dazu auf der Seite <support>Musterli unterstützen</support>."
+          ]
+        },
+        "law": {
+          "heading": "Anwendbares Recht und Gerichtsstand",
+          "paragraphs": [
+            "Es gilt Schweizer Recht. Gerichtsstand ist {jurisdiction}, soweit zwingende gesetzliche Bestimmungen nichts anderes vorsehen, etwa zum Schutz von Konsumentinnen und Konsumenten."
+          ]
+        },
+        "changes": {
+          "heading": "Änderungen",
+          "paragraphs": [
+            "Wir können diese Bedingungen anpassen, zum Beispiel wenn Musterli neue Funktionen erhält. Es gilt die Fassung auf dieser Seite, das Datum oben zeigt ihren Stand.",
+            "Die Freigabe für Exporte, die du bereits erstellt hast, nehmen wir nie zurück."
           ]
         }
       }

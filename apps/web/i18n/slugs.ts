@@ -217,9 +217,9 @@ export const CATEGORY_SEGMENT = {
 
 /**
  * Localized first path segment of each section (internal name to slug). The
- * internal name is also the folder under `app/[locale]`. `imprint` and
- * `privacy` are the legal pages linked from the footer, `support` is the
- * donation page.
+ * internal name is also the folder under `app/[locale]`. `imprint`,
+ * `privacy` and `terms` are the legal pages linked from the footer, `support`
+ * is the donation page.
  */
 export const SECTION_SLUGS = {
   tools: { de: "tools", en: "tools" },
@@ -227,6 +227,7 @@ export const SECTION_SLUGS = {
   cssPatterns: { de: "css-muster", en: "css-patterns" },
   imprint: { de: "impressum", en: "imprint" },
   privacy: { de: "datenschutz", en: "privacy" },
+  terms: { de: "nutzungsbedingungen", en: "terms" },
   support: { de: "unterstuetzen", en: "support" },
   gradients: { de: "farbverlaeufe", en: "gradients" },
   palettes: { de: "farbpaletten", en: "color-palettes" },

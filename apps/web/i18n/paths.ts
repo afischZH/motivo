@@ -43,6 +43,7 @@ export type AppRoute =
   | { page: "brandKit" }
   | { page: "imprint" }
   | { page: "privacy" }
+  | { page: "terms" }
   | { page: "support" };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
@@ -58,6 +59,8 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/imprint" as const;
     case "privacy":
       return "/privacy" as const;
+    case "terms":
+      return "/terms" as const;
     case "support":
       return "/support" as const;
     case "category":
@@ -223,7 +226,12 @@ export function routeFromPathname(
   if (section === "myDesigns") {
     return segments.length === 1 ? { page: "myDesigns" } : undefined;
   }
-  if (section === "imprint" || section === "privacy" || section === "support") {
+  if (
+    section === "imprint" ||
+    section === "privacy" ||
+    section === "terms" ||
+    section === "support"
+  ) {
     return segments.length === 1 ? { page: section } : undefined;
   }
   if (section === "convert") {

@@ -15,6 +15,7 @@ const routes: AppRoute[] = [
   { page: "patterns" },
   { page: "imprint" },
   { page: "privacy" },
+  { page: "terms" },
   { page: "support" },
   ...Object.keys(TOOL_SLUGS).flatMap((toolId): AppRoute[] => [
     { page: "landing", toolId },
