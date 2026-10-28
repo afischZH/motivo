@@ -209,6 +209,14 @@ Grundlage für Duotone (L4) und ASCII-Art (L5), wiederverwendbar für Halftone, 
 - **Review M4c** (M4c-AP05): Die Vorschau hat zusätzlich ein Budget von 4096² Pixeln (`RASTER_PREVIEW_MAX_PIXELS`), ein vergrössertes 8192-px-Design rendert sonst 67 MP pro Änderung. Der Worker prüft jede Anfrage (Grössen 1 bis 8192 px, Ausgabe höchstens `IMAGE_EFFECT_MAX_PIXELS`, Params gegen das Tool-Schema) und antwortet sonst `invalid-request`, bevor er etwas dekodiert. Abbrechen eines Exports beendet den Export-Worker sofort. Raster-Motive und laufende Exporte halten den gemeinsamen Client (`retainRasterEffectClient`); 30 s nach der letzten Freigabe werden beide Worker samt dekodierten Fotos beendet. ASCII-Art nimmt Fotos nur bis 1024 px (`asciiPhotoAssetSchema`), wie in `docs/TOOLS.md` L5 festgelegt. In Node (statische Motive, Tests) teilt `renderImageEffect` das skalierte Beispielbild über einen kleinen Cache (4 Einträge).
 - **Bewusst nicht gemacht**: SVG-Export für Duotone (ein SVG-Filter kann weder in OKLab mischen noch das deterministische Korn nachbilden, siehe `docs/TOOLS.md` L4), GIF für Bildeffekte (GIF braucht SVG-Ausgabe), Vorschaubilder der Bildeffekte in "Meine Designs" (`designs/thumbnail.ts` erzeugt nur SVG).
 
+### 4.17 Perspektive ohne 3D-Library (ab M5-AP03)
+Reine Helfer in `packages/engine/src/tools/perspective-grid/` (`docs/TOOLS.md` D4), je mit Unit-Tests, keine neuen Hooks:
+- **Projektion** (`perspectiveCamera`): Lochkamera über einer Ebene, Tiefe in Zellen; Bildzeile `Horizont ± f·h/d`, Spalte `cx + f·X/d`. Rollen der Kamera = ganze Szene im umschliessenden Rechteck der gedrehten Fläche berechnen und per `transform` drehen (Verläufe in `userSpaceOnUse` drehen mit).
+- **Clipping**: Linien zwischen Nahebene (Tiefe des Bildrands) und fernem Ende, nie bis zum Horizont; Spalten ab der Tiefe, in der sie seitlich ins Bild treten (keine riesigen Koordinaten, keine NaN). Das ferne Ende rückt nach vorne, wo Zeilen dichter als ein Mindestabstand würden.
+- **Ausblenden nach Tiefe mit einem Verlauf**: Auf einer Ebene hängt die Tiefe nur von der Bildzeile ab, also blendet ein einziger senkrechter Verlauf (Linienfarbe mit `stop-opacity`) alle Linien aus, statt Deckkraft pro Linie.
+- **Begrenzter Blur für dünne Linien** (`perspectiveGlowSigma`): σ höchstens `MESH_FILTER_SIGMA_MAX` Ausgabepixel beim grösstmöglichen Export (`MESH_OUTPUT_EDGE_MAX`), wie `meshBlurPlan`; dünne Linien brauchen keinen Raster-Ersatz, der Glow wird nur schmaler. Der Blur-Filter nutzt per `<use>` dieselben Pfaddaten (SVG bleibt halb so gross).
+- **Nahtlose Bewegung**: Zeilen bei `(j − t) · Abstand`; `t = 1` ist dasselbe SVG wie `t = 0`, das ferne Ende ist voll ausgeblendet, darum kein Springen.
+
 ## 5. Render- und Export-Pipeline
 
 ```
@@ -446,6 +454,7 @@ GET  /api/v1/tools/{toolId}/schema
 - **Schema-Tests**: `defaults` und alle `presets` müssen `schema.parse` bestehen.
 - **Barrierefreiheit**: axe-Checks in CI, alle Controls per Tastatur bedienbar.
 - **Sicherheit**: SVG-Sanitizer mit bekannten XSS-Payloads testen; Importdateien (Designs, Brand Kit) mit manipulierten Fällen testen.
+- **CI-Robustheit**: Schwere Unit-Tests (Raster, WebGL-Emulation) bleiben auch auf einem ausgelasteten CI-Runner deutlich unter 5 s; deterministische Eingaben (Beispielbilder, Samples) werden zwischengespeichert statt pro Vorlage neu berechnet. Zeitbudgets messen den schnellsten von mehreren Läufen (`main-thread-budget.test.ts`).
 
 ## 13. Statistik und Fehler-Monitoring (seit M2-AP09)
 
