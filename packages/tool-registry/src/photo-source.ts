@@ -83,6 +83,37 @@ export function isImageEffectTool(
   return tool.render.kind === "image-effect" && tool.photoSource !== undefined;
 }
 
+/** Scaled samples kept (Node: every preset of a tool shares one). */
+const SCALED_SAMPLE_CACHE = 4;
+const scaledSamples = new Map<string, PixelBuffer>();
+
+/**
+ * The tool's sample generated for `design` and scaled to `out`, as the
+ * editor worker would draw it. Cached: generating the sample (1500 × 1000
+ * px for the default size) dominated static motifs and the contract tests,
+ * which render every preset on the same picture. Effects never write to
+ * their input (the contract's determinism test would catch it).
+ */
+function scaledSample(tool: AnyToolDefinition, design: CanvasSize, out: CanvasSize): PixelBuffer {
+  const source = tool.photoSource;
+  if (!source) throw new TypeError(`Tool "${tool.id}" has no photo source`);
+  const s = photoSampleSize(design);
+  const key = `${tool.id}@${tool.version}:${s.width}x${s.height}:${out.width}x${out.height}`;
+  const hit = scaledSamples.get(key);
+  if (hit) return hit;
+  const sample = source.sample(s.width, s.height);
+  const scaled =
+    sample.width === out.width && sample.height === out.height
+      ? sample
+      : resizeCover(sample, out.width, out.height);
+  if (scaledSamples.size >= SCALED_SAMPLE_CACHE) {
+    const oldest = scaledSamples.keys().next().value;
+    if (oldest !== undefined) scaledSamples.delete(oldest);
+  }
+  scaledSamples.set(key, scaled);
+  return scaled;
+}
+
 /**
  * Renders an image-effect tool at `out` pixels for a design of `design`
  * size: `source` is the picture already cropped and scaled to `out` (the
@@ -100,15 +131,7 @@ export function renderImageEffect(
   if (!isImageEffectTool(tool) || !tool.photoSource) {
     throw new TypeError(`Tool "${tool.id}" is not an image effect`);
   }
-  let input = source;
-  if (input === undefined) {
-    const s = photoSampleSize(design);
-    const sample = tool.photoSource.sample(s.width, s.height);
-    input =
-      sample.width === out.width && sample.height === out.height
-        ? sample
-        : resizeCover(sample, out.width, out.height);
-  }
+  const input = source ?? scaledSample(tool, design, out);
   if (input.width !== out.width || input.height !== out.height) {
     throw new RangeError(
       `Source is ${input.width}x${input.height}, expected ${out.width}x${out.height}`,
