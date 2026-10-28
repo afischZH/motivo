@@ -142,6 +142,7 @@ describe("built-in tool registration", () => {
       "screenshot-beautifier",
       "avatar",
       "placeholder-image",
+      "animated-gradient",
     ]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
       "screenshot-beautifier",
@@ -159,6 +160,7 @@ describe("built-in tool registration", () => {
       "mesh-gradient",
       "blurry-gradient",
       "striped-gradient",
+      "animated-gradient",
     ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
@@ -467,6 +469,7 @@ describe("extra exports", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "animated-gradient",
     ]);
   });
 });

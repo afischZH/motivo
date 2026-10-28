@@ -61,6 +61,10 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "screenshot-beautifier": { de: "screenshot-verschoenerer", en: "screenshot-beautifier" },
   avatar: { de: "avatar-generator", en: "avatar-generator" },
   "placeholder-image": { de: "platzhalterbild-generator", en: "placeholder-image-generator" },
+  "animated-gradient": {
+    de: "animierter-farbverlauf-generator",
+    en: "animated-gradient-generator",
+  },
 };
 
 /**

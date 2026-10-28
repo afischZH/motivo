@@ -42,6 +42,23 @@ describe("renderMotif with a CSS element", () => {
     expect(out.rules).toBeUndefined();
   });
 
+  it("parses the motion of content boxes (animated gradient blobs)", () => {
+    const animated = tool("animated-gradient");
+    const out = renderMotif(animated, { ...animated.defaults, mode: "blobs" }, 1, size);
+    if (out.kind !== "css" || !out.element) throw new Error("expected a CSS element");
+    expect(out.element.motion).toEqual([]);
+    expect(out.element.content).toHaveLength(4);
+    for (const box of out.element.content) {
+      expect(box.motion).toEqual([["animation", ["musterli-ag-float 12s ease-in-out infinite"]]]);
+      expect(cssToStyle(box.declarations)["--musterli-ag-x1"]).toMatch(/^-?\d+(\.\d)?%$/);
+    }
+    // Boxes without motion keep the plain shape.
+    const glass = tool("glass-effects");
+    const plain = renderMotif(glass, glass.defaults, 1, size);
+    if (plain.kind !== "css" || !plain.element) throw new Error("expected a CSS element");
+    expect(plain.element.content.every((b) => b.motion === undefined)).toBe(true);
+  });
+
   it("leaves outputs without an element unchanged", () => {
     const out = renderMotif(tool("css-gradient"), tool("css-gradient").defaults, 1, size);
     expect(out.kind === "css" && out.element).toBeFalsy();

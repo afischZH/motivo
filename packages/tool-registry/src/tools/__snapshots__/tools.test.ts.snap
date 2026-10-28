@@ -1,5 +1,1813 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`preset snapshots: animated-gradient > aurora 1`] = `
+{
+  "css": "background-color: #0ea5e9;",
+  "element": {
+    "content": [],
+    "css": "background-color: #0ea5e9;
+background-image: linear-gradient(120deg, #0ea5e9, #6366f1, #a855f7, #ec4899);
+background-size: 310% 310%;
+background-position: 0% 21.1%;
+--musterli-ag-from: 0% 21.1%;
+--musterli-ag-to: 100% 78.9%;",
+    "height": 800,
+    "motionCss": "animation: musterli-ag-pan 12s ease-in-out infinite alternate;",
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><g transform="translate(0 -354.48)"><defs><linearGradient id="lgd6gdpa" gradientUnits="userSpaceOnUse" x1="-71.94" y1="124.6" x2="3791.94" y2="2355.4"><stop offset="0" stop-color="#0ea5e9"/><stop offset="0.3333" stop-color="#6366f1"/><stop offset="0.6667" stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><rect width="3720" height="2480" fill="url(#lgd6gdpa)"/></g></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > chameleon 1`] = `
+{
+  "css": "background-color: #10b981;",
+  "element": {
+    "content": [],
+    "css": "background-color: #10b981;
+--musterli-ag-c1: #10b981;
+--musterli-ag-p1: #10b981;
+--musterli-ag-c2: #3b82f6;
+--musterli-ag-p2: #3b82f6;
+--musterli-ag-c3: #f43f5e;
+--musterli-ag-p3: #f43f5e;
+background-image: linear-gradient(135deg, var(--musterli-ag-c1), var(--musterli-ag-c2), var(--musterli-ag-c3));",
+    "height": 800,
+    "motionCss": "animation: musterli-ag-shift-3 9s ease-in-out infinite;",
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><linearGradient id="lgbz1yoc" gradientUnits="userSpaceOnUse" x1="100" y1="-100" x2="1100" y2="900"><stop offset="0" stop-color="#10b981"/><stop offset="0.5" stop-color="#3b82f6"/><stop offset="1" stop-color="#f43f5e"/></linearGradient></defs><rect width="1200" height="800" fill="url(#lgbz1yoc)"/></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > extra exports of every preset 1`] = `
+{
+  "aurora": {
+    "css": ".animated-gradient {
+  background-image: linear-gradient(120deg, #0ea5e9, #6366f1, #a855f7, #ec4899);
+  background-size: 310% 310%;
+  background-position: 0% 21.1%;
+  animation: gradient-pan 12s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-pan {
+  from { background-position: 0% 21.1%; }
+  to { background-position: 100% 78.9%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+.animated-gradient {
+  background-image: linear-gradient(120deg, #0ea5e9, #6366f1, #a855f7, #ec4899);
+  background-size: 310% 310%;
+  background-position: 0% 21.1%;
+  animation: gradient-pan 12s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-pan {
+  from { background-position: 0% 21.1%; }
+  to { background-position: 100% 78.9%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient"></div>
+",
+    "tailwind": "<!-- Add the @keyframes rules from the CSS export to your stylesheet. -->
+<div class="bg-[linear-gradient(120deg,_#0ea5e9,_#6366f1,_#a855f7,_#ec4899)] bg-[length:310%_310%] bg-[position:0%_21.1%] animate-[gradient-pan_12s_ease-in-out_infinite_alternate] motion-reduce:animate-none"></div>
+",
+    "tailwind-theme": "@theme {
+  --animate-gradient-pan: gradient-pan 12s ease-in-out infinite alternate;
+
+  @keyframes gradient-pan {
+    from { background-position: 0% 21.1%; }
+    to { background-position: 100% 78.9%; }
+  }
+}
+
+/* Usage:
+   <div class="bg-[linear-gradient(120deg,_#0ea5e9,_#6366f1,_#a855f7,_#ec4899)] bg-[length:310%_310%] bg-[position:0%_21.1%] animate-gradient-pan motion-reduce:animate-none"></div>
+*/
+",
+  },
+  "chameleon": {
+    "css": "@property --gradient-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #10b981;
+}
+
+@property --gradient-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3b82f6;
+}
+
+@property --gradient-color-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #f43f5e;
+}
+
+.animated-gradient {
+  --gradient-color-1: #10b981;
+  --gradient-color-2: #3b82f6;
+  --gradient-color-3: #f43f5e;
+  background-image: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3));
+  animation: gradient-shift 9s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { --gradient-color-1: #10b981; --gradient-color-2: #3b82f6; --gradient-color-3: #f43f5e; }
+  33.333% { --gradient-color-1: #3b82f6; --gradient-color-2: #f43f5e; --gradient-color-3: #10b981; }
+  66.667% { --gradient-color-1: #f43f5e; --gradient-color-2: #10b981; --gradient-color-3: #3b82f6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+@property --gradient-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #10b981;
+}
+
+@property --gradient-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3b82f6;
+}
+
+@property --gradient-color-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #f43f5e;
+}
+
+.animated-gradient {
+  --gradient-color-1: #10b981;
+  --gradient-color-2: #3b82f6;
+  --gradient-color-3: #f43f5e;
+  background-image: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3));
+  animation: gradient-shift 9s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { --gradient-color-1: #10b981; --gradient-color-2: #3b82f6; --gradient-color-3: #f43f5e; }
+  33.333% { --gradient-color-1: #3b82f6; --gradient-color-2: #f43f5e; --gradient-color-3: #10b981; }
+  66.667% { --gradient-color-1: #f43f5e; --gradient-color-2: #10b981; --gradient-color-3: #3b82f6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient"></div>
+",
+    "tailwind": "<!-- Add the @property and @keyframes rules from the CSS export to your stylesheet. -->
+<div class="[--gradient-color-1:#10b981] [--gradient-color-2:#3b82f6] [--gradient-color-3:#f43f5e] bg-[linear-gradient(135deg,_var(--gradient-color-1),_var(--gradient-color-2),_var(--gradient-color-3))] animate-[gradient-shift_9s_ease-in-out_infinite] motion-reduce:animate-none"></div>
+",
+    "tailwind-theme": "@property --gradient-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #10b981;
+}
+
+@property --gradient-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #3b82f6;
+}
+
+@property --gradient-color-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #f43f5e;
+}
+
+@theme {
+  --animate-gradient-shift: gradient-shift 9s ease-in-out infinite;
+
+  @keyframes gradient-shift {
+    0%, 100% { --gradient-color-1: #10b981; --gradient-color-2: #3b82f6; --gradient-color-3: #f43f5e; }
+    33.333% { --gradient-color-1: #3b82f6; --gradient-color-2: #f43f5e; --gradient-color-3: #10b981; }
+    66.667% { --gradient-color-1: #f43f5e; --gradient-color-2: #10b981; --gradient-color-3: #3b82f6; }
+  }
+}
+
+/* Usage:
+   <div class="[--gradient-color-1:#10b981] [--gradient-color-2:#3b82f6] [--gradient-color-3:#f43f5e] bg-[linear-gradient(135deg,_var(--gradient-color-1),_var(--gradient-color-2),_var(--gradient-color-3))] animate-gradient-shift motion-reduce:animate-none"></div>
+*/
+",
+  },
+  "lava": {
+    "css": ".animated-gradient {
+  position: relative;
+  overflow: hidden;
+  background-color: #1c0a00;
+}
+
+.animated-gradient .blob {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: 0.9;
+  animation: blob-float 18s ease-in-out infinite;
+}
+
+.animated-gradient .blob:nth-child(1) {
+  left: -10.5%;
+  top: 20.2%;
+  width: 56.7%;
+  background-image: radial-gradient(closest-side, #f97316 28%, transparent);
+  --blob-x1: -18%;
+  --blob-y1: 28.1%;
+  --blob-x2: -1.5%;
+  --blob-y2: -36.7%;
+}
+
+.animated-gradient .blob:nth-child(2) {
+  left: 21.1%;
+  top: 4.8%;
+  width: 48.6%;
+  background-image: radial-gradient(closest-side, #dc2626 28%, transparent);
+  --blob-x1: -37.4%;
+  --blob-y1: -14%;
+  --blob-x2: 43.2%;
+  --blob-y2: -19.9%;
+}
+
+.animated-gradient .blob:nth-child(3) {
+  left: 15.2%;
+  top: -21.5%;
+  width: 79.6%;
+  background-image: radial-gradient(closest-side, #facc15 28%, transparent);
+  --blob-x1: -42.7%;
+  --blob-y1: 14.7%;
+  --blob-x2: -0.1%;
+  --blob-y2: -30.5%;
+}
+
+.animated-gradient .blob:nth-child(4) {
+  left: -13.4%;
+  top: -8%;
+  width: 53.5%;
+  background-image: radial-gradient(closest-side, #db2777 28%, transparent);
+  --blob-x1: 17.7%;
+  --blob-y1: 28%;
+  --blob-x2: -40.3%;
+  --blob-y2: 4.5%;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--blob-x1), var(--blob-y1)); }
+  66.667% { transform: translate(var(--blob-x2), var(--blob-y2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient .blob {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+.animated-gradient {
+  position: relative;
+  overflow: hidden;
+  background-color: #1c0a00;
+}
+
+.animated-gradient .blob {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: 0.9;
+  animation: blob-float 18s ease-in-out infinite;
+}
+
+.animated-gradient .blob:nth-child(1) {
+  left: -10.5%;
+  top: 20.2%;
+  width: 56.7%;
+  background-image: radial-gradient(closest-side, #f97316 28%, transparent);
+  --blob-x1: -18%;
+  --blob-y1: 28.1%;
+  --blob-x2: -1.5%;
+  --blob-y2: -36.7%;
+}
+
+.animated-gradient .blob:nth-child(2) {
+  left: 21.1%;
+  top: 4.8%;
+  width: 48.6%;
+  background-image: radial-gradient(closest-side, #dc2626 28%, transparent);
+  --blob-x1: -37.4%;
+  --blob-y1: -14%;
+  --blob-x2: 43.2%;
+  --blob-y2: -19.9%;
+}
+
+.animated-gradient .blob:nth-child(3) {
+  left: 15.2%;
+  top: -21.5%;
+  width: 79.6%;
+  background-image: radial-gradient(closest-side, #facc15 28%, transparent);
+  --blob-x1: -42.7%;
+  --blob-y1: 14.7%;
+  --blob-x2: -0.1%;
+  --blob-y2: -30.5%;
+}
+
+.animated-gradient .blob:nth-child(4) {
+  left: -13.4%;
+  top: -8%;
+  width: 53.5%;
+  background-image: radial-gradient(closest-side, #db2777 28%, transparent);
+  --blob-x1: 17.7%;
+  --blob-y1: 28%;
+  --blob-x2: -40.3%;
+  --blob-y2: 4.5%;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--blob-x1), var(--blob-y1)); }
+  66.667% { transform: translate(var(--blob-x2), var(--blob-y2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient .blob {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient">
+  <span class="blob" aria-hidden="true"></span>
+  <span class="blob" aria-hidden="true"></span>
+  <span class="blob" aria-hidden="true"></span>
+  <span class="blob" aria-hidden="true"></span>
+</div>
+",
+    "tailwind": "<!-- Add the @keyframes rules from the CSS export to your stylesheet. -->
+<div class="relative overflow-hidden bg-[#1c0a00]">
+  <span class="absolute aspect-square opacity-[0.9] animate-[blob-float_18s_ease-in-out_infinite] motion-reduce:animate-none left-[-10.5%] top-[20.2%] w-[56.7%] bg-[radial-gradient(closest-side,_#f97316_28%,_transparent)] [--blob-x1:-18%] [--blob-y1:28.1%] [--blob-x2:-1.5%] [--blob-y2:-36.7%]" aria-hidden="true"></span>
+  <span class="absolute aspect-square opacity-[0.9] animate-[blob-float_18s_ease-in-out_infinite] motion-reduce:animate-none left-[21.1%] top-[4.8%] w-[48.6%] bg-[radial-gradient(closest-side,_#dc2626_28%,_transparent)] [--blob-x1:-37.4%] [--blob-y1:-14%] [--blob-x2:43.2%] [--blob-y2:-19.9%]" aria-hidden="true"></span>
+  <span class="absolute aspect-square opacity-[0.9] animate-[blob-float_18s_ease-in-out_infinite] motion-reduce:animate-none left-[15.2%] top-[-21.5%] w-[79.6%] bg-[radial-gradient(closest-side,_#facc15_28%,_transparent)] [--blob-x1:-42.7%] [--blob-y1:14.7%] [--blob-x2:-0.1%] [--blob-y2:-30.5%]" aria-hidden="true"></span>
+  <span class="absolute aspect-square opacity-[0.9] animate-[blob-float_18s_ease-in-out_infinite] motion-reduce:animate-none left-[-13.4%] top-[-8%] w-[53.5%] bg-[radial-gradient(closest-side,_#db2777_28%,_transparent)] [--blob-x1:17.7%] [--blob-y1:28%] [--blob-x2:-40.3%] [--blob-y2:4.5%]" aria-hidden="true"></span>
+</div>
+",
+    "tailwind-theme": "@theme {
+  --animate-blob-float: blob-float 18s ease-in-out infinite;
+
+  @keyframes blob-float {
+    0%, 100% { transform: translate(0, 0); }
+    33.333% { transform: translate(var(--blob-x1), var(--blob-y1)); }
+    66.667% { transform: translate(var(--blob-x2), var(--blob-y2)); }
+  }
+}
+
+/* Usage:
+   <div class="relative overflow-hidden bg-[#1c0a00]">
+     <span class="absolute aspect-square opacity-[0.9] animate-blob-float motion-reduce:animate-none left-[-10.5%] top-[20.2%] w-[56.7%] bg-[radial-gradient(closest-side,_#f97316_28%,_transparent)] [--blob-x1:-18%] [--blob-y1:28.1%] [--blob-x2:-1.5%] [--blob-y2:-36.7%]" aria-hidden="true"></span>
+     <span class="absolute aspect-square opacity-[0.9] animate-blob-float motion-reduce:animate-none left-[21.1%] top-[4.8%] w-[48.6%] bg-[radial-gradient(closest-side,_#dc2626_28%,_transparent)] [--blob-x1:-37.4%] [--blob-y1:-14%] [--blob-x2:43.2%] [--blob-y2:-19.9%]" aria-hidden="true"></span>
+     <span class="absolute aspect-square opacity-[0.9] animate-blob-float motion-reduce:animate-none left-[15.2%] top-[-21.5%] w-[79.6%] bg-[radial-gradient(closest-side,_#facc15_28%,_transparent)] [--blob-x1:-42.7%] [--blob-y1:14.7%] [--blob-x2:-0.1%] [--blob-y2:-30.5%]" aria-hidden="true"></span>
+     <span class="absolute aspect-square opacity-[0.9] animate-blob-float motion-reduce:animate-none left-[-13.4%] top-[-8%] w-[53.5%] bg-[radial-gradient(closest-side,_#db2777_28%,_transparent)] [--blob-x1:17.7%] [--blob-y1:28%] [--blob-x2:-40.3%] [--blob-y2:4.5%]" aria-hidden="true"></span>
+   </div>
+*/
+",
+  },
+  "lighthouse": {
+    "css": "@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.animated-gradient {
+  background-image: linear-gradient(calc(45deg + var(--gradient-angle)), #fde68a, #f59e0b, #7c2d12);
+  animation: gradient-spin 14s linear infinite;
+}
+
+@keyframes gradient-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.animated-gradient {
+  background-image: linear-gradient(calc(45deg + var(--gradient-angle)), #fde68a, #f59e0b, #7c2d12);
+  animation: gradient-spin 14s linear infinite;
+}
+
+@keyframes gradient-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient"></div>
+",
+    "tailwind": "<!-- Add the @property and @keyframes rules from the CSS export to your stylesheet. -->
+<div class="bg-[linear-gradient(calc(45deg_+_var(--gradient-angle)),_#fde68a,_#f59e0b,_#7c2d12)] animate-[gradient-spin_14s_linear_infinite] motion-reduce:animate-none"></div>
+",
+    "tailwind-theme": "@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@theme {
+  --animate-gradient-spin: gradient-spin 14s linear infinite;
+
+  @keyframes gradient-spin {
+    to { --gradient-angle: 360deg; }
+  }
+}
+
+/* Usage:
+   <div class="bg-[linear-gradient(calc(45deg_+_var(--gradient-angle)),_#fde68a,_#f59e0b,_#7c2d12)] animate-gradient-spin motion-reduce:animate-none"></div>
+*/
+",
+  },
+  "ocean": {
+    "css": "@property --gradient-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0c4a6e;
+}
+
+@property --gradient-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0891b2;
+}
+
+@property --gradient-color-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #67e8f9;
+}
+
+@property --gradient-color-4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #164e63;
+}
+
+.animated-gradient {
+  --gradient-color-1: #0c4a6e;
+  --gradient-color-2: #0891b2;
+  --gradient-color-3: #67e8f9;
+  --gradient-color-4: #164e63;
+  background-image: linear-gradient(180deg, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3), var(--gradient-color-4));
+  animation: gradient-shift 16s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { --gradient-color-1: #0c4a6e; --gradient-color-2: #0891b2; --gradient-color-3: #67e8f9; --gradient-color-4: #164e63; }
+  25% { --gradient-color-1: #0891b2; --gradient-color-2: #67e8f9; --gradient-color-3: #164e63; --gradient-color-4: #0c4a6e; }
+  50% { --gradient-color-1: #67e8f9; --gradient-color-2: #164e63; --gradient-color-3: #0c4a6e; --gradient-color-4: #0891b2; }
+  75% { --gradient-color-1: #164e63; --gradient-color-2: #0c4a6e; --gradient-color-3: #0891b2; --gradient-color-4: #67e8f9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+@property --gradient-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0c4a6e;
+}
+
+@property --gradient-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0891b2;
+}
+
+@property --gradient-color-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #67e8f9;
+}
+
+@property --gradient-color-4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #164e63;
+}
+
+.animated-gradient {
+  --gradient-color-1: #0c4a6e;
+  --gradient-color-2: #0891b2;
+  --gradient-color-3: #67e8f9;
+  --gradient-color-4: #164e63;
+  background-image: linear-gradient(180deg, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3), var(--gradient-color-4));
+  animation: gradient-shift 16s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { --gradient-color-1: #0c4a6e; --gradient-color-2: #0891b2; --gradient-color-3: #67e8f9; --gradient-color-4: #164e63; }
+  25% { --gradient-color-1: #0891b2; --gradient-color-2: #67e8f9; --gradient-color-3: #164e63; --gradient-color-4: #0c4a6e; }
+  50% { --gradient-color-1: #67e8f9; --gradient-color-2: #164e63; --gradient-color-3: #0c4a6e; --gradient-color-4: #0891b2; }
+  75% { --gradient-color-1: #164e63; --gradient-color-2: #0c4a6e; --gradient-color-3: #0891b2; --gradient-color-4: #67e8f9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient"></div>
+",
+    "tailwind": "<!-- Add the @property and @keyframes rules from the CSS export to your stylesheet. -->
+<div class="[--gradient-color-1:#0c4a6e] [--gradient-color-2:#0891b2] [--gradient-color-3:#67e8f9] [--gradient-color-4:#164e63] bg-[linear-gradient(180deg,_var(--gradient-color-1),_var(--gradient-color-2),_var(--gradient-color-3),_var(--gradient-color-4))] animate-[gradient-shift_16s_ease_infinite] motion-reduce:animate-none"></div>
+",
+    "tailwind-theme": "@property --gradient-color-1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0c4a6e;
+}
+
+@property --gradient-color-2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0891b2;
+}
+
+@property --gradient-color-3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #67e8f9;
+}
+
+@property --gradient-color-4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #164e63;
+}
+
+@theme {
+  --animate-gradient-shift: gradient-shift 16s ease infinite;
+
+  @keyframes gradient-shift {
+    0%, 100% { --gradient-color-1: #0c4a6e; --gradient-color-2: #0891b2; --gradient-color-3: #67e8f9; --gradient-color-4: #164e63; }
+    25% { --gradient-color-1: #0891b2; --gradient-color-2: #67e8f9; --gradient-color-3: #164e63; --gradient-color-4: #0c4a6e; }
+    50% { --gradient-color-1: #67e8f9; --gradient-color-2: #164e63; --gradient-color-3: #0c4a6e; --gradient-color-4: #0891b2; }
+    75% { --gradient-color-1: #164e63; --gradient-color-2: #0c4a6e; --gradient-color-3: #0891b2; --gradient-color-4: #67e8f9; }
+  }
+}
+
+/* Usage:
+   <div class="[--gradient-color-1:#0c4a6e] [--gradient-color-2:#0891b2] [--gradient-color-3:#67e8f9] [--gradient-color-4:#164e63] bg-[linear-gradient(180deg,_var(--gradient-color-1),_var(--gradient-color-2),_var(--gradient-color-3),_var(--gradient-color-4))] animate-gradient-shift motion-reduce:animate-none"></div>
+*/
+",
+  },
+  "pastel": {
+    "css": ".animated-gradient {
+  position: relative;
+  overflow: hidden;
+  background-color: #fdf4ff;
+}
+
+.animated-gradient .blob {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: 0.85;
+  animation: blob-float 20s ease-in-out infinite;
+}
+
+.animated-gradient .blob:nth-child(1) {
+  left: -10.5%;
+  top: 20.2%;
+  width: 56.7%;
+  background-image: radial-gradient(closest-side, #c4b5fd 21%, transparent);
+  --blob-x1: -13.5%;
+  --blob-y1: 21.1%;
+  --blob-x2: -1.1%;
+  --blob-y2: -27.5%;
+}
+
+.animated-gradient .blob:nth-child(2) {
+  left: 21.1%;
+  top: 4.8%;
+  width: 48.6%;
+  background-image: radial-gradient(closest-side, #fbcfe8 21%, transparent);
+  --blob-x1: -28%;
+  --blob-y1: -10.5%;
+  --blob-x2: 32.4%;
+  --blob-y2: -14.9%;
+}
+
+.animated-gradient .blob:nth-child(3) {
+  left: 15.2%;
+  top: -21.5%;
+  width: 79.6%;
+  background-image: radial-gradient(closest-side, #a7f3d0 21%, transparent);
+  --blob-x1: -32.1%;
+  --blob-y1: 11%;
+  --blob-x2: 0%;
+  --blob-y2: -22.9%;
+}
+
+.animated-gradient .blob:nth-child(4) {
+  left: -13.4%;
+  top: -8%;
+  width: 53.5%;
+  background-image: radial-gradient(closest-side, #fde68a 21%, transparent);
+  --blob-x1: 13.3%;
+  --blob-y1: 21%;
+  --blob-x2: -30.2%;
+  --blob-y2: 3.4%;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--blob-x1), var(--blob-y1)); }
+  66.667% { transform: translate(var(--blob-x2), var(--blob-y2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient .blob {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+.animated-gradient {
+  position: relative;
+  overflow: hidden;
+  background-color: #fdf4ff;
+}
+
+.animated-gradient .blob {
+  position: absolute;
+  aspect-ratio: 1;
+  opacity: 0.85;
+  animation: blob-float 20s ease-in-out infinite;
+}
+
+.animated-gradient .blob:nth-child(1) {
+  left: -10.5%;
+  top: 20.2%;
+  width: 56.7%;
+  background-image: radial-gradient(closest-side, #c4b5fd 21%, transparent);
+  --blob-x1: -13.5%;
+  --blob-y1: 21.1%;
+  --blob-x2: -1.1%;
+  --blob-y2: -27.5%;
+}
+
+.animated-gradient .blob:nth-child(2) {
+  left: 21.1%;
+  top: 4.8%;
+  width: 48.6%;
+  background-image: radial-gradient(closest-side, #fbcfe8 21%, transparent);
+  --blob-x1: -28%;
+  --blob-y1: -10.5%;
+  --blob-x2: 32.4%;
+  --blob-y2: -14.9%;
+}
+
+.animated-gradient .blob:nth-child(3) {
+  left: 15.2%;
+  top: -21.5%;
+  width: 79.6%;
+  background-image: radial-gradient(closest-side, #a7f3d0 21%, transparent);
+  --blob-x1: -32.1%;
+  --blob-y1: 11%;
+  --blob-x2: 0%;
+  --blob-y2: -22.9%;
+}
+
+.animated-gradient .blob:nth-child(4) {
+  left: -13.4%;
+  top: -8%;
+  width: 53.5%;
+  background-image: radial-gradient(closest-side, #fde68a 21%, transparent);
+  --blob-x1: 13.3%;
+  --blob-y1: 21%;
+  --blob-x2: -30.2%;
+  --blob-y2: 3.4%;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--blob-x1), var(--blob-y1)); }
+  66.667% { transform: translate(var(--blob-x2), var(--blob-y2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient .blob {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient">
+  <span class="blob" aria-hidden="true"></span>
+  <span class="blob" aria-hidden="true"></span>
+  <span class="blob" aria-hidden="true"></span>
+  <span class="blob" aria-hidden="true"></span>
+</div>
+",
+    "tailwind": "<!-- Add the @keyframes rules from the CSS export to your stylesheet. -->
+<div class="relative overflow-hidden bg-[#fdf4ff]">
+  <span class="absolute aspect-square opacity-[0.85] animate-[blob-float_20s_ease-in-out_infinite] motion-reduce:animate-none left-[-10.5%] top-[20.2%] w-[56.7%] bg-[radial-gradient(closest-side,_#c4b5fd_21%,_transparent)] [--blob-x1:-13.5%] [--blob-y1:21.1%] [--blob-x2:-1.1%] [--blob-y2:-27.5%]" aria-hidden="true"></span>
+  <span class="absolute aspect-square opacity-[0.85] animate-[blob-float_20s_ease-in-out_infinite] motion-reduce:animate-none left-[21.1%] top-[4.8%] w-[48.6%] bg-[radial-gradient(closest-side,_#fbcfe8_21%,_transparent)] [--blob-x1:-28%] [--blob-y1:-10.5%] [--blob-x2:32.4%] [--blob-y2:-14.9%]" aria-hidden="true"></span>
+  <span class="absolute aspect-square opacity-[0.85] animate-[blob-float_20s_ease-in-out_infinite] motion-reduce:animate-none left-[15.2%] top-[-21.5%] w-[79.6%] bg-[radial-gradient(closest-side,_#a7f3d0_21%,_transparent)] [--blob-x1:-32.1%] [--blob-y1:11%] [--blob-x2:0%] [--blob-y2:-22.9%]" aria-hidden="true"></span>
+  <span class="absolute aspect-square opacity-[0.85] animate-[blob-float_20s_ease-in-out_infinite] motion-reduce:animate-none left-[-13.4%] top-[-8%] w-[53.5%] bg-[radial-gradient(closest-side,_#fde68a_21%,_transparent)] [--blob-x1:13.3%] [--blob-y1:21%] [--blob-x2:-30.2%] [--blob-y2:3.4%]" aria-hidden="true"></span>
+</div>
+",
+    "tailwind-theme": "@theme {
+  --animate-blob-float: blob-float 20s ease-in-out infinite;
+
+  @keyframes blob-float {
+    0%, 100% { transform: translate(0, 0); }
+    33.333% { transform: translate(var(--blob-x1), var(--blob-y1)); }
+    66.667% { transform: translate(var(--blob-x2), var(--blob-y2)); }
+  }
+}
+
+/* Usage:
+   <div class="relative overflow-hidden bg-[#fdf4ff]">
+     <span class="absolute aspect-square opacity-[0.85] animate-blob-float motion-reduce:animate-none left-[-10.5%] top-[20.2%] w-[56.7%] bg-[radial-gradient(closest-side,_#c4b5fd_21%,_transparent)] [--blob-x1:-13.5%] [--blob-y1:21.1%] [--blob-x2:-1.1%] [--blob-y2:-27.5%]" aria-hidden="true"></span>
+     <span class="absolute aspect-square opacity-[0.85] animate-blob-float motion-reduce:animate-none left-[21.1%] top-[4.8%] w-[48.6%] bg-[radial-gradient(closest-side,_#fbcfe8_21%,_transparent)] [--blob-x1:-28%] [--blob-y1:-10.5%] [--blob-x2:32.4%] [--blob-y2:-14.9%]" aria-hidden="true"></span>
+     <span class="absolute aspect-square opacity-[0.85] animate-blob-float motion-reduce:animate-none left-[15.2%] top-[-21.5%] w-[79.6%] bg-[radial-gradient(closest-side,_#a7f3d0_21%,_transparent)] [--blob-x1:-32.1%] [--blob-y1:11%] [--blob-x2:0%] [--blob-y2:-22.9%]" aria-hidden="true"></span>
+     <span class="absolute aspect-square opacity-[0.85] animate-blob-float motion-reduce:animate-none left-[-13.4%] top-[-8%] w-[53.5%] bg-[radial-gradient(closest-side,_#fde68a_21%,_transparent)] [--blob-x1:13.3%] [--blob-y1:21%] [--blob-x2:-30.2%] [--blob-y2:3.4%]" aria-hidden="true"></span>
+   </div>
+*/
+",
+  },
+  "radar": {
+    "css": "@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.animated-gradient {
+  background-image: conic-gradient(from var(--gradient-angle), #0f172a, #22d3ee, #a855f7, #0f172a);
+  animation: gradient-spin 8s linear infinite;
+}
+
+@keyframes gradient-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.animated-gradient {
+  background-image: conic-gradient(from var(--gradient-angle), #0f172a, #22d3ee, #a855f7, #0f172a);
+  animation: gradient-spin 8s linear infinite;
+}
+
+@keyframes gradient-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient"></div>
+",
+    "tailwind": "<!-- Add the @property and @keyframes rules from the CSS export to your stylesheet. -->
+<div class="bg-[conic-gradient(from_var(--gradient-angle),_#0f172a,_#22d3ee,_#a855f7,_#0f172a)] animate-[gradient-spin_8s_linear_infinite] motion-reduce:animate-none"></div>
+",
+    "tailwind-theme": "@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@theme {
+  --animate-gradient-spin: gradient-spin 8s linear infinite;
+
+  @keyframes gradient-spin {
+    to { --gradient-angle: 360deg; }
+  }
+}
+
+/* Usage:
+   <div class="bg-[conic-gradient(from_var(--gradient-angle),_#0f172a,_#22d3ee,_#a855f7,_#0f172a)] animate-gradient-spin motion-reduce:animate-none"></div>
+*/
+",
+  },
+  "sunset": {
+    "css": ".animated-gradient {
+  background-image: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+  background-size: 250% 250%;
+  background-position: 0% 50%;
+  animation: gradient-pan 10s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+",
+    "html": "<style>
+.animated-gradient {
+  background-image: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+  background-size: 250% 250%;
+  background-position: 0% 50%;
+  animation: gradient-pan 10s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-pan {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+  }
+}
+
+.animated-gradient {
+  width: 100%;
+  aspect-ratio: 1200 / 800;
+}
+
+body {
+  margin: 0;
+}
+</style>
+<div class="animated-gradient"></div>
+",
+    "tailwind": "<!-- Add the @keyframes rules from the CSS export to your stylesheet. -->
+<div class="bg-[linear-gradient(90deg,_#f97316,_#ec4899,_#8b5cf6)] bg-[length:250%_250%] bg-[position:0%_50%] animate-[gradient-pan_10s_ease-in-out_infinite_alternate] motion-reduce:animate-none"></div>
+",
+    "tailwind-theme": "@theme {
+  --animate-gradient-pan: gradient-pan 10s ease-in-out infinite alternate;
+
+  @keyframes gradient-pan {
+    from { background-position: 0% 50%; }
+    to { background-position: 100% 50%; }
+  }
+}
+
+/* Usage:
+   <div class="bg-[linear-gradient(90deg,_#f97316,_#ec4899,_#8b5cf6)] bg-[length:250%_250%] bg-[position:0%_50%] animate-gradient-pan motion-reduce:animate-none"></div>
+*/
+",
+  },
+}
+`;
+
+exports[`preset snapshots: animated-gradient > lava 1`] = `
+{
+  "css": "background-color: #1c0a00;",
+  "element": {
+    "content": [
+      {
+        "css": "background-image: radial-gradient(closest-side, #f97316 28%, transparent);
+opacity: 0.9;
+--musterli-ag-x1: -18%;
+--musterli-ag-y1: 28.1%;
+--musterli-ag-x2: -1.5%;
+--musterli-ag-y2: -36.7%;",
+        "height": 680.4,
+        "motionCss": "animation: musterli-ag-float 18s ease-in-out infinite;",
+        "width": 680.4,
+        "x": -126,
+        "y": 161.6,
+      },
+      {
+        "css": "background-image: radial-gradient(closest-side, #dc2626 28%, transparent);
+opacity: 0.9;
+--musterli-ag-x1: -37.4%;
+--musterli-ag-y1: -14%;
+--musterli-ag-x2: 43.2%;
+--musterli-ag-y2: -19.9%;",
+        "height": 583.2,
+        "motionCss": "animation: musterli-ag-float 18s ease-in-out infinite;",
+        "width": 583.2,
+        "x": 253.2,
+        "y": 38.4,
+      },
+      {
+        "css": "background-image: radial-gradient(closest-side, #facc15 28%, transparent);
+opacity: 0.9;
+--musterli-ag-x1: -42.7%;
+--musterli-ag-y1: 14.7%;
+--musterli-ag-x2: -0.1%;
+--musterli-ag-y2: -30.5%;",
+        "height": 955.2,
+        "motionCss": "animation: musterli-ag-float 18s ease-in-out infinite;",
+        "width": 955.2,
+        "x": 182.4,
+        "y": -172,
+      },
+      {
+        "css": "background-image: radial-gradient(closest-side, #db2777 28%, transparent);
+opacity: 0.9;
+--musterli-ag-x1: 17.7%;
+--musterli-ag-y1: 28%;
+--musterli-ag-x2: -40.3%;
+--musterli-ag-y2: 4.5%;",
+        "height": 642,
+        "motionCss": "animation: musterli-ag-float 18s ease-in-out infinite;",
+        "width": 642,
+        "x": -160.8,
+        "y": -64,
+      },
+    ],
+    "css": "background-color: #1c0a00;",
+    "height": 800,
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><radialGradient id="ab961igl"><stop offset="0.28" stop-color="#f97316"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient><radialGradient id="ablapycr"><stop offset="0.28" stop-color="#dc2626"/><stop offset="1" stop-color="#dc2626" stop-opacity="0"/></radialGradient><radialGradient id="ab1oo5wjv"><stop offset="0.28" stop-color="#facc15"/><stop offset="1" stop-color="#facc15" stop-opacity="0"/></radialGradient><radialGradient id="abg91npb"><stop offset="0.28" stop-color="#db2777"/><stop offset="1" stop-color="#db2777" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="800" fill="#1c0a00"/><circle cx="214.2" cy="501.8" r="340.2" fill="url(#ab961igl)" opacity="0.9"/><circle cx="544.8" cy="330" r="291.6" fill="url(#ablapycr)" opacity="0.9"/><circle cx="660" cy="305.6" r="477.6" fill="url(#ab1oo5wjv)" opacity="0.9"/><circle cx="160.2" cy="257" r="321" fill="url(#abg91npb)" opacity="0.9"/></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > lighthouse 1`] = `
+{
+  "css": "background-color: #fde68a;",
+  "element": {
+    "content": [],
+    "css": "background-color: #fde68a;
+background-image: linear-gradient(calc(45deg + var(--musterli-ag-angle)), #fde68a, #f59e0b, #7c2d12);",
+    "height": 800,
+    "motionCss": "animation: musterli-ag-spin 14s linear infinite;",
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><linearGradient id="lg1tr27qx" gradientUnits="userSpaceOnUse" x1="100" y1="900" x2="1100" y2="-100"><stop offset="0" stop-color="#fde68a"/><stop offset="0.5" stop-color="#f59e0b"/><stop offset="1" stop-color="#7c2d12"/></linearGradient></defs><rect width="1200" height="800" fill="url(#lg1tr27qx)"/></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > ocean 1`] = `
+{
+  "css": "background-color: #0c4a6e;",
+  "element": {
+    "content": [],
+    "css": "background-color: #0c4a6e;
+--musterli-ag-c1: #0c4a6e;
+--musterli-ag-p1: #0c4a6e;
+--musterli-ag-c2: #0891b2;
+--musterli-ag-p2: #0891b2;
+--musterli-ag-c3: #67e8f9;
+--musterli-ag-p3: #67e8f9;
+--musterli-ag-c4: #164e63;
+--musterli-ag-p4: #164e63;
+background-image: linear-gradient(180deg, var(--musterli-ag-c1), var(--musterli-ag-c2), var(--musterli-ag-c3), var(--musterli-ag-c4));",
+    "height": 800,
+    "motionCss": "animation: musterli-ag-shift-4 16s ease infinite;",
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><linearGradient id="lgbapavf" gradientUnits="userSpaceOnUse" x1="600" y1="0" x2="600" y2="800"><stop offset="0" stop-color="#0c4a6e"/><stop offset="0.3333" stop-color="#0891b2"/><stop offset="0.6667" stop-color="#67e8f9"/><stop offset="1" stop-color="#164e63"/></linearGradient></defs><rect width="1200" height="800" fill="url(#lgbapavf)"/></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > pastel 1`] = `
+{
+  "css": "background-color: #fdf4ff;",
+  "element": {
+    "content": [
+      {
+        "css": "background-image: radial-gradient(closest-side, #c4b5fd 21%, transparent);
+opacity: 0.85;
+--musterli-ag-x1: -13.5%;
+--musterli-ag-y1: 21.1%;
+--musterli-ag-x2: -1.1%;
+--musterli-ag-y2: -27.5%;",
+        "height": 680.4,
+        "motionCss": "animation: musterli-ag-float 20s ease-in-out infinite;",
+        "width": 680.4,
+        "x": -126,
+        "y": 161.6,
+      },
+      {
+        "css": "background-image: radial-gradient(closest-side, #fbcfe8 21%, transparent);
+opacity: 0.85;
+--musterli-ag-x1: -28%;
+--musterli-ag-y1: -10.5%;
+--musterli-ag-x2: 32.4%;
+--musterli-ag-y2: -14.9%;",
+        "height": 583.2,
+        "motionCss": "animation: musterli-ag-float 20s ease-in-out infinite;",
+        "width": 583.2,
+        "x": 253.2,
+        "y": 38.4,
+      },
+      {
+        "css": "background-image: radial-gradient(closest-side, #a7f3d0 21%, transparent);
+opacity: 0.85;
+--musterli-ag-x1: -32.1%;
+--musterli-ag-y1: 11%;
+--musterli-ag-x2: 0%;
+--musterli-ag-y2: -22.9%;",
+        "height": 955.2,
+        "motionCss": "animation: musterli-ag-float 20s ease-in-out infinite;",
+        "width": 955.2,
+        "x": 182.4,
+        "y": -172,
+      },
+      {
+        "css": "background-image: radial-gradient(closest-side, #fde68a 21%, transparent);
+opacity: 0.85;
+--musterli-ag-x1: 13.3%;
+--musterli-ag-y1: 21%;
+--musterli-ag-x2: -30.2%;
+--musterli-ag-y2: 3.4%;",
+        "height": 642,
+        "motionCss": "animation: musterli-ag-float 20s ease-in-out infinite;",
+        "width": 642,
+        "x": -160.8,
+        "y": -64,
+      },
+    ],
+    "css": "background-color: #fdf4ff;",
+    "height": 800,
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><radialGradient id="abp6pt66"><stop offset="0.21" stop-color="#c4b5fd"/><stop offset="1" stop-color="#c4b5fd" stop-opacity="0"/></radialGradient><radialGradient id="ab169cz0y"><stop offset="0.21" stop-color="#fbcfe8"/><stop offset="1" stop-color="#fbcfe8" stop-opacity="0"/></radialGradient><radialGradient id="ab18j4rxc"><stop offset="0.21" stop-color="#a7f3d0"/><stop offset="1" stop-color="#a7f3d0" stop-opacity="0"/></radialGradient><radialGradient id="ab1xl0l46"><stop offset="0.21" stop-color="#fde68a"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="800" fill="#fdf4ff"/><circle cx="214.2" cy="501.8" r="340.2" fill="url(#abp6pt66)" opacity="0.85"/><circle cx="544.8" cy="330" r="291.6" fill="url(#ab169cz0y)" opacity="0.85"/><circle cx="660" cy="305.6" r="477.6" fill="url(#ab18j4rxc)" opacity="0.85"/><circle cx="160.2" cy="257" r="321" fill="url(#ab1xl0l46)" opacity="0.85"/></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > radar 1`] = `
+{
+  "css": "background-color: #0f172a;",
+  "element": {
+    "content": [],
+    "css": "background-color: #0f172a;
+background-image: conic-gradient(from var(--musterli-ag-angle), #0f172a, #22d3ee, #a855f7, #0f172a);",
+    "height": 800,
+    "motionCss": "animation: musterli-ag-spin 8s linear infinite;",
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="#0f172a"/><g shape-rendering="crispEdges"><path d="M600 400 L600 -1042.22 L665.42 -1040.74Z" fill="#0f192c"/><path d="M600 400 L650.33 -1041.34 L715.66 -1037.57Z" fill="#0f1c2f"/><path d="M600 400 L700.6 -1038.71 L765.76 -1032.66Z" fill="#101f32"/><path d="M600 400 L750.75 -1034.32 L815.66 -1026Z" fill="#102235"/><path d="M600 400 L800.72 -1028.18 L865.3 -1017.61Z" fill="#102539"/><path d="M600 400 L850.44 -1020.31 L914.61 -1007.49Z" fill="#11283c"/><path d="M600 400 L899.85 -1010.7 L963.54 -995.65Z" fill="#112b3f"/><path d="M600 400 L948.9 -999.38 L1012.03 -982.11Z" fill="#112f43"/><path d="M600 400 L997.53 -986.35 L1060.01 -966.89Z" fill="#123246"/><path d="M600 400 L1045.67 -971.63 L1107.43 -950Z" fill="#123549"/><path d="M600 400 L1093.27 -955.24 L1154.24 -931.47Z" fill="#12384c"/><path d="M600 400 L1140.27 -937.2 L1200.37 -911.32Z" fill="#133b50"/><path d="M600 400 L1186.6 -917.53 L1245.77 -889.57Z" fill="#133e53"/><path d="M600 400 L1232.23 -896.26 L1290.38 -866.25Z" fill="#134156"/><path d="M600 400 L1277.08 -873.41 L1334.15 -841.38Z" fill="#144459"/><path d="M600 400 L1321.11 -849 L1377.03 -815Z" fill="#14485d"/><path d="M600 400 L1364.26 -823.07 L1418.96 -787.14Z" fill="#144b60"/><path d="M600 400 L1406.48 -795.65 L1459.89 -757.84Z" fill="#154e63"/><path d="M600 400 L1447.72 -766.78 L1499.77 -727.12Z" fill="#155166"/><path d="M600 400 L1487.92 -736.49 L1538.56 -695.04Z" fill="#15546a"/><path d="M600 400 L1527.04 -704.81 L1576.2 -661.61Z" fill="#15576d"/><path d="M600 400 L1565.03 -671.78 L1612.66 -626.9Z" fill="#165a70"/><path d="M600 400 L1601.85 -637.45 L1647.88 -590.93Z" fill="#165e74"/><path d="M600 400 L1637.45 -601.85 L1681.83 -553.76Z" fill="#166177"/><path d="M600 400 L1671.78 -565.03 L1714.45 -515.42Z" fill="#17647a"/><path d="M600 400 L1704.81 -527.04 L1745.72 -475.97Z" fill="#17677d"/><path d="M600 400 L1736.49 -487.92 L1775.59 -435.45Z" fill="#176a81"/><path d="M600 400 L1766.78 -447.72 L1804.03 -393.91Z" fill="#186d84"/><path d="M600 400 L1795.65 -406.48 L1831.01 -351.41Z" fill="#187087"/><path d="M600 400 L1823.07 -364.26 L1856.48 -307.99Z" fill="#18738a"/><path d="M600 400 L1849 -321.11 L1880.43 -263.71Z" fill="#19778e"/><path d="M600 400 L1873.41 -277.08 L1902.81 -218.62Z" fill="#197a91"/><path d="M600 400 L1896.26 -232.23 L1923.6 -172.77Z" fill="#197d94"/><path d="M600 400 L1917.53 -186.6 L1942.79 -126.23Z" fill="#1a8097"/><path d="M600 400 L1937.2 -140.27 L1960.34 -79.05Z" fill="#1a839b"/><path d="M600 400 L1955.24 -93.27 L1976.22 -31.28Z" fill="#1a869e"/><path d="M600 400 L1971.63 -45.67 L1990.44 17.01Z" fill="#1b89a1"/><path d="M600 400 L1986.35 2.47 L2002.96 65.77Z" fill="#1b8ca5"/><path d="M600 400 L1999.38 51.1 L2013.77 114.93Z" fill="#1b90a8"/><path d="M600 400 L2010.7 100.15 L2022.85 164.45Z" fill="#1c93ab"/><path d="M600 400 L2020.31 149.56 L2030.21 214.25Z" fill="#1c96ae"/><path d="M600 400 L2028.18 199.28 L2035.82 264.28Z" fill="#1c99b2"/><path d="M600 400 L2034.32 249.25 L2039.68 314.47Z" fill="#1c9cb5"/><path d="M600 400 L2038.71 299.4 L2041.79 364.76Z" fill="#1d9fb8"/><path d="M600 400 L2041.34 349.67 L2042.14 415.1Z" fill="#1da2bb"/><path d="M600 400 L2042.22 400 L2040.74 465.42Z" fill="#1da6bf"/><path d="M600 400 L2041.34 450.33 L2037.57 515.66Z" fill="#1ea9c2"/><path d="M600 400 L2038.71 500.6 L2032.66 565.76Z" fill="#1eacc5"/><path d="M600 400 L2034.32 550.75 L2026 615.66Z" fill="#1eafc8"/><path d="M600 400 L2028.18 600.72 L2017.61 665.3Z" fill="#1fb2cc"/><path d="M600 400 L2020.31 650.44 L2007.49 714.61Z" fill="#1fb5cf"/><path d="M600 400 L2010.7 699.85 L1995.65 763.54Z" fill="#1fb8d2"/><path d="M600 400 L1999.38 748.9 L1982.11 812.03Z" fill="#20bbd6"/><path d="M600 400 L1986.35 797.53 L1966.89 860.01Z" fill="#20bfd9"/><path d="M600 400 L1971.63 845.67 L1950 907.43Z" fill="#20c2dc"/><path d="M600 400 L1955.24 893.27 L1931.47 954.24Z" fill="#21c5df"/><path d="M600 400 L1937.2 940.27 L1911.32 1000.37Z" fill="#21c8e3"/><path d="M600 400 L1917.53 986.6 L1889.57 1045.77Z" fill="#21cbe6"/><path d="M600 400 L1896.26 1032.23 L1866.25 1090.38Z" fill="#22cee9"/><path d="M600 400 L1873.41 1077.08 L1841.38 1134.15Z" fill="#22d1ec"/><path d="M600 400 L1849 1121.11 L1815 1177.03Z" fill="#23d2ee"/><path d="M600 400 L1823.07 1164.26 L1787.14 1218.96Z" fill="#25d0ee"/><path d="M600 400 L1795.65 1206.48 L1757.84 1259.89Z" fill="#28ceee"/><path d="M600 400 L1766.78 1247.72 L1727.12 1299.77Z" fill="#2accef"/><path d="M600 400 L1736.49 1287.92 L1695.04 1338.56Z" fill="#2ccaef"/><path d="M600 400 L1704.81 1327.04 L1661.61 1376.2Z" fill="#2ec7ef"/><path d="M600 400 L1671.78 1365.03 L1626.9 1412.66Z" fill="#31c5ef"/><path d="M600 400 L1637.45 1401.85 L1590.93 1447.88Z" fill="#33c3ef"/><path d="M600 400 L1601.85 1437.45 L1553.76 1481.83Z" fill="#35c1ef"/><path d="M600 400 L1565.03 1471.78 L1515.42 1514.45Z" fill="#37bfef"/><path d="M600 400 L1527.04 1504.81 L1475.97 1545.72Z" fill="#39bdf0"/><path d="M600 400 L1487.92 1536.49 L1435.45 1575.59Z" fill="#3cbbf0"/><path d="M600 400 L1447.72 1566.78 L1393.91 1604.03Z" fill="#3eb9f0"/><path d="M600 400 L1406.48 1595.65 L1351.41 1631.01Z" fill="#40b7f0"/><path d="M600 400 L1364.26 1623.07 L1307.99 1656.48Z" fill="#42b5f0"/><path d="M600 400 L1321.11 1649 L1263.71 1680.43Z" fill="#45b2f0"/><path d="M600 400 L1277.08 1673.41 L1218.62 1702.81Z" fill="#47b0f0"/><path d="M600 400 L1232.23 1696.26 L1172.77 1723.6Z" fill="#49aef1"/><path d="M600 400 L1186.6 1717.53 L1126.23 1742.79Z" fill="#4bacf1"/><path d="M600 400 L1140.27 1737.2 L1079.05 1760.34Z" fill="#4eaaf1"/><path d="M600 400 L1093.27 1755.24 L1031.28 1776.22Z" fill="#50a8f1"/><path d="M600 400 L1045.67 1771.63 L982.99 1790.44Z" fill="#52a6f1"/><path d="M600 400 L997.53 1786.35 L934.23 1802.96Z" fill="#54a4f1"/><path d="M600 400 L948.9 1799.38 L885.07 1813.77Z" fill="#56a2f2"/><path d="M600 400 L899.85 1810.7 L835.55 1822.85Z" fill="#59a0f2"/><path d="M600 400 L850.44 1820.31 L785.75 1830.21Z" fill="#5b9df2"/><path d="M600 400 L800.72 1828.18 L735.72 1835.82Z" fill="#5d9bf2"/><path d="M600 400 L750.75 1834.32 L685.53 1839.68Z" fill="#5f99f2"/><path d="M600 400 L700.6 1838.71 L635.24 1841.79Z" fill="#6297f2"/><path d="M600 400 L650.33 1841.34 L584.9 1842.14Z" fill="#6495f2"/><path d="M600 400 L600 1842.22 L534.58 1840.74Z" fill="#6693f3"/><path d="M600 400 L549.67 1841.34 L484.34 1837.57Z" fill="#6891f3"/><path d="M600 400 L499.4 1838.71 L434.24 1832.66Z" fill="#6b8ff3"/><path d="M600 400 L449.25 1834.32 L384.34 1826Z" fill="#6d8df3"/><path d="M600 400 L399.28 1828.18 L334.7 1817.61Z" fill="#6f8bf3"/><path d="M600 400 L349.56 1820.31 L285.39 1807.49Z" fill="#7188f3"/><path d="M600 400 L300.15 1810.7 L236.46 1795.65Z" fill="#7486f3"/><path d="M600 400 L251.1 1799.38 L187.97 1782.11Z" fill="#7684f4"/><path d="M600 400 L202.47 1786.35 L139.99 1766.89Z" fill="#7882f4"/><path d="M600 400 L154.33 1771.63 L92.57 1750Z" fill="#7a80f4"/><path d="M600 400 L106.73 1755.24 L45.76 1731.47Z" fill="#7c7ef4"/><path d="M600 400 L59.73 1737.2 L-0.37 1711.32Z" fill="#7f7cf4"/><path d="M600 400 L13.4 1717.53 L-45.77 1689.57Z" fill="#817af4"/><path d="M600 400 L-32.23 1696.26 L-90.38 1666.25Z" fill="#8378f5"/><path d="M600 400 L-77.08 1673.41 L-134.15 1641.38Z" fill="#8576f5"/><path d="M600 400 L-121.11 1649 L-177.03 1615Z" fill="#8873f5"/><path d="M600 400 L-164.26 1623.07 L-218.96 1587.14Z" fill="#8a71f5"/><path d="M600 400 L-206.48 1595.65 L-259.89 1557.84Z" fill="#8c6ff5"/><path d="M600 400 L-247.72 1566.78 L-299.77 1527.12Z" fill="#8e6df5"/><path d="M600 400 L-287.92 1536.49 L-338.56 1495.04Z" fill="#916bf5"/><path d="M600 400 L-327.04 1504.81 L-376.2 1461.61Z" fill="#9369f6"/><path d="M600 400 L-365.03 1471.78 L-412.66 1426.9Z" fill="#9567f6"/><path d="M600 400 L-401.85 1437.45 L-447.88 1390.93Z" fill="#9765f6"/><path d="M600 400 L-437.45 1401.85 L-481.83 1353.76Z" fill="#9963f6"/><path d="M600 400 L-471.78 1365.03 L-514.45 1315.42Z" fill="#9c61f6"/><path d="M600 400 L-504.81 1327.04 L-545.72 1275.97Z" fill="#9e5ef6"/><path d="M600 400 L-536.49 1287.92 L-575.59 1235.45Z" fill="#a05cf6"/><path d="M600 400 L-566.78 1247.72 L-604.03 1193.91Z" fill="#a25af7"/><path d="M600 400 L-595.65 1206.48 L-631.01 1151.41Z" fill="#a558f7"/><path d="M600 400 L-623.07 1164.26 L-656.48 1107.99Z" fill="#a756f7"/><path d="M600 400 L-649 1121.11 L-680.43 1063.71Z" fill="#a754f5"/><path d="M600 400 L-673.41 1077.08 L-702.81 1018.62Z" fill="#a453f2"/><path d="M600 400 L-696.26 1032.23 L-723.6 972.77Z" fill="#a252ee"/><path d="M600 400 L-717.53 986.6 L-742.79 926.23Z" fill="#9f51eb"/><path d="M600 400 L-737.2 940.27 L-760.34 879.05Z" fill="#9d50e8"/><path d="M600 400 L-755.24 893.27 L-776.22 831.28Z" fill="#9a4fe4"/><path d="M600 400 L-771.63 845.67 L-790.44 782.99Z" fill="#974ee1"/><path d="M600 400 L-786.35 797.53 L-802.96 734.23Z" fill="#954ddd"/><path d="M600 400 L-799.38 748.9 L-813.77 685.07Z" fill="#924cda"/><path d="M600 400 L-810.7 699.85 L-822.85 635.55Z" fill="#904bd7"/><path d="M600 400 L-820.31 650.44 L-830.21 585.75Z" fill="#8d4ad3"/><path d="M600 400 L-828.18 600.72 L-835.82 535.72Z" fill="#8b49d0"/><path d="M600 400 L-834.32 550.75 L-839.68 485.53Z" fill="#8848cc"/><path d="M600 400 L-838.71 500.6 L-841.79 435.24Z" fill="#8647c9"/><path d="M600 400 L-841.34 450.33 L-842.14 384.9Z" fill="#8346c5"/><path d="M600 400 L-842.22 400 L-840.74 334.58Z" fill="#8045c2"/><path d="M600 400 L-841.34 349.67 L-837.57 284.34Z" fill="#7e44bf"/><path d="M600 400 L-838.71 299.4 L-832.66 234.24Z" fill="#7b43bb"/><path d="M600 400 L-834.32 249.25 L-826 184.34Z" fill="#7942b8"/><path d="M600 400 L-828.18 199.28 L-817.61 134.7Z" fill="#7641b4"/><path d="M600 400 L-820.31 149.56 L-807.49 85.39Z" fill="#7440b1"/><path d="M600 400 L-810.7 100.15 L-795.65 36.46Z" fill="#713fae"/><path d="M600 400 L-799.38 51.1 L-782.11 -12.03Z" fill="#6f3eaa"/><path d="M600 400 L-786.35 2.47 L-766.89 -60.01Z" fill="#6c3da7"/><path d="M600 400 L-771.63 -45.67 L-750 -107.43Z" fill="#6a3ca3"/><path d="M600 400 L-755.24 -93.27 L-731.47 -154.24Z" fill="#673ba0"/><path d="M600 400 L-737.2 -140.27 L-711.32 -200.37Z" fill="#643a9c"/><path d="M600 400 L-717.53 -186.6 L-689.57 -245.77Z" fill="#623999"/><path d="M600 400 L-696.26 -232.23 L-666.25 -290.38Z" fill="#5f3896"/><path d="M600 400 L-673.41 -277.08 L-641.38 -334.15Z" fill="#5d3792"/><path d="M600 400 L-649 -321.11 L-615 -377.03Z" fill="#5a358f"/><path d="M600 400 L-623.07 -364.26 L-587.14 -418.96Z" fill="#58348b"/><path d="M600 400 L-595.65 -406.48 L-557.84 -459.89Z" fill="#553388"/><path d="M600 400 L-566.78 -447.72 L-527.12 -499.77Z" fill="#533285"/><path d="M600 400 L-536.49 -487.92 L-495.04 -538.56Z" fill="#503181"/><path d="M600 400 L-504.81 -527.04 L-461.61 -576.2Z" fill="#4d307e"/><path d="M600 400 L-471.78 -565.03 L-426.9 -612.66Z" fill="#4b2f7a"/><path d="M600 400 L-437.45 -601.85 L-390.93 -647.88Z" fill="#482e77"/><path d="M600 400 L-401.85 -637.45 L-353.76 -681.83Z" fill="#462d73"/><path d="M600 400 L-365.03 -671.78 L-315.42 -714.45Z" fill="#432c70"/><path d="M600 400 L-327.04 -704.81 L-275.97 -745.72Z" fill="#412b6d"/><path d="M600 400 L-287.92 -736.49 L-235.45 -775.59Z" fill="#3e2a69"/><path d="M600 400 L-247.72 -766.78 L-193.91 -804.03Z" fill="#3c2966"/><path d="M600 400 L-206.48 -795.65 L-151.41 -831.01Z" fill="#392862"/><path d="M600 400 L-164.26 -823.07 L-107.99 -856.48Z" fill="#37275f"/><path d="M600 400 L-121.11 -849 L-63.71 -880.43Z" fill="#34265c"/><path d="M600 400 L-77.08 -873.41 L-18.62 -902.81Z" fill="#312558"/><path d="M600 400 L-32.23 -896.26 L27.23 -923.6Z" fill="#2f2455"/><path d="M600 400 L13.4 -917.53 L73.77 -942.79Z" fill="#2c2351"/><path d="M600 400 L59.73 -937.2 L120.95 -960.34Z" fill="#2a224e"/><path d="M600 400 L106.73 -955.24 L168.72 -976.22Z" fill="#27214a"/><path d="M600 400 L154.33 -971.63 L217.01 -990.44Z" fill="#252047"/><path d="M600 400 L202.47 -986.35 L265.77 -1002.96Z" fill="#221f44"/><path d="M600 400 L251.1 -999.38 L314.93 -1013.77Z" fill="#201e40"/><path d="M600 400 L300.15 -1010.7 L364.45 -1022.85Z" fill="#1d1d3d"/><path d="M600 400 L349.56 -1020.31 L414.25 -1030.21Z" fill="#1a1c39"/><path d="M600 400 L399.28 -1028.18 L464.28 -1035.82Z" fill="#181b36"/><path d="M600 400 L449.25 -1034.32 L514.47 -1039.68Z" fill="#151a33"/><path d="M600 400 L499.4 -1038.71 L564.76 -1041.79Z" fill="#13192f"/><path d="M600 400 L549.67 -1041.34 L600 -1042.22Z" fill="#10182c"/></g></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
+exports[`preset snapshots: animated-gradient > sunset 1`] = `
+{
+  "css": "background-color: #f97316;",
+  "element": {
+    "content": [],
+    "css": "background-color: #f97316;
+background-image: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6);
+background-size: 250% 250%;
+background-position: 0% 50%;
+--musterli-ag-from: 0% 50%;
+--musterli-ag-to: 100% 50%;",
+    "height": 800,
+    "motionCss": "animation: musterli-ag-pan 10s ease-in-out infinite alternate;",
+    "width": 1200,
+    "x": 0,
+    "y": 0,
+  },
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><g transform="translate(0 -600)"><defs><linearGradient id="lg14zshf2" gradientUnits="userSpaceOnUse" x1="0" y1="1000" x2="3000" y2="1000"><stop offset="0" stop-color="#f97316"/><stop offset="0.5" stop-color="#ec4899"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><rect width="3000" height="2000" fill="url(#lg14zshf2)"/></g></svg>",
+  "rules": "@property --musterli-ag-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@property --musterli-ag-c1 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c2 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c3 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c4 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c5 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@property --musterli-ag-c6 {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+@keyframes musterli-ag-pan {
+  from { background-position: var(--musterli-ag-from); }
+  to { background-position: var(--musterli-ag-to); }
+}
+@keyframes musterli-ag-spin {
+  to { --musterli-ag-angle: 360deg; }
+}
+@keyframes musterli-ag-shift-2 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p1); }
+}
+@keyframes musterli-ag-shift-3 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p1); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); }
+}
+@keyframes musterli-ag-shift-4 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); }
+  25% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p1); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); }
+  75% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); }
+}
+@keyframes musterli-ag-shift-5 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); }
+  20% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p1); }
+  40% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); }
+  60% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); }
+  80% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); }
+}
+@keyframes musterli-ag-shift-6 {
+  0%, 100% { --musterli-ag-c1: var(--musterli-ag-p1); --musterli-ag-c2: var(--musterli-ag-p2); --musterli-ag-c3: var(--musterli-ag-p3); --musterli-ag-c4: var(--musterli-ag-p4); --musterli-ag-c5: var(--musterli-ag-p5); --musterli-ag-c6: var(--musterli-ag-p6); }
+  16.667% { --musterli-ag-c1: var(--musterli-ag-p2); --musterli-ag-c2: var(--musterli-ag-p3); --musterli-ag-c3: var(--musterli-ag-p4); --musterli-ag-c4: var(--musterli-ag-p5); --musterli-ag-c5: var(--musterli-ag-p6); --musterli-ag-c6: var(--musterli-ag-p1); }
+  33.333% { --musterli-ag-c1: var(--musterli-ag-p3); --musterli-ag-c2: var(--musterli-ag-p4); --musterli-ag-c3: var(--musterli-ag-p5); --musterli-ag-c4: var(--musterli-ag-p6); --musterli-ag-c5: var(--musterli-ag-p1); --musterli-ag-c6: var(--musterli-ag-p2); }
+  50% { --musterli-ag-c1: var(--musterli-ag-p4); --musterli-ag-c2: var(--musterli-ag-p5); --musterli-ag-c3: var(--musterli-ag-p6); --musterli-ag-c4: var(--musterli-ag-p1); --musterli-ag-c5: var(--musterli-ag-p2); --musterli-ag-c6: var(--musterli-ag-p3); }
+  66.667% { --musterli-ag-c1: var(--musterli-ag-p5); --musterli-ag-c2: var(--musterli-ag-p6); --musterli-ag-c3: var(--musterli-ag-p1); --musterli-ag-c4: var(--musterli-ag-p2); --musterli-ag-c5: var(--musterli-ag-p3); --musterli-ag-c6: var(--musterli-ag-p4); }
+  83.333% { --musterli-ag-c1: var(--musterli-ag-p6); --musterli-ag-c2: var(--musterli-ag-p1); --musterli-ag-c3: var(--musterli-ag-p2); --musterli-ag-c4: var(--musterli-ag-p3); --musterli-ag-c5: var(--musterli-ag-p4); --musterli-ag-c6: var(--musterli-ag-p5); }
+}
+@keyframes musterli-ag-float {
+  0%, 100% { transform: translate(0, 0); }
+  33.333% { transform: translate(var(--musterli-ag-x1), var(--musterli-ag-y1)); }
+  66.667% { transform: translate(var(--musterli-ag-x2), var(--musterli-ag-y2)); }
+}",
+}
+`;
+
 exports[`preset snapshots: avatar > bauhaus 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs><clipPath id="ac11lawba"><rect x="0" y="0" width="512" height="512"/></clipPath></defs><rect width="512" height="512" fill="#f1e9da"/><g clip-path="url(#ac11lawba)"><rect x="0" y="0" width="512" height="512" fill="#f1e9da"/><path d="M256 25.6L486.4 486.4H25.6z" fill="#e63946" transform="rotate(90 256 256)"/><path d="M256 0L396.8 281.6H115.2z" fill="#111827" transform="rotate(180 256 140.8)"/><circle cx="435.2" cy="76.8" r="76.8" fill="#1d3557"/></g></svg>"`;
 
 exports[`preset snapshots: avatar > classic 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs><clipPath id="ac77kf53"><circle cx="256" cy="256" r="256"/></clipPath></defs><g clip-path="url(#ac77kf53)"><rect x="0" y="0" width="512" height="512" fill="#e07a5f"/><text x="256" y="327.68" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="204.8" font-weight="600" fill="#111827">AL</text></g></svg>"`;

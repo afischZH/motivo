@@ -3214,6 +3214,103 @@
           }
         }
       }
+    },
+    "animated-gradient": {
+      "name": "Animierter Farbverlauf",
+      "description": "Wandernde, drehende und farbwechselnde Verläufe und schwebende Flecken als reines CSS. CSS, Tailwind oder HTML kopieren, PNG und GIF exportieren.",
+      "params": {
+        "mode": {
+          "label": "Animation",
+          "description": "Wandern bewegt einen grossen Verlauf, Drehen dreht ihn, Farbwechsel lässt die Farben die Plätze tauschen, Flecken lässt weiche Farbflecken schweben.",
+          "options": {
+            "pan": "Wandern",
+            "rotate": "Drehen",
+            "shift": "Farbwechsel",
+            "blobs": "Flecken"
+          }
+        },
+        "rotateShape": {
+          "label": "Verlaufsart",
+          "options": {
+            "conic": "Konisch",
+            "linear": "Linear"
+          }
+        },
+        "angle": {
+          "label": "Winkel",
+          "description": "Richtung des Verlaufs. Beim Wandern bewegt sich der Verlauf auch entlang dieser Achse."
+        },
+        "duration": {
+          "label": "Dauer"
+        },
+        "timing": {
+          "label": "Beschleunigung",
+          "options": {
+            "linear": "Gleichmässig",
+            "ease": "Sanft",
+            "ease-in": "Langsam anfangen",
+            "ease-out": "Langsam enden",
+            "ease-in-out": "Langsam anfangen und enden"
+          }
+        },
+        "direction": {
+          "label": "Richtung",
+          "options": {
+            "normal": "Vorwärts",
+            "reverse": "Rückwärts"
+          }
+        },
+        "motion": {
+          "label": "Bewegung",
+          "description": "Wie weit sich der Verlauf oder die Flecken bewegen."
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "intensity": {
+          "label": "Intensität"
+        }
+      },
+      "groups": {
+        "animation": "Animation",
+        "blobs": "Flecken"
+      },
+      "presets": {
+        "aurora": "Polarlicht",
+        "sunset": "Abendrot",
+        "radar": "Radar",
+        "lighthouse": "Leuchtturm",
+        "chameleon": "Chamäleon",
+        "ocean": "Ozean",
+        "lava": "Lavalampe",
+        "pastel": "Pastellwolken"
+      },
+      "seo": {
+        "whatIs": "Ein animierter Farbverlauf ist ein Hintergrund, der sich langsam bewegt: Der Verlauf wandert, dreht sich, wechselt seine Farben, oder weiche Flecken schweben darüber. Musterli schreibt ihn als reines CSS mit Keyframes, ohne JavaScript und ohne Video. So bleibt er leicht und in jeder Grösse scharf.",
+        "howTo": "Wähl Wandern, Drehen, Farbwechsel oder Flecken, such deine Farben aus und stell Dauer, Beschleunigung und Richtung ein. Die Leertaste würfelt neue Farben und eine neue Anordnung der Flecken. Die Vorschau zeigt das echte CSS. Kopier danach das CSS, ein HTML-Beispiel oder Tailwind-Klassen, exportier ein Standbild als PNG, JPG, WebP oder SVG oder die ganze Schleife als GIF.",
+        "faq": {
+          "q1": {
+            "question": "Was passiert bei Menschen, die weniger Bewegung wünschen?",
+            "answer": "Jeder Code-Export enthält eine Regel für prefers-reduced-motion. Wer im System weniger Bewegung einstellt, sieht einen ruhigen, stehenden Verlauf, genau das erste Bild der Animation. Die Vorschau hier verhält sich gleich."
+          },
+          "q2": {
+            "question": "Welche Browser können drehende und farbwechselnde Verläufe?",
+            "answer": "Sie nutzen @property. Das können Chrome und Edge ab Version 85, Safari ab 16.4 und Firefox ab 128. Ältere Browser zeigen einen stehenden Verlauf statt eines kaputten Hintergrunds."
+          },
+          "q3": {
+            "question": "Macht die Animation meine Website langsam?",
+            "answer": "Die Flecken bewegen sich nur mit transform, das erledigt der Browser auf der Grafikkarte. Wandern, Drehen und Farbwechsel zeichnen den Hintergrund neu. Setz sie darum lieber für einen grossen Bereich ein als für viele kleine Elemente. Längere Dauern wirken ohnehin ruhiger."
+          },
+          "q4": {
+            "question": "Wie nutze ich das mit Tailwind?",
+            "answer": "Der Tailwind-Export liefert Klassen mit Arbitrary Values und einen Hinweis, die Keyframes zu ergänzen. Für Tailwind v4 gibt es eine @theme-Fassung mit --animate-* und den Keyframes. Dann schreibst du einfach animate-gradient-pan."
+          },
+          "q5": {
+            "question": "Bekomme ich die Animation auch als Bild?",
+            "answer": "PNG, JPG, WebP und SVG zeigen den ruhigen Anfangszustand. Der GIF-Export zeichnet die ganze Schleife Bild für Bild und nahtlos, für Orte ohne CSS wie E-Mails oder Chats."
+          }
+        }
+      }
     }
   },
   "Converters": {

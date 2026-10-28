@@ -268,6 +268,11 @@ export interface CssBox {
   height: number;
   /** CSS declarations of the box, without a selector. */
   css: string;
+  /**
+   * Animation declarations of the box (e.g. floating blobs), applied like
+   * `CssElement.motionCss`: only when the viewer allows motion.
+   */
+  motionCss?: string;
 }
 
 /**

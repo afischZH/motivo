@@ -45,3 +45,4 @@ export * from "./tools/terrazzo";
 export * from "./tools/screenshot-beautifier";
 export * from "./tools/screenshot-beautifier/mockup";
 export * from "./tools/avatar";
+export * from "./tools/animated-gradient";

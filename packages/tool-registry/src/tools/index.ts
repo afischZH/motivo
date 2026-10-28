@@ -38,6 +38,7 @@ import { terrazzoTool } from "./terrazzo";
 import { screenshotBeautifierTool } from "./screenshot-beautifier";
 import { avatarTool } from "./avatar";
 import { placeholderImageTool } from "./placeholder-image";
+import { animatedGradientTool } from "./animated-gradient";
 
 export {
   blobTool,
@@ -74,6 +75,7 @@ export {
   screenshotBeautifierTool,
   avatarTool,
   placeholderImageTool,
+  animatedGradientTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -122,6 +124,7 @@ export type { AvatarParams } from "./avatar";
 export { AVATAR_SOURCES, avatarSourceHash, avatarText } from "./avatar";
 export type { PlaceholderImageParams } from "./placeholder-image";
 export { PLACEHOLDER_LABELS, placeholderLabel } from "./placeholder-image";
+export type { AnimatedGradientParams } from "./animated-gradient";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -159,6 +162,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   screenshotBeautifierTool,
   avatarTool,
   placeholderImageTool,
+  animatedGradientTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

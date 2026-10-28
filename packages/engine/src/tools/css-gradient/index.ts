@@ -269,9 +269,18 @@ function conicSvg(o: CssGradientOptions): string {
   return `${underlay}<g shape-rendering="crispEdges">${paths.join("")}</g>`;
 }
 
+/**
+ * The SVG elements of the gradient on a `width` × `height` box at the origin
+ * (without the root `<svg>`), for tools that place or animate it.
+ */
+export function cssGradientSvgBody(o: CssGradientOptions): string {
+  return o.type === "linear" ? linearSvg(o) : o.type === "radial" ? radialSvg(o) : conicSvg(o);
+}
+
 /** Renders CSS declarations and an equivalent SVG preview. Pure and deterministic. */
 export function cssGradient(o: CssGradientOptions): CssGradientResult {
-  const body =
-    o.type === "linear" ? linearSvg(o) : o.type === "radial" ? radialSvg(o) : conicSvg(o);
-  return { css: cssGradientCss(o), previewSvg: svgDocument(o.width, o.height, body) };
+  return {
+    css: cssGradientCss(o),
+    previewSvg: svgDocument(o.width, o.height, cssGradientSvgBody(o)),
+  };
 }

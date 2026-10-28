@@ -51,6 +51,8 @@ interface Case {
   maxMeanDiff?: number;
   /** Overrides `MAX_STRAY_RATIO` per browser, with the reason in a comment. */
   maxStrayRatio?: Partial<Record<string, number>>;
+  /** Animated CSS: emulate reduced motion, so the preview shows the calm frame 0. */
+  reducedMotion?: boolean;
 }
 
 const CASES: Case[] = [
@@ -129,6 +131,13 @@ const CASES: Case[] = [
   { toolId: "placeholder-image" },
   { toolId: "placeholder-image", preset: "Blueprint" },
   { toolId: "avatar", preset: "Bauhaus" },
+  // M4c-AP03: animated CSS (calm state) against its SVG twin: pan on an
+  // oversized background, conic wedges (as Prism above), @property colours,
+  // soft radial blobs in boxes.
+  { toolId: "animated-gradient", css: true, reducedMotion: true },
+  { toolId: "animated-gradient", preset: "Radar", css: true, reducedMotion: true, maxMeanDiff: 4 },
+  { toolId: "animated-gradient", preset: "Chameleon", css: true, reducedMotion: true },
+  { toolId: "animated-gradient", preset: "Lava lamp", css: true, reducedMotion: true },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).
@@ -228,6 +237,7 @@ async function expectPreviewEqualsExport(
   testInfo: TestInfo,
   c: Case,
 ): Promise<void> {
+  if (c.reducedMotion) await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(`/en/tools/${toolSlug(c.toolId, "en")}`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("button", { name: "Share" })).toBeEnabled();
