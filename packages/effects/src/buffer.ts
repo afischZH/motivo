@@ -64,6 +64,42 @@ export function coverRect(
 }
 
 /**
+ * Stretches `src` to `width` × `height` with nearest-neighbour sampling
+ * (hard pixel edges, e.g. a dither grid enlarged to the output). Pure.
+ */
+export function resizeNearest(src: PixelBuffer, width: number, height: number): PixelBuffer {
+  const out = createPixelBuffer(width, height);
+  if (out.width === src.width && out.height === src.height) {
+    out.data.set(src.data);
+    return out;
+  }
+  const s = new Uint32Array(src.data.buffer, src.data.byteOffset, src.width * src.height);
+  const d = new Uint32Array(out.data.buffer, out.data.byteOffset, out.width * out.height);
+  const xs = new Uint32Array(out.width);
+  for (let x = 0; x < out.width; x++) {
+    xs[x] = Math.min(src.width - 1, Math.floor(((x + 0.5) * src.width) / out.width));
+  }
+  for (let y = 0; y < out.height; y++) {
+    const sy = Math.min(src.height - 1, Math.floor(((y + 0.5) * src.height) / out.height));
+    const row = sy * src.width;
+    const o = y * out.width;
+    for (let x = 0; x < out.width; x++) d[o + x] = s[row + (xs[x] ?? 0)] ?? 0;
+  }
+  return out;
+}
+
+/**
+ * Scales an effect grid to the output: nearest neighbour when enlarging
+ * (crisp pixels), box filter when shrinking (a small preview shows the
+ * mean, like any downscaled image).
+ */
+export function scaleGrid(src: PixelBuffer, width: number, height: number): PixelBuffer {
+  return width >= src.width && height >= src.height
+    ? resizeNearest(src, width, height)
+    : resizeCover(src, width, height);
+}
+
+/**
  * Resamples `src` to `width` × `height` with `coverRect` (box filter when
  * shrinking, nearest sample when enlarging). Pure and deterministic; the
  * browser draws with a canvas instead, this one serves Node (static motifs,

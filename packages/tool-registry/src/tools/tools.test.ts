@@ -152,6 +152,9 @@ describe("built-in tool registration", () => {
       "duotone",
       "ascii-art",
       "perspective-grid",
+      "halftone",
+      "cmyk-halftone",
+      "dither",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
@@ -192,6 +195,9 @@ describe("built-in tool registration", () => {
       "noise-grain",
       "duotone",
       "ascii-art",
+      "halftone",
+      "cmyk-halftone",
+      "dither",
     ]);
   });
 

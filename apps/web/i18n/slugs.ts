@@ -69,6 +69,9 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   duotone: { de: "duotone-generator", en: "duotone-generator" },
   "ascii-art": { de: "ascii-art-generator", en: "ascii-art-generator" },
   "perspective-grid": { de: "perspektivgitter-generator", en: "perspective-grid-generator" },
+  halftone: { de: "halftone-generator", en: "halftone-generator" },
+  "cmyk-halftone": { de: "cmyk-raster-generator", en: "cmyk-halftone-generator" },
+  dither: { de: "dithering-generator", en: "dither-generator" },
 };
 
 /**

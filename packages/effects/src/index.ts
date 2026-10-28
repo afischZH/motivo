@@ -11,3 +11,6 @@ export * from "./duotone";
 export * from "./dither";
 export * from "./demo-photo";
 export * from "./ascii";
+export * from "./halftone";
+export * from "./halftone-effect";
+export * from "./cmyk";

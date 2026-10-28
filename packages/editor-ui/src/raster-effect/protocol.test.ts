@@ -1,6 +1,9 @@
 import {
   coverRect,
+  ditherTool,
   duotoneTool,
+  effectVectorInputSize,
+  halftoneTool,
   photoSampleSize,
   renderImageEffect,
   type CanvasSize,
@@ -186,5 +189,61 @@ describe("raster-effect handler", () => {
     // The photo travels separately: params hold null in its place.
     const ok = await handle(request({ params: { ...duotoneTool.defaults, photo: null } }));
     expect(ok).toMatchObject({ ok: true });
+  });
+});
+
+describe("raster-effect handler: effect grids and vector output (M5-AP02)", () => {
+  const tools = new Map([halftoneTool, ditherTool, duotoneTool].map((t) => [t.id, t] as const));
+  const lookup = (id: string) => tools.get(id);
+  const design = { width: 300, height: 200 };
+
+  it("draws the picture at the dither grid and scales the result to the output", async () => {
+    const { env } = fakeEnv({ lookup });
+    const handle = createEffectHandler(env);
+    const params = { ...ditherTool.defaults, pixelSize: 4 };
+    const reply = await handle(
+      request({ toolId: ditherTool.id, params, design, out: { width: 600, height: 400 } }),
+    );
+    expect(reply).toMatchObject({ ok: true });
+    // The source is drawn at the grid (75 × 50), the bitmap has the output size.
+    expect(env.readCover.mock.calls[0]?.[2]).toEqual({ width: 75, height: 50 });
+    expect(env.toBitmap.mock.calls.at(-1)?.[0]).toMatchObject({ width: 600, height: 400 });
+  });
+
+  it("builds the halftone SVG at the analysis size, only within the shape budget", async () => {
+    const { env } = fakeEnv({ lookup });
+    const handle = createEffectHandler(env);
+    const svgRequest = (patch: Partial<EffectRenderRequest>) =>
+      request({
+        toolId: halftoneTool.id,
+        params: halftoneTool.defaults,
+        design,
+        out: effectVectorInputSize(design),
+        encode: { mime: "image/svg+xml" },
+        ...patch,
+      });
+    const reply = await handle(svgRequest({}));
+    if (!reply.ok || !("blob" in reply)) throw new Error("no SVG");
+    expect(reply.blob.type).toBe("image/svg+xml");
+    expect(await reply.blob.text()).toMatch(
+      /^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" width="300"/,
+    );
+    expect(env.encode).not.toHaveBeenCalled();
+    const invalid = { ok: false, error: "invalid-request" };
+    // Wrong analysis size, a tool without vector output, too many shapes.
+    expect(await handle(svgRequest({ out: { width: 60, height: 40 } }))).toMatchObject(invalid);
+    expect(
+      await handle(svgRequest({ toolId: duotoneTool.id, params: duotoneTool.defaults })),
+    ).toMatchObject(invalid);
+    const huge = { width: 8000, height: 6000 };
+    expect(
+      await handle(
+        svgRequest({
+          design: huge,
+          out: effectVectorInputSize(huge),
+          params: { ...halftoneTool.defaults, cellSize: 4 },
+        }),
+      ),
+    ).toMatchObject(invalid);
   });
 });

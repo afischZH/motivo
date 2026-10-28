@@ -43,6 +43,9 @@ import { faviconGeneratorTool } from "./favicon-generator";
 import { duotoneTool } from "./duotone";
 import { asciiArtTool } from "./ascii-art";
 import { perspectiveGridTool } from "./perspective-grid";
+import { halftoneTool } from "./halftone";
+import { cmykHalftoneTool } from "./cmyk-halftone";
+import { ditherTool } from "./dither";
 
 export {
   blobTool,
@@ -84,6 +87,9 @@ export {
   duotoneTool,
   asciiArtTool,
   perspectiveGridTool,
+  halftoneTool,
+  cmykHalftoneTool,
+  ditherTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -146,6 +152,18 @@ export { duotoneStops } from "./duotone";
 export type { AsciiArtParams } from "./ascii-art";
 export { asciiStyle, sampleAsciiGrid } from "./ascii-art";
 export type { PerspectiveGridParams } from "./perspective-grid";
+export type { HalftoneParams } from "./halftone";
+export { HALFTONE_SVG_MAX_SHAPES, halftoneOptions } from "./halftone";
+export type { CmykHalftoneParams } from "./cmyk-halftone";
+export { CMYK_SVG_MAX_SHAPES, cmykHalftoneOptions, cmykOffsets } from "./cmyk-halftone";
+export type { DitherParams, DitherPaletteId } from "./dither";
+export {
+  DITHER_FIXED_PALETTES,
+  DITHER_PALETTES,
+  ditherColorMode,
+  ditherGrid,
+  ditherPalette,
+} from "./dither";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -188,6 +206,9 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   duotoneTool,
   asciiArtTool,
   perspectiveGridTool,
+  halftoneTool,
+  cmykHalftoneTool,
+  ditherTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

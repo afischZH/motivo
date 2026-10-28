@@ -3816,6 +3816,266 @@
           }
         }
       }
+    },
+    "halftone": {
+      "name": "Halftone-Effekt",
+      "description": "Verwandle Fotos in Rasterpunkte, Linien, Quadrate oder Rauten wie im Zeitungsdruck. Mit Winkel, Zellgrösse, zwei Farben und SVG-Export. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "screen": "Raster",
+        "tone": "Tonwerte"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Punkte",
+            "line": "Linien",
+            "square": "Quadrate",
+            "diamond": "Rauten"
+          }
+        },
+        "cellSize": {
+          "label": "Zellgrösse"
+        },
+        "angle": {
+          "label": "Rasterwinkel"
+        },
+        "ink": {
+          "label": "Druckfarbe"
+        },
+        "background": {
+          "label": "Papier"
+        },
+        "invert": {
+          "label": "Umkehren (helle Punkte)"
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "newsprint": "Zeitung",
+        "pop-art": "Pop-Art",
+        "engraving": "Kupferstich",
+        "mosaic": "Mosaik",
+        "diamonds": "Rauten",
+        "night": "Nacht"
+      },
+      "seo": {
+        "whatIs": "Halftone (auf Deutsch Rasterdruck oder Autotypie) ist die Technik, mit der Zeitungen und Plakate Fotos mit nur einer Druckfarbe zeigen: Das Bild wird in ein Raster aus Zellen zerlegt, und jede Zelle bekommt einen Punkt, der umso grösser ist, je dunkler das Bild an dieser Stelle ist. Aus der Nähe siehst du Punkte, aus der Distanz ein Foto. Heute ist der Look beliebt für Plakate, Merch, Social Media und Webseiten mit Retro- oder Pop-Art-Stil.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle die Form (Punkte, Linien, Quadrate oder Rauten), die Zellgrösse und den Rasterwinkel. Druckfarbe und Papier sind frei wählbar, das Papier auch transparent. Mit Umkehren werden die hellen Stellen zu Punkten, ideal für helle Farbe auf dunklem Grund. Helligkeit, Kontrast und Gamma steuern, wie gross die Punkte werden. Die Leertaste würfelt neue Farben und Winkel. Exportiere als PNG, JPG, WebP oder SVG.",
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Kann ich das Halftone als Vektor exportieren?",
+          "a2": "Ja. Der SVG-Export zeichnet jeden Punkt und jede Linie als Vektorform, ideal für Plotter, Siebdruck oder Laser. Damit die Datei handlich bleibt (rund 1 MB), gilt ein Limit von 70 000 Formen. Bei sehr grossen Fotos wählst du dafür eine grössere Zellgrösse; PNG, JPG und WebP haben kein solches Limit.",
+          "q3": "Welcher Rasterwinkel ist der richtige?",
+          "a3": "Klassisch sind 45 Grad: Unter diesem Winkel fällt das Raster dem Auge am wenigsten auf. 0 Grad wirkt technisch und streng, Linien unter 30 Grad erinnern an Kupferstiche. Probier mit der Leertaste verschiedene Winkel aus.",
+          "q4": "Warum werden die Punkte in der verkleinerten Vorschau zu einer Fläche?",
+          "a4": "Sind die Zellen in der Vorschau kleiner als etwa vier Bildschirmpixel, lassen sich die Punkte nicht mehr darstellen. Die Vorschau zeigt dann den Grauwert, den das Raster aus der Distanz ergibt. Zoome auf 100 Prozent, um die Punkte zu sehen; der Export rechnet immer in voller Grösse.",
+          "q5": "Kann ich meine Markenfarben verwenden?",
+          "a5": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an: Die dunkelste Farbe wird zur Druckfarbe, die hellste zum Papier. Ist Umkehren aktiv, ist es umgekehrt."
+        }
+      }
+    },
+    "cmyk-halftone": {
+      "name": "CMYK-Raster",
+      "description": "Zerlege Fotos in Cyan, Magenta, Gelb und Schwarz mit eigenem Rasterwinkel pro Farbe, wie im Offsetdruck. Mit Passerversatz und SVG-Export. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "screen": "Raster",
+        "angles": "Rasterwinkel",
+        "tone": "Tonwerte"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Punkte",
+            "line": "Linien",
+            "square": "Quadrate",
+            "diamond": "Rauten"
+          }
+        },
+        "cellSize": {
+          "label": "Zellgrösse"
+        },
+        "gcr": {
+          "label": "Unbuntaufbau (GCR)"
+        },
+        "offset": {
+          "label": "Passerversatz"
+        },
+        "offsetAngle": {
+          "label": "Richtung des Versatzes"
+        },
+        "angleC": {
+          "label": "Winkel Cyan"
+        },
+        "angleM": {
+          "label": "Winkel Magenta"
+        },
+        "angleY": {
+          "label": "Winkel Gelb"
+        },
+        "angleK": {
+          "label": "Winkel Schwarz"
+        },
+        "cyan": {
+          "label": "Cyan"
+        },
+        "magenta": {
+          "label": "Magenta"
+        },
+        "yellow": {
+          "label": "Gelb"
+        },
+        "black": {
+          "label": "Schwarz"
+        },
+        "paper": {
+          "label": "Papier"
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "comic": "Comic",
+        "misprint": "Fehldruck",
+        "fine": "Feinraster",
+        "newsprint": "Zeitung",
+        "pastel": "Pastell",
+        "squares": "Quadrate"
+      },
+      "seo": {
+        "whatIs": "Der CMYK-Rasterdruck ist das Verfahren hinter fast jedem gedruckten Farbfoto: Das Bild wird in die vier Druckfarben Cyan, Magenta, Gelb und Schwarz zerlegt, und jede Farbe wird als eigenes Punktraster gedruckt. Damit sich die Raster nicht zu störenden Mustern (Moiré) überlagern, hat jede Farbe ihren eigenen Winkel, klassisch Cyan 15, Magenta 75, Gelb 0 und Schwarz 45 Grad. Aus der Nähe entstehen die typischen Rosetten, die Comics und Pop-Art berühmt gemacht haben.",
+        "howTo": "Lade ein Foto hoch oder starte mit einer Vorlage am Beispielbild. Stelle Zellgrösse und Form ein; der Unbuntaufbau (GCR) bestimmt, wie viel vom Grau in Schwarz statt in den drei Buntfarben gedruckt wird. Die Winkel pro Farbe sind frei einstellbar. Mit dem Passerversatz verschiebst du Cyan, Magenta und Gelb gegeneinander wie bei einem verrutschten Druck. Druckfarben und Papier lassen sich anpassen. Die Leertaste dreht alle Raster gemeinsam und wählt ein neues Papier. Exportiere als PNG, JPG, WebP oder SVG.",
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Ist das eine echte Farbseparation für die Druckerei?",
+          "a2": "Nein, es ist ein Gestaltungseffekt. Die Umrechnung von RGB in CMYK ist bewusst einfach und kennt kein Farbprofil. Für den Druck eines Fotos in Originalfarben braucht die Druckerei weiterhin ein Profil wie ISO Coated. Das Ergebnis eignet sich aber gut als Grafik, die nach Rasterdruck aussieht.",
+          "q3": "Was macht der Unbuntaufbau (GCR)?",
+          "a3": "Wo Cyan, Magenta und Gelb gemeinsam ein Grau ergeben, ersetzt der Unbuntaufbau diesen Anteil durch Schwarz. Bei 100 Prozent druckt ein neutrales Grau nur in Schwarz, bei 0 Prozent nur in den drei Buntfarben. Mittlere Werte ergeben satte Schatten mit farbigen Rosetten.",
+          "q4": "Kann ich die Datei als SVG weiterverarbeiten?",
+          "a4": "Ja. Jede Druckfarbe ist eine eigene Gruppe mit dem Mischmodus Multiplizieren, so sehen Browser und Figma dieselben Überdrucke wie die Vorschau. Programme ohne Mischmodi zeigen die Farben übereinander. Das SVG ist auf 70 000 Formen begrenzt (rund 1 MB); bei grossen Fotos wählst du eine grössere Zellgrösse.",
+          "q5": "Warum sehe ich Moiré-Muster?",
+          "a5": "Moiré entsteht, wenn sich Raster mit ähnlichen Winkeln überlagern oder wenn die Zellen in der Vorschau nur wenige Pixel gross sind. Die klassischen Winkel liegen 30 Grad auseinander und halten das Moiré klein. Zoome auf 100 Prozent oder wähle eine grössere Zellgrösse."
+        }
+      }
+    },
+    "dither": {
+      "name": "Dithering-Effekt",
+      "description": "Reduziere Fotos auf wenige Farben mit Floyd-Steinberg, Atkinson, Stucki oder Bayer-Raster, in 1 Bit, Graustufen, Retro-Paletten oder deinen Farben. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "dither": "Dithering",
+        "tone": "Tonwerte"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "algorithm": {
+          "label": "Verfahren",
+          "options": {
+            "floyd-steinberg": "Floyd-Steinberg",
+            "atkinson": "Atkinson",
+            "stucki": "Stucki",
+            "bayer2": "Bayer 2 × 2",
+            "bayer4": "Bayer 4 × 4",
+            "bayer8": "Bayer 8 × 8"
+          }
+        },
+        "palette": {
+          "label": "Palette",
+          "options": {
+            "mono": "1 Bit (zwei Farben)",
+            "gray": "4 Graustufen",
+            "handheld": "Handheld (4 Grüntöne)",
+            "cga": "Frühe PC-Grafik (4 Farben)",
+            "custom": "Eigene Farben"
+          }
+        },
+        "ink": {
+          "label": "Dunkle Farbe"
+        },
+        "paper": {
+          "label": "Helle Farbe"
+        },
+        "colorMode": {
+          "label": "Farben zuordnen",
+          "options": {
+            "tone": "Nach Helligkeit",
+            "color": "Nach Farbe"
+          }
+        },
+        "pixelSize": {
+          "label": "Pixelgrösse"
+        },
+        "serpentine": {
+          "label": "Schlangenlinie (abwechselnde Zeilenrichtung)"
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "one-bit": "1 Bit",
+        "atkinson": "Atkinson",
+        "handheld": "Handheld",
+        "cga": "Frühe PC-Grafik",
+        "ordered": "Bayer-Raster",
+        "grayscale": "Graustufen",
+        "sunset": "Abendrot"
+      },
+      "seo": {
+        "whatIs": "Dithering ist ein Verfahren, mit dem ein Bild mit nur wenigen Farben auskommt und trotzdem Verläufe und Details zeigt: Statt eine Farbe zu runden, verteilt der Algorithmus die Abweichung auf die Nachbarpixel (Fehlerdiffusion wie Floyd-Steinberg, Atkinson oder Stucki) oder vergleicht jedes Pixel mit einem festen Schwellenmuster (Bayer-Raster). Der körnige Look erinnert an frühe Computer, Spielkonsolen und Faxgeräte und ist heute beliebt für Retro-Grafiken, Poster und Webseiten.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle ein Verfahren und eine Palette: 1 Bit mit zwei eigenen Farben, vier Graustufen, vier Grüntöne, die vier Farben früher PC-Grafik oder deine eigenen Farben. Die Pixelgrösse macht die Punkte gröber, Helligkeit, Kontrast und Gamma bestimmen, wie viel hell und dunkel wird. Die Leertaste würfelt neue Farben, bei festen Paletten ein neues Verfahren. Exportiere als PNG, JPG oder WebP.",
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Welches Verfahren soll ich wählen?",
+          "a2": "Floyd-Steinberg ist der Klassiker mit feinen, natürlichen Übergängen. Atkinson gibt nur einen Teil des Fehlers weiter: Lichter und Schatten werden kräftiger, wie bei frühen Macintosh-Grafiken. Stucki verteilt den Fehler weiter und wirkt ruhiger. Die Bayer-Raster erzeugen ein regelmässiges Kreuzmuster, das sich gut für Pixel-Art eignet.",
+          "q3": "Sieht der Export genau aus wie die Vorschau?",
+          "a3": "Ja. Das Dithering wird immer auf demselben Raster berechnet, nämlich Designgrösse geteilt durch Pixelgrösse, und danach auf die Anzeige- oder Exportgrösse skaliert. In derselben Grösse sind Vorschau und PNG pixelgleich, in doppelter Grösse wird jeder Punkt einfach grösser. In einer verkleinerten Vorschau verschmelzen die Punkte zu Grautönen; zoome auf 100 Prozent, um sie zu sehen.",
+          "q4": "Kann ich meine Markenfarben verwenden?",
+          "a4": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an: Die Palette wechselt auf eigene Farben mit deinen Markenfarben, von dunkel nach hell sortiert. Nach Farbe sucht für jedes Pixel die ähnlichste Farbe, nach Helligkeit verteilt die Helligkeit des Fotos über die Palette.",
+          "q5": "Warum gibt es keinen SVG-Export?",
+          "a5": "Beim Dithering ist jedes Pixel ein eigener Punkt. Als SVG würden daraus Hunderttausende Rechtecke, die Datei wäre gross und langsam. Exportiere als PNG: Mit einer Pixelgrösse über 1 bleibt jeder Punkt beim Vergrössern scharf."
+        }
+      }
     }
   },
   "Converters": {

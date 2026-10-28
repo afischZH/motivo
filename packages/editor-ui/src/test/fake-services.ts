@@ -45,6 +45,13 @@ export function fakeServices(overrides: Partial<ExportServices> = {}): FakeServi
           paths: ["favicon.ico"],
         })),
     ),
+    exportEffectSvg: vi.fn<ExportServices["exportEffectSvg"]>(
+      overrides.exportEffectSvg ??
+        (async (tool) => ({
+          blob: new Blob(["<svg/>"], { type: "image/svg+xml" }),
+          filename: `musterli-${tool.id}.svg`,
+        })),
+    ),
     downloadBlob: vi.fn<ExportServices["downloadBlob"]>(
       overrides.downloadBlob ?? (() => undefined),
     ),
