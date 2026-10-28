@@ -59,6 +59,12 @@ interface Message {
 
 const OUTLINE = buttonVariants({ variant: "outline", size: "sm" });
 const GHOST = buttonVariants({ variant: "ghost", size: "sm" });
+// The destructive variant dims its background in dark mode, which drops the
+// label contrast below 4.5:1; the confirm button keeps the full colour.
+const DANGER = cn(
+  buttonVariants({ variant: "destructive", size: "sm" }),
+  "dark:bg-destructive dark:hover:bg-destructive/90",
+);
 
 function storageMessageKey(error: unknown): `errors.${StorageErrorCode}` {
   const code = error instanceof StorageError ? error.code : "failed";
@@ -691,7 +697,7 @@ function ConfirmDelete(props: {
           </button>
           <button
             type="button"
-            className={buttonVariants({ variant: "destructive", size: "sm" })}
+            className={DANGER}
             onClick={() => {
               if (props.design) props.onConfirm(props.design);
             }}
