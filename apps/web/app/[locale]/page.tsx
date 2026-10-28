@@ -1,20 +1,20 @@
 /**
- * Home page: hero with motifs rendered by the tools themselves (static SVG
- * files from `/motifs`), value proposition, categories, featured tools,
- * "how it works", FAQ and a closing call to action. Built from the registry
- * and `lib/home.ts`; static, without page-specific client JS.
+ * Home page: a "motif machine" hero whose reels show presets rendered by the
+ * tools themselves (static SVG files from `/motifs`), then value proposition,
+ * categories, featured tools, "how it works", FAQ and a closing call to
+ * action. Built from the registry and `lib/home.ts`; the machine is the only
+ * client component.
  */
-import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { registry, type AnyToolDefinition, type ToolCategory } from "@motivo/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Bricolage_Grotesque } from "next/font/google";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
 
+import { MotifMachine, type MachineReel } from "@/components/home/motif-machine";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
-import { ToolCard } from "@/components/seo/tool-card";
-import { buttonVariants } from "@/components/ui/button";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
 import { routeHref, routePath } from "@/i18n/paths";
@@ -22,10 +22,18 @@ import { routing } from "@/i18n/routing";
 import { categoryTools, populatedCategories } from "@/lib/catalogue";
 import { FEATURED_TOOL_IDS, HERO_START_TOOL_ID, HERO_TOOL_IDS, HOME_FAQ_COUNT } from "@/lib/home";
 import { pageAlternates } from "@/lib/seo/alternates";
+import { hasStaticMotif, motifPath, staticDesigns } from "@/lib/seo/motifs";
 import { faqPage } from "@/lib/seo/json-ld";
 import { pageOpenGraph } from "@/lib/seo/page-meta";
 import { toolKeys } from "@/lib/seo/tool-content";
 import { cn } from "@/lib/utils";
+
+// Display face of the home page only (SIL OFL), self-hosted by next/font.
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 type HomePageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -68,7 +76,7 @@ export default async function HomePage({ params }: HomePageProps) {
   }));
 
   return (
-    <div className="flex flex-col gap-20 pb-20">
+    <div className={cn(display.variable, "flex flex-col")}>
       <JsonLdScript data={faqPage(faq, locale)} />
       <Hero locale={locale} text={text} />
       <Values text={text} />
@@ -81,109 +89,76 @@ export default async function HomePage({ params }: HomePageProps) {
   );
 }
 
-const SECTION = "mx-auto flex w-full max-w-6xl flex-col gap-6 px-4";
-const H2 = "text-2xl font-semibold tracking-tight sm:text-3xl";
+const WRAP = "mx-auto w-full max-w-6xl px-4 sm:px-6";
+const SECTION = cn(WRAP, "flex flex-col gap-8 py-20 sm:py-28");
+const H2 =
+  "font-display text-4xl font-extrabold tracking-[-0.03em] text-balance sm:text-5xl lg:text-6xl";
+const LEAD = "max-w-prose text-lg text-muted-foreground";
+const INK_LINK =
+  "rounded-control font-semibold underline decoration-2 underline-offset-4 hover:decoration-4";
 
 function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
-  const [stage, ...floating] = tools(HERO_TOOL_IDS);
   const startName = text(toolKeys(HERO_START_TOOL_ID).name);
+  const reels: MachineReel[] = tools(HERO_TOOL_IDS).map((tool) => ({
+    toolId: tool.id,
+    name: text(toolKeys(tool.id).name),
+    href: routePath({ page: "landing", toolId: tool.id }, locale),
+    frames: staticDesigns(tool).map((design) => motifPath(tool.id, design.id)),
+  }));
 
   return (
     <section
       aria-labelledby="hero-heading"
-      className="border-b border-border bg-gradient-to-b from-highlight/60 to-background"
+      className="on-machine border-b-[3px] border-machine-ink bg-machine text-machine-foreground"
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-14 sm:py-20 lg:grid-cols-2">
-        <div className="flex flex-col items-start gap-6">
-          <p className="text-sm font-medium text-link">{text("Home.hero.eyebrow")}</p>
+      <div
+        className={cn(
+          WRAP,
+          "grid items-center gap-14 py-16 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:py-28",
+        )}
+      >
+        <div className="flex flex-col items-start gap-7">
           <h1
             id="hero-heading"
-            className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+            className="font-display text-[clamp(3.5rem,11vw,7.25rem)] leading-[0.88] font-extrabold tracking-[-0.04em] text-balance"
           >
             {text("Home.hero.title")}
           </h1>
-          <p className="max-w-prose text-lg text-muted-foreground">{text("Home.hero.lead")}</p>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/tools" className={buttonVariants({ size: "lg" })}>
+          <p className="max-w-[34ch] text-lg text-machine-muted sm:text-xl">
+            {text("Home.hero.lead")}
+          </p>
+          <div className="flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-6">
+            <Link
+              href="/tools"
+              className="machine-press font-display inline-flex h-14 items-center justify-center rounded-full px-8 text-lg font-bold"
+            >
               {text("Home.hero.ctaPrimary")}
             </Link>
             {/* Full page load, like every other editor link. */}
             <a
               href={routePath({ page: "tool", toolId: HERO_START_TOOL_ID }, locale)}
-              className={buttonVariants({ size: "lg", variant: "outline" })}
+              className={cn(INK_LINK, "self-start py-2 text-lg sm:self-auto")}
             >
               {text("Home.hero.ctaSecondary", { tool: startName })}
             </a>
           </div>
-          <p className="text-sm text-muted-foreground">{text("Home.hero.hint")}</p>
+          <p className="text-sm text-machine-muted">{text("Home.hero.hint")}</p>
         </div>
 
-        {stage && (
-          <div className="relative mx-auto w-full max-w-xl pb-10 sm:pb-12">
-            <ul aria-label={text("Home.hero.showcaseLabel")}>
-              <li>
-                <ShowcaseLink tool={stage} locale={locale} text={text}>
-                  <MotifImage
-                    tool={stage}
-                    alt=""
-                    priority
-                    className="w-full rounded-card shadow-lg motion-safe:animate-[motif-drift_14s_ease-in-out_infinite_alternate]"
-                  />
-                </ShowcaseLink>
-              </li>
-              {floating.map((tool, i) => (
-                <li
-                  key={tool.id}
-                  className={cn(
-                    "absolute w-[30%]",
-                    i === 0 ? "-bottom-2 left-4 sm:left-6" : "-top-6 right-4 sm:right-6",
-                  )}
-                >
-                  <ShowcaseLink tool={tool} locale={locale} text={text}>
-                    <MotifImage
-                      tool={tool}
-                      alt=""
-                      className="w-full rounded-card border-4 border-background shadow-xl"
-                    />
-                  </ShowcaseLink>
-                </li>
-              ))}
-            </ul>
-            <p
-              aria-hidden="true"
-              className="absolute right-4 -bottom-1 flex items-center gap-2 rounded-control border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground shadow-sm sm:right-6"
-            >
-              <kbd className="rounded-sm border border-border bg-muted px-1.5 font-sans text-foreground">
-                {text("Home.hero.spaceHint")}
-              </kbd>
-              {text("Home.hero.spaceHintText")}
-            </p>
-          </div>
-        )}
+        <MotifMachine
+          reels={reels}
+          labels={{
+            machine: text("Home.machine.label"),
+            spin: text("Home.machine.spin"),
+            key: text("Home.hero.spaceHint"),
+            // Placeholders pass through and are filled in on the client.
+            round: text("Home.machine.round", { n: "{n}" }),
+            landed: text("Home.machine.landed", { tools: "{tools}" }),
+            open: text("Home.hero.showcaseLink", { tool: "{tool}" }),
+          }}
+        />
       </div>
     </section>
-  );
-}
-
-function ShowcaseLink({
-  tool,
-  locale,
-  text,
-  children,
-}: {
-  tool: AnyToolDefinition;
-  locale: EnabledLocale;
-  text: Text;
-  children: ReactNode;
-}) {
-  return (
-    <Link
-      href={routeHref({ page: "landing", toolId: tool.id }, locale)}
-      aria-label={text("Home.hero.showcaseLink", { tool: text(toolKeys(tool.id).name) })}
-      className="block rounded-card transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
-    >
-      {children}
-    </Link>
   );
 }
 
@@ -194,16 +169,15 @@ function Values({ text }: { text: Text }) {
       <h2 id="values-heading" className={H2}>
         {text("Home.values.heading")}
       </h2>
-      <ul className="grid gap-4 md:grid-cols-3">
+      <ul className="grid gap-x-10 gap-y-10 md:grid-cols-3">
         {items.map((item) => (
-          <li key={item} className="flex flex-col gap-2 rounded-card border border-border p-5">
-            <h3 className="text-lg font-semibold">{text(`Home.values.${item}.title`)}</h3>
+          <li key={item} className="flex flex-col gap-3 border-t-[3px] border-foreground pt-6">
+            <h3 className="font-display text-2xl font-bold tracking-[-0.02em] sm:text-3xl">
+              {text(`Home.values.${item}.title`)}
+            </h3>
             <p className="text-muted-foreground">{text(`Home.values.${item}.text`)}</p>
             {item === "donations" && (
-              <Link
-                href="/support"
-                className="mt-auto rounded-control text-sm font-medium text-link underline-offset-4 hover:underline"
-              >
+              <Link href="/support" className={cn(INK_LINK, "mt-1 self-start")}>
                 {text("Footer.support")}
               </Link>
             )}
@@ -214,46 +188,78 @@ function Values({ text }: { text: Text }) {
   );
 }
 
+/** Ink-framed window, the machine's reel language reused for every tile. */
+const WINDOW =
+  "group flex h-full flex-col overflow-hidden rounded-2xl border-[3px] border-foreground bg-card shadow-[0_4px_0_var(--foreground)] transition-transform duration-150 ease-out hover:-translate-y-1 focus-visible:-translate-y-1";
+
+/**
+ * Cover motif of a category tile: its first tool that no earlier tile shows,
+ * so categories sharing tools (gradients, CSS patterns) do not look alike.
+ */
+function categoryCover(category: ToolCategory, used: Set<string>): AnyToolDefinition | undefined {
+  const candidates = categoryTools(category).filter(hasStaticMotif);
+  const cover = candidates.find((tool) => !used.has(tool.id)) ?? candidates[0];
+  if (cover) used.add(cover.id);
+  return cover;
+}
+
 function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
-  const card =
-    "flex h-full flex-col gap-1 rounded-card border border-border bg-card p-4 transition-colors hover:border-ring";
+  const used = new Set<string>();
   return (
-    <section aria-labelledby="categories-heading" className={SECTION}>
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <div className="flex flex-col gap-1">
+    <section aria-labelledby="categories-heading" className={cn(SECTION, "pt-0 sm:pt-0")}>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-col gap-3">
           <h2 id="categories-heading" className={H2}>
             {text("Home.categories.heading")}
           </h2>
-          <p className="text-muted-foreground">{text("Home.categories.lead")}</p>
+          <p className={LEAD}>{text("Home.categories.lead")}</p>
         </div>
-        <Link
-          href="/tools"
-          className="rounded-control text-sm font-medium text-link underline-offset-4 hover:underline"
-        >
+        <Link href="/tools" className={INK_LINK}>
           {text("Home.categories.all")}
         </Link>
       </div>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {populatedCategories().map((category) => (
-          <li key={category}>
-            <Link href={routeHref({ page: "category", category }, locale)} className={card}>
-              <span className="font-semibold">
-                {text(`Categories.${category}.name`)}{" "}
-                <span className="text-sm font-normal text-muted-foreground">
-                  ({text("Catalogue.toolCount", { count: categoryTools(category).length })})
+      <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+        {populatedCategories().map((category) => {
+          const cover = categoryCover(category, used);
+          return (
+            <li key={category}>
+              <Link href={routeHref({ page: "category", category }, locale)} className={WINDOW}>
+                <span className="block aspect-[4/3] overflow-hidden border-b-[3px] border-foreground bg-muted">
+                  {cover && (
+                    <MotifImage
+                      tool={cover}
+                      alt=""
+                      className="size-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                    />
+                  )}
                 </span>
+                <span className="flex flex-1 flex-col gap-1 p-3 sm:p-4">
+                  <span className="font-display text-lg font-bold tracking-[-0.01em] sm:text-xl">
+                    {text(`Categories.${category}.name`)}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {text("Catalogue.toolCount", { count: categoryTools(category).length })}
+                  </span>
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+        <li>
+          <Link href="/convert" className={WINDOW}>
+            <span
+              aria-hidden="true"
+              className="font-display flex aspect-[4/3] items-center justify-center border-b-[3px] border-foreground bg-machine text-xl font-extrabold tracking-[-0.03em] text-machine-foreground sm:text-3xl"
+            >
+              SVG ⇄ CSS
+            </span>
+            <span className="flex flex-1 flex-col gap-1 p-3 sm:p-4">
+              <span className="font-display text-lg font-bold tracking-[-0.01em] sm:text-xl">
+                {text("Categories.converters.name")}
               </span>
               <span className="text-sm text-muted-foreground">
-                {text(`Categories.${category}.description`)}
+                {text("Home.categories.converters")}
               </span>
-            </Link>
-          </li>
-        ))}
-        <li>
-          <Link href="/convert" className={card}>
-            <span className="font-semibold">{text("Categories.converters.name")}</span>
-            <span className="text-sm text-muted-foreground">
-              {text("Home.categories.converters")}
             </span>
           </Link>
         </li>
@@ -264,20 +270,57 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
 
 function Featured({ locale, text }: { locale: EnabledLocale; text: Text }) {
   return (
-    <section aria-labelledby="featured-heading" className={SECTION}>
-      <div className="flex flex-col gap-1">
-        <h2 id="featured-heading" className={H2}>
-          {text("Home.featured.heading")}
-        </h2>
-        <p className="text-muted-foreground">{text("Home.featured.lead")}</p>
+    <section
+      aria-labelledby="featured-heading"
+      className="border-y-[3px] border-foreground bg-muted"
+    >
+      <div className={SECTION}>
+        <div className="flex flex-col gap-3">
+          <h2 id="featured-heading" className={H2}>
+            {text("Home.featured.heading")}
+          </h2>
+          <p className={LEAD}>{text("Home.featured.lead")}</p>
+        </div>
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {tools(FEATURED_TOOL_IDS).map((tool) => {
+            const name = text(toolKeys(tool.id).name);
+            return (
+              <li key={tool.id}>
+                <article className={cn(WINDOW, "relative")}>
+                  <span className="flex h-48 items-center justify-center border-b-[3px] border-foreground bg-background p-5">
+                    <MotifImage
+                      tool={tool}
+                      alt=""
+                      className="max-h-full w-auto rounded-lg border-2 border-foreground"
+                    />
+                  </span>
+                  <span className="flex flex-1 flex-col gap-2 p-5">
+                    <h3 className="font-display text-xl font-bold tracking-[-0.01em]">
+                      {/* The stretched link makes the whole tile clickable. */}
+                      <Link
+                        href={routeHref({ page: "landing", toolId: tool.id }, locale)}
+                        className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-ring"
+                      >
+                        {name}
+                      </Link>
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {text(toolKeys(tool.id).description)}
+                    </p>
+                    <a
+                      href={routePath({ page: "tool", toolId: tool.id }, locale)}
+                      aria-label={text("Catalogue.openEditorFor", { tool: name })}
+                      className={cn(INK_LINK, "relative z-10 mt-auto self-start pt-2 text-sm")}
+                    >
+                      {text("Catalogue.openEditor")}
+                    </a>
+                  </span>
+                </article>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {tools(FEATURED_TOOL_IDS).map((tool) => (
-          <li key={tool.id}>
-            <ToolCard tool={tool} locale={locale} headingLevel={3} />
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
@@ -285,26 +328,31 @@ function Featured({ locale, text }: { locale: EnabledLocale; text: Text }) {
 function HowItWorks({ text }: { text: Text }) {
   const steps = ["step1", "step2", "step3"] as const;
   return (
-    <section aria-labelledby="how-heading" className={SECTION}>
-      <h2 id="how-heading" className={H2}>
-        {text("Home.how.heading")}
-      </h2>
-      <ol className="grid gap-6 md:grid-cols-3">
-        {steps.map((step, i) => (
-          <li key={step} className="flex gap-4">
-            <span
-              aria-hidden="true"
-              className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground tabular-nums"
-            >
-              {i + 1}
-            </span>
-            <div className="flex flex-col gap-1">
-              <h3 className="text-lg font-semibold">{text(`Home.how.${step}.title`)}</h3>
-              <p className="text-muted-foreground">{text(`Home.how.${step}.text`)}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
+    <section
+      aria-labelledby="how-heading"
+      className="on-machine border-b-[3px] border-machine-ink bg-machine text-machine-foreground"
+    >
+      <div className={SECTION}>
+        <h2 id="how-heading" className={H2}>
+          {text("Home.how.heading")}
+        </h2>
+        <ol className="grid gap-10 md:grid-cols-3">
+          {steps.map((step, i) => (
+            <li key={step} className="flex flex-col gap-4">
+              <span
+                aria-hidden="true"
+                className="font-display text-8xl leading-none font-extrabold tracking-[-0.04em] text-lever tabular-nums"
+              >
+                {i + 1}
+              </span>
+              <h3 className="font-display text-2xl font-bold tracking-[-0.02em]">
+                {text(`Home.how.${step}.title`)}
+              </h3>
+              <p className="text-machine-muted">{text(`Home.how.${step}.text`)}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }
@@ -315,10 +363,13 @@ function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text:
       <h2 id="faq-heading" className={H2}>
         {text("Home.faq.heading")}
       </h2>
-      <dl className="grid gap-x-10 gap-y-6 md:grid-cols-2">
+      <dl className="grid gap-x-12 gap-y-10 md:grid-cols-2">
         {faq.map((entry) => (
-          <div key={entry.question} className="flex flex-col gap-1">
-            <dt className="font-semibold">{entry.question}</dt>
+          <div
+            key={entry.question}
+            className="flex flex-col gap-2 border-t-[3px] border-foreground pt-5"
+          >
+            <dt className="font-display text-xl font-bold tracking-[-0.01em]">{entry.question}</dt>
             <dd className="text-muted-foreground">{entry.answer}</dd>
           </div>
         ))}
@@ -329,17 +380,20 @@ function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text:
 
 function ClosingCta({ locale, text }: { locale: EnabledLocale; text: Text }) {
   return (
-    <section aria-labelledby="cta-heading" className={SECTION}>
-      <div className="flex flex-col items-start gap-4 rounded-card border border-border bg-highlight p-8 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-1">
-          <h2 id="cta-heading" className="text-2xl font-semibold tracking-tight">
+    <section aria-labelledby="cta-heading" className={cn(WRAP, "pb-24")}>
+      <div className="machine-cabinet flex flex-col items-start gap-8 rounded-[2rem] p-8 text-lever-foreground sm:p-12 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-3">
+          <h2
+            id="cta-heading"
+            className="font-display text-5xl leading-[0.95] font-extrabold tracking-[-0.04em] text-balance sm:text-6xl"
+          >
             {text("Home.cta.heading")}
           </h2>
-          <p className="text-muted-foreground">{text("Home.cta.text")}</p>
+          <p className="text-lg">{text("Home.cta.text")}</p>
         </div>
         <a
           href={routePath({ page: "tool", toolId: HERO_START_TOOL_ID }, locale)}
-          className={buttonVariants({ size: "lg" })}
+          className="lever-button font-display inline-flex h-14 shrink-0 items-center justify-center rounded-full px-8 text-lg font-bold"
         >
           {text("Home.cta.button")}
         </a>

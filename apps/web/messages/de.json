@@ -27,16 +27,19 @@
     "metaTitle": "Motivo: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
     "metaDescription": "Gratis Generatoren für Muster, Verläufe, Hintergründe und Farbpaletten. Alles läuft in deinem Browser, Export als SVG, PNG oder CSS. Ohne Konto.",
     "hero": {
-      "eyebrow": "Gratis Generatoren für Grafiken",
       "title": "Motive per Klick",
       "lead": "Muster, Verläufe, Hintergründe und Farbpaletten für Websites, Slides und Social Media. Leertaste drücken, neue Variante bekommen, als SVG, PNG oder CSS exportieren.",
       "ctaPrimary": "Alle Tools entdecken",
       "ctaSecondary": "Mit {tool} starten",
-      "hint": "Kein Konto nötig. Deine Motive entstehen direkt auf deinem Gerät.",
-      "showcaseLabel": "Beispielmotive",
+      "hint": "Gratis und ohne Konto. Deine Motive entstehen direkt auf deinem Gerät.",
       "showcaseLink": "{tool} öffnen",
-      "spaceHint": "Leertaste",
-      "spaceHintText": "neue Variante"
+      "spaceHint": "Leertaste"
+    },
+    "machine": {
+      "label": "Motiv-Automat mit drei Beispielmotiven",
+      "spin": "Drehen",
+      "round": "Variante {n}",
+      "landed": "Neue Varianten: {tools}"
     },
     "values": {
       "heading": "Warum Motivo",

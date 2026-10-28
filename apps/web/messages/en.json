@@ -27,16 +27,19 @@
     "metaTitle": "Motivo: free pattern, gradient and background generators in your browser",
     "metaDescription": "Free generators for patterns, gradients, backgrounds and color palettes. Everything runs in your browser, export as SVG, PNG or CSS. No account needed.",
     "hero": {
-      "eyebrow": "Free generators for graphics",
       "title": "Motifs in one click",
       "lead": "Patterns, gradients, backgrounds and color palettes for websites, slides and social media. Press the space bar for a new variant, then export as SVG, PNG or CSS.",
       "ctaPrimary": "Explore all tools",
       "ctaSecondary": "Start with {tool}",
-      "hint": "No account needed. Your motifs are created right on your device.",
-      "showcaseLabel": "Sample motifs",
+      "hint": "Free and no account needed. Your motifs are created right on your device.",
       "showcaseLink": "Open {tool}",
-      "spaceHint": "Space",
-      "spaceHintText": "new variant"
+      "spaceHint": "Space"
+    },
+    "machine": {
+      "label": "Motif machine with three sample motifs",
+      "spin": "Spin",
+      "round": "Variant {n}",
+      "landed": "New variants: {tools}"
     },
     "values": {
       "heading": "Why Motivo",
