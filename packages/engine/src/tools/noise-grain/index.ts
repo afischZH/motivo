@@ -68,34 +68,63 @@ function baseFill(o: NoiseGrainSvgOptions): { defs: string; fill: string } | nul
   }
 }
 
+/** A tiled grain raster blended over a whole canvas (see `grainOverlay`). */
+export interface GrainLayer {
+  /** `data:` URI (or URL) of the seamless grain tile. */
+  readonly href: string;
+  /** Edge of the square tile in px; it is drawn 1:1 in user units. */
+  readonly edge: number;
+  /** Opacity of the grain layer in [0, 1]; clamped. */
+  readonly opacity: number;
+  readonly blend: GrainBlend;
+}
+
 /**
- * SVG document: base rect plus a rect filled with the tiled grain pattern,
- * blended with `mix-blend-mode`. The tile uses nearest-neighbour scaling so a
- * scaled preview or a 2x export shows the same grain, only magnified.
+ * The grain layer as SVG parts: a `<pattern>` for `<defs>` and a full-size
+ * rect that fills with it, blended with `mix-blend-mode`. The tile uses
+ * nearest-neighbour scaling so a scaled preview or a 2x export shows the same
+ * grain, only magnified. Both parts are empty at zero opacity. Shared by every
+ * tool with a grain option, so all of them render grain the same way.
+ */
+export function grainOverlay(
+  width: number,
+  height: number,
+  layer: GrainLayer,
+): { def: string; rect: string } {
+  const opacity = Math.min(1, Math.max(0, layer.opacity));
+  if (!(opacity > 0)) return { def: "", rect: "" };
+  const t = formatNumber(layer.edge);
+  const pattern =
+    `<pattern width="${t}" height="${t}" patternUnits="userSpaceOnUse">` +
+    `<image width="${t}" height="${t}" style="image-rendering:pixelated" ` +
+    `xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="${layer.href}"/></pattern>`;
+  // The id hashes the head of the pattern only: hashing a 250 KB data URI
+  // per render would be wasted work, and the tile is unique per document.
+  const id = stableId("g", pattern.slice(0, 200) + layer.href.slice(-64));
+  return {
+    def: pattern.replace("<pattern ", `<pattern id="${id}" `),
+    rect:
+      `<rect width="${formatNumber(width)}" height="${formatNumber(height)}" fill="url(#${id})" ` +
+      `opacity="${formatNumber(opacity, 3)}" style="mix-blend-mode:${layer.blend}"/>`,
+  };
+}
+
+/**
+ * SVG document: base rect plus a rect filled with the tiled grain pattern
+ * (`grainOverlay`).
  */
 export function noiseGrainSvg(o: NoiseGrainSvgOptions): string {
   const w = formatNumber(o.width);
   const h = formatNumber(o.height);
-  const t = formatNumber(o.tileEdge);
   const base = baseFill(o);
-  const opacity = Math.min(1, Math.max(0, o.opacity));
-
-  const pattern =
-    `<pattern width="${t}" height="${t}" patternUnits="userSpaceOnUse">` +
-    `<image width="${t}" height="${t}" style="image-rendering:pixelated" ` +
-    `xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="${o.tileHref}"/></pattern>`;
-  // The id hashes the head of the pattern only: hashing a 250 KB data URI
-  // per render would be wasted work, and the tile is unique per document.
-  const patternId = stableId("g", pattern.slice(0, 200) + o.tileHref.slice(-64));
-  const patternDef = pattern.replace("<pattern ", `<pattern id="${patternId}" `);
-
+  const grain = grainOverlay(o.width, o.height, {
+    href: o.tileHref,
+    edge: o.tileEdge,
+    opacity: o.opacity,
+    blend: o.blend,
+  });
   const baseRect = base ? `<rect width="${w}" height="${h}" fill="${base.fill}"/>` : "";
-  const grainRect =
-    opacity > 0
-      ? `<rect width="${w}" height="${h}" fill="url(#${patternId})" ` +
-        `opacity="${formatNumber(opacity, 3)}" style="mix-blend-mode:${o.blend}"/>`
-      : "";
-  const defsBody = `${base?.defs ?? ""}${grainRect ? patternDef : ""}`;
+  const defsBody = `${base?.defs ?? ""}${grain.def}`;
   const defs = defsBody ? `<defs>${defsBody}</defs>` : "";
-  return svgDocument(o.width, o.height, `${defs}${baseRect}${grainRect}`);
+  return svgDocument(o.width, o.height, `${defs}${baseRect}${grain.rect}`);
 }

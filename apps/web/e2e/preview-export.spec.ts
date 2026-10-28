@@ -71,6 +71,14 @@ const CASES: Case[] = [
   { toolId: "doodles", preset: "Chalkboard" },
   { toolId: "svg-charts" },
   { toolId: "svg-charts", preset: "Quarterly" },
+  // M3-AP07 gradients: with and without the grain tile; mesh with its
+  // Gaussian blur filter, blurry and striped without filters.
+  { toolId: "mesh-gradient" },
+  { toolId: "mesh-gradient", preset: "Meadow" },
+  { toolId: "blurry-gradient" },
+  { toolId: "blurry-gradient", preset: "Sorbet" },
+  { toolId: "striped-gradient" },
+  { toolId: "striped-gradient", preset: "Dusk" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

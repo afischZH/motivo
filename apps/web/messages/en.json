@@ -1435,6 +1435,182 @@
           "a5": "PNG, JPG, WebP, GIF (first frame of an animation) and SVG up to 5 MB. Transparent pixels are not counted."
         }
       }
+    },
+    "mesh-gradient": {
+      "name": "Mesh Gradient",
+      "description": "Soft, flowing color gradients from several blurred color fields. Export as PNG, JPG, WebP, SVG or CSS.",
+      "groups": {
+        "effects": "Blur and grain"
+      },
+      "params": {
+        "points": {
+          "label": "Color fields"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "lagoon": "Lagoon",
+        "ember": "Ember",
+        "meadow": "Meadow",
+        "nebula": "Nebula",
+        "citrus": "Citrus",
+        "dusk": "Dusk",
+        "ice": "Ice"
+      },
+      "seo": {
+        "whatIs": "A mesh gradient blends several colors across a surface instead of along a single line. The result looks like soft, flowing light and suits website heroes, app backgrounds, slides and social media posts.",
+        "howTo": "Pick your colors and a background, choose how many color fields to mix and how strongly to warp and blur them, and add some grain if you like. Press Space for a new arrangement. Then export as PNG, JPG, WebP, SVG or CSS in the size you need.",
+        "faq": {
+          "q1": {
+            "question": "How is a mesh gradient different from a normal gradient?",
+            "answer": "A linear or radial gradient runs along one line or out from one point. A mesh gradient places several colors freely on the surface and blends them softly, so it looks organic rather than technical."
+          },
+          "q2": {
+            "question": "Can I edit the SVG in a design app?",
+            "answer": "The SVG contains plain shapes and one standard Gaussian blur filter, which browsers and many design apps can display. Support for SVG filters varies between editing apps, so if the blur looks different there, use the PNG export."
+          },
+          "q3": {
+            "question": "Why is there grain on the gradient?",
+            "answer": "Fine grain gives the surface a soft, analog look and hides banding, the visible steps in smooth gradients. Set Grain to 0 for a perfectly smooth result."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, and the arrangement is computed from the seed. The same settings and seed always give the same gradient."
+          }
+        }
+      }
+    },
+    "blurry-gradient": {
+      "name": "Blurry Gradient",
+      "description": "Dreamy backgrounds from large, strongly blurred color circles. Export as PNG, JPG, WebP, SVG or CSS.",
+      "groups": {
+        "effects": "Look"
+      },
+      "params": {
+        "circles": {
+          "label": "Circles"
+        },
+        "layout": {
+          "label": "Position",
+          "options": {
+            "corners": "Corners",
+            "mixed": "Center and corners",
+            "center": "Center"
+          }
+        },
+        "size": {
+          "label": "Size"
+        },
+        "spread": {
+          "label": "Spread"
+        },
+        "opacity": {
+          "label": "Opacity"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "midnight": "Midnight",
+        "sorbet": "Sorbet",
+        "ocean": "Ocean",
+        "sunset": "Sunset",
+        "forest": "Forest",
+        "mono": "Mono",
+        "neon": "Neon"
+      },
+      "seo": {
+        "whatIs": "A blurry gradient is a background made of a few large color circles, blurred so strongly that only soft clouds of color remain. It works well behind text, as a website hero, in presentations and as a wallpaper.",
+        "howTo": "Choose two to five circles and whether they sit in the corners or around the center, then set size, spread, opacity and blur. Press Space for a new variant, add grain if you like, and export as PNG, JPG, WebP, SVG or CSS.",
+        "faq": {
+          "q1": {
+            "question": "Will text stay readable on top?",
+            "answer": "Yes, with enough contrast. Light circles on a light background or dark ones on a dark background keep the surface calm. Lower the opacity if the colors compete with your text."
+          },
+          "q2": {
+            "question": "Does the SVG use filters?",
+            "answer": "No. Every blurred circle is a radial gradient whose transparency follows the exact shape of a blurred circle. That is why the SVG looks the same in every browser and design app and renders fast at any size."
+          },
+          "q3": {
+            "question": "What does Spread do?",
+            "answer": "It moves each circle away from its anchor point by a random amount, toward the middle of the image. At 0 the circles sit exactly on the corners or in the center."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, and the positions are computed from the seed. The same settings and seed always give the same result."
+          }
+        }
+      }
+    },
+    "striped-gradient": {
+      "name": "Striped Gradient",
+      "description": "Vertical stripes, each with its own gradient, slightly offset against each other. Export as PNG, JPG, WebP, SVG or CSS.",
+      "groups": {
+        "effects": "Shading and grain"
+      },
+      "params": {
+        "stripes": {
+          "label": "Stripes"
+        },
+        "variance": {
+          "label": "Width variation"
+        },
+        "offset": {
+          "label": "Offset"
+        },
+        "alternate": {
+          "label": "Alternate direction"
+        },
+        "shading": {
+          "label": "Shading"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "fluted": "Fluted glass",
+        "candy": "Candy",
+        "dusk": "Dusk",
+        "forest": "Forest",
+        "retro": "Retro",
+        "silk": "Silk",
+        "ink": "Ink"
+      },
+      "seo": {
+        "whatIs": "A striped gradient splits a color gradient into vertical bands and shifts each band a little. It looks like light through ribbed glass or folded fabric and makes a striking background for covers, posters and websites.",
+        "howTo": "Set your colors from top to bottom, then choose the number of stripes, how much their widths vary and how far they are offset. Shading adds light and shadow to every stripe. Press Space for new variants and export as PNG, JPG, WebP, SVG or CSS.",
+        "faq": {
+          "q1": {
+            "question": "What does Offset do?",
+            "answer": "Every stripe runs through the same colors but starts at a slightly different height. The higher the offset, the more the stripes are out of step. At 0 they line up into one continuous gradient."
+          },
+          "q2": {
+            "question": "How do I get a fluted glass look?",
+            "answer": "Use many narrow stripes, a small offset and strong shading. The Fluted glass preset is a good starting point."
+          },
+          "q3": {
+            "question": "Is the SVG easy to edit?",
+            "answer": "Yes. Apart from the optional grain it consists only of rectangles with linear gradients, without filters, so design apps such as Figma, Illustrator or Inkscape open it as editable shapes."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, and the offsets are computed from the seed. The same settings and seed always give the same result."
+          }
+        }
+      }
     }
   },
   "Converters": {

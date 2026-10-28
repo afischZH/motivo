@@ -21,3 +21,6 @@ export * from "./noise";
 export * from "./tools/blob-composition";
 export * from "./tools/doodles";
 export * from "./tools/svg-charts";
+export * from "./tools/mesh-gradient";
+export * from "./tools/blurry-gradient";
+export * from "./tools/striped-gradient";
