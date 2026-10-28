@@ -883,18 +883,20 @@ background-position: 0 0, 24px 36px, 24px 36px, 0px 36px, 0px 36px, 24px 24px, 2
 
 exports[`preset snapshots: css-shadow > button 1`] = `
 {
-  "css": "background-color: #4f46e5;
+  "css": "background-color: #f5f3ff;
+background-image: repeating-linear-gradient(0deg, #ceccd773 0px 2px, transparent 2px 32px), repeating-linear-gradient(90deg, #ceccd773 0px 2px, transparent 2px 32px);
+background-size: 100% 100%, 100% 100%;
+background-position: 0 0, 0 0;",
+  "element": {
+    "css": "background-color: #4f46e5;
 border-radius: 40px;
 box-shadow: 0 3px 6px -0.5px rgb(31 30 38 / 0.144),
     0 5.2px 10.4px -0.9px rgb(31 30 38 / 0.109),
     0 6px 12px -1px rgb(31 30 38 / 0.096);",
-  "element": {
-    "backdrop": "background-color: #f5f3ff;
-background-image: repeating-linear-gradient(0deg, #ceccd773 0px 2px, transparent 2px 32px), repeating-linear-gradient(90deg, #ceccd773 0px 2px, transparent 2px 32px);
-background-size: 100% 100%, 100% 100%;
-background-position: 0 0, 0 0;",
     "height": 81,
     "width": 269,
+    "x": 345.5,
+    "y": 279.5,
   },
   "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><linearGradient id="gj2npnl" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" y1="320" x2="32" y2="320"><stop offset="0" stop-color="#ceccd7" stop-opacity="0.451"/><stop offset="0.0625" stop-color="#ceccd7" stop-opacity="0.451"/><stop offset="0.0625" stop-color="#ceccd7" stop-opacity="0"/><stop offset="1" stop-color="#ceccd7" stop-opacity="0"/></linearGradient><linearGradient id="g1alzrmr" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="480" y1="640" x2="480" y2="608"><stop offset="0" stop-color="#ceccd7" stop-opacity="0.451"/><stop offset="0.0625" stop-color="#ceccd7" stop-opacity="0.451"/><stop offset="0.0625" stop-color="#ceccd7" stop-opacity="0"/><stop offset="1" stop-color="#ceccd7" stop-opacity="0"/></linearGradient></defs><rect width="960" height="640" fill="#f5f3ff"/><rect width="960" height="640" fill="url(#gj2npnl)"/><rect width="960" height="640" fill="url(#g1alzrmr)"/></svg><defs><filter id="shy3klw8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="6"/></filter><filter id="shuznsjh" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5.2"/></filter><filter id="sh15bbeen" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3"/></filter></defs><path d="M385.5 286.5h189a39 39 0 0 1 39 39v1a39 39 0 0 1 -39 39h-189a39 39 0 0 1 -39 -39v-1a39 39 0 0 1 39 -39Z" fill="#1f1e26" fill-opacity="0.096" filter="url(#shy3klw8)"/><path d="M385.5 285.6h189a39.1 39.1 0 0 1 39.1 39.1v1a39.1 39.1 0 0 1 -39.1 39.1h-189a39.1 39.1 0 0 1 -39.1 -39.1v-1a39.1 39.1 0 0 1 39.1 -39.1Z" fill="#1f1e26" fill-opacity="0.109" filter="url(#shuznsjh)"/><path d="M385.5 283h189a39.5 39.5 0 0 1 39.5 39.5v1a39.5 39.5 0 0 1 -39.5 39.5h-189a39.5 39.5 0 0 1 -39.5 -39.5v-1a39.5 39.5 0 0 1 39.5 -39.5Z" fill="#1f1e26" fill-opacity="0.144" filter="url(#sh15bbeen)"/><path d="M385.5 279.5h189a40 40 0 0 1 40 40v1a40 40 0 0 1 -40 40h-189a40 40 0 0 1 -40 -40v-1a40 40 0 0 1 40 -40Z" fill="#4f46e5"/></svg>",
 }
@@ -902,14 +904,16 @@ background-position: 0 0, 0 0;",
 
 exports[`preset snapshots: css-shadow > crisp 1`] = `
 {
-  "css": "background-color: #ffffff;
+  "css": "background-color: #f4f4f5;",
+  "element": {
+    "css": "background-color: #ffffff;
 border-radius: 8px;
 box-shadow: 0 2px 3px 0 rgb(31 31 32 / 0.18),
     0 4px 6px 0 rgb(31 31 32 / 0.12);",
-  "element": {
-    "backdrop": "background-color: #f4f4f5;",
     "height": 317,
     "width": 512,
+    "x": 224,
+    "y": 161.5,
   },
   "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><rect width="960" height="640" fill="#f4f4f5"/><defs><filter id="sh15bbeen" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3"/></filter><filter id="sh1qkf1i4" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.5"/></filter></defs><path d="M232 165.5h496a8 8 0 0 1 8 8v301a8 8 0 0 1 -8 8h-496a8 8 0 0 1 -8 -8v-301a8 8 0 0 1 8 -8Z" fill="#1f1f20" fill-opacity="0.12" filter="url(#sh15bbeen)"/><path d="M232 163.5h496a8 8 0 0 1 8 8v301a8 8 0 0 1 -8 8h-496a8 8 0 0 1 -8 -8v-301a8 8 0 0 1 8 -8Z" fill="#1f1f20" fill-opacity="0.18" filter="url(#sh1qkf1i4)"/><path d="M232 161.5h496a8 8 0 0 1 8 8v301a8 8 0 0 1 -8 8h-496a8 8 0 0 1 -8 -8v-301a8 8 0 0 1 8 -8Z" fill="#ffffff"/></svg>",
 }
@@ -917,30 +921,38 @@ box-shadow: 0 2px 3px 0 rgb(31 31 32 / 0.18),
 
 exports[`preset snapshots: css-shadow > deep 1`] = `
 {
-  "css": "background-color: #ffffff;
-border-radius: 16px;
-box-shadow: 0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.057),
-    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.057),
-    0 2.5px 5px -0.5px rgb(35 31 22 / 0.056),
-    0 5px 10px -1px rgb(35 31 22 / 0.055),
-    0 10px 20px -2px rgb(35 31 22 / 0.054),
-    0 20px 40px -4px rgb(35 31 22 / 0.05),
-    0 40px 80px -8px rgb(35 31 22 / 0.043),
-    0 80px 160px -16px rgb(35 31 22 / 0.029);",
-  "element": {
-    "backdrop": "background-color: #e9e3d7;
+  "css": "background-color: #e9e3d7;
 background-image: linear-gradient(160deg, #e9e3d7 0%, #e7e1d5 14.29%, #e2dcd0 28.57%, #dad4c8 42.86%, #d1ccc0 57.14%, #c9c4b8 71.43%, #c4bfb3 85.71%, #c2bdb1 100%);
 background-image: linear-gradient(160deg in oklch, #e9e3d7 0%, #e7e1d5 14.29%, #e2dcd0 28.57%, #dad4c8 42.86%, #d1ccc0 57.14%, #c9c4b8 71.43%, #c4bfb3 85.71%, #c2bdb1 100%);",
+  "element": {
+    "css": "background-color: #ffffff;
+border-radius: 16px;
+box-shadow: 0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.078),
+    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.078),
+    0 2.5px 5px -0.5px rgb(35 31 22 / 0.077),
+    0 5px 10px -1px rgb(35 31 22 / 0.076),
+    0 10px 20px -2px rgb(35 31 22 / 0.074),
+    0 20px 40px -4px rgb(35 31 22 / 0.069),
+    0 40px 80px -8px rgb(35 31 22 / 0.059),
+    0 80px 160px -16px rgb(35 31 22 / 0.039);",
     "height": 317,
     "width": 512,
+    "x": 224,
+    "y": 161.5,
   },
-  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><linearGradient id="lgo2kp1w" gradientUnits="userSpaceOnUse" x1="321" y1="-116.84" x2="639" y2="756.84"><stop offset="0" stop-color="#e9e3d7"/><stop offset="0.0588" stop-color="#e9e3d7"/><stop offset="0.1176" stop-color="#e8e2d6"/><stop offset="0.1765" stop-color="#e6e0d4"/><stop offset="0.2353" stop-color="#e4ded2"/><stop offset="0.2941" stop-color="#e1dbcf"/><stop offset="0.3529" stop-color="#ded8cc"/><stop offset="0.4118" stop-color="#dbd5c9"/><stop offset="0.4706" stop-color="#d7d2c6"/><stop offset="0.5294" stop-color="#d4cec2"/><stop offset="0.5882" stop-color="#d0cbbf"/><stop offset="0.6471" stop-color="#cdc7bb"/><stop offset="0.7059" stop-color="#cac4b8"/><stop offset="0.7647" stop-color="#c7c2b6"/><stop offset="0.8235" stop-color="#c5c0b4"/><stop offset="0.8824" stop-color="#c3beb2"/><stop offset="0.9412" stop-color="#c2bdb1"/><stop offset="1" stop-color="#c2bdb1"/></linearGradient></defs><rect width="960" height="640" fill="url(#lgo2kp1w)"/></svg><defs><filter id="sh1gi16tu" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="80"/></filter><filter id="sh1yifzpq" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="40"/></filter><filter id="sh1fz7k8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="20"/></filter><filter id="sh1dyf2ef" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="10"/></filter><filter id="sh10paf15" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5"/></filter><filter id="shdp8l3d" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="2.5"/></filter><filter id="sh1bqvmcs" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.25"/></filter><filter id="shiwwkn1" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="0.65"/></filter></defs><path d="M240 257.5h480v285h-480Z" fill="#231f16" fill-opacity="0.029" filter="url(#sh1gi16tu)"/><path d="M240 209.5h480a8 8 0 0 1 8 8v285a8 8 0 0 1 -8 8h-480a8 8 0 0 1 -8 -8v-285a8 8 0 0 1 8 -8Z" fill="#231f16" fill-opacity="0.043" filter="url(#sh1yifzpq)"/><path d="M240 185.5h480a12 12 0 0 1 12 12v285a12 12 0 0 1 -12 12h-480a12 12 0 0 1 -12 -12v-285a12 12 0 0 1 12 -12Z" fill="#231f16" fill-opacity="0.05" filter="url(#sh1fz7k8)"/><path d="M240 173.5h480a14 14 0 0 1 14 14v285a14 14 0 0 1 -14 14h-480a14 14 0 0 1 -14 -14v-285a14 14 0 0 1 14 -14Z" fill="#231f16" fill-opacity="0.054" filter="url(#sh1dyf2ef)"/><path d="M240 167.5h480a15 15 0 0 1 15 15v285a15 15 0 0 1 -15 15h-480a15 15 0 0 1 -15 -15v-285a15 15 0 0 1 15 -15Z" fill="#231f16" fill-opacity="0.055" filter="url(#sh10paf15)"/><path d="M240 164.5h480a15.5 15.5 0 0 1 15.5 15.5v285a15.5 15.5 0 0 1 -15.5 15.5h-480a15.5 15.5 0 0 1 -15.5 -15.5v-285a15.5 15.5 0 0 1 15.5 -15.5Z" fill="#231f16" fill-opacity="0.056" filter="url(#shdp8l3d)"/><path d="M240 163h480a15.8 15.8 0 0 1 15.8 15.8v285a15.8 15.8 0 0 1 -15.8 15.8h-480a15.8 15.8 0 0 1 -15.8 -15.8v-285a15.8 15.8 0 0 1 15.8 -15.8Z" fill="#231f16" fill-opacity="0.057" filter="url(#sh1bqvmcs)"/><path d="M240 162.2h480a15.9 15.9 0 0 1 15.9 15.9v285a15.9 15.9 0 0 1 -15.9 15.9h-480a15.9 15.9 0 0 1 -15.9 -15.9v-285a15.9 15.9 0 0 1 15.9 -15.9Z" fill="#231f16" fill-opacity="0.057" filter="url(#shiwwkn1)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#ffffff"/></svg>",
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><linearGradient id="lgo2kp1w" gradientUnits="userSpaceOnUse" x1="321" y1="-116.84" x2="639" y2="756.84"><stop offset="0" stop-color="#e9e3d7"/><stop offset="0.0588" stop-color="#e9e3d7"/><stop offset="0.1176" stop-color="#e8e2d6"/><stop offset="0.1765" stop-color="#e6e0d4"/><stop offset="0.2353" stop-color="#e4ded2"/><stop offset="0.2941" stop-color="#e1dbcf"/><stop offset="0.3529" stop-color="#ded8cc"/><stop offset="0.4118" stop-color="#dbd5c9"/><stop offset="0.4706" stop-color="#d7d2c6"/><stop offset="0.5294" stop-color="#d4cec2"/><stop offset="0.5882" stop-color="#d0cbbf"/><stop offset="0.6471" stop-color="#cdc7bb"/><stop offset="0.7059" stop-color="#cac4b8"/><stop offset="0.7647" stop-color="#c7c2b6"/><stop offset="0.8235" stop-color="#c5c0b4"/><stop offset="0.8824" stop-color="#c3beb2"/><stop offset="0.9412" stop-color="#c2bdb1"/><stop offset="1" stop-color="#c2bdb1"/></linearGradient></defs><rect width="960" height="640" fill="url(#lgo2kp1w)"/></svg><defs><filter id="sh1gi16tu" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="80"/></filter><filter id="sh1yifzpq" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="40"/></filter><filter id="sh1fz7k8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="20"/></filter><filter id="sh1dyf2ef" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="10"/></filter><filter id="sh10paf15" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5"/></filter><filter id="shdp8l3d" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="2.5"/></filter><filter id="sh1bqvmcs" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.25"/></filter><filter id="shiwwkn1" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="0.65"/></filter></defs><path d="M240 257.5h480v285h-480Z" fill="#231f16" fill-opacity="0.039" filter="url(#sh1gi16tu)"/><path d="M240 209.5h480a8 8 0 0 1 8 8v285a8 8 0 0 1 -8 8h-480a8 8 0 0 1 -8 -8v-285a8 8 0 0 1 8 -8Z" fill="#231f16" fill-opacity="0.059" filter="url(#sh1yifzpq)"/><path d="M240 185.5h480a12 12 0 0 1 12 12v285a12 12 0 0 1 -12 12h-480a12 12 0 0 1 -12 -12v-285a12 12 0 0 1 12 -12Z" fill="#231f16" fill-opacity="0.069" filter="url(#sh1fz7k8)"/><path d="M240 173.5h480a14 14 0 0 1 14 14v285a14 14 0 0 1 -14 14h-480a14 14 0 0 1 -14 -14v-285a14 14 0 0 1 14 -14Z" fill="#231f16" fill-opacity="0.074" filter="url(#sh1dyf2ef)"/><path d="M240 167.5h480a15 15 0 0 1 15 15v285a15 15 0 0 1 -15 15h-480a15 15 0 0 1 -15 -15v-285a15 15 0 0 1 15 -15Z" fill="#231f16" fill-opacity="0.076" filter="url(#sh10paf15)"/><path d="M240 164.5h480a15.5 15.5 0 0 1 15.5 15.5v285a15.5 15.5 0 0 1 -15.5 15.5h-480a15.5 15.5 0 0 1 -15.5 -15.5v-285a15.5 15.5 0 0 1 15.5 -15.5Z" fill="#231f16" fill-opacity="0.077" filter="url(#shdp8l3d)"/><path d="M240 163h480a15.8 15.8 0 0 1 15.8 15.8v285a15.8 15.8 0 0 1 -15.8 15.8h-480a15.8 15.8 0 0 1 -15.8 -15.8v-285a15.8 15.8 0 0 1 15.8 -15.8Z" fill="#231f16" fill-opacity="0.078" filter="url(#sh1bqvmcs)"/><path d="M240 162.2h480a15.9 15.9 0 0 1 15.9 15.9v285a15.9 15.9 0 0 1 -15.9 15.9h-480a15.9 15.9 0 0 1 -15.9 -15.9v-285a15.9 15.9 0 0 1 15.9 -15.9Z" fill="#231f16" fill-opacity="0.078" filter="url(#shiwwkn1)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#ffffff"/></svg>",
 }
 `;
 
 exports[`preset snapshots: css-shadow > extra exports of every preset 1`] = `
 {
   "button": {
+    "css": "background-color: #4f46e5;
+border-radius: 40px;
+box-shadow: 0 3px 6px -0.5px rgb(31 30 38 / 0.144),
+    0 5.2px 10.4px -0.9px rgb(31 30 38 / 0.109),
+    0 6px 12px -1px rgb(31 30 38 / 0.096);
+",
     "css-variable": ":root {
   --shadow-button:
     0 3px 6px -0.5px rgb(31 30 38 / 0.144),
@@ -971,6 +983,11 @@ filter:
 ",
   },
   "crisp": {
+    "css": "background-color: #ffffff;
+border-radius: 8px;
+box-shadow: 0 2px 3px 0 rgb(31 31 32 / 0.18),
+    0 4px 6px 0 rgb(31 31 32 / 0.12);
+",
     "css-variable": ":root {
   --shadow-crisp:
     0 2px 3px 0 rgb(31 31 32 / 0.18),
@@ -997,16 +1014,27 @@ filter:
 ",
   },
   "deep": {
+    "css": "background-color: #ffffff;
+border-radius: 16px;
+box-shadow: 0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.078),
+    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.078),
+    0 2.5px 5px -0.5px rgb(35 31 22 / 0.077),
+    0 5px 10px -1px rgb(35 31 22 / 0.076),
+    0 10px 20px -2px rgb(35 31 22 / 0.074),
+    0 20px 40px -4px rgb(35 31 22 / 0.069),
+    0 40px 80px -8px rgb(35 31 22 / 0.059),
+    0 80px 160px -16px rgb(35 31 22 / 0.039);
+",
     "css-variable": ":root {
   --shadow-deep:
-    0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.057),
-    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.057),
-    0 2.5px 5px -0.5px rgb(35 31 22 / 0.056),
-    0 5px 10px -1px rgb(35 31 22 / 0.055),
-    0 10px 20px -2px rgb(35 31 22 / 0.054),
-    0 20px 40px -4px rgb(35 31 22 / 0.05),
-    0 40px 80px -8px rgb(35 31 22 / 0.043),
-    0 80px 160px -16px rgb(35 31 22 / 0.029);
+    0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.078),
+    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.078),
+    0 2.5px 5px -0.5px rgb(35 31 22 / 0.077),
+    0 5px 10px -1px rgb(35 31 22 / 0.076),
+    0 10px 20px -2px rgb(35 31 22 / 0.074),
+    0 20px 40px -4px rgb(35 31 22 / 0.069),
+    0 40px 80px -8px rgb(35 31 22 / 0.059),
+    0 80px 160px -16px rgb(35 31 22 / 0.039);
 }
 
 .card {
@@ -1015,41 +1043,50 @@ filter:
 ",
     "drop-shadow": "/* drop-shadow() has no spread; it is left out. */
 filter:
-    drop-shadow(0 0.6px 0.7px rgb(35 31 22 / 0.057))
-    drop-shadow(0 1.3px 1.3px rgb(35 31 22 / 0.057))
-    drop-shadow(0 2.5px 2.5px rgb(35 31 22 / 0.056))
-    drop-shadow(0 5px 5px rgb(35 31 22 / 0.055))
-    drop-shadow(0 10px 10px rgb(35 31 22 / 0.054))
-    drop-shadow(0 20px 20px rgb(35 31 22 / 0.05))
-    drop-shadow(0 40px 40px rgb(35 31 22 / 0.043))
-    drop-shadow(0 80px 80px rgb(35 31 22 / 0.029));
+    drop-shadow(0 0.6px 0.7px rgb(35 31 22 / 0.078))
+    drop-shadow(0 1.3px 1.3px rgb(35 31 22 / 0.078))
+    drop-shadow(0 2.5px 2.5px rgb(35 31 22 / 0.077))
+    drop-shadow(0 5px 5px rgb(35 31 22 / 0.076))
+    drop-shadow(0 10px 10px rgb(35 31 22 / 0.074))
+    drop-shadow(0 20px 20px rgb(35 31 22 / 0.069))
+    drop-shadow(0 40px 40px rgb(35 31 22 / 0.059))
+    drop-shadow(0 80px 80px rgb(35 31 22 / 0.039));
 ",
-    "tailwind": "<div class="bg-[#ffffff] rounded-[16px] shadow-[0_0.6px_1.3px_-0.1px_rgb(35_31_22_/_0.057),0_1.3px_2.5px_-0.2px_rgb(35_31_22_/_0.057),0_2.5px_5px_-0.5px_rgb(35_31_22_/_0.056),0_5px_10px_-1px_rgb(35_31_22_/_0.055),0_10px_20px_-2px_rgb(35_31_22_/_0.054),0_20px_40px_-4px_rgb(35_31_22_/_0.05),0_40px_80px_-8px_rgb(35_31_22_/_0.043),0_80px_160px_-16px_rgb(35_31_22_/_0.029)]"></div>
+    "tailwind": "<div class="bg-[#ffffff] rounded-[16px] shadow-[0_0.6px_1.3px_-0.1px_rgb(35_31_22_/_0.078),0_1.3px_2.5px_-0.2px_rgb(35_31_22_/_0.078),0_2.5px_5px_-0.5px_rgb(35_31_22_/_0.077),0_5px_10px_-1px_rgb(35_31_22_/_0.076),0_10px_20px_-2px_rgb(35_31_22_/_0.074),0_20px_40px_-4px_rgb(35_31_22_/_0.069),0_40px_80px_-8px_rgb(35_31_22_/_0.059),0_80px_160px_-16px_rgb(35_31_22_/_0.039)]"></div>
 ",
     "tailwind-theme": "@theme {
   --shadow-deep:
-    0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.057),
-    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.057),
-    0 2.5px 5px -0.5px rgb(35 31 22 / 0.056),
-    0 5px 10px -1px rgb(35 31 22 / 0.055),
-    0 10px 20px -2px rgb(35 31 22 / 0.054),
-    0 20px 40px -4px rgb(35 31 22 / 0.05),
-    0 40px 80px -8px rgb(35 31 22 / 0.043),
-    0 80px 160px -16px rgb(35 31 22 / 0.029);
+    0 0.6px 1.3px -0.1px rgb(35 31 22 / 0.078),
+    0 1.3px 2.5px -0.2px rgb(35 31 22 / 0.078),
+    0 2.5px 5px -0.5px rgb(35 31 22 / 0.077),
+    0 5px 10px -1px rgb(35 31 22 / 0.076),
+    0 10px 20px -2px rgb(35 31 22 / 0.074),
+    0 20px 40px -4px rgb(35 31 22 / 0.069),
+    0 40px 80px -8px rgb(35 31 22 / 0.059),
+    0 80px 160px -16px rgb(35 31 22 / 0.039);
 }
 
 /* Usage: class="shadow-deep" */
 ",
   },
   "floating": {
+    "css": "background-color: #ffffff;
+border-radius: 16px;
+box-shadow: 0 1.5px 3px -0.4px rgb(28 31 37 / 0.088),
+    0 3px 6px -0.7px rgb(28 31 37 / 0.087),
+    0 6px 12px -1.5px rgb(28 31 37 / 0.084),
+    0 12px 24px -3px rgb(28 31 37 / 0.079),
+    0 24px 48px -6px rgb(28 31 37 / 0.067),
+    0 48px 96px -12px rgb(28 31 37 / 0.045);
+",
     "css-variable": ":root {
   --shadow-floating:
-    0 1.5px 3px -0.4px rgb(28 31 37 / 0.055),
-    0 3px 6px -0.7px rgb(28 31 37 / 0.054),
-    0 6px 12px -1.5px rgb(28 31 37 / 0.052),
-    0 12px 24px -3px rgb(28 31 37 / 0.049),
-    0 24px 48px -6px rgb(28 31 37 / 0.042),
-    0 48px 96px -12px rgb(28 31 37 / 0.028);
+    0 1.5px 3px -0.4px rgb(28 31 37 / 0.088),
+    0 3px 6px -0.7px rgb(28 31 37 / 0.087),
+    0 6px 12px -1.5px rgb(28 31 37 / 0.084),
+    0 12px 24px -3px rgb(28 31 37 / 0.079),
+    0 24px 48px -6px rgb(28 31 37 / 0.067),
+    0 48px 96px -12px rgb(28 31 37 / 0.045);
 }
 
 .card {
@@ -1058,29 +1095,35 @@ filter:
 ",
     "drop-shadow": "/* drop-shadow() has no spread; it is left out. */
 filter:
-    drop-shadow(0 1.5px 1.5px rgb(28 31 37 / 0.055))
-    drop-shadow(0 3px 3px rgb(28 31 37 / 0.054))
-    drop-shadow(0 6px 6px rgb(28 31 37 / 0.052))
-    drop-shadow(0 12px 12px rgb(28 31 37 / 0.049))
-    drop-shadow(0 24px 24px rgb(28 31 37 / 0.042))
-    drop-shadow(0 48px 48px rgb(28 31 37 / 0.028));
+    drop-shadow(0 1.5px 1.5px rgb(28 31 37 / 0.088))
+    drop-shadow(0 3px 3px rgb(28 31 37 / 0.087))
+    drop-shadow(0 6px 6px rgb(28 31 37 / 0.084))
+    drop-shadow(0 12px 12px rgb(28 31 37 / 0.079))
+    drop-shadow(0 24px 24px rgb(28 31 37 / 0.067))
+    drop-shadow(0 48px 48px rgb(28 31 37 / 0.045));
 ",
-    "tailwind": "<div class="bg-[#ffffff] rounded-[16px] shadow-[0_1.5px_3px_-0.4px_rgb(28_31_37_/_0.055),0_3px_6px_-0.7px_rgb(28_31_37_/_0.054),0_6px_12px_-1.5px_rgb(28_31_37_/_0.052),0_12px_24px_-3px_rgb(28_31_37_/_0.049),0_24px_48px_-6px_rgb(28_31_37_/_0.042),0_48px_96px_-12px_rgb(28_31_37_/_0.028)]"></div>
+    "tailwind": "<div class="bg-[#ffffff] rounded-[16px] shadow-[0_1.5px_3px_-0.4px_rgb(28_31_37_/_0.088),0_3px_6px_-0.7px_rgb(28_31_37_/_0.087),0_6px_12px_-1.5px_rgb(28_31_37_/_0.084),0_12px_24px_-3px_rgb(28_31_37_/_0.079),0_24px_48px_-6px_rgb(28_31_37_/_0.067),0_48px_96px_-12px_rgb(28_31_37_/_0.045)]"></div>
 ",
     "tailwind-theme": "@theme {
   --shadow-floating:
-    0 1.5px 3px -0.4px rgb(28 31 37 / 0.055),
-    0 3px 6px -0.7px rgb(28 31 37 / 0.054),
-    0 6px 12px -1.5px rgb(28 31 37 / 0.052),
-    0 12px 24px -3px rgb(28 31 37 / 0.049),
-    0 24px 48px -6px rgb(28 31 37 / 0.042),
-    0 48px 96px -12px rgb(28 31 37 / 0.028);
+    0 1.5px 3px -0.4px rgb(28 31 37 / 0.088),
+    0 3px 6px -0.7px rgb(28 31 37 / 0.087),
+    0 6px 12px -1.5px rgb(28 31 37 / 0.084),
+    0 12px 24px -3px rgb(28 31 37 / 0.079),
+    0 24px 48px -6px rgb(28 31 37 / 0.067),
+    0 48px 96px -12px rgb(28 31 37 / 0.045);
 }
 
 /* Usage: class="shadow-floating" */
 ",
   },
   "inner": {
+    "css": "background-color: #eef1f6;
+border-radius: 16px;
+box-shadow: inset 0 2px 5.3px 0 rgb(29 31 35 / 0.125),
+    inset 0 4px 10.7px 0 rgb(29 31 35 / 0.1),
+    inset 0 6px 16px 0 rgb(29 31 35 / 0.075);
+",
     "css-variable": ":root {
   --shadow-inner:
     inset 0 2px 5.3px 0 rgb(29 31 35 / 0.125),
@@ -1111,13 +1154,21 @@ filter:
 ",
   },
   "soft": {
+    "css": "background-color: #ffffff;
+border-radius: 16px;
+box-shadow: 0 1.5px 3px -0.2px rgb(28 31 37 / 0.096),
+    0 3px 6px -0.5px rgb(28 31 37 / 0.093),
+    0 6px 12px -1px rgb(28 31 37 / 0.087),
+    0 12px 24px -2px rgb(28 31 37 / 0.074),
+    0 24px 48px -4px rgb(28 31 37 / 0.05);
+",
     "css-variable": ":root {
   --shadow-soft:
-    0 1.5px 3px -0.2px rgb(28 31 37 / 0.053),
-    0 3px 6px -0.5px rgb(28 31 37 / 0.051),
-    0 6px 12px -1px rgb(28 31 37 / 0.048),
-    0 12px 24px -2px rgb(28 31 37 / 0.041),
-    0 24px 48px -4px rgb(28 31 37 / 0.027);
+    0 1.5px 3px -0.2px rgb(28 31 37 / 0.096),
+    0 3px 6px -0.5px rgb(28 31 37 / 0.093),
+    0 6px 12px -1px rgb(28 31 37 / 0.087),
+    0 12px 24px -2px rgb(28 31 37 / 0.074),
+    0 24px 48px -4px rgb(28 31 37 / 0.05);
 }
 
 .card {
@@ -1126,27 +1177,34 @@ filter:
 ",
     "drop-shadow": "/* drop-shadow() has no spread; it is left out. */
 filter:
-    drop-shadow(0 1.5px 1.5px rgb(28 31 37 / 0.053))
-    drop-shadow(0 3px 3px rgb(28 31 37 / 0.051))
-    drop-shadow(0 6px 6px rgb(28 31 37 / 0.048))
-    drop-shadow(0 12px 12px rgb(28 31 37 / 0.041))
-    drop-shadow(0 24px 24px rgb(28 31 37 / 0.027));
+    drop-shadow(0 1.5px 1.5px rgb(28 31 37 / 0.096))
+    drop-shadow(0 3px 3px rgb(28 31 37 / 0.093))
+    drop-shadow(0 6px 6px rgb(28 31 37 / 0.087))
+    drop-shadow(0 12px 12px rgb(28 31 37 / 0.074))
+    drop-shadow(0 24px 24px rgb(28 31 37 / 0.05));
 ",
-    "tailwind": "<div class="bg-[#ffffff] rounded-[16px] shadow-[0_1.5px_3px_-0.2px_rgb(28_31_37_/_0.053),0_3px_6px_-0.5px_rgb(28_31_37_/_0.051),0_6px_12px_-1px_rgb(28_31_37_/_0.048),0_12px_24px_-2px_rgb(28_31_37_/_0.041),0_24px_48px_-4px_rgb(28_31_37_/_0.027)]"></div>
+    "tailwind": "<div class="bg-[#ffffff] rounded-[16px] shadow-[0_1.5px_3px_-0.2px_rgb(28_31_37_/_0.096),0_3px_6px_-0.5px_rgb(28_31_37_/_0.093),0_6px_12px_-1px_rgb(28_31_37_/_0.087),0_12px_24px_-2px_rgb(28_31_37_/_0.074),0_24px_48px_-4px_rgb(28_31_37_/_0.05)]"></div>
 ",
     "tailwind-theme": "@theme {
   --shadow-soft:
-    0 1.5px 3px -0.2px rgb(28 31 37 / 0.053),
-    0 3px 6px -0.5px rgb(28 31 37 / 0.051),
-    0 6px 12px -1px rgb(28 31 37 / 0.048),
-    0 12px 24px -2px rgb(28 31 37 / 0.041),
-    0 24px 48px -4px rgb(28 31 37 / 0.027);
+    0 1.5px 3px -0.2px rgb(28 31 37 / 0.096),
+    0 3px 6px -0.5px rgb(28 31 37 / 0.093),
+    0 6px 12px -1px rgb(28 31 37 / 0.087),
+    0 12px 24px -2px rgb(28 31 37 / 0.074),
+    0 24px 48px -4px rgb(28 31 37 / 0.05);
 }
 
 /* Usage: class="shadow-soft" */
 ",
   },
   "sunset": {
+    "css": "background-color: #fff7ed;
+border-radius: 16px;
+box-shadow: 3.5px 2px 8px -1px rgb(154 52 18 / 0.107),
+    6.9px 4px 16px -2px rgb(154 52 18 / 0.1),
+    13.9px 8px 32px -4px rgb(154 52 18 / 0.086),
+    27.7px 16px 64px -8px rgb(154 52 18 / 0.057);
+",
     "css-variable": ":root {
   --shadow-sunset:
     3.5px 2px 8px -1px rgb(154 52 18 / 0.107),
@@ -1184,37 +1242,41 @@ filter:
 
 exports[`preset snapshots: css-shadow > floating 1`] = `
 {
-  "css": "background-color: #ffffff;
-border-radius: 16px;
-box-shadow: 0 1.5px 3px -0.4px rgb(28 31 37 / 0.055),
-    0 3px 6px -0.7px rgb(28 31 37 / 0.054),
-    0 6px 12px -1.5px rgb(28 31 37 / 0.052),
-    0 12px 24px -3px rgb(28 31 37 / 0.049),
-    0 24px 48px -6px rgb(28 31 37 / 0.042),
-    0 48px 96px -12px rgb(28 31 37 / 0.028);",
-  "element": {
-    "backdrop": "background-color: #e8edf5;
+  "css": "background-color: #e8edf5;
 background-image: radial-gradient(circle 5.5px at 14px 14px, #c1c6ce99 0px 4.5px, transparent 5.5px);
 background-size: 28px 28px;
 background-position: 0 0;",
+  "element": {
+    "css": "background-color: #ffffff;
+border-radius: 16px;
+box-shadow: 0 1.5px 3px -0.4px rgb(28 31 37 / 0.088),
+    0 3px 6px -0.7px rgb(28 31 37 / 0.087),
+    0 6px 12px -1.5px rgb(28 31 37 / 0.084),
+    0 12px 24px -3px rgb(28 31 37 / 0.079),
+    0 24px 48px -6px rgb(28 31 37 / 0.067),
+    0 48px 96px -12px rgb(28 31 37 / 0.045);",
     "height": 317,
     "width": 512,
+    "x": 224,
+    "y": 161.5,
   },
-  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><radialGradient id="g13thh36" gradientUnits="userSpaceOnUse" cx="14" cy="14" r="5.5"><stop offset="0" stop-color="#c1c6ce" stop-opacity="0.6"/><stop offset="0.81818" stop-color="#c1c6ce" stop-opacity="0.6"/><stop offset="1" stop-color="#c1c6ce" stop-opacity="0"/></radialGradient><pattern id="p13thh36" patternUnits="userSpaceOnUse" x="0" y="0" width="28" height="28"><rect width="28" height="28" fill="url(#g13thh36)"/></pattern></defs><rect width="960" height="640" fill="#e8edf5"/><rect width="960" height="640" fill="url(#p13thh36)"/></svg><defs><filter id="sh4pky5i" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="48"/></filter><filter id="sh1gav3rg" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="24"/></filter><filter id="sh1hpf01h" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="12"/></filter><filter id="shy3klw8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="6"/></filter><filter id="sh15bbeen" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3"/></filter><filter id="sh1qkf1i4" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.5"/></filter></defs><path d="M240 221.5h480a4 4 0 0 1 4 4v285a4 4 0 0 1 -4 4h-480a4 4 0 0 1 -4 -4v-285a4 4 0 0 1 4 -4Z" fill="#1c1f25" fill-opacity="0.028" filter="url(#sh4pky5i)"/><path d="M240 191.5h480a10 10 0 0 1 10 10v285a10 10 0 0 1 -10 10h-480a10 10 0 0 1 -10 -10v-285a10 10 0 0 1 10 -10Z" fill="#1c1f25" fill-opacity="0.042" filter="url(#sh1gav3rg)"/><path d="M240 176.5h480a13 13 0 0 1 13 13v285a13 13 0 0 1 -13 13h-480a13 13 0 0 1 -13 -13v-285a13 13 0 0 1 13 -13Z" fill="#1c1f25" fill-opacity="0.049" filter="url(#sh1hpf01h)"/><path d="M240 169h480a14.5 14.5 0 0 1 14.5 14.5v285a14.5 14.5 0 0 1 -14.5 14.5h-480a14.5 14.5 0 0 1 -14.5 -14.5v-285a14.5 14.5 0 0 1 14.5 -14.5Z" fill="#1c1f25" fill-opacity="0.052" filter="url(#shy3klw8)"/><path d="M240 165.2h480a15.3 15.3 0 0 1 15.3 15.3v285a15.3 15.3 0 0 1 -15.3 15.3h-480a15.3 15.3 0 0 1 -15.3 -15.3v-285a15.3 15.3 0 0 1 15.3 -15.3Z" fill="#1c1f25" fill-opacity="0.054" filter="url(#sh15bbeen)"/><path d="M240 163.4h480a15.6 15.6 0 0 1 15.6 15.6v285a15.6 15.6 0 0 1 -15.6 15.6h-480a15.6 15.6 0 0 1 -15.6 -15.6v-285a15.6 15.6 0 0 1 15.6 -15.6Z" fill="#1c1f25" fill-opacity="0.055" filter="url(#sh1qkf1i4)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#ffffff"/></svg>",
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><radialGradient id="g13thh36" gradientUnits="userSpaceOnUse" cx="14" cy="14" r="5.5"><stop offset="0" stop-color="#c1c6ce" stop-opacity="0.6"/><stop offset="0.81818" stop-color="#c1c6ce" stop-opacity="0.6"/><stop offset="1" stop-color="#c1c6ce" stop-opacity="0"/></radialGradient><pattern id="p13thh36" patternUnits="userSpaceOnUse" x="0" y="0" width="28" height="28"><rect width="28" height="28" fill="url(#g13thh36)"/></pattern></defs><rect width="960" height="640" fill="#e8edf5"/><rect width="960" height="640" fill="url(#p13thh36)"/></svg><defs><filter id="sh4pky5i" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="48"/></filter><filter id="sh1gav3rg" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="24"/></filter><filter id="sh1hpf01h" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="12"/></filter><filter id="shy3klw8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="6"/></filter><filter id="sh15bbeen" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3"/></filter><filter id="sh1qkf1i4" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.5"/></filter></defs><path d="M240 221.5h480a4 4 0 0 1 4 4v285a4 4 0 0 1 -4 4h-480a4 4 0 0 1 -4 -4v-285a4 4 0 0 1 4 -4Z" fill="#1c1f25" fill-opacity="0.045" filter="url(#sh4pky5i)"/><path d="M240 191.5h480a10 10 0 0 1 10 10v285a10 10 0 0 1 -10 10h-480a10 10 0 0 1 -10 -10v-285a10 10 0 0 1 10 -10Z" fill="#1c1f25" fill-opacity="0.067" filter="url(#sh1gav3rg)"/><path d="M240 176.5h480a13 13 0 0 1 13 13v285a13 13 0 0 1 -13 13h-480a13 13 0 0 1 -13 -13v-285a13 13 0 0 1 13 -13Z" fill="#1c1f25" fill-opacity="0.079" filter="url(#sh1hpf01h)"/><path d="M240 169h480a14.5 14.5 0 0 1 14.5 14.5v285a14.5 14.5 0 0 1 -14.5 14.5h-480a14.5 14.5 0 0 1 -14.5 -14.5v-285a14.5 14.5 0 0 1 14.5 -14.5Z" fill="#1c1f25" fill-opacity="0.084" filter="url(#shy3klw8)"/><path d="M240 165.2h480a15.3 15.3 0 0 1 15.3 15.3v285a15.3 15.3 0 0 1 -15.3 15.3h-480a15.3 15.3 0 0 1 -15.3 -15.3v-285a15.3 15.3 0 0 1 15.3 -15.3Z" fill="#1c1f25" fill-opacity="0.087" filter="url(#sh15bbeen)"/><path d="M240 163.4h480a15.6 15.6 0 0 1 15.6 15.6v285a15.6 15.6 0 0 1 -15.6 15.6h-480a15.6 15.6 0 0 1 -15.6 -15.6v-285a15.6 15.6 0 0 1 15.6 -15.6Z" fill="#1c1f25" fill-opacity="0.088" filter="url(#sh1qkf1i4)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#ffffff"/></svg>",
 }
 `;
 
 exports[`preset snapshots: css-shadow > inner 1`] = `
 {
-  "css": "background-color: #eef1f6;
+  "css": "background-color: #eef1f6;",
+  "element": {
+    "css": "background-color: #eef1f6;
 border-radius: 16px;
 box-shadow: inset 0 2px 5.3px 0 rgb(29 31 35 / 0.125),
     inset 0 4px 10.7px 0 rgb(29 31 35 / 0.1),
     inset 0 6px 16px 0 rgb(29 31 35 / 0.075);",
-  "element": {
-    "backdrop": "background-color: #eef1f6;",
     "height": 317,
     "width": 512,
+    "x": 224,
+    "y": 161.5,
   },
   "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><rect width="960" height="640" fill="#eef1f6"/><defs><filter id="sh15k62e2" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="8"/></filter><filter id="sh1s7ra75" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5.35"/></filter><filter id="sh1thykiz" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="2.65"/></filter><clipPath id="cl1x7ltm1"><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z"/></clipPath></defs><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#eef1f6"/><g clip-path="url(#cl1x7ltm1)"><path d="M201 138.5h558v363h-558ZM240 167.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill-rule="evenodd" fill="#1d1f23" fill-opacity="0.075" filter="url(#sh15k62e2)"/><path d="M208.3 145.8h543.4v348.4h-543.4ZM240 165.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill-rule="evenodd" fill="#1d1f23" fill-opacity="0.1" filter="url(#sh1s7ra75)"/><path d="M215.7 153.2h528.6v333.6h-528.6ZM240 163.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill-rule="evenodd" fill="#1d1f23" fill-opacity="0.125" filter="url(#sh1thykiz)"/></g></svg>",
 }
@@ -1222,38 +1284,42 @@ box-shadow: inset 0 2px 5.3px 0 rgb(29 31 35 / 0.125),
 
 exports[`preset snapshots: css-shadow > soft 1`] = `
 {
-  "css": "background-color: #ffffff;
-border-radius: 16px;
-box-shadow: 0 1.5px 3px -0.2px rgb(28 31 37 / 0.053),
-    0 3px 6px -0.5px rgb(28 31 37 / 0.051),
-    0 6px 12px -1px rgb(28 31 37 / 0.048),
-    0 12px 24px -2px rgb(28 31 37 / 0.041),
-    0 24px 48px -4px rgb(28 31 37 / 0.027);",
-  "element": {
-    "backdrop": "background-color: #fcfdff;
+  "css": "background-color: #fcfdff;
 background-image: linear-gradient(160deg, #fcfdff 0%, #fafbfd 14.29%, #f4f6f9 28.57%, #ebeef2 42.86%, #e2e5eb 57.14%, #d9dde4 71.43%, #d3d8e0 85.71%, #d1d6de 100%);
 background-image: linear-gradient(160deg in oklch, #fcfdff 0%, #fafbfd 14.29%, #f4f6f9 28.57%, #ebeef2 42.86%, #e2e5eb 57.14%, #d9dde4 71.43%, #d3d8e0 85.71%, #d1d6de 100%);",
+  "element": {
+    "css": "background-color: #ffffff;
+border-radius: 16px;
+box-shadow: 0 1.5px 3px -0.2px rgb(28 31 37 / 0.096),
+    0 3px 6px -0.5px rgb(28 31 37 / 0.093),
+    0 6px 12px -1px rgb(28 31 37 / 0.087),
+    0 12px 24px -2px rgb(28 31 37 / 0.074),
+    0 24px 48px -4px rgb(28 31 37 / 0.05);",
     "height": 317,
     "width": 512,
+    "x": 224,
+    "y": 161.5,
   },
-  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><linearGradient id="lgcd201j" gradientUnits="userSpaceOnUse" x1="321" y1="-116.84" x2="639" y2="756.84"><stop offset="0" stop-color="#fcfdff"/><stop offset="0.0588" stop-color="#fcfdff"/><stop offset="0.1176" stop-color="#fbfcfe"/><stop offset="0.1765" stop-color="#f9fafd"/><stop offset="0.2353" stop-color="#f6f8fb"/><stop offset="0.2941" stop-color="#f3f5f8"/><stop offset="0.3529" stop-color="#f0f2f6"/><stop offset="0.4118" stop-color="#eceff3"/><stop offset="0.4706" stop-color="#e8ebf0"/><stop offset="0.5294" stop-color="#e4e8ed"/><stop offset="0.5882" stop-color="#e1e4ea"/><stop offset="0.6471" stop-color="#dde1e7"/><stop offset="0.7059" stop-color="#d9dee5"/><stop offset="0.7647" stop-color="#d7dbe2"/><stop offset="0.8235" stop-color="#d4d9e0"/><stop offset="0.8824" stop-color="#d2d7df"/><stop offset="0.9412" stop-color="#d1d6de"/><stop offset="1" stop-color="#d1d6de"/></linearGradient></defs><rect width="960" height="640" fill="url(#lgcd201j)"/></svg><defs><filter id="sh1gav3rg" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="24"/></filter><filter id="sh1hpf01h" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="12"/></filter><filter id="shy3klw8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="6"/></filter><filter id="sh15bbeen" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3"/></filter><filter id="sh1qkf1i4" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.5"/></filter></defs><path d="M240 189.5h480a12 12 0 0 1 12 12v285a12 12 0 0 1 -12 12h-480a12 12 0 0 1 -12 -12v-285a12 12 0 0 1 12 -12Z" fill="#1c1f25" fill-opacity="0.027" filter="url(#sh1gav3rg)"/><path d="M240 175.5h480a14 14 0 0 1 14 14v285a14 14 0 0 1 -14 14h-480a14 14 0 0 1 -14 -14v-285a14 14 0 0 1 14 -14Z" fill="#1c1f25" fill-opacity="0.041" filter="url(#sh1hpf01h)"/><path d="M240 168.5h480a15 15 0 0 1 15 15v285a15 15 0 0 1 -15 15h-480a15 15 0 0 1 -15 -15v-285a15 15 0 0 1 15 -15Z" fill="#1c1f25" fill-opacity="0.048" filter="url(#shy3klw8)"/><path d="M240 165h480a15.5 15.5 0 0 1 15.5 15.5v285a15.5 15.5 0 0 1 -15.5 15.5h-480a15.5 15.5 0 0 1 -15.5 -15.5v-285a15.5 15.5 0 0 1 15.5 -15.5Z" fill="#1c1f25" fill-opacity="0.051" filter="url(#sh15bbeen)"/><path d="M240 163.2h480a15.8 15.8 0 0 1 15.8 15.8v285a15.8 15.8 0 0 1 -15.8 15.8h-480a15.8 15.8 0 0 1 -15.8 -15.8v-285a15.8 15.8 0 0 1 15.8 -15.8Z" fill="#1c1f25" fill-opacity="0.053" filter="url(#sh1qkf1i4)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#ffffff"/></svg>",
+  "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><linearGradient id="lgcd201j" gradientUnits="userSpaceOnUse" x1="321" y1="-116.84" x2="639" y2="756.84"><stop offset="0" stop-color="#fcfdff"/><stop offset="0.0588" stop-color="#fcfdff"/><stop offset="0.1176" stop-color="#fbfcfe"/><stop offset="0.1765" stop-color="#f9fafd"/><stop offset="0.2353" stop-color="#f6f8fb"/><stop offset="0.2941" stop-color="#f3f5f8"/><stop offset="0.3529" stop-color="#f0f2f6"/><stop offset="0.4118" stop-color="#eceff3"/><stop offset="0.4706" stop-color="#e8ebf0"/><stop offset="0.5294" stop-color="#e4e8ed"/><stop offset="0.5882" stop-color="#e1e4ea"/><stop offset="0.6471" stop-color="#dde1e7"/><stop offset="0.7059" stop-color="#d9dee5"/><stop offset="0.7647" stop-color="#d7dbe2"/><stop offset="0.8235" stop-color="#d4d9e0"/><stop offset="0.8824" stop-color="#d2d7df"/><stop offset="0.9412" stop-color="#d1d6de"/><stop offset="1" stop-color="#d1d6de"/></linearGradient></defs><rect width="960" height="640" fill="url(#lgcd201j)"/></svg><defs><filter id="sh1gav3rg" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="24"/></filter><filter id="sh1hpf01h" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="12"/></filter><filter id="shy3klw8" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="6"/></filter><filter id="sh15bbeen" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="3"/></filter><filter id="sh1qkf1i4" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="1.5"/></filter></defs><path d="M240 189.5h480a12 12 0 0 1 12 12v285a12 12 0 0 1 -12 12h-480a12 12 0 0 1 -12 -12v-285a12 12 0 0 1 12 -12Z" fill="#1c1f25" fill-opacity="0.05" filter="url(#sh1gav3rg)"/><path d="M240 175.5h480a14 14 0 0 1 14 14v285a14 14 0 0 1 -14 14h-480a14 14 0 0 1 -14 -14v-285a14 14 0 0 1 14 -14Z" fill="#1c1f25" fill-opacity="0.074" filter="url(#sh1hpf01h)"/><path d="M240 168.5h480a15 15 0 0 1 15 15v285a15 15 0 0 1 -15 15h-480a15 15 0 0 1 -15 -15v-285a15 15 0 0 1 15 -15Z" fill="#1c1f25" fill-opacity="0.087" filter="url(#shy3klw8)"/><path d="M240 165h480a15.5 15.5 0 0 1 15.5 15.5v285a15.5 15.5 0 0 1 -15.5 15.5h-480a15.5 15.5 0 0 1 -15.5 -15.5v-285a15.5 15.5 0 0 1 15.5 -15.5Z" fill="#1c1f25" fill-opacity="0.093" filter="url(#sh15bbeen)"/><path d="M240 163.2h480a15.8 15.8 0 0 1 15.8 15.8v285a15.8 15.8 0 0 1 -15.8 15.8h-480a15.8 15.8 0 0 1 -15.8 -15.8v-285a15.8 15.8 0 0 1 15.8 -15.8Z" fill="#1c1f25" fill-opacity="0.096" filter="url(#sh1qkf1i4)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#ffffff"/></svg>",
 }
 `;
 
 exports[`preset snapshots: css-shadow > sunset 1`] = `
 {
-  "css": "background-color: #fff7ed;
+  "css": "background-color: #ffecd6;
+background-image: linear-gradient(160deg, #ffecd6 0%, #feead3 14.29%, #fae4ca 28.57%, #f6dbbc 42.86%, #f0d1ae 57.14%, #ecc8a0 71.43%, #e8c297 85.71%, #e7c094 100%);
+background-image: linear-gradient(160deg in oklch, #ffecd6 0%, #feead3 14.29%, #fae4ca 28.57%, #f6dbbc 42.86%, #f0d1ae 57.14%, #ecc8a0 71.43%, #e8c297 85.71%, #e7c094 100%);",
+  "element": {
+    "css": "background-color: #fff7ed;
 border-radius: 16px;
 box-shadow: 3.5px 2px 8px -1px rgb(154 52 18 / 0.107),
     6.9px 4px 16px -2px rgb(154 52 18 / 0.1),
     13.9px 8px 32px -4px rgb(154 52 18 / 0.086),
     27.7px 16px 64px -8px rgb(154 52 18 / 0.057);",
-  "element": {
-    "backdrop": "background-color: #ffecd6;
-background-image: linear-gradient(160deg, #ffecd6 0%, #feead3 14.29%, #fae4ca 28.57%, #f6dbbc 42.86%, #f0d1ae 57.14%, #ecc8a0 71.43%, #e8c297 85.71%, #e7c094 100%);
-background-image: linear-gradient(160deg in oklch, #ffecd6 0%, #feead3 14.29%, #fae4ca 28.57%, #f6dbbc 42.86%, #f0d1ae 57.14%, #ecc8a0 71.43%, #e8c297 85.71%, #e7c094 100%);",
     "height": 317,
     "width": 512,
+    "x": 224,
+    "y": 161.5,
   },
   "previewSvg": "<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640"><defs><linearGradient id="lgdztwo" gradientUnits="userSpaceOnUse" x1="321" y1="-116.84" x2="639" y2="756.84"><stop offset="0" stop-color="#ffecd6"/><stop offset="0.0588" stop-color="#ffecd5"/><stop offset="0.1176" stop-color="#feebd4"/><stop offset="0.1765" stop-color="#fde9d1"/><stop offset="0.2353" stop-color="#fce6cd"/><stop offset="0.2941" stop-color="#fae3c9"/><stop offset="0.3529" stop-color="#f8e0c4"/><stop offset="0.4118" stop-color="#f6dcbe"/><stop offset="0.4706" stop-color="#f4d8b8"/><stop offset="0.5294" stop-color="#f2d4b2"/><stop offset="0.5882" stop-color="#f0d0ac"/><stop offset="0.6471" stop-color="#eecca6"/><stop offset="0.7059" stop-color="#ecc9a1"/><stop offset="0.7647" stop-color="#eac69d"/><stop offset="0.8235" stop-color="#e9c399"/><stop offset="0.8824" stop-color="#e8c196"/><stop offset="0.9412" stop-color="#e7c095"/><stop offset="1" stop-color="#e7c094"/></linearGradient></defs><rect width="960" height="640" fill="url(#lgdztwo)"/></svg><defs><filter id="shazu1qn" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="32"/></filter><filter id="shnl7vpt" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="16"/></filter><filter id="sh15k62e2" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="8"/></filter><filter id="sh1uvsg32" x="0" y="0" width="960" height="640" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="4"/></filter></defs><path d="M267.7 185.5h480a8 8 0 0 1 8 8v285a8 8 0 0 1 -8 8h-480a8 8 0 0 1 -8 -8v-285a8 8 0 0 1 8 -8Z" fill="#9a3412" fill-opacity="0.057" filter="url(#shazu1qn)"/><path d="M253.9 173.5h480a12 12 0 0 1 12 12v285a12 12 0 0 1 -12 12h-480a12 12 0 0 1 -12 -12v-285a12 12 0 0 1 12 -12Z" fill="#9a3412" fill-opacity="0.086" filter="url(#shnl7vpt)"/><path d="M246.9 167.5h480a14 14 0 0 1 14 14v285a14 14 0 0 1 -14 14h-480a14 14 0 0 1 -14 -14v-285a14 14 0 0 1 14 -14Z" fill="#9a3412" fill-opacity="0.1" filter="url(#sh15k62e2)"/><path d="M243.5 164.5h480a15 15 0 0 1 15 15v285a15 15 0 0 1 -15 15h-480a15 15 0 0 1 -15 -15v-285a15 15 0 0 1 15 -15Z" fill="#9a3412" fill-opacity="0.107" filter="url(#sh1uvsg32)"/><path d="M240 161.5h480a16 16 0 0 1 16 16v285a16 16 0 0 1 -16 16h-480a16 16 0 0 1 -16 -16v-285a16 16 0 0 1 16 -16Z" fill="#fff7ed"/></svg>",
 }
