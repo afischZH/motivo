@@ -180,7 +180,9 @@
         "tailwindTheme": "Tailwind v4 @theme",
         "css": "CSS",
         "htmlExample": "HTML-Beispiel",
-        "cssGrid": "CSS Grid + HTML"
+        "cssGrid": "CSS Grid + HTML",
+        "report": "Bericht als Text",
+        "dropShadow": "CSS drop-shadow()"
       }
     },
     "share": {
@@ -308,6 +310,11 @@
     "thumbnails": {
       "group": "{label}: Sammlung",
       "brandKit": "Brand Kit"
+    },
+    "suggestions": {
+      "title": "Vorschläge",
+      "hint": "Ein Klick übernimmt den Vorschlag, Rückgängig macht ihn ungeschehen.",
+      "applied": "Übernommen: {label}"
     }
   },
   "sizes": {

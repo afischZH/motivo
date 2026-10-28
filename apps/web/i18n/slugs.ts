@@ -47,6 +47,8 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "css-patterns": { de: "css-muster-generator", en: "css-pattern-generator" },
   "glass-effects": { de: "glas-effekt-generator", en: "glassmorphism-generator" },
   "bento-grid": { de: "bento-grid-generator", en: "bento-grid-generator" },
+  "contrast-checker": { de: "kontrast-checker", en: "contrast-checker" },
+  "css-shadow": { de: "css-schatten-generator", en: "css-shadow-generator" },
 };
 
 /**

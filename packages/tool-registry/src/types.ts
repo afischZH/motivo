@@ -377,6 +377,27 @@ export interface ExtraExport<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Suggestions
+// ---------------------------------------------------------------------------
+
+/**
+ * A one-click change the tool proposes for the current params (e.g. the
+ * nearest text colour that passes WCAG AA). The editor lists them above the
+ * controls; choosing one merges `patch` into the params as one undo step.
+ */
+export interface ParamSuggestion<P> {
+  /** Stable kebab-case id, unique within one result. */
+  id: string;
+  /** i18n key of the button text; may use the placeholders in `values`. */
+  labelKey: string;
+  values?: Readonly<Record<string, string | number>>;
+  /** Optional colour shown as a swatch on the button (hex). */
+  swatch?: string;
+  /** Params to merge; must keep the params valid. */
+  patch: Partial<P>;
+}
+
+// ---------------------------------------------------------------------------
 // Image input
 // ---------------------------------------------------------------------------
 
@@ -482,6 +503,11 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   tile?: TileRenderer<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
+  /**
+   * One-click changes for the current params; see `ParamSuggestion`. Pure
+   * and cheap (runs on every change); an empty list shows nothing.
+   */
+  suggestions?(params: Params<S>): readonly ParamSuggestion<Params<S>>[];
   /**
    * The subset of `exports` offered for these params, when it depends on
    * them (e.g. image exports only for some effects). Pure. Default: all.

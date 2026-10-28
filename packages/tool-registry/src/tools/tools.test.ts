@@ -115,12 +115,15 @@ describe("built-in tool registration", () => {
       "palette-from-image",
       "glass-effects",
       "bento-grid",
+      "contrast-checker",
+      "css-shadow",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
       "tints-shades",
       "tailwind-palette",
       "palette-from-image",
+      "contrast-checker",
     ]);
     expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual([
       "css-gradient",
@@ -426,6 +429,8 @@ describe("extra exports", () => {
       "palette-from-image",
       "glass-effects",
       "bento-grid",
+      "contrast-checker",
+      "css-shadow",
     ]);
   });
 });

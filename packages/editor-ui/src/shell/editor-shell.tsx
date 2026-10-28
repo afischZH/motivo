@@ -28,6 +28,7 @@ import type { LocalDesignController, LocalDesignView } from "../designs/local-de
 import { useLocalDesign } from "../designs/use-local-design";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
 import { ImageInputSection } from "../image-input/image-input-section";
+import { SuggestionsSection } from "./suggestions";
 import type { ImageInputServices } from "../image-input/services";
 import { buildShareUrl, useShareHash } from "../share/use-share";
 import { cx } from "../controls/primitives";
@@ -435,6 +436,7 @@ export function EditorShell({
             </h2>
             <ToolAdvisories />
             <BrandPaletteSection onApplied={confirm} />
+            <SuggestionsSection onApplied={confirm} />
             <ImageInputSection services={imageInputServices} />
             <AssetServicesContext.Provider value={imageInputServices}>
               <EditorControls />
