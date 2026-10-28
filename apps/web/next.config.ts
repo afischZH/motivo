@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     "@motivo/tool-registry",
     "@motivo/exporters",
     "@motivo/editor-ui",
+    "@motivo/svg-sanitizer",
   ],
   // Always defined (empty when unset), so Next inlines them into the client
   // bundle and drops the analytics and Sentry code paths from builds without

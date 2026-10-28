@@ -652,6 +652,125 @@
         }
       }
     },
+    "seamless-patterns": {
+      "name": "Nahtlose Muster",
+      "description": "Nahtlos kachelbare Muster aus Formen oder deiner eigenen Grafik. Als SVG, CSS, Kachel oder Bild exportieren.",
+      "params": {
+        "upload": {
+          "label": "Eigene Grafik"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "ring": "Ring",
+            "square": "Quadrat",
+            "diamond": "Raute",
+            "triangle": "Dreieck",
+            "hexagon": "Sechseck",
+            "star": "Stern",
+            "sparkle": "Funkeln",
+            "heart": "Herz",
+            "leaf": "Blatt",
+            "drop": "Tropfen",
+            "wave": "Welle",
+            "plus": "Plus",
+            "cross": "Kreuz",
+            "arch": "Bogen",
+            "flower": "Blume",
+            "clover": "Klee",
+            "moon": "Mond",
+            "semicircle": "Halbkreis",
+            "pill": "Kapsel",
+            "chevron": "Winkel",
+            "sun": "Sonne",
+            "pebble": "Kiesel",
+            "dots": "Punkte"
+          }
+        },
+        "keepOriginalColors": {
+          "label": "Originalfarben behalten"
+        },
+        "tiling": {
+          "label": "Kachelung",
+          "options": {
+            "grid": "Raster",
+            "brick": "Ziegel",
+            "halfDrop": "Halb versetzt",
+            "mirror": "Gespiegelt"
+          }
+        },
+        "size": {
+          "label": "Motivgrösse"
+        },
+        "spacingX": {
+          "label": "Abstand horizontal"
+        },
+        "spacingY": {
+          "label": "Abstand vertikal"
+        },
+        "cells": {
+          "label": "Motive pro Kachel"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "rotationJitter": {
+          "label": "Zufällige Drehung"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "jitter": {
+          "label": "Zufallsversatz"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "single": "Eine Farbe",
+            "palette": "Palette"
+          }
+        },
+        "color": {
+          "label": "Motivfarbe"
+        }
+      },
+      "presets": {
+        "meadow": "Wiese",
+        "sweethearts": "Herzklopfen",
+        "terrazzo": "Terrazzo",
+        "starlight": "Sternenlicht",
+        "botanical": "Botanisch",
+        "bauhaus": "Bauhaus",
+        "waves": "Wellen"
+      },
+      "seo": {
+        "whatIs": "Ein nahtloses Muster ist eine Kachel, die sich ohne sichtbare Kanten beliebig oft wiederholen lässt. Motive, die über den Rand ragen, erscheinen auf der gegenüberliegenden Seite wieder, darum fällt der Übergang nicht auf. Solche Muster eignen sich für Website-Hintergründe, Geschenkpapier, Stoffe, Tapeten und Verpackungen.",
+        "howTo": "Wähl eine der eingebauten Formen oder lade eine eigene SVG-, PNG-, JPG- oder WebP-Datei und schneide sie zu. Bestimme die Kachelung (Raster, Ziegel, halb versetzt oder gespiegelt), Grösse, Abstände und Drehung und färbe die Motive mit einer Farbe oder einer Palette. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, als CSS-Hintergrund, als einzelne PNG-Kachel oder als Bild.",
+        "faq": {
+          "q1": {
+            "question": "Wird meine hochgeladene Datei gespeichert oder geteilt?",
+            "answer": "Nein. Deine Datei wird nur in deinem Browser verarbeitet, nie an einen Server geschickt und nicht in Links übernommen. Wer deinen Link öffnet, sieht das Muster mit der gewählten Form."
+          },
+          "q2": {
+            "question": "Was ist der Unterschied zwischen Ziegel und halb versetzt?",
+            "answer": "Beim Ziegel ist jede zweite Reihe um eine halbe Kachelbreite verschoben, wie bei einer Backsteinmauer. Halb versetzt verschiebt stattdessen jede zweite Spalte um eine halbe Höhe."
+          },
+          "q3": {
+            "question": "Wie verwende ich das Muster als CSS-Hintergrund?",
+            "answer": "Der CSS-Export enthält die Kachel als eingebettetes SVG samt background-size und background-repeat. Füg den Code in die Regel deines Elements ein, das Muster wiederholt sich dann nahtlos."
+          },
+          "q4": {
+            "question": "Warum ist meine SVG-Datei einfarbig?",
+            "answer": "Ohne die Option Originalfarben behalten färbt Motivo die Grafik in deiner Motivfarbe oder Palette ein. Schalte die Option ein, um die Farben der Datei zu behalten."
+          },
+          "q5": {
+            "question": "Warum wurden Teile meiner SVG-Datei entfernt?",
+            "answer": "Motivo lässt aus Sicherheitsgründen nur einfache Grafikelemente durch. Skripte, eingebettete Webinhalte, Schriften und Verweise auf andere Dateien werden entfernt."
+          }
+        }
+      }
+    },
     "noise-grain": {
       "name": "Noise und Grain",
       "description": "Körnige Texturen und Hintergründe mit feinem Rauschen über Farbe oder Verlauf. Als PNG, JPG, WebP oder SVG exportieren.",

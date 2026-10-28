@@ -652,6 +652,125 @@
         }
       }
     },
+    "seamless-patterns": {
+      "name": "Seamless Patterns",
+      "description": "Seamlessly tiling patterns made of shapes or your own graphic. Export as SVG, CSS, tile or image.",
+      "params": {
+        "upload": {
+          "label": "Your graphic"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Circle",
+            "ring": "Ring",
+            "square": "Square",
+            "diamond": "Diamond",
+            "triangle": "Triangle",
+            "hexagon": "Hexagon",
+            "star": "Star",
+            "sparkle": "Sparkle",
+            "heart": "Heart",
+            "leaf": "Leaf",
+            "drop": "Drop",
+            "wave": "Wave",
+            "plus": "Plus",
+            "cross": "Cross",
+            "arch": "Arch",
+            "flower": "Flower",
+            "clover": "Clover",
+            "moon": "Moon",
+            "semicircle": "Semicircle",
+            "pill": "Pill",
+            "chevron": "Chevron",
+            "sun": "Sun",
+            "pebble": "Pebble",
+            "dots": "Dots"
+          }
+        },
+        "keepOriginalColors": {
+          "label": "Keep original colors"
+        },
+        "tiling": {
+          "label": "Tiling",
+          "options": {
+            "grid": "Grid",
+            "brick": "Brick",
+            "halfDrop": "Half drop",
+            "mirror": "Mirror"
+          }
+        },
+        "size": {
+          "label": "Motif size"
+        },
+        "spacingX": {
+          "label": "Horizontal spacing"
+        },
+        "spacingY": {
+          "label": "Vertical spacing"
+        },
+        "cells": {
+          "label": "Motifs per tile"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "rotationJitter": {
+          "label": "Random rotation"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "jitter": {
+          "label": "Random offset"
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "single": "One color",
+            "palette": "Palette"
+          }
+        },
+        "color": {
+          "label": "Motif color"
+        }
+      },
+      "presets": {
+        "meadow": "Meadow",
+        "sweethearts": "Sweethearts",
+        "terrazzo": "Terrazzo",
+        "starlight": "Starlight",
+        "botanical": "Botanical",
+        "bauhaus": "Bauhaus",
+        "waves": "Waves"
+      },
+      "seo": {
+        "whatIs": "A seamless pattern is a tile that repeats any number of times without visible edges. Motifs that cross the border reappear on the opposite side, so the joins disappear. Seamless patterns work well for website backgrounds, wrapping paper, fabric, wallpaper and packaging.",
+        "howTo": "Pick one of the built-in shapes or load your own SVG, PNG, JPG or WebP file and crop it. Choose the tiling (grid, brick, half drop or mirror), size, spacing and rotation, and color the motifs with one color or a palette. Press the space bar for new variations. Export as SVG, as a CSS background, as a single PNG tile or as an image.",
+        "faq": {
+          "q1": {
+            "question": "Is my uploaded file stored or shared?",
+            "answer": "No. Your file is processed only in your browser, never sent to a server and never put into links. Anyone opening your link sees the pattern with the chosen shape."
+          },
+          "q2": {
+            "question": "What is the difference between brick and half drop?",
+            "answer": "Brick shifts every other row by half a tile width, like a brick wall. Half drop shifts every other column by half a tile height instead."
+          },
+          "q3": {
+            "question": "How do I use the pattern as a CSS background?",
+            "answer": "The CSS export contains the tile as an embedded SVG together with background-size and background-repeat. Paste the code into your element's rule and the pattern repeats seamlessly."
+          },
+          "q4": {
+            "question": "Why is my SVG file a single color?",
+            "answer": "Unless Keep original colors is on, Motivo recolors the graphic with your motif color or palette. Turn the option on to keep the file's own colors."
+          },
+          "q5": {
+            "question": "Why were parts of my SVG file removed?",
+            "answer": "For safety, Motivo only lets plain graphic elements through. Scripts, embedded web content, fonts and references to other files are removed."
+          }
+        }
+      }
+    },
     "noise-grain": {
       "name": "Noise and Grain",
       "description": "Grainy textures and backgrounds with fine noise over a color or gradient. Export as PNG, JPG, WebP or SVG.",

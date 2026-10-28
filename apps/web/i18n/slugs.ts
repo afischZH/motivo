@@ -22,6 +22,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   blob: { de: "blob-generator", en: "blob-generator" },
   "svg-waves": { de: "svg-wellen-generator", en: "svg-wave-generator" },
   "polka-dots": { de: "punktmuster-generator", en: "polka-dot-pattern-generator" },
+  "seamless-patterns": { de: "nahtlose-muster-generator", en: "seamless-pattern-generator" },
   "noise-grain": { de: "rauschen-koernung-generator", en: "noise-grain-generator" },
   "grid-patterns": { de: "rastermuster-generator", en: "grid-pattern-generator" },
   confetti: { de: "konfetti-generator", en: "confetti-generator" },

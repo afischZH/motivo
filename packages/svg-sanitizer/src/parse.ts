@@ -30,8 +30,11 @@ export type ParseError =
   "malformed" | "doctype" | "entity" | "too-deep" | "too-many-elements" | "no-root";
 
 export class XmlParseError extends Error {
-  constructor(readonly code: ParseError) {
+  // No parameter property: build scripts load this file with Node's type stripping.
+  readonly code: ParseError;
+  constructor(code: ParseError) {
     super(code);
+    this.code = code;
     this.name = "XmlParseError";
   }
 }
