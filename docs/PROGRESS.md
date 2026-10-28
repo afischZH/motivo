@@ -4,13 +4,27 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M3 fertig, wartet auf Abnahme durch Andreas. Kurswechsel 2026-10-28: **komplett gratis, spendenfinanziert, keine Konten, keine Zahlungen**. Alle APs erledigt (AP01, AP02, AP10 gestrichen), CI in Chromium, Firefox und WebKit grün (PR #4, Draft). Umbenennung in **Musterli** (Domain musterli.app) mit PR #7 übernommen. M2 live seit 2026-10-27 (PR #3, Merge 648bbad).
+- **Meilenstein**: M4 (Flaggschiff-Muster, Code-Tools, Launch), freigegeben von Andreas 2026-10-28 07:51. Branch `m4/launch` ab `main`. M3 abgenommen und live seit 2026-10-28 07:45 (PR #4, Merge 1acdf92), Name jetzt **Musterli**.
 - **Letzte Sitzung**: 2026-10-28 (Cloud-Sitzung)
-- **Nächster Schritt**: M3-Abnahme bei Andreas: Merge PR #4 auf main und Produktions-Deploy (Stopp-Punkt). Später offen für Andreas: Impressum-Angaben, Domain/DNS, Analytics-Token, Sentry-DSN, juristische Prüfung der Rechtstexte.
+- **Nächster Schritt**: AP01, AP04, AP05 und AP06 parallel; AP02 und AP03 nach AP01 (Shape-API). Offen für Andreas bis zum Launch: Domain musterli.app mit Cloudflare verbinden, Impressum-Angaben, Analytics-Token, Sentry-DSN, juristische Prüfung (Rechtstexte, Nutzungsbedingungen), Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
-### M3: Gradient-Tools, lokales Speichern, lokales Brand Kit, Spenden (Plan angepasst 2026-10-28: keine Konten)
+### M4: Flaggschiff-Muster, Code-Tools und Launch (freigegeben 2026-10-28)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M4-AP01 | Eigene Shape-Bibliothek: 150+ Formen in 12 Packs (100er-Box, Nonzero), Pack-API in `@musterli/engine`, Brand-Kit-Shapes als eigenes Pack, Seamless Patterns nutzt die Bibliothek | engine-dev | in Arbeit | – | Clean-Room, selbst gezeichnet, Lizenz in `assets/LICENSES.md` |
+| M4-AP02 | Tool **Geometric Patterns** (TOOLS.md A1): uniform und dynamic Grid, Rotation, Duotone, nur Kontur, mind. 6 Presets, CSS-Kachel | engine-dev | offen | AP01 | |
+| M4-AP03 | Kachel-Editing in Geometric Patterns (`tileOverrides`, Popover per Klick und Tastatur) | ui-dev | offen | AP02 | Overrides in Teilen-Link und gespeicherten Designs |
+| M4-AP04 | **GIF-Export** im Worker (gifenc, dynamisch geladen), generisch für Tools mit `supportsAnimation` (Seed-Varianten, Farbwechsel) | engine-dev + ui-dev | in Arbeit | – | Dependency-Grösse vor Einbau messen (Grenze 50 KB gzip) |
+| M4-AP05 | Tools **Kontrast-Checker** (F6) und **CSS-Schatten** (J1) mit SEO-Landingpages | engine-dev + ui-dev | in Arbeit | – | Spezifikation aus PR #8 |
+| M4-AP06 | Tools **Glas- und Rahmen-Effekte** (J2) und **Bento-Grid** (J3) mit SEO-Landingpages | engine-dev + ui-dev | in Arbeit | – | Spezifikation aus PR #8 |
+| M4-AP07 | Kurze Nutzungsbedingungen mit freier Lizenz für Exporte (DE/EN, juristisch zu prüfen) | ui-dev | offen | – | |
+| M4-AP08 | Launch-Vorbereitung: Changelog, Lighthouse auf Produktions-Host, Entwürfe Launch-Kommunikation, Domain-Anleitung für Andreas | Orchestrator | offen | Domain (Andreas) | Veröffentlichen nur durch Andreas |
+| M4-AP09 | QA in 3 Browsern, Code- und Security-Review | qa-tester + reviewer | offen | alle | |
+
+### M3: Gradient-Tools, lokales Speichern, lokales Brand Kit, Spenden (abgenommen 2026-10-28, live)
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
