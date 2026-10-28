@@ -14,7 +14,8 @@
       "en": "English"
     },
     "mainNav": "Main",
-    "toolsNav": "Tools"
+    "toolsNav": "Tools",
+    "menu": "Menu"
   },
   "Theme": {
     "toggle": "Dark theme",
@@ -3087,7 +3088,15 @@
     "toolCount": "{count, plural, one {# generator} other {# generators}}",
     "showCategory": "View category",
     "convertersLead": "Convert code and images, right in your browser.",
-    "allConverters": "All converters"
+    "allConverters": "All converters",
+    "searchLabel": "Search generators",
+    "searchPlaceholder": "Search, e.g. waves, gradient, palette",
+    "searchShortcut": "Press / to jump to search",
+    "resultsOne": "1 result",
+    "resultsOther": "{count} results",
+    "noResults": "Nothing found for “{query}”.",
+    "noResultsHint": "Try another word or browse the categories.",
+    "clearSearch": "Clear search"
   },
   "CategoryPage": {
     "metaTitle": "{category} generators | Musterli",

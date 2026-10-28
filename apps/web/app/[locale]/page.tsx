@@ -268,13 +268,14 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
           </Link>
         }
       />
-      <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+      {/* Eight categories plus the converters: 3 × 3 from sm up, the converters full width below. */}
+      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
         {populatedCategories().map((category) => {
           const cover = categoryCover(category, used);
           return (
             <li key={category}>
               <Link href={routeHref({ page: "category", category }, locale)} className={TILE}>
-                <span className="block aspect-[4/3] overflow-hidden border-b border-border bg-muted">
+                <span className="block aspect-[4/3] overflow-hidden border-b border-border bg-muted sm:aspect-[16/10]">
                   {cover && (
                     <MotifImage
                       tool={cover}
@@ -293,11 +294,11 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
             </li>
           );
         })}
-        <li>
+        <li className="col-span-2 sm:col-span-1">
           <Link href="/convert" className={TILE}>
             <span
               aria-hidden="true"
-              className="flex aspect-[4/3] items-center justify-center gap-2 border-b border-border bg-highlight font-mono text-sm font-medium text-link sm:text-base"
+              className="flex aspect-[3/1] items-center sm:aspect-[16/10] justify-center gap-2 border-b border-border bg-highlight font-mono text-sm font-medium text-link sm:text-base"
             >
               SVG · CSS · PNG
             </span>
