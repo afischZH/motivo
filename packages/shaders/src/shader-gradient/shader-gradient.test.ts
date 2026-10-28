@@ -31,8 +31,7 @@ const BASE: ShaderGradientOptions = {
  * Byte-exact comparison as one string: `toEqual` on large typed arrays walks
  * every element through the matcher and is slow on a busy CI runner.
  */
-const bytes = (data: Uint8Array | Uint8ClampedArray): string =>
-  Buffer.from(data.buffer, data.byteOffset, data.byteLength).toString("base64");
+const bytes = (data: Uint8Array | Uint8ClampedArray): string => data.join(",");
 
 const PALETTE = paletteTextureData(["#1e1b4b", "#7c3aed", "#f472b6", "#fde68a"]);
 const DESIGN = { width: 160, height: 100 };
