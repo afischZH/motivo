@@ -239,6 +239,13 @@ importers:
         version: 4.6.7
 
   packages/shaders:
+    dependencies:
+      '@musterli/effects':
+        specifier: workspace:*
+        version: link:../effects
+      '@musterli/engine':
+        specifier: workspace:*
+        version: link:../engine
     devDependencies:
       '@musterli/config':
         specifier: workspace:*
