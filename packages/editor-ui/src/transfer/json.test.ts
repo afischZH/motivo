@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { packIntoFiles, parseUntrustedJson, partFileName, utf8Length } from "./json";
+import { packIntoFiles, parseUntrustedJson, partFileName, stringifyEach, utf8Length } from "./json";
 
 const wrap = (part: number, body: string) => `{"part":${part},"items":[${body}]}`;
 
@@ -27,6 +27,23 @@ describe("packIntoFiles", () => {
   it("gives an oversized item a file of its own", () => {
     const files = packIntoFiles(['"a"', `"${"x".repeat(100)}"`, '"b"'], wrap, 50);
     expect(files).toHaveLength(3);
+  });
+});
+
+describe("stringifyEach", () => {
+  it("serialises every value in order", async () => {
+    expect(await stringifyEach([1, "a", { b: [true] }])).toEqual(["1", '"a"', '{"b":[true]}']);
+  });
+
+  it("gives the event loop a turn between slices of work", async () => {
+    let ticks = 0;
+    const timer = setInterval(() => ticks++, 0);
+    // About 4 x 5 MB: well over one slice of work.
+    const big = Array.from({ length: 4 }, () => "x".repeat(5_000_000));
+    const out = await stringifyEach(big, 1);
+    clearInterval(timer);
+    expect(out).toHaveLength(4);
+    expect(ticks).toBeGreaterThan(0);
   });
 });
 

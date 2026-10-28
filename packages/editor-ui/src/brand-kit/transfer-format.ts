@@ -19,7 +19,7 @@
  * stays as it is.
  */
 import type { BrandAsset, BrandKitSnapshot, BrandPalette } from "@motivo/storage";
-import { packIntoFiles, partFileName } from "../transfer/json";
+import { packIntoFiles, partFileName, stringifyEach } from "../transfer/json";
 
 export const BRAND_KIT_FILE_FORMAT = "motivo-brandkit";
 export const BRAND_KIT_FILE_VERSION = 1;
@@ -95,19 +95,20 @@ export function buildBrandKitFile(kit: BrandKitSnapshot, exportedAt: number): Br
 /**
  * The export as file texts, each at most `maxBytes` so that it can be
  * imported again. Palettes and the default mark go into the first file;
- * logos and shapes fill as many files as they need.
+ * logos and shapes fill as many files as they need. Serialises in slices
+ * so the page stays responsive.
  */
-export function brandKitFileTexts(
+export async function brandKitFileTexts(
   kit: BrandKitSnapshot,
   exportedAt: number,
   maxBytes: number = BRAND_KIT_FILE_MAX_BYTES,
-): string[] {
+): Promise<string[]> {
   const { assets, ...first } = buildBrandKitFile(kit, exportedAt);
   const rest = { ...first, defaultPaletteId: null, palettes: [] };
   const head = (envelope: object) => `${JSON.stringify(envelope).slice(0, -1)},"assets":[`;
   const heads = [head(first), head(rest)] as const;
   return packIntoFiles(
-    assets.map((asset) => JSON.stringify(asset)),
+    await stringifyEach(assets),
     (part, body) => `${part === 0 ? heads[0] : heads[1]}${body}]}`,
     maxBytes,
   );

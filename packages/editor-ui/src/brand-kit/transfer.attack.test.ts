@@ -119,7 +119,7 @@ describe("brand kit import under attack", () => {
     expect(parsed.ok && parsed.defaultId).toBeNull();
   });
 
-  it("exports a large brand kit in files that each import again", () => {
+  it("exports a large brand kit in files that each import again", async () => {
     // 50 large raster logos (about 700 KB each) are more than one file may hold.
     const head =
       "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg";
@@ -147,7 +147,7 @@ describe("brand kit import under attack", () => {
           }) as BrandAsset,
       ),
     };
-    const texts = brandKitFileTexts(kit, 1);
+    const texts = await brandKitFileTexts(kit, 1);
     expect(texts.length).toBeGreaterThan(1);
     const ids: string[] = [];
     texts.forEach((text, part) => {

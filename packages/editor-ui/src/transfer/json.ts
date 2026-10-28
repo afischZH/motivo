@@ -37,6 +37,24 @@ export function utf8Length(text: string): number {
 }
 
 /**
+ * `JSON.stringify` of each value, giving the event loop a turn whenever a
+ * slice of work took `budgetMs`: an export with large uploads (about 5 ms
+ * per MB) must not block the page for longer than 50 ms at a time.
+ */
+export async function stringifyEach(values: readonly unknown[], budgetMs = 25): Promise<string[]> {
+  const out: string[] = [];
+  let start = performance.now();
+  for (const value of values) {
+    out.push(JSON.stringify(value));
+    if (performance.now() - start >= budgetMs) {
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+      start = performance.now();
+    }
+  }
+  return out;
+}
+
+/**
  * Packs serialised items into as few files as possible, each at most
  * `maxBytes` (UTF-8) so it can be imported again. `wrap(part, body)` builds
  * the file text of part `part` (from 0) around the comma-joined items. An

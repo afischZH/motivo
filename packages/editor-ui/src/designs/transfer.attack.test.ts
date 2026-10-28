@@ -179,7 +179,7 @@ describe("designs import under attack", () => {
     expect(isSafeRasterHref(`data:image/png;base64,${PNG_1X1}`)).toBe(true);
   });
 
-  it("exports large collections in files that each import again", () => {
+  it("exports large collections in files that each import again", async () => {
     // Uploads make designs large: one file would exceed the import limit.
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M0 0${" L1 1".repeat(160_000)}"/></svg>`;
     const designs = Array.from({ length: 30 }, (_, i) =>
@@ -196,7 +196,7 @@ describe("designs import under attack", () => {
     expect(JSON.stringify(buildDesignsFile(designs, 1)).length).toBeGreaterThan(
       DESIGNS_FILE_MAX_BYTES,
     );
-    const texts = designsFileTexts(designs, 1);
+    const texts = await designsFileTexts(designs, 1);
     expect(texts.length).toBeGreaterThan(1);
     const ids: string[] = [];
     for (const text of texts) {
@@ -210,7 +210,7 @@ describe("designs import under attack", () => {
       "motivo-designs-v1-2026-10-28-2.json",
     );
     // Small exports stay one file, identical to the single-file format.
-    expect(designsFileTexts([entry()], 1)).toEqual([
+    expect(await designsFileTexts([entry()], 1)).toEqual([
       JSON.stringify(buildDesignsFile([entry()], 1)),
     ]);
   });

@@ -266,7 +266,7 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
         const all = await store.getAll();
         if (all.length === 0) return { tone: "info", text: tPage("exportEmpty") };
         // Several files when uploads make one too large to import again.
-        const texts = designsFileTexts(all, Date.now());
+        const texts = await designsFileTexts(all, Date.now());
         const { downloadBlob } = await import("@motivo/exporters");
         const date = new Date();
         texts.forEach((text, part) => {

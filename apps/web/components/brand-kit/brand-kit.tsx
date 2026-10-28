@@ -250,7 +250,7 @@ export function BrandKit() {
           return { tone: "info", text: t("page.exportEmpty") };
         }
         // Several files when large logos make one too large to import again.
-        const texts = brandKitFileTexts(kit, Date.now());
+        const texts = await brandKitFileTexts(kit, Date.now());
         const { downloadBlob } = await import("@motivo/exporters");
         const date = new Date();
         texts.forEach((text, part) => {
