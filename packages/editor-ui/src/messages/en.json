@@ -6,7 +6,12 @@
       "resetHint": "Double-click to reset to the default",
       "advanced": "Advanced",
       "moreSettings": "More settings",
-      "advisories": "Hints about the design"
+      "advisories": "Hints about the design",
+      "reset": "Reset {label}",
+      "resetShort": "Reset to default",
+      "showHelp": "About {label}",
+      "resetAll": "Reset all",
+      "resetAllHint": "Set every setting back to its default (undo with ⌘/Ctrl+Z)"
     },
     "list": {
       "item": "Item {index}",

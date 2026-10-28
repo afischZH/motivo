@@ -66,6 +66,25 @@ describe("EditorControls layout", () => {
   });
 });
 
+describe("control rows", () => {
+  it("offers a reset only while the value differs from the default", async () => {
+    const { user } = renderEditor();
+    expect(screen.queryByRole("button", { name: "Anzahl zurücksetzen" })).toBeNull();
+    screen.getByRole("slider", { name: "Anzahl" }).focus();
+    await user.keyboard("{ArrowRight}");
+    expect(params().count).toBe(11);
+    await user.click(screen.getByRole("button", { name: "Anzahl zurücksetzen" }));
+    expect(params().count).toBe(fixtureDefaults.count);
+    expect(screen.queryByRole("button", { name: "Anzahl zurücksetzen" })).toBeNull();
+  });
+
+  it("keeps short help texts visible", () => {
+    renderEditor();
+    expect(screen.getByText("Wie stark die Formen decken")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Erklärung zu Deckkraft" })).toBeNull();
+  });
+});
+
 describe("slider", () => {
   it("steps with arrows, 10 steps with Shift, jumps with Home/End", async () => {
     const { user } = renderEditor();

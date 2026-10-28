@@ -56,7 +56,8 @@ export function RangeField(props: FieldProps<RangeControl, number>) {
           aria-valuetext={c.unit ? `${props.value}${c.unit}` : undefined}
         />
       </Slider.Root>
-      <span className="flex items-center gap-1">
+      {/* One width for every slider's field, the unit sits inside it. */}
+      <span className="relative shrink-0">
         <NumberInput
           id={props.ids.input}
           value={props.value}
@@ -64,12 +65,16 @@ export function RangeField(props: FieldProps<RangeControl, number>) {
           max={c.max}
           step={c.step}
           integer={c.integer}
+          className={cx("w-[4.5rem]", c.unit && "pr-6")}
           onChange={props.onChange}
           {...(props.onCommit ? { onCommit: props.onCommit } : {})}
           {...(props.ids.description ? { describedBy: props.ids.description } : {})}
         />
         {c.unit && (
-          <span className="w-4 text-xs text-muted-foreground" aria-hidden="true">
+          <span
+            className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-xs text-muted-foreground"
+            aria-hidden="true"
+          >
             {c.unit}
           </span>
         )}
@@ -129,7 +134,8 @@ export function SegmentedField(props: FieldProps<ChoiceControl, OptionValue>) {
           key={String(option.value)}
           value={String(option.value)}
           className={cx(
-            "h-7 min-w-0 flex-1 truncate rounded-[calc(var(--radius-md)-2px)] px-2 text-xs font-medium",
+            // Long labels wrap onto a second line instead of being cut off.
+            "min-h-7 min-w-0 flex-1 rounded-[calc(var(--radius-md)-2px)] px-2 py-1 text-xs leading-tight font-medium text-balance break-words",
             "text-muted-foreground hover:text-foreground",
             "data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm",
             FOCUS_RING,

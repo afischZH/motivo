@@ -142,7 +142,7 @@ describe("list control", () => {
     const { user } = renderList();
     await user.click(rows()[1] as HTMLElement);
     const form = screen.getByRole("group", { name: "Ebene 2 bearbeiten" });
-    const lock = within(form).getAllByRole("button", { name: /Grösse/ })[0] as HTMLElement;
+    const lock = within(form).getByRole("button", { name: "Grösse sperren" });
     await user.click(lock);
     expect([...store.getState().locks]).toEqual(["items.1.size"]);
     store.getState().newVariant();

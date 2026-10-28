@@ -39,7 +39,7 @@
 | Shape/Pack | Grid-Picker mit Suche und Mehrfachauswahl | |
 | Bild-Upload | Dropzone + Paste aus Zwischenablage + Crop-Dialog | Hinweis: "Bild bleibt auf deinem Gerät" |
 
-Jedes Control hat ein Schloss für "beim Randomisieren behalten". Pro-Parameter zeigen ein kleines Badge; Interaktion öffnet ein freundliches Upgrade-Popover statt das Control zu verstecken.
+Jedes Control hat ein Schloss für "beim Randomisieren behalten". Auf Geräten mit Maus erscheint das offene Schloss erst beim Überfahren oder Fokussieren der Zeile, ein gesperrtes immer (Akzentfarbe); auf Touch-Geräten sind alle sichtbar. Weicht ein Wert vom Standard ab, erscheint daneben ein Zurücksetzen-Knopf (Doppelklick auf den Slider bleibt als Abkürzung), oben im Panel setzt "Alle zurücksetzen" alles in einem Undo-Schritt zurück. Hilfetexte bis 90 Zeichen stehen unter dem Control, längere liegen hinter einem Info-Knopf neben dem Label (`aria-expanded`, per `aria-describedby` immer vorgelesen). Segment-Labels brechen um statt abgeschnitten zu werden; Zahlenfelder neben Slidern sind gleich breit, die Einheit steht im Feld. Pro-Parameter zeigen ein kleines Badge; Interaktion öffnet ein freundliches Upgrade-Popover statt das Control zu verstecken.
 
 ## 4. Tastaturkürzel
 

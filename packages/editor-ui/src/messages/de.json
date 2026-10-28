@@ -6,7 +6,12 @@
       "resetHint": "Doppelklick setzt den Standardwert",
       "advanced": "Erweitert",
       "moreSettings": "Weitere Einstellungen",
-      "advisories": "Hinweise zum Design"
+      "advisories": "Hinweise zum Design",
+      "reset": "{label} zurücksetzen",
+      "resetShort": "Auf Standardwert zurücksetzen",
+      "showHelp": "Erklärung zu {label}",
+      "resetAll": "Alle zurücksetzen",
+      "resetAllHint": "Alle Einstellungen auf die Standardwerte setzen (Rückgängig mit ⌘/Ctrl+Z)"
     },
     "list": {
       "item": "Element {index}",

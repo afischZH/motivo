@@ -6,6 +6,8 @@ import { useT } from "../i18n";
 import type { ParamValues } from "../store/editor-store";
 import { applyListOp, type ListItem, type ListOp } from "../store/list";
 import { useEditorStore } from "../store/react";
+import { valuesEqual } from "../store/values";
+import { ChevronDownIcon } from "../shell/icons";
 import { BackgroundField, ColorField, PaletteField } from "./color";
 import {
   NumberField,
@@ -156,8 +158,11 @@ function ControlLevel(level: Level) {
         {renderControls(group.controls)}
         {group.advanced.length > 0 && (
           <details className="group/advanced grid grid-cols-[minmax(0,1fr)] gap-4">
-            <summary className="cursor-pointer text-xs font-medium text-muted-foreground select-none">
+            <summary className="flex w-fit cursor-pointer list-none items-center gap-1 rounded-md text-xs font-medium text-muted-foreground select-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
               {t("Editor.controls.advanced")}
+              <span className="transition-transform duration-200 ease-out group-open/advanced:rotate-180 [&_svg]:size-3.5">
+                <ChevronDownIcon />
+              </span>
             </summary>
             <div className="mt-3 grid grid-cols-[minmax(0,1fr)] gap-4">
               {renderControls(group.advanced)}
@@ -172,11 +177,14 @@ function ControlLevel(level: Level) {
       <details
         key={group.id ?? "__ungrouped"}
         open={!group.collapsed}
-        className="border-b border-border pb-4 last:border-b-0"
+        className="group/section border-b border-border pb-4 last:border-b-0"
         data-group={group.id ?? undefined}
       >
-        <summary className="cursor-pointer py-1 text-sm font-semibold text-foreground select-none">
+        <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm font-semibold text-foreground select-none hover:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
           {title}
+          <span className="text-muted-foreground transition-transform duration-200 ease-out group-open/section:rotate-180">
+            <ChevronDownIcon />
+          </span>
         </summary>
         <div className="mt-3">{body}</div>
       </details>
@@ -214,6 +222,16 @@ function ControlField({ control, value, level }: ControlFieldProps) {
       ? { locked: level.locks.has(lockKey), onToggle: () => onToggleLock(lockKey) }
       : undefined;
 
+  // A visible reset while the value differs from the default (double-click
+  // on a slider stays as a shortcut). Lists and uploads have their own actions.
+  const defaults = level.source.defaults as ParamValues;
+  const resettable =
+    level.onReset !== undefined &&
+    control.kind !== "list" &&
+    control.kind !== "image" &&
+    Object.prototype.hasOwnProperty.call(defaults, control.key) &&
+    !valuesEqual(value, defaults[control.key]);
+
   const row = (labelFor: boolean, children: ReactNode, aside?: ReactNode) => (
     <ControlRow
       controlKey={control.key}
@@ -222,6 +240,7 @@ function ControlField({ control, value, level }: ControlFieldProps) {
       labelFor={labelFor}
       {...(description !== undefined ? { description } : {})}
       {...(lock ? { lock } : {})}
+      {...(resettable ? { onReset: () => level.onReset?.(control.key) } : {})}
       aside={aside}
     >
       {children}
