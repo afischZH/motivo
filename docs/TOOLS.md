@@ -242,6 +242,34 @@ Kleine Tools für die Entwickler-Persona: Ergebnis ist in erster Linie Code zum 
 
 ---
 
+## K. Generative Welle · M4b · G
+
+Entscheid Andreas 2026-10-28. Alle Tools rein clientseitig, deterministisch über den Seed, nur allgemein bekannte Algorithmen (Clean-Room). Jede Spezifikation schreibt der umsetzende Agent in seinen Abschnitt.
+
+### K1. Höhenlinien (Topo Lines) · M4b · G
+
+(Spezifikation folgt mit M4b-AP01)
+
+### K2. Flow Fields · M4b · G
+
+(Spezifikation folgt mit M4b-AP01)
+
+### K3. Low-Poly und Voronoi · M4b · G
+
+(Spezifikation folgt mit M4b-AP02)
+
+### K4. Guilloche · M4b · G
+
+(Spezifikation folgt mit M4b-AP03)
+
+### K5. Terrazzo · M4b · G
+
+(Spezifikation folgt mit M4b-AP02)
+
+### K6. Screenshot-Verschönerer · M4b · G
+
+(Spezifikation folgt mit M4b-AP04)
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
