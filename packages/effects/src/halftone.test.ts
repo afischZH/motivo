@@ -189,7 +189,7 @@ describe("halftoneSvg", () => {
     expect(svg).not.toContain("<rect");
     const plate = halftonePlate(photo, HALFTONE);
     expect(plateShapeCount(plate)).toBeLessThanOrEqual(screenCells(plate.screen));
-    expect(halftoneCellEstimate(240, 160, 8)).toBe(Math.ceil(32 * 22));
+    expect(halftoneCellEstimate(240, 160, 8)).toBe(33 * 23);
     // About 16 bytes per dot.
     expect(svg.length / plateShapeCount(plate)).toBeLessThan(20);
   });

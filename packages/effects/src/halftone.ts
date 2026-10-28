@@ -348,7 +348,7 @@ export function plateShapeCount(plate: HalftonePlate): number {
 /** Upper estimate of the cells per plate for a `width` × `height` design at `cell` px. */
 export function halftoneCellEstimate(width: number, height: number, cell: number): number {
   const c = Math.max(1e-3, cell);
-  return Math.ceil((width / c + 2) * (height / c + 2));
+  return Math.ceil((width / c + 3) * (height / c + 3));
 }
 
 /** Number with at most `d` decimals, no trailing zeros, no negative zero. */

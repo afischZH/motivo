@@ -379,6 +379,32 @@ export interface PixelBuffer {
 export interface ImageEffectRenderer<P> {
   kind: "image-effect";
   render(input: PixelBuffer, params: P, ctx: RenderContext): PixelBuffer;
+  /**
+   * Fixed effect grid (since M5-AP02, e.g. dither): the size `render`
+   * works at for a design of `design` size, whatever the output size.
+   * `input` is then the picture at this size, `render` returns this size,
+   * and the caller scales the result to the output (`scaleGrid`: nearest
+   * neighbour when enlarging, box filter when shrinking). So effects that
+   * depend on the resolution (error diffusion) give the same grid in the
+   * preview and in every export. At most `IMAGE_EFFECT_GRID_MAX_PIXELS`.
+   */
+  grid?(params: P, design: CanvasSize): CanvasSize;
+  /** Vector output of the effect (SVG export, since M5-AP02); see `ImageEffectVector`. */
+  vector?: ImageEffectVector<P>;
+}
+
+/**
+ * SVG export of an image effect (halftone): `render` builds the SVG in
+ * design units from the picture at analysis resolution (`input`, the same
+ * crop as the raster path, at most `IMAGE_EFFECT_VECTOR_MAX_EDGE`). Runs in
+ * the raster-effect worker. `shapes` estimates the number of shapes for the
+ * params and design size (pure, cheap); above `maxShapes` the export
+ * dialog explains the limit instead of offering a huge file.
+ */
+export interface ImageEffectVector<P> {
+  render(input: PixelBuffer, params: P, ctx: RenderContext): string;
+  shapes(params: P, design: CanvasSize): number;
+  readonly maxShapes: number;
 }
 
 export type Renderer<P> =
