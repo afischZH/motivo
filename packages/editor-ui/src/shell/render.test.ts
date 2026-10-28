@@ -1,4 +1,4 @@
-import { cssGradientTool, polkaDotsTool } from "@motivo/tool-registry";
+import { cssGradientTool, polkaDotsTool } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { fixtureTool } from "../test/fixture-tool";
 import { fitScale } from "./preview";

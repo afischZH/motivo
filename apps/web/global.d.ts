@@ -1,4 +1,4 @@
-import type editorMessages from "@motivo/editor-ui/messages/de.json";
+import type editorMessages from "@musterli/editor-ui/messages/de.json";
 import type { routing } from "@/i18n/routing";
 import type messages from "./messages/de.json";
 

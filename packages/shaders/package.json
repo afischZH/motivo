@@ -1,5 +1,5 @@
 {
-  "name": "@motivo/shaders",
+  "name": "@musterli/shaders",
   "version": "0.0.0",
   "private": true,
   "description": "GLSL sources and uniform schemas",
@@ -12,6 +12,6 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
-    "@motivo/config": "workspace:*"
+    "@musterli/config": "workspace:*"
   }
 }

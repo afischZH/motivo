@@ -9,7 +9,7 @@ import {
   keepLocked,
   visualParamsSchema,
   type Preset,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import * as z from "zod";
 
 const schema = visualParamsSchema.extend({
@@ -112,7 +112,6 @@ export const fixtureTool = defineTool({
       `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="${width}" height="${height}" fill="${p.palette[0] ?? "#000"}"/></svg>`,
   },
   exports: ["svg"],
-  gating: {},
 });
 
 /** Second tool for tool switching. */
@@ -128,7 +127,6 @@ export const otherTool = defineTool({
     keepLocked({ ...current, size: rng.int(1, 10) }, current, locks),
   render: { kind: "svg", render: () => "<svg/>" },
   exports: ["svg"],
-  gating: {},
 });
 
 /** Tool with a list param (generic list control and thumbnail picker). */
@@ -194,7 +192,6 @@ export const listTool = defineTool({
     ),
   render: { kind: "svg", render: () => "<svg/>" },
   exports: ["svg"],
-  gating: {},
 });
 
 export function createFixtureRegistry() {

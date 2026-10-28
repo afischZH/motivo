@@ -15,8 +15,9 @@ import {
   type Params,
   type ParamsSchema,
   type RenderContext,
+  type TileOutput,
   type ToolDefinition,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { ExportError } from "./errors";
 import { CODE_LANGUAGE_FILES, MIME_TYPES } from "./formats";
 
@@ -128,9 +129,31 @@ export function svgToDataUri(svg: string): string {
   return `data:image/svg+xml,${quoted.replace(DATA_URI_UNSAFE, percentEncode)}`;
 }
 
+/** Whether the tool describes a repeat tile (seamless tools). */
+export function supportsTile(tool: AnyToolDefinition): boolean {
+  return tool.tile !== undefined && tool.render.kind === "svg";
+}
+
+/**
+ * The repeat tile of a seamless design: SVG plus its size in CSS pixels.
+ * Throws `ExportError("unsupported-format")` for tools without a tile.
+ */
+export function exportTile<S extends ParamsSchema>(
+  tool: ToolDefinition<S>,
+  params: Params<S>,
+  ctx: RenderContext,
+): TileOutput {
+  const tile = tool.tile;
+  if (!tile || tool.render.kind !== "svg") {
+    throw new ExportError("unsupported-format", `Tool "${tool.id}" has no repeat tile`);
+  }
+  return tile.render(params, freshContext(ctx));
+}
+
 /**
  * CSS declarations (no selector) that reproduce the design: native CSS for
- * CSS tools, the SVG as a background data URI for SVG tools.
+ * CSS tools, the repeat tile with `background-size` for seamless tools, the
+ * SVG as a background data URI for other SVG tools.
  * Throws `ExportError("unsupported-format")`.
  */
 export function exportCss<S extends ParamsSchema>(
@@ -142,6 +165,14 @@ export function exportCss<S extends ParamsSchema>(
   requireFormat(t, "css");
   const render = tool.render;
   if (render.kind === "css") return render.render(params, freshContext(ctx)).css;
+  if (supportsTile(t)) {
+    const tile = exportTile(tool, params, ctx);
+    return [
+      `background-image: url("${svgToDataUri(tile.svg)}");`,
+      `background-size: ${fmtPx(tile.width)} ${fmtPx(tile.height)};`,
+      "background-repeat: repeat;",
+    ].join("\n");
+  }
   const svg = exportSvg(tool, params, ctx);
   return [
     `background-image: url("${svgToDataUri(svg)}");`,
@@ -149,6 +180,10 @@ export function exportCss<S extends ParamsSchema>(
     "background-position: center;",
     "background-repeat: no-repeat;",
   ].join("\n");
+}
+
+function fmtPx(value: number): string {
+  return `${Math.round(value * 100) / 100}px`;
 }
 
 /** Metadata of an extra export, for listing in the export dialog. */

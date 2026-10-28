@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-describe("@motivo/exporters entry", () => {
+describe("@musterli/exporters entry", () => {
   it("imports without a DOM (server bundles, workers)", async () => {
     expect(typeof document).toBe("undefined");
     const mod = await import("./index");

@@ -1,12 +1,12 @@
 {
   "Metadata": {
-    "title": "Motivo",
+    "title": "Musterli",
     "description": "Generatoren für Muster, Verläufe und Hintergründe, direkt im Browser."
   },
   "Layout": {
     "skipToContent": "Zum Inhalt springen",
-    "homeLink": "Motivo, zur Startseite",
-    "brand": "Motivo",
+    "homeLink": "Musterli, zur Startseite",
+    "brand": "Musterli",
     "footerTagline": "Grafiken für deine Projekte, gerendert auf deinem Gerät.",
     "languageNav": "Sprache",
     "languages": {
@@ -24,33 +24,38 @@
     "title": "Motive per Klick",
     "lead": "Muster, Verläufe und Hintergründe, direkt in deinem Browser gerendert. Die ersten Generatoren sind bald da.",
     "engineCheck": "Engine-Check:",
-    "metaTitle": "Motivo: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
+    "metaTitle": "Musterli: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
     "metaDescription": "Gratis Generatoren für Muster, Verläufe, Hintergründe und Farbpaletten. Alles läuft in deinem Browser, Export als SVG, PNG oder CSS. Ohne Konto.",
     "hero": {
-      "eyebrow": "Gratis Generatoren für Grafiken",
       "title": "Motive per Klick",
       "lead": "Muster, Verläufe, Hintergründe und Farbpaletten für Websites, Slides und Social Media. Leertaste drücken, neue Variante bekommen, als SVG, PNG oder CSS exportieren.",
       "ctaPrimary": "Alle Tools entdecken",
       "ctaSecondary": "Mit {tool} starten",
-      "hint": "Kein Konto nötig. Deine Motive entstehen direkt auf deinem Gerät.",
-      "showcaseLabel": "Beispielmotive",
       "showcaseLink": "{tool} öffnen",
       "spaceHint": "Leertaste",
-      "spaceHintText": "neue Variante"
+      "points": {
+        "free": "Gratis, ohne Limits",
+        "local": "Läuft in deinem Browser",
+        "noAccount": "Kein Konto nötig"
+      }
+    },
+    "preview": {
+      "default": "Standard",
+      "next": "Neue Variante"
     },
     "values": {
-      "heading": "Warum Motivo",
+      "heading": "Warum Musterli",
       "free": {
         "title": "Gratis Generatoren",
-        "text": "Alle Generatoren und Konverter sind gratis nutzbar, ohne Anmeldung und ohne Wasserzeichen auf deinen Mustern."
+        "text": "Alle Generatoren und Konverter sind gratis nutzbar, ohne Anmeldung, ohne Limits und ohne Wasserzeichen auf deinen Motiven."
       },
       "local": {
         "title": "Alles in deinem Browser",
         "text": "Motive werden auf deinem Gerät berechnet. Bilder, die du in Konverter lädst, verlassen deinen Browser nicht."
       },
-      "lifetime": {
-        "title": "Lifetime statt Abo",
-        "text": "Für spätere Profi-Funktionen ist eine Lifetime-Lizenz geplant: einmal zahlen statt monatlich. Umfang und Preise stehen noch nicht fest."
+      "donations": {
+        "title": "Getragen von Spenden",
+        "text": "Musterli finanziert sich über freiwillige Spenden. Es gibt keine Bezahlschranke, kein Abo und keine Pro-Version."
       }
     },
     "categories": {
@@ -81,8 +86,8 @@
     "faq": {
       "heading": "Häufige Fragen",
       "q1": {
-        "question": "Kostet Motivo etwas?",
-        "answer": "Nein. Alle Generatoren und Konverter, die du hier findest, sind gratis. Für spätere Profi-Funktionen wie sehr grosse Exporte ist eine Lifetime-Lizenz geplant, ohne Abo."
+        "question": "Kostet Musterli etwas?",
+        "answer": "Nein. Alle Generatoren, Konverter und Exporte sind gratis, ohne Limits. Musterli finanziert sich über freiwillige Spenden."
       },
       "q2": {
         "question": "Brauche ich ein Konto?",
@@ -94,7 +99,7 @@
       },
       "q4": {
         "question": "Darf ich die Motive kommerziell nutzen?",
-        "answer": "Die Lizenzbedingungen für Exporte legen wir vor dem Bezahl-Launch fest und veröffentlichen sie auf dieser Website."
+        "answer": "Ja. Was du mit Musterli exportierst, darfst du frei verwenden, auch kommerziell. Den genauen Lizenztext veröffentlichen wir auf dieser Website."
       },
       "q5": {
         "question": "Welche Formate kann ich exportieren?",
@@ -113,14 +118,16 @@
     "home": "Zur Startseite"
   },
   "ToolsIndex": {
-    "metaTitle": "Generatoren | Motivo",
+    "metaTitle": "Generatoren | Musterli",
     "metaDescription": "Alle Generatoren für Muster, Verläufe und Hintergründe, direkt in deinem Browser.",
     "title": "Generatoren",
     "lead": "Such dir einen Generator aus, drück die Leertaste und lass dich überraschen."
   },
   "ToolPage": {
-    "metaTitle": "{tool} | Motivo",
-    "allTools": "Alle Generatoren"
+    "metaTitle": "{tool} | Musterli",
+    "allTools": "Alle Generatoren",
+    "supportHint": "Gefällt dir Musterli? <link>Unterstütze das Projekt</link>.",
+    "newTab": "(öffnet in neuem Tab)"
   },
   "tools": {
     "common": {
@@ -317,7 +324,7 @@
           },
           "q5": {
             "question": "Darf ich die Muster kommerziell nutzen?",
-            "answer": "Ja. Was du mit Motivo erstellst, gehört dir und darf in eigenen und kommerziellen Projekten verwendet werden."
+            "answer": "Ja. Was du mit Musterli erstellst, gehört dir und darf in eigenen und kommerziellen Projekten verwendet werden."
           }
         }
       },
@@ -652,6 +659,125 @@
         }
       }
     },
+    "seamless-patterns": {
+      "name": "Nahtlose Muster",
+      "description": "Nahtlos kachelbare Muster aus Formen oder deiner eigenen Grafik. Als SVG, CSS, Kachel oder Bild exportieren.",
+      "params": {
+        "upload": {
+          "label": "Eigene Grafik"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "ring": "Ring",
+            "square": "Quadrat",
+            "diamond": "Raute",
+            "triangle": "Dreieck",
+            "hexagon": "Sechseck",
+            "star": "Stern",
+            "sparkle": "Funkeln",
+            "heart": "Herz",
+            "leaf": "Blatt",
+            "drop": "Tropfen",
+            "wave": "Welle",
+            "plus": "Plus",
+            "cross": "Kreuz",
+            "arch": "Bogen",
+            "flower": "Blume",
+            "clover": "Klee",
+            "moon": "Mond",
+            "semicircle": "Halbkreis",
+            "pill": "Kapsel",
+            "chevron": "Winkel",
+            "sun": "Sonne",
+            "pebble": "Kiesel",
+            "dots": "Punkte"
+          }
+        },
+        "keepOriginalColors": {
+          "label": "Originalfarben behalten"
+        },
+        "tiling": {
+          "label": "Kachelung",
+          "options": {
+            "grid": "Raster",
+            "brick": "Ziegel",
+            "halfDrop": "Halb versetzt",
+            "mirror": "Gespiegelt"
+          }
+        },
+        "size": {
+          "label": "Motivgrösse"
+        },
+        "spacingX": {
+          "label": "Abstand horizontal"
+        },
+        "spacingY": {
+          "label": "Abstand vertikal"
+        },
+        "cells": {
+          "label": "Motive pro Kachel"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "rotationJitter": {
+          "label": "Zufällige Drehung"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "jitter": {
+          "label": "Zufallsversatz"
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "single": "Eine Farbe",
+            "palette": "Palette"
+          }
+        },
+        "color": {
+          "label": "Motivfarbe"
+        }
+      },
+      "presets": {
+        "meadow": "Wiese",
+        "sweethearts": "Herzklopfen",
+        "terrazzo": "Terrazzo",
+        "starlight": "Sternenlicht",
+        "botanical": "Botanisch",
+        "bauhaus": "Bauhaus",
+        "waves": "Wellen"
+      },
+      "seo": {
+        "whatIs": "Ein nahtloses Muster ist eine Kachel, die sich ohne sichtbare Kanten beliebig oft wiederholen lässt. Motive, die über den Rand ragen, erscheinen auf der gegenüberliegenden Seite wieder, darum fällt der Übergang nicht auf. Solche Muster eignen sich für Website-Hintergründe, Geschenkpapier, Stoffe, Tapeten und Verpackungen.",
+        "howTo": "Wähl eine der eingebauten Formen oder lade eine eigene SVG-, PNG-, JPG- oder WebP-Datei und schneide sie zu. Bestimme die Kachelung (Raster, Ziegel, halb versetzt oder gespiegelt), Grösse, Abstände und Drehung und färbe die Motive mit einer Farbe oder einer Palette. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, als CSS-Hintergrund, als einzelne PNG-Kachel oder als Bild.",
+        "faq": {
+          "q1": {
+            "question": "Wird meine hochgeladene Datei gespeichert oder geteilt?",
+            "answer": "Nein. Deine Datei wird nur in deinem Browser verarbeitet, nie an einen Server geschickt und nicht in Links übernommen. Wer deinen Link öffnet, sieht das Muster mit der gewählten Form."
+          },
+          "q2": {
+            "question": "Was ist der Unterschied zwischen Ziegel und halb versetzt?",
+            "answer": "Beim Ziegel ist jede zweite Reihe um eine halbe Kachelbreite verschoben, wie bei einer Backsteinmauer. Halb versetzt verschiebt stattdessen jede zweite Spalte um eine halbe Höhe."
+          },
+          "q3": {
+            "question": "Wie verwende ich das Muster als CSS-Hintergrund?",
+            "answer": "Der CSS-Export enthält die Kachel als eingebettetes SVG samt background-size und background-repeat. Füg den Code in die Regel deines Elements ein, das Muster wiederholt sich dann nahtlos."
+          },
+          "q4": {
+            "question": "Warum ist meine SVG-Datei einfarbig?",
+            "answer": "Ohne die Option Originalfarben behalten färbt Musterli die Grafik in deiner Motivfarbe oder Palette ein. Schalte die Option ein, um die Farben der Datei zu behalten."
+          },
+          "q5": {
+            "question": "Warum wurden Teile meiner SVG-Datei entfernt?",
+            "answer": "Musterli lässt aus Sicherheitsgründen nur einfache Grafikelemente durch. Skripte, eingebettete Webinhalte, Schriften und Verweise auf andere Dateien werden entfernt."
+          }
+        }
+      }
+    },
     "noise-grain": {
       "name": "Noise und Grain",
       "description": "Körnige Texturen und Hintergründe mit feinem Rauschen über Farbe oder Verlauf. Als PNG, JPG, WebP oder SVG exportieren.",
@@ -964,6 +1090,252 @@
         }
       }
     },
+    "blob-composition": {
+      "name": "Blob-Komposition",
+      "description": "Mehrere Blobs an Ecken und Rändern, die sich jeder Bildgrösse anpassen. Als SVG oder Bild exportieren.",
+      "blob": "Blob {index}",
+      "params": {
+        "blobs": {
+          "label": "Blobs"
+        },
+        "anchor": {
+          "label": "Position",
+          "options": {
+            "top-left": "Oben links",
+            "top": "Oben",
+            "top-right": "Oben rechts",
+            "left": "Links",
+            "center": "Mitte",
+            "right": "Rechts",
+            "bottom-left": "Unten links",
+            "bottom": "Unten",
+            "bottom-right": "Unten rechts"
+          }
+        },
+        "offsetX": {
+          "label": "Verschiebung horizontal"
+        },
+        "offsetY": {
+          "label": "Verschiebung vertikal"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "complexity": {
+          "label": "Komplexität"
+        },
+        "randomness": {
+          "label": "Zufälligkeit"
+        },
+        "variant": {
+          "label": "Formvariante"
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        },
+        "fillStyle": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "outline": "Kontur",
+            "gradient": "Verlauf"
+          }
+        },
+        "strokeWidth": {
+          "label": "Linienstärke"
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        }
+      },
+      "presets": {
+        "corners": "Ecken",
+        "sunrise": "Sonnenaufgang",
+        "mint": "Minze",
+        "outline": "Konturen",
+        "dusk": "Dämmerung",
+        "paper": "Papier",
+        "pop": "Pop"
+      },
+      "seo": {
+        "whatIs": "Eine Blob-Komposition ordnet mehrere organische Formen als Ebenen an den Ecken und Rändern einer Fläche an. So entstehen ruhige Hintergründe für Websites, Präsentationen und Social-Media-Beiträge, bei denen die Mitte frei für Text bleibt.",
+        "howTo": "Wähle eine Vorlage oder drücke die Leertaste für neue Anordnungen. Pro Blob legst du Position, Verschiebung, Grösse und Form fest, ziehst Ebenen nach oben oder unten und blendest sie aus. Die Farben kommen der Reihe nach aus deiner Palette. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Was passiert, wenn ich die Bildgrösse ändere?",
+            "answer": "Positionen werden relativ zu den Ecken und Rändern gespeichert, Grössen relativ zur kürzeren Seite. Die Komposition passt sich deshalb jedem Format an, vom Quadrat bis zum breiten Banner."
+          },
+          "q2": {
+            "question": "Wie ändere ich die Farbe eines einzelnen Blobs?",
+            "answer": "Der oberste Blob nimmt die erste Farbe der Palette, der zweite die zweite und so weiter. Ändere die Palette oder die Reihenfolge der Blobs."
+          },
+          "q3": {
+            "question": "Bleibt die Form eines Blobs gleich, wenn ich andere ändere?",
+            "answer": "Ja. Jede Form hängt nur von ihrer eigenen Formvariante, Komplexität und Zufälligkeit ab. Mit dem Schloss behältst du einzelne Werte beim Würfeln."
+          },
+          "q4": {
+            "question": "Wie viele Blobs sind möglich?",
+            "answer": "Bis zu acht Ebenen. Für ruhige Hintergründe reichen meist zwei bis vier."
+          }
+        }
+      }
+    },
+    "doodles": {
+      "name": "Doodle-Hintergründe",
+      "description": "Handgezeichnet wirkende Kringel, Spiralen, Sterne und Zickzacklinien als Hintergrund. Als SVG oder Bild exportieren.",
+      "params": {
+        "shape": {
+          "label": "Form",
+          "options": {
+            "mixed": "Gemischt",
+            "squiggle": "Kringel",
+            "zigzag": "Zickzack",
+            "spiral": "Spiralen",
+            "loop": "Kreise",
+            "triangle": "Dreiecke",
+            "star": "Sterne",
+            "cross": "Kreuze",
+            "arc": "Bögen"
+          }
+        },
+        "spacing": {
+          "label": "Abstand"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "sizeVariance": {
+          "label": "Grössenvariation"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "wobble": {
+          "label": "Zittern"
+        },
+        "strokeWidth": {
+          "label": "Linienstärke"
+        }
+      },
+      "presets": {
+        "notebook": "Notizheft",
+        "chalkboard": "Wandtafel",
+        "party": "Party",
+        "stars": "Sterne",
+        "spirals": "Spiralen",
+        "blueprint": "Bauplan",
+        "bold": "Kräftig"
+      },
+      "seo": {
+        "whatIs": "Doodle-Hintergründe bestehen aus kleinen, wie von Hand gezeichneten Formen: Kringel, Spiralen, Sterne, Kreuze und Zickzacklinien. Sie wirken verspielt und persönlich und eignen sich für Einladungen, Schul- und Kinderthemen, Social-Media-Beiträge und Verpackungen.",
+        "howTo": "Wähle eine Form oder die Mischung, stelle Abstand, Grösse und Linienstärke ein und bestimme mit Zittern, wie handgezeichnet die Linien wirken. Drücke die Leertaste für neue Varianten und exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Warum wirken die Linien handgezeichnet?",
+            "answer": "Jeder Punkt einer Form wird mit sanftem Rauschen leicht verschoben, danach werden die Punkte mit weichen Kurven verbunden und mit runden Linienenden gezeichnet."
+          },
+          "q2": {
+            "question": "Woher stammen die Formen?",
+            "answer": "Alle Formen werden direkt im Browser aus einfachen geometrischen Regeln erzeugt. Es gibt keine Bildvorlagen, jede Variante ist neu."
+          },
+          "q3": {
+            "question": "Warum überlappen sich die Doodles nicht?",
+            "answer": "Die Positionen stammen aus Poisson-Disk-Sampling. Jede Form hält einen Mindestabstand, die Verteilung wirkt gleichmässig und trotzdem zufällig."
+          },
+          "q4": {
+            "question": "Kann ich das SVG weiterbearbeiten?",
+            "answer": "Ja. Alle Linien einer Farbe liegen in einem Pfad mit Kontur, ohne Transformationen, und lassen sich in Figma oder Illustrator umfärben."
+          }
+        }
+      }
+    },
+    "svg-charts": {
+      "name": "SVG-Diagramme",
+      "description": "Platzhalter-Diagramme mit Zufallsdaten für Mockups: Linien, Flächen und Balken. Als SVG oder Bild exportieren.",
+      "groups": {
+        "data": "Daten"
+      },
+      "params": {
+        "type": {
+          "label": "Diagrammtyp",
+          "options": {
+            "line": "Linie",
+            "area": "Fläche",
+            "bar": "Balken"
+          }
+        },
+        "series": {
+          "label": "Datenreihen"
+        },
+        "points": {
+          "label": "Datenpunkte"
+        },
+        "trend": {
+          "label": "Trend"
+        },
+        "volatility": {
+          "label": "Schwankung"
+        },
+        "smoothing": {
+          "label": "Glättung"
+        },
+        "lineWidth": {
+          "label": "Linienstärke"
+        },
+        "markers": {
+          "label": "Punkte markieren"
+        },
+        "barGap": {
+          "label": "Abstand zwischen Balken"
+        },
+        "barRadius": {
+          "label": "Eckenradius"
+        },
+        "axes": {
+          "label": "Achsen"
+        },
+        "grid": {
+          "label": "Hilfslinien"
+        },
+        "axisColor": {
+          "label": "Achsenfarbe"
+        },
+        "margin": {
+          "label": "Rand"
+        }
+      },
+      "presets": {
+        "growth": "Wachstum",
+        "dashboard": "Dashboard",
+        "quarterly": "Quartale",
+        "monthly": "Monate",
+        "sparkline": "Sparkline",
+        "minimal": "Minimal",
+        "stacked-waves": "Wellen"
+      },
+      "seo": {
+        "whatIs": "SVG-Diagramme sind Platzhalter-Charts mit Zufallsdaten. Du brauchst sie für Mockups, Präsentationen, Landingpages und App-Entwürfe, wenn echte Zahlen fehlen oder nicht gezeigt werden sollen.",
+        "howTo": "Wähle Linie, Fläche oder Balken, lege Anzahl Datenreihen und Datenpunkte fest und stelle Trend und Schwankung ein. Achsen und Hilfslinien schaltest du ein oder aus. Mit der Leertaste entstehen neue Daten. Exportiere als SVG, CSS oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich eigene Daten eingeben?",
+            "answer": "Nein, das Tool erzeugt bewusst Zufallsdaten für Entwürfe. Mit Trend und Schwankung steuerst du, ob die Kurve steigt, fällt oder stark ausschlägt."
+          },
+          "q2": {
+            "question": "Warum hat das Diagramm keine Beschriftungen?",
+            "answer": "Ohne Text sieht das SVG in jedem Programm gleich aus und braucht keine Schriften. Beschriftungen ergänzt du im Layout, zum Beispiel in Figma."
+          },
+          "q3": {
+            "question": "Bleiben die Daten gleich, wenn ich den Stil ändere?",
+            "answer": "Ja. Die Daten hängen vom Seed ab. Diagrammtyp, Farben, Achsen und Glättung kannst du ändern, ohne dass sich die Werte ändern."
+          },
+          "q4": {
+            "question": "Wie bekomme ich neue Zufallsdaten?",
+            "answer": "Drücke die Leertaste. Typ, Datenreihen und Stil bleiben, Daten, Trend und Farben werden neu gewürfelt. Mit dem Schloss hältst du einzelne Werte fest."
+          }
+        }
+      }
+    },
     "palette-generator": {
       "name": "Farbpaletten-Generator",
       "description": "Harmonische Farbpaletten per Leertaste. Farben sperren, Harmonie wählen, Kontrast prüfen und als CSS exportieren.",
@@ -1025,7 +1397,7 @@
         "primaries": "Grundfarben"
       },
       "seo": {
-        "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Motivo rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
+        "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Musterli rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
         "howTo": "Drück die Leertaste für eine neue Palette. Sperr Farben, die dir gefallen, mit dem Schloss, wähl eine Harmonie und exportier die Palette als CSS-Variablen, HEX-Liste oder Bild.",
         "faq": {
           "q1": "Was bedeuten die Harmonien?",
@@ -1180,13 +1552,189 @@
           "q1": "Wird mein Bild hochgeladen?",
           "a1": "Nein. Das Bild wird in deinem Browser verkleinert und ausgewertet. Es verlässt dein Gerät nicht, landet nicht in geteilten Links und wird nicht gespeichert.",
           "q2": "Wie werden die Farben gefunden?",
-          "a2": "Motivo gruppiert die Pixel mit k-Means im OKLab-Farbraum, der Farbunterschiede so misst, wie das Auge sie wahrnimmt. Jede Gruppe ergibt eine Farbe, ihr Anteil ist die Fläche, die sie im Bild einnimmt.",
+          "a2": "Musterli gruppiert die Pixel mit k-Means im OKLab-Farbraum, der Farbunterschiede so misst, wie das Auge sie wahrnimmt. Jede Gruppe ergibt eine Farbe, ihr Anteil ist die Fläche, die sie im Bild einnimmt.",
           "q3": "Warum ändert die Leertaste die Palette?",
           "a3": "k-Means startet mit zufällig gewählten Farben und kann je nach Start bei leicht anderen Gruppen landen. Mit der Leertaste probierst du einen neuen Start aus und behältst die Variante, die dir am besten gefällt.",
           "q4": "Warum zeigt ein geteilter Link das Beispielbild?",
           "a4": "Geteilte Links enthalten nur die Einstellungen, nie dein Bild oder die daraus gewonnenen Farben. Wer den Link öffnet, sieht deshalb das Beispielbild und kann ein eigenes Bild hineinziehen. Willst du die Farben weitergeben, exportier sie als HEX-Liste oder Bild.",
           "q5": "Welche Bilder funktionieren?",
           "a5": "PNG, JPG, WebP, GIF (erstes Bild einer Animation) und SVG bis 5 MB. Durchsichtige Pixel zählen nicht mit."
+        }
+      }
+    },
+    "mesh-gradient": {
+      "name": "Mesh-Verlauf",
+      "description": "Weiche, fliessende Farbverläufe aus mehreren unscharfen Farbflächen. Als PNG, JPG, WebP, SVG oder CSS exportieren.",
+      "groups": {
+        "effects": "Unschärfe und Körnung"
+      },
+      "params": {
+        "points": {
+          "label": "Farbflächen"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "lagoon": "Lagune",
+        "ember": "Glut",
+        "meadow": "Wiese",
+        "nebula": "Nebel",
+        "citrus": "Zitrus",
+        "dusk": "Dämmerung",
+        "ice": "Eis"
+      },
+      "seo": {
+        "whatIs": "Ein Mesh-Verlauf mischt mehrere Farben über die ganze Fläche statt entlang einer Linie. Das Ergebnis wirkt wie weiches, fliessendes Licht und passt zu Website-Headern, App-Hintergründen, Präsentationen und Social-Media-Posts.",
+        "howTo": "Wähle deine Farben und einen Hintergrund, lege fest, wie viele Farbflächen sich mischen und wie stark sie verzerrt und weichgezeichnet werden, und füge bei Bedarf Körnung hinzu. Mit der Leertaste würfelst du eine neue Anordnung. Exportiere dann als PNG, JPG, WebP, SVG oder CSS in der Grösse, die du brauchst.",
+        "faq": {
+          "q1": {
+            "question": "Was unterscheidet einen Mesh-Verlauf von einem normalen Verlauf?",
+            "answer": "Ein linearer oder radialer Verlauf läuft entlang einer Linie oder von einem Punkt aus. Ein Mesh-Verlauf verteilt mehrere Farben frei auf der Fläche und mischt sie weich. Darum wirkt er organisch statt technisch."
+          },
+          "q2": {
+            "question": "Kann ich das SVG in einem Grafikprogramm bearbeiten?",
+            "answer": "Das SVG enthält einfache Formen und einen einzigen Standard-Weichzeichner (Gausscher Weichzeichner), den Browser und viele Grafikprogramme darstellen. Grafikprogramme unterstützen SVG-Filter unterschiedlich gut. Sieht die Unschärfe dort anders aus, nimm den PNG-Export."
+          },
+          "q3": {
+            "question": "Wozu dient die Körnung?",
+            "answer": "Feine Körnung gibt der Fläche einen weichen, analogen Look und kaschiert Banding, also sichtbare Stufen in glatten Verläufen. Mit Körnung 0 bleibt der Verlauf ganz glatt."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, und die Anordnung wird aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer denselben Verlauf."
+          }
+        }
+      }
+    },
+    "blurry-gradient": {
+      "name": "Verschwommener Verlauf",
+      "description": "Verträumte Hintergründe aus grossen, stark weichgezeichneten Farbkreisen. Als PNG, JPG, WebP, SVG oder CSS exportieren.",
+      "groups": {
+        "effects": "Wirkung"
+      },
+      "params": {
+        "circles": {
+          "label": "Kreise"
+        },
+        "layout": {
+          "label": "Position",
+          "options": {
+            "corners": "Ecken",
+            "mixed": "Mitte und Ecken",
+            "center": "Mitte"
+          }
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "spread": {
+          "label": "Streuung"
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "midnight": "Mitternacht",
+        "sorbet": "Sorbet",
+        "ocean": "Ozean",
+        "sunset": "Sonnenuntergang",
+        "forest": "Wald",
+        "mono": "Mono",
+        "neon": "Neon"
+      },
+      "seo": {
+        "whatIs": "Ein verschwommener Verlauf ist ein Hintergrund aus wenigen grossen Farbkreisen, die so stark weichgezeichnet sind, dass nur noch weiche Farbwolken bleiben. Er eignet sich hinter Text, als Website-Header, in Präsentationen und als Wallpaper.",
+        "howTo": "Wähle zwei bis fünf Kreise und ob sie in den Ecken oder um die Mitte liegen. Stelle dann Grösse, Streuung, Deckkraft und Unschärfe ein. Mit der Leertaste würfelst du eine neue Variante. Füge bei Bedarf Körnung hinzu und exportiere als PNG, JPG, WebP, SVG oder CSS.",
+        "faq": {
+          "q1": {
+            "question": "Bleibt Text darauf gut lesbar?",
+            "answer": "Ja, mit genügend Kontrast. Helle Kreise auf hellem Grund oder dunkle auf dunklem Grund halten die Fläche ruhig. Senke die Deckkraft, wenn die Farben mit deinem Text konkurrieren."
+          },
+          "q2": {
+            "question": "Verwendet das SVG Filter?",
+            "answer": "Nein. Jeder weichgezeichnete Kreis ist ein radialer Verlauf, dessen Transparenz genau der Form eines unscharfen Kreises folgt. Darum sieht das SVG in jedem Browser und Grafikprogramm gleich aus und ist in jeder Grösse schnell gezeichnet."
+          },
+          "q3": {
+            "question": "Was bewirkt die Streuung?",
+            "answer": "Sie verschiebt jeden Kreis um einen zufälligen Betrag von seinem Ankerpunkt zur Bildmitte hin. Bei 0 liegen die Kreise genau in den Ecken oder in der Mitte."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, und die Positionen werden aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer dasselbe Bild."
+          }
+        }
+      }
+    },
+    "striped-gradient": {
+      "name": "Streifenverlauf",
+      "description": "Senkrechte Streifen mit je eigenem Verlauf, leicht gegeneinander versetzt. Als PNG, JPG, WebP, SVG oder CSS exportieren.",
+      "groups": {
+        "effects": "Schattierung und Körnung"
+      },
+      "params": {
+        "stripes": {
+          "label": "Streifen"
+        },
+        "variance": {
+          "label": "Breitenvariation"
+        },
+        "offset": {
+          "label": "Versatz"
+        },
+        "alternate": {
+          "label": "Richtung abwechseln"
+        },
+        "shading": {
+          "label": "Schattierung"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "fluted": "Riffelglas",
+        "candy": "Bonbon",
+        "dusk": "Dämmerung",
+        "forest": "Wald",
+        "retro": "Retro",
+        "silk": "Seide",
+        "ink": "Tinte"
+      },
+      "seo": {
+        "whatIs": "Ein Streifenverlauf teilt einen Farbverlauf in senkrechte Bänder und verschiebt jedes Band ein wenig. Das wirkt wie Licht hinter Riffelglas oder wie Stoff mit Falten und gibt Covern, Plakaten und Websites einen markanten Hintergrund.",
+        "howTo": "Lege deine Farben von oben nach unten fest und wähle dann die Anzahl Streifen, wie stark ihre Breite variiert und wie weit sie versetzt sind. Die Schattierung gibt jedem Streifen Licht und Schatten. Mit der Leertaste würfelst du neue Varianten. Exportiere als PNG, JPG, WebP, SVG oder CSS.",
+        "faq": {
+          "q1": {
+            "question": "Was bewirkt der Versatz?",
+            "answer": "Jeder Streifen läuft durch dieselben Farben, beginnt aber auf einer etwas anderen Höhe. Je grösser der Versatz, desto stärker sind die Streifen gegeneinander verschoben. Bei 0 ergeben sie einen durchgehenden Verlauf."
+          },
+          "q2": {
+            "question": "Wie erreiche ich einen Riffelglas-Look?",
+            "answer": "Nimm viele schmale Streifen, wenig Versatz und eine kräftige Schattierung. Die Vorlage Riffelglas ist ein guter Startpunkt."
+          },
+          "q3": {
+            "question": "Lässt sich das SVG gut bearbeiten?",
+            "answer": "Ja. Abgesehen von der optionalen Körnung besteht es nur aus Rechtecken mit linearen Verläufen, ohne Filter. Grafikprogramme wie Figma, Illustrator oder Inkscape öffnen es als bearbeitbare Formen."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, und der Versatz wird aus dem Seed berechnet. Gleiche Einstellungen und gleicher Seed ergeben immer dasselbe Bild."
+          }
         }
       }
     }
@@ -1365,12 +1913,12 @@
     "breadcrumbLabel": "Pfad"
   },
   "Landing": {
-    "metaTitle": "{tool} online | Motivo",
+    "metaTitle": "{tool} online | Musterli",
     "cta": "Generator öffnen",
     "ctaSecondary": "{tool} jetzt ausprobieren",
     "ctaHint": "Läuft direkt in deinem Browser. Deine Grafiken entstehen auf deinem Gerät.",
     "previewAlt": "Beispielmotiv aus dem {tool}",
-    "ogAlt": "{tool} von Motivo mit einem Beispielmotiv",
+    "ogAlt": "{tool} von Musterli mit einem Beispielmotiv",
     "presetsHeading": "Mit einem Preset starten",
     "presetsLead": "Wähle ein Preset, es öffnet sich direkt im Editor. Dort passt du alles an.",
     "presetLink": "{preset}, im Editor öffnen",
@@ -1391,7 +1939,7 @@
     "allConverters": "Alle Konverter"
   },
   "CategoryPage": {
-    "metaTitle": "{category}: Generatoren | Motivo",
+    "metaTitle": "{category}: Generatoren | Musterli",
     "otherCategories": "Weitere Kategorien",
     "backToCatalogue": "Alle Generatoren"
   },
@@ -1434,7 +1982,7 @@
     }
   },
   "PatternLibrary": {
-    "metaTitle": "CSS-Muster zum Kopieren: {count} Muster | Motivo",
+    "metaTitle": "CSS-Muster zum Kopieren: {count} Muster | Musterli",
     "metaDescription": "{count} Hintergrundmuster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Kopieren, einfügen, fertig.",
     "title": "CSS-Muster",
     "lead": "Hintergründe aus reinem CSS, ganz ohne Bilddatei. Such dir ein Muster aus, kopiere den Code oder pass Farben und Grösse im Editor an.",
@@ -1442,11 +1990,11 @@
     "all": "Alle",
     "count": "{count, plural, one {# Muster} other {# Muster}}",
     "openGenerator": "Eigenes Muster im Editor gestalten",
-    "ogAlt": "Auswahl an CSS-Mustern von Motivo",
+    "ogAlt": "Auswahl an CSS-Mustern von Musterli",
     "nav": "CSS-Muster"
   },
   "PatternPage": {
-    "metaTitle": "{pattern}: CSS-Muster zum Kopieren | Motivo",
+    "metaTitle": "{pattern}: CSS-Muster zum Kopieren | Musterli",
     "metaDescription": "{description} Reines CSS, bereit zum Kopieren, mit Tailwind-Klassen und SVG-Export.",
     "heading": "{pattern} als CSS-Muster",
     "previewLabel": "Vorschau des Musters {pattern}",
@@ -1464,17 +2012,59 @@
     "howTo": "Kopiere das CSS in die Regel des Elements, das das Muster tragen soll, zum Beispiel einen Abschnitt, eine Karte oder den body. Die Farben stehen als Hex-Werte im Code und lassen sich direkt austauschen. Im Editor änderst du alles mit Reglern und exportierst das Muster auch als SVG oder PNG.",
     "relatedHeading": "Ähnliche Muster",
     "backToLibrary": "Alle CSS-Muster",
-    "ogAlt": "{pattern}, ein CSS-Muster von Motivo"
+    "ogAlt": "{pattern}, ein CSS-Muster von Musterli"
   },
   "Footer": {
     "nav": "Fusszeile",
-    "productHeading": "Motivo",
+    "productHeading": "Musterli",
     "legalHeading": "Rechtliches",
     "catalogue": "Alle Tools",
     "converters": "Konverter",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "founders": "Founders-Warteliste"
+    "support": "Musterli unterstützen",
+    "gradients": "Farbverläufe",
+    "palettes": "Farbpaletten"
+  },
+  "Support": {
+    "metaTitle": "Musterli unterstützen",
+    "metaDescription": "Musterli ist gratis, ohne Konto und ohne Tracking. Mit einer Spende hilfst du, Domain, Hosting und die Weiterentwicklung zu finanzieren.",
+    "title": "Musterli unterstützen",
+    "lead": "Musterli ist gratis und bleibt es. Es gibt kein Konto, kein Abo und kein Tracking. Wenn dir Musterli hilft und du etwas zurückgeben möchtest, freuen wir uns über eine Spende.",
+    "facts": {
+      "heading": "So funktioniert Musterli",
+      "free": {
+        "title": "Gratis, ohne Konto",
+        "text": "Alle Tools, Grössen und Exportformate stehen allen offen. Du musst dich nirgends anmelden."
+      },
+      "private": {
+        "title": "Ohne Tracking",
+        "text": "Deine Motive entstehen in deinem Browser. Wir setzen keine Cookies und verfolgen dich nicht über andere Websites."
+      },
+      "license": {
+        "title": "Exporte frei nutzbar",
+        "text": "Was du exportierst, darfst du frei verwenden, auch kommerziell. Mit oder ohne Spende."
+      }
+    },
+    "uses": {
+      "heading": "Wofür deine Spende ist",
+      "domain": "Die Domain, damit Musterli unter seiner Adresse erreichbar bleibt.",
+      "hosting": "Das Hosting, damit die Seiten schnell und zuverlässig laden.",
+      "development": "Die Weiterentwicklung: neue Generatoren, Verbesserungen und Fehlerbehebungen."
+    },
+    "donate": {
+      "heading": "Spenden",
+      "text": "Jeder Betrag hilft. Eine Spende ist freiwillig und schaltet nichts frei, denn bei Musterli ist schon alles offen.",
+      "button": "Jetzt spenden",
+      "external": "Der Link führt zu unserem externen Spendenanbieter. Zahlungsdaten gibst du nur dort ein, nie bei Musterli.",
+      "soon": "Spenden-Link folgt bald",
+      "soonText": "Wir richten die Spendenmöglichkeit gerade ein. Schau bald wieder vorbei."
+    },
+    "other": {
+      "heading": "Andere Wege zu helfen",
+      "text": "Erzähl anderen von Musterli oder teile ein Motiv, das dir gefällt. Auch das hilft uns sehr."
+    },
+    "thanks": "Danke, dass du Musterli nutzt."
   },
   "Legal": {
     "draftBanner": {
@@ -1490,7 +2080,7 @@
     },
     "imprint": {
       "metaTitle": "Impressum",
-      "metaDescription": "Impressum von Motivo: Betreiber, Kontakt und rechtliche Hinweise.",
+      "metaDescription": "Impressum von Musterli: Betreiber, Kontakt und rechtliche Hinweise.",
       "title": "Impressum",
       "sections": {
         "contact": {
@@ -1526,9 +2116,9 @@
     },
     "privacy": {
       "metaTitle": "Datenschutzerklärung",
-      "metaDescription": "Wie Motivo mit Daten umgeht: keine Cookies, Bilder bleiben im Browser, cookiefreie Statistik und Fehlerberichte.",
+      "metaDescription": "Wie Musterli mit Daten umgeht: kein Konto, keine Cookies, Bilder bleiben im Browser, cookiefreie Statistik und Fehlerberichte.",
       "title": "Datenschutzerklärung",
-      "intro": "Motivo ist so gebaut, dass möglichst wenige Daten anfallen. Es gibt kein Konto, keine Cookies und kein Tracking über Websites hinweg. Motive und Bilder werden in deinem Browser berechnet. Hier erfährst du, welche Daten trotzdem anfallen und wofür.",
+      "intro": "Musterli ist so gebaut, dass möglichst wenige Daten anfallen. Es gibt kein Konto, keine Cookies und kein Tracking über Websites hinweg. Motive und Bilder werden in deinem Browser berechnet. Hier erfährst du, welche Daten trotzdem anfallen und wofür.",
       "sections": {
         "controller": {
           "heading": "Verantwortliche Stelle",
@@ -1570,13 +2160,15 @@
         "cookies": {
           "heading": "Keine Cookies, nur lokale Einstellungen",
           "paragraphs": [
-            "Motivo setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen."
+            "Musterli setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen.",
+            "Designs, die du speicherst, automatische Entwürfe im Editor und dein Brand Kit (Paletten, Logos, Shapes) legt Musterli in der Datenbank deines Browsers ab (IndexedDB). Auch diese Daten bleiben auf deinem Gerät und werden nicht an uns gesendet. Du löschst sie in Musterli selbst oder, wie die Einstellungen, über die Browser-Einstellungen."
           ]
         },
         "local": {
           "heading": "Bilder bleiben in deinem Browser",
           "paragraphs": [
-            "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst."
+            "Wenn du ein Bild oder eine Datei in einen Konverter lädst oder eine Farbpalette aus einem Bild erstellst, wird die Datei ausschliesslich in deinem Browser verarbeitet. Sie wird weder hochgeladen noch gespeichert und ist weg, sobald du den Tab schliesst.",
+            "Bilder, die du in einem Tool verwendest (zum Beispiel ein eigenes Motiv in Seamless Patterns) oder ins Brand Kit legst, werden ebenfalls nie hochgeladen. Speicherst du das Design oder das Brand Kit, bleiben sie in deinem Browser (siehe oben). Sie verlassen dein Gerät nur, wenn du selbst eine Datei exportierst, und sind nie Teil eines Teilen-Links."
           ]
         },
         "share": {
@@ -1591,27 +2183,24 @@
             "Wenn du uns schreibst, bearbeiten wir deine E-Mail-Adresse und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Wir löschen die Nachricht, sobald sie erledigt ist und keine gesetzliche Aufbewahrungspflicht besteht."
           ]
         },
-        "waitlist": {
-          "heading": "Founders-Warteliste",
+        "donations": {
+          "heading": "Spenden",
           "paragraphs": [
-            "Wenn du dich für die Founders-Warteliste einträgst, bearbeiten wir deine E-Mail-Adresse, die Sprache der Website, den Zeitpunkt der Anmeldung und der Bestätigung sowie die Version des Einwilligungstexts. Wir nutzen diese Daten nur, um dich über den Verkaufsstart der Lifetime-Lizenzen zum Founders-Preis zu informieren. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du jederzeit widerrufen kannst.",
-            "Die Anmeldung läuft im Double-Opt-in-Verfahren: Eingetragen bist du erst, wenn du den Link in unserer Bestätigungs-E-Mail öffnest. Der Link ist 48 Stunden gültig. Unbestätigte Anmeldungen löschen wir spätestens 30 Tage nach der letzten E-Mail. Jede E-Mail enthält einen Abmeldelink. Meldest du dich ab, löschen wir deine E-Mail-Adresse sofort.",
-            "Die Daten speichern wir bei Supabase (Supabase, Inc., USA) in einem Rechenzentrum in Zürich (Region eu-central-2). Die Bestätigungs-E-Mail verschicken wir über den E-Mail-Dienst Resend mit Sitz in den USA. Unsere E-Mails enthalten keine Zählpixel und keine umgeleiteten Links.",
-            "Zum Schutz vor Missbrauch begrenzen wir die Anzahl Anmeldungen. Dafür bilden wir aus deiner IP-Adresse einen täglich wechselnden, nicht umkehrbaren Prüfwert und löschen ihn nach spätestens einem Tag. Deine IP-Adresse selbst speichern wir nicht. Ist die Sicherheitsprüfung Cloudflare Turnstile aktiv, verarbeitet Cloudflare beim Absenden technische Angaben zu deinem Browser und deine IP-Adresse, um automatisierte Anmeldungen zu erkennen."
+            "Musterli ist gratis und finanziert sich über freiwillige Spenden. Auf der Seite «Unterstützen» verlinken wir auf einen externen Spendenanbieter. Musterli selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
+            "Erst wenn du dem Link folgst, verlässt du Musterli. Für die Bearbeitung deiner Daten beim Spendenanbieter ist dieser verantwortlich, und es gilt seine Datenschutzerklärung. Der Anbieter teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ihm ausdrücklich zur Weitergabe an uns überlässt."
           ]
         },
         "transfer": {
           "heading": "Bekanntgabe ins Ausland",
           "paragraphs": [
-            "Cloudflare, Sentry, Supabase und Resend haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
+            "Cloudflare und Sentry haben ihren Sitz in den USA. Cloudflare kann Daten auch in anderen Ländern bearbeiten, in denen es Rechenzentren betreibt. Für die USA stützen wir uns auf die Zertifizierung der Anbieter unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework sowie auf die Standardvertragsklauseln der EU-Kommission in den Auftragsverarbeitungsverträgen der Anbieter.",
             "Fehlerberichte bei Sentry speichern wir in der EU. Ein Zugriff aus den USA, etwa durch den Support des Anbieters, ist trotzdem nicht ausgeschlossen."
           ]
         },
         "retention": {
           "heading": "Aufbewahrung",
           "paragraphs": [
-            "Wir bewahren Personendaten nur so lange auf, wie es für den jeweiligen Zweck nötig ist oder das Gesetz es verlangt. Statistikdaten sehen wir nur zusammengefasst. Technische Protokolle und Fehlerberichte löschen die Anbieter nach ihren Fristen automatisch.",
-            "Für die Founders-Warteliste gelten die Fristen im Abschnitt «Founders-Warteliste»."
+            "Wir bewahren Personendaten nur so lange auf, wie es für den jeweiligen Zweck nötig ist oder das Gesetz es verlangt. Statistikdaten sehen wir nur zusammengefasst. Technische Protokolle und Fehlerberichte löschen die Anbieter nach ihren Fristen automatisch."
           ]
         },
         "rights": {
@@ -1631,107 +2220,447 @@
       }
     }
   },
-  "Waitlist": {
-    "eyebrow": "Founders-Warteliste",
-    "heading": "Sichere dir den Founders-Preis",
-    "lead": "Die ersten {seats} Lifetime-Lizenzen gibt es zum Founders-Preis. Trag dich ein, und wir sagen dir Bescheid, sobald du kaufen kannst. Einmal zahlen, kein Abo.",
-    "price": "Lifetime-Lizenz ab {price} CHF oder EUR",
-    "priceNote": "Unverbindlicher Richtwert, kein Angebot. Preise und Umfang legen wir vor dem Verkaufsstart fest.",
-    "count": "{count} von {seats} Founders-Plätzen vorgemerkt",
-    "countFull": "Alle {seats} Founders-Plätze sind vorgemerkt. Trag dich trotzdem ein, falls jemand abspringt.",
-    "emailLabel": "E-Mail-Adresse",
-    "emailPlaceholder": "du@beispiel.ch",
-    "consent": "Ich bin einverstanden, dass Motivo meine E-Mail-Adresse speichert, um mich über den Verkaufsstart der Founders-Lizenzen zu informieren. Ich kann mich jederzeit abmelden. Mehr dazu in der <link>Datenschutzerklärung</link>.",
-    "submit": "Eintragen",
-    "submitting": "Wird gesendet …",
-    "captchaLoading": "Sicherheitsprüfung wird geladen …",
-    "honeypotLabel": "Website (bitte leer lassen)",
-    "successTitle": "Fast geschafft!",
-    "success": "Wir haben dir eine E-Mail geschickt. Bitte bestätige deine Anmeldung über den Link darin. Der Link ist {hours} Stunden gültig.",
-    "successHint": "Keine E-Mail erhalten? Schau im Spam-Ordner nach oder versuch es in {minutes} Minuten nochmals.",
-    "errors": {
-      "email": "Bitte gib eine gültige E-Mail-Adresse ein.",
-      "consent": "Bitte bestätige die Einwilligung.",
-      "invalid": "Bitte prüf deine Angaben und versuch es nochmals.",
-      "captcha": "Die Sicherheitsprüfung hat nicht geklappt. Bitte versuch es nochmals.",
-      "rate_limited": "Gerade sind sehr viele Anmeldungen eingegangen. Bitte versuch es später nochmals.",
-      "unavailable": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
-      "disabled": "Die Warteliste ist noch nicht geöffnet."
+  "Collections": {
+    "copy": "Kopieren",
+    "copyLabel": "{format} kopieren",
+    "copyBefore": "",
+    "copyAfter": "kopieren",
+    "copied": "Kopiert! Ab ins Projekt damit.",
+    "copiedShort": "Kopiert",
+    "copyFailed": "Das hat nicht geklappt. Markiere den Code und kopiere ihn von Hand.",
+    "copyFailedShort": "Fehlgeschlagen",
+    "colorsLabel": "Farben",
+    "colorLabel": "Farbe {index}",
+    "formats": {
+      "hex": "HEX",
+      "rgb": "RGB",
+      "oklch": "OKLCH"
     },
-    "comingSoon": "Die Warteliste öffnet bald. Schau in ein paar Tagen wieder vorbei.",
-    "loading": "Warteliste wird geladen …",
-    "noscript": "Für die Anmeldung braucht es JavaScript.",
-    "learnMore": "Mehr zur Founders-Lizenz"
+    "contrast": "Text in {text}, Kontrast {ratio}:1",
+    "black": "Schwarz",
+    "white": "Weiss",
+    "groupsLabel": "Nach Stimmung springen",
+    "openIn": "{tool} öffnen",
+    "variantPreview": "Vorschau in {tool}",
+    "gradientsTeaser": {
+      "heading": "Fertige Farbverläufe",
+      "lead": "Über 30 eigene Verläufe mit CSS-Code zum Kopieren, jeder direkt im Editor anpassbar.",
+      "link": "Zur Verlaufssammlung"
+    },
+    "palettesTeaser": {
+      "heading": "Fertige Farbpaletten",
+      "lead": "Über 30 Paletten nach Stimmung, mit HEX-, RGB- und OKLCH-Werten zum Kopieren.",
+      "link": "Zur Palettensammlung"
+    }
   },
-  "Founders": {
-    "metaTitle": "Founders-Warteliste: Lifetime-Lizenz zum Founders-Preis",
-    "metaDescription": "Trag dich auf die Warteliste ein und sichere dir einen der ersten {seats} Founders-Plätze für die Motivo-Lifetime-Lizenz. Einmal zahlen, kein Abo.",
-    "title": "Founders-Warteliste",
-    "lead": "Motivo bleibt gratis nutzbar. Für Profi-Funktionen kommt eine Lifetime-Lizenz: einmal zahlen statt monatlich. Die ersten {seats} Lizenzen gibt es zum tiefsten Preis.",
-    "points": {
-      "once": {
-        "title": "Einmal zahlen",
-        "text": "Kein Abo und keine Verlängerung. Die Lizenz gilt, solange es Motivo gibt."
+  "GradientCollection": {
+    "nav": "Farbverläufe",
+    "metaTitle": "{count} Farbverläufe mit CSS-Code | Musterli",
+    "metaDescription": "{count} eigene Farbverläufe nach Stimmung: warm, kühl, pastell, leuchtend, dunkel und dezent. CSS kopieren oder im Editor als Mesh- oder verschwommenen Verlauf weiterbauen.",
+    "title": "Farbverläufe",
+    "lead": "Eine Sammlung eigener Verläufe, berechnet im OKLCH-Farbraum, damit die Übergänge sauber und ohne graue Mitte bleiben. Kopiere das CSS oder öffne einen Verlauf im Editor.",
+    "count": "{count, plural, one {# Verlauf} other {# Verläufe}}",
+    "openGenerator": "Eigenen Verlauf gestalten",
+    "ogAlt": "Auswahl an Farbverläufen von Musterli",
+    "groups": {
+      "warm": {
+        "name": "Warm",
+        "description": "Gelb, Orange und Rot für Energie und Wärme."
       },
-      "future": {
-        "title": "Künftige Tools inklusive",
-        "text": "Neue Generatoren und Exporte kommen laufend dazu, ohne Aufpreis."
+      "cool": {
+        "name": "Kühl",
+        "description": "Blau, Türkis und Mint für Ruhe und Frische."
       },
-      "honest": {
-        "title": "Ehrlicher Zähler",
-        "text": "Der Zähler zeigt bestätigte Anmeldungen, direkt aus der Datenbank. Keine künstliche Verknappung."
+      "pastel": {
+        "name": "Pastell",
+        "description": "Helle, weiche Töne für freundliche Flächen."
+      },
+      "vivid": {
+        "name": "Leuchtend",
+        "description": "Kräftige Farben, die auffallen."
+      },
+      "dark": {
+        "name": "Dunkel",
+        "description": "Tiefe Töne für den Dark Mode und hellen Text."
+      },
+      "subtle": {
+        "name": "Dezent",
+        "description": "Fast neutrale Verläufe für ruhige Hintergründe."
+      }
+    },
+    "items": {
+      "alpenglow": {
+        "name": "Alpenglühen",
+        "description": "Warmes Gelb, Orange und Rosenrot wie das letzte Licht auf den Gipfeln."
+      },
+      "apricot": {
+        "name": "Aprikose",
+        "description": "Sanfter Übergang von cremigem Hellgelb zu reifem Aprikosenorange."
+      },
+      "embers": {
+        "name": "Glut",
+        "description": "Ein radialer Verlauf von Goldgelb über Orange zu dunklem Rot, wie glühende Kohlen."
+      },
+      "pumpkin-patch": {
+        "name": "Kürbisfeld",
+        "description": "Kräftiges Gelb und sattes Orange, quer von links nach rechts."
+      },
+      "terracotta": {
+        "name": "Terrakotta",
+        "description": "Von hellem Ton zu gebranntem Rotbraun, erdig und ruhig."
+      },
+      "cinnamon-star": {
+        "name": "Zimtstern",
+        "description": "Helles Creme, Zimtbraun und dunkler Kakao, gemütlich wie Weihnachtsgebäck."
+      },
+      "glacier": {
+        "name": "Gletscher",
+        "description": "Fast weisses Eisblau, das nach unten in kräftiges Blau übergeht."
+      },
+      "mountain-lake": {
+        "name": "Bergsee",
+        "description": "Klares Türkis und kühles Blau wie ein See an einem Sommermorgen."
+      },
+      "north-wind": {
+        "name": "Nordwind",
+        "description": "Ein zurückhaltendes Blaugrau, frisch und gut lesbar für Text darüber."
+      },
+      "rhine-falls": {
+        "name": "Rheinfall",
+        "description": "Gischtweiss, Wassergrün und tiefes Blau in einem langen Verlauf."
+      },
+      "foehn-sky": {
+        "name": "Föhnhimmel",
+        "description": "Klares Himmelblau, das in ein weiches Violett kippt."
+      },
+      "peppermint": {
+        "name": "Pfefferminz",
+        "description": "Helles Minzgrün bis kühles Türkis, leicht und sauber."
+      },
+      "candy-floss": {
+        "name": "Zuckerwatte",
+        "description": "Zartes Rosa und Fliederblau, verspielt und weich."
+      },
+      "peach-blossom": {
+        "name": "Pfirsichblüte",
+        "description": "Ein heller Pfirsichton, der in ein warmes Rosé übergeht."
+      },
+      "lavender-field": {
+        "name": "Lavendelfeld",
+        "description": "Von hellem Flieder zu kräftigerem Lavendel, ruhig und elegant."
+      },
+      "morning-dew": {
+        "name": "Morgentau",
+        "description": "Ein Hauch Grün und ein Hauch Blau, kaum sichtbar und sehr frisch."
+      },
+      "macaron": {
+        "name": "Macaron",
+        "description": "Rosa, Vanille und Pistazie nebeneinander wie in der Konditorei."
+      },
+      "soap-bubble": {
+        "name": "Seifenblase",
+        "description": "Ein konischer Verlauf in schimmernden Pastelltönen, der sich zum Kreis schliesst."
+      },
+      "kingfisher": {
+        "name": "Eisvogel",
+        "description": "Leuchtendes Blau mit einem orangen Akzent, wie das Gefieder des Vogels."
+      },
+      "neon-night": {
+        "name": "Neonnacht",
+        "description": "Pink, Violett und Cyan wie Leuchtreklame in einer Regennacht."
+      },
+      "parrot": {
+        "name": "Papagei",
+        "description": "Limettengrün, Türkis und Blau, laut und fröhlich."
+      },
+      "hibiscus": {
+        "name": "Hibiskus",
+        "description": "Ein radialer Verlauf von Orange zu leuchtendem Pink."
+      },
+      "carnival": {
+        "name": "Fasnacht",
+        "description": "Gelb, Rot und Violett, bunt wie ein Umzug mit Guggenmusik."
+      },
+      "northern-lights": {
+        "name": "Nordlicht",
+        "description": "Grün, Türkis und Violett, wie Polarlicht über einem dunklen Himmel."
+      },
+      "observatory": {
+        "name": "Sternwarte",
+        "description": "Ein tiefes Nachtblau, das von oben her heller wird."
+      },
+      "fir-forest": {
+        "name": "Tannenwald",
+        "description": "Dunkles Tannengrün bis fast Schwarz, ruhig und edel."
+      },
+      "deep-sea": {
+        "name": "Tiefsee",
+        "description": "Von Petrolblau in die Dunkelheit, ideal hinter hellem Text."
+      },
+      "blackberry": {
+        "name": "Brombeere",
+        "description": "Sattes Beerenrot und dunkles Violett."
+      },
+      "volcano": {
+        "name": "Vulkan",
+        "description": "Glühendes Orange am unteren Rand, das nach oben in verkohltes Dunkel übergeht."
+      },
+      "espresso": {
+        "name": "Espresso",
+        "description": "Warmes Kaffeebraun bis Schwarzbraun, dezent und dunkel."
+      },
+      "sea-of-fog": {
+        "name": "Nebelmeer",
+        "description": "Helles, fast neutrales Grau mit einem Hauch Blau, wie Nebel über dem Mittelland."
+      },
+      "linen": {
+        "name": "Leinen",
+        "description": "Warmes Naturweiss, ideal als ruhiger Seitenhintergrund."
+      },
+      "pebble": {
+        "name": "Kieselstein",
+        "description": "Warmes Hellgrau, das in kühles Grau übergeht."
+      },
+      "parchment": {
+        "name": "Pergament",
+        "description": "Ein radialer Verlauf in Elfenbein und hellem Ocker."
+      },
+      "dawn-gray": {
+        "name": "Morgengrau",
+        "description": "Ein Grau mit warmem Anfang und kühlem Ende, wie der Himmel vor Sonnenaufgang."
+      },
+      "slate": {
+        "name": "Schiefer",
+        "description": "Mittleres bis dunkles Blaugrau, sachlich und modern."
       }
     }
   },
-  "WaitlistResult": {
-    "backHome": "Zur Startseite",
-    "backFounders": "Zur Founders-Warteliste",
-    "confirm": {
-      "metaTitle": "Anmeldung bestätigen",
-      "title": "Anmeldung bestätigen",
-      "text": "Bestätige mit einem Klick, dass du auf die Founders-Warteliste möchtest.",
-      "button": "Anmeldung bestätigen",
-      "working": "Wird bestätigt …",
-      "error": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
-      "noToken": "Öffne diese Seite über den Bestätigungslink in unserer E-Mail."
+  "GradientPage": {
+    "metaTitle": "{gradient}: Farbverlauf mit CSS-Code | Musterli",
+    "metaDescription": "{description} Mit CSS- und Tailwind-Code, Farbwerten in HEX, RGB und OKLCH und Varianten als Mesh-, verschwommener oder Streifenverlauf.",
+    "heading": "Farbverlauf {gradient}",
+    "previewLabel": "Vorschau des Farbverlaufs {gradient}",
+    "openEditor": "Im Editor anpassen",
+    "openEditorHint": "Winkel, Form und Farben ändern, dann als CSS, SVG oder PNG exportieren.",
+    "colorsHeading": "Farben",
+    "colorsLead": "Die Farbstopps des Verlaufs. Ein Klick auf einen Wert kopiert ihn.",
+    "codeHeading": "Code",
+    "cssLead": "Füge die Zeilen in die Regel deines Elements ein. Die erste Zeile ist eine Ersatzfarbe, die zweite der Verlauf für alle Browser, die dritte interpoliert in OKLCH für moderne Browser.",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "variantsHeading": "Den Verlauf weiterdenken",
+    "variantsLead": "Dieselben Farben in anderen Generatoren. Jede Karte öffnet den Editor mit diesen Farben.",
+    "colorToolsHeading": "Mit den Farben weiterarbeiten",
+    "colorToolsLead": "Mach aus den Farbstopps eine Palette oder eine ganze Farbskala.",
+    "howToHeading": "So verwendest du den Verlauf",
+    "howTo": "Kopiere das CSS in die Regel des Elements, das den Verlauf tragen soll, etwa einen Abschnitt, eine Karte oder einen Button. Für Text auf dem Verlauf wähle eine Schriftfarbe, die auf allen Farbstopps genügend Kontrast hat; die Werte bei den Farben helfen dir dabei. Im Editor änderst du Winkel, Form und Übergang und exportierst den Verlauf auch als Bild.",
+    "relatedHeading": "Ähnliche Verläufe",
+    "backToCollection": "Alle Farbverläufe",
+    "ogAlt": "Farbverlauf {gradient} von Musterli"
+  },
+  "PaletteCollection": {
+    "nav": "Farbpaletten",
+    "metaTitle": "{count} Farbpaletten nach Stimmung | Musterli",
+    "metaDescription": "{count} eigene Farbpaletten: erdig, frisch, pastell, kräftig, dunkel und neutral. Mit HEX-, RGB- und OKLCH-Werten, CSS-Variablen und Tailwind-Code zum Kopieren.",
+    "title": "Farbpaletten",
+    "lead": "Paletten mit je fünf Farben, sortiert nach Stimmung. Kopiere die Werte, übernimm sie als CSS-Variablen oder mach daraus einen Verlauf.",
+    "count": "{count, plural, one {# Palette} other {# Paletten}}",
+    "openGenerator": "Eigene Palette erstellen",
+    "ogAlt": "Auswahl an Farbpaletten von Musterli",
+    "groups": {
+      "earthy": {
+        "name": "Erdig",
+        "description": "Ton, Holz, Laub und Gewürze."
+      },
+      "fresh": {
+        "name": "Frisch",
+        "description": "Grün, Wasser und Frühling."
+      },
+      "pastel": {
+        "name": "Pastell",
+        "description": "Weiche, helle Farben mit wenig Sättigung."
+      },
+      "bold": {
+        "name": "Kräftig",
+        "description": "Hohe Sättigung und starke Kontraste."
+      },
+      "dark": {
+        "name": "Dunkel",
+        "description": "Dunkle Grundtöne mit hellen Akzenten."
+      },
+      "neutral": {
+        "name": "Neutral",
+        "description": "Grau- und Naturtöne als ruhige Basis."
+      }
     },
-    "confirmed": {
-      "metaTitle": "Anmeldung bestätigt",
-      "title": "Du bist auf der Warteliste",
-      "text": "Danke für deine Bestätigung. Wir melden uns per E-Mail, sobald die Founders-Lizenzen erhältlich sind. Abmelden kannst du dich jederzeit über den Link in unserer E-Mail."
-    },
-    "invalid": {
-      "metaTitle": "Link ungültig",
-      "title": "Dieser Link funktioniert nicht mehr",
-      "text": "Der Bestätigungslink ist abgelaufen oder wurde schon verwendet. Falls du bereits bestätigt hast, ist alles in Ordnung. Sonst trag dich einfach nochmals ein."
-    },
-    "error": {
-      "metaTitle": "Fehler",
-      "title": "Das hat nicht geklappt",
-      "text": "Wir konnten deine Anfrage gerade nicht bearbeiten. Bitte öffne den Link in ein paar Minuten nochmals."
-    },
-    "unsubscribe": {
-      "metaTitle": "Von der Warteliste abmelden",
-      "title": "Von der Warteliste abmelden",
-      "text": "Nach der Abmeldung löschen wir deine E-Mail-Adresse und schreiben dir nicht mehr.",
-      "button": "Jetzt abmelden",
-      "working": "Wird abgemeldet …",
-      "done": "Du bist abgemeldet. Wir haben deine E-Mail-Adresse gelöscht.",
-      "invalid": "Dieser Abmeldelink ist ungültig oder wurde schon verwendet. Falls du dich bereits abgemeldet hast, musst du nichts mehr tun.",
-      "error": "Das hat nicht geklappt. Bitte versuch es in ein paar Minuten nochmals.",
-      "noToken": "Öffne diese Seite über den Abmeldelink in unserer E-Mail."
+    "items": {
+      "clay-oven": {
+        "name": "Lehmofen",
+        "description": "Sand, Ocker, gebrannter Ton und dunkles Braun für warme, handgemachte Marken."
+      },
+      "autumn-forest": {
+        "name": "Herbstwald",
+        "description": "Goldgelb, Orange und Rostrot mit zwei Waldgrüntönen."
+      },
+      "vineyard": {
+        "name": "Rebberg",
+        "description": "Rebblätter, Traubenrot und dunkle Erde, wie im Lavaux im Herbst."
+      },
+      "spice-market": {
+        "name": "Gewürzmarkt",
+        "description": "Kurkuma, Paprika, Zimt und ein Zweig Salbei."
+      },
+      "sandstone": {
+        "name": "Sandstein",
+        "description": "Fünf warme Beigetöne von hell bis dunkel, ideal für ruhige Oberflächen."
+      },
+      "moorland": {
+        "name": "Moorland",
+        "description": "Gedämpftes Grün, Olive und Torfbraun."
+      },
+      "lemongrass": {
+        "name": "Zitronengras",
+        "description": "Von Zitronengelb über Grasgrün bis Tannengrün."
+      },
+      "lido": {
+        "name": "Seebad",
+        "description": "Sand, Sonnengelb und drei Wasserblautöne, nach Sommer am See."
+      },
+      "garden-party": {
+        "name": "Gartenparty",
+        "description": "Rosa, Himbeere und frisches Grün."
+      },
+      "mint-ice": {
+        "name": "Minzeis",
+        "description": "Kühle Minztöne von fast Weiss bis Petrol."
+      },
+      "spring-market": {
+        "name": "Frühlingsmarkt",
+        "description": "Gelb, Rosa, Flieder und Grün mit einem dunklen Blau als Anker."
+      },
+      "alpine-meadow": {
+        "name": "Bergwiese",
+        "description": "Löwenzahn, Wiesengrün und Enzianviolett."
+      },
+      "sorbet": {
+        "name": "Sorbet",
+        "description": "Fünf Pastellkugeln: Erdbeere, Aprikose, Zitrone, Minze und Heidelbeere."
+      },
+      "cloud-castle": {
+        "name": "Wolkenschloss",
+        "description": "Helles Flieder, Himmelblau und Rosa mit einem tieferen Violett."
+      },
+      "gelato": {
+        "name": "Glace",
+        "description": "Vanille, Pfirsich, Himbeer, Pistazie und Karamell."
+      },
+      "watercolor": {
+        "name": "Aquarell",
+        "description": "Lasierende Töne in Blau, Grün, Gelb und Rosa."
+      },
+      "peony": {
+        "name": "Pfingstrose",
+        "description": "Rosa in drei Stufen und ein zartes Blattgrün."
+      },
+      "chalk-drawing": {
+        "name": "Kreidezeichnung",
+        "description": "Pastellkreide auf einer dunklen Wandtafel."
+      },
+      "pop-art": {
+        "name": "Pop-Art",
+        "description": "Gelb, Rot und Blau mit Schwarz und Weiss, laut und grafisch."
+      },
+      "street-party": {
+        "name": "Strassenfest",
+        "description": "Mango, Pink, Violett und Türkis vor einem dunklen Grund."
+      },
+      "signal": {
+        "name": "Signal",
+        "description": "Weiss, Gelb, Rot und Blau mit klaren Kontrasten, gut für Hinweise und Warnungen."
+      },
+      "hummingbird": {
+        "name": "Kolibri",
+        "description": "Smaragd, Petrol, Magenta und Orange, schillernd wie Federn."
+      },
+      "workshop": {
+        "name": "Werkstatt",
+        "description": "Papierweiss, Senfgelb, Ziegelrot, Arbeitsblau und Schwarz."
+      },
+      "fireworks": {
+        "name": "Feuerwerk",
+        "description": "Leuchtende Farben auf Nachtblau, wie am 1. August."
+      },
+      "night-train": {
+        "name": "Nachtzug",
+        "description": "Tiefe Blautöne und das warme Licht eines Abteilfensters."
+      },
+      "ocean-trench": {
+        "name": "Ozeangraben",
+        "description": "Von fast Schwarz über Petrol bis zu hellem Aqua."
+      },
+      "fireside": {
+        "name": "Kaminfeuer",
+        "description": "Russ, Glut, Flamme und warmes Licht."
+      },
+      "velvet-curtain": {
+        "name": "Samtvorhang",
+        "description": "Dunkles Weinrot, Samtrot und goldene Akzente wie im Theater."
+      },
+      "forest-night": {
+        "name": "Waldnacht",
+        "description": "Fünf Grüntöne vom dunklen Unterholz bis zum Mondlicht auf den Blättern."
+      },
+      "planetarium": {
+        "name": "Planetarium",
+        "description": "Nachthimmel, violetter Nebel, ein blauer Stern und Sternenlicht."
+      },
+      "concrete": {
+        "name": "Beton",
+        "description": "Fünf neutrale Grautöne ohne Farbstich, die Basis für jedes Interface."
+      },
+      "wool-sweater": {
+        "name": "Wollpullover",
+        "description": "Warme Grau- und Brauntöne wie ungefärbte Schafwolle."
+      },
+      "granite": {
+        "name": "Granit",
+        "description": "Kühle Grautöne mit einem leichten Blaustich."
+      },
+      "print-shop": {
+        "name": "Druckerei",
+        "description": "Papier, Tinte und ein einziges Signalrot."
+      },
+      "timber-cabin": {
+        "name": "Holzhaus",
+        "description": "Helles Holz, Naturtöne und ein dunkles Tannengrün."
+      },
+      "winter-sky": {
+        "name": "Winterhimmel",
+        "description": "Fünf kühle Blaugraustufen von Schneeweiss bis Schiefer."
+      }
     }
   },
-  "WaitlistEmail": {
-    "subject": "Bitte bestätige deine Anmeldung zur Founders-Warteliste",
-    "heading": "Fast geschafft",
-    "intro": "Du hast dich mit dieser E-Mail-Adresse für die Founders-Warteliste von Motivo eingetragen. Bitte bestätige deine Anmeldung mit einem Klick:",
-    "button": "Anmeldung bestätigen",
-    "fallback": "Falls der Knopf nicht funktioniert, kopiere diesen Link in deinen Browser:",
-    "expiry": "Der Link ist {hours} Stunden gültig und funktioniert nur einmal.",
-    "what": "Wir informieren dich per E-Mail, sobald die Lifetime-Lizenzen zum Founders-Preis erhältlich sind (geplant ab {price} CHF oder EUR, unverbindlich). Sonst schreiben wir dir nichts, und wir geben deine Adresse nicht weiter.",
-    "ignore": "Du hast dich nicht angemeldet? Dann ignoriere diese E-Mail einfach. Ohne Bestätigung löschen wir deine Adresse nach spätestens {days} Tagen.",
-    "unsubscribe": "Abmelden",
-    "privacy": "Datenschutz"
+  "PalettePage": {
+    "metaTitle": "{palette}: Farbpalette mit HEX und OKLCH | Musterli",
+    "metaDescription": "{description} Alle Farben als HEX, RGB und OKLCH, dazu CSS-Variablen, Tailwind-Code und passende Verläufe.",
+    "heading": "Farbpalette {palette}",
+    "previewLabel": "Die {count} Farben der Palette {palette}",
+    "openEditor": "Im Palettengenerator öffnen",
+    "openEditorHint": "Farben sperren, mit der Leertaste neue Varianten würfeln und als Bild oder Code exportieren.",
+    "colorsHeading": "Farben",
+    "colorsLead": "Ein Klick auf einen Wert kopiert ihn. Auf jedem Farbfeld steht der Wert in der Schriftfarbe, die darauf am besten lesbar ist.",
+    "codeHeading": "Code",
+    "codeLead": "Die Palette als CSS-Variablen für jedes Projekt und als Theme für Tailwind CSS v4.",
+    "cssVariablesLabel": "CSS-Variablen",
+    "tailwindLabel": "Tailwind-Theme",
+    "gradientsHeading": "Verläufe aus dieser Palette",
+    "gradientsLead": "Dieselben Farben als Verlauf. Jede Karte öffnet den Editor mit diesen Farben.",
+    "colorToolsHeading": "Mit der Palette weiterarbeiten",
+    "colorToolsLead": "Bearbeite die Palette oder baue aus ihrer kräftigsten Farbe eine ganze Skala.",
+    "howToHeading": "So verwendest du die Palette",
+    "howTo": "Lege die hellste Farbe als Hintergrund fest und nutze die dunkelste für Text. Die kräftigen Farben dazwischen eignen sich für Buttons, Links und Hervorhebungen. Prüfe bei Text immer den Kontrast; die Angaben auf den Farbfeldern zeigen, ob Schwarz oder Weiss besser lesbar ist.",
+    "relatedHeading": "Ähnliche Paletten",
+    "backToCollection": "Alle Farbpaletten",
+    "ogAlt": "Farbpalette {palette} von Musterli"
   }
 }

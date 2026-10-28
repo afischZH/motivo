@@ -4,7 +4,7 @@
  * href (for `Link`), path, or the set of paths in every enabled locale (for
  * hreflang, sitemap and the language switcher).
  */
-import type { ToolCategory } from "@motivo/tool-registry";
+import type { ToolCategory } from "@musterli/tool-registry";
 
 import { isConverterId, type ConverterId } from "@/lib/convert/ids";
 
@@ -13,6 +13,8 @@ import { routing } from "./routing";
 import {
   categoryIdFromSlug,
   categorySlug,
+  collectionItemFromSlug,
+  collectionItemSlug,
   converterIdFromSlug,
   converterSlug,
   isCategorySegment,
@@ -21,9 +23,6 @@ import {
   sectionFromAnySlug,
   toolIdFromSlug,
   toolSlug,
-  waitlistPageFromSlug,
-  waitlistPageSlug,
-  type WaitlistPage,
 } from "./slugs";
 
 export type AppRoute =
@@ -36,10 +35,15 @@ export type AppRoute =
   | { page: "converter"; converterId: ConverterId }
   | { page: "patterns" }
   | { page: "pattern"; patternId: string }
+  | { page: "gradients" }
+  | { page: "gradient"; gradientId: string }
+  | { page: "palettes" }
+  | { page: "palette"; paletteId: string }
+  | { page: "myDesigns" }
+  | { page: "brandKit" }
   | { page: "imprint" }
   | { page: "privacy" }
-  | { page: "founders" }
-  | { page: "waitlist"; waitlistPage: WaitlistPage };
+  | { page: "support" };
 
 /** Href for next-intl's `Link`, `redirect` and `getPathname` in a locale. */
 export function routeHref(route: AppRoute, locale: AnyLocale) {
@@ -54,13 +58,8 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/imprint" as const;
     case "privacy":
       return "/privacy" as const;
-    case "founders":
-      return "/founders" as const;
-    case "waitlist":
-      return {
-        pathname: "/founders/[waitlistPage]" as const,
-        params: { waitlistPage: waitlistPageSlug(route.waitlistPage, locale) },
-      };
+    case "support":
+      return "/support" as const;
     case "category":
       return {
         pathname: "/tools/category/[categorySlug]" as const,
@@ -87,6 +86,24 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return {
         pathname: "/css-patterns/[patternSlug]" as const,
         params: { patternSlug: patternSlug(route.patternId, locale) },
+      };
+    case "gradients":
+      return "/gradients" as const;
+    case "gradient":
+      return {
+        pathname: "/gradients/[gradientSlug]" as const,
+        params: { gradientSlug: collectionItemSlug("gradients", route.gradientId, locale) },
+      };
+    case "palettes":
+      return "/palettes" as const;
+    case "myDesigns":
+      return "/my-designs" as const;
+    case "brandKit":
+      return "/brand-kit" as const;
+    case "palette":
+      return {
+        pathname: "/palettes/[paletteSlug]" as const,
+        params: { paletteSlug: collectionItemSlug("palettes", route.paletteId, locale) },
       };
   }
 }
@@ -159,8 +176,7 @@ export function routeFromPathname(
   if (segments.length > 3) return undefined;
 
   const first = segments[0] ?? "";
-  // Internal folder names that differ from every localized slug.
-  const section = sectionFromAnySlug(first) ?? (first === "founders" ? "founders" : undefined);
+  const section = sectionFromAnySlug(first);
   const param = (value: string | string[] | undefined) =>
     typeof value === "string" ? value : segments[segments.length - 1];
 
@@ -189,14 +205,26 @@ export function routeFromPathname(
     const patternId = slug ? patternIdFromSlug(slug, locale) : undefined;
     return patternId ? { page: "pattern", patternId } : undefined;
   }
-  if (section === "imprint" || section === "privacy") {
-    return segments.length === 1 ? { page: section } : undefined;
+  if (section === "gradients") {
+    if (segments.length === 1) return { page: "gradients" };
+    const slug = param(params.gradientSlug);
+    const gradientId = slug ? collectionItemFromSlug("gradients", slug, locale) : undefined;
+    return gradientId && segments.length === 2 ? { page: "gradient", gradientId } : undefined;
   }
-  if (section === "founders") {
-    if (segments.length === 1) return { page: "founders" };
-    const slug = param(params.waitlistPage);
-    const waitlistPage = slug ? waitlistPageFromSlug(slug, locale) : undefined;
-    return waitlistPage && segments.length === 2 ? { page: "waitlist", waitlistPage } : undefined;
+  if (section === "palettes") {
+    if (segments.length === 1) return { page: "palettes" };
+    const slug = param(params.paletteSlug);
+    const paletteId = slug ? collectionItemFromSlug("palettes", slug, locale) : undefined;
+    return paletteId && segments.length === 2 ? { page: "palette", paletteId } : undefined;
+  }
+  if (section === "brandKit") {
+    return segments.length === 1 ? { page: "brandKit" } : undefined;
+  }
+  if (section === "myDesigns") {
+    return segments.length === 1 ? { page: "myDesigns" } : undefined;
+  }
+  if (section === "imprint" || section === "privacy" || section === "support") {
+    return segments.length === 1 ? { page: section } : undefined;
   }
   if (section === "convert") {
     if (segments.length === 1) return { page: "convert" };

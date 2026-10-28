@@ -21,7 +21,7 @@ import {
   tailwindConfig,
   tailwindTheme,
   type NamedColor,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema } from "../common";
 import { keepLocked } from "../randomize";
@@ -233,5 +233,4 @@ export const paletteFromImageTool = defineTool({
       return { colors: colors.map((c) => ({ color: c.color, share: roundTo(c.share, 4) })) };
     },
   },
-  gating: {},
 });

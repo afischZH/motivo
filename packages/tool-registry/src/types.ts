@@ -1,9 +1,9 @@
 /**
- * The tool contract. Every generator in Motivo is a `ToolDefinition`; the
+ * The tool contract. Every generator in Musterli is a `ToolDefinition`; the
  * editor shell, persistence, API and SEO pages are derived from it, so a new
  * tool never needs tool-specific code outside its own definition file.
  */
-import type { Rng } from "@motivo/engine";
+import type { Rng } from "@musterli/engine";
 import type * as z from "zod";
 
 /** How a tool produces its output. Mirrors `Renderer["kind"]`. */
@@ -29,7 +29,7 @@ export const TOOL_CATEGORIES = [
 export type ToolCategory = (typeof TOOL_CATEGORIES)[number];
 
 /**
- * Parameter schemas are always objects: locks, control hints and gating are
+ * Parameter schemas are always objects: locks and control hints are
  * addressed per top-level key.
  */
 export type ParamsSchema = z.ZodObject;
@@ -192,29 +192,6 @@ export interface ControlHints<P> {
 }
 
 // ---------------------------------------------------------------------------
-// Gating (enforced from M4; until then every tool is fully free)
-// ---------------------------------------------------------------------------
-
-/** Licence tiers in ascending order. A Team seat counts as `pro`. */
-export const LICENSE_TIERS = ["free", "solo", "pro"] as const;
-export type LicenseTier = (typeof LICENSE_TIERS)[number];
-
-/**
- * Minimum tier per feature. Anything not listed is free, so `{}` means the
- * whole tool is free.
- */
-export interface Gating<P> {
-  /** Minimum tier to change a param away from its default. */
-  params?: { readonly [K in ParamKey<P>]?: LicenseTier };
-  /** Minimum tier per export format. */
-  exports?: { readonly [F in ExportFormat]?: LicenseTier };
-  /** Largest export edge in pixels per tier; a missing tier means no limit. */
-  maxExportEdge?: { readonly [T in LicenseTier]?: number };
-  /** Minimum tier per extra export, by `ExtraExport.id`. */
-  extraExports?: Readonly<Record<string, LicenseTier>>;
-}
-
-// ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
 
@@ -296,6 +273,22 @@ export type Renderer<P> =
   | Canvas2dRenderer<P>
   | WebglRenderer<P>
   | ImageEffectRenderer<P>;
+
+/** A repeat tile: SVG of exactly one tile, `width` × `height` CSS pixels. */
+export interface TileOutput {
+  svg: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * Seamless tools describe their repeat tile, built from the same markup as
+ * `render` (one render path). Exporters use it for CSS backgrounds
+ * (`background-size` + `repeat`) and the PNG tile export.
+ */
+export interface TileRenderer<P> {
+  render(params: P, ctx: RenderContext): TileOutput;
+}
 
 // ---------------------------------------------------------------------------
 // Extra exports
@@ -396,16 +389,32 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * locked keys and the changed param itself are kept.
    */
   regenerateOn?: readonly (keyof Params<S> & string)[];
+  /**
+   * Maps a brand palette (2 to 10 lower-case `#rrggbb` colours) onto the
+   * params, for tools whose colours need more than the generic mapping of
+   * `applyBrandPalette` (brand-palette.ts), e.g. a swatch count. Pure;
+   * returns the changed params. Locks and the schema are applied afterwards
+   * by the caller, so the hook may ignore them.
+   */
+  brandPalette?(colors: readonly string[], current: Params<S>): Partial<Params<S>>;
   /** The single render path for preview and export. `render.kind` is the render kind. */
   render: Renderer<Params<S>>;
   exports: readonly ExportFormat[];
   /** Tool-specific text outputs, offered next to `exports`. */
   extraExports?: readonly ExtraExport<Params<S>>[];
-  gating: Gating<Params<S>>;
   /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
   /** Derives params from a user image; see `ImageInput`. */
   imageInput?: ImageInput<Params<S>>;
+  /**
+   * Params that hold the user's own files (uploads, `kind: "image"`). They
+   * stay on the device: share links (and later saved designs) reset them
+   * to the defaults in both directions, presets and variants keep them.
+   * `render` must fall back to something sensible for the default value.
+   */
+  localParams?: readonly ParamKey<Params<S>>[];
+  /** The repeat tile of a seamless design; see `TileRenderer`. */
+  tile?: TileRenderer<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
 }

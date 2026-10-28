@@ -10,23 +10,33 @@
  * Slugs are lowercase ASCII words joined by "-", unique per locale, and stay
  * stable once published (changing one needs a redirect).
  */
-import type { ToolCategory } from "@motivo/tool-registry";
+import type { ToolCategory } from "@musterli/tool-registry";
 
 import type { ConverterId } from "@/lib/convert/ids";
 
 import { ALL_LOCALES, SLUG_FALLBACK_LOCALE, type AnyLocale, type LocalizedSlugs } from "./locales";
 
-/** Tool id (from `@motivo/tool-registry`) to its localized slugs. */
+/** Tool id (from `@musterli/tool-registry`) to its localized slugs. */
 export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "css-gradient": { de: "css-verlauf-generator", en: "css-gradient-generator" },
   blob: { de: "blob-generator", en: "blob-generator" },
   "svg-waves": { de: "svg-wellen-generator", en: "svg-wave-generator" },
   "polka-dots": { de: "punktmuster-generator", en: "polka-dot-pattern-generator" },
+  "seamless-patterns": { de: "nahtlose-muster-generator", en: "seamless-pattern-generator" },
   "noise-grain": { de: "rauschen-koernung-generator", en: "noise-grain-generator" },
   "grid-patterns": { de: "rastermuster-generator", en: "grid-pattern-generator" },
   confetti: { de: "konfetti-generator", en: "confetti-generator" },
   "starry-sky": { de: "sternenhimmel-generator", en: "starry-sky-generator" },
   "dieter-dots": { de: "dieter-dots-generator", en: "dieter-dots-generator" },
+  "blob-composition": { de: "blob-hintergrund-generator", en: "blob-background-generator" },
+  doodles: { de: "doodle-hintergrund-generator", en: "doodle-background-generator" },
+  "svg-charts": { de: "svg-diagramm-generator", en: "svg-chart-generator" },
+  "mesh-gradient": { de: "mesh-verlauf-generator", en: "mesh-gradient-generator" },
+  "blurry-gradient": {
+    de: "verschwommener-verlauf-generator",
+    en: "blurry-gradient-generator",
+  },
+  "striped-gradient": { de: "streifenverlauf-generator", en: "striped-gradient-generator" },
   "palette-generator": { de: "farbpaletten-generator", en: "color-palette-generator" },
   "tints-shades": { de: "farbabstufungen-generator", en: "tints-and-shades-generator" },
   "tailwind-palette": {
@@ -38,7 +48,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
 };
 
 /**
- * CSS pattern library id (`CSS_PATTERNS` in `@motivo/engine`) to its
+ * CSS pattern library id (`CSS_PATTERNS` in `@musterli/engine`) to its
  * localized slugs, used in `/[locale]/<cssPatterns section>/<slug>`. The
  * contract test in `slugs.test.ts` requires an entry for every pattern.
  */
@@ -79,6 +89,94 @@ export const PATTERN_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   squares: { de: "quadrate", en: "squares" },
 };
 
+/**
+ * Curated gradient collection (`lib/collections/gradients.ts`) id to its
+ * localized slugs, used in `/[locale]/<gradients section>/<slug>`. The
+ * contract test in `slugs.test.ts` requires an entry for every gradient.
+ */
+export const GRADIENT_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
+  alpenglow: { de: "alpengluehen", en: "alpenglow" },
+  apricot: { de: "aprikose", en: "apricot" },
+  embers: { de: "glut", en: "embers" },
+  "pumpkin-patch": { de: "kuerbisfeld", en: "pumpkin-patch" },
+  terracotta: { de: "terrakotta", en: "terracotta" },
+  "cinnamon-star": { de: "zimtstern", en: "cinnamon-star" },
+  glacier: { de: "gletscher", en: "glacier" },
+  "mountain-lake": { de: "bergsee", en: "mountain-lake" },
+  "north-wind": { de: "nordwind", en: "north-wind" },
+  "rhine-falls": { de: "rheinfall", en: "rhine-falls" },
+  "foehn-sky": { de: "foehnhimmel", en: "foehn-sky" },
+  peppermint: { de: "pfefferminz", en: "peppermint" },
+  "candy-floss": { de: "zuckerwatte", en: "candy-floss" },
+  "peach-blossom": { de: "pfirsichbluete", en: "peach-blossom" },
+  "lavender-field": { de: "lavendelfeld", en: "lavender-field" },
+  "morning-dew": { de: "morgentau", en: "morning-dew" },
+  macaron: { de: "macaron", en: "macaron" },
+  "soap-bubble": { de: "seifenblase", en: "soap-bubble" },
+  kingfisher: { de: "eisvogel", en: "kingfisher" },
+  "neon-night": { de: "neonnacht", en: "neon-night" },
+  parrot: { de: "papagei", en: "parrot" },
+  hibiscus: { de: "hibiskus", en: "hibiscus" },
+  carnival: { de: "fasnacht", en: "carnival" },
+  "northern-lights": { de: "nordlicht", en: "northern-lights" },
+  observatory: { de: "sternwarte", en: "observatory" },
+  "fir-forest": { de: "tannenwald", en: "fir-forest" },
+  "deep-sea": { de: "tiefsee", en: "deep-sea" },
+  blackberry: { de: "brombeere", en: "blackberry" },
+  volcano: { de: "vulkan", en: "volcano" },
+  espresso: { de: "espresso", en: "espresso" },
+  "sea-of-fog": { de: "nebelmeer", en: "sea-of-fog" },
+  linen: { de: "leinen", en: "linen" },
+  pebble: { de: "kieselstein", en: "pebble" },
+  parchment: { de: "pergament", en: "parchment" },
+  "dawn-gray": { de: "morgengrau", en: "dawn-gray" },
+  slate: { de: "schiefer", en: "slate" },
+};
+
+/**
+ * Curated palette collection (`lib/collections/palettes.ts`) id to its
+ * localized slugs, used in `/[locale]/<palettes section>/<slug>`. The
+ * contract test in `slugs.test.ts` requires an entry for every palette.
+ */
+export const PALETTE_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
+  "clay-oven": { de: "lehmofen", en: "clay-oven" },
+  "autumn-forest": { de: "herbstwald", en: "autumn-forest" },
+  vineyard: { de: "rebberg", en: "vineyard" },
+  "spice-market": { de: "gewuerzmarkt", en: "spice-market" },
+  sandstone: { de: "sandstein", en: "sandstone" },
+  moorland: { de: "moorland", en: "moorland" },
+  lemongrass: { de: "zitronengras", en: "lemongrass" },
+  lido: { de: "seebad", en: "lido" },
+  "garden-party": { de: "gartenparty", en: "garden-party" },
+  "mint-ice": { de: "minzeis", en: "mint-ice" },
+  "spring-market": { de: "fruehlingsmarkt", en: "spring-market" },
+  "alpine-meadow": { de: "bergwiese", en: "alpine-meadow" },
+  sorbet: { de: "sorbet", en: "sorbet" },
+  "cloud-castle": { de: "wolkenschloss", en: "cloud-castle" },
+  gelato: { de: "glace", en: "gelato" },
+  watercolor: { de: "aquarell", en: "watercolor" },
+  peony: { de: "pfingstrose", en: "peony" },
+  "chalk-drawing": { de: "kreidezeichnung", en: "chalk-drawing" },
+  "pop-art": { de: "pop-art", en: "pop-art" },
+  "street-party": { de: "strassenfest", en: "street-party" },
+  signal: { de: "signal", en: "signal" },
+  hummingbird: { de: "kolibri", en: "hummingbird" },
+  workshop: { de: "werkstatt", en: "workshop" },
+  fireworks: { de: "feuerwerk", en: "fireworks" },
+  "night-train": { de: "nachtzug", en: "night-train" },
+  "ocean-trench": { de: "ozeangraben", en: "ocean-trench" },
+  fireside: { de: "kaminfeuer", en: "fireside" },
+  "velvet-curtain": { de: "samtvorhang", en: "velvet-curtain" },
+  "forest-night": { de: "waldnacht", en: "forest-night" },
+  planetarium: { de: "planetarium", en: "planetarium" },
+  concrete: { de: "beton", en: "concrete" },
+  "wool-sweater": { de: "wollpullover", en: "wool-sweater" },
+  granite: { de: "granit", en: "granite" },
+  "print-shop": { de: "druckerei", en: "print-shop" },
+  "timber-cabin": { de: "holzhaus", en: "timber-cabin" },
+  "winter-sky": { de: "winterhimmel", en: "winter-sky" },
+};
+
 /** Converter id to its localized slugs. */
 export const CONVERTER_SLUGS: Readonly<Record<ConverterId, LocalizedSlugs>> = {
   "svg-to-css": { de: "svg-zu-css", en: "svg-to-css" },
@@ -115,7 +213,8 @@ export const CATEGORY_SEGMENT = {
 /**
  * Localized first path segment of each section (internal name to slug). The
  * internal name is also the folder under `app/[locale]`. `imprint` and
- * `privacy` are the legal pages linked from the footer.
+ * `privacy` are the legal pages linked from the footer, `support` is the
+ * donation page.
  */
 export const SECTION_SLUGS = {
   tools: { de: "tools", en: "tools" },
@@ -123,27 +222,27 @@ export const SECTION_SLUGS = {
   cssPatterns: { de: "css-muster", en: "css-patterns" },
   imprint: { de: "impressum", en: "imprint" },
   privacy: { de: "datenschutz", en: "privacy" },
-  founders: { de: "founders-warteliste", en: "founders-waitlist" },
+  support: { de: "unterstuetzen", en: "support" },
+  gradients: { de: "farbverlaeufe", en: "gradients" },
+  palettes: { de: "farbpaletten", en: "color-palettes" },
+  // Saved designs in this browser: noindex, never in the sitemap.
+  myDesigns: { de: "meine-designs", en: "my-designs" },
+  // The brand kit in this browser: noindex, never in the sitemap.
+  brandKit: { de: "brand-kit", en: "brand-kit" },
 } as const satisfies Record<string, LocalizedSlugs>;
 
 export type Section = keyof typeof SECTION_SLUGS;
 
 /**
- * Result pages of the Founders waitlist under the `founders` section
- * (`/de/founders-warteliste/bestaetigt`). `confirm` and `unsubscribe` are the
- * pages the e-mail links to (each with a button that POSTs, so link scanners
- * cannot act); the confirm page then opens `confirmed`, `invalid` or `error`.
- * Not indexed, not in the sitemap.
+ * First segments of retired sections (the Founders waitlist, removed with the
+ * switch to donations on 2026-10-28). Any path below them, in any locale,
+ * gets one permanent redirect to the section that replaced it.
  */
-export const WAITLIST_PAGE_SLUGS = {
-  confirm: { de: "bestaetigen", en: "confirm" },
-  confirmed: { de: "bestaetigt", en: "confirmed" },
-  invalid: { de: "link-ungueltig", en: "invalid-link" },
-  error: { de: "fehler", en: "error" },
-  unsubscribe: { de: "abmelden", en: "unsubscribe" },
-} as const satisfies Record<string, LocalizedSlugs>;
-
-export type WaitlistPage = keyof typeof WAITLIST_PAGE_SLUGS;
+export const RETIRED_SECTION_SLUGS: Readonly<Record<string, Section>> = {
+  founders: "support",
+  "founders-warteliste": "support",
+  "founders-waitlist": "support",
+};
 
 /** Slug format: lowercase ASCII words joined by single hyphens. */
 export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -204,19 +303,6 @@ export function sectionFromAnySlug(value: string): Section | undefined {
   );
 }
 
-export function waitlistPageSlug(page: WaitlistPage, locale: AnyLocale): string {
-  return pick(WAITLIST_PAGE_SLUGS[page], locale);
-}
-
-export function waitlistPageFromSlug(slug: string, locale: AnyLocale): WaitlistPage | undefined {
-  return findId(WAITLIST_PAGE_SLUGS, (entry) => pick(entry, locale) === slug);
-}
-
-export function waitlistPageFromAnySlug(value: string): WaitlistPage | undefined {
-  if (Object.hasOwn(WAITLIST_PAGE_SLUGS, value)) return value as WaitlistPage;
-  return findId(WAITLIST_PAGE_SLUGS, (entry) => hasSlug(entry, value));
-}
-
 export function categorySlug(category: ToolCategory, locale: AnyLocale): string {
   return pick(CATEGORY_SLUGS[category], locale);
 }
@@ -254,4 +340,32 @@ export function patternIdFromSlug(slug: string, locale: AnyLocale): string | und
 export function patternIdFromAnySlug(value: string): string | undefined {
   if (Object.hasOwn(PATTERN_SLUGS, value)) return value;
   return findId(PATTERN_SLUGS, (entry) => hasSlug(entry, value));
+}
+
+/** The two curated collections: gradients and palettes. */
+export type CollectionKind = "gradients" | "palettes";
+
+const COLLECTION_SLUGS: Readonly<Record<CollectionKind, Readonly<Record<string, LocalizedSlugs>>>> =
+  { gradients: GRADIENT_SLUGS, palettes: PALETTE_SLUGS };
+
+/** Slug of a collection item in a locale. An item without an entry falls back to its id. */
+export function collectionItemSlug(kind: CollectionKind, id: string, locale: AnyLocale): string {
+  const entry = COLLECTION_SLUGS[kind][id];
+  return entry ? pick(entry, locale) : id;
+}
+
+/** Item id for the slug this locale uses, or undefined. */
+export function collectionItemFromSlug(
+  kind: CollectionKind,
+  slug: string,
+  locale: AnyLocale,
+): string | undefined {
+  return findId(COLLECTION_SLUGS[kind], (entry) => pick(entry, locale) === slug);
+}
+
+/** Item id for any known spelling (id or a slug of any locale), for redirects. */
+export function collectionItemFromAnySlug(kind: CollectionKind, value: string): string | undefined {
+  const map = COLLECTION_SLUGS[kind];
+  if (Object.hasOwn(map, value)) return value;
+  return findId(map, (entry) => hasSlug(entry, value));
 }

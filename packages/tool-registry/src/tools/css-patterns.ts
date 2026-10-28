@@ -30,7 +30,7 @@ import {
   patternUsesAccent,
   randomPalette,
   type Rng,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { HEX_COLOR_PATTERN, backgroundSchema, colorSchema } from "../common";
 import { isItemLocked, keepLocked } from "../randomize";
@@ -327,5 +327,4 @@ export const cssPatternsTool = defineTool({
       },
     },
   ],
-  gating: {},
 });

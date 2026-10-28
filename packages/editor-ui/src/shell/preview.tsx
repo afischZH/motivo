@@ -1,6 +1,6 @@
 "use client";
 
-import type { CanvasSize } from "@motivo/tool-registry";
+import type { CanvasSize } from "@musterli/tool-registry";
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { cx } from "../controls/primitives";
 import { Motif } from "./motif";

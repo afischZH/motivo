@@ -89,3 +89,39 @@ export function breadcrumbList(crumbs: readonly Crumb[]): JsonLd {
     })),
   };
 }
+
+export interface CollectionPageInput {
+  name: string;
+  description: string;
+  /** Absolute URL of the page. */
+  url: string;
+  inLanguage: string;
+  /** Absolute URL of a representative image (the OG image). */
+  image?: string | undefined;
+  /** The items in display order, with absolute URLs. */
+  items: readonly Crumb[];
+}
+
+/** A curated collection page (gradients, palettes) with its items as an `ItemList`. */
+export function collectionPage(input: CollectionPageInput): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inLanguage: input.inLanguage,
+    ...(input.image ? { image: input.image } : {}),
+    isAccessibleForFree: true,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: input.items.length,
+      itemListElement: input.items.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        url: item.url,
+      })),
+    },
+  };
+}

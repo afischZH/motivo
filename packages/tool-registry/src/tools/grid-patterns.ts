@@ -8,7 +8,7 @@ import {
   GRID_STYLES,
   gridPatternSvg,
   randomPalette,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
@@ -166,5 +166,4 @@ export const gridPatternsTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

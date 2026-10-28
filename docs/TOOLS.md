@@ -1,8 +1,8 @@
 # TOOLS.md: Tool-Spezifikationen
 
-Jedes Tool wird als `ToolDefinition` umgesetzt (siehe `ARCHITECTURE.md`, Abschnitt 4). Pro Tool: Zweck, Parameter, Algorithmus-Skizze, Exporte, Gating, Phase.
+Jedes Tool wird als `ToolDefinition` umgesetzt (siehe `ARCHITECTURE.md`, Abschnitt 4). Pro Tool: Zweck, Parameter, Algorithmus-Skizze, Exporte, Phase.
 
-Legende Phase: **M1** bis **M7** = Meilensteine aus `ROADMAP.md`. **G** = gratis nutzbar, **P** = Teile nur mit Lifetime-Lizenz. "Lifetime" heisst in diesem Dokument jede Lizenzstufe (Solo oder Pro); was nur mit **Lifetime Pro** geht, ist explizit so bezeichnet (Stufen siehe `PRODUCT.md` 6.1).
+Legende Phase: **M1** bis **M7** = Meilensteine aus `ROADMAP.md`. Alle Tools, Grössen und Exporte sind gratis und ohne Limits (Entscheid 2026-10-28, `PRODUCT.md` Abschnitt 6); es gibt kein Gating mehr. Grössenobergrenzen sind nur technisch begründet (z. B. 8192 px pro Kante im Browser).
 
 Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grössen-Presets: Social, Desktop, Mobile, A4), `background` (Farbe oder transparent), `palette` (2 bis 10 Farben, Brand-Paletten wählbar), `seed`.
 
@@ -16,7 +16,6 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **Algorithmus**: Uniform: Kachelgitter, pro Zelle Shape + Farbe + Rotation per PRNG. Dynamic: rekursive Unterteilung (Quadtree-artig, Zelle mit Wahrscheinlichkeit p in 4 oder 2 Teile splitten bis Mindestgrösse). Shapes sind 100x100-SVG-Pfade, Farbe wird beim Rendern über `fill` gesetzt, Opazität bleibt erhalten (Duotone).
 - **Kachel-Editing**: Klick auf Kachel öffnet Mini-Popover (Shape tauschen, Farbe, Rotation). Overrides als `tileOverrides: Record<cellId, Partial<Tile>>` speichern.
 - **Exporte**: SVG, CSS (data-URI, `background-repeat` wenn Kachel kachelbar), PNG/JPG/WebP, GIF (Frames = neue Seeds oder Farbwechsel).
-- **Gating**: Free: 5 offizielle Packs, max. 1080 px. Lifetime: alle Packs, eigene Packs, GIF, Tile-Editing, 4K. Lifetime Pro: 8K, React-Komponente.
 - **Eigene Bibliothek**: Wir zeichnen eine eigene Startbibliothek (Ziel 150+ Shapes, 12 Packs) oder nutzen CC0-Quellen mit dokumentierter Lizenz.
 
 ### A2. Seamless Patterns · M4 · G/P
@@ -24,6 +23,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **Parameter**: `source` (Shape | Upload SVG | Upload Bild mit Crop), `tiling` (`grid` | `brick` | `halfDrop` | `mirror`), `scale`, `spacingX/Y`, `rotation`, `jitter`, `keepOriginalColors`.
 - **Algorithmus**: Eine Musterkachel (Tile) berechnen; Elemente, die den Rand schneiden, an den gegenüberliegenden Seiten duplizieren (Offset ±tileW/±tileH), damit das Tile nahtlos ist. Brick = Zeilenversatz 50 %, Half-Drop = Spaltenversatz 50 %, Mirror = alternierende Spiegelung.
 - **Exporte**: SVG (`<pattern>` + Rect), CSS (Tile als data-URI mit `background-size`), PNG-Tile und PNG-Fläche.
+- **Umsetzung M3** (Tool-ID `seamless-patterns`, aus M4 vorgezogen, M3-AP12): 24 eigene Shapes (Kreis, Ring, Quadrat, Raute, Dreieck, Sechseck, Stern, Funkeln, Herz, Blatt, Tropfen, Welle, Plus, Kreuz, Bogen, Blume, Klee, Mond, Halbkreis, Kapsel, Winkel, Sonne, Kiesel, Punkte) als Pfade in einer 100er-Box, alle mit Nonzero-Füllung; Auswahl über den Thumbnail-Picker. Kein Text-Glyph, keine Emojis. `source` ist implizit: Ist `upload` gesetzt, ist die eigene Datei das Motiv, sonst `shape`. Params: `shape`, `upload` (SVG oder PNG/JPEG-data-URI, siehe unten), `keepOriginalColors`, `tiling`, `size` (8 bis 400 px, statt `scale`), `spacingX/Y` (0 bis 400 px), `cells` (1 bis 6 Motive pro Kachelseite), `rotation` plus `rotationJitter`, `sizeVariance`, `jitter` (Anteil der Zelle), `colorMode` (eine Farbe oder Palette), `color`, `palette`, `background`. Kachel: `cells × cells` Zellen, Brick erzwingt eine gerade Zeilenzahl (Versatz um eine halbe Zelle in jeder zweiten Zeile), Half-Drop eine gerade Spaltenzahl, Mirror baut aus einem n × n-Block eine 2n × 2n-Kachel mit horizontaler, vertikaler und doppelter Spiegelung. Jede Platzierung wird mit allen Gitterversätzen (±Kachelbreite, ±Kachelhöhe) kopiert, deren Begrenzungskreis die Kachel schneidet; Tests prüfen für alle vier Modi, dass die Abdeckung an gegenüberliegenden Rändern identisch ist. Fünf RNG-Ziehungen pro Zelle (Optionen verschieben die Anordnung nicht). Schutz gegen Links mit Riesenwerten: Zellgrösse mindestens 8 px, höchstens 2000 Elemente pro Kachel. SVG: ein `<pattern patternUnits="userSpaceOnUse">` mit `<use>` auf einen Pfad in `defs`, nach Farbe gruppiert. Uploads werden einmal als `<image>` in `defs` eingebettet; einfarbig färbt bei Rasterbildern ein Filter (`feFlood` + `feComposite` mit der Alpha-Maske), bei SVG eine umgefärbte Kopie pro Farbe (Sanitizer-Option `recolor`, zusammen höchstens 2 MB). Exporte: SVG, CSS (die Kachel als data-URI mit `background-size` und `background-repeat: repeat`), PNG-Kachel (eigene Grösse, nur Skalierung 1×/2×/4×), PNG/JPG/WebP-Fläche. Generisch über `ToolDefinition.tile` (Kachel-Renderer), der Export-Dialog zeigt die PNG-Kachel bei jedem Tool mit `tile`. Uploads: SVG, PNG, JPG, WebP bis 5 MB (GIF nicht, nur ein Bild), Typ per Magic Bytes, Zuschnitt frei oder quadratisch per Maus oder Tastatur; Rasterbilder werden im Worker zugeschnitten und auf höchstens 1024 px Kantenlänge neu kodiert (PNG, JPEG bei JPEG-Quelle), SVG über den Sanitizer (neue viewBox, Abschnitt Sicherheit in `docs/ARCHITECTURE.md`). Uploads bleiben im Browser, nicht im Teilen-Link (`localParams`) und bleiben beim Wechsel der Vorlage erhalten. 7 Presets (Wiese, Herzklopfen, Terrazzo, Sternenlicht, Botanisch, Bauhaus, Wellen), alles frei.
 
 ### A3. Polka Dots, Grid Patterns, Confetti, Starry Sky, Dieter Dots · M2/M3 · G
 - Einfache SVG-Generatoren mit wenigen Parametern (Dichte, Grösse, Varianz, Farbe, Form). Dieter Dots: konzentrische Ringe aus Punkten (`rings`, `dotsPerRing`, `ringSpacing`, `scale`).
@@ -36,6 +36,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 ### A4. Doodle Backgrounds · M3 · G
 - Handgezeichnet wirkende Formen: Linien/Pfade mit leichtem Rauschen (Perlin-Offset der Kontrollpunkte), runde Linienenden, Verteilung per Poisson-Disk.
+- **Umsetzung M3** (Tool-ID `doodles`): acht eigene, prozedurale Strichformen (Kringel, Zickzack, Spirale, Kreis mit Überschwung, Dreieck, Stern, Kreuz, Bogen) als Polylinien in Einheitskoordinaten; jeder Punkt wird mit 1D-Gradientenrauschen (Perlin-Konstruktion, `noise.ts`) entlang der Strichlänge verschoben (`wobble`), danach Catmull-Rom-Glättung (eckige Formen mit tiefer Spannung). Params `shape` (gemischt oder eine Form), `spacing` (Poisson-Disk in Prozent der kürzeren Kante), `size`, `sizeVariance`, `rotation`, `wobble`, `strokeWidth` (px). Ein Rauschpaar pro Render, pro Doodle nur eine Phase (fünf RNG-Ziehungen pro Position, damit Optionen die Anordnung nicht verschieben). Alle Striche einer Farbe in einem Pfad mit runden Enden. Schutz: Abstand mindestens 8 px, höchstens 2500 Doodles. Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ## B. CSS-Patterns
 
@@ -71,19 +72,23 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **Parameter**: Palette (Drag-to-reorder), `points` (3 bis 8), `blur`, `warp`, `grain`, `seed`.
 - **Algorithmus (SVG)**: farbige Ellipsen/Pfade an PRNG-Positionen, `feGaussianBlur` für weiche Übergänge, optional `feTurbulence` + `feDisplacementMap` für "Flüssig"-Verzerrung, Grain als zusätzliche `feTurbulence`-Ebene mit Blend-Mode. **Illustrator-Kompatibilität testen**, zusätzlich Raster-Export.
 - Später (P2): Animation (Punkte auf Lissajous-Bahnen) ► Video.
+- **Umgesetzt in M3 (M3-AP07, Tool-ID `mesh-gradient`)**: `background`, `palette` (Farbe i für Fläche i, zyklisch), `points` (3 bis 8 Farbflächen), `blur` (Gauss bis 20 % der kürzeren Kante), `warp` (Verzerrung der Umrisse), `grain`. Mittelpunkte per Best-Candidate-Sampling (gleichmässig, bis 12 % ausserhalb des Bildes), Umrisse als geschlossene Catmull-Rom-Kurven mit radialem Rauschen und gestreckter Achse. **Abweichung von der Skizze**: kein `feTurbulence`/`feDisplacementMap`, die Verzerrung steckt in der Geometrie (Turbulenz rendert je Browser anders), Körnung als Gauss-Kachel statt `feTurbulence`. Ein `feGaussianBlur` mit `color-interpolation-filters="sRGB"` und Filterregion 3σ über den Rand (kein Ausbleichen an den Kanten). Gleich viele Zufallszahlen pro Fläche, Unschärfe und Verzerrung verschieben also nichts. Exporte: PNG, JPG, WebP, SVG, CSS. Illustrator ungetestet (SVG-Filter), PNG ist der verlässliche Export.
+- **Grosse Unschärfe (Nachtrag M3)**: Browser begrenzen `feGaussianBlur` in Ausgabepixeln (Chromium ca. 520 px, Firefox 500 px, WebKit ca. 270 px), grosse Exporte wurden sonst schärfer als die Vorschau. `meshBlurPlan` wählt deshalb aus der Designgrösse: Ist σ beim grösstmöglichen Export (längere Kante 8192 px) höchstens 200 px, bleibt der Filter. Sonst berechnet die Engine die weichgezeichneten Flächen als kleines PNG (4 Pixel pro σ, Fläche 1 Pixel über den Rand, sRGB, vormultipliertes Alpha, Gauss-Kern bis 3σ) und bettet es als `<image>` ein; der Browser skaliert es hoch. Ein weichgezeichnetes Feld hat keine feinen Details, die Abweichung zum Filter liegt bei höchstens 4 Farbstufen. Das SVG enthält dann keinen Filter mehr (für Illustrator und Figma eher besser).
 
 ### C2. Blurry Gradients · M3 · G
 - 2 bis 5 Kreise, Positionierung an Ecken/Mitte, Opazität, starker Blur, Grain. SVG + PNG.
+- **Umgesetzt in M3 (M3-AP07, Tool-ID `blurry-gradient`)**: `circles` (2 bis 5), `layout` (Ecken, Mitte und Ecken, Mitte), `size` (Radius in Prozent der kürzeren Kante), `spread` (zufälliger Versatz zur Bildmitte hin), `opacity`, `blur` (Gauss bis 25 % der kürzeren Kante), `grain`. Ohne SVG-Filter: jeder Kreis ist ein radialer Verlauf, dessen Stopps (21, zum Rand hin dichter) dem exakten Profil einer mit einer Gaussglocke gefalteten Kreisscheibe folgen (Bessel-Integral, Simpson). Läuft in jedem Browser und Editor gleich und kostet bei 8K nichts. Exporte: PNG, JPG, WebP, SVG, CSS.
 
 ### C3. Striped Gradients · M3 · G
 - Vertikale Bänder, jedes Band mit eigenem linearen Verlauf aus der Palette, leichter Versatz. SVG/PNG.
+- **Umgesetzt in M3 (M3-AP07, Tool-ID `striped-gradient`)**: `palette` (Stopps von oben nach unten), `stripes` (2 bis 40), `variance` (Breitenvariation), `offset` (zufällige Höhenverschiebung je Band, der Verlauf ist um den Versatz länger, damit nie eine einfarbige Kante entsteht), `alternate` (jedes zweite Band umgekehrt), `shading` (Licht links, Schatten rechts je Band, wie Riffelglas), `grain`. Nur Rechtecke mit linearen Verläufen; Bänder überlappen um 1 px gegen Haarlinien. Exporte: PNG, JPG, WebP, SVG, CSS.
+- **Körnung der Verlaufs-Tools (C1 bis C3)**: dieselbe Gauss-Kachel wie Noise/Grain (E1), hier 128 px, monochrom, `overlay`, Deckkraft = `grain` in Prozent, aus eigenem Zufallsstrom (`deriveSeed(seed, "grain")`), damit sie die Geometrie nicht verschiebt. "Neue Variante" behält die Körnung.
 
 ### C4. Shader Gradient Editor · M5 · G/P
 - **Parameter**: 2 bis 6 Farben, `style` (Liquid, Silk, Streaked, Grainy als Presets), `frequency`, `amplitude`, `warp` (Domain-Warping-Stärke), `speed`, `dither` (aus/Bayer 2/4/8, Stufenanzahl), `grain`, `vignette`, `angle`, `zoom`.
 - **Algorithmus (GLSL, WebGL2)**: Simplex/Value-Noise, Domain Warping (`p += warp * noise(p)` mehrfach), Ergebnis als Index in eine Farbrampe (Palette als 1D-Texture), danach Bayer-Dithering (Schwellwert-Matrix), Film Grain (Hash-Noise pro Pixel und Frame), Vignette.
 - **Video-Modus**: Keyframes für numerische Parameter über Zeit, Timeline-UI, Loop-Länge, nahtloser Loop durch periodische Zeitfunktion (`t` auf Kreis abbilden: `noise(p, cos(2πt), sin(2πt))`).
-- **Exporte**: PNG/JPG (bis 8K via Kachel-Rendering), MP4/WebM, Clipboard; P2: Web-Component `<motivo-shader>` mit eingebettetem Shader.
-- **Gating**: Free: Bild bis 1080 px. Lifetime: Bild bis 4K, Video bis 1080p. Lifetime Pro: Bild 8K, Video 4K, Web-Component.
+- **Exporte**: PNG/JPG (bis 8K via Kachel-Rendering), MP4/WebM, Clipboard; P2: Web-Component `<musterli-shader>` mit eingebettetem Shader.
 
 ## D. Backgrounds
 
@@ -95,6 +100,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 ### D2. Blob Composition · M3 · G/P
 - Mehrere Blobs als Ebenen, Positionen an Ecken/Rändern, Brand-Farben, "Magic Resize" (Positionen relativ in % gespeichert).
+- **Umsetzung M3** (Tool-ID `blob-composition`): Blobs als Listen-Param (`kind: "list"`, 1 bis 8 Ebenen, oberste zuerst) mit `anchor` (neun Positionen: Ecken, Ränder, Mitte), `offsetX`/`offsetY` in Prozent von Breite bzw. Höhe, `size` in Prozent der kürzeren Kante, `complexity`, `randomness`, `variant` (bestimmt den Umriss, unabhängig von Seed und Listenposition), `opacity`, `visible`. Form aus der Blob-Engine (D1). Farben der Reihe nach aus der Palette (Brand-Paletten folgen mit M3-AP06), Füllung Farbe, Kontur oder Verlauf (Farbe i nach i + 1). "Hinzufügen" setzt den Blob in die erste freie Ecke. alles frei. Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ### D3. SVG Waves · M1 · G
 - Layers 1 bis 5, Punkte pro Welle, Amplitude, Glättung, Richtung (oben/unten), Farbverlauf über Layers. Spline wie bei Blobs, aber offen. Exporte: SVG, PNG, CSS.
@@ -105,6 +111,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 
 ### D5. SVG Charts (Platzhalter-Charts) · M3 · G
 - Linien- und Balken-Diagramme mit Zufallsdaten für Mockups. Glättung, Achsen ein/aus, Farben.
+- **Umsetzung M3** (Tool-ID `svg-charts`): `type` (Linie, Fläche, gruppierte Balken), `series` (1 bis 4), `points` (2 bis 24), Daten als geseedeter Random Walk mit `trend` und `volatility` (es werden immer 4 × 24 Werte gezogen, Stiländerungen behalten die Daten), `smoothing` (Catmull-Rom), `lineWidth`, `markers`, `barGap`, `barRadius`, `axes`, `grid`, `axisColor`, `margin`. Bewusst ohne Text (keine Schriften, überall gleiche Darstellung). Leertaste würfelt Daten, Trend und Farben, der Stil bleibt. Exporte: SVG, CSS, PNG, JPG, WebP.
 
 ## E. Image Effects (alle im Web Worker auf ImageData)
 
@@ -150,13 +157,13 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), Base64 zu SVG, Bild zu Base64 (optional Komprimierung via Canvas), Base64 zu Bild. Jede Seite mit Erklärung, Beispielen und FAQ.
 
 ## H. Social Media Editor · M6 · G/P
-- **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Motivo-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
+- **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Musterli-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
 - **Text-Effekte**: Schatten, Outline, Verlauf, "Highlight-Balken", Gradient-Fill; eigene und Google Fonts (Lizenz der Fonts prüfen: nur OFL/Apache).
 - **Grössen**: Instagram Feed (1080x1080, 1080x1350), Story (1080x1920), LinkedIn, X/Twitter, Facebook, Pinterest, YouTube-Thumbnail; Werte bei Umsetzung aktuell recherchieren.
 - **Magic Resize**: Layout-Constraints pro Ebene (Anker + relative Grösse), beim Formatwechsel neu berechnen; danach manuell feinjustieren.
 - **Templates**: als JSON (Konva-Szene mit Platzhaltern), eigene Vorlagenbibliothek (Ziel 100 zum Launch des Editors).
 - **Brand-Apply**: Ein Klick ersetzt Template-Farbslots durch Brand-Palette und Fonts.
-- Exporte: PNG/JPG; Free mit dezentem Wasserzeichen.
+- Exporte: PNG/JPG, ohne Wasserzeichen.
 
 ## I. Composer (Differenzierung) · M7 · P
 - Generalisierung des Social-Editors: beliebige Tool-Ergebnisse als Ebenen mit Blend-Modes und Masken (z. B. Pattern nur innerhalb eines Blobs). Ebenen bleiben **parametrisch** (Klick auf Ebene öffnet das Tool-Panel).

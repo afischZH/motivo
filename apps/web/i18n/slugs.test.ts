@@ -3,13 +3,16 @@
  * a valid, unique slug in every enabled locale. A new tool only needs an entry
  * in `TOOL_SLUGS`; this test names the ones that are missing.
  */
-import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
+import { TOOL_CATEGORIES, registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { curatedGradients } from "@/lib/collections/gradients";
+import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 
 import { ALL_LOCALES, ENABLED_LOCALES } from "./locales";
+import { canonicalRedirect } from "./legacy";
 import { routeFromPathname, routePath } from "./paths";
 import {
   CATEGORY_SEGMENT,
@@ -20,6 +23,9 @@ import {
   categoryIdFromAnySlug,
   categoryIdFromSlug,
   categorySlug,
+  collectionItemFromAnySlug,
+  GRADIENT_SLUGS,
+  PALETTE_SLUGS,
   TOOL_SLUGS,
   converterIdFromAnySlug,
   converterIdFromSlug,
@@ -29,11 +35,7 @@ import {
   patternIdFromSlug,
   patternSlug,
   sectionFromAnySlug,
-  WAITLIST_PAGE_SLUGS,
-  waitlistPageFromAnySlug,
-  waitlistPageFromSlug,
-  waitlistPageSlug,
-  type WaitlistPage,
+  RETIRED_SECTION_SLUGS,
   toolIdFromAnySlug,
   toolIdFromSlug,
   toolSlug,
@@ -119,52 +121,49 @@ describe("CSS pattern slug map", () => {
   });
 });
 
-describe("Founders waitlist pages", () => {
-  it("have the documented localized slugs", () => {
-    expect(SECTION_SLUGS.founders).toEqual({ de: "founders-warteliste", en: "founders-waitlist" });
-    expect(WAITLIST_PAGE_SLUGS).toEqual({
-      confirm: { de: "bestaetigen", en: "confirm" },
-      confirmed: { de: "bestaetigt", en: "confirmed" },
-      invalid: { de: "link-ungueltig", en: "invalid-link" },
-      error: { de: "fehler", en: "error" },
-      unsubscribe: { de: "abmelden", en: "unsubscribe" },
-    });
+describe("collection slug maps", () => {
+  it("have an entry for every curated item and nothing else", () => {
+    const gradients = curatedGradients().map((g) => g.id);
+    const palettes = curatedPalettes().map((p) => p.id);
+    for (const id of gradients)
+      expect(GRADIENT_SLUGS[id], `add "${id}" to GRADIENT_SLUGS`).toBeDefined();
+    for (const id of palettes)
+      expect(PALETTE_SLUGS[id], `add "${id}" to PALETTE_SLUGS`).toBeDefined();
+    expect(Object.keys(GRADIENT_SLUGS).filter((id) => !gradients.includes(id))).toEqual([]);
+    expect(Object.keys(PALETTE_SLUGS).filter((id) => !palettes.includes(id))).toEqual([]);
   });
 
-  it.each(ENABLED_LOCALES)("are valid, unique and resolvable in %s", (locale) => {
-    const pages = Object.keys(WAITLIST_PAGE_SLUGS) as WaitlistPage[];
-    const slugs = pages.map((page) => waitlistPageSlug(page, locale));
-    for (const slug of slugs) expect(slug).toMatch(SLUG_PATTERN);
-    expect(new Set(slugs).size).toBe(slugs.length);
-    for (const page of pages) {
-      expect(waitlistPageFromSlug(waitlistPageSlug(page, locale), locale)).toBe(page);
-      expect(waitlistPageFromAnySlug(waitlistPageSlug(page, locale))).toBe(page);
-    }
-    expect(sectionFromAnySlug(SECTION_SLUGS.founders[locale])).toBe("founders");
-    expect(waitlistPageFromAnySlug("toString")).toBeUndefined();
+  it("resolve any spelling for redirects", () => {
+    expect(collectionItemFromAnySlug("gradients", "gletscher")).toBe("glacier");
+    expect(collectionItemFromAnySlug("gradients", "glacier")).toBe("glacier");
+    expect(collectionItemFromAnySlug("palettes", "lehmofen")).toBe("clay-oven");
+    expect(collectionItemFromAnySlug("palettes", "gletscher")).toBeUndefined();
+    expect(collectionItemFromAnySlug("palettes", "toString")).toBeUndefined();
+    expect(sectionFromAnySlug("farbverlaeufe")).toBe("gradients");
+    expect(sectionFromAnySlug("color-palettes")).toBe("palettes");
+  });
+});
+
+describe("support page", () => {
+  it("has the documented localized slugs", () => {
+    expect(SECTION_SLUGS.support).toEqual({ de: "unterstuetzen", en: "support" });
   });
 
-  it("have paths that round-trip through the route model", () => {
+  it("round-trips through the route model", () => {
     for (const locale of ENABLED_LOCALES) {
-      expect(routeFromPathname("/founders", {}, locale)).toEqual({ page: "founders" });
-      expect(routePath({ page: "founders" }, locale)).toBe(
-        `/${locale}/${SECTION_SLUGS.founders[locale]}`,
-      );
-      for (const waitlistPage of Object.keys(WAITLIST_PAGE_SLUGS) as WaitlistPage[]) {
-        const path = routePath({ page: "waitlist", waitlistPage }, locale);
-        expect(path).toBe(
-          `/${locale}/${SECTION_SLUGS.founders[locale]}/${waitlistPageSlug(waitlistPage, locale)}`,
-        );
-        expect(routeFromPathname(path, {}, locale)).toEqual({ page: "waitlist", waitlistPage });
-        // Internal pathname as next-intl's usePathname reports it.
-        expect(
-          routeFromPathname(
-            "/founders/[waitlistPage]",
-            { waitlistPage: waitlistPageSlug(waitlistPage, locale) },
-            locale,
-          ),
-        ).toEqual({ page: "waitlist", waitlistPage });
-      }
+      const path = routePath({ page: "support" }, locale);
+      expect(path).toBe(`/${locale}/${SECTION_SLUGS.support[locale]}`);
+      expect(routeFromPathname(path, {}, locale)).toEqual({ page: "support" });
+      expect(routeFromPathname("/support", {}, locale)).toEqual({ page: "support" });
+      expect(sectionFromAnySlug(SECTION_SLUGS.support[locale])).toBe("support");
+    }
+  });
+
+  it("retires the Founders waitlist slugs without clashing with live sections", () => {
+    for (const [slug, section] of Object.entries(RETIRED_SECTION_SLUGS)) {
+      expect(sectionFromAnySlug(slug), slug).toBeUndefined();
+      expect(toolIdFromAnySlug(slug), slug).toBeUndefined();
+      expect(SECTION_SLUGS).toHaveProperty(section);
     }
   });
 });
@@ -181,6 +180,35 @@ describe("legal sections", () => {
     expect(new Set(all).size).toBe(all.length);
     expect(sectionFromAnySlug(SECTION_SLUGS.imprint[locale])).toBe("imprint");
     expect(sectionFromAnySlug(SECTION_SLUGS.privacy[locale])).toBe("privacy");
+  });
+});
+
+describe("my designs section", () => {
+  it("has the documented localized slugs and round-trips", () => {
+    expect(SECTION_SLUGS.myDesigns).toEqual({ de: "meine-designs", en: "my-designs" });
+    for (const locale of ENABLED_LOCALES) {
+      expect(sectionFromAnySlug(SECTION_SLUGS.myDesigns[locale])).toBe("myDesigns");
+      const path = routePath({ page: "myDesigns" }, locale);
+      expect(path).toBe(`/${locale}/${SECTION_SLUGS.myDesigns[locale]}`);
+      expect(routeFromPathname(path, {}, locale)).toEqual({ page: "myDesigns" });
+    }
+    expect(canonicalRedirect("/de/my-designs")).toBe("/de/meine-designs");
+    expect(canonicalRedirect("/en/meine-designs")).toBe("/en/my-designs");
+    expect(canonicalRedirect("/de/meine-designs")).toBeNull();
+  });
+});
+
+describe("brand kit section", () => {
+  it("has the documented localized slugs and round-trips", () => {
+    expect(SECTION_SLUGS.brandKit).toEqual({ de: "brand-kit", en: "brand-kit" });
+    for (const locale of ENABLED_LOCALES) {
+      expect(sectionFromAnySlug(SECTION_SLUGS.brandKit[locale])).toBe("brandKit");
+      const path = routePath({ page: "brandKit" }, locale);
+      expect(path).toBe(`/${locale}/brand-kit`);
+      expect(routeFromPathname(path, {}, locale)).toEqual({ page: "brandKit" });
+      expect(routeFromPathname(`${path}/x`, {}, locale)).toBeUndefined();
+    }
+    expect(canonicalRedirect("/de/brand-kit")).toBeNull();
   });
 });
 

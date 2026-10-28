@@ -11,6 +11,8 @@ import {
   categoryIdFromAnySlug,
   categorySegment,
   categorySlug,
+  collectionItemFromAnySlug,
+  collectionItemSlug,
   converterIdFromAnySlug,
   converterSlug,
   sectionFromAnySlug,
@@ -20,8 +22,7 @@ import {
   sectionSlug,
   toolIdFromAnySlug,
   toolSlug,
-  waitlistPageFromAnySlug,
-  waitlistPageSlug,
+  RETIRED_SECTION_SLUGS,
 } from "./slugs";
 
 /** The canonical pathname for `pathname`, or null if it is canonical or unknown. */
@@ -30,6 +31,12 @@ export function canonicalRedirect(pathname: string): string | null {
   if (segments.length < 2 || segments.length > 4) return null;
   const [locale, sectionSegment, slug] = segments as [string, string, string | undefined];
   if (!isEnabledLocale(locale)) return null;
+  // Retired sections (Founders waitlist): every path below them, sub-pages
+  // included, goes to the page that replaced them.
+  const retired = Object.hasOwn(RETIRED_SECTION_SLUGS, sectionSegment)
+    ? RETIRED_SECTION_SLUGS[sectionSegment]
+    : undefined;
+  if (retired) return `/${locale}/${sectionSlug(retired, locale)}`;
   const section = sectionFromAnySlug(sectionSegment);
 
   let canonical: string;
@@ -56,15 +63,15 @@ export function canonicalRedirect(pathname: string): string | null {
     const patternId = patternIdFromAnySlug(slug);
     if (!patternId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${patternSlug(patternId, locale)}`;
+  } else if (section === "gradients" || section === "palettes") {
+    // Collection item page: `/de/farbverlaeufe/<gradient slug>`.
+    const itemId = segments.length === 3 ? collectionItemFromAnySlug(section, slug) : undefined;
+    if (!itemId) return null;
+    canonical = `/${locale}/${sectionSlug(section, locale)}/${collectionItemSlug(section, itemId, locale)}`;
   } else if (section === "convert") {
     const converterId = converterIdFromAnySlug(slug);
     if (!converterId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${converterSlug(converterId, locale)}`;
-  } else if (section === "founders") {
-    // Waitlist result pages: `/de/founders-warteliste/bestaetigt`.
-    const page = waitlistPageFromAnySlug(slug);
-    if (!page || segments.length !== 3) return null;
-    canonical = `/${locale}/${sectionSlug(section, locale)}/${waitlistPageSlug(page, locale)}`;
   } else {
     // Single-page sections (legal pages) have no sub-pages.
     return null;

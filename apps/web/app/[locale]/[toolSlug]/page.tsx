@@ -5,12 +5,14 @@
  * messages, motifs from the tool's own render function. No client JS
  * beyond the shared layout.
  */
-import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { CollectionTeaser } from "@/components/collections/collection-teaser";
+import { teaserPreviews } from "@/lib/collections/teaser";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
@@ -22,6 +24,7 @@ import { routeHref, routePath } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { toolIdFromSlug, toolSlug } from "@/i18n/slugs";
 import { primaryCategory, relatedTools } from "@/lib/catalogue";
+import { collectionsFor } from "@/lib/collections";
 import { pageAlternates } from "@/lib/seo/alternates";
 import { faqPage, webApplication } from "@/lib/seo/json-ld";
 import { designEditorHash, hasStaticMotif, landingPresets } from "@/lib/seo/motifs";
@@ -229,6 +232,10 @@ export default async function LandingPage({ params }: LandingPageProps) {
           </section>
         )}
       </div>
+
+      {collectionsFor(tool.category).map((kind) => (
+        <CollectionTeaser key={kind} kind={kind} locale={locale} previews={teaserPreviews(kind)} />
+      ))}
 
       <RelatedTools tool={tool} locale={locale} text={text} />
     </div>

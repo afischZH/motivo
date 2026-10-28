@@ -1,22 +1,24 @@
 {
-  "name": "@motivo/tool-registry",
+  "name": "@musterli/tool-registry",
   "version": "0.0.0",
   "private": true,
   "description": "Tool definitions: schema, defaults, presets, meta",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./testing": "./src/testing.ts"
+    "./testing": "./src/testing.ts",
+    "./svg-asset": "./src/svg-asset.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
-    "@motivo/config": "workspace:*"
+    "@musterli/config": "workspace:*"
   },
   "dependencies": {
-    "@motivo/engine": "workspace:*",
+    "@musterli/engine": "workspace:*",
+    "@musterli/svg-sanitizer": "workspace:*",
     "zod": "^4.6.7"
   }
 }

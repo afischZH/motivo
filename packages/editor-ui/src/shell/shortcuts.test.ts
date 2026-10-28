@@ -41,6 +41,9 @@ describe("matchShortcut", () => {
     ["Ctrl+Y", key("y", { ctrlKey: true }), "redo"],
     ["Cmd+Y is not redo", key("y", { metaKey: true }), null],
     ["Ctrl+E", key("e", { ctrlKey: true }), "export"],
+    ["Ctrl+S", key("s", { ctrlKey: true }), "save"],
+    ["Cmd+S", key("s", { metaKey: true }), "save"],
+    ["Shift+Cmd+S is not save", key("S", { metaKey: true, shiftKey: true }), null],
     ["ArrowLeft", key("ArrowLeft"), "previousVariant"],
     ["ArrowRight", key("ArrowRight"), "nextVariant"],
     ["0", key("0"), "zoomFit"],
@@ -178,6 +181,13 @@ describe("resolveShortcut", () => {
     const input = mount('<input data-target type="text">');
     expect(resolveShortcut(event(" ", document.body))).toBe("newVariant");
     expect(resolveShortcut(event(" ", input))).toBeNull();
+  });
+
+  it("saves even while typing, but not inside a dialog", () => {
+    const input = mount('<input data-target type="text">');
+    expect(isShortcutBlocked(input, "save")).toBe(false);
+    const inDialog = mount('<div role="dialog"><input data-target></div>');
+    expect(isShortcutBlocked(inDialog, "save")).toBe(true);
   });
 
   it("ignores events that were already handled or are part of an IME composition", () => {

@@ -7,8 +7,8 @@ import {
   polkaDotsTool,
   svgWavesTool,
   type AnyToolDefinition,
-} from "@motivo/tool-registry";
-import { checkSvg } from "@motivo/tool-registry/testing";
+} from "@musterli/tool-registry";
+import { checkSvg } from "@musterli/tool-registry/testing";
 import { describe, expect, it } from "vitest";
 import * as z from "zod";
 import { ExportError } from "./errors";
@@ -38,7 +38,6 @@ const textTool = defineTool({
   randomize: (_rng, current) => current,
   render: { kind: "text", render: (p) => p.value },
   exports: ["css", "svg"],
-  gating: {},
 });
 
 describe("freshContext", () => {

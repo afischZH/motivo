@@ -1,7 +1,9 @@
-import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
+import { TOOL_CATEGORIES, registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { curatedGradients } from "@/lib/collections/gradients";
+import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 
 import { canonicalRedirect } from "./legacy";
@@ -48,6 +50,17 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/css-muster/nope")).toBeNull();
   });
 
+  it("redirects gradient and palette pages to this locale's section and slug", () => {
+    expect(canonicalRedirect("/en/farbverlaeufe/alpengluehen")).toBe("/en/gradients/alpenglow");
+    expect(canonicalRedirect("/de/gradients/alpenglow")).toBe("/de/farbverlaeufe/alpengluehen");
+    expect(canonicalRedirect("/de/farbverlaeufe/alpenglow")).toBe("/de/farbverlaeufe/alpengluehen");
+    expect(canonicalRedirect("/en/farbpaletten")).toBe("/en/color-palettes");
+    expect(canonicalRedirect("/de/color-palettes/clay-oven")).toBe("/de/farbpaletten/lehmofen");
+    expect(canonicalRedirect("/de/farbpaletten/lehmofen")).toBeNull();
+    expect(canonicalRedirect("/de/farbpaletten/nope")).toBeNull();
+    expect(canonicalRedirect("/de/farbpaletten/lehmofen/mehr")).toBeNull();
+  });
+
   it("redirects legal pages to this locale's slug", () => {
     expect(canonicalRedirect("/de/imprint")).toBe("/de/impressum");
     expect(canonicalRedirect("/en/datenschutz")).toBe("/en/privacy");
@@ -55,16 +68,20 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/de/impressum/svg-to-css")).toBeNull();
   });
 
-  it("redirects the Founders page and waitlist pages to this locale's slugs", () => {
-    expect(canonicalRedirect("/de/founders-waitlist")).toBe("/de/founders-warteliste");
-    expect(canonicalRedirect("/en/founders-warteliste/bestaetigt")).toBe(
-      "/en/founders-waitlist/confirmed",
-    );
-    expect(canonicalRedirect("/de/founders-warteliste/unsubscribe")).toBe(
-      "/de/founders-warteliste/abmelden",
-    );
-    expect(canonicalRedirect("/de/founders-warteliste/bestaetigt")).toBeNull();
-    expect(canonicalRedirect("/de/founders-warteliste/nope")).toBeNull();
+  it("redirects the support page to this locale's slug", () => {
+    expect(canonicalRedirect("/de/support")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/en/unterstuetzen")).toBe("/en/support");
+    expect(canonicalRedirect("/de/unterstuetzen")).toBeNull();
+    expect(canonicalRedirect("/en/support/more")).toBeNull();
+  });
+
+  it("sends every path of the retired Founders waitlist to the support page", () => {
+    expect(canonicalRedirect("/de/founders-warteliste")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/en/founders-waitlist")).toBe("/en/support");
+    expect(canonicalRedirect("/en/founders-warteliste/bestaetigt")).toBe("/en/support");
+    expect(canonicalRedirect("/de/founders-waitlist/unsubscribe")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/de/founders")).toBe("/de/unterstuetzen");
+    expect(canonicalRedirect("/fr/founders-waitlist")).toBeNull();
   });
 
   it("leaves canonical, unknown and unrelated paths alone", () => {
@@ -83,18 +100,17 @@ describe("canonicalRedirect", () => {
       { page: "convert" },
       { page: "imprint" },
       { page: "privacy" },
-      { page: "founders" },
-      { page: "waitlist", waitlistPage: "confirm" },
-      { page: "waitlist", waitlistPage: "confirmed" },
-      { page: "waitlist", waitlistPage: "invalid" },
-      { page: "waitlist", waitlistPage: "error" },
-      { page: "waitlist", waitlistPage: "unsubscribe" },
+      { page: "support" },
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
       ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),
       ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
       { page: "patterns" },
       ...libraryPatterns().map((p): AppRoute => ({ page: "pattern", patternId: p.id })),
+      { page: "gradients" },
+      ...curatedGradients().map((g): AppRoute => ({ page: "gradient", gradientId: g.id })),
+      { page: "palettes" },
+      ...curatedPalettes().map((p): AppRoute => ({ page: "palette", paletteId: p.id })),
     ];
     for (const route of routes) {
       const paths = localizedPaths(route);

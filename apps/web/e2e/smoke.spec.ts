@@ -10,6 +10,20 @@ async function expectNoAxeViolations(page: Page) {
 
 const html = (page: Page) => page.locator("html");
 
+/**
+ * Opens `path` and waits until the theme toggle is hydrated: its click
+ * handler and the Ctrl/Cmd+Shift+K listener only exist from then on, and
+ * the server HTML shows the button earlier.
+ */
+async function gotoHydrated(page: Page, path: string) {
+  await page.goto(path);
+  await expectThemeToggleHydrated(page);
+}
+
+async function expectThemeToggleHydrated(page: Page) {
+  await expect(page.getByTestId("theme-toggle")).toHaveAttribute("data-hydrated", "true");
+}
+
 test.describe("routing and i18n", () => {
   test("/ redirects to a locale and renders landmarks", async ({ page }) => {
     const response = await page.goto("/");
@@ -78,7 +92,7 @@ test.describe("theme", () => {
   test.use({ colorScheme: "light" });
 
   test("toggle switches the dark class and persists after reload", async ({ page }) => {
-    await page.goto("/en");
+    await gotoHydrated(page, "/en");
     const toggle = page.getByRole("button", { name: "Dark theme" });
 
     await expect(html(page)).not.toHaveClass(/\bdark\b/);
@@ -90,6 +104,7 @@ test.describe("theme", () => {
 
     await page.reload();
     await expect(html(page)).toHaveClass(/\bdark\b/);
+    await expectThemeToggleHydrated(page);
     await expect(page.getByRole("button", { name: "Dark theme" })).toHaveAttribute(
       "aria-pressed",
       "true",
@@ -101,7 +116,7 @@ test.describe("theme", () => {
   });
 
   test("theme survives a locale switch", async ({ page }) => {
-    await page.goto("/de");
+    await gotoHydrated(page, "/de");
     await page.getByRole("button", { name: "Dunkles Design" }).click();
     await page.getByRole("link", { name: "English" }).click();
 
@@ -110,7 +125,7 @@ test.describe("theme", () => {
   });
 
   test("toggle is keyboard operable", async ({ page }) => {
-    await page.goto("/en");
+    await gotoHydrated(page, "/en");
     const toggle = page.getByRole("button", { name: "Dark theme" });
     await toggle.focus();
     await page.keyboard.press("Enter");
@@ -120,8 +135,8 @@ test.describe("theme", () => {
   });
 
   test("Ctrl+Shift+K and Meta+Shift+K toggle the theme", async ({ page }) => {
-    await page.goto("/en");
-    await expect(page.getByRole("button", { name: "Dark theme" })).toBeVisible();
+    // The button is visible in the server HTML; the shortcut is bound on hydration.
+    await gotoHydrated(page, "/en");
 
     await page.keyboard.press("Control+Shift+K");
     await expect(html(page)).toHaveClass(/\bdark\b/);

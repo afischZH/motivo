@@ -2,7 +2,7 @@
  * Pure format metadata: MIME types, file extensions, quality defaults and
  * file names. No browser APIs.
  */
-import type { CodeLanguage, ExportFormat } from "@motivo/tool-registry";
+import type { CodeLanguage, ExportFormat } from "@musterli/tool-registry";
 
 /** Formats produced by drawing into a canvas. */
 export const RASTER_FORMATS = ["png", "jpg", "webp"] as const;
@@ -93,8 +93,8 @@ function slug(value: string): string {
 }
 
 /**
- * `motivo-<toolId>-<seed>.<ext>`, optionally with a suffix before the
- * extension (`motivo-blob-42-clip-path.css`). Seeds are printed as uint32.
+ * `musterli-<toolId>-<seed>.<ext>`, optionally with a suffix before the
+ * extension (`musterli-blob-42-clip-path.css`). Seeds are printed as uint32.
  */
 export function exportFilename(
   toolId: string,
@@ -102,7 +102,7 @@ export function exportFilename(
   extension: string,
   suffix?: string,
 ): string {
-  const parts = ["motivo", slug(toolId), String(seed >>> 0)];
+  const parts = ["musterli", slug(toolId), String(seed >>> 0)];
   if (suffix !== undefined && suffix !== "") parts.push(slug(suffix));
   return `${parts.join("-")}.${extension.replace(/^\./, "")}`;
 }

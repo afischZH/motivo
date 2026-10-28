@@ -57,14 +57,14 @@ describe("resolveBackground", () => {
 });
 
 describe("exportFilename", () => {
-  it("follows motivo-<toolId>-<seed>.<ext>", () => {
-    expect(exportFilename("css-gradient", 42, "png")).toBe("motivo-css-gradient-42.png");
-    expect(exportFilename("blob", 7, ".css", "clip-path")).toBe("motivo-blob-7-clip-path.css");
+  it("follows musterli-<toolId>-<seed>.<ext>", () => {
+    expect(exportFilename("css-gradient", 42, "png")).toBe("musterli-css-gradient-42.png");
+    expect(exportFilename("blob", 7, ".css", "clip-path")).toBe("musterli-blob-7-clip-path.css");
   });
 
   it("prints seeds as uint32 and sanitises ids", () => {
-    expect(exportFilename("blob", -1, "svg")).toBe("motivo-blob-4294967295.svg");
-    expect(exportFilename("../Evil Tool", 1, "svg")).toBe("motivo-evil-tool-1.svg");
-    expect(exportFilename("///", 1, "svg")).toBe("motivo-design-1.svg");
+    expect(exportFilename("blob", -1, "svg")).toBe("musterli-blob-4294967295.svg");
+    expect(exportFilename("../Evil Tool", 1, "svg")).toBe("musterli-evil-tool-1.svg");
+    expect(exportFilename("///", 1, "svg")).toBe("musterli-design-1.svg");
   });
 });

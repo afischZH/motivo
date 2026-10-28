@@ -3,7 +3,7 @@ import {
   paletteFromImageTool,
   type PaletteFromImageParams,
   type PixelBuffer,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 // Test-only cross-package import: tool texts live in the web app.
@@ -31,6 +31,7 @@ function setup(decoded: ImageDecodeResult[]) {
       async (): Promise<ImageDecodeResult> =>
         decoded.shift() ?? { ok: false, error: "decode-failed" },
     ),
+    crop: vi.fn(async () => ({ ok: false as const, error: "decode-failed" as const })),
     derive: vi.fn(async (t, pixels, params, seed) => {
       const patch = deriveFromImage(t, pixels, params, seed);
       return patch

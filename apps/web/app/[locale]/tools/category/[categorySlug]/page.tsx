@@ -8,6 +8,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { CollectionTeaser } from "@/components/collections/collection-teaser";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ToolCard } from "@/components/seo/tool-card";
 import type { EnabledLocale } from "@/i18n/locales";
@@ -16,6 +17,7 @@ import { routeHref } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { categoryIdFromSlug, categorySlug } from "@/i18n/slugs";
 import { categoryTools, populatedCategories } from "@/lib/catalogue";
+import { collectionsFor } from "@/lib/collections";
 import { pageAlternates } from "@/lib/seo/alternates";
 import { pageOpenGraph } from "@/lib/seo/page-meta";
 
@@ -89,6 +91,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </li>
         ))}
       </ul>
+
+      {collectionsFor([category]).map((kind) => (
+        <CollectionTeaser key={kind} kind={kind} locale={locale} />
+      ))}
 
       {others.length > 0 && (
         <nav aria-labelledby="other-categories" className="flex flex-col gap-3">

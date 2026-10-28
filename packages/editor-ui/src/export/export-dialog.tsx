@@ -11,12 +11,14 @@ import {
   exportExtra,
   exportFilename,
   exportRaster,
+  exportRasterTile,
   exportSvg,
+  exportTile,
   resolveQuality,
   textBlob,
   MIME_TYPES,
   type RasterFormat,
-} from "@motivo/exporters";
+} from "@musterli/exporters";
 import {
   CANVAS_EDGE_MAX,
   CANVAS_EDGE_MIN,
@@ -25,7 +27,7 @@ import {
   type CanvasSize,
   type Params,
   type ParamsSchema,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";
@@ -55,6 +57,8 @@ import { useBackdropClose } from "../shell/use-backdrop-close";
 /** Browser side effects of the dialog, replaceable in tests. */
 export interface ExportServices {
   exportRaster: typeof exportRaster;
+  /** Repeat tile of seamless tools (scale only, the tile has its own size). */
+  exportRasterTile: typeof exportRasterTile;
   downloadBlob: typeof downloadBlob;
   copyText: typeof copyText;
   copyPng: typeof copyPng;
@@ -64,6 +68,7 @@ export interface ExportServices {
 
 export const browserExportServices: ExportServices = {
   exportRaster,
+  exportRasterTile,
   downloadBlob,
   copyText,
   copyPng,
@@ -120,6 +125,12 @@ export interface ExportDialogProps {
   open: boolean;
   onClose(): void;
   services?: ExportServices;
+  /**
+   * A quiet line shown under the actions once something was downloaded or
+   * copied (the app passes its donation hint). Never shown before, never
+   * blocks anything; gone when the dialog closes.
+   */
+  afterExport?: ReactNode;
 }
 
 /**
@@ -131,6 +142,7 @@ export function ExportDialog({
   open,
   onClose,
   services = browserExportServices,
+  afterExport,
 }: ExportDialogProps) {
   const t = useT();
   const titleId = useId();
@@ -169,7 +181,7 @@ export function ExportDialog({
           {t("Editor.export.close")}
         </button>
       </div>
-      {open && <ExportDialogBody services={services} />}
+      {open && <ExportDialogBody services={services} afterExport={afterExport} />}
     </dialog>
   );
 }
@@ -180,7 +192,13 @@ type Status =
   | { kind: "done"; message: string }
   | { kind: "error"; message: string; hint?: string };
 
-function ExportDialogBody({ services }: { services: ExportServices }) {
+function ExportDialogBody({
+  services,
+  afterExport,
+}: {
+  services: ExportServices;
+  afterExport: ReactNode;
+}) {
   const t = useT();
   const id = useId();
   const tool = useEditorStore((s) => s.tool);
@@ -198,6 +216,8 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
   const [qualityPercent, setQualityPercent] = useState<Partial<Record<RasterFormat, number>>>({});
   const [jpgBackground, setJpgBackground] = useState(() => defaultJpgBackground(params.background));
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  // Something was downloaded or copied since the dialog opened.
+  const [exported, setExported] = useState(false);
   // The body only mounts in the browser (after opening), so feature detection is safe here.
   const [clipboard] = useState(() => ({
     text: services.canCopyText(),
@@ -221,8 +241,13 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     return <p className="p-5 text-sm text-muted-foreground">{t("Editor.export.noFormats")}</p>;
   }
 
-  const raster = choice.kind === "raster" ? choice.format : null;
-  const plan = planRasterSize(size, sizeMode);
+  const raster = choice.kind === "raster" || choice.kind === "tile" ? choice.format : null;
+  const tileChoice = choice.kind === "tile";
+  const tileSize = tileChoice ? tileSizeOf(tool, params, seed, size) : null;
+  // The tile has its own size and only scales; a custom size would cut it.
+  const effectiveMode: ExportSizeMode =
+    tileChoice && sizeMode.kind === "custom" ? { kind: "scale", scale: 1 } : sizeMode;
+  const plan = planRasterSize(tileSize ?? size, effectiveMode);
   const quality =
     raster === null
       ? undefined
@@ -255,10 +280,13 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     const controller = new AbortController();
     abortRef.current = controller;
     setStatus({ kind: "busy", action, progress: null });
-    const ctx = createRenderContext(seed, plan.render);
+    const ctx = createRenderContext(seed, tileChoice ? size : plan.render);
     const options: Parameters<typeof exportRaster>[3] = {
       format,
-      size: { width: plan.output.width, height: plan.output.height },
+      size:
+        tileChoice && effectiveMode.kind === "scale"
+          ? { scale: effectiveMode.scale }
+          : { width: plan.output.width, height: plan.output.height },
       signal: controller.signal,
       onProgress: (fraction) => {
         if (!controller.signal.aborted) {
@@ -268,7 +296,9 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     };
     if (quality !== undefined) options.quality = quality;
     if (format === "jpg") options.background = jpgBackground;
-    return services.exportRaster(tool, params as AnyParams, ctx, options);
+    return tileChoice
+      ? services.exportRasterTile(tool, params as AnyParams, ctx, options)
+      : services.exportRaster(tool, params as AnyParams, ctx, options);
   };
 
   const finishRaster = () => {
@@ -281,6 +311,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
         const result = await startRaster(raster, "download");
         services.downloadBlob(result.blob, result.filename);
         setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+        setExported(true);
       } catch (error) {
         fail(error);
       } finally {
@@ -295,6 +326,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
       exportFilename(tool.id, seed, extension, suffix),
     );
     setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+    setExported(true);
   };
 
   const copy = async () => {
@@ -314,6 +346,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
       const result = await pending;
       finishRaster();
       const key = clipboardErrorKey(result);
+      if (key === null) setExported(true);
       setStatus(
         key === null
           ? { kind: "done", message: t("Editor.export.copied") }
@@ -324,6 +357,7 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     if (!text?.ok) return;
     const result = await services.copyText(text.value);
     const key = clipboardErrorKey(result);
+    if (key === null) setExported(true);
     setStatus(
       key === null
         ? { kind: "done", message: t("Editor.export.copied") }
@@ -352,8 +386,9 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
       {raster !== null && (
         <>
           <SizeSection
-            design={size}
-            mode={sizeMode}
+            design={tileSize ?? size}
+            mode={effectiveMode}
+            allowCustom={!tileChoice}
             onChange={setSizeMode}
             plan={plan}
             disabled={busy}
@@ -460,9 +495,29 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
             {t("Editor.export.download")}
           </button>
         </div>
+        {exported && afterExport !== undefined && (
+          <div className="text-right text-xs text-muted-foreground" data-testid="export-after">
+            {afterExport}
+          </div>
+        )}
       </div>
     </div>
   );
+}
+
+/** Pixel size of the repeat tile at scale 1, or null when it cannot be built. */
+function tileSizeOf(
+  tool: AnyToolDefinition,
+  params: ParamValues,
+  seed: number,
+  size: CanvasSize,
+): CanvasSize | null {
+  try {
+    const tile = exportTile(tool, params as AnyParams, createRenderContext(seed, size));
+    return { width: Math.round(tile.width), height: Math.round(tile.height) };
+  } catch {
+    return null;
+  }
 }
 
 function textFile(choice: TextChoice): { mime: string; extension: string; suffix?: string } {
@@ -554,6 +609,8 @@ function SizeSection(props: {
   onChange(mode: ExportSizeMode): void;
   plan: ReturnType<typeof planRasterSize>;
   disabled: boolean;
+  /** False for the repeat tile: it only scales. */
+  allowCustom?: boolean;
 }) {
   const t = useT();
   const id = useId();
@@ -600,17 +657,18 @@ function SizeSection(props: {
             }),
           ),
         )}
-        {option(
-          "custom",
-          custom,
-          () =>
-            props.onChange({
-              kind: "custom",
-              width: plan.output.width,
-              height: plan.output.height,
-            }),
-          t("Editor.export.customSize"),
-        )}
+        {props.allowCustom !== false &&
+          option(
+            "custom",
+            custom,
+            () =>
+              props.onChange({
+                kind: "custom",
+                width: plan.output.width,
+                height: plan.output.height,
+              }),
+            t("Editor.export.customSize"),
+          )}
       </div>
       {custom && (
         <div className="flex flex-wrap items-end gap-2">

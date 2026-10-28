@@ -3,7 +3,7 @@
  * structured data, OG images and the noindex rule for non-production hosts.
  */
 import AxeBuilder from "@axe-core/playwright";
-import { builtInTools } from "@motivo/tool-registry";
+import { builtInTools } from "@musterli/tool-registry";
 import { expect, test, type Page } from "@playwright/test";
 
 import { ENABLED_LOCALES } from "../i18n/locales";

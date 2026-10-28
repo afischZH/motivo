@@ -1,4 +1,4 @@
-import { builtInTools } from "@motivo/tool-registry";
+import { builtInTools } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import de from "./de.json";
 import en from "./en.json";

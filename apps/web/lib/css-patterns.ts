@@ -16,13 +16,13 @@ import {
   type PatternCategory,
   type PatternDeclarations,
   type PatternSpec,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import {
   cssPatternDescriptionKey,
   cssPatternNameKey,
   cssPatternShowcase,
   registry,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 
 import { OG_SIZE } from "./seo/og";
 import { designEditorHash, STATIC_SEED } from "./seo/motifs";

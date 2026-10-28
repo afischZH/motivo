@@ -1,4 +1,4 @@
-import { ExportError, type RasterExportResult } from "@motivo/exporters";
+import { ExportError, type RasterExportResult } from "@musterli/exporters";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
@@ -137,7 +137,7 @@ describe("ExportDialog formats", () => {
     expect(services.downloadBlob).toHaveBeenCalledTimes(1);
     const [blob, name] = services.downloadBlob.mock.calls[0] ?? [];
     expect(blob?.type).toBe("image/svg+xml");
-    expect(name).toBe(`motivo-blob-${store.getState().seed}.svg`);
+    expect(name).toBe(`musterli-blob-${store.getState().seed}.svg`);
     expect(status().textContent).toBe("Heruntergeladen.");
   });
 });
@@ -302,6 +302,17 @@ describe("ExportDialog errors", () => {
     );
   });
 
+  it("explains too-large (large JPG or WebP the browser cannot draw)", async () => {
+    setup("blob", failing("too-large"));
+    fireEvent.click(formatRadio("JPG"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Dein Browser kann ein Bild dieser Grösse nicht in diesem Format erzeugen. Wähle PNG oder eine kleinere Grösse.",
+      ),
+    );
+  });
+
   it("explains decode-failed and unknown errors", async () => {
     setup("blob", failing("decode-failed"));
     fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
@@ -317,5 +328,53 @@ describe("ExportDialog errors", () => {
         "Der Browser hat den Zugriff auf die Zwischenablage blockiert. Lade die Datei stattdessen herunter.",
       ),
     );
+  });
+});
+
+describe("ExportDialog afterExport", () => {
+  function setupWithHint(services: ExportServices) {
+    const store = createEditorStore({ toolId: "blob", size: { width: 1080, height: 1350 } });
+    renderWithIntl(
+      <EditorStoreProvider store={store}>
+        <ExportDialog
+          open
+          onClose={() => undefined}
+          services={services}
+          afterExport={<a href="/de/unterstuetzen">Unterstützen</a>}
+        />
+      </EditorStoreProvider>,
+    );
+  }
+
+  it("shows the hint only after a successful download", () => {
+    setupWithHint(fakeServices());
+    expect(screen.queryByTestId("export-after")).toBeNull();
+    fireEvent.click(formatRadio("SVG"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    expect(screen.getByTestId("export-after").textContent).toBe("Unterstützen");
+  });
+
+  it("shows the hint after copying code", async () => {
+    setupWithHint(fakeServices());
+    fireEvent.click(formatRadio("CSS"));
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(screen.getByTestId("export-after")).toBeTruthy());
+  });
+
+  it("stays hidden when the export fails or the copy is denied", async () => {
+    setupWithHint(
+      fakeServices({
+        exportRaster: vi.fn(async () => {
+          throw new ExportError("encode-failed", "encode-failed");
+        }),
+        copyText: async () => ({ ok: false, reason: "denied" }),
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(alert().textContent).not.toBe(""));
+    fireEvent.click(formatRadio("SVG"));
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(alert().textContent).toContain("Zwischenablage"));
+    expect(screen.queryByTestId("export-after")).toBeNull();
   });
 });

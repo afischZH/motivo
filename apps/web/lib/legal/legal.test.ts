@@ -53,30 +53,30 @@ describe.each([
 
   it("covers the required topics in the privacy policy", () => {
     const text = JSON.stringify(messages.Legal.privacy);
+    // IndexedDB: saved designs, drafts and the brand kit (M3-AP03 to AP05).
     for (const term of [
       "Cloudflare",
       "Sentry",
       "localStorage",
+      "IndexedDB",
+      "Brand Kit",
       "#",
       "EU",
-      "Supabase",
-      "Resend",
-      "Turnstile",
-      "eu-central-2",
     ]) {
       expect(text).toContain(term);
     }
   });
 
+  it("describes donations generically and no retired service", () => {
+    expect(Object.keys(messages.Legal.privacy.sections)).toContain("donations");
+    const text = JSON.stringify(messages.Legal.privacy);
+    for (const term of ["Supabase", "Resend", "Turnstile", "Founders", "Lifetime", "Stripe"]) {
+      expect(text).not.toContain(term);
+    }
+  });
+
   it("follows the house style", () => {
-    const text = [
-      messages.Legal,
-      messages.Home,
-      messages.Waitlist,
-      messages.Founders,
-      messages.WaitlistResult,
-      messages.WaitlistEmail,
-    ]
+    const text = [messages.Legal, messages.Home, messages.Support, messages.Footer]
       .map((part) => JSON.stringify(part))
       .join("");
     // No dashes as punctuation.

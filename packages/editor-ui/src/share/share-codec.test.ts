@@ -1,13 +1,14 @@
-import { createRng } from "@motivo/engine";
+import { createRng } from "@musterli/engine";
 import {
   builtInTools,
   createRegistry,
   cssGradientTool,
   cssPatternsTool,
   paletteFromImageTool,
+  seamlessPatternsTool,
   withoutDerivedParams,
   type AnyToolDefinition,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { deflateSync, inflateSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import { createEditorStore, selectDesign, type Design } from "../store/editor-store";
@@ -435,5 +436,49 @@ describe("CSS pattern layers", () => {
     });
     const bad = packJson([tool.id, 1, 1, 1080, 1080, { ...old, color: "#fff;x" }]);
     expect(errorOf(decodeDesign(bad))).toBe("invalid-params");
+  });
+});
+
+describe("share links: uploads never travel (security review M3-AP12)", () => {
+  const tool = seamlessPatternsTool;
+  const svgUpload = {
+    kind: "svg",
+    svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" width="10" height="10"><script>alert(1)</script><rect width="10" height="10"/></svg>',
+    width: 10,
+    height: 10,
+    name: "x.svg",
+  };
+  const rasterUpload = {
+    kind: "raster",
+    href: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+    width: 1,
+    height: 1,
+    name: "x.png",
+  };
+
+  it("drops an upload injected into a crafted link", () => {
+    for (const upload of [svgUpload, rasterUpload]) {
+      const code = packJson([tool.id, tool.version, 1, 1080, 1080, { ...tool.defaults, upload }]);
+      const r = decodeDesign(code);
+      expect(r.ok).toBe(true);
+      if (r.ok) expect(r.design.params.upload).toBeNull();
+    }
+  });
+
+  it("rejects links whose upload does not even match the schema", () => {
+    const bad = {
+      ...tool.defaults,
+      upload: { kind: "svg", svg: "", width: -1, height: 0, name: 1 },
+    };
+    expect(errorOf(decodeDesign(packJson([tool.id, tool.version, 1, 1080, 1080, bad])))).toBe(
+      "invalid-params",
+    );
+  });
+
+  it("never encodes the upload into a link", () => {
+    const code = encodeOk(design(tool, { params: { ...tool.defaults, upload: rasterUpload } }));
+    const json = new TextDecoder().decode(inflateSync(base64urlDecode(code).subarray(1)));
+    expect(json).not.toContain("data:image");
+    expect(json).not.toContain("x.png");
   });
 });

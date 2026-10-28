@@ -6,7 +6,7 @@
  * thumbnail of the active picture and a way back to the sample. Status and
  * errors are announced through live regions. No tool-specific code.
  */
-import type { PixelBuffer } from "@motivo/tool-registry";
+import type { PixelBuffer } from "@musterli/tool-registry";
 import { useEffect, useId, useRef, useState, type DragEvent } from "react";
 import { cx, FOCUS_RING } from "../controls/primitives";
 import { useT } from "../i18n";
@@ -40,7 +40,7 @@ function PixelThumbnail({ pixels, label }: { pixels: PixelBuffer | null; label: 
 }
 
 /** True when the paste target edits text, so pasting there must not load an image. */
-function isTextTarget(target: EventTarget | null): boolean {
+export function isTextTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false;
   if (target.isContentEditable) return true;
   if (target instanceof HTMLTextAreaElement) return true;

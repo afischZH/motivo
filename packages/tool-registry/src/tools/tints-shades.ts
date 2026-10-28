@@ -12,7 +12,7 @@ import {
   type ColorFormat,
   type NamedColor,
   type ScaleColor,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema } from "../common";
 import { keepLocked } from "../randomize";
@@ -165,5 +165,4 @@ export const tintsShadesTool = defineTool({
     list("rgb-list", EXTRA_EXPORT_LABELS.rgbList, "rgb"),
     list("hsl-list", EXTRA_EXPORT_LABELS.hslList, "hsl"),
   ],
-  gating: {},
 });

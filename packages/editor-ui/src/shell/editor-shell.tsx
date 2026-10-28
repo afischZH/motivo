@@ -1,15 +1,31 @@
 "use client";
 
-import { supportsExport } from "@motivo/exporters";
+import { supportsExport } from "@musterli/exporters";
+import type { BrandKitStore, DesignStore } from "@musterli/storage";
 import {
   TRANSPARENT,
   createRenderContext,
+  hasLocalContent,
   type AnyToolDefinition,
   type Params,
   type ParamsSchema,
-} from "@motivo/tool-registry";
-import { useDeferredValue, useEffect, useId, useMemo, useState, type ReactNode } from "react";
+} from "@musterli/tool-registry";
+import { useLocale } from "next-intl";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { AssetServicesContext } from "../asset-input/services-context";
+import { BrandPaletteSection } from "../brand-kit/brand-palette-section";
+import { BrandKitContext, useBrandKitView } from "../brand-kit/context";
 import { EditorControls } from "../controls/control-panel";
+import type { LocalDesignController, LocalDesignView } from "../designs/local-design";
+import { useLocalDesign } from "../designs/use-local-design";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
 import { ImageInputSection } from "../image-input/image-input-section";
 import type { ImageInputServices } from "../image-input/services";
@@ -26,6 +42,7 @@ import {
   CloseIcon,
   LinkIcon,
   RedoIcon,
+  SaveIcon,
   ShuffleIcon,
   UndoIcon,
 } from "./icons";
@@ -45,6 +62,21 @@ export interface EditorShellProps {
   exportServices?: ExportServices;
   /** Decoding and analysis of user images (tools with `imageInput`); replaceable in tests. */
   imageInputServices?: ImageInputServices;
+  /** Quiet line in the export dialog after a successful export (see `ExportDialog`). */
+  afterExport?: ReactNode;
+  /**
+   * Local saving (IndexedDB). Without it the editor has no save button, no
+   * autosave draft and ignores `#design=` (tests, embeds).
+   */
+  designs?: DesignStore;
+  /**
+   * The brand kit (IndexedDB). With it, tools with colour params offer
+   * "apply brand palette", colour pickers show brand swatches and upload
+   * fields offer brand logos and shapes.
+   */
+  brandKit?: BrandKitStore;
+  /** The Brand Kit page in the current locale, linked when it is empty. */
+  brandKitHref?: string;
   className?: string;
 }
 
@@ -75,9 +107,14 @@ export function EditorShell({
   headerStart,
   exportServices = browserExportServices,
   imageInputServices,
+  afterExport,
+  designs,
+  brandKit,
+  brandKitHref,
   className,
 }: EditorShellProps) {
   const t = useT();
+  const locale = useLocale();
   const store = useEditorStoreApi();
   const tool = useEditorStore((s) => s.tool);
   const canUndo = useEditorStore(selectCanUndo);
@@ -104,6 +141,19 @@ export function EditorShell({
   }, [flash]);
 
   const toolName = t(`tools.${tool.id}.name`);
+
+  const defaultName = useCallback(
+    () =>
+      t("Designs.editor.defaultName", {
+        tool: toolName,
+        date: new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(
+          new Date(),
+        ),
+      }),
+    [t, toolName, locale],
+  );
+  const local = useLocalDesign(store, designs, defaultName);
+  const brandView = useBrandKitView(brandKit, brandKitHref);
 
   // Announce the variant position whenever the active variant or the variant
   // count changes. Not on array identity: edits replace `variants` without
@@ -159,7 +209,13 @@ export function EditorShell({
     }
     const result = await exportServices.copyText(built.url);
     if (result.ok) {
-      setNotice(null);
+      const s = store.getState();
+      // Uploads stay on this device: say so instead of sharing a different picture silently.
+      setNotice(
+        hasLocalContent(s.tool, s.params)
+          ? { tone: "info", message: t("Editor.share.localLeftOut") }
+          : null,
+      );
       confirm(t("Editor.share.copied"));
     } else {
       setNotice({ tone: "error", message: t("Editor.share.copyFailed"), url: built.url });
@@ -195,7 +251,19 @@ export function EditorShell({
       }
     : undefined;
 
-  useEditorShortcuts(copyImage ? { ...actions, copyImage } : actions);
+  const save = local
+    ? () => {
+        void local.controller.save().then((ok) => {
+          if (ok) confirm(t("Designs.editor.saved"));
+        });
+      }
+    : undefined;
+
+  useEditorShortcuts({
+    ...actions,
+    ...(copyImage ? { copyImage } : {}),
+    ...(save ? { save } : {}),
+  });
 
   const shownNotice: ShellNotice | null =
     notice ??
@@ -208,159 +276,289 @@ export function EditorShell({
   };
 
   return (
-    <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
-      <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
-        <div className="flex min-w-0 flex-[1_1_16rem] items-baseline gap-3">
-          {headerStart}
-          <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
-        </div>
-        <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-1">
-          <button
-            type="button"
-            className={ICON_BUTTON}
-            onClick={actions.undo}
-            disabled={!canUndo}
-            aria-label={t("Editor.shell.undo")}
-            title={`${t("Editor.shell.undo")} (⌘/Ctrl+Z)`}
-            aria-keyshortcuts="Control+Z Meta+Z"
-          >
-            <UndoIcon />
-          </button>
-          <button
-            type="button"
-            className={ICON_BUTTON}
-            onClick={actions.redo}
-            disabled={!canRedo}
-            aria-label={t("Editor.shell.redo")}
-            title={`${t("Editor.shell.redo")} (⇧+⌘/Ctrl+Z)`}
-            aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
-          >
-            <RedoIcon />
-          </button>
-        </div>
-        <button
-          type="button"
-          className={BUTTON_CLASS}
-          onClick={actions.newVariant}
-          aria-keyshortcuts="Space"
-          data-testid="new-variant"
-        >
-          <ShuffleIcon />
-          {t("Editor.shell.newVariant")}
-        </button>
-        <button
-          type="button"
-          className={ICON_BUTTON}
-          onClick={actions.help}
-          aria-label={t("Editor.shortcuts.title")}
-          aria-keyshortcuts="Shift+?"
-          title={`${t("Editor.shortcuts.title")} (?)`}
-        >
-          <KeyboardIcon />
-        </button>
-        <span
-          role="status"
-          aria-live="polite"
-          className="text-xs text-muted-foreground"
-          data-testid="shell-flash"
-        >
-          {flash?.message}
-        </span>
-        <button
-          type="button"
-          className={BUTTON_CLASS}
-          onClick={() => void share()}
-          disabled={!hydrated}
-          title={t("Editor.share.hint")}
-          data-testid="share-link"
-        >
-          <LinkIcon />
-          {t("Editor.share.button")}
-        </button>
-        <button
-          type="button"
-          className={PRIMARY_BUTTON_CLASS}
-          onClick={actions.export}
-          aria-haspopup="dialog"
-          aria-keyshortcuts="Control+E Meta+E"
-          title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
-        >
-          <DownloadIcon />
-          {t("Editor.shell.export")}
-        </button>
-      </div>
-
-      {shownNotice && (
-        <div
-          role={shownNotice.tone === "error" ? "alert" : "status"}
-          className={cx(
-            "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
-            shownNotice.tone === "error" ? "bg-destructive/10" : "bg-muted",
+    <BrandKitContext.Provider value={brandView}>
+      <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
+        <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
+          <div className="flex min-w-0 flex-[1_1_16rem] items-baseline gap-3">
+            {headerStart}
+            <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
+          </div>
+          {local && save && (
+            <DesignBar
+              controller={local.controller}
+              view={local.view}
+              onSave={save}
+              enabled={hydrated}
+            />
           )}
-          data-testid="shell-notice"
-        >
-          <p className="min-w-0 flex-[1_1_16rem]">{shownNotice.message}</p>
-          {shownNotice.url !== undefined && (
-            <>
-              <label htmlFor={`${ids}-share-url`} className="sr-only">
-                {t("Editor.share.linkLabel")}
-              </label>
-              <input
-                id={`${ids}-share-url`}
-                readOnly
-                value={shownNotice.url}
-                onFocus={(event) => event.currentTarget.select()}
-                className="h-8 min-w-0 flex-[1_1_16rem] rounded-md border border-input bg-background px-2 text-xs"
-              />
-            </>
-          )}
+          <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-1">
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={actions.undo}
+              disabled={!canUndo}
+              aria-label={t("Editor.shell.undo")}
+              title={`${t("Editor.shell.undo")} (⌘/Ctrl+Z)`}
+              aria-keyshortcuts="Control+Z Meta+Z"
+            >
+              <UndoIcon />
+            </button>
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={actions.redo}
+              disabled={!canRedo}
+              aria-label={t("Editor.shell.redo")}
+              title={`${t("Editor.shell.redo")} (⇧+⌘/Ctrl+Z)`}
+              aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
+            >
+              <RedoIcon />
+            </button>
+          </div>
+          <button
+            type="button"
+            className={BUTTON_CLASS}
+            onClick={actions.newVariant}
+            aria-keyshortcuts="Space"
+            data-testid="new-variant"
+          >
+            <ShuffleIcon />
+            {t("Editor.shell.newVariant")}
+          </button>
           <button
             type="button"
             className={ICON_BUTTON}
-            onClick={dismissNotice}
-            aria-label={t("Editor.share.dismiss")}
+            onClick={actions.help}
+            aria-label={t("Editor.shortcuts.title")}
+            aria-keyshortcuts="Shift+?"
+            title={`${t("Editor.shortcuts.title")} (?)`}
           >
-            <CloseIcon />
+            <KeyboardIcon />
+          </button>
+          <span
+            role="status"
+            aria-live="polite"
+            className="text-xs text-muted-foreground"
+            data-testid="shell-flash"
+          >
+            {flash?.message}
+          </span>
+          <button
+            type="button"
+            className={BUTTON_CLASS}
+            onClick={() => void share()}
+            disabled={!hydrated}
+            title={t("Editor.share.hint")}
+            data-testid="share-link"
+          >
+            <LinkIcon />
+            {t("Editor.share.button")}
+          </button>
+          <button
+            type="button"
+            className={PRIMARY_BUTTON_CLASS}
+            onClick={actions.export}
+            aria-haspopup="dialog"
+            aria-keyshortcuts="Control+E Meta+E"
+            title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
+          >
+            <DownloadIcon />
+            {t("Editor.shell.export")}
           </button>
         </div>
-      )}
 
-      <div
-        className={cx(
-          "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
-          "lg:grid-cols-[13rem_minmax(0,1fr)_20rem] lg:grid-rows-[minmax(0,1fr)_auto]",
+        {shownNotice && (
+          <div
+            role={shownNotice.tone === "error" ? "alert" : "status"}
+            className={cx(
+              "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
+              shownNotice.tone === "error" ? "bg-destructive/10" : "bg-muted",
+            )}
+            data-testid="shell-notice"
+          >
+            <p className="min-w-0 flex-[1_1_16rem]">{shownNotice.message}</p>
+            {shownNotice.url !== undefined && (
+              <>
+                <label htmlFor={`${ids}-share-url`} className="sr-only">
+                  {t("Editor.share.linkLabel")}
+                </label>
+                <input
+                  id={`${ids}-share-url`}
+                  readOnly
+                  value={shownNotice.url}
+                  onFocus={(event) => event.currentTarget.select()}
+                  className="h-8 min-w-0 flex-[1_1_16rem] rounded-md border border-input bg-background px-2 text-xs"
+                />
+              </>
+            )}
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={dismissNotice}
+              aria-label={t("Editor.share.dismiss")}
+            >
+              <CloseIcon />
+            </button>
+          </div>
         )}
-      >
-        <PreviewSection
-          zoom={zoom}
-          onZoomChange={setZoom}
-          shownScale={shownScale}
-          onScaleChange={setShownScale}
-          toolName={toolName}
-        />
-        <Filmstrip tool={tool} onPrevious={actions.previousVariant} onNext={actions.nextVariant} />
-        <PresetBar />
-        <section
-          aria-labelledby={`${ids}-controls`}
-          className="border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
-        >
-          <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
-            {t("Editor.shell.settings")}
-          </h2>
-          <ImageInputSection services={imageInputServices} />
-          <EditorControls />
-        </section>
-      </div>
 
-      <p role="status" aria-live="polite" className="sr-only" data-testid="editor-announcer">
-        {announcement}
-      </p>
-      <ShortcutHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
-      <ExportDialog
-        open={exportOpen}
-        onClose={() => setExportOpen(false)}
-        services={exportServices}
+        {local?.view.notice && <DesignNotice controller={local.controller} view={local.view} />}
+
+        <div
+          className={cx(
+            "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
+            "lg:grid-cols-[13rem_minmax(0,1fr)_20rem] lg:grid-rows-[minmax(0,1fr)_auto]",
+          )}
+        >
+          <PreviewSection
+            zoom={zoom}
+            onZoomChange={setZoom}
+            shownScale={shownScale}
+            onScaleChange={setShownScale}
+            toolName={toolName}
+          />
+          <Filmstrip
+            tool={tool}
+            onPrevious={actions.previousVariant}
+            onNext={actions.nextVariant}
+          />
+          <PresetBar />
+          {/* WebKit counts a <select>'s clipped label text as page overflow on narrow screens. */}
+          <section
+            aria-labelledby={`${ids}-controls`}
+            className="overflow-x-clip border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
+          >
+            <h2 id={`${ids}-controls`} className="mb-3 text-sm font-semibold">
+              {t("Editor.shell.settings")}
+            </h2>
+            <BrandPaletteSection onApplied={confirm} />
+            <ImageInputSection services={imageInputServices} />
+            <AssetServicesContext.Provider value={imageInputServices}>
+              <EditorControls />
+            </AssetServicesContext.Provider>
+          </section>
+        </div>
+
+        <p role="status" aria-live="polite" className="sr-only" data-testid="editor-announcer">
+          {announcement}
+        </p>
+        <ShortcutHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
+        <ExportDialog
+          open={exportOpen}
+          onClose={() => setExportOpen(false)}
+          services={exportServices}
+          afterExport={afterExport}
+        />
+      </div>
+    </BrandKitContext.Provider>
+  );
+}
+
+/** Name field, save button and save state (docs/DESIGN.md 2: title editable, Speichern). */
+function DesignBar(props: {
+  controller: LocalDesignController;
+  view: LocalDesignView;
+  onSave(): void;
+  enabled: boolean;
+}) {
+  const t = useT();
+  const id = useId();
+  const { controller, view } = props;
+  const status =
+    view.designId === null
+      ? null
+      : view.dirty
+        ? t("Designs.editor.statusChanged")
+        : t("Designs.editor.statusSaved");
+  return (
+    <div
+      role="group"
+      aria-label={t("Designs.editor.group")}
+      className="flex min-w-0 flex-[1_1_14rem] items-center gap-2 sm:flex-initial"
+      data-testid="design-bar"
+    >
+      <label htmlFor={`${id}-name`} className="sr-only">
+        {t("Designs.editor.nameLabel")}
+      </label>
+      <input
+        id={`${id}-name`}
+        type="text"
+        value={view.name}
+        maxLength={120}
+        placeholder={t("Designs.editor.namePlaceholder")}
+        onChange={(event) => controller.setName(event.currentTarget.value)}
+        onBlur={() => void controller.commitName()}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") void controller.commitName();
+        }}
+        disabled={!props.enabled}
+        className="h-8 w-full min-w-0 rounded-md border border-input bg-background px-2 text-sm placeholder:text-muted-foreground sm:w-44"
+        data-testid="design-name"
       />
+      <button
+        type="button"
+        className={BUTTON_CLASS}
+        onClick={props.onSave}
+        disabled={!props.enabled || !view.ready || view.saving}
+        title={`${t("Designs.editor.saveHint")} (⌘/Ctrl+S)`}
+        aria-keyshortcuts="Control+S Meta+S"
+        data-testid="save-design"
+      >
+        <SaveIcon />
+        {view.saving ? t("Designs.editor.saving") : t("Designs.editor.save")}
+      </button>
+      {status !== null && (
+        <span className="shrink-0 text-xs text-muted-foreground" data-testid="design-status">
+          {status}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** Notice about drafts, old versions and storage problems, with its actions. */
+function DesignNotice({
+  controller,
+  view,
+}: {
+  controller: LocalDesignController;
+  view: LocalDesignView;
+}) {
+  const t = useT();
+  const notice = view.notice;
+  if (!notice) return null;
+  const error = notice.kind === "error";
+  const message = error
+    ? t(`Designs.errors.${notice.code}`)
+    : t(`Designs.editor.notices.${notice.kind}`);
+  return (
+    <div
+      role={error ? "alert" : "status"}
+      className={cx(
+        "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
+        error ? "bg-destructive/10" : "bg-muted",
+      )}
+      data-testid="design-notice"
+    >
+      <p className="min-w-0 flex-[1_1_16rem]">{message}</p>
+      {notice.kind === "draft-restored" && (
+        <button type="button" className={BUTTON_CLASS} onClick={() => controller.startNew()}>
+          {t("Designs.editor.startNew")}
+        </button>
+      )}
+      {notice.kind === "draft-available" && (
+        <button type="button" className={BUTTON_CLASS} onClick={() => controller.restoreDraft()}>
+          {t("Designs.editor.restore")}
+        </button>
+      )}
+      <button
+        type="button"
+        className={ICON_BUTTON}
+        onClick={() => controller.dismissNotice()}
+        aria-label={t("Designs.editor.dismiss")}
+      >
+        <CloseIcon />
+      </button>
     </div>
   );
 }

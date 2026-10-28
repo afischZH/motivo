@@ -69,14 +69,13 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 
 ## 6. Wichtige Screens
 
-1. **Startseite**: Hero mit live laufendem Shader-Hintergrund (gerendert mit dem eigenen Tool, Dogfooding), Tool-Raster nach Kategorien, "So funktioniert's" in 3 Schritten, Testimonials (erst wenn echte vorhanden), Preise-Teaser.
+1. **Startseite**: Hero mit live laufendem Shader-Hintergrund (gerendert mit dem eigenen Tool, Dogfooding), Tool-Raster nach Kategorien, "So funktioniert's" in 3 Schritten, Testimonials (erst wenn echte vorhanden), Hinweis "Getragen von Spenden" mit Link zur Seite "Unterstützen" (keine Preise).
 2. **Tool-Landingpage (SEO)**: H1 "XYZ-Generator", grosser Button "Jetzt öffnen", eingebettete Mini-Vorschau mit 3 Presets zum Durchklicken, Feature-Blöcke, "Was ist ...", Anleitung, Anwendungsfälle, FAQ, verwandte Tools.
 3. **Katalog**: Filter-Chips (Kategorien, Gratis, Neu), Suche, Karten mit animiertem Hover-Preview.
-4. **Dashboard**: Raster gespeicherter Designs mit Thumbnails, Ordner links, Suche, Filter nach Tool, Mehrfachauswahl (Verschieben, Löschen, Duplizieren). Leerer Zustand: "Dein erstes Motiv in 10 Sekunden" mit 4 Schnellstart-Tools.
+4. **Meine Designs** (lokal im Browser, ohne Konto): Raster gespeicherter Designs mit Thumbnails, Ordner links, Suche, Filter nach Tool, Mehrfachauswahl (Verschieben, Löschen, Duplizieren). Leerer Zustand: "Dein erstes Motiv in 10 Sekunden" mit 4 Schnellstart-Tools.
 5. **Brand Kit**: Paletten, Logos, eigene Shapes/Packs, Fonts; "Aus Website importieren" (P2).
 6. **Export-Dialog**: Formatwahl als Karten (Bild · Vektor · Code · Animation), Grössen-Presets + frei, Qualität, Transparenz, Dateiname, Vorschau der Dateigrösse; Code-Formate mit Copy-Button und Syntax-Highlighting.
-7. **Pricing**: Zwei Lifetime-Karten (Solo, Pro) plus Free und Team; Hauptbotschaft "Einmal zahlen. Für immer nutzen. Alle künftigen Tools inklusive." Aktueller Phasenpreis (Founders/Early Bird) mit durchgestrichenem Regulärpreis und ehrlichem Restkontingent. Vergleichsgrafik "Lifetime vs. typisches Abo über 3 Jahre". Währungsumschalter CHF/EUR/USD (Standard aus Locale/IP). FAQ "Was heisst Lifetime?", "Was sind Credits?", "Was passiert, wenn Motivo eingestellt wird?". Zahlungslogos inkl. TWINT.
-8. **Lizenz-Bereich** (`/app/license`): Lizenzstufe mit Kaufdatum ("Dein seit 12. März 2027"), Belege zum Download, Credit-Saldo (inklusive vs. gekauft, Datum der nächsten Gutschrift), Upgrade auf Pro mit angezeigtem Differenzbetrag.
+7. **Unterstützen** (`/de/unterstuetzen`, `/en/support`, seit M3-AP14): kurzer, ehrlicher Text (gratis, ohne Konto, ohne Tracking, Exporte frei nutzbar), wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung), hervorgehobener Block mit Knopf "Jetzt spenden" zum externen Anbieter. Ohne konfigurierten Link (`NEXT_PUBLIC_DONATION_URL`) neutraler Hinweis "Spenden-Link folgt bald", kein toter Knopf. Dezente Hinweise nur im Footer ("Musterli unterstützen") und als eine leise Zeile im Export-Dialog nach erfolgreichem Export (öffnet in neuem Tab, damit das Design im Editor bleibt). Nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
 
 ## 7. Barrierefreiheit (WCAG 2.2 AA)
 
@@ -89,6 +88,5 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 ## 8. Microcopy (Ton)
 
 - Du-Form, freundlich, kurz, leicht verspielt, nie belehrend. Beispiel: "Neu würfeln", "Gefällt dir? Speichern", "Kopiert! Ab ins Projekt damit."
-- Upgrade-Hinweise ehrlich und konkret: "4K-Export ist in der Lifetime-Lizenz drin, einmal zahlen, für immer nutzen. Deine aktuelle Version kannst du in 1080 px gratis exportieren."
-- Credits immer vor der Aktion zeigen: "Kostet 1 Credit, du hast noch 18 diesen Monat."
+- Spendenhinweise leise und ohne Druck: "Gefällt dir Musterli? Unterstütze das Projekt." Keine Schuldgefühle, keine Countdown- oder Knappheitstexte, keine Upgrade-Sprache.
 - Schweizer Rechtschreibung im Deutschen (kein Eszett, immer ss).

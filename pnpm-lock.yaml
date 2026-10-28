@@ -50,19 +50,22 @@ importers:
 
   apps/web:
     dependencies:
-      '@motivo/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@motivo/editor-ui':
+      '@musterli/editor-ui':
         specifier: workspace:*
         version: link:../../packages/editor-ui
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../../packages/engine
-      '@motivo/exporters':
+      '@musterli/exporters':
         specifier: workspace:*
         version: link:../../packages/exporters
-      '@motivo/tool-registry':
+      '@musterli/storage':
+        specifier: workspace:*
+        version: link:../../packages/storage
+      '@musterli/svg-sanitizer':
+        specifier: workspace:*
+        version: link:../../packages/svg-sanitizer
+      '@musterli/tool-registry':
         specifier: workspace:*
         version: link:../../packages/tool-registry
       '@opennextjs/cloudflare':
@@ -92,14 +95,11 @@ importers:
       react-dom:
         specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
-      zod:
-        specifier: ^4.6.7
-        version: 4.6.7
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.14.0
         version: 4.14.0(playwright-core@1.63.0)
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@playwright/test':
@@ -132,27 +132,21 @@ importers:
 
   packages/config: {}
 
-  packages/db:
-    devDependencies:
-      '@electric-sql/pglite':
-        specifier: 0.5.12
-        version: 0.5.12
-      '@motivo/config':
-        specifier: workspace:*
-        version: link:../config
-      '@types/node':
-        specifier: ^22.20.5
-        version: 22.20.5
-
   packages/editor-ui:
     dependencies:
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
-      '@motivo/exporters':
+      '@musterli/exporters':
         specifier: workspace:*
         version: link:../exporters
-      '@motivo/tool-registry':
+      '@musterli/storage':
+        specifier: workspace:*
+        version: link:../storage
+      '@musterli/svg-sanitizer':
+        specifier: workspace:*
+        version: link:../svg-sanitizer
+      '@musterli/tool-registry':
         specifier: workspace:*
         version: link:../tool-registry
       fflate:
@@ -165,7 +159,7 @@ importers:
         specifier: ^5.0.16
         version: 5.0.16(@types/react@19.3.0)(react@19.3.1)
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
       '@testing-library/dom':
@@ -183,6 +177,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
+      fake-indexeddb:
+        specifier: 6.2.6
+        version: 6.2.6
       jsdom:
         specifier: ^30.1.3
         version: 30.1.3
@@ -201,7 +198,7 @@ importers:
 
   packages/effects:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
@@ -211,17 +208,20 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
   packages/exporters:
     dependencies:
-      '@motivo/tool-registry':
+      '@musterli/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@musterli/tool-registry':
         specifier: workspace:*
         version: link:../tool-registry
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
       zod:
@@ -230,26 +230,48 @@ importers:
 
   packages/shaders:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
+        specifier: workspace:*
+        version: link:../config
+
+  packages/storage:
+    dependencies:
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@musterli/config':
+        specifier: workspace:*
+        version: link:../config
+      fake-indexeddb:
+        specifier: 6.2.6
+        version: 6.2.6
+
+  packages/svg-sanitizer:
+    devDependencies:
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
   packages/tool-registry:
     dependencies:
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
+      '@musterli/svg-sanitizer':
+        specifier: workspace:*
+        version: link:../svg-sanitizer
       zod:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
   packages/ui:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
@@ -758,9 +780,6 @@ packages:
 
   '@dotenvx/tooling@1.0.6':
     resolution: {integrity: sha512-d1AhKqlprzjR7+/7YTYbf9lTjeIUxr2WN+gYL5jf9O25wymlVWzuwOujq9IWJOt33sGWcLjr1eswSOmqm4SRMg==}
-
-  '@electric-sql/pglite@0.5.12':
-    resolution: {integrity: sha512-IiAxv1ld1V9QP0AWsflliDqrGRo+20O+yXOr2fjk6YzBHsCvTPclwQhCB1uZ7eHtPrxUrSllNzWgqy/Ot76PEw==}
 
   '@eloqnt/config@0.1.1':
     resolution: {integrity: sha512-YRDigSaiJEzKDfzTth5kG+L/PKfB3mo8h7yNzpXExPfvQmcD05WoZT57PdhJE0jI+Vva6eb0OCU8hnHHgdME3g==}
@@ -3324,6 +3343,10 @@ packages:
   express@5.3.0:
     resolution: {integrity: sha512-qCqy1xSoaugxOD4IVHb1ZWdkvCF2W3aE2okKouWj8VwJ+ztskSiXoBnCSJqfKT+cVPJhuJqe9YLbY425+Zh00g==}
     engines: {node: '>= 18'}
+
+  fake-indexeddb@6.2.6:
+    resolution: {integrity: sha512-ihhmr0KoET51jT8R4YhbUYuLLvr1qqO6INISygtN16i8loR8kAxtAUr4+EKHTSMjL+lggaAn4OC7DRqzrNgnuQ==}
+    engines: {node: '>=18'}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -5892,8 +5915,6 @@ snapshots:
 
   '@dotenvx/tooling@1.0.6': {}
 
-  '@electric-sql/pglite@0.5.12': {}
-
   '@eloqnt/config@0.1.1': {}
 
   '@eloqnt/format-json@0.1.0':
@@ -8405,6 +8426,8 @@ snapshots:
       vary: 1.1.2
     transitivePeerDependencies:
       - supports-color
+
+  fake-indexeddb@6.2.6: {}
 
   fast-deep-equal@3.1.3: {}
 

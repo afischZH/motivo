@@ -2,6 +2,8 @@
 
 Annahme: 1 Person mit AI-Coding-Agent, rund 20 bis 25 Stunden pro Woche. Wochenangaben sind Richtwerte, keine Zusagen. Jeder Meilenstein endet mit einer **Definition of Done (DoD)**, die der Agent abhaken muss, bevor der nächste beginnt.
 
+Grundentscheid 2026-10-28 (Andreas): Musterli ist komplett gratis und spendenfinanziert. Keine Konten, keine Zahlungen, keine Lizenzen, keine Credits (siehe `PRODUCT.md` Abschnitt 6).
+
 Gesamtüberblick:
 
 | Meilenstein | Inhalt | Wochen (ca.) | Ergebnis |
@@ -9,11 +11,11 @@ Gesamtüberblick:
 | **M0** | Setup & Fundament | 1 | Repo, CI, Design-System-Basis |
 | **M1** | Editor-Shell + erste Tools | 2 bis 4 | 4 Tools + 6 Konverter lokal lauffähig |
 | **M2** | Gratis-Welle, SEO, i18n | 5 bis 7 | **Öffentliche Gratis-Beta** |
-| **M3** | Accounts, Speichern, Brand Kit, Gradient-Tools | 8 bis 10 | Nutzer können speichern |
-| **M4** | Lifetime-Verkauf + Flaggschiff-Patterns | 11 bis 14 | **Lifetime-Launch** (Founders/Early Bird) |
-| **M5** | WebGL & Bildeffekte & Video | 15 bis 18 | Trend-Tools, Pro-Mehrwert |
+| **M3** | Gradient-Tools, lokales Speichern, lokales Brand Kit, Spenden | 8 bis 10 | Nutzer können ohne Konto speichern |
+| **M4** | Flaggschiff-Patterns, Shape-Bibliothek, GIF | 11 bis 14 | **Öffentlicher Launch** |
+| **M5** | WebGL & Bildeffekte & Video | 15 bis 18 | Trend-Tools |
 | **M6** | Social Media Editor + restliche Effekte | 19 bis 23 | Marketing-Zielgruppe |
-| **M7** | Differenzierung: Composer, KI, Community, API, Plugins | 24+ | Wachstum |
+| **M7** | Differenzierung: Composer, Code-Exporte, Plugins | 24+ | Wachstum |
 
 ---
 
@@ -48,40 +50,34 @@ Gesamtüberblick:
 - [x] i18n mit next-intl (DE, EN zuerst; FR, IT vorbereitet), lokalisierte Slugs, `hreflang`
 - [x] SEO-Landingpage-Template pro Tool (Inhalte aus i18n-Dateien), Katalog, Kategorie-Seiten, Sitemap, strukturierte Daten, OG-Bilder pro Tool und Sprache (beim Build gerendert, siehe `ARCHITECTURE.md` Abschnitt 7)
 - [ ] Startseite, Impressum, Datenschutz (nDSG/DSGVO), cookiefreie Analytics, Sentry (im Code fertig; offen: juristische Prüfung der Rechtstexte, Analytics- und Sentry-Variablen durch Andreas)
-- [ ] **Founders-Warteliste** (E-Mail mit Double-Opt-in) mit Hinweis auf Lifetime-Preis ab 49, Zähler der Anmeldungen (im Code fertig, aus bis zum Owner-Setup nach `docs/SETUP-WAITLIST.md`)
+- ~~**Founders-Warteliste**~~ entfällt (Entscheid 2026-10-28: keine Zahlungen); Code in M3-AP13 entfernt
 - [ ] Lighthouse ≥ 95 (Performance, SEO, A11y) auf Landingpages (Performance 95 bis 99 und A11y 100 lokal gemessen; SEO erst auf dem Produktions-Host messbar, wegen noindex auf allen anderen Hosts)
 
 **DoD**: Live unter eigener Domain, 15+ Tools, alle Seiten in DE und EN indexierbar, Search Console eingerichtet.
 
-## M3: Accounts, Speichern, Brand Kit, Gradient-Tools (Woche 8 bis 10)
+## M3: Gradient-Tools, lokales Speichern, lokales Brand Kit, Spenden (Woche 8 bis 10)
 
-- [ ] Supabase-Projekt (EU-Region), Migrationen für `profiles`, `folders`, `designs`, `brand_kits`, `brand_palettes`, `brand_assets`, `export_events`; RLS-Policies + Tests
-- [ ] Auth: Magic Link, Google, Apple
-- [ ] Designs speichern/laden (`?d=<id>`), Thumbnails (WebP) in Storage, Autosave-Entwurf lokal
-- [ ] Dashboard: Raster, Ordner, Suche, Duplizieren, Löschen
-- [ ] Brand Kit v1: Paletten (max. 10 Farben), Logos, Upload eigener SVG-Shapes (**Sanitizer!**)
-- [ ] Export-Events protokollieren
-- [ ] Tools: **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients**, **Blob Composition**, **Doodle Backgrounds**, **SVG Charts**
-- [ ] Programmatic-SEO: Gradient- und Paletten-Sammlungsseiten
+- [x] Tools: **Mesh Gradients**, **Blurry Gradients**, **Striped Gradients**, **Blob Composition**, **Doodle Backgrounds**, **SVG Charts**
+- [x] Programmatic-SEO: Gradient- und Paletten-Sammlungsseiten
+- [x] Tool **Seamless Patterns** (aus M4 vorgezogen): 4 Kachel-Modi, eigene Shapes, SVG/Bild-Upload mit Zuschnitt nur im Browser (Cross-Browser in CI grün)
+- [x] Warteliste, Supabase- und Resend-Anbindung sowie Gating-Reste entfernen; alles gratis ohne Limits
+- [x] Designs lokal speichern (IndexedDB), Autosave-Entwurf, Übersicht "Meine Designs" mit Suche, Duplizieren, Löschen, Vorschaubild
+- [x] Export und Import aller Designs als Datei (JSON, versioniert, beim Import validiert) für andere Geräte
+- [x] Brand Kit lokal: Paletten (max. 10 Farben), Logos, eigene SVG-Shapes (**Sanitizer!**), Export/Import als Datei
+- [x] Brand-Palette in jedem Tool nutzbar
+- [x] Seite "Unterstützen" mit Link zum externen Spendenanbieter, dezenter Hinweis in Footer und Export-Dialog (DE/EN)
 
-**DoD**: Nutzer kann sich anmelden, Design speichern, auf anderem Gerät öffnen, Brand-Palette in jedem Tool nutzen. Sicherheitstest: fremde Designs per ID nicht lesbar.
+**DoD**: Design ohne Konto speichern, nach Neuladen wieder öffnen, per Datei auf ein anderes Gerät übertragen; Brand-Palette in jedem Tool nutzbar; importierte Dateien und SVGs werden strikt validiert bzw. sanitisiert; keine Anfrage an einen eigenen Server beim Speichern (E2E prüft das).
 
-## M4: Lifetime-Verkauf + Flaggschiff-Patterns (Woche 11 bis 14) ► Lifetime-Launch
+## M4: Flaggschiff-Patterns und Launch (Woche 11 bis 14) ► öffentlicher Launch
 
-- [ ] Migrationen für `tiers`, `licenses`, `license_seats`, `purchases`, `credit_ledger`, `price_phases` + RLS + Tests
-- [ ] Stripe Checkout als **Einmalzahlung** für Solo, Pro, Upgrade Solo zu Pro (Differenzbetrag) und Credit-Packs; Preise in CHF, EUR, USD; TWINT, Karten, Apple/Google Pay; Stripe Tax; Rechnungen für Firmen
-- [ ] Webhooks idempotent: Kauf, Upgrade, Refund; **Preisphasen** (Founders, Early Bird, Regulär) mit atomarem Zähler, automatischer Wechsel zur nächsten Phase
-- [ ] `entitlements` serverseitig und clientseitig (Hook `useEntitlement('export.4k')`)
-- [ ] Gating in Exportern (Grösse, Format, Wasserzeichen) und Controls (Badges + Lifetime-Popover)
-- [ ] Bereich `/app/license`: Lizenz, Belege, Credit-Saldo, Upgrade-Button
-- [ ] Pricing-Seite: Lifetime-Vergleich, Phasenpreis mit ehrlichem Restkontingent, Währungsumschalter, Vergleich "Lifetime vs. Abo über 3 Jahre", FAQ zu "Was heisst Lifetime?"
-- [ ] Founders-Warteliste per E-Mail über Launch informieren (exklusiver Zugang zu Founders-Preisen)
-- [ ] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing), **Seamless Patterns** (4 Tiling-Modi, Bild/SVG-Upload, Crop)
+- [ ] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing); **Seamless Patterns** in M3 vorgezogen (M3-AP12)
 - [ ] Eigene Shape-Bibliothek (Startziel 150+ Shapes, 12 Packs) + Custom Packs aus Brand Kit
 - [ ] **GIF-Export** im Worker
-- [ ] AGB inkl. Lifetime-Definition, Fair Use, Exit-Versprechen, Lizenzbedingungen, 14-Tage-Refund-Prozess (juristisch prüfen lassen)
+- [ ] Kurze Nutzungsbedingungen mit freier Lizenz für Exporte (juristisch zu prüfen)
+- [ ] Launch-Kommunikation (Product Hunt, Reddit, Swiss-Communities), Changelog
 
-**DoD**: Testkauf in Stripe-Testmodus für jede Stufe, jede Währung und jede Preisphase; Upgrade verrechnet korrekt; Refund setzt Lizenz zurück; letzte Founders-Lizenz kann bei parallelen Käufen nicht doppelt verkauft werden (Lasttest); Webhook-Ausfall simuliert und nachträglich korrekt verarbeitet.
+**DoD**: Geometric Patterns und GIF-Export in Chrome, Safari, Firefox identisch zur Vorschau; Shape-Bibliothek mit Lizenzen in `assets/LICENSES.md`; Nutzungsbedingungen geprüft.
 
 ## M5: WebGL, Bildeffekte, Video (Woche 15 bis 18)
 
@@ -111,13 +107,11 @@ Gesamtüberblick:
 Reihenfolge nach Nutzerfeedback festlegen. Kandidaten:
 
 - [ ] **Composer**: beliebige Tools als parametrische Ebenen, Blend-Modes, Masken
-- [ ] **KI "Describe it"**: Prompt ► Params (strukturierter Output, Zod-validiert), Abrechnung über Credits (Inklusivkontingent + Packs)
-- [ ] **Brand Kit aus URL** (mit SSRF-Schutz)
-- [ ] **Community**: öffentliche Packs/Paletten/Templates, Likes, Remix, Moderation & Melde-Funktion, Lizenz-Checkbox beim Veröffentlichen
-- [ ] **Öffentliche API** v1 (SVG/CSS-Tools), API-Keys, Usage-Dashboard, Doku-Seite mit Beispielen
 - [ ] **Code-Exporte**: React-Komponente, Web-Component für Shader
-- [ ] **Figma-Plugin**, **Framer-Plugin**
-- [ ] **Teams**: Workspaces, Rollen, geteilte Brand Kits, Rechnung auf Firma (inkl. CH-MWST-Angaben)
+- [ ] **Figma-Plugin**, **Framer-Plugin** (gratis)
+- [ ] Transparenzseite: Fixkosten und Spendeneingang pro Jahr
+
+Bewusst nicht (Entscheid 2026-10-28): KI über bezahlte Modelle, öffentliche API, Community mit Server-Daten, Teams, Brand Kit aus URL. Nur mit neuem Entscheid Andreas und fixem Budget.
 
 ---
 
@@ -127,12 +121,11 @@ Reihenfolge nach Nutzerfeedback festlegen. Kandidaten:
 |---|---|---|
 | Browser-Unterschiede bei SVG-Filtern/Canvas | Vorschau ≠ Export | Ein Render-Pfad, Cross-Browser-Visual-Tests ab M1 |
 | WebCodecs/Video nicht überall verfügbar | Video-Export fehlt | Feature-Detection, WebM-Fallback, klare Meldung |
-| SEO braucht Monate | Wenig Traffic zum Bezahl-Launch | Gratis-Beta früh (M2), Inhalte in 4 Sprachen, Product Hunt/Reddit/Swiss-Communities |
+| SEO braucht Monate | Wenig Traffic zum Launch | Gratis-Beta früh (M2), Inhalte in 4 Sprachen, Product Hunt/Reddit/Swiss-Communities |
 | Rechtliche Nähe zum Vorbild | Abmahnung | Clean-Room, eigener Name, eigene Assets, juristische Prüfung vor Launch |
 | SVG-Uploads als XSS-Vektor | Sicherheitslücke | Strikter Sanitizer, CSP, Uploads nie inline vom eigenen Origin ausliefern |
-| Zu viele Tools, zu wenig Tiefe | Mittelmass | Nach M4 Nutzungsdaten auswerten, Top-5-Tools vertiefen statt nur verbreitern |
+| Zu viele Tools, zu wenig Tiefe | Mittelmass | Nach M4 cookiefreie Nutzungsdaten auswerten, Top-5-Tools vertiefen statt nur verbreitern |
 | Solo-Kapazität | Verzögerung | Tool-Architektur strikt einhalten, Agent arbeitet in kleinen, getesteten Schritten |
-| Lifetime: keine wiederkehrenden Einnahmen | Umsatz bricht nach Launch-Welle ein | SEO als Dauermotor, Upgrades, Credit-Packs, Team-Lizenzen; Reserve-Quote aus jedem Verkauf (`PRODUCT.md` 6.5) |
-| Lifetime: laufende Kosten pro Nutzer steigen | Verlust pro Käufer über die Jahre | Client-Rendering, KI/API nur über Credits, Speicher mit Fair Use; Kosten pro aktivem Nutzer monatlich messen |
-| Lifetime: Preis zu tief angesetzt | Kein Spielraum mehr | Preistreppe, Preise für Neukunden dürfen steigen, Bestandskunden behalten alles |
-| Erwartung "alles für immer" | Supportlast, Unmut bei Einschränkungen | Klare Lifetime-Definition in AGB und FAQ, Exit-Versprechen, Credits transparent anzeigen |
+| Spenden decken die Fixkosten nicht | Betrieb nicht finanziert | Fixkosten minimal halten (Cloudflare-Gratis-Kontingent, statische Seiten), keine Kosten pro Nutzer, Spenden-Hinweis dezent aber sichtbar |
+| Lokale Daten gehen verloren (Browser-Speicher gelöscht) | Nutzer verlieren Designs | Datei-Export/-Import prominent, Hinweis in "Meine Designs", `navigator.storage.persist()` anfragen |
+| Gratis-Angebot wird missbraucht (Last) | Kosten trotz Gratis-Kontingent | Alles im Browser, keine Server-Endpunkte mit Nutzerdaten, Cloudflare-Limits beobachten |

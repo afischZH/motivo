@@ -12,7 +12,7 @@ import {
   parseItemLockKey,
   type AnyToolDefinition,
   type ListHint,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import * as z from "zod";
 import { valuesEqual } from "./values";
 

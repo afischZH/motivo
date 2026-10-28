@@ -42,6 +42,51 @@ export const backgroundSchema = z
   .union([z.literal(TRANSPARENT), colorSchema])
   .register(controlKindRegistry, { kind: "background" });
 
+/**
+ * A user's own image (upload) held in a param of `kind: "image"`. Lives
+ * only on the device (`ToolDefinition.localParams`), never in share links.
+ *
+ * - `svg`: the output of `@musterli/svg-sanitizer` (cropped already); tools
+ *   must sanitise it again before use through `svgAssetFor` (svg-asset.ts:
+ *   prepared in the editor's worker, a cache hit on render) and embed it
+ *   only as an image, never as markup;
+ * - `raster`: the cropped, downsampled picture as a PNG or JPEG data URI.
+ *
+ * `width`/`height` are the size of the (cropped) image in its own units.
+ */
+export const IMAGE_ASSET_MAX_SVG_LENGTH = 1_048_576;
+/** About 4.5 MB of image data: a 1024 px PNG with alpha fits comfortably. */
+export const IMAGE_ASSET_MAX_RASTER_LENGTH = 6_000_000;
+/** Longest edge of a raster upload after downsampling. */
+export const IMAGE_ASSET_RASTER_MAX_EDGE = 1024;
+
+const assetDimension = z.number().positive().max(1_000_000);
+const assetName = z.string().max(200);
+
+export const imageAssetSchema = z
+  .discriminatedUnion("kind", [
+    z.object({
+      kind: z.literal("svg"),
+      svg: z.string().min(1).max(IMAGE_ASSET_MAX_SVG_LENGTH),
+      width: assetDimension,
+      height: assetDimension,
+      name: assetName,
+    }),
+    z.object({
+      kind: z.literal("raster"),
+      href: z
+        .string()
+        .max(IMAGE_ASSET_MAX_RASTER_LENGTH)
+        .regex(/^data:image\/(?:png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/),
+      width: z.int().min(1).max(IMAGE_ASSET_RASTER_MAX_EDGE),
+      height: z.int().min(1).max(IMAGE_ASSET_RASTER_MAX_EDGE),
+      name: assetName,
+    }),
+  ])
+  .register(controlKindRegistry, { kind: "image" });
+
+export type ImageAsset = z.output<typeof imageAssetSchema>;
+
 /** Smallest and largest canvas edge in CSS pixels (8K is 7680). */
 export const CANVAS_EDGE_MIN = 16;
 export const CANVAS_EDGE_MAX = 8192;

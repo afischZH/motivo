@@ -103,7 +103,8 @@
         "theme": "Switch light and dark",
         "help": "This overview",
         "export": "Open export",
-        "copyImage": "Copy as PNG"
+        "copyImage": "Copy as PNG",
+        "save": "Save"
       }
     },
     "export": {
@@ -121,7 +122,8 @@
         "jpg": "JPG",
         "webp": "WebP",
         "svg": "SVG",
-        "css": "CSS"
+        "css": "CSS",
+        "png-tile": "PNG tile"
       },
       "size": "Size",
       "scale": "{scale}× ({width} × {height})",
@@ -155,6 +157,7 @@
         "encodeUnsupported": "Your browser cannot save this format. Use PNG or JPG.",
         "encodeFailed": "The image is too large for this device.",
         "encodeFailedHint": "Choose a smaller size, for example 1× or 2×.",
+        "tooLarge": "Your browser cannot create an image of this size in this format. Choose PNG or a smaller size.",
         "unavailable": "Your browser does not support this export. Try a current browser.",
         "aborted": "Export cancelled.",
         "unknown": "Something went wrong. Please try again."
@@ -200,7 +203,8 @@
         "invalid-size": "The size in the link is invalid. You are seeing the default settings.",
         "other-tool": "This link belongs to another tool. You are seeing the default settings.",
         "outdated": "This link comes from an older version. The design may look slightly different."
-      }
+      },
+      "localLeftOut": "Your own file is not in the link, it stays on your device. Anyone opening the link sees the pattern with the chosen shape."
     },
     "imageInput": {
       "title": "Image",
@@ -218,13 +222,83 @@
       "dismiss": "Dismiss message",
       "errors": {
         "too-large": "The image is larger than 5 MB. Make it smaller and try again.",
-        "unsupported-type": "Motivo does not know this format. Use a PNG, JPG, WebP, GIF or SVG.",
+        "unsupported-type": "Musterli does not know this format. Use a PNG, JPG, WebP, GIF or SVG.",
         "too-many-pixels": "The image has too many pixels (over 64 megapixels). Make it smaller and try again.",
         "read-failed": "The file could not be read. Please try again.",
         "decode-failed": "The image could not be opened. The file may be damaged.",
         "timeout": "Analyzing took too long and was stopped. Try a smaller image.",
         "no-result": "There is nothing to analyze in this image, for example because it is fully transparent."
       }
+    },
+    "asset": {
+      "none": "No file of your own, the chosen shape is used",
+      "yourFile": "Your file",
+      "choose": "Choose file",
+      "replace": "Replace",
+      "remove": "Remove",
+      "removedFile": "Your file is removed. The pattern uses the chosen shape again.",
+      "dropNow": "Drop to load the file",
+      "hint": "Drag an SVG, PNG, JPG or WebP here, paste it with Ctrl+V or choose a file (up to 5 MB). The file stays on your device, is not uploaded and is not shared in links.",
+      "thumbnail": "Your file: {name}",
+      "reading": "Reading file …",
+      "ready": "{name} is cropped and in the pattern.",
+      "removed": "For safety, Musterli removed parts of the SVG file, for example scripts or external references (count: {count}).",
+      "dismiss": "Dismiss message",
+      "errors": {
+        "too-large": "The file is larger than 5 MB. Make it smaller and try again.",
+        "unsupported-type": "This format does not work here. Use an SVG, PNG, JPG or WebP.",
+        "too-many-pixels": "The image has too many pixels (over 64 megapixels). Make it smaller and try again.",
+        "read-failed": "The file could not be read. Please try again.",
+        "decode-failed": "The image could not be opened. The file may be damaged.",
+        "timeout": "Cropping took too long and was stopped. Try a smaller image.",
+        "no-result": "The image could not be cropped. Please try again.",
+        "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
+        "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
+        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again."
+      },
+      "crop": {
+        "title": "Crop",
+        "hint": "Choose the part of {name} that becomes the motif of the pattern.",
+        "frame": "Crop frame",
+        "frameLabel": "Crop: left {x} %, top {y} %, width {w} %, height {h} %",
+        "keys": "Arrow keys move the frame, hold Alt to resize, hold Shift for bigger steps.",
+        "aspect": "Aspect ratio",
+        "aspects": {
+          "free": "Free",
+          "square": "Square"
+        },
+        "fields": {
+          "x": "Left",
+          "y": "Top",
+          "w": "Width",
+          "h": "Height"
+        },
+        "reset": "Reset",
+        "cancel": "Cancel",
+        "apply": "Apply",
+        "working": "Cropping …"
+      }
+    },
+    "brand": {
+      "title": "Brand palette",
+      "choose": "Choose a brand palette",
+      "defaultName": "{name} (default)",
+      "unnamed": "Untitled",
+      "apply": "Apply",
+      "preview": "Colours of the chosen palette",
+      "hint": "Replaces the colours of the motif and locks them, so new variants keep them. The background stays. Undo with ⌘/Ctrl+Z.",
+      "applied": "Brand palette “{name}” applied.",
+      "failed": "This palette does not fit here.",
+      "empty": "No brand palette yet.",
+      "create": "Create one in the Brand Kit",
+      "swatches": "Brand colours",
+      "swatch": "Use brand colour {value}",
+      "fromKit": "From Brand Kit",
+      "assetsTitle": "Logos and shapes from your Brand Kit",
+      "loading": "Loading …",
+      "assetsEmpty": "No logos or shapes yet.",
+      "openKit": "Open the Brand Kit",
+      "useAsset": "Use {name}"
     }
   },
   "sizes": {
@@ -240,5 +314,231 @@
     "tablet": "Tablet",
     "a4-portrait": "A4 portrait",
     "a4-landscape": "A4 landscape"
+  },
+  "Designs": {
+    "nav": "My designs",
+    "errors": {
+      "unavailable": "This browser does not let Musterli save anything, for example in a private window or when site data is blocked.",
+      "quota": "This browser's storage is full. Delete old designs or export them to a file.",
+      "blocked": "Musterli is still open in another tab with an older version. Close that tab and try again.",
+      "failed": "That did not work. Please try again.",
+      "not-found": "This design does not exist in this browser (any more).",
+      "other-tool": "This design belongs to another tool.",
+      "invalid": "This design can no longer be opened with the current version.",
+      "limit": "There is no room left here. Delete something first."
+    },
+    "editor": {
+      "group": "Save design",
+      "nameLabel": "Design name",
+      "namePlaceholder": "Untitled design",
+      "save": "Save",
+      "saving": "Saving …",
+      "saveHint": "Save in this browser only",
+      "saved": "Saved, in this browser only.",
+      "statusSaved": "Saved",
+      "statusChanged": "Changed",
+      "defaultName": "{tool} from {date}",
+      "restore": "Restore",
+      "startNew": "Start over",
+      "dismiss": "Dismiss notice",
+      "notices": {
+        "draft-restored": "Your last draft is back.",
+        "draft-available": "You still have an unsaved draft here.",
+        "outdated": "This design was made with an older version of the tool and may look slightly different."
+      }
+    },
+    "page": {
+      "metaTitle": "My designs",
+      "metaDescription": "Your saved designs, in this browser only.",
+      "title": "My designs",
+      "intro": "Your designs live only in this browser on this device. There is no account and no server.",
+      "storageHint": "Clearing your browser data removes the designs too, so back them up to a file now and then. The same file brings them to another device or browser.",
+      "loading": "Loading designs …",
+      "searchLabel": "Search designs",
+      "searchPlaceholder": "Search by name or tool",
+      "count": "{count, plural, =0 {No designs} one {# design} other {# designs}}",
+      "shown": "{shown} of {count} designs",
+      "exportAll": "Export all",
+      "import": "Import",
+      "importing": "Importing …",
+      "emptyTitle": "No designs yet",
+      "emptyText": "Open a tool, create something and press Save (⌘/Ctrl+S). Your designs will show up here.",
+      "emptyCta": "Browse tools",
+      "noResults": "No design matches “{query}”.",
+      "open": "Open",
+      "openLabel": "Open {name} in the editor",
+      "rename": "Rename",
+      "renameLabel": "New name for {name}",
+      "renameSave": "Apply",
+      "cancel": "Cancel",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "actionsLabel": "Actions for {name}",
+      "copyName": "{name} (copy)",
+      "deleteTitle": "Delete design?",
+      "deleteText": "“{name}” will be deleted from this browser.",
+      "deleteConfirm": "Delete",
+      "deleted": "“{name}” deleted.",
+      "undo": "Undo",
+      "restored": "“{name}” is back.",
+      "duplicated": "Copied “{name}”.",
+      "renamed": "Renamed to “{name}”.",
+      "updated": "Changed on {date}",
+      "thumbnailAlt": "Preview of {name}",
+      "noThumbnail": "No preview",
+      "exported": "Saved {count, plural, one {# design} other {# designs}} to a file.",
+      "exportedParts": "Saved {count, plural, one {# design} other {# designs}} to {files} files so each stays below the import limit. Import them one after the other.",
+      "exportEmpty": "There is nothing to export yet.",
+      "imported": "{added, plural, =0 {Nothing imported} one {Imported # design} other {Imported # designs}}.",
+      "importDuplicates": "{count, plural, one {# design was} other {# designs were}} already here.",
+      "importSkipped": "{count, plural, one {# design was} other {# designs were}} skipped:",
+      "skippedItem": "{name}: {reason}",
+      "skippedUnnamed": "Entry {index}: {reason}",
+      "skipReasons": {
+        "invalid": "invalid data",
+        "unknown-tool": "unknown tool",
+        "invalid-params": "invalid settings",
+        "unsafe-upload": "unsafe or damaged file in the design"
+      },
+      "importErrors": {
+        "too-large": "The file is too large. At most 20 MB are allowed.",
+        "empty": "The file is empty.",
+        "malformed": "The file is damaged or not JSON.",
+        "forbidden-keys": "The file contains forbidden entries and was not imported.",
+        "wrong-format": "This is not a Musterli designs file.",
+        "unsupported-version": "This file comes from a newer version of Musterli.",
+        "too-many": "The file holds too many designs (at most 2000).",
+        "timeout": "Checking the file took too long.",
+        "aborted": "Import cancelled.",
+        "brand-kit-file": "This is a Brand Kit file. Import it in the Brand Kit."
+      },
+      "dismiss": "Dismiss message"
+    }
+  },
+  "BrandKit": {
+    "nav": "Brand Kit",
+    "page": {
+      "metaTitle": "Brand Kit",
+      "metaDescription": "Your brand colours, logos and shapes, only in this browser.",
+      "title": "Brand Kit",
+      "intro": "Add your brand colours, logos and own shapes. In every tool you apply your palette with one click.",
+      "storageHint": "Your Brand Kit stays in this browser on this device, with no account and no server. If you clear your browser data, it is gone. Back it up as a file now and then. With that file you also bring it to another device.",
+      "loading": "Loading Brand Kit …",
+      "export": "Export",
+      "import": "Import",
+      "importing": "Importing …",
+      "exported": "Brand Kit saved as a file.",
+      "exportedParts": "Brand Kit saved to {files} files so each stays below the import limit. Import them one after the other.",
+      "exportEmpty": "Your Brand Kit is still empty.",
+      "imported": "Imported {palettes, plural, =0 {no palettes} one {# palette} other {# palettes}} and {assets, plural, =0 {no images} one {# image} other {# images}}.",
+      "importDuplicates": "{count, plural, one {# entry was} other {# entries were}} already there.",
+      "importOverLimit": "{count, plural, one {# entry did} other {# entries did}} not fit any more.",
+      "importSkipped": "{count, plural, one {# entry was} other {# entries were}} skipped:",
+      "importRemoved": "For safety, Musterli removed parts of SVG files (count: {count}).",
+      "skippedPalette": "Palette {name}: {reason}",
+      "skippedAsset": "Image {name}: {reason}",
+      "skippedUnnamed": "Entry {index}: {reason}",
+      "skipReasons": {
+        "invalid": "invalid data",
+        "unsafe-image": "unsafe or damaged image"
+      },
+      "importErrors": {
+        "too-large": "The file is too large. At most 30 MB are allowed.",
+        "empty": "The file is empty.",
+        "malformed": "The file is damaged or not JSON.",
+        "forbidden-keys": "The file contains forbidden entries and was not imported.",
+        "wrong-format": "This is not a Musterli Brand Kit file.",
+        "unsupported-version": "This file comes from a newer version of Musterli.",
+        "too-many": "The file contains too many entries.",
+        "designs-file": "This is a designs file. Import it in “My designs”.",
+        "timeout": "Checking the file took too long.",
+        "aborted": "Import cancelled."
+      },
+      "dismiss": "Dismiss message",
+      "undo": "Undo"
+    },
+    "errors": {
+      "unavailable": "Musterli cannot save anything in this browser, for example in a private window or when site data is blocked.",
+      "quota": "This browser's storage is full. Delete old entries or export them as a file.",
+      "blocked": "Musterli is still open with an older version in another tab. Close that tab and try again.",
+      "failed": "That did not work. Please try again.",
+      "not-found": "This entry does not exist (any more) in this browser.",
+      "limit": "There is no room left here. Delete something first."
+    },
+    "palettes": {
+      "title": "Palettes",
+      "hint": "2 to 10 colours per palette. The default palette is preselected in the editor.",
+      "empty": "No palette yet. Create your first one.",
+      "add": "New palette",
+      "defaultBadge": "Default",
+      "makeDefault": "Make default",
+      "makeDefaultLabel": "Make {name} the default",
+      "edit": "Edit",
+      "editLabel": "Edit {name}",
+      "delete": "Delete",
+      "deleteLabel": "Delete {name}",
+      "deleted": "Palette “{name}” deleted.",
+      "restored": "Palette “{name}” is back.",
+      "saved": "Palette “{name}” saved.",
+      "defaultSet": "“{name}” is now the default palette.",
+      "unnamed": "Untitled palette",
+      "newName": "Palette {index}",
+      "colorsLabel": "Colours of {name}",
+      "form": {
+        "createTitle": "New palette",
+        "editTitle": "Edit palette",
+        "name": "Name",
+        "colors": "Colours",
+        "count": "{count} of 10 colours",
+        "picker": "Colour picker for colour {index}",
+        "hex": "HEX value of colour {index}",
+        "moveUp": "Move colour {index} up",
+        "moveDown": "Move colour {index} down",
+        "remove": "Remove colour {index}",
+        "addColor": "Add colour",
+        "save": "Save",
+        "cancel": "Cancel",
+        "invalidHex": "Enter a HEX value like #1e90ff for colour {index}.",
+        "moved": "Colour {index} is now at position {position}."
+      }
+    },
+    "assets": {
+      "logos": {
+        "title": "Logos",
+        "hint": "SVG, PNG, JPG or WebP up to 5 MB. SVG is cleaned, pictures are scaled down to at most 1024 px.",
+        "empty": "No logos yet.",
+        "add": "Add logo",
+        "added": "Logo “{name}” added."
+      },
+      "shapes": {
+        "title": "Own shapes",
+        "hint": "SVG only, up to 1 MB. The tools recolour shapes in your colours.",
+        "empty": "No shapes yet.",
+        "add": "Add shape",
+        "added": "Shape “{name}” added."
+      },
+      "usage": "In tools with an image upload, pick logos and shapes under “From Brand Kit”.",
+      "adding": "Checking file …",
+      "removedParts": "For safety, Musterli removed parts of the SVG file, such as scripts or external references (count: {count}).",
+      "delete": "Delete",
+      "deleteLabel": "Delete {name}",
+      "deleted": "“{name}” deleted.",
+      "restored": "“{name}” is back.",
+      "previewAlt": "Preview of {name}",
+      "unnamed": "Untitled",
+      "errors": {
+        "too-large": "The file is larger than 5 MB. Make it smaller and try again.",
+        "unsupported-type": "This format does not work here. Use SVG, PNG, JPG or WebP.",
+        "too-many-pixels": "The picture has too many pixels (over 64 megapixels). Make it smaller and try again.",
+        "read-failed": "The file could not be read. Please try again.",
+        "decode-failed": "The picture could not be opened. The file may be damaged.",
+        "timeout": "Processing took too long and was stopped. Try a smaller picture.",
+        "no-result": "The picture could not be processed. Please try again.",
+        "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
+        "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
+        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again.",
+        "shape-not-svg": "Shapes must be SVG files. Logos may also be PNG, JPG or WebP."
+      }
+    }
   }
 }

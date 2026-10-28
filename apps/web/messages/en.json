@@ -1,12 +1,12 @@
 {
   "Metadata": {
-    "title": "Motivo",
+    "title": "Musterli",
     "description": "Generators for patterns, gradients and backgrounds, right in your browser."
   },
   "Layout": {
     "skipToContent": "Skip to content",
-    "homeLink": "Motivo, go to home page",
-    "brand": "Motivo",
+    "homeLink": "Musterli, go to home page",
+    "brand": "Musterli",
     "footerTagline": "Graphics for your projects, rendered on your device.",
     "languageNav": "Language",
     "languages": {
@@ -24,33 +24,38 @@
     "title": "Motifs in one click",
     "lead": "Patterns, gradients and backgrounds, rendered right in your browser. The first generators are coming soon.",
     "engineCheck": "Engine check:",
-    "metaTitle": "Motivo: free pattern, gradient and background generators in your browser",
+    "metaTitle": "Musterli: free pattern, gradient and background generators in your browser",
     "metaDescription": "Free generators for patterns, gradients, backgrounds and color palettes. Everything runs in your browser, export as SVG, PNG or CSS. No account needed.",
     "hero": {
-      "eyebrow": "Free generators for graphics",
       "title": "Motifs in one click",
       "lead": "Patterns, gradients, backgrounds and color palettes for websites, slides and social media. Press the space bar for a new variant, then export as SVG, PNG or CSS.",
       "ctaPrimary": "Explore all tools",
       "ctaSecondary": "Start with {tool}",
-      "hint": "No account needed. Your motifs are created right on your device.",
-      "showcaseLabel": "Sample motifs",
       "showcaseLink": "Open {tool}",
       "spaceHint": "Space",
-      "spaceHintText": "new variant"
+      "points": {
+        "free": "Free, no limits",
+        "local": "Runs in your browser",
+        "noAccount": "No account needed"
+      }
+    },
+    "preview": {
+      "default": "Default",
+      "next": "New variant"
     },
     "values": {
-      "heading": "Why Motivo",
+      "heading": "Why Musterli",
       "free": {
         "title": "Free generators",
-        "text": "Every generator and converter is free to use, without signing up and without watermarks on your patterns."
+        "text": "Every generator and converter is free to use, without signing up, without limits and without watermarks on your motifs."
       },
       "local": {
         "title": "Everything in your browser",
         "text": "Motifs are computed on your device. Images you load into a converter never leave your browser."
       },
-      "lifetime": {
-        "title": "Lifetime instead of subscription",
-        "text": "A lifetime license is planned for future pro features: pay once instead of every month. Scope and prices are not set yet."
+      "donations": {
+        "title": "Funded by donations",
+        "text": "Musterli is funded by voluntary donations. There is no paywall, no subscription and no pro version."
       }
     },
     "categories": {
@@ -81,8 +86,8 @@
     "faq": {
       "heading": "Frequently asked questions",
       "q1": {
-        "question": "Does Motivo cost anything?",
-        "answer": "No. Every generator and converter you find here is free. A lifetime license without a subscription is planned for future pro features such as very large exports."
+        "question": "Does Musterli cost anything?",
+        "answer": "No. Every generator, converter and export is free, without limits. Musterli is funded by voluntary donations."
       },
       "q2": {
         "question": "Do I need an account?",
@@ -94,7 +99,7 @@
       },
       "q4": {
         "question": "Can I use the motifs commercially?",
-        "answer": "We will set the license terms for exports before the paid launch and publish them on this website."
+        "answer": "Yes. You may use whatever you export from Musterli freely, including commercially. We will publish the exact license text on this website."
       },
       "q5": {
         "question": "Which formats can I export?",
@@ -113,14 +118,16 @@
     "home": "Go to home page"
   },
   "ToolsIndex": {
-    "metaTitle": "Generators | Motivo",
+    "metaTitle": "Generators | Musterli",
     "metaDescription": "All generators for patterns, gradients and backgrounds, right in your browser.",
     "title": "Generators",
     "lead": "Pick a generator, press Space and enjoy the surprise."
   },
   "ToolPage": {
-    "metaTitle": "{tool} | Motivo",
-    "allTools": "All generators"
+    "metaTitle": "{tool} | Musterli",
+    "allTools": "All generators",
+    "supportHint": "Enjoying Musterli? <link>Support the project</link>.",
+    "newTab": "(opens in a new tab)"
   },
   "tools": {
     "common": {
@@ -317,7 +324,7 @@
           },
           "q5": {
             "question": "May I use the patterns commercially?",
-            "answer": "Yes. What you create with Motivo is yours and may be used in personal and commercial projects."
+            "answer": "Yes. What you create with Musterli is yours and may be used in personal and commercial projects."
           }
         }
       },
@@ -652,6 +659,125 @@
         }
       }
     },
+    "seamless-patterns": {
+      "name": "Seamless Patterns",
+      "description": "Seamlessly tiling patterns made of shapes or your own graphic. Export as SVG, CSS, tile or image.",
+      "params": {
+        "upload": {
+          "label": "Your graphic"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Circle",
+            "ring": "Ring",
+            "square": "Square",
+            "diamond": "Diamond",
+            "triangle": "Triangle",
+            "hexagon": "Hexagon",
+            "star": "Star",
+            "sparkle": "Sparkle",
+            "heart": "Heart",
+            "leaf": "Leaf",
+            "drop": "Drop",
+            "wave": "Wave",
+            "plus": "Plus",
+            "cross": "Cross",
+            "arch": "Arch",
+            "flower": "Flower",
+            "clover": "Clover",
+            "moon": "Moon",
+            "semicircle": "Semicircle",
+            "pill": "Pill",
+            "chevron": "Chevron",
+            "sun": "Sun",
+            "pebble": "Pebble",
+            "dots": "Dots"
+          }
+        },
+        "keepOriginalColors": {
+          "label": "Keep original colors"
+        },
+        "tiling": {
+          "label": "Tiling",
+          "options": {
+            "grid": "Grid",
+            "brick": "Brick",
+            "halfDrop": "Half drop",
+            "mirror": "Mirror"
+          }
+        },
+        "size": {
+          "label": "Motif size"
+        },
+        "spacingX": {
+          "label": "Horizontal spacing"
+        },
+        "spacingY": {
+          "label": "Vertical spacing"
+        },
+        "cells": {
+          "label": "Motifs per tile"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "rotationJitter": {
+          "label": "Random rotation"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "jitter": {
+          "label": "Random offset"
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "single": "One color",
+            "palette": "Palette"
+          }
+        },
+        "color": {
+          "label": "Motif color"
+        }
+      },
+      "presets": {
+        "meadow": "Meadow",
+        "sweethearts": "Sweethearts",
+        "terrazzo": "Terrazzo",
+        "starlight": "Starlight",
+        "botanical": "Botanical",
+        "bauhaus": "Bauhaus",
+        "waves": "Waves"
+      },
+      "seo": {
+        "whatIs": "A seamless pattern is a tile that repeats any number of times without visible edges. Motifs that cross the border reappear on the opposite side, so the joins disappear. Seamless patterns work well for website backgrounds, wrapping paper, fabric, wallpaper and packaging.",
+        "howTo": "Pick one of the built-in shapes or load your own SVG, PNG, JPG or WebP file and crop it. Choose the tiling (grid, brick, half drop or mirror), size, spacing and rotation, and color the motifs with one color or a palette. Press the space bar for new variations. Export as SVG, as a CSS background, as a single PNG tile or as an image.",
+        "faq": {
+          "q1": {
+            "question": "Is my uploaded file stored or shared?",
+            "answer": "No. Your file is processed only in your browser, never sent to a server and never put into links. Anyone opening your link sees the pattern with the chosen shape."
+          },
+          "q2": {
+            "question": "What is the difference between brick and half drop?",
+            "answer": "Brick shifts every other row by half a tile width, like a brick wall. Half drop shifts every other column by half a tile height instead."
+          },
+          "q3": {
+            "question": "How do I use the pattern as a CSS background?",
+            "answer": "The CSS export contains the tile as an embedded SVG together with background-size and background-repeat. Paste the code into your element's rule and the pattern repeats seamlessly."
+          },
+          "q4": {
+            "question": "Why is my SVG file a single color?",
+            "answer": "Unless Keep original colors is on, Musterli recolors the graphic with your motif color or palette. Turn the option on to keep the file's own colors."
+          },
+          "q5": {
+            "question": "Why were parts of my SVG file removed?",
+            "answer": "For safety, Musterli only lets plain graphic elements through. Scripts, embedded web content, fonts and references to other files are removed."
+          }
+        }
+      }
+    },
     "noise-grain": {
       "name": "Noise and Grain",
       "description": "Grainy textures and backgrounds with fine noise over a color or gradient. Export as PNG, JPG, WebP or SVG.",
@@ -964,6 +1090,252 @@
         }
       }
     },
+    "blob-composition": {
+      "name": "Blob Composition",
+      "description": "Several blobs at corners and edges that adapt to any canvas size. Export as SVG or image.",
+      "blob": "Blob {index}",
+      "params": {
+        "blobs": {
+          "label": "Blobs"
+        },
+        "anchor": {
+          "label": "Position",
+          "options": {
+            "top-left": "Top left",
+            "top": "Top",
+            "top-right": "Top right",
+            "left": "Left",
+            "center": "Center",
+            "right": "Right",
+            "bottom-left": "Bottom left",
+            "bottom": "Bottom",
+            "bottom-right": "Bottom right"
+          }
+        },
+        "offsetX": {
+          "label": "Horizontal offset"
+        },
+        "offsetY": {
+          "label": "Vertical offset"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "complexity": {
+          "label": "Complexity"
+        },
+        "randomness": {
+          "label": "Randomness"
+        },
+        "variant": {
+          "label": "Shape variant"
+        },
+        "opacity": {
+          "label": "Opacity"
+        },
+        "fillStyle": {
+          "label": "Fill",
+          "options": {
+            "solid": "Color",
+            "outline": "Outline",
+            "gradient": "Gradient"
+          }
+        },
+        "strokeWidth": {
+          "label": "Stroke width"
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        }
+      },
+      "presets": {
+        "corners": "Corners",
+        "sunrise": "Sunrise",
+        "mint": "Mint",
+        "outline": "Outlines",
+        "dusk": "Dusk",
+        "paper": "Paper",
+        "pop": "Pop"
+      },
+      "seo": {
+        "whatIs": "A blob composition arranges several organic shapes as layers at the corners and edges of a canvas. The result is a calm background for websites, slides and social posts that keeps the center free for text.",
+        "howTo": "Pick a preset or press Space for new arrangements. For each blob, set position, offset, size and shape, move layers up or down and hide them. Colors are taken from your palette in order. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "What happens when I change the canvas size?",
+            "answer": "Positions are stored relative to the corners and edges, sizes relative to the shorter side. The composition adapts to every format, from square to wide banner."
+          },
+          "q2": {
+            "question": "How do I change the color of a single blob?",
+            "answer": "The top blob uses the first palette color, the second blob the second color and so on. Change the palette or reorder the blobs."
+          },
+          "q3": {
+            "question": "Does a blob keep its shape when I change the others?",
+            "answer": "Yes. Each shape depends only on its own shape variant, complexity and randomness. Use the lock to keep single values when you randomize."
+          },
+          "q4": {
+            "question": "How many blobs can I add?",
+            "answer": "Up to eight layers. Two to four usually make the calmest backgrounds."
+          }
+        }
+      }
+    },
+    "doodles": {
+      "name": "Doodle Backgrounds",
+      "description": "Hand-drawn looking squiggles, spirals, stars and zigzags as a background. Export as SVG or image.",
+      "params": {
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "mixed": "Mixed",
+            "squiggle": "Squiggles",
+            "zigzag": "Zigzags",
+            "spiral": "Spirals",
+            "loop": "Loops",
+            "triangle": "Triangles",
+            "star": "Stars",
+            "cross": "Crosses",
+            "arc": "Arcs"
+          }
+        },
+        "spacing": {
+          "label": "Spacing"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "wobble": {
+          "label": "Wobble"
+        },
+        "strokeWidth": {
+          "label": "Stroke width"
+        }
+      },
+      "presets": {
+        "notebook": "Notebook",
+        "chalkboard": "Chalkboard",
+        "party": "Party",
+        "stars": "Stars",
+        "spirals": "Spirals",
+        "blueprint": "Blueprint",
+        "bold": "Bold"
+      },
+      "seo": {
+        "whatIs": "Doodle backgrounds are made of small shapes that look drawn by hand: squiggles, spirals, stars, crosses and zigzags. They feel playful and personal and work well for invitations, school and kids themes, social posts and packaging.",
+        "howTo": "Pick a shape or the mix, set spacing, size and stroke width, and use wobble to decide how hand-drawn the lines look. Press Space for new variations and export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Why do the lines look hand-drawn?",
+            "answer": "Every point of a shape is shifted slightly with smooth noise, then the points are joined with soft curves and drawn with round line caps."
+          },
+          "q2": {
+            "question": "Where do the shapes come from?",
+            "answer": "All shapes are generated in your browser from simple geometric rules. There are no image templates, every variation is new."
+          },
+          "q3": {
+            "question": "Why don't the doodles overlap?",
+            "answer": "Positions come from Poisson-disk sampling. Every shape keeps a minimum distance, so the spread looks even yet random."
+          },
+          "q4": {
+            "question": "Can I edit the SVG?",
+            "answer": "Yes. All strokes of one color sit in a single stroked path without transforms, easy to recolor in Figma or Illustrator."
+          }
+        }
+      }
+    },
+    "svg-charts": {
+      "name": "SVG Charts",
+      "description": "Placeholder charts with random data for mockups: lines, areas and bars. Export as SVG or image.",
+      "groups": {
+        "data": "Data"
+      },
+      "params": {
+        "type": {
+          "label": "Chart type",
+          "options": {
+            "line": "Line",
+            "area": "Area",
+            "bar": "Bars"
+          }
+        },
+        "series": {
+          "label": "Series"
+        },
+        "points": {
+          "label": "Data points"
+        },
+        "trend": {
+          "label": "Trend"
+        },
+        "volatility": {
+          "label": "Volatility"
+        },
+        "smoothing": {
+          "label": "Smoothing"
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "markers": {
+          "label": "Mark points"
+        },
+        "barGap": {
+          "label": "Gap between bars"
+        },
+        "barRadius": {
+          "label": "Corner radius"
+        },
+        "axes": {
+          "label": "Axes"
+        },
+        "grid": {
+          "label": "Grid lines"
+        },
+        "axisColor": {
+          "label": "Axis color"
+        },
+        "margin": {
+          "label": "Margin"
+        }
+      },
+      "presets": {
+        "growth": "Growth",
+        "dashboard": "Dashboard",
+        "quarterly": "Quarterly",
+        "monthly": "Monthly",
+        "sparkline": "Sparkline",
+        "minimal": "Minimal",
+        "stacked-waves": "Waves"
+      },
+      "seo": {
+        "whatIs": "SVG charts are placeholder charts with random data. Use them in mockups, slides, landing pages and app designs when real numbers are missing or must not be shown.",
+        "howTo": "Choose line, area or bars, set the number of series and data points, and adjust trend and volatility. Turn axes and grid lines on or off. Press Space for new data. Export as SVG, CSS or image.",
+        "faq": {
+          "q1": {
+            "question": "Can I enter my own data?",
+            "answer": "No, the tool generates random data for drafts on purpose. Trend and volatility control whether the curve rises, falls or swings."
+          },
+          "q2": {
+            "question": "Why are there no labels?",
+            "answer": "Without text the SVG looks the same in every app and needs no fonts. Add labels in your layout, for example in Figma."
+          },
+          "q3": {
+            "question": "Does the data stay when I change the style?",
+            "answer": "Yes. The data depends on the seed. You can change chart type, colors, axes and smoothing without changing the values."
+          },
+          "q4": {
+            "question": "How do I get new random data?",
+            "answer": "Press Space. Type, series and style stay, data, trend and colors are reshuffled. Use the lock to keep single values."
+          }
+        }
+      }
+    },
     "palette-generator": {
       "name": "Color Palette Generator",
       "description": "Harmonious color palettes at the press of the space bar. Lock colors, pick a harmony, check contrast and export as CSS.",
@@ -1025,7 +1397,7 @@
         "primaries": "Primaries"
       },
       "seo": {
-        "whatIs": "A color palette generator puts together colors that work well with each other. Motivo works in the OKLCH color space, so lightness and hue steps look even to the eye.",
+        "whatIs": "A color palette generator puts together colors that work well with each other. Musterli works in the OKLCH color space, so lightness and hue steps look even to the eye.",
         "howTo": "Press the space bar for a new palette. Lock the colors you like, choose a harmony and export the palette as CSS variables, a HEX list or an image.",
         "faq": {
           "q1": "What do the harmonies mean?",
@@ -1180,13 +1552,189 @@
           "q1": "Is my image uploaded?",
           "a1": "No. The image is scaled down and analyzed in your browser. It never leaves your device, is not part of shared links and is not stored.",
           "q2": "How are the colors found?",
-          "a2": "Motivo groups the pixels with k-means in the OKLab color space, which measures color differences the way the eye sees them. Each group becomes one color, and its share is the area it covers in the image.",
+          "a2": "Musterli groups the pixels with k-means in the OKLab color space, which measures color differences the way the eye sees them. Each group becomes one color, and its share is the area it covers in the image.",
           "q3": "Why does the space bar change the palette?",
           "a3": "k-means starts from randomly chosen colors and can settle on slightly different groups depending on the start. The space bar tries a new start, so you can keep the variant you like best.",
           "q4": "Why does a shared link show the sample image?",
           "a4": "Shared links contain only the settings, never your image or the colors taken from it. Whoever opens the link sees the sample image and can drop in their own. To pass on the colors, export them as a HEX list or an image.",
           "q5": "Which images work?",
           "a5": "PNG, JPG, WebP, GIF (first frame of an animation) and SVG up to 5 MB. Transparent pixels are not counted."
+        }
+      }
+    },
+    "mesh-gradient": {
+      "name": "Mesh Gradient",
+      "description": "Soft, flowing color gradients from several blurred color fields. Export as PNG, JPG, WebP, SVG or CSS.",
+      "groups": {
+        "effects": "Blur and grain"
+      },
+      "params": {
+        "points": {
+          "label": "Color fields"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "lagoon": "Lagoon",
+        "ember": "Ember",
+        "meadow": "Meadow",
+        "nebula": "Nebula",
+        "citrus": "Citrus",
+        "dusk": "Dusk",
+        "ice": "Ice"
+      },
+      "seo": {
+        "whatIs": "A mesh gradient blends several colors across a surface instead of along a single line. The result looks like soft, flowing light and suits website heroes, app backgrounds, slides and social media posts.",
+        "howTo": "Pick your colors and a background, choose how many color fields to mix and how strongly to warp and blur them, and add some grain if you like. Press Space for a new arrangement. Then export as PNG, JPG, WebP, SVG or CSS in the size you need.",
+        "faq": {
+          "q1": {
+            "question": "How is a mesh gradient different from a normal gradient?",
+            "answer": "A linear or radial gradient runs along one line or out from one point. A mesh gradient places several colors freely on the surface and blends them softly, so it looks organic rather than technical."
+          },
+          "q2": {
+            "question": "Can I edit the SVG in a design app?",
+            "answer": "The SVG contains plain shapes and one standard Gaussian blur filter, which browsers and many design apps can display. Support for SVG filters varies between editing apps, so if the blur looks different there, use the PNG export."
+          },
+          "q3": {
+            "question": "Why is there grain on the gradient?",
+            "answer": "Fine grain gives the surface a soft, analog look and hides banding, the visible steps in smooth gradients. Set Grain to 0 for a perfectly smooth result."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, and the arrangement is computed from the seed. The same settings and seed always give the same gradient."
+          }
+        }
+      }
+    },
+    "blurry-gradient": {
+      "name": "Blurry Gradient",
+      "description": "Dreamy backgrounds from large, strongly blurred color circles. Export as PNG, JPG, WebP, SVG or CSS.",
+      "groups": {
+        "effects": "Look"
+      },
+      "params": {
+        "circles": {
+          "label": "Circles"
+        },
+        "layout": {
+          "label": "Position",
+          "options": {
+            "corners": "Corners",
+            "mixed": "Center and corners",
+            "center": "Center"
+          }
+        },
+        "size": {
+          "label": "Size"
+        },
+        "spread": {
+          "label": "Spread"
+        },
+        "opacity": {
+          "label": "Opacity"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "midnight": "Midnight",
+        "sorbet": "Sorbet",
+        "ocean": "Ocean",
+        "sunset": "Sunset",
+        "forest": "Forest",
+        "mono": "Mono",
+        "neon": "Neon"
+      },
+      "seo": {
+        "whatIs": "A blurry gradient is a background made of a few large color circles, blurred so strongly that only soft clouds of color remain. It works well behind text, as a website hero, in presentations and as a wallpaper.",
+        "howTo": "Choose two to five circles and whether they sit in the corners or around the center, then set size, spread, opacity and blur. Press Space for a new variant, add grain if you like, and export as PNG, JPG, WebP, SVG or CSS.",
+        "faq": {
+          "q1": {
+            "question": "Will text stay readable on top?",
+            "answer": "Yes, with enough contrast. Light circles on a light background or dark ones on a dark background keep the surface calm. Lower the opacity if the colors compete with your text."
+          },
+          "q2": {
+            "question": "Does the SVG use filters?",
+            "answer": "No. Every blurred circle is a radial gradient whose transparency follows the exact shape of a blurred circle. That is why the SVG looks the same in every browser and design app and renders fast at any size."
+          },
+          "q3": {
+            "question": "What does Spread do?",
+            "answer": "It moves each circle away from its anchor point by a random amount, toward the middle of the image. At 0 the circles sit exactly on the corners or in the center."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, and the positions are computed from the seed. The same settings and seed always give the same result."
+          }
+        }
+      }
+    },
+    "striped-gradient": {
+      "name": "Striped Gradient",
+      "description": "Vertical stripes, each with its own gradient, slightly offset against each other. Export as PNG, JPG, WebP, SVG or CSS.",
+      "groups": {
+        "effects": "Shading and grain"
+      },
+      "params": {
+        "stripes": {
+          "label": "Stripes"
+        },
+        "variance": {
+          "label": "Width variation"
+        },
+        "offset": {
+          "label": "Offset"
+        },
+        "alternate": {
+          "label": "Alternate direction"
+        },
+        "shading": {
+          "label": "Shading"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "fluted": "Fluted glass",
+        "candy": "Candy",
+        "dusk": "Dusk",
+        "forest": "Forest",
+        "retro": "Retro",
+        "silk": "Silk",
+        "ink": "Ink"
+      },
+      "seo": {
+        "whatIs": "A striped gradient splits a color gradient into vertical bands and shifts each band a little. It looks like light through ribbed glass or folded fabric and makes a striking background for covers, posters and websites.",
+        "howTo": "Set your colors from top to bottom, then choose the number of stripes, how much their widths vary and how far they are offset. Shading adds light and shadow to every stripe. Press Space for new variants and export as PNG, JPG, WebP, SVG or CSS.",
+        "faq": {
+          "q1": {
+            "question": "What does Offset do?",
+            "answer": "Every stripe runs through the same colors but starts at a slightly different height. The higher the offset, the more the stripes are out of step. At 0 they line up into one continuous gradient."
+          },
+          "q2": {
+            "question": "How do I get a fluted glass look?",
+            "answer": "Use many narrow stripes, a small offset and strong shading. The Fluted glass preset is a good starting point."
+          },
+          "q3": {
+            "question": "Is the SVG easy to edit?",
+            "answer": "Yes. Apart from the optional grain it consists only of rectangles with linear gradients, without filters, so design apps such as Figma, Illustrator or Inkscape open it as editable shapes."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, and the offsets are computed from the seed. The same settings and seed always give the same result."
+          }
         }
       }
     }
@@ -1365,12 +1913,12 @@
     "breadcrumbLabel": "Breadcrumb"
   },
   "Landing": {
-    "metaTitle": "{tool} online | Motivo",
+    "metaTitle": "{tool} online | Musterli",
     "cta": "Open the generator",
     "ctaSecondary": "Try the {tool} now",
     "ctaHint": "Runs right in your browser. Your graphics are made on your device.",
     "previewAlt": "Example motif made with the {tool}",
-    "ogAlt": "{tool} by Motivo with an example motif",
+    "ogAlt": "{tool} by Musterli with an example motif",
     "presetsHeading": "Start from a preset",
     "presetsLead": "Pick a preset and it opens right in the editor, ready to adjust.",
     "presetLink": "{preset}, open in the editor",
@@ -1391,7 +1939,7 @@
     "allConverters": "All converters"
   },
   "CategoryPage": {
-    "metaTitle": "{category} generators | Motivo",
+    "metaTitle": "{category} generators | Musterli",
     "otherCategories": "More categories",
     "backToCatalogue": "All generators"
   },
@@ -1434,7 +1982,7 @@
     }
   },
   "PatternLibrary": {
-    "metaTitle": "CSS patterns to copy: {count} patterns | Motivo",
+    "metaTitle": "CSS patterns to copy: {count} patterns | Musterli",
     "metaDescription": "{count} background patterns in pure CSS: dots, grids, stripes, waves and geometric shapes. Copy, paste, done.",
     "title": "CSS Patterns",
     "lead": "Backgrounds in pure CSS, no image file needed. Pick a pattern, copy the code or adjust colors and size in the editor.",
@@ -1442,11 +1990,11 @@
     "all": "All",
     "count": "{count, plural, one {# pattern} other {# patterns}}",
     "openGenerator": "Design your own in the editor",
-    "ogAlt": "A selection of CSS patterns by Motivo",
+    "ogAlt": "A selection of CSS patterns by Musterli",
     "nav": "CSS Patterns"
   },
   "PatternPage": {
-    "metaTitle": "{pattern} CSS pattern to copy | Motivo",
+    "metaTitle": "{pattern} CSS pattern to copy | Musterli",
     "metaDescription": "{description} Pure CSS, ready to copy, with Tailwind classes and SVG export.",
     "heading": "{pattern} CSS pattern",
     "previewLabel": "Preview of the {pattern} pattern",
@@ -1464,17 +2012,59 @@
     "howTo": "Copy the CSS into the rule of the element that should carry the pattern, for example a section, a card or the body. The colors are hex values in the code and can be swapped directly. In the editor you change everything with sliders and can also export the pattern as SVG or PNG.",
     "relatedHeading": "Related patterns",
     "backToLibrary": "All CSS patterns",
-    "ogAlt": "{pattern}, a CSS pattern by Motivo"
+    "ogAlt": "{pattern}, a CSS pattern by Musterli"
   },
   "Footer": {
     "nav": "Footer",
-    "productHeading": "Motivo",
+    "productHeading": "Musterli",
     "legalHeading": "Legal",
     "catalogue": "All tools",
     "converters": "Converters",
     "imprint": "Imprint",
     "privacy": "Privacy",
-    "founders": "Founders waitlist"
+    "support": "Support Musterli",
+    "gradients": "Gradients",
+    "palettes": "Color palettes"
+  },
+  "Support": {
+    "metaTitle": "Support Musterli",
+    "metaDescription": "Musterli is free, with no account and no tracking. A donation helps pay for the domain, hosting and further development.",
+    "title": "Support Musterli",
+    "lead": "Musterli is free and will stay free. There is no account, no subscription and no tracking. If Musterli helps you and you would like to give something back, we are happy about a donation.",
+    "facts": {
+      "heading": "How Musterli works",
+      "free": {
+        "title": "Free, no account",
+        "text": "Every tool, size and export format is open to everyone. You never have to sign up."
+      },
+      "private": {
+        "title": "No tracking",
+        "text": "Your motifs are made in your browser. We set no cookies and do not follow you across other websites."
+      },
+      "license": {
+        "title": "Exports free to use",
+        "text": "You may use what you export freely, including commercially. With or without a donation."
+      }
+    },
+    "uses": {
+      "heading": "What your donation pays for",
+      "domain": "The domain, so Musterli stays reachable at its address.",
+      "hosting": "Hosting, so the pages load fast and reliably.",
+      "development": "Further development: new generators, improvements and bug fixes."
+    },
+    "donate": {
+      "heading": "Donate",
+      "text": "Every amount helps. A donation is voluntary and unlocks nothing, because everything in Musterli is already open.",
+      "button": "Donate now",
+      "external": "The link takes you to our external donation provider. You enter payment details only there, never on Musterli.",
+      "soon": "Donation link coming soon",
+      "soonText": "We are setting up donations right now. Check back soon."
+    },
+    "other": {
+      "heading": "Other ways to help",
+      "text": "Tell others about Musterli or share a motif you like. That helps a lot too."
+    },
+    "thanks": "Thank you for using Musterli."
   },
   "Legal": {
     "draftBanner": {
@@ -1490,7 +2080,7 @@
     },
     "imprint": {
       "metaTitle": "Imprint",
-      "metaDescription": "Imprint of Motivo: operator, contact and legal notes.",
+      "metaDescription": "Imprint of Musterli: operator, contact and legal notes.",
       "title": "Imprint",
       "sections": {
         "contact": {
@@ -1526,9 +2116,9 @@
     },
     "privacy": {
       "metaTitle": "Privacy policy",
-      "metaDescription": "How Motivo handles data: no cookies, images stay in your browser, cookie-free statistics and error reports.",
+      "metaDescription": "How Musterli handles data: no account, no cookies, images stay in your browser, cookie-free statistics and error reports.",
       "title": "Privacy policy",
-      "intro": "Motivo is built to collect as little data as possible. There is no account, no cookies and no cross-site tracking. Motifs and images are computed in your browser. Here you can find out which data is still processed, and why.",
+      "intro": "Musterli is built to collect as little data as possible. There is no account, no cookies and no cross-site tracking. Motifs and images are computed in your browser. Here you can find out which data is still processed, and why.",
       "sections": {
         "controller": {
           "heading": "Controller",
@@ -1570,13 +2160,15 @@
         "cookies": {
           "heading": "No cookies, only local settings",
           "paragraphs": [
-            "Motivo sets no cookies. So you don’t have to pick your theme and your preferred export format every time, your browser keeps these two settings in local storage (localStorage). They stay on your device, are not sent to us, and you can delete them at any time in your browser settings."
+            "Musterli sets no cookies. So you don’t have to pick your theme and your preferred export format every time, your browser keeps these two settings in local storage (localStorage). They stay on your device, are not sent to us, and you can delete them at any time in your browser settings.",
+            "Designs you save, the editor’s automatic drafts and your Brand Kit (palettes, logos, shapes) are kept in your browser’s database (IndexedDB). This data also stays on your device and is not sent to us. You can delete it in Musterli itself or, like the settings, in your browser settings."
           ]
         },
         "local": {
           "heading": "Images stay in your browser",
           "paragraphs": [
-            "When you load an image or file into a converter or create a color palette from an image, the file is processed only in your browser. It is neither uploaded nor stored, and it is gone as soon as you close the tab."
+            "When you load an image or file into a converter or create a color palette from an image, the file is processed only in your browser. It is neither uploaded nor stored, and it is gone as soon as you close the tab.",
+            "Images you use in a tool (for example your own motif in Seamless Patterns) or add to your Brand Kit are never uploaded either. If you save the design or the Brand Kit, they stay in your browser (see above). They only leave your device when you export a file yourself, and they are never part of a share link."
           ]
         },
         "share": {
@@ -1591,27 +2183,24 @@
             "If you write to us, we process your email address and the content of your message to answer your request. We delete the message once it is resolved and no legal retention obligation applies."
           ]
         },
-        "waitlist": {
-          "heading": "Founders waitlist",
+        "donations": {
+          "heading": "Donations",
           "paragraphs": [
-            "When you join the Founders waitlist, we process your email address, the language of the website, the time of sign-up and confirmation, and the version of the consent text. We use this data only to tell you when the lifetime licenses go on sale at the Founders price. The legal basis is your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time.",
-            "Sign-up uses double opt-in: you are only on the list once you open the link in our confirmation email. The link is valid for 48 hours. We delete unconfirmed sign-ups at the latest 30 days after the last email. Every email contains an unsubscribe link. If you unsubscribe, we delete your email address immediately.",
-            "We store the data with Supabase (Supabase, Inc., USA) in a data center in Zurich (region eu-central-2). We send the confirmation email through the email service Resend, based in the USA. Our emails contain no tracking pixels and no redirected links.",
-            "To prevent abuse, we limit the number of sign-ups. For this we derive a value from your IP address that changes daily and cannot be reversed, and delete it after one day at the latest. We do not store your IP address itself. If the Cloudflare Turnstile security check is active, Cloudflare processes technical details of your browser and your IP address when you submit the form, to detect automated sign-ups."
+            "Musterli is free and funded by voluntary donations. On the “Support” page we link to an external donation provider. Musterli itself accepts no payments and receives neither payment nor account details from you.",
+            "You only leave Musterli when you follow the link. The donation provider is responsible for processing your data there, and its privacy policy applies. The provider may tell us the amount donated and any details you explicitly choose to share with us."
           ]
         },
         "transfer": {
           "heading": "Transfers abroad",
           "paragraphs": [
-            "Cloudflare, Sentry, Supabase and Resend are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
+            "Cloudflare and Sentry are based in the USA. Cloudflare may also process data in other countries where it operates data centers. For the USA we rely on the providers’ certification under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework, and on the European Commission’s standard contractual clauses in the providers’ data processing agreements.",
             "We store Sentry error reports in the EU. Access from the USA, for example by the provider’s support, still cannot be ruled out."
           ]
         },
         "retention": {
           "heading": "Retention",
           "paragraphs": [
-            "We keep personal data only as long as needed for its purpose or required by law. We only see statistics in aggregated form. The providers delete technical logs and error reports automatically according to their retention periods.",
-            "For the Founders waitlist, the periods in the section “Founders waitlist” apply."
+            "We keep personal data only as long as needed for its purpose or required by law. We only see statistics in aggregated form. The providers delete technical logs and error reports automatically according to their retention periods."
           ]
         },
         "rights": {
@@ -1631,107 +2220,447 @@
       }
     }
   },
-  "Waitlist": {
-    "eyebrow": "Founders waitlist",
-    "heading": "Lock in the Founders price",
-    "lead": "The first {seats} lifetime licenses come at the Founders price. Join the list and we will let you know as soon as you can buy. Pay once, no subscription.",
-    "price": "Lifetime license from {price} CHF or EUR",
-    "priceNote": "Non-binding guide price, not an offer. We will set prices and scope before sales start.",
-    "count": "{count} of {seats} Founders spots reserved",
-    "countFull": "All {seats} Founders spots are reserved. Join anyway in case someone drops out.",
-    "emailLabel": "Email address",
-    "emailPlaceholder": "you@example.com",
-    "consent": "I agree that Motivo stores my email address to tell me when the Founders licenses go on sale. I can unsubscribe at any time. See the <link>privacy policy</link>.",
-    "submit": "Join the list",
-    "submitting": "Sending …",
-    "captchaLoading": "Loading security check …",
-    "honeypotLabel": "Website (leave empty)",
-    "successTitle": "Almost done!",
-    "success": "We have sent you an email. Please confirm your sign-up with the link in it. The link is valid for {hours} hours.",
-    "successHint": "No email? Check your spam folder or try again in {minutes} minutes.",
-    "errors": {
-      "email": "Please enter a valid email address.",
-      "consent": "Please confirm your consent.",
-      "invalid": "Please check your details and try again.",
-      "captcha": "The security check failed. Please try again.",
-      "rate_limited": "We are receiving a lot of sign-ups right now. Please try again later.",
-      "unavailable": "That did not work. Please try again in a few minutes.",
-      "disabled": "The waitlist is not open yet."
+  "Collections": {
+    "copy": "Copy",
+    "copyLabel": "Copy {format}",
+    "copyBefore": "Copy",
+    "copyAfter": "",
+    "copied": "Copied! Off to your project.",
+    "copiedShort": "Copied",
+    "copyFailed": "That did not work. Select the code and copy it by hand.",
+    "copyFailedShort": "Failed",
+    "colorsLabel": "Colors",
+    "colorLabel": "Color {index}",
+    "formats": {
+      "hex": "HEX",
+      "rgb": "RGB",
+      "oklch": "OKLCH"
     },
-    "comingSoon": "The waitlist opens soon. Check back in a few days.",
-    "loading": "Loading the waitlist …",
-    "noscript": "Signing up requires JavaScript.",
-    "learnMore": "More about the Founders license"
+    "contrast": "Text in {text}, contrast {ratio}:1",
+    "black": "black",
+    "white": "white",
+    "groupsLabel": "Jump to a mood",
+    "openIn": "Open in {tool}",
+    "variantPreview": "Preview in {tool}",
+    "gradientsTeaser": {
+      "heading": "Ready-made gradients",
+      "lead": "More than 30 original gradients with CSS to copy, each one ready to adjust in the editor.",
+      "link": "Browse the gradient collection"
+    },
+    "palettesTeaser": {
+      "heading": "Ready-made color palettes",
+      "lead": "More than 30 palettes by mood, with HEX, RGB and OKLCH values to copy.",
+      "link": "Browse the palette collection"
+    }
   },
-  "Founders": {
-    "metaTitle": "Founders waitlist: lifetime license at the Founders price",
-    "metaDescription": "Join the waitlist and claim one of the first {seats} Founders spots for the Motivo lifetime license. Pay once, no subscription.",
-    "title": "Founders waitlist",
-    "lead": "Motivo stays free to use. A lifetime license for pro features is coming: pay once instead of every month. The first {seats} licenses come at the lowest price.",
-    "points": {
-      "once": {
-        "title": "Pay once",
-        "text": "No subscription, no renewal. The license is valid for as long as Motivo exists."
+  "GradientCollection": {
+    "nav": "Gradients",
+    "metaTitle": "{count} gradients with CSS code | Musterli",
+    "metaDescription": "{count} original gradients by mood: warm, cool, pastel, vivid, dark and subtle. Copy the CSS or keep going in the editor as a mesh or blurry gradient.",
+    "title": "Gradients",
+    "lead": "A collection of original gradients, computed in the OKLCH color space so the blends stay clean without a gray middle. Copy the CSS or open a gradient in the editor.",
+    "count": "{count, plural, one {# gradient} other {# gradients}}",
+    "openGenerator": "Design your own gradient",
+    "ogAlt": "A selection of gradients by Musterli",
+    "groups": {
+      "warm": {
+        "name": "Warm",
+        "description": "Yellow, orange and red for energy and warmth."
       },
-      "future": {
-        "title": "Future tools included",
-        "text": "New generators and exports keep coming, at no extra cost."
+      "cool": {
+        "name": "Cool",
+        "description": "Blue, turquoise and mint for calm and freshness."
       },
-      "honest": {
-        "title": "Honest counter",
-        "text": "The counter shows confirmed sign-ups, straight from the database. No artificial scarcity."
+      "pastel": {
+        "name": "Pastel",
+        "description": "Light, soft tones for friendly surfaces."
+      },
+      "vivid": {
+        "name": "Vivid",
+        "description": "Strong colors that stand out."
+      },
+      "dark": {
+        "name": "Dark",
+        "description": "Deep tones for dark mode and light text."
+      },
+      "subtle": {
+        "name": "Subtle",
+        "description": "Nearly neutral blends for quiet backgrounds."
+      }
+    },
+    "items": {
+      "alpenglow": {
+        "name": "Alpenglow",
+        "description": "Warm yellow, orange and rose red like the last light on the peaks."
+      },
+      "apricot": {
+        "name": "Apricot",
+        "description": "A gentle blend from creamy pale yellow to ripe apricot orange."
+      },
+      "embers": {
+        "name": "Embers",
+        "description": "A radial blend from golden yellow through orange to deep red, like glowing coals."
+      },
+      "pumpkin-patch": {
+        "name": "Pumpkin Patch",
+        "description": "Strong yellow and rich orange, running from left to right."
+      },
+      "terracotta": {
+        "name": "Terracotta",
+        "description": "From pale clay to burnt reddish brown, earthy and calm."
+      },
+      "cinnamon-star": {
+        "name": "Cinnamon Star",
+        "description": "Pale cream, cinnamon and dark cocoa, as cozy as holiday baking."
+      },
+      "glacier": {
+        "name": "Glacier",
+        "description": "Almost white ice blue that deepens into a strong blue towards the bottom."
+      },
+      "mountain-lake": {
+        "name": "Mountain Lake",
+        "description": "Clear turquoise and cool blue, like a lake on a summer morning."
+      },
+      "north-wind": {
+        "name": "North Wind",
+        "description": "A restrained blue gray, fresh and easy to read text on."
+      },
+      "rhine-falls": {
+        "name": "Rhine Falls",
+        "description": "Spray white, water green and deep blue in one long blend."
+      },
+      "foehn-sky": {
+        "name": "Foehn Sky",
+        "description": "Clear sky blue that tips into a soft violet."
+      },
+      "peppermint": {
+        "name": "Peppermint",
+        "description": "Pale mint to cool turquoise, light and clean."
+      },
+      "candy-floss": {
+        "name": "Candy Floss",
+        "description": "Soft pink and lilac blue, playful and gentle."
+      },
+      "peach-blossom": {
+        "name": "Peach Blossom",
+        "description": "A pale peach that turns into a warm rosé."
+      },
+      "lavender-field": {
+        "name": "Lavender Field",
+        "description": "From pale lilac to deeper lavender, calm and elegant."
+      },
+      "morning-dew": {
+        "name": "Morning Dew",
+        "description": "A hint of green and a hint of blue, barely there and very fresh."
+      },
+      "macaron": {
+        "name": "Macaron",
+        "description": "Pink, vanilla and pistachio side by side, like in a pastry shop."
+      },
+      "soap-bubble": {
+        "name": "Soap Bubble",
+        "description": "A conic blend of shimmering pastels that closes into a full circle."
+      },
+      "kingfisher": {
+        "name": "Kingfisher",
+        "description": "Bright blue with an orange accent, like the bird's plumage."
+      },
+      "neon-night": {
+        "name": "Neon Night",
+        "description": "Pink, violet and cyan like neon signs on a rainy night."
+      },
+      "parrot": {
+        "name": "Parrot",
+        "description": "Lime green, turquoise and blue, loud and cheerful."
+      },
+      "hibiscus": {
+        "name": "Hibiscus",
+        "description": "A radial blend from orange to vivid pink."
+      },
+      "carnival": {
+        "name": "Carnival",
+        "description": "Yellow, red and violet, as colorful as a carnival parade."
+      },
+      "northern-lights": {
+        "name": "Northern Lights",
+        "description": "Green, turquoise and violet, like an aurora over a dark sky."
+      },
+      "observatory": {
+        "name": "Observatory",
+        "description": "A deep night blue that lightens from the top."
+      },
+      "fir-forest": {
+        "name": "Fir Forest",
+        "description": "Dark fir green fading almost to black, calm and refined."
+      },
+      "deep-sea": {
+        "name": "Deep Sea",
+        "description": "From petrol blue into darkness, ideal behind light text."
+      },
+      "blackberry": {
+        "name": "Blackberry",
+        "description": "Rich berry red and dark violet."
+      },
+      "volcano": {
+        "name": "Volcano",
+        "description": "Glowing orange at the bottom edge, fading upwards into charred darkness."
+      },
+      "espresso": {
+        "name": "Espresso",
+        "description": "Warm coffee brown to near black, subtle and dark."
+      },
+      "sea-of-fog": {
+        "name": "Sea of Fog",
+        "description": "Pale, almost neutral gray with a touch of blue, like fog over the lowlands."
+      },
+      "linen": {
+        "name": "Linen",
+        "description": "Warm natural white, ideal as a quiet page background."
+      },
+      "pebble": {
+        "name": "Pebble",
+        "description": "Warm light gray turning into cool gray."
+      },
+      "parchment": {
+        "name": "Parchment",
+        "description": "A radial blend of ivory and pale ochre."
+      },
+      "dawn-gray": {
+        "name": "Dawn Gray",
+        "description": "A gray with a warm start and a cool end, like the sky before sunrise."
+      },
+      "slate": {
+        "name": "Slate",
+        "description": "Medium to dark blue gray, matter of fact and modern."
       }
     }
   },
-  "WaitlistResult": {
-    "backHome": "Go to the home page",
-    "backFounders": "Go to the Founders waitlist",
-    "confirm": {
-      "metaTitle": "Confirm your sign-up",
-      "title": "Confirm your sign-up",
-      "text": "Confirm with one click that you want to join the Founders waitlist.",
-      "button": "Confirm sign-up",
-      "working": "Confirming …",
-      "error": "That did not work. Please try again in a few minutes.",
-      "noToken": "Open this page with the confirmation link in our email."
+  "GradientPage": {
+    "metaTitle": "{gradient} gradient: CSS code and colors | Musterli",
+    "metaDescription": "{description} With CSS and Tailwind code, color values in HEX, RGB and OKLCH, and variations as mesh, blurry or striped gradient.",
+    "heading": "{gradient} gradient",
+    "previewLabel": "Preview of the {gradient} gradient",
+    "openEditor": "Customize in the editor",
+    "openEditorHint": "Change angle, shape and colors, then export as CSS, SVG or PNG.",
+    "colorsHeading": "Colors",
+    "colorsLead": "The color stops of the gradient. Click a value to copy it.",
+    "codeHeading": "Code",
+    "cssLead": "Paste the lines into your element's rule. The first line is a fallback color, the second the gradient for every browser, the third interpolates in OKLCH for modern browsers.",
+    "cssLabel": "CSS",
+    "tailwindLabel": "Tailwind",
+    "variantsHeading": "Take the gradient further",
+    "variantsLead": "The same colors in other generators. Each card opens the editor with these colors.",
+    "colorToolsHeading": "Keep working with the colors",
+    "colorToolsLead": "Turn the color stops into a palette or a full color scale.",
+    "howToHeading": "How to use this gradient",
+    "howTo": "Copy the CSS into the rule of the element that should carry the gradient, for example a section, a card or a button. For text on top, pick a text color with enough contrast on every color stop; the values next to the colors help you with that. In the editor you change angle, shape and easing and can also export the gradient as an image.",
+    "relatedHeading": "Similar gradients",
+    "backToCollection": "All gradients",
+    "ogAlt": "{gradient} gradient by Musterli"
+  },
+  "PaletteCollection": {
+    "nav": "Palettes",
+    "metaTitle": "{count} color palettes by mood | Musterli",
+    "metaDescription": "{count} original color palettes: earthy, fresh, pastel, bold, dark and neutral. With HEX, RGB and OKLCH values, CSS variables and Tailwind code to copy.",
+    "title": "Color palettes",
+    "lead": "Palettes of five colors each, sorted by mood. Copy the values, use them as CSS variables or turn them into a gradient.",
+    "count": "{count, plural, one {# palette} other {# palettes}}",
+    "openGenerator": "Create your own palette",
+    "ogAlt": "A selection of color palettes by Musterli",
+    "groups": {
+      "earthy": {
+        "name": "Earthy",
+        "description": "Clay, wood, leaves and spices."
+      },
+      "fresh": {
+        "name": "Fresh",
+        "description": "Greens, water and spring."
+      },
+      "pastel": {
+        "name": "Pastel",
+        "description": "Soft, light colors with little saturation."
+      },
+      "bold": {
+        "name": "Bold",
+        "description": "High saturation and strong contrast."
+      },
+      "dark": {
+        "name": "Dark",
+        "description": "Dark base tones with light accents."
+      },
+      "neutral": {
+        "name": "Neutral",
+        "description": "Grays and natural tones as a quiet base."
+      }
     },
-    "confirmed": {
-      "metaTitle": "Sign-up confirmed",
-      "title": "You are on the waitlist",
-      "text": "Thanks for confirming. We will email you as soon as the Founders licenses are available. You can unsubscribe at any time with the link in our email."
-    },
-    "invalid": {
-      "metaTitle": "Invalid link",
-      "title": "This link no longer works",
-      "text": "The confirmation link has expired or was already used. If you have already confirmed, you are all set. Otherwise, simply sign up again."
-    },
-    "error": {
-      "metaTitle": "Error",
-      "title": "That did not work",
-      "text": "We could not process your request right now. Please open the link again in a few minutes."
-    },
-    "unsubscribe": {
-      "metaTitle": "Unsubscribe from the waitlist",
-      "title": "Unsubscribe from the waitlist",
-      "text": "When you unsubscribe, we delete your email address and will not write to you again.",
-      "button": "Unsubscribe now",
-      "working": "Unsubscribing …",
-      "done": "You are unsubscribed. We have deleted your email address.",
-      "invalid": "This unsubscribe link is invalid or was already used. If you have already unsubscribed, there is nothing left to do.",
-      "error": "That did not work. Please try again in a few minutes.",
-      "noToken": "Open this page with the unsubscribe link in our email."
+    "items": {
+      "clay-oven": {
+        "name": "Clay Oven",
+        "description": "Sand, ochre, burnt clay and dark brown for warm, handmade brands."
+      },
+      "autumn-forest": {
+        "name": "Autumn Forest",
+        "description": "Golden yellow, orange and rust with two forest greens."
+      },
+      "vineyard": {
+        "name": "Vineyard",
+        "description": "Vine leaves, grape red and dark soil, like terraced vineyards in autumn."
+      },
+      "spice-market": {
+        "name": "Spice Market",
+        "description": "Turmeric, paprika, cinnamon and a sprig of sage."
+      },
+      "sandstone": {
+        "name": "Sandstone",
+        "description": "Five warm beige tones from light to dark, ideal for calm interfaces."
+      },
+      "moorland": {
+        "name": "Moorland",
+        "description": "Muted green, olive and peat brown."
+      },
+      "lemongrass": {
+        "name": "Lemongrass",
+        "description": "From lemon yellow through grass green to fir green."
+      },
+      "lido": {
+        "name": "Lido",
+        "description": "Sand, sunny yellow and three water blues, like summer at the lake."
+      },
+      "garden-party": {
+        "name": "Garden Party",
+        "description": "Pink, raspberry and fresh green."
+      },
+      "mint-ice": {
+        "name": "Mint Ice",
+        "description": "Cool mint tones from almost white to petrol."
+      },
+      "spring-market": {
+        "name": "Spring Market",
+        "description": "Yellow, pink, lilac and green with a dark blue as anchor."
+      },
+      "alpine-meadow": {
+        "name": "Alpine Meadow",
+        "description": "Dandelion, meadow green and gentian violet."
+      },
+      "sorbet": {
+        "name": "Sorbet",
+        "description": "Five pastel scoops: strawberry, apricot, lemon, mint and blueberry."
+      },
+      "cloud-castle": {
+        "name": "Cloud Castle",
+        "description": "Pale lilac, sky blue and pink with a deeper violet."
+      },
+      "gelato": {
+        "name": "Gelato",
+        "description": "Vanilla, peach, raspberry, pistachio and caramel."
+      },
+      "watercolor": {
+        "name": "Watercolor",
+        "description": "Translucent washes of blue, green, yellow and pink."
+      },
+      "peony": {
+        "name": "Peony",
+        "description": "Pink in three steps and a soft leaf green."
+      },
+      "chalk-drawing": {
+        "name": "Chalk Drawing",
+        "description": "Pastel chalk on a dark blackboard."
+      },
+      "pop-art": {
+        "name": "Pop Art",
+        "description": "Yellow, red and blue with black and white, loud and graphic."
+      },
+      "street-party": {
+        "name": "Street Party",
+        "description": "Mango, pink, violet and turquoise against a dark ground."
+      },
+      "signal": {
+        "name": "Signal",
+        "description": "White, yellow, red and blue with clear contrast, good for notices and warnings."
+      },
+      "hummingbird": {
+        "name": "Hummingbird",
+        "description": "Emerald, petrol, magenta and orange, iridescent like feathers."
+      },
+      "workshop": {
+        "name": "Workshop",
+        "description": "Paper white, mustard, brick red, workwear blue and black."
+      },
+      "fireworks": {
+        "name": "Fireworks",
+        "description": "Bright colors on night blue, like a summer fireworks show."
+      },
+      "night-train": {
+        "name": "Night Train",
+        "description": "Deep blues and the warm light of a compartment window."
+      },
+      "ocean-trench": {
+        "name": "Ocean Trench",
+        "description": "From almost black through petrol to pale aqua."
+      },
+      "fireside": {
+        "name": "Fireside",
+        "description": "Soot, embers, flame and warm light."
+      },
+      "velvet-curtain": {
+        "name": "Velvet Curtain",
+        "description": "Dark wine, velvet red and golden accents, like a theater."
+      },
+      "forest-night": {
+        "name": "Forest Night",
+        "description": "Five greens from dark undergrowth to moonlight on the leaves."
+      },
+      "planetarium": {
+        "name": "Planetarium",
+        "description": "Night sky, violet nebula, a blue star and starlight."
+      },
+      "concrete": {
+        "name": "Concrete",
+        "description": "Five neutral grays without a tint, a base for any interface."
+      },
+      "wool-sweater": {
+        "name": "Wool Sweater",
+        "description": "Warm grays and browns like undyed sheep's wool."
+      },
+      "granite": {
+        "name": "Granite",
+        "description": "Cool grays with a slight blue tint."
+      },
+      "print-shop": {
+        "name": "Print Shop",
+        "description": "Paper, ink and a single signal red."
+      },
+      "timber-cabin": {
+        "name": "Timber Cabin",
+        "description": "Light wood, natural tones and a dark fir green."
+      },
+      "winter-sky": {
+        "name": "Winter Sky",
+        "description": "Five cool blue grays from snow white to slate."
+      }
     }
   },
-  "WaitlistEmail": {
-    "subject": "Please confirm your Founders waitlist sign-up",
-    "heading": "Almost done",
-    "intro": "You signed up for the Motivo Founders waitlist with this email address. Please confirm with one click:",
-    "button": "Confirm sign-up",
-    "fallback": "If the button does not work, copy this link into your browser:",
-    "expiry": "The link is valid for {hours} hours and works only once.",
-    "what": "We will email you as soon as the lifetime licenses are available at the Founders price (planned from {price} CHF or EUR, non-binding). Other than that we will not write to you, and we do not share your address.",
-    "ignore": "Did not sign up? Then simply ignore this email. Without confirmation we delete your address after {days} days at the latest.",
-    "unsubscribe": "Unsubscribe",
-    "privacy": "Privacy"
+  "PalettePage": {
+    "metaTitle": "{palette} color palette with HEX and OKLCH | Musterli",
+    "metaDescription": "{description} Every color as HEX, RGB and OKLCH, plus CSS variables, Tailwind code and matching gradients.",
+    "heading": "{palette} color palette",
+    "previewLabel": "The {count} colors of the {palette} palette",
+    "openEditor": "Open in the palette generator",
+    "openEditorHint": "Lock colors, roll new variations with the space bar and export as image or code.",
+    "colorsHeading": "Colors",
+    "colorsLead": "Click a value to copy it. Each swatch shows its value in the text color that reads best on it.",
+    "codeHeading": "Code",
+    "codeLead": "The palette as CSS variables for any project and as a theme for Tailwind CSS v4.",
+    "cssVariablesLabel": "CSS variables",
+    "tailwindLabel": "Tailwind theme",
+    "gradientsHeading": "Gradients from this palette",
+    "gradientsLead": "The same colors as a gradient. Each card opens the editor with these colors.",
+    "colorToolsHeading": "Keep working with the palette",
+    "colorToolsLead": "Edit the palette or build a full scale from its most colorful entry.",
+    "howToHeading": "How to use this palette",
+    "howTo": "Use the lightest color as the background and the darkest for text. The strong colors in between work for buttons, links and highlights. Always check the contrast for text; the notes on the swatches show whether black or white reads better.",
+    "relatedHeading": "Similar palettes",
+    "backToCollection": "All color palettes",
+    "ogAlt": "{palette} color palette by Musterli"
   }
 }

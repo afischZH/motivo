@@ -8,7 +8,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 const DIR = fileURLToPath(new URL("../content/changelog/", import.meta.url));

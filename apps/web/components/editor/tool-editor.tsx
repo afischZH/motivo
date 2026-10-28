@@ -1,7 +1,9 @@
 "use client";
 
-import { EditorShell, EditorStoreProvider } from "@motivo/editor-ui";
+import { EditorShell, EditorStoreProvider } from "@musterli/editor-ui";
+import { createBrandKitStore, createDesignStore } from "@musterli/storage";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 import { Link } from "@/i18n/client-navigation";
 
@@ -11,12 +13,25 @@ import { Link } from "@/i18n/client-navigation";
  * store looks the tool up in the registry. One store per page: remounting
  * with another tool id (`key`) starts fresh from that tool's defaults.
  */
-export function ToolEditor({ toolId }: { toolId: string }) {
+export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitHref: string }) {
   const t = useTranslations("ToolPage");
+  // Saved designs and the brand kit live in this browser only (IndexedDB, opened on first use).
+  const [designs] = useState(() => createDesignStore());
+  const [brandKit] = useState(() => createBrandKitStore());
+  useEffect(
+    () => () => {
+      designs.close();
+      brandKit.close();
+    },
+    [designs, brandKit],
+  );
 
   return (
     <EditorStoreProvider key={toolId} options={{ toolId }}>
       <EditorShell
+        designs={designs}
+        brandKit={brandKit}
+        brandKitHref={brandKitHref}
         headerStart={
           <Link
             href="/tools"
@@ -25,6 +40,22 @@ export function ToolEditor({ toolId }: { toolId: string }) {
             {t("allTools")}
           </Link>
         }
+        // Quiet donation hint after a successful export (M3-AP14). A new tab,
+        // so the design in the editor stays as it is.
+        afterExport={t.rich("supportHint", {
+          link: (chunks) => (
+            <Link
+              href="/support"
+              target="_blank"
+              rel="noopener"
+              className="rounded-control text-link underline underline-offset-4"
+              data-testid="export-support-link"
+            >
+              {chunks}
+              <span className="sr-only"> {t("newTab")}</span>
+            </Link>
+          ),
+        })}
       />
     </EditorStoreProvider>
   );

@@ -1,9 +1,9 @@
 /**
  * Generic vitest suites every tool must pass. Import from
- * `@motivo/tool-registry/testing` in test files only; this module imports
+ * `@musterli/tool-registry/testing` in test files only; this module imports
  * vitest and must never end up in the app bundle.
  */
-import { createRng } from "@motivo/engine";
+import { createRng } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import * as z from "zod";
 import { DEFAULT_CANVAS_SIZE } from "./common";
@@ -59,7 +59,7 @@ const NAME_START = /[A-Za-z_:]/;
 
 /**
  * Light well-formedness check for generated SVG (no DOM in Node): single root
- * `<svg>` with xmlns and a size, balanced tags, quoted attributes, and no
+ * `<svg>` with xmlns and a size, balanced tags, quoted attributes, unique ids and no
  * leaked `NaN`/`undefined`/`Infinity`. Returns a list of problems, empty if fine.
  */
 export function checkSvg(svg: string): string[] {
@@ -81,6 +81,13 @@ export function checkSvg(svg: string): string[] {
   const text = src.replace(/data:[\w/+.-]+;base64,[A-Za-z0-9+/=]*/g, "data:");
   for (const bad of ["NaN", "undefined", "Infinity", "null"]) {
     if (new RegExp(`\\b${bad}\\b`).test(text)) problems.push(`contains "${bad}"`);
+  }
+
+  const ids = new Set<string>();
+  for (const m of src.matchAll(/\sid="([^"]*)"/g)) {
+    const id = m[1] ?? "";
+    if (ids.has(id)) problems.push(`duplicate id "${id}"`);
+    ids.add(id);
   }
 
   const stack: string[] = [];
@@ -167,12 +174,11 @@ export function describeToolContract<S extends ParamsSchema>(
         expect(new Set(tool.category).size).toBe(tool.category.length);
       });
 
-      it("only references existing params in controls and gating", () => {
+      it("only references existing params in controls", () => {
         const known = schemaKeys(anyTool);
         const referenced = [
           ...Object.keys(tool.controls?.params ?? {}),
           ...(tool.controls?.order ?? []),
-          ...Object.keys(tool.gating.params ?? {}),
           ...(anyTool.regenerateOn ?? []),
         ];
         expect(referenced.filter((k) => !known.has(k))).toEqual([]);
@@ -326,8 +332,6 @@ export function describeToolContract<S extends ParamsSchema>(
           expect(e.id).toMatch(TOOL_ID_PATTERN);
           expect(e.labelKey.length).toBeGreaterThan(0);
         }
-        const gated = Object.keys(tool.gating.extraExports ?? {});
-        expect(gated.filter((id) => !ids.includes(id))).toEqual([]);
       });
 
       it.each(extras.map((e) => [e.id, e] as const))(

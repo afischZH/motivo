@@ -5,7 +5,7 @@
  * demand, and load a design from the URL hash on page load and on
  * `hashchange`. The hash is never written while editing.
  */
-import { registry as defaultRegistry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { registry as defaultRegistry, type AnyToolDefinition } from "@musterli/tool-registry";
 import { useEffect, useState } from "react";
 import { selectDesign, type EditorStoreApi } from "../store/editor-store";
 import { designFromHash, designToHash, type ShareEncodeError } from "./share-codec";

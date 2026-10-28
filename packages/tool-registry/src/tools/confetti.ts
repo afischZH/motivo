@@ -2,7 +2,7 @@
  * M2-AP01: Confetti (docs/TOOLS.md A3). Rotated chips, dots, triangles and
  * squiggles spread evenly with Poisson-disk sampling.
  */
-import { CONFETTI_SHAPES, confettiSvg, randomPalette } from "@motivo/engine";
+import { CONFETTI_SHAPES, confettiSvg, randomPalette } from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
@@ -135,5 +135,4 @@ export const confettiTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
-  gating: {},
 });

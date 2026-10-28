@@ -1,10 +1,10 @@
-import { sampleImagePixels } from "@motivo/engine";
+import { sampleImagePixels } from "@musterli/engine";
 import {
   deriveFromImage,
   paletteFromImageTool,
   type PaletteFromImageParams,
   type PixelBuffer,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { describe, expect, it, vi } from "vitest";
 import { createEditorStore } from "../store/editor-store";
 import type { ImageDecodeResult, ImageInputServices } from "./services";
@@ -25,6 +25,7 @@ function fakeServices(decoded: ImageDecodeResult[] = []) {
       async (): Promise<ImageDecodeResult> =>
         decoded.shift() ?? { ok: false, error: "decode-failed" },
     ),
+    crop: vi.fn(async () => ({ ok: false as const, error: "decode-failed" as const })),
     derive: vi.fn(async (t, pixels, params, seed) => {
       const patch = deriveFromImage(t, pixels, params, seed);
       return patch

@@ -11,7 +11,7 @@ import {
   cssGradient,
   cssGradientTailwind,
   randomPalette,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { paletteSchema } from "../common";
 import { keepLocked } from "../randomize";
@@ -195,5 +195,4 @@ export const cssGradientTool = defineTool({
       },
     },
   ],
-  gating: {},
 });

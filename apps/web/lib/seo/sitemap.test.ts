@@ -1,10 +1,13 @@
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { ENABLED_LOCALES } from "@/i18n/locales";
 import { toolLandingPaths } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
+import { collectionItemSlug } from "@/i18n/slugs";
+import { curatedGradients } from "@/lib/collections/gradients";
+import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 import { LEGAL_CONFIG } from "@/lib/legal/config";
 
@@ -24,8 +27,12 @@ describe("sitemap", () => {
       1 +
       libraryPatterns().length +
       1 +
+      curatedGradients().length +
+      1 +
+      curatedPalettes().length +
+      1 +
       CONVERTER_IDS.length +
-      1 + // Founders waitlist
+      1 + // Support (donations)
       (LEGAL_CONFIG.legalReviewed ? 2 : 0);
     expect(entries).toHaveLength(pages * ENABLED_LOCALES.length);
     expect(new Set(urls).size).toBe(urls.length);
@@ -46,10 +53,18 @@ describe("sitemap", () => {
     }
   });
 
-  it("lists the Founders page but none of the waitlist result pages", () => {
-    expect(urls).toContain("https://example.test/de/founders-warteliste");
-    expect(urls).toContain("https://example.test/en/founders-waitlist");
-    expect(urls.filter((url) => /founders-(warteliste|waitlist)\/./.test(url))).toEqual([]);
+  it("lists the support page and nothing of the retired waitlist", () => {
+    expect(urls).toContain("https://example.test/de/unterstuetzen");
+    expect(urls).toContain("https://example.test/en/support");
+    expect(urls.filter((url) => /founders/.test(url))).toEqual([]);
+  });
+
+  it("never lists the personal designs page", () => {
+    expect(urls.filter((url) => /\/(meine-designs|my-designs)/.test(url))).toEqual([]);
+  });
+
+  it("never lists the personal brand kit page", () => {
+    expect(urls.filter((url) => /\/brand-kit/.test(url))).toEqual([]);
   });
 
   it("leaves out the legal pages while they are drafts", () => {
@@ -61,6 +76,29 @@ describe("sitemap", () => {
     for (const url of urls) expect(new URL(url).origin).toBe("https://example.test");
     expect(urls).toContain("https://example.test/de/tools/kategorie/farben");
     expect(urls).toContain("https://example.test/en/convert/svg-to-css");
+  });
+
+  it("contains both collections and every item page with alternates", () => {
+    expect(urls).toContain("https://example.test/de/farbverlaeufe");
+    expect(urls).toContain("https://example.test/en/color-palettes");
+    for (const g of curatedGradients()) {
+      expect(urls).toContain(
+        `https://example.test/en/gradients/${collectionItemSlug("gradients", g.id, "en")}`,
+      );
+    }
+    for (const p of curatedPalettes()) {
+      expect(urls).toContain(
+        `https://example.test/de/farbpaletten/${collectionItemSlug("palettes", p.id, "de")}`,
+      );
+    }
+    const glacier = entries.find(
+      (e) => e.url === "https://example.test/de/farbverlaeufe/gletscher",
+    );
+    expect(glacier?.alternates?.languages).toEqual({
+      de: "https://example.test/de/farbverlaeufe/gletscher",
+      en: "https://example.test/en/gradients/glacier",
+      "x-default": "https://example.test/en/gradients/glacier",
+    });
   });
 
   it("contains the CSS pattern library and every pattern page with alternates", () => {

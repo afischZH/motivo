@@ -9,7 +9,9 @@ const base = new URL("https://example.test");
 
 describe("resolveSiteUrl", () => {
   it("uses the env value's origin", () => {
-    expect(resolveSiteUrl("https://motivo.example/de/").toString()).toBe("https://motivo.example/");
+    expect(resolveSiteUrl("https://musterli.example/de/").toString()).toBe(
+      "https://musterli.example/",
+    );
   });
 
   it("falls back to the workers.dev URL when unset or invalid", () => {
@@ -88,6 +90,16 @@ describe("path helpers", () => {
     });
     expect(routeFromPathname("/css-patterns/nope", { patternSlug: "nope" }, "en")).toBeUndefined();
     expect(routeFromPathname("/tools/nope", { toolSlug: "nope" }, "en")).toBeUndefined();
+    expect(routeFromPathname("/gradients", {}, "de")).toEqual({ page: "gradients" });
+    expect(
+      routeFromPathname("/gradients/[gradientSlug]", { gradientSlug: "gletscher" }, "de"),
+    ).toEqual({ page: "gradient", gradientId: "glacier" });
+    expect(routeFromPathname("/en/color-palettes/lido", {}, "en")).toEqual({
+      page: "palette",
+      paletteId: "lido",
+    });
+    expect(routeFromPathname("/de/farbpaletten", {}, "de")).toEqual({ page: "palettes" });
+    expect(routeFromPathname("/palettes/nope", { paletteSlug: "nope" }, "en")).toBeUndefined();
   });
 
   it("accepts the rewritten internal path and the external path", () => {

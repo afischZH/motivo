@@ -1,5 +1,5 @@
 /**
- * Content sniffing lives in `@motivo/editor-ui` because the editor's image
+ * Content sniffing lives in `@musterli/editor-ui` because the editor's image
  * input needs the same allowlist; re-exported here for the converters.
  */
-export * from "@motivo/editor-ui/image-sniff";
+export * from "@musterli/editor-ui/image-sniff";

@@ -1,5 +1,5 @@
-import { designFromHash } from "@motivo/editor-ui/share";
-import { registry, withoutDerivedParams } from "@motivo/tool-registry";
+import { designFromHash } from "@musterli/editor-ui/share";
+import { registry, withoutDerivedParams } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -56,7 +56,7 @@ describe("static motifs", () => {
 
 describe("ogElement", () => {
   it("embeds the motif and the caption", () => {
-    const element = ogElement({ svg: "<svg/>", brand: "Motivo", title: "Blob" });
+    const element = ogElement({ svg: "<svg/>", brand: "Musterli", title: "Blob" });
     const json = JSON.stringify(element);
     expect(json).toContain("data:image/svg+xml;base64,");
     expect(json).toContain('"Blob"');

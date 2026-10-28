@@ -15,9 +15,10 @@
  *  - Undo/redo covers params, seed, size and the active variant. Locks and
  *    the filmstrip itself are not part of the history.
  */
-import { createRng, toUint32 } from "@motivo/engine";
+import { createRng, toUint32 } from "@musterli/engine";
 import {
   DEFAULT_CANVAS_SIZE,
+  applyBrandPalette as brandPaletteFor,
   canvasSizeSchema,
   keepLocked,
   parseToolParams,
@@ -26,7 +27,7 @@ import {
   type AnyToolDefinition,
   type CanvasSize,
   type ToolRegistry,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import {
   applyListOp,
@@ -108,6 +109,14 @@ export interface EditorActions {
   listOp(key: string, op: ListOp): boolean;
   /** Sets several params as one undo step. */
   setParams(patch: ParamValues): void;
+  /**
+   * Puts a brand palette onto the tool's colour params (generic mapping,
+   * `applyBrandPalette` in the tool registry) as one undo step. Locked
+   * params stay. By default the recoloured params are locked afterwards, so
+   * new variants (Space) keep the brand colours. Returns false when the
+   * tool has no colour params or the palette does not fit.
+   */
+  applyBrandPalette(colors: readonly string[], options?: { lock?: boolean }): boolean;
   /**
    * Merges params derived from an image input (`tool.imageInput`) into the
    * current design and its filmstrip entry, without an undo step: they follow
@@ -438,6 +447,25 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         if (next) change({ params: next });
       },
 
+      applyBrandPalette(colors, options = {}) {
+        const s = get();
+        const result = brandPaletteFor(s.tool, s.params, colors, s.locks);
+        if (!result) return false;
+        let locks = s.locks;
+        if (options.lock !== false) {
+          const added = result.applied.filter((key) => !locks.has(key) && isLockable(s.tool, key));
+          if (added.length > 0) locks = new Set([...locks, ...added]);
+        }
+        const params = valuesEqual(result.params, s.params) ? s.params : result.params;
+        if (params === s.params) {
+          // Nothing to recolour (already the brand colours): only the locks may change.
+          if (locks !== s.locks) set({ locks });
+          return true;
+        }
+        change({ params, locks });
+        return true;
+      },
+
       applyDerived(patch) {
         const s = get();
         const next = mergePatch(s, patch);
@@ -502,7 +530,11 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const s = get();
         const preset = s.tool.presets.find((p) => p.id === presetId);
         if (!preset) return;
-        pushVariant(preset.params, preset.seed === undefined ? s.seed : toUint32(preset.seed));
+        // The user's own files (uploads) stay: a preset restyles them.
+        pushVariant(
+          withLocalParams(s.tool, preset.params, s.params),
+          preset.seed === undefined ? s.seed : toUint32(preset.seed),
+        );
       },
 
       selectVariant(id) {
@@ -576,10 +608,30 @@ export const selectDesign = (s: EditorState): Design => ({
   size: s.size,
 });
 
-/** Id of the preset whose params equal the current params, if any. */
+/** `params` with the tool's local params (uploads) taken from `from`. */
+function withLocalParams(
+  tool: AnyToolDefinition,
+  params: ParamValues,
+  from: ParamValues,
+): ParamValues {
+  const keys = tool.localParams ?? [];
+  if (keys.length === 0) return params;
+  const out: Record<string, unknown> = { ...params };
+  for (const key of keys) out[key] = from[key];
+  return out;
+}
+
+/**
+ * Id of the preset whose params equal the current params, if any. Local
+ * params (uploads) are ignored: a preset applied to an upload still matches.
+ */
 export function findMatchingPresetId(
   tool: AnyToolDefinition,
   params: ParamValues,
 ): string | undefined {
-  return tool.presets.find((p) => valuesEqual(p.params, params))?.id;
+  const keys = tool.localParams ?? [];
+  const current = keys.length === 0 ? params : withLocalParams(tool, params, tool.defaults);
+  return tool.presets.find((p) =>
+    valuesEqual(withLocalParams(tool, p.params, tool.defaults), current),
+  )?.id;
 }

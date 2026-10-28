@@ -20,7 +20,7 @@ test.describe("home page", () => {
     const main = page.getByRole("main");
     await expect(main.getByRole("heading", { level: 1 })).toHaveText("Motifs in one click");
     for (const name of [
-      "Why Motivo",
+      "Why Musterli",
       "Tools by category",
       "Popular generators",
       "How it works",
@@ -29,10 +29,12 @@ test.describe("home page", () => {
     ]) {
       await expect(main.getByRole("heading", { level: 2, name })).toBeVisible();
     }
-    // Hero motifs come from the tools' own static renders.
-    const showcase = main.getByRole("list", { name: "Sample motifs" });
-    await expect(showcase.locator('img[src^="/motifs/"]')).toHaveCount(3);
-    await expect(showcase.locator("img").first()).toHaveJSProperty("complete", true);
+    // The hero preview shows the tool's own static renders and opens its editor.
+    const preview = main.getByRole("link", { name: /^Open / });
+    const frames = preview.locator('img[src^="/motifs/"]');
+    expect(await frames.count()).toBeGreaterThan(0);
+    await expect(frames.first()).toHaveJSProperty("complete", true);
+    await expect(preview).toHaveAttribute("href", /\/en\/tools\//);
 
     await main.getByRole("link", { name: "Explore all tools" }).click();
     await expect(page).toHaveURL(/\/en\/tools$/);
@@ -51,22 +53,17 @@ test.describe("home page", () => {
     );
   });
 
-  test("states no binding price or offer", async ({ page }) => {
+  test("states no price or paywall and points to donations", async ({ page }) => {
     await page.goto("/de");
     const main = page.getByRole("main");
-    // The only price is the Founders "from" price, marked as non-binding (M2-AP10).
-    const waitlist = main.locator("#founders-waitlist");
-    await expect(waitlist.getByTestId("waitlist-price")).toHaveText(
-      "Lifetime-Lizenz ab 49 CHF oder EUR",
+    const text = (await main.textContent()) ?? "";
+    expect(text).not.toMatch(/CHF|EUR|USD|€|\$/);
+    expect(text).not.toMatch(/Lifetime|Founders|Lizenz ab|Warteliste/);
+    await expect(main.getByRole("heading", { name: "Getragen von Spenden" })).toBeVisible();
+    await expect(main.getByRole("link", { name: "Musterli unterstützen" })).toHaveAttribute(
+      "href",
+      "/de/unterstuetzen",
     );
-    await expect(waitlist).toContainText("Unverbindlicher Richtwert, kein Angebot.");
-    const outside = await main.evaluate((el) => {
-      const clone = el.cloneNode(true) as HTMLElement;
-      clone.querySelector("#founders-waitlist")?.remove();
-      return clone.textContent ?? "";
-    });
-    expect(outside).not.toMatch(/CHF|EUR|USD|€|\$/);
-    expect(outside).toContain("Lifetime-Lizenz");
   });
 });
 

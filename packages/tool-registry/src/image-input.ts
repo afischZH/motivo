@@ -3,7 +3,7 @@
  * thread and worker), share links and tests, so every caller derives params
  * from an image the same way.
  */
-import { createRng, deriveSeed } from "@motivo/engine";
+import { createRng, deriveSeed } from "@musterli/engine";
 import type { AnyToolDefinition, PixelBuffer } from "./types";
 
 /** Salt of the rng stream handed to `imageInput.derive`. */
@@ -40,16 +40,31 @@ export function deriveFromImage(
   return out;
 }
 
+/** Keys that never leave the device: image-derived params and local files (uploads). */
+export function privateParamKeys(tool: AnyToolDefinition): readonly string[] {
+  return [...(tool.imageInput?.derivedKeys ?? []), ...(tool.localParams ?? [])];
+}
+
 /**
- * The params with every image-derived key reset to the tool default. Share
- * links use it in both directions, so no trace of a user image travels in a
- * URL. Returns `params` itself for tools without image input.
+ * The params with every image-derived key and every local file param
+ * (`localParams`) reset to the tool default. Share links use it in both
+ * directions, so no trace of a user image or upload travels in a URL.
+ * Returns `params` itself for tools without either.
  */
 export function withoutDerivedParams<T extends Values>(tool: AnyToolDefinition, params: T): T {
-  const keys = tool.imageInput?.derivedKeys;
-  if (!keys || keys.length === 0) return params;
+  const keys = privateParamKeys(tool);
+  if (keys.length === 0) return params;
   const defaults = tool.defaults as Values;
   const out: Record<string, unknown> = { ...params };
   for (const key of keys) out[key] = defaults[key];
   return out as T;
+}
+
+/**
+ * Whether `params` hold a local file (a `localParams` key away from its
+ * default), which a share link would leave out.
+ */
+export function hasLocalContent(tool: AnyToolDefinition, params: Values): boolean {
+  const defaults = tool.defaults as Values;
+  return (tool.localParams ?? []).some((key) => params[key] !== defaults[key]);
 }

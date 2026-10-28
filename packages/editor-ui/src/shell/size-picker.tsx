@@ -6,7 +6,7 @@ import {
   SIZE_PRESETS,
   type CanvasSize,
   type SizePresetGroup,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { useId, useState, type KeyboardEvent } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT } from "../i18n";

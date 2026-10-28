@@ -8,11 +8,12 @@ import {
   listExtraExports,
   resolveRasterSize,
   supportsExport,
+  supportsTile,
   type ClipboardResult,
   type ExtraExportInfo,
   type RasterFormat,
-} from "@motivo/exporters";
-import { CANVAS_EDGE_MAX, type AnyToolDefinition, type CanvasSize } from "@motivo/tool-registry";
+} from "@musterli/exporters";
+import { CANVAS_EDGE_MAX, type AnyToolDefinition, type CanvasSize } from "@musterli/tool-registry";
 
 /** Card groups of the format choice (docs/DESIGN.md 6: Bild, Vektor, Code). */
 export type ExportCategory = "image" | "vector" | "code";
@@ -21,6 +22,8 @@ export const EXPORT_CATEGORIES: readonly ExportCategory[] = ["image", "vector", 
 
 export type ExportChoice =
   | { id: RasterFormat; kind: "raster"; format: RasterFormat; category: "image" }
+  /** One repeat tile of a seamless design as PNG (tools with `tile`). */
+  | { id: "png-tile"; kind: "tile"; format: "png"; category: "image" }
   | { id: "svg"; kind: "svg"; category: "vector" }
   | { id: "css"; kind: "css"; category: "code" }
   | { id: `extra:${string}`; kind: "extra"; extra: ExtraExportInfo; category: "code" };
@@ -29,19 +32,22 @@ export type ExportChoice =
 export type TextChoice = Extract<ExportChoice, { kind: "svg" | "css" | "extra" }>;
 
 export const isTextChoice = (choice: ExportChoice): choice is TextChoice =>
-  choice.kind !== "raster";
+  choice.kind !== "raster" && choice.kind !== "tile";
 
 const RASTER_ORDER: readonly RasterFormat[] = ["png", "jpg", "webp"];
 
 /**
  * Every export the tool offers and the exporters can produce, in display
- * order: PNG, JPG, WebP, SVG, CSS, then the tool's extra exports.
+ * order: PNG, JPG, WebP, PNG tile, SVG, CSS, then the tool's extra exports.
  */
 export function listExportChoices(tool: AnyToolDefinition): ExportChoice[] {
   const choices: ExportChoice[] = [];
   for (const format of RASTER_ORDER) {
     if (supportsExport(tool, format))
       choices.push({ id: format, kind: "raster", format, category: "image" });
+  }
+  if (supportsTile(tool) && supportsExport(tool, "png")) {
+    choices.push({ id: "png-tile", kind: "tile", format: "png", category: "image" });
   }
   if (supportsExport(tool, "svg")) choices.push({ id: "svg", kind: "svg", category: "vector" });
   if (supportsExport(tool, "css")) choices.push({ id: "css", kind: "css", category: "code" });
@@ -134,6 +140,8 @@ export function exportErrorKey(error: unknown): string {
         return "encodeUnsupported";
       case "encode-failed":
         return "encodeFailed";
+      case "too-large":
+        return "tooLarge";
       case "unavailable":
         return "unavailable";
       case "aborted":

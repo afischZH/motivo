@@ -1,5 +1,13 @@
-import { CSS_PATTERN_IDS, GRAIN_TILE_EDGE, MAX_DOT_SITES, createRng, crc32 } from "@motivo/engine";
+import {
+  CSS_PATTERN_IDS,
+  GRAIN_TILE_EDGE,
+  MAX_DOT_SITES,
+  MESH_OUTPUT_EDGE_MAX,
+  createRng,
+  crc32,
+} from "@musterli/engine";
 import { describe, expect, it } from "vitest";
+import { CANVAS_EDGE_MAX } from "../common";
 import { registry } from "../registry";
 import { createRenderContext } from "../render";
 import { parseToolParams } from "../randomize";
@@ -7,6 +15,7 @@ import { renderStatic, describePresetSnapshots, describeToolContract } from "../
 import type { AnyToolDefinition, CssOutput } from "../types";
 import {
   blobTool,
+  blurryGradientTool,
   builtInTools,
   confettiTool,
   cssGradientTool,
@@ -14,12 +23,15 @@ import {
   cssPatternsTool,
   dieterDotsTool,
   gridPatternsTool,
+  meshGradientTool,
   noiseGrainTool,
   polkaDotsTool,
   starrySkyTool,
+  stripedGradientTool,
   svgWavesTool,
 } from "./index";
 import type { CssPatternLayer, CssPatternsParams } from "./css-patterns";
+import { GRADIENT_GRAIN_EDGE, grainTileCacheSize } from "./grain";
 import { noiseGrainTileCacheSize } from "./noise-grain";
 
 function required<T>(value: T | undefined): T {
@@ -81,12 +93,19 @@ describe("built-in tool registration", () => {
       "css-patterns",
       "blob",
       "svg-waves",
+      "blob-composition",
+      "doodles",
+      "svg-charts",
       "polka-dots",
+      "seamless-patterns",
       "noise-grain",
       "grid-patterns",
       "confetti",
       "starry-sky",
       "dieter-dots",
+      "mesh-gradient",
+      "blurry-gradient",
+      "striped-gradient",
       "palette-generator",
       "tints-shades",
       "tailwind-palette",
@@ -98,10 +117,17 @@ describe("built-in tool registration", () => {
       "tailwind-palette",
       "palette-from-image",
     ]);
-    expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual(["css-gradient"]);
+    expect(registry.listByCategory("gradients").map((t) => t.id)).toEqual([
+      "css-gradient",
+      "mesh-gradient",
+      "blurry-gradient",
+      "striped-gradient",
+    ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
+      "doodles",
       "polka-dots",
+      "seamless-patterns",
       "grid-patterns",
       "confetti",
       "dieter-dots",
@@ -109,8 +135,8 @@ describe("built-in tool registration", () => {
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });
 
-  it.each(builtInTools.map((t) => [t.id, t] as const))("%s is fully free until M4", (_, tool) => {
-    expect(tool.gating).toEqual({});
+  it.each(builtInTools.map((t) => [t.id, t] as const))("%s has no gating (all free)", (_, tool) => {
+    expect(tool).not.toHaveProperty("gating");
   });
 });
 
@@ -574,5 +600,140 @@ describe("M2 SVG generators", () => {
         renderStatic(tool, tool.defaults, 2, size),
       );
     }
+  });
+});
+
+describe.each([
+  ["mesh-gradient", meshGradientTool],
+  ["blurry-gradient", blurryGradientTool],
+  ["striped-gradient", stripedGradientTool],
+] as const)("%s", (_, tool) => {
+  const size = { width: 600, height: 400 };
+  const anyTool = tool as unknown as AnyToolDefinition;
+  const render = (params: object, seed = 1): string =>
+    renderStatic(anyTool, { ...tool.defaults, ...params }, seed, size) as string;
+  const tile = (svg: string): string | undefined =>
+    /data:image\/png;base64,([A-Za-z0-9+/=]+)/.exec(svg)?.[1];
+
+  it("adds a grey grain tile only with a grain amount", () => {
+    expect(render({ grain: 0 })).not.toContain("<pattern");
+    const svg = render({ grain: 30 });
+    expect(svg).toContain(`<pattern id="`);
+    expect(svg).toContain(`width="${GRADIENT_GRAIN_EDGE}" height="${GRADIENT_GRAIN_EDGE}"`);
+    expect(svg).toContain('opacity="0.3" style="mix-blend-mode:overlay"');
+    // Greyscale: 128 x 128 one-byte pixels, about 22 KB base64 (RGB would be about 66 KB).
+    expect(tile(svg)?.length).toBeLessThan(30_000);
+  });
+
+  it("keeps the grain tile for a seed whatever the other params", () => {
+    const a = tile(render({ grain: 20 }));
+    expect(tile(render({ grain: 60, palette: ["#000000", "#ffffff"] }))).toBe(a);
+    expect(tile(render({ grain: 20 }, 2))).not.toBe(a);
+    expect(grainTileCacheSize()).toBeLessThanOrEqual(16);
+  });
+
+  it("does not move the geometry when only the grain changes", () => {
+    const strip = (svg: string) =>
+      svg
+        .replace(/<pattern[\s\S]*?<\/pattern>|<rect [^>]*mix-blend[^>]*>/g, "")
+        .replace("<defs></defs>", "");
+    expect(strip(render({ grain: 0 }))).toBe(strip(render({ grain: 40 })));
+  });
+
+  it("keeps the grain amount on a new variant", () => {
+    const out = anyTool.randomize(createRng(5), { ...tool.defaults, grain: 33 }, new Set());
+    expect((out as { grain: number }).grain).toBe(33);
+  });
+
+  it("renders a 4K canvas within the budget", () => {
+    const { ms, value } = fastest(() =>
+      renderStatic(anyTool, tool.defaults, 3, { width: 3840, height: 2160 }),
+    );
+    expect(typeof value).toBe("string");
+    expect(ms).toBeLessThan(RENDER_BUDGET_MS);
+  });
+
+  it("rejects out-of-range params", () => {
+    for (const p of [{ grain: 101 }, { grain: -1 }, { palette: ["#fff"] }]) {
+      expect(tool.schema.safeParse({ ...tool.defaults, ...p }).success).toBe(false);
+    }
+  });
+});
+
+describe("mesh-gradient", () => {
+  it("uses one Gaussian blur for small blurs and no turbulence", () => {
+    const svg = renderStatic(meshGradientTool, { ...meshGradientTool.defaults, blur: 5 }, 1, {
+      width: 600,
+      height: 400,
+    }) as string;
+    expect(svg.match(/<feGaussianBlur /g)).toHaveLength(1);
+    expect(svg).not.toContain("feTurbulence");
+    expect(svg.match(/<path /g)).toHaveLength(meshGradientTool.defaults.points);
+  });
+
+  it("renders large blurs as a raster field, sized for the largest export", () => {
+    // The engine plans the blur for exports up to its own edge limit; it must match the registry's.
+    expect(MESH_OUTPUT_EDGE_MAX).toBe(CANVAS_EDGE_MAX);
+    const svg = renderStatic(meshGradientTool, meshGradientTool.defaults, 1, {
+      width: 1920,
+      height: 1080,
+    }) as string;
+    expect(svg).not.toContain("<filter");
+    expect(svg.match(/<image x=/g)).toHaveLength(1);
+  });
+
+  it("keeps a transparent background on a new variant", () => {
+    const out = meshGradientTool.randomize(
+      createRng(2),
+      { ...meshGradientTool.defaults, background: "transparent" },
+      new Set(),
+    );
+    expect(out.background).toBe("transparent");
+  });
+
+  it("rejects too few or too many points", () => {
+    for (const points of [2, 9, 4.5]) {
+      expect(
+        meshGradientTool.schema.safeParse({ ...meshGradientTool.defaults, points }).success,
+      ).toBe(false);
+    }
+  });
+});
+
+describe("blurry-gradient", () => {
+  it("draws one radial gradient per circle and no filter", () => {
+    const svg = renderStatic(blurryGradientTool, blurryGradientTool.defaults, 1, {
+      width: 600,
+      height: 400,
+    }) as string;
+    expect(svg.match(/<radialGradient /g)).toHaveLength(blurryGradientTool.defaults.circles);
+    expect(svg).not.toContain("<filter");
+  });
+
+  it("rejects unknown layouts and circle counts", () => {
+    for (const p of [{ layout: "grid" }, { circles: 6 }, { circles: 1 }]) {
+      expect(
+        blurryGradientTool.schema.safeParse({ ...blurryGradientTool.defaults, ...p }).success,
+      ).toBe(false);
+    }
+  });
+});
+
+describe("striped-gradient", () => {
+  it("draws one gradient rect per stripe", () => {
+    const svg = renderStatic(
+      stripedGradientTool,
+      { ...stripedGradientTool.defaults, shading: 0 },
+      1,
+      { width: 600, height: 400 },
+    ) as string;
+    expect(svg.match(/<rect /g)).toHaveLength(stripedGradientTool.defaults.stripes);
+  });
+
+  it("caps the stripe count so params cannot inflate the SVG", () => {
+    expect(
+      stripedGradientTool.schema.safeParse({ ...stripedGradientTool.defaults, stripes: 41 })
+        .success,
+    ).toBe(false);
   });
 });

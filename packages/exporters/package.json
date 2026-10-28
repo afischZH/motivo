@@ -1,5 +1,5 @@
 {
-  "name": "@motivo/exporters",
+  "name": "@musterli/exporters",
   "version": "0.0.0",
   "private": true,
   "description": "SVG/CSS/PNG/JPG/WebP/GIF/MP4/React exporters",
@@ -13,10 +13,11 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@motivo/tool-registry": "workspace:*"
+    "@musterli/engine": "workspace:*",
+    "@musterli/tool-registry": "workspace:*"
   },
   "devDependencies": {
-    "@motivo/config": "workspace:*",
+    "@musterli/config": "workspace:*",
     "zod": "^4.6.7"
   }
 }

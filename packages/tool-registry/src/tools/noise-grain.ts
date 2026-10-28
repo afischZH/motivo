@@ -15,15 +15,14 @@ import {
   GRAIN_SIZE_MAX,
   GRAIN_SIZE_MIN,
   GRAIN_TILE_EDGE,
-  grainTile,
   noiseGrainSvg,
-  pngDataUri,
   randomPalette,
   type GrainBlend,
   type Rng,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema, paletteSchema } from "../common";
+import { grainTileCacheSize, grainTileDataUri } from "./grain";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
@@ -66,15 +65,7 @@ const preset = (id: string, params: Partial<NoiseGrainParams>): Preset<NoiseGrai
   params: { ...defaults, ...params },
 });
 
-// ---------------------------------------------------------------------------
-// Tile cache: the tile depends only on (seed, size, mono, blend), so colour,
-// angle and amount changes reuse it instead of recomputing about 200k
-// Gaussian samples. Pure memoisation; outputs are identical with or without.
-// ---------------------------------------------------------------------------
-
-const TILE_CACHE_MAX = 16;
-const tileCache = new Map<string, string>();
-
+/** Grain tile of the design; depends only on (seed, size, mono, blend), so it is cached. */
 function tileDataUri(
   rng: Rng,
   seed: number,
@@ -82,27 +73,11 @@ function tileDataUri(
   mono: boolean,
   blend: GrainBlend,
 ): string {
-  const key = `${seed}|${size}|${mono ? 1 : 0}|${blend}`;
-  const hit = tileCache.get(key);
-  if (hit !== undefined) {
-    // Refresh recency (Map keeps insertion order).
-    tileCache.delete(key);
-    tileCache.set(key, hit);
-    return hit;
-  }
-  const uri = pngDataUri(grainTile(rng, { size, mono, blend }), mono ? "gray" : "rgb");
-  tileCache.set(key, uri);
-  if (tileCache.size > TILE_CACHE_MAX) {
-    const oldest = tileCache.keys().next().value;
-    if (oldest !== undefined) tileCache.delete(oldest);
-  }
-  return uri;
+  return grainTileDataUri(`noise|${seed}|${size}|${mono ? 1 : 0}|${blend}`, rng, size, mono, blend);
 }
 
 /** Number of cached tiles, for tests. */
-export function noiseGrainTileCacheSize(): number {
-  return tileCache.size;
-}
+export const noiseGrainTileCacheSize = grainTileCacheSize;
 
 export const noiseGrainTool = defineTool({
   id: ID,
@@ -204,5 +179,4 @@ export const noiseGrainTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
-  gating: {},
 });
