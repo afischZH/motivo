@@ -92,17 +92,62 @@ export function prepareSvgAsset(input: string): PreparedSvgAsset | null {
   };
 }
 
-/** Entries kept (current upload, undo history, a few variants). */
-const CACHE_ENTRIES = 4;
-const cache = new Map<string, PreparedSvgAsset>();
+/**
+ * Most entries kept: every SVG of the current design (Bento: up to 48 tile
+ * pictures plus the grid picture) and a few from the undo history. With
+ * fewer entries than SVGs in one design, every render would evict the
+ * entry the next lookup needs and run the sanitizer on the main thread
+ * again for each picture (M4-AP09: about 750 ms per render with 8 tiles).
+ */
+export const SVG_ASSET_CACHE_ENTRIES = 64;
+/**
+ * Most characters of input kept (each entry holds the input, the sanitised
+ * copy and the recolour template): twice the largest Bento picture budget.
+ */
+export const SVG_ASSET_CACHE_CHARS = 24_000_000;
+
+/** Least recently used map limited by entry count and total weight. */
+class LruCache<V> {
+  private readonly map = new Map<string, { value: V; weight: number }>();
+  private total = 0;
+  constructor(
+    private readonly maxEntries: number,
+    private readonly maxWeight: number,
+  ) {}
+  get(key: string): V | undefined {
+    const hit = this.map.get(key);
+    if (!hit) return undefined;
+    // Most recently used last.
+    this.map.delete(key);
+    this.map.set(key, hit);
+    return hit.value;
+  }
+  set(key: string, value: V, weight: number): void {
+    this.delete(key);
+    this.map.set(key, { value, weight });
+    this.total += weight;
+    while (this.map.size > this.maxEntries || (this.total > this.maxWeight && this.map.size > 1)) {
+      const oldest = this.map.keys().next().value;
+      if (oldest === undefined) break;
+      this.delete(oldest);
+    }
+  }
+  delete(key: string): void {
+    const hit = this.map.get(key);
+    if (!hit) return;
+    this.map.delete(key);
+    this.total -= hit.weight;
+  }
+  clear(): void {
+    this.map.clear();
+    this.total = 0;
+  }
+}
+
+const cache = new LruCache<PreparedSvgAsset>(SVG_ASSET_CACHE_ENTRIES, SVG_ASSET_CACHE_CHARS);
 
 function remember(entry: PreparedSvgAsset): void {
-  cache.delete(entry.input);
-  if (cache.size >= CACHE_ENTRIES) {
-    const oldest = cache.keys().next().value;
-    if (oldest !== undefined) cache.delete(oldest);
-  }
-  cache.set(entry.input, entry);
+  cache.set(entry.input, entry, entry.input.length);
 }
 
 /**
@@ -133,14 +178,14 @@ export function recolorSvgAsset(asset: PreparedSvgAsset, color: string): string 
   return result.ok ? result.svg : null;
 }
 
-/** Test helper: forgets all prepared entries. */
+/** Test helper: forgets all prepared entries and data URIs. */
 export function clearSvgAssetCache(): void {
   cache.clear();
+  assetUris.clear();
 }
 
-/** Data URIs of sanitised uploads, by sanitizer output (small LRU). */
-const assetUris = new Map<string, string>();
-const ASSET_URI_ENTRIES = 32;
+/** Data URIs of sanitised uploads, by sanitizer output (LRU, limits as above). */
+const assetUris = new LruCache<string>(SVG_ASSET_CACHE_ENTRIES, SVG_ASSET_CACHE_CHARS);
 
 /**
  * Data URI of an upload for `<image>` and CSS `url()`: a raster as is, an
@@ -151,13 +196,9 @@ export function imageAssetHref(asset: ImageAsset): string | null {
   if (asset.kind === "raster") return asset.href;
   const clean = svgAssetFor(asset.svg);
   if (!clean) return null;
-  const uri = assetUris.get(clean.svg) ?? svgBase64DataUri(clean.svg);
-  // Most recently used last; the oldest entry goes first.
-  assetUris.delete(clean.svg);
-  assetUris.set(clean.svg, uri);
-  if (assetUris.size > ASSET_URI_ENTRIES) {
-    const oldest = assetUris.keys().next().value;
-    if (oldest !== undefined) assetUris.delete(oldest);
-  }
+  const cached = assetUris.get(clean.svg);
+  if (cached !== undefined) return cached;
+  const uri = svgBase64DataUri(clean.svg);
+  assetUris.set(clean.svg, uri, uri.length);
   return uri;
 }
