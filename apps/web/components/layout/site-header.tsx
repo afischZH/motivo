@@ -8,6 +8,7 @@ export function SiteHeader() {
   const tConvert = useTranslations("Converters");
   const tPatterns = useTranslations("PatternLibrary");
   const tTheme = useTranslations("Theme");
+  const tDesigns = useTranslations("Designs");
 
   return (
     <header className="border-b border-border">
@@ -38,6 +39,30 @@ export function SiteHeader() {
               className="rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               {tConvert("nav")}
+            </Link>
+            {/* Subtle: icon only on narrow screens, the name from sm up. */}
+            <Link
+              href="/my-designs"
+              className="inline-flex items-center gap-1.5 rounded-control text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+              data-testid="my-designs-nav"
+            >
+              <svg
+                className="size-4 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" />
+              </svg>
+              <span className="sr-only sm:not-sr-only">{tDesigns("nav")}</span>
             </Link>
           </nav>
           {/* The visible hint uses the generic form; macOS users read ⌘ for Ctrl. */}

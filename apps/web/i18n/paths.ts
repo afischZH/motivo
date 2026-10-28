@@ -42,6 +42,7 @@ export type AppRoute =
   | { page: "gradient"; gradientId: string }
   | { page: "palettes" }
   | { page: "palette"; paletteId: string }
+  | { page: "myDesigns" }
   | { page: "imprint" }
   | { page: "privacy" }
   | { page: "founders" }
@@ -103,6 +104,8 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       };
     case "palettes":
       return "/palettes" as const;
+    case "myDesigns":
+      return "/my-designs" as const;
     case "palette":
       return {
         pathname: "/palettes/[paletteSlug]" as const,
@@ -220,6 +223,9 @@ export function routeFromPathname(
     const slug = param(params.paletteSlug);
     const paletteId = slug ? collectionItemFromSlug("palettes", slug, locale) : undefined;
     return paletteId && segments.length === 2 ? { page: "palette", paletteId } : undefined;
+  }
+  if (section === "myDesigns") {
+    return segments.length === 1 ? { page: "myDesigns" } : undefined;
   }
   if (section === "imprint" || section === "privacy") {
     return segments.length === 1 ? { page: section } : undefined;

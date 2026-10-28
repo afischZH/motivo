@@ -1,7 +1,9 @@
 "use client";
 
 import { EditorShell, EditorStoreProvider } from "@motivo/editor-ui";
+import { createDesignStore } from "@motivo/storage";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 import { Link } from "@/i18n/client-navigation";
 
@@ -13,10 +15,14 @@ import { Link } from "@/i18n/client-navigation";
  */
 export function ToolEditor({ toolId }: { toolId: string }) {
   const t = useTranslations("ToolPage");
+  // Saved designs live in this browser only (IndexedDB, opened on first use).
+  const [designs] = useState(() => createDesignStore());
+  useEffect(() => () => designs.close(), [designs]);
 
   return (
     <EditorStoreProvider key={toolId} options={{ toolId }}>
       <EditorShell
+        designs={designs}
         headerStart={
           <Link
             href="/tools"

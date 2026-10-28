@@ -59,6 +59,10 @@ describe("sitemap", () => {
     expect(urls.filter((url) => /founders-(warteliste|waitlist)\/./.test(url))).toEqual([]);
   });
 
+  it("never lists the personal designs page", () => {
+    expect(urls.filter((url) => /\/(meine-designs|my-designs)/.test(url))).toEqual([]);
+  });
+
   it("leaves out the legal pages while they are drafts", () => {
     const legal = urls.filter((url) => /\/(impressum|imprint|datenschutz|privacy)$/.test(url));
     expect(legal).toHaveLength(LEGAL_CONFIG.legalReviewed ? 4 : 0);

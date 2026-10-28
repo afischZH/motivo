@@ -49,6 +49,7 @@ export const routing = defineRouting({
     "/gradients/[gradientSlug]": sectionPath("gradients", "/[gradientSlug]"),
     "/palettes": sectionPath("palettes"),
     "/palettes/[paletteSlug]": sectionPath("palettes", "/[paletteSlug]"),
+    "/my-designs": sectionPath("myDesigns"),
     "/imprint": sectionPath("imprint"),
     "/privacy": sectionPath("privacy"),
     "/founders": sectionPath("founders"),

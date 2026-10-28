@@ -20,8 +20,17 @@ export const WAITLIST_CLIENT_NAMESPACES = ["Waitlist"] as const;
 /** Waitlist confirm and unsubscribe pages: only the result texts. */
 export const WAITLIST_RESULT_CLIENT_NAMESPACES = ["WaitlistResult"] as const;
 
-/** Editor pages: page chrome, editor shell and tool texts (`tools.*`). */
-export const EDITOR_CLIENT_NAMESPACES = ["ToolPage", "Editor", "sizes", "tools"] as const;
+/** Editor pages: page chrome, editor shell, saving and tool texts (`tools.*`). */
+export const EDITOR_CLIENT_NAMESPACES = [
+  "ToolPage",
+  "Editor",
+  "Designs",
+  "sizes",
+  "tools",
+] as const;
+
+/** "Meine Designs": only its own texts (tool names come as props). */
+export const MY_DESIGNS_CLIENT_NAMESPACES = ["Designs"] as const;
 
 /** The given top-level namespaces; missing ones are skipped. */
 export function pickMessages(messages: Messages, namespaces: readonly string[]): Messages {

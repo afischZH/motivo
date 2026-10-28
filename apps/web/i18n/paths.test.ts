@@ -35,6 +35,7 @@ const routes: AppRoute[] = [
   ...Object.keys(PATTERN_SLUGS).map((patternId): AppRoute => ({ page: "pattern", patternId })),
   { page: "gradients" },
   { page: "palettes" },
+  { page: "myDesigns" },
   ...Object.keys(GRADIENT_SLUGS).map((gradientId): AppRoute => ({ page: "gradient", gradientId })),
   ...Object.keys(PALETTE_SLUGS).map((paletteId): AppRoute => ({ page: "palette", paletteId })),
   ...(Object.keys(WAITLIST_PAGE_SLUGS) as (keyof typeof WAITLIST_PAGE_SLUGS)[]).map(
