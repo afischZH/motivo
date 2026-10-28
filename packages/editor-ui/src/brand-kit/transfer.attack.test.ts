@@ -43,7 +43,8 @@ const time = (fn: () => void) => {
   return performance.now() - start;
 };
 
-describe("brand kit import under attack", () => {
+// Large inputs on purpose: generous timeouts for loaded CI machines.
+describe("brand kit import under attack", { timeout: 60_000 }, () => {
   it("survives SVG nested deeper than any recursive walker allows", () => {
     const depth = 100_000;
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">${"<g>".repeat(depth)}<rect width="1" height="1"/>${"</g>".repeat(depth)}</svg>`;

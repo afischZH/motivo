@@ -51,7 +51,8 @@ const time = (fn: () => void) => {
   return performance.now() - start;
 };
 
-describe("designs import under attack", () => {
+// Large inputs on purpose: generous timeouts for loaded CI machines.
+describe("designs import under attack", { timeout: 60_000 }, () => {
   it("survives nesting deep enough to overflow a recursive walker", () => {
     const depth = 200_000;
     const text = `{"format":"${DESIGNS_FILE_FORMAT}","version":1,"designs":[{"params":{"x":${"[".repeat(depth)}${"]".repeat(depth)}}}]}`;

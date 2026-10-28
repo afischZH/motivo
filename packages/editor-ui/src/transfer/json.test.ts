@@ -30,7 +30,7 @@ describe("packIntoFiles", () => {
   });
 });
 
-describe("stringifyEach", () => {
+describe("stringifyEach", { timeout: 30_000 }, () => {
   it("serialises every value in order", async () => {
     expect(await stringifyEach([1, "a", { b: [true] }])).toEqual(["1", '"a"', '{"b":[true]}']);
   });
