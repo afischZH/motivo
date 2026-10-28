@@ -152,6 +152,15 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **F4 Palette aus Bild (M2-AP06, Tool-ID `palette-from-image`)**: Bild per Ablage, Dateiwahl oder Einfügen (Ctrl+V) über die generische Bildeingabe der Editor-Shell (siehe ARCHITECTURE.md 4.2). Erlaubt sind PNG, JPG, WebP, GIF (erstes Bild) und SVG (nur über `<img>` gerastert) bis 5 MB und 64 Megapixel; der Typ wird an den Magic Bytes erkannt. Das Bild wird im Worker auf höchstens 256 px Kantenlänge verkleinert und nie hochgeladen, gespeichert oder in Teilen-Links übernommen. Algorithmus (`extractPalette` in `packages/engine`): Pixel auf 5 Bit pro Kanal gebinnt (höchstens 32 768 gewichtete Punkte), dann gewichtetes k-Means++ in OKLab mit dem Seed (Leertaste = neuer Start), höchstens 24 Iterationen, durchsichtige Pixel (Alpha < 128) zählen nicht. Ergebnis: 3 bis 10 Farben mit Anteil, sortiert nach Anteil, Helligkeit oder Farbton (Grautöne zuletzt). Ohne eigenes Bild dient ein prozedural gezeichnetes Beispielbild (Sonnenuntergang, keine Asset-Lizenz nötig); Standardwerte und 7 Vorlagen (Farbanzahl und Sortierung) enthalten dessen Paletten für Seed 1, ein Test rechnet sie nach. Exporte: CSS-Variablen, HEX-Liste, `tailwind.config.js`, Tailwind-v4-`@theme`, SVG, PNG, JPG, WebP.
 | **F5 Gradient-, Paletten-Sammlungen** | Programmatic-SEO-Seiten (kuratiert + Community) | M3 |
 
+### F6. Kontrast-Checker · M4 · G
+- **Zweck**: Text- und Hintergrundfarbe prüfen, ob sie lesbar sind, und sehen, wie die Kombination bei Farbsehschwäche wirkt. Ergänzt die Farbtools (Brand-Palette wählbar).
+- **Parameter**: `foreground`, `background` (je Hex, Pipette über `EyeDropper`-API wo vorhanden, sonst nur Eingabe), `sample` (Überschrift, Fliesstext, UI-Element), `simulation` (keine, Protanopie, Deuteranopie, Tritanopie, Achromatopsie), `pairs` (optional: alle Paare einer Palette als Matrix, wie F1).
+- **Algorithmus**: WCAG-2-Kontrast aus `packages/engine/src/palette/` (bestehend). Bewertung AA/AAA für normalen und grossen Text sowie 3:1 für UI-Elemente; Werte abgerundet wie in F1, damit nie ein knapp verfehltes AA erscheint. Simulation der Farbsehschwäche mit den veröffentlichten Matrizen von Machado, Oliveira und Fernandes (2009) in linearem sRGB, Achromatopsie über Luminanz.
+- **Vorschlag bei zu wenig Kontrast**: nächstgelegene Farbe, die AA bzw. AAA erreicht, durch Verschieben der OKLCH-Helligkeit bei gleichem Farbton (Binärsuche, deterministisch). Ein Klick übernimmt sie.
+- **APCA** (Kontrastmodell für WCAG 3) erst nach Prüfung der Lizenz des Referenz-Algorithmus; bis dahin nur WCAG 2.
+- **Exporte**: CSS-Variablen der beiden Farben, PNG/SVG der Vorschaukarte, Bericht als Text (Kontrast, Stufen). Teilen-Link.
+- **SEO**: eigene Landingpage, FAQ zu WCAG-Stufen und Farbsehschwäche.
+
 ## G. Converters (alle rein clientseitig, gratis, SEO-Magneten) · M1
 
 SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), Base64 zu SVG, Bild zu Base64 (optional Komprimierung via Canvas), Base64 zu Bild. Jede Seite mit Erklärung, Beispielen und FAQ.
@@ -169,6 +178,30 @@ SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), 
 - Generalisierung des Social-Editors: beliebige Tool-Ergebnisse als Ebenen mit Blend-Modes und Masken (z. B. Pattern nur innerhalb eines Blobs). Ebenen bleiben **parametrisch** (Klick auf Ebene öffnet das Tool-Panel).
 - Exporte: PNG/JPG/WebP, SVG wenn alle Ebenen vektoriell sind.
 
+## J. CSS-Effekte und Layouts (Code-first) · M4 · G
+
+Kleine Tools für die Entwickler-Persona: Ergebnis ist in erster Linie Code zum Kopieren (CSS, Tailwind, HTML), die Vorschau ist echtes CSS auf einem frei wählbaren Musterli-Hintergrund (Gradient, Mesh, Muster als Bühne). Damit gilt der eine Render-Pfad wie bei B1: dieselben Deklarationen ergeben Vorschau und Export. Bildexporte (PNG/WebP) über ein SVG ohne `foreignObject`, wo das Ergebnis nachgezeichnet werden kann, sonst nur Code.
+
+### J1. CSS-Schatten-Generator · M4 · G
+- **Zweck**: weiche, natürlich wirkende Schatten statt eines einzelnen harten `box-shadow`.
+- **Parameter**: `layers` (1 bis 8 Schattenebenen), `distance` (Versatz der grössten Ebene), `blur`, `spread`, `angle` (Lichtrichtung), `opacity`, `color` (Schattenfarbe, standardmässig aus der Hintergrundfarbe abgedunkelt statt Schwarz), `easing` (linear, ease-out, exponentiell: wie Versatz und Unschärfe über die Ebenen wachsen), `inset`, Vorschau-Form (`radius`, Karte/Button).
+- **Algorithmus**: Ebene i von n bekommt Versatz und Unschärfe `max * ease(i/n)` und Deckkraft `opacity / n` (leicht nach Easing gewichtet); Zahlen gerundet auf 0.1 px. Leertaste würfelt Lichtrichtung, Grösse und Easing.
+- **Exporte**: CSS (`box-shadow`), Tailwind (Arbitrary Value `shadow-[...]` und `@theme`-Variable `--shadow-*` für v4), CSS-Variable, `filter: drop-shadow()`-Variante für freigestellte Formen. Vorlagen (mind. 6): z. B. "Sanft", "Schwebend", "Scharf", "Tief", "Innen".
+
+### J2. Glas- und Rahmen-Effekte · M4 · G
+- **Zweck**: trendige Oberflächen für Karten und Hero-Bereiche: Milchglas, Verlaufsrahmen, Leuchten.
+- **Parameter**: `effect` (Glas, Verlaufsrahmen, Glow), Glas: `blur` (`backdrop-filter`), `tint` (Farbe + Deckkraft), `saturation`, `border` (heller Innenrand), `noise` (Grain-Kachel aus E1 als Overlay); Verlaufsrahmen: `palette`, `width`, `angle`, `animated` (drehender `conic-gradient` per `@property`, mit `prefers-reduced-motion`); Glow: `color`, `size`, `intensity`; gemeinsam `radius`, `shadow` (Werte aus J1 übernehmbar).
+- **Kompatibilität**: `backdrop-filter` mit `-webkit-`-Präfix für Safari; `@property` nur wo unterstützt, sonst statischer Rahmen als Fallback. Werte bei Umsetzung gegen aktuelle Browser-Doku prüfen.
+- **Exporte**: CSS, Tailwind-Klassen, HTML-Beispiel. PNG/WebP nur für Verlaufsrahmen und Glow (Glas hängt vom Hintergrund der Zielseite ab; PNG zeigt es auf dem gewählten Musterli-Hintergrund).
+- **Barrierefreiheit**: Hinweis im Tool, wenn Text auf Glas den Kontrast (F6) verfehlt.
+
+### J3. Bento-Grid-Generator · M4 · G
+- **Zweck**: Layouts im "Bento"-Stil (ungleich grosse, abgerundete Kacheln in einem Raster) für Feature-Sektionen, Portfolios und Social-Grafiken. Leertaste = neue Aufteilung.
+- **Parameter**: `columns` (2 bis 8), `rows` (2 bis 8), `tiles` (Zielanzahl Kacheln), `minSpan`/`maxSpan` (kleinste und grösste Kachel in Zellen), `gap`, `radius`, `padding`, `fill` (eine Farbe, Palette zufällig, Palette der Reihe nach, Musterli-Design pro Kachel als Referenz in P2), Kachelinhalt als Platzhalter (leer, Titel-Balken, Icon-Kreis, Linien als Textersatz).
+- **Algorithmus**: Raster vollständig belegen ohne Lücken: wiederholte Guillotine-Teilung entlang Zellgrenzen (zufällige Achse und Position aus dem `Rng`, gewichtet nach Seitenverhältnis), bis die Zielanzahl erreicht ist oder keine Teilung `minSpan` einhält; alternativ Platzierung grösster Kacheln zuerst mit Auffüllen durch 1×1. Ergebnis ist eine Liste `{ col, row, colSpan, rowSpan }`, deterministisch pro Seed. Responsive-Variante: auf `breakpointColumns` (z. B. 2) umbrechen, Kacheln in Lesereihenfolge.
+- **Exporte**: CSS Grid (`grid-template-columns`, `grid-column: span n`) mit HTML-Gerüst, Tailwind-Klassen, React-Komponente (P2), SVG, PNG, JPG, WebP (Kacheln als gerundete Rechtecke). Vorlagen (mind. 6): z. B. "Feature-Sektion 3×2", "Portfolio", "Dashboard", "Hochformat Story".
+- **Abgrenzung**: kein freier Layout-Editor (Nicht-Ziel Vektor-Editor); verschieben einzelner Kacheln höchstens per Sperren und Neu-Würfeln.
+
 ---
 
 ## Umsetzungsreihenfolge (Zusammenfassung)
@@ -176,7 +209,7 @@ SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
 2. **M2**: CSS Patterns + Editor, Farbtools, Noise, Polka/Grid/Confetti/Dieter Dots
 3. **M3**: Mesh, Blurry, Striped, Blob Composition, Doodles, Charts, Sammlungsseiten
-4. **M4**: Geometric + Seamless Patterns, Packs, GIF
+4. **M4**: Geometric + Seamless Patterns, Packs, GIF; Code-first-Welle: Kontrast-Checker (F6), CSS-Schatten (J1), Glas- und Rahmen-Effekte (J2), Bento-Grid (J3)
 5. **M5**: Shader Gradient (+ Video), Perspective Grid, Halftone, CMYK, Dither
 6. **M6**: God Rays, Fractal Glass, Social Media Editor
 7. **M7**: Composer, Community-Ausbau, API, Plugins, KI

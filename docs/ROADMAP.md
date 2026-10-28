@@ -74,6 +74,7 @@ Gesamtüberblick:
 - [ ] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing); **Seamless Patterns** in M3 vorgezogen (M3-AP12)
 - [ ] Eigene Shape-Bibliothek (Startziel 150+ Shapes, 12 Packs) + Custom Packs aus Brand Kit
 - [ ] **GIF-Export** im Worker
+- [ ] Code-first-Welle (Entscheid 2026-10-28): **Kontrast-Checker** (F6), **CSS-Schatten-Generator** (J1), **Glas- und Rahmen-Effekte** (J2), **Bento-Grid-Generator** (J3), je mit SEO-Landingpage
 - [ ] Kurze Nutzungsbedingungen mit freier Lizenz für Exporte (juristisch zu prüfen)
 - [ ] Launch-Kommunikation (Product Hunt, Reddit, Swiss-Communities), Changelog
 
