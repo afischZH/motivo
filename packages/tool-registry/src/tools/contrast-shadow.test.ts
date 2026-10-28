@@ -1,6 +1,6 @@
 /**
  * M4-AP05: contrast checker suggestions and brand palette, CSS shadow
- * render path (element + backdrop + SVG twin) and code exports.
+ * render path (stage + element + SVG twin) and code exports.
  */
 import { contrastRatio, sampleTargets } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
@@ -112,20 +112,32 @@ describe("css shadow", () => {
     return e.render({ ...cssShadowTool.defaults, ...patch }, ctx);
   };
 
-  it("styles a centred element on a backdrop with one shadow per layer", () => {
+  it("styles a centred element on the stage with one shadow per layer", () => {
     const out = render();
-    expect(out.css).toMatch(/^background-color: #ffffff;\nborder-radius: 16px;\nbox-shadow: /);
-    expect(out.css.match(/rgb\(/g)).toHaveLength(cssShadowTool.defaults.layers);
-    expect(out.element?.width).toBeGreaterThan(0);
-    expect(out.element?.backdrop).toMatch(/background-image: linear-gradient\(/);
-    // The stage is preview only: never in the exported CSS.
-    expect(out.css).not.toContain("gradient");
+    const element = out.element;
+    if (!element) throw new Error("expected an element");
+    expect(element.css).toMatch(/^background-color: #ffffff;\nborder-radius: 16px;\nbox-shadow: /);
+    expect(element.css.match(/rgb\(/g)).toHaveLength(cssShadowTool.defaults.layers);
+    expect(element.x * 2 + element.width).toBe(ctx.width);
+    expect(element.y * 2 + element.height).toBe(ctx.height);
+    expect(out.css).toMatch(/background-image: linear-gradient\(/);
+    // The stage is preview only: the CSS export is the element's declarations.
+    const css = extra("css");
+    expect(css).toBe(`${element.css}\n`);
+    expect(css).not.toContain("gradient");
     expect(out.previewSvg).toContain("feGaussianBlur");
   });
 
+  it("lives in the CSS effects category and exports code as an extra", () => {
+    expect(cssShadowTool.category).toEqual(["css-effects"]);
+    expect(cssShadowTool.exports).not.toContain("css");
+  });
+
   it("uses the chosen colour only without auto colour", () => {
-    expect(render({ autoColor: false, color: "#ff0000" }).css).toContain("rgb(255 0 0 /");
-    expect(render({ autoColor: true, color: "#ff0000" }).css).not.toContain("rgb(255 0 0 /");
+    expect(render({ autoColor: false, color: "#ff0000" }).element?.css).toContain("rgb(255 0 0 /");
+    expect(render({ autoColor: true, color: "#ff0000" }).element?.css).not.toContain(
+      "rgb(255 0 0 /",
+    );
   });
 
   it("exports the same layers as Tailwind, @theme, variable and drop-shadow", () => {
@@ -143,7 +155,7 @@ describe("css shadow", () => {
   });
 
   it("marks every layer inset for inner shadows", () => {
-    const css = render({ inset: true }).css;
+    const css = render({ inset: true }).element?.css ?? "";
     expect(css.match(/inset /g)).toHaveLength(cssShadowTool.defaults.layers);
     expect(render({ inset: true }).previewSvg).toContain("clip-path");
   });

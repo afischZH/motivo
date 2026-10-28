@@ -14,7 +14,7 @@ const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-
 
 const motifImg = (page: Page): Locator => page.getByTestId("preview").locator("img");
 const shadowElement = (page: Page): Locator =>
-  page.getByTestId("preview").getByTestId("motif-element");
+  page.getByTestId("preview").locator("[data-motif-element]");
 
 async function openEditor(page: Page, toolId: string, locale: "de" | "en") {
   await page.goto(`/${locale}/tools/${toolSlug(toolId, locale)}`);

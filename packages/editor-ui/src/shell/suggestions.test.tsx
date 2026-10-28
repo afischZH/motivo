@@ -5,8 +5,6 @@ import * as z from "zod";
 import { createEditorStore } from "../store/editor-store";
 import { EditorStoreProvider } from "../store/react";
 import { fixtureMessages, renderWithIntl } from "../test/render";
-import { Motif } from "./motif";
-import { renderMotif } from "./render";
 import { SuggestionsSection } from "./suggestions";
 
 const schema = z.object({ color: colorSchema, radius: z.number().min(0).max(40) });
@@ -36,10 +34,7 @@ const tool = defineTool({
         ],
   render: {
     kind: "css",
-    render: (p) => ({
-      css: `background-color: ${p.color}; border-radius: ${p.radius}px;`,
-      element: { width: 100, height: 50, backdrop: "background-color: #eeeeee;" },
-    }),
+    render: (p) => ({ css: `background-color: ${p.color}; border-radius: ${p.radius}px;` }),
   },
   exports: ["css"],
 });
@@ -74,23 +69,5 @@ describe("SuggestionsSection", () => {
     expect(screen.queryByRole("region", { name: "Vorschläge" })).toBeNull();
     store.getState().undo();
     expect(store.getState().params.color).toBe("#777777");
-  });
-});
-
-describe("Motif with a CSS element", () => {
-  it("styles a centred element on the backdrop", () => {
-    const output = renderMotif(tool, defaults, 1, { width: 400, height: 300 });
-    expect(output.kind === "css" && output.element?.width).toBe(100);
-    const { getByTestId } = renderWithIntl(
-      <Motif output={output} width={400} height={300} scale={0.5} />,
-    );
-    const element = getByTestId("motif-element");
-    expect(element.style.backgroundColor).toBe("rgb(119, 119, 119)");
-    expect(element.style.borderRadius).toBe("8px");
-    expect(element.style.width).toBe("100px");
-    const stage = element.parentElement as HTMLElement;
-    expect(stage.style.backgroundColor).toBe("rgb(238, 238, 238)");
-    expect(stage.style.width).toBe("400px");
-    expect(stage.style.transform).toBe("scale(0.5)");
   });
 });

@@ -54,9 +54,18 @@ function kindSupports(tool: AnyToolDefinition, format: ExportFormat): boolean {
 /**
  * Whether the exporters in this package can produce `format` for the tool:
  * the tool must declare it in `exports` and its render kind must support it.
+ * With `params`, the tool's `exportsFor` may narrow the formats further
+ * (e.g. image exports only for some effects).
  */
-export function supportsExport(tool: AnyToolDefinition, format: ExportFormat): boolean {
-  return tool.exports.includes(format) && kindSupports(tool, format);
+export function supportsExport(
+  tool: AnyToolDefinition,
+  format: ExportFormat,
+  params?: Readonly<Record<string, unknown>>,
+): boolean {
+  if (!tool.exports.includes(format) || !kindSupports(tool, format)) return false;
+  if (params === undefined || tool.exportsFor === undefined) return true;
+  // The editor only holds params that passed the tool's schema.
+  return tool.exportsFor(params as Parameters<typeof tool.randomize>[1]).includes(format);
 }
 
 function requireFormat(tool: AnyToolDefinition, format: ExportFormat): void {

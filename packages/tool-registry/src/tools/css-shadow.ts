@@ -1,9 +1,9 @@
 /**
  * M4-AP05: CSS shadow generator (docs/TOOLS.md J1). Layered `box-shadow`
  * on a real CSS preview element (card or button) that sits on a Musterli
- * background. One render path: `render` returns the element's declarations
- * (exported as CSS) plus the stage as `element.backdrop`; the SVG twin for
- * SVG/PNG/WebP is drawn from the same layer list.
+ * background. One render path: `render` returns the stage as `css` (preview
+ * only) and the element as `CssOutput.element` (its declarations are the CSS
+ * export); the SVG twin for SVG/PNG/WebP is drawn from the same layer list.
  */
 import {
   SHADOW_EASINGS,
@@ -108,7 +108,7 @@ const nameOf = (p: CssShadowParams): string => toCssName(p.name, "soft");
 export const cssShadowTool = defineTool({
   id: ID,
   version: 1,
-  category: ["css-patterns"],
+  category: ["css-effects"],
   schema,
   defaults,
   defaultSize: SHADOW_SIZE,
@@ -280,8 +280,8 @@ export const cssShadowTool = defineTool({
       const box = shadowElementBox(p.shape, width, height);
       const stage = shadowStage(p.stage, p.surface, width, height);
       return {
-        css: elementCss(p, layers),
-        element: { width: box.width, height: box.height, backdrop: stage.css },
+        css: stage.css,
+        element: { ...box, css: elementCss(p, layers) },
         previewSvg: shadowSvg({
           width,
           height,
@@ -296,8 +296,14 @@ export const cssShadowTool = defineTool({
       };
     },
   },
-  exports: ["css", "svg", "png", "webp"],
+  exports: ["svg", "png", "webp"],
   extraExports: [
+    {
+      id: "css",
+      labelKey: EXTRA_EXPORT_LABELS.css,
+      language: "css",
+      render: (p) => `${elementCss(p, layersOf(p))}\n`,
+    },
     {
       id: "tailwind",
       labelKey: EXTRA_EXPORT_LABELS.tailwind,

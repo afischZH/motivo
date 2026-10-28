@@ -21,17 +21,41 @@ export type MotifStyle = Readonly<Record<string, string>>;
  */
 export type CssDeclarations = readonly (readonly [property: string, values: readonly string[]])[];
 
-/** A centred element styled by the declarations, on a backdrop (`CssOutput.element`). */
-export interface MotifElement {
+/** A box of a CSS element with parsed declarations. */
+export interface MotifBox {
+  x: number;
+  y: number;
   width: number;
   height: number;
-  backdrop: CssDeclarations;
+  declarations: CssDeclarations;
+}
+
+/** `CssElement` of a CSS output with parsed declarations. */
+export interface MotifElement extends MotifBox {
+  /** Applied only when the viewer allows motion. */
+  motion: CssDeclarations;
+  content: readonly MotifBox[];
 }
 
 export type MotifOutput =
   | { kind: "svg"; svg: string }
-  | { kind: "css"; css: string; declarations: CssDeclarations; element?: MotifElement }
+  | {
+      kind: "css";
+      css: string;
+      declarations: CssDeclarations;
+      element?: MotifElement;
+      /** Global rules (`@property`, `@keyframes`) for a stylesheet. */
+      rules?: string;
+    }
   | { kind: "unsupported"; renderKind: RenderKind };
+
+const box = (b: { x: number; y: number; width: number; height: number; css: string }) => ({
+  x: b.x,
+  y: b.y,
+  width: b.width,
+  height: b.height,
+  declarations: parseCssDeclarations(b.css),
+});
 
 /** Renders one design through the tool's render path. */
 export function renderMotif(
@@ -49,15 +73,20 @@ export function renderMotif(
       return { kind: "svg", svg: renderer.render(p, ctx) };
     case "css": {
       const out = renderer.render(p, ctx);
-      const declarations = parseCssDeclarations(out.css);
-      if (!out.element) return { kind: "css", css: out.css, declarations };
-      const { width, height, backdrop } = out.element;
-      return {
+      const motif: MotifOutput = {
         kind: "css",
         css: out.css,
-        declarations,
-        element: { width, height, backdrop: parseCssDeclarations(backdrop) },
+        declarations: parseCssDeclarations(out.css),
       };
+      if (out.element) {
+        motif.element = {
+          ...box(out.element),
+          motion: parseCssDeclarations(out.element.motionCss ?? ""),
+          content: (out.element.content ?? []).map(box),
+        };
+      }
+      if (out.rules) motif.rules = out.rules;
+      return motif;
     }
     default:
       return { kind: "unsupported", renderKind: renderer.kind };

@@ -1738,6 +1738,228 @@
         }
       }
     },
+    "glass-effects": {
+      "name": "Glas- und Rahmen-Effekte",
+      "description": "Milchglas, Verlaufsrahmen und Leuchten für Karten und Hero-Bereiche. Echtes CSS mit Vorschau, kopierbar als CSS, Tailwind oder HTML.",
+      "groups": {
+        "effect": "Effekt",
+        "glass": "Glas",
+        "border": "Verlaufsrahmen",
+        "glow": "Leuchten",
+        "card": "Karte",
+        "stage": "Bühne"
+      },
+      "params": {
+        "effect": {
+          "label": "Effekt",
+          "options": {
+            "glass": "Glas",
+            "gradient-border": "Verlaufsrahmen",
+            "glow": "Leuchten"
+          }
+        },
+        "backdrop": {
+          "label": "Hintergrund",
+          "options": {
+            "aurora": "Polarlicht",
+            "shapes": "Formen",
+            "gradient": "Verlauf",
+            "dots": "Punkte",
+            "grid": "Raster",
+            "stripes": "Streifen"
+          }
+        },
+        "backdropPalette": {
+          "label": "Farben der Bühne"
+        },
+        "cardWidth": {
+          "label": "Breite der Karte"
+        },
+        "cardHeight": {
+          "label": "Höhe der Karte"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "shadow": {
+          "label": "Schatten"
+        },
+        "textColor": {
+          "label": "Textfarbe"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "tint": {
+          "label": "Tönung"
+        },
+        "tintOpacity": {
+          "label": "Deckkraft der Tönung"
+        },
+        "saturation": {
+          "label": "Sättigung"
+        },
+        "border": {
+          "label": "Heller Innenrand"
+        },
+        "noise": {
+          "label": "Körnung"
+        },
+        "borderPalette": {
+          "label": "Farben des Rahmens"
+        },
+        "borderWidth": {
+          "label": "Rahmenbreite"
+        },
+        "borderAngle": {
+          "label": "Startwinkel"
+        },
+        "animated": {
+          "label": "Rahmen dreht sich"
+        },
+        "speed": {
+          "label": "Dauer einer Drehung"
+        },
+        "surface": {
+          "label": "Kartenfarbe"
+        },
+        "glowColor": {
+          "label": "Farbe des Leuchtens"
+        },
+        "glowSize": {
+          "label": "Reichweite"
+        },
+        "glowIntensity": {
+          "label": "Stärke"
+        }
+      },
+      "presets": {
+        "frosted": "Milchglas",
+        "ice": "Eis",
+        "smoke": "Rauchglas",
+        "grainy": "Körniges Glas",
+        "neon-ring": "Neonring",
+        "sunset-frame": "Abendrot-Rahmen",
+        "mint-glow": "Minzleuchten",
+        "violet-glow": "Violettes Leuchten"
+      },
+      "advisories": {
+        "textContrast": "Text auf dem Glas erreicht nur {ratio}:1 Kontrast, für WCAG AA brauchst du {required}:1. Wähle eine kräftigere Tönung oder eine andere Textfarbe."
+      },
+      "seo": {
+        "whatIs": "Glas- und Rahmen-Effekte sind CSS-Oberflächen für Karten, Dialoge und Hero-Bereiche: Milchglas mit backdrop-filter, Rahmen mit Farbverlauf (auf Wunsch drehend) und farbiges Leuchten. Das Tool zeigt den Effekt als echtes CSS auf einem Musterli-Hintergrund und liefert den Code dazu.",
+        "howTo": "Wähle Glas, Verlaufsrahmen oder Leuchten. Beim Glas stellst du Unschärfe, Tönung, Sättigung, Innenrand und Körnung ein, beim Rahmen Farben, Breite und Drehung, beim Leuchten Farbe, Reichweite und Stärke. Unter Bühne wechselst du den Hintergrund. Mit der Leertaste entstehen neue Varianten. Kopiere CSS, Tailwind-Klassen oder ein HTML-Beispiel.",
+        "faq": {
+          "q1": {
+            "question": "Funktioniert der Glas-Effekt in Safari?",
+            "answer": "Ja. Der Code enthält backdrop-filter zusätzlich mit dem Präfix -webkit-, das Safari vor Version 18 braucht. Chrome, Edge und Firefox unterstützen backdrop-filter ohne Präfix."
+          },
+          "q2": {
+            "question": "Warum gibt es Glas nicht als PNG?",
+            "answer": "Glas zeigt verschwommen, was auf deiner Seite dahinter liegt. Ein Bild würde nur den Hintergrund hier im Tool festhalten. Verlaufsrahmen und Leuchten kannst du dagegen als PNG oder WebP exportieren."
+          },
+          "q3": {
+            "question": "Was passiert mit dem drehenden Rahmen bei reduzierter Bewegung?",
+            "answer": "Wer in den Systemeinstellungen weniger Bewegung wünscht, sieht einen stillstehenden Rahmen. Der Code enthält dafür eine Regel für prefers-reduced-motion. Browser ohne @property zeigen ebenfalls den statischen Rahmen."
+          },
+          "q4": {
+            "question": "Ist Text auf Glas gut lesbar?",
+            "answer": "Das hängt von Tönung und Hintergrund ab. Das Tool prüft den Kontrast deiner Textfarbe auf dem getönten Glas und zeigt einen Hinweis, wenn WCAG AA mit 4.5:1 verfehlt wird."
+          }
+        }
+      }
+    },
+    "bento-grid": {
+      "name": "Bento-Grid",
+      "description": "Ungleich grosse, abgerundete Kacheln in einem Raster, ohne Lücken. Für Feature-Sektionen, Portfolios und Social-Grafiken, als CSS Grid, Tailwind oder Bild.",
+      "groups": {
+        "grid": "Raster",
+        "tiles": "Kacheln"
+      },
+      "params": {
+        "columns": {
+          "label": "Spalten"
+        },
+        "rows": {
+          "label": "Zeilen"
+        },
+        "tiles": {
+          "label": "Anzahl Kacheln"
+        },
+        "minSpan": {
+          "label": "Kleinste Kachel (Zellen)"
+        },
+        "maxSpan": {
+          "label": "Grösste Kachel (Zellen)"
+        },
+        "layoutSeed": {
+          "label": "Aufteilung Nr.",
+          "description": "Jede Nummer ergibt eine andere Aufteilung. Mit dem Schloss behältst du sie, während die Leertaste nur die Farben neu würfelt."
+        },
+        "gap": {
+          "label": "Abstand"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "padding": {
+          "label": "Rand"
+        },
+        "fill": {
+          "label": "Füllung",
+          "options": {
+            "single": "Eine Farbe",
+            "palette-random": "Palette zufällig",
+            "palette-order": "Palette der Reihe nach"
+          }
+        },
+        "content": {
+          "label": "Inhalt",
+          "options": {
+            "empty": "Leer",
+            "title": "Titel",
+            "icon": "Symbol",
+            "lines": "Textzeilen",
+            "mixed": "Gemischt"
+          }
+        },
+        "breakpointColumns": {
+          "label": "Spalten auf schmalen Bildschirmen",
+          "description": "Unter 768 px Breite ordnet der Code die Kacheln in Lesereihenfolge in so vielen Spalten an."
+        }
+      },
+      "presets": {
+        "feature-section": "Feature-Sektion 3×2",
+        "portfolio": "Portfolio",
+        "dashboard": "Dashboard",
+        "story": "Hochformat Story",
+        "mosaic": "Mosaik",
+        "calm": "Ruhig",
+        "blocks": "Blöcke"
+      },
+      "seo": {
+        "whatIs": "Ein Bento-Grid ordnet Inhalte in Kacheln unterschiedlicher Grösse an, wie die Fächer einer Bento-Box. Das Layout ist beliebt für Feature-Sektionen, Portfolios, Dashboards und Social-Media-Grafiken. Der Generator füllt das Raster immer vollständig, ohne Lücken.",
+        "howTo": "Lege Spalten, Zeilen und die gewünschte Anzahl Kacheln fest. Mit kleinster und grösster Kachel steuerst du, wie unterschiedlich die Kacheln werden. Drücke die Leertaste für eine neue Aufteilung oder sperre die Aufteilung und würfle nur die Farben neu. Exportiere als CSS Grid mit HTML, als Tailwind-Klassen, als SVG oder Bild.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich einzelne Kacheln verschieben?",
+            "answer": "Nein, Musterli ist bewusst kein Layout-Editor. Du würfelst Aufteilungen, bis eine passt, und sperrst sie mit dem Schloss. Spalten, Zeilen und Kachelgrössen steuerst du über die Regler."
+          },
+          "q2": {
+            "question": "Funktioniert das Raster auch auf dem Handy?",
+            "answer": "Ja. Der CSS-Code ordnet die Kacheln unter 768 px Breite in Lesereihenfolge in weniger Spalten an. Wie viele, stellst du unter Spalten auf schmalen Bildschirmen ein."
+          },
+          "q3": {
+            "question": "Bleiben Lücken im Raster?",
+            "answer": "Nie. Das Raster wird so lange entlang der Zellgrenzen geteilt, bis die gewünschte Anzahl Kacheln erreicht ist. Jede Zelle gehört genau zu einer Kachel."
+          },
+          "q4": {
+            "question": "Brauche ich Tailwind für den Code?",
+            "answer": "Nein. Der Export CSS Grid + HTML läuft in jedem Browser ohne Framework. Die Tailwind-Klassen sind eine Alternative für Projekte mit Tailwind."
+          }
+        }
+      }
+    },
     "contrast-checker": {
       "name": "Kontrast-Checker",
       "description": "Prüf, ob Text und Hintergrund nach WCAG gut lesbar sind, sieh die Farben mit Farbsehschwäche und übernimm passende Farben per Klick.",
@@ -2149,6 +2371,10 @@
     "composer": {
       "name": "Composer",
       "description": "Mehrere Motive zu einer Grafik kombinieren."
+    },
+    "css-effects": {
+      "name": "CSS-Effekte und Layouts",
+      "description": "Glas, Verlaufsrahmen, Leuchten und Bento-Layouts als fertiger Code zum Kopieren."
     }
   },
   "PatternLibrary": {
