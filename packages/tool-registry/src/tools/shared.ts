@@ -49,4 +49,6 @@ export const EXTRA_EXPORT_LABELS = {
   css: "Editor.export.extras.css",
   htmlExample: "Editor.export.extras.htmlExample",
   cssGrid: "Editor.export.extras.cssGrid",
+  report: "Editor.export.extras.report",
+  dropShadow: "Editor.export.extras.dropShadow",
 } as const;

@@ -29,3 +29,5 @@ export * from "./shapes";
 export * from "./tools/seamless-patterns";
 export * from "./tools/glass-effects";
 export * from "./tools/bento-grid";
+export * from "./tools/contrast-checker";
+export * from "./tools/css-shadow";

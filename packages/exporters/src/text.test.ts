@@ -107,6 +107,16 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
     expect(css).not.toMatch(/\b(?:NaN|undefined)\b/);
   });
 
+  it("renders every extra export for defaults and presets", () => {
+    for (const params of [tool.defaults, ...tool.presets.map((p) => p.params)]) {
+      for (const extra of listExtraExports(tool)) {
+        const text = exportExtra(tool, extra.id, params, ctx());
+        expect(text.length).toBeGreaterThan(0);
+        expect(text).not.toMatch(/\b(?:NaN|undefined)\b/);
+      }
+    }
+  });
+
   it("is unaffected by an rng the caller already consumed", () => {
     const used = ctx(5);
     for (let i = 0; i < 10; i++) used.rng.next();

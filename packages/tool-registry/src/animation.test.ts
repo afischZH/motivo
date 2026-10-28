@@ -167,6 +167,10 @@ describe("animated tools in the registry", () => {
     }
     // Glass effects are CSS effects on a backdrop, not a motif to animate.
     expect(ids).not.toContain("glass-effects");
+    // CSS shadow: colour cycle of its shadow and surface colours; the
+    // contrast checker is a measuring tool, nothing to animate.
+    expect(ids).toContain("css-shadow");
+    expect(ids).not.toContain("contrast-checker");
   });
 
   it("the shared opt-ins are well-formed", () => {

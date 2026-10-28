@@ -70,6 +70,7 @@ describe("listExportChoices with params", () => {
       "svg",
       "extra:css-grid",
       "extra:tailwind",
+      "gif",
     ]);
   });
 });

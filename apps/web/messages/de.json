@@ -1933,6 +1933,176 @@
           }
         }
       }
+    },
+    "contrast-checker": {
+      "name": "Kontrast-Checker",
+      "description": "Prüf, ob Text und Hintergrund nach WCAG gut lesbar sind, sieh die Farben mit Farbsehschwäche und übernimm passende Farben per Klick.",
+      "params": {
+        "foreground": {
+          "label": "Textfarbe"
+        },
+        "background": {
+          "label": "Hintergrundfarbe"
+        },
+        "sample": {
+          "label": "Beispiel",
+          "description": "Bestimmt, welche Stufen zählen: Fliesstext braucht 4.5:1 für AA und 7:1 für AAA, grosser Text 3:1 und 4.5:1, Bedienelemente 3:1.",
+          "options": {
+            "heading": "Überschrift",
+            "body": "Fliesstext",
+            "ui": "UI-Element"
+          }
+        },
+        "simulation": {
+          "label": "Farbsehschwäche simulieren",
+          "description": "Zeigt die Kombination zusätzlich so, wie sie Menschen mit einer Farbsehschwäche wahrnehmen, samt Kontrast.",
+          "options": {
+            "none": "Keine",
+            "protanopia": "Protanopie (Rotblindheit)",
+            "deuteranopia": "Deuteranopie (Grünblindheit)",
+            "tritanopia": "Tritanopie (Blaublindheit)",
+            "achromatopsia": "Achromatopsie (keine Farben)"
+          }
+        },
+        "pairs": {
+          "label": "Alle Paare einer Palette",
+          "description": "Zeigt jede Farbe der Palette als Text auf jeder anderen, mit Kontrastverhältnis."
+        }
+      },
+      "groups": {
+        "check": "Prüfung",
+        "pairs": "Palette"
+      },
+      "presets": {
+        "slate": "Schiefer",
+        "night": "Nachtmodus",
+        "signal": "Signal",
+        "mint": "Minze",
+        "traffic-light": "Ampel",
+        "sky": "Himmel und Sonne",
+        "grey-scale": "Graustufen",
+        "palette-pairs": "Palettenpaare"
+      },
+      "suggestions": {
+        "foreground-aa": "Textfarbe für AA: {color} ({ratio}:1)",
+        "foreground-aaa": "Textfarbe für AAA: {color} ({ratio}:1)",
+        "background-aa": "Hintergrund für AA: {color} ({ratio}:1)",
+        "background-aaa": "Hintergrund für AAA: {color} ({ratio}:1)"
+      },
+      "seo": {
+        "whatIs": "Ein Kontrast-Checker misst, wie stark sich Text- und Hintergrundfarbe in der Helligkeit unterscheiden. Die Richtlinien für barrierefreie Webinhalte (WCAG 2) verlangen dafür Mindestwerte, damit Texte auch bei schwacher Sehkraft, Blendung oder auf schlechten Bildschirmen lesbar bleiben.",
+        "howTo": "Wähl Text- und Hintergrundfarbe per Farbwähler, HEX-Wert oder Pipette und lies ab, welche WCAG-Stufen erfüllt sind. Reicht der Kontrast nicht, übernimmst du mit einem Klick die nächstgelegene Farbe, die AA oder AAA schafft. Die Simulation zeigt, wie die Kombination bei Farbsehschwäche wirkt.",
+        "faq": {
+          "q1": "Was bedeuten AA und AAA?",
+          "a1": "AA ist die übliche Mindestanforderung: 4.5:1 für normalen Text und 3:1 für grossen Text. AAA ist strenger und verlangt 7:1 bzw. 4.5:1. Für Bedienelemente und Grafiken gilt 3:1.",
+          "q2": "Ab wann gilt Text als gross?",
+          "a2": "Ab 18 Punkt (24 px) in normaler Schrift oder ab 14 Punkt (rund 18.7 px) in fetter Schrift.",
+          "q3": "Warum rundet Musterli den Kontrast ab?",
+          "a3": "Damit nie ein knapp verfehlter Wert als bestanden erscheint. 4.49:1 zeigt Musterli als 4.4:1, denn für AA reicht das nach WCAG nicht.",
+          "q4": "Wie funktioniert die Simulation der Farbsehschwäche?",
+          "a4": "Musterli rechnet die Farben mit den veröffentlichten Matrizen von Machado, Oliveira und Fernandes (2009) um, für Achromatopsie zählt nur die Helligkeit. Die Simulation ist eine Annäherung und ersetzt keinen Test mit Betroffenen.",
+          "q5": "Wie findet Musterli eine bessere Farbe?",
+          "a5": "Es verschiebt nur die Helligkeit im OKLCH-Farbraum, Farbton und Sättigung bleiben möglichst gleich. So bleibt deine Markenfarbe erkennbar und erreicht trotzdem AA oder AAA."
+        }
+      }
+    },
+    "css-shadow": {
+      "name": "CSS-Schatten-Generator",
+      "description": "Weiche, mehrschichtige Schatten für Karten und Buttons. Vorschau mit echtem CSS, Export als box-shadow, Tailwind oder drop-shadow.",
+      "params": {
+        "layers": {
+          "label": "Ebenen"
+        },
+        "distance": {
+          "label": "Abstand"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "spread": {
+          "label": "Ausdehnung"
+        },
+        "angle": {
+          "label": "Lichtrichtung",
+          "description": "Woher das Licht kommt. Bei 0° kommt es von oben und der Schatten fällt nach unten."
+        },
+        "opacity": {
+          "label": "Deckkraft"
+        },
+        "autoColor": {
+          "label": "Farbe aus dem Hintergrund",
+          "description": "Dunkelt den Farbton des Hintergrunds ab, statt reines Schwarz zu nehmen. Das wirkt natürlicher."
+        },
+        "color": {
+          "label": "Schattenfarbe"
+        },
+        "easing": {
+          "label": "Verlauf",
+          "description": "Wie Abstand und Unschärfe von Ebene zu Ebene wachsen.",
+          "options": {
+            "linear": "Linear",
+            "ease-out": "Ease-out",
+            "exponential": "Exponentiell"
+          }
+        },
+        "inset": {
+          "label": "Innenschatten"
+        },
+        "shape": {
+          "label": "Vorschau-Form",
+          "options": {
+            "card": "Karte",
+            "button": "Button"
+          }
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "elementColor": {
+          "label": "Farbe der Fläche"
+        },
+        "stage": {
+          "label": "Bühne",
+          "description": "Musterli-Hintergrund für die Vorschau. Er gehört nicht zum CSS-Export.",
+          "options": {
+            "solid": "Einfarbig",
+            "gradient": "Verlauf",
+            "dots": "Punkte",
+            "grid": "Raster"
+          }
+        },
+        "surface": {
+          "label": "Hintergrundfarbe"
+        }
+      },
+      "groups": {
+        "shadow": "Schatten",
+        "element": "Fläche und Bühne",
+        "code": "Code"
+      },
+      "presets": {
+        "soft": "Sanft",
+        "floating": "Schwebend",
+        "crisp": "Scharf",
+        "deep": "Tief",
+        "inner": "Innen",
+        "button": "Button",
+        "sunset": "Abendlicht"
+      },
+      "seo": {
+        "whatIs": "Ein CSS-Schatten-Generator erzeugt den Code für box-shadow. Statt eines einzelnen harten Schattens legt Musterli mehrere Ebenen übereinander, deren Abstand und Unschärfe nach einer Kurve wachsen. So wirken Karten und Buttons weich und natürlich beleuchtet.",
+        "howTo": "Stell Ebenen, Abstand, Unschärfe und Lichtrichtung ein oder drück die Leertaste für eine neue Variante. Die Vorschau ist echtes CSS auf einem Musterli-Hintergrund. Kopier danach box-shadow, die Tailwind-Klasse, die @theme-Variable oder die drop-shadow-Variante.",
+        "faq": {
+          "q1": "Warum mehrere Schattenebenen?",
+          "a1": "Ein echter Schatten ist nahe am Gegenstand dunkel und scharf und wird mit Abstand heller und weicher. Mehrere Ebenen bilden das nach, ein einzelner box-shadow wirkt dagegen oft flach oder schmutzig.",
+          "q2": "Wie nutze ich den Schatten in Tailwind?",
+          "a2": "Für Tailwind v3 und v4 gibt es die Klasse shadow-[...] mit allen Ebenen. In Tailwind v4 legst du den Schatten auch als Variable --shadow-name in @theme ab und schreibst dann einfach shadow-name.",
+          "q3": "Was ist der Unterschied zu drop-shadow?",
+          "a3": "box-shadow folgt dem Rechteck des Elements, filter: drop-shadow() folgt der Form, etwa bei freigestellten PNG oder SVG. drop-shadow kennt keine Ausdehnung und keinen Innenschatten.",
+          "q4": "Warum ist der Schatten nicht schwarz?",
+          "a4": "Schatten nehmen etwas von der Farbe der Umgebung an. Musterli dunkelt darum standardmässig den Farbton des Hintergrunds ab. Du kannst die Farbe aber auch selbst wählen."
+        }
+      }
     }
   },
   "Converters": {

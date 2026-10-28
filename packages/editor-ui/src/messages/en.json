@@ -183,7 +183,9 @@
         "tailwindTheme": "Tailwind v4 @theme",
         "css": "CSS",
         "htmlExample": "HTML example",
-        "cssGrid": "CSS Grid + HTML"
+        "cssGrid": "CSS Grid + HTML",
+        "report": "Text report",
+        "dropShadow": "CSS drop-shadow()"
       },
       "gif": {
         "title": "GIF settings",
@@ -328,6 +330,11 @@
     "thumbnails": {
       "group": "{label}: collection",
       "brandKit": "Brand Kit"
+    },
+    "suggestions": {
+      "title": "Suggestions",
+      "hint": "One click applies a suggestion; undo reverts it.",
+      "applied": "Applied: {label}"
     }
   },
   "sizes": {

@@ -84,6 +84,13 @@ const CASES: Case[] = [
   { toolId: "blurry-gradient", preset: "Sorbet" },
   { toolId: "striped-gradient" },
   { toolId: "striped-gradient", preset: "Dusk" },
+  // M4-AP05: SVG text and glyphs; real CSS box-shadow vs. its SVG twin
+  // (Gaussian blur per layer, outer on a gradient, inner clipped, dots stage).
+  { toolId: "contrast-checker" },
+  { toolId: "contrast-checker", preset: "Traffic light" },
+  { toolId: "css-shadow", css: true },
+  { toolId: "css-shadow", preset: "Inner", css: true },
+  { toolId: "css-shadow", preset: "Floating", css: true },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).
