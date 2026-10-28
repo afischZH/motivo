@@ -10,6 +10,7 @@ export {
   DESIGNS_FILE_VERSION,
   buildDesignsFile,
   designsFileName,
+  designsFileTexts,
   type DesignsFile,
   type DesignsFileEntry,
   type DesignsFileError,

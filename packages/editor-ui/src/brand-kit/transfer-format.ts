@@ -19,6 +19,7 @@
  * stays as it is.
  */
 import type { BrandAsset, BrandKitSnapshot, BrandPalette } from "@motivo/storage";
+import { packIntoFiles, partFileName } from "../transfer/json";
 
 export const BRAND_KIT_FILE_FORMAT = "motivo-brandkit";
 export const BRAND_KIT_FILE_VERSION = 1;
@@ -91,9 +92,30 @@ export function buildBrandKitFile(kit: BrandKitSnapshot, exportedAt: number): Br
   };
 }
 
-/** `motivo-brandkit-v1-2026-10-28.json` (local date). */
-export function brandKitFileName(date: Date): string {
+/**
+ * The export as file texts, each at most `maxBytes` so that it can be
+ * imported again. Palettes and the default mark go into the first file;
+ * logos and shapes fill as many files as they need.
+ */
+export function brandKitFileTexts(
+  kit: BrandKitSnapshot,
+  exportedAt: number,
+  maxBytes: number = BRAND_KIT_FILE_MAX_BYTES,
+): string[] {
+  const { assets, ...first } = buildBrandKitFile(kit, exportedAt);
+  const rest = { ...first, defaultPaletteId: null, palettes: [] };
+  const head = (envelope: object) => `${JSON.stringify(envelope).slice(0, -1)},"assets":[`;
+  const heads = [head(first), head(rest)] as const;
+  return packIntoFiles(
+    assets.map((asset) => JSON.stringify(asset)),
+    (part, body) => `${part === 0 ? heads[0] : heads[1]}${body}]}`,
+    maxBytes,
+  );
+}
+
+/** `motivo-brandkit-v1-2026-10-28.json` (local date); several files get `-1`, `-2`. */
+export function brandKitFileName(date: Date, part = 0, parts = 1): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   const day = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  return `${BRAND_KIT_FILE_FORMAT}-v${BRAND_KIT_FILE_VERSION}-${day}.json`;
+  return partFileName(`${BRAND_KIT_FILE_FORMAT}-v${BRAND_KIT_FILE_VERSION}-${day}`, part, parts);
 }

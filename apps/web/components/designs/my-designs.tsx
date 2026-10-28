@@ -8,10 +8,10 @@
  */
 import {
   StorageError,
-  buildDesignsFile,
   createDesignStore,
   designHash,
   designsFileName,
+  designsFileTexts,
   readDesignsFile,
   type DesignRecord,
   type DesignStore,
@@ -108,7 +108,13 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
   /** Designs whose thumbnail could not be drawn; not tried again on this visit. */
   const [failed, setFailed] = useState<ReadonlySet<string>>(() => new Set());
 
-  const toolName = useCallback((toolId: string) => tools[toolId]?.name ?? toolId, [tools]);
+  // Own keys only: a stored tool id like "constructor" must not find Object.prototype.
+  const toolInfo = useCallback(
+    (toolId: string): ToolInfo | undefined =>
+      Object.hasOwn(tools, toolId) ? tools[toolId] : undefined,
+    [tools],
+  );
+  const toolName = useCallback((toolId: string) => toolInfo(toolId)?.name ?? toolId, [toolInfo]);
 
   const showError = useCallback(
     (error: unknown) => {
@@ -157,7 +163,7 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
 
   // Draws missing thumbnails (after an import, or when saving could not), one at a time.
   const missing = designs
-    .filter((d) => d.thumbnail === null && tools[d.toolId] && !failed.has(d.id))
+    .filter((d) => d.thumbnail === null && toolInfo(d.toolId) && !failed.has(d.id))
     .map((d) => d.id);
   const missingKey = missing.join(",");
   useEffect(() => {
@@ -165,7 +171,7 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
     let cancelled = false;
     const queue = missingKey.split(",");
     void (async () => {
-      const [{ createDesignThumbnail }, { registry }] = await Promise.all([
+      const [{ createDesignThumbnail }, { registry, parseToolParams }] = await Promise.all([
         import("@motivo/editor-ui/designs/thumbnail"),
         import("@motivo/tool-registry"),
       ]);
@@ -175,7 +181,8 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
         try {
           const record = await store.get(id);
           const tool = record ? registry.get(record.toolId) : undefined;
-          const parsed = record && tool ? tool.schema.safeParse(record.params) : undefined;
+          // Same path as opening the design: older param forms are migrated first.
+          const parsed = record && tool ? parseToolParams(tool, record.params) : undefined;
           if (record && tool && parsed?.success) {
             const blob = await createDesignThumbnail(tool, parsed.data, record.seed, record.size);
             if (cancelled) return;
@@ -258,11 +265,21 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
       try {
         const all = await store.getAll();
         if (all.length === 0) return { tone: "info", text: tPage("exportEmpty") };
-        const file = buildDesignsFile(all, Date.now());
-        const blob = new Blob([JSON.stringify(file)], { type: "application/json" });
+        // Several files when uploads make one too large to import again.
+        const texts = designsFileTexts(all, Date.now());
         const { downloadBlob } = await import("@motivo/exporters");
-        downloadBlob(blob, designsFileName(new Date()));
-        return { tone: "info", text: tPage("exported", { count: all.length }) };
+        const date = new Date();
+        texts.forEach((text, part) => {
+          const blob = new Blob([text], { type: "application/json" });
+          downloadBlob(blob, designsFileName(date, part, texts.length));
+        });
+        return {
+          tone: "info",
+          text:
+            texts.length > 1
+              ? tPage("exportedParts", { count: all.length, files: texts.length })
+              : tPage("exported", { count: all.length }),
+        };
       } finally {
         setBusy(null);
       }
@@ -456,7 +473,7 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
                 <DesignCard
                   key={d.id}
                   design={d}
-                  tool={tools[d.toolId]}
+                  tool={toolInfo(d.toolId)}
                   toolName={toolName(d.toolId)}
                   thumbnail={d.url ?? undefined}
                   updated={tPage("updated", {
