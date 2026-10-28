@@ -1,4 +1,4 @@
-import { paletteFromImageTool, type PixelBuffer } from "@motivo/tool-registry";
+import { paletteFromImageTool, type PixelBuffer } from "@musterli/tool-registry";
 import { describe, expect, it, vi } from "vitest";
 import {
   handleImageRequest,

@@ -1,4 +1,4 @@
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import de from "@/messages/de.json";

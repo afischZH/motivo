@@ -4,7 +4,7 @@ title: Die ersten vier Generatoren und sechs Konverter
 tools: [css-gradient, svg-waves, blob, polka-dots]
 ---
 
-**Motivo startet mit vier Generatoren.**
+**Musterli startet mit vier Generatoren.**
 
 - **CSS-Verlauf**: lineare, radiale und konische Verläufe mit sanften Übergängen in OKLCH.
 - **SVG-Wellen**: geschichtete Wellen für Abschnitte, Header und Hintergründe.

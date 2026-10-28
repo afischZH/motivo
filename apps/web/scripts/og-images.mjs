@@ -20,7 +20,7 @@ const APP_ROOT = new URL("../", import.meta.url);
 const OUT_DIR = new URL("public/og/", APP_ROOT);
 
 const [{ registry }, motifs, og, locales, patterns, collections, ogModule] = await Promise.all([
-  import("@motivo/tool-registry"),
+  import("@musterli/tool-registry"),
   import("../lib/seo/motifs.ts"),
   import("../lib/seo/og.ts"),
   import("../i18n/locales.ts"),

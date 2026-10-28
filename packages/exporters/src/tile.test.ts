@@ -3,7 +3,7 @@ import {
   polkaDotsTool,
   seamlessPatternsTool,
   type SeamlessPatternsParams,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { fakeEnv } from "./__fixtures__/raster-fakes";
 import { ExportError } from "./errors";
@@ -54,7 +54,7 @@ describe("repeat tile exports (seamless tools)", () => {
     expect(result).toMatchObject({
       width: tile.width * 2,
       height: tile.height * 2,
-      filename: "motivo-seamless-patterns-1-tile.png",
+      filename: "musterli-seamless-patterns-1-tile.png",
     });
     expect(env.loadedSvgs[0]).toContain(`width="${tile.width * 2}" height="${tile.height * 2}"`);
   });

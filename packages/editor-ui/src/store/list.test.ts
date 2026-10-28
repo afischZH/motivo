@@ -1,4 +1,4 @@
-import { cssPatternsTool } from "@motivo/tool-registry";
+import { cssPatternsTool } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { fixtureTool } from "../test/fixture-tool";
 import {

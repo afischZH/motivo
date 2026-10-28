@@ -23,7 +23,7 @@ import {
   withoutDerivedParams,
   type AnyToolDefinition,
   type ToolRegistry,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { deflateSync, inflateSync } from "fflate";
 import type { Design, ParamValues } from "../store/editor-store";
 

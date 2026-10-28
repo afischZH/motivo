@@ -4,7 +4,7 @@
  * redirects, and the check that the CSS and its SVG twin look the same.
  */
 import AxeBuilder from "@axe-core/playwright";
-import { CSS_PATTERNS, PATTERN_LOOKS, cssPattern } from "@motivo/engine";
+import { CSS_PATTERNS, PATTERN_LOOKS, cssPattern } from "@musterli/engine";
 import { expect, test, type Page } from "@playwright/test";
 import { deflateRawSync } from "node:zlib";
 

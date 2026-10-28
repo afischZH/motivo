@@ -1,10 +1,10 @@
-import { sampleImagePixels } from "@motivo/engine";
+import { sampleImagePixels } from "@musterli/engine";
 import {
   deriveFromImage,
   paletteFromImageTool,
   type PaletteFromImageParams,
   type PixelBuffer,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { describe, expect, it, vi } from "vitest";
 import { createEditorStore } from "../store/editor-store";
 import type { ImageDecodeResult, ImageInputServices } from "./services";

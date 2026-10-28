@@ -1,6 +1,6 @@
 "use client";
 
-import { HEX_COLOR_PATTERN, TRANSPARENT } from "@motivo/tool-registry";
+import { HEX_COLOR_PATTERN, TRANSPARENT } from "@musterli/tool-registry";
 import { Popover, Switch } from "radix-ui";
 import { useId, useState, useSyncExternalStore, type ReactNode } from "react";
 import { brandSwatches, useBrandKit } from "../brand-kit/context";

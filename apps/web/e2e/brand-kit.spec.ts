@@ -446,7 +446,7 @@ test.describe("moving the brand kit with a file", () => {
     const downloadPromise = page.waitForEvent("download");
     await page.getByTestId("brand-export").click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toMatch(/^motivo-brandkit-v1-\d{4}-\d{2}-\d{2}\.json$/);
+    expect(download.suggestedFilename()).toMatch(/^musterli-brandkit-v1-\d{4}-\d{2}-\d{2}\.json$/);
     const path = await download.path();
     const file = JSON.parse(await readFile(path, "utf8")) as {
       format: string;
@@ -511,7 +511,7 @@ test.describe("moving the brand kit with a file", () => {
     );
     await expect(message).toContainText("This is a designs file.");
     await input.setInputFiles(json("other.json", '{"hello":"world"}'));
-    await expect(message).toContainText("not a Motivo Brand Kit file");
+    await expect(message).toContainText("not a Musterli Brand Kit file");
     await input.setInputFiles(json("broken.json", "{broken"));
     await expect(message).toContainText("damaged or not JSON");
     await input.setInputFiles(

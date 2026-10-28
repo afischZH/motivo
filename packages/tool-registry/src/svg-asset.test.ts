@@ -1,4 +1,4 @@
-import { sanitizeSvg } from "@motivo/svg-sanitizer";
+import { sanitizeSvg } from "@musterli/svg-sanitizer";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   clearSvgAssetCache,

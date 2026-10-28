@@ -3,7 +3,7 @@
  * strokes (own procedural shapes, noise on the control points, round caps),
  * spread with Poisson-disk sampling.
  */
-import { DOODLE_SHAPES, doodlesSvg, randomPalette } from "@motivo/engine";
+import { DOODLE_SHAPES, doodlesSvg, randomPalette } from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

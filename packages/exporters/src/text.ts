@@ -17,7 +17,7 @@ import {
   type RenderContext,
   type TileOutput,
   type ToolDefinition,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { ExportError } from "./errors";
 import { CODE_LANGUAGE_FILES, MIME_TYPES } from "./formats";
 

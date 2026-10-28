@@ -5,6 +5,6 @@
 export function createSanitizeWorker(): Worker {
   return new Worker(new URL("./sanitize.worker.ts", import.meta.url), {
     type: "module",
-    name: "motivo-svg-sanitize",
+    name: "musterli-svg-sanitize",
   });
 }

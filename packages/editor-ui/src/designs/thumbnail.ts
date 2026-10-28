@@ -4,14 +4,14 @@
  * runs in the raster worker; WebP where the browser can encode it, PNG
  * otherwise (Safari cannot encode WebP).
  */
-import { ExportError, rasterizeSvg, renderDesignSvg, type RasterEnv } from "@motivo/exporters";
+import { ExportError, rasterizeSvg, renderDesignSvg, type RasterEnv } from "@musterli/exporters";
 import {
   createRenderContext,
   type AnyToolDefinition,
   type CanvasSize,
   type Params,
   type ParamsSchema,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 
 /** Longest edge of a stored thumbnail in pixels. */
 export const DESIGN_THUMBNAIL_EDGE = 400;

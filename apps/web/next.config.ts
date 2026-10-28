@@ -10,11 +10,11 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig: NextConfig = {
   // Workspace packages ship TypeScript source and must be compiled by Next.
   transpilePackages: [
-    "@motivo/engine",
-    "@motivo/tool-registry",
-    "@motivo/exporters",
-    "@motivo/editor-ui",
-    "@motivo/svg-sanitizer",
+    "@musterli/engine",
+    "@musterli/tool-registry",
+    "@musterli/exporters",
+    "@musterli/editor-ui",
+    "@musterli/svg-sanitizer",
   ],
   // Always defined (empty when unset), so Next inlines them into the client
   // bundle and drops the analytics and Sentry code paths from builds without

@@ -5,7 +5,7 @@ import {
   MESH_OUTPUT_EDGE_MAX,
   createRng,
   crc32,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import { CANVAS_EDGE_MAX } from "../common";
 import { registry } from "../registry";

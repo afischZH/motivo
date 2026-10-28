@@ -4,7 +4,7 @@
  * href (for `Link`), path, or the set of paths in every enabled locale (for
  * hreflang, sitemap and the language switcher).
  */
-import type { ToolCategory } from "@motivo/tool-registry";
+import type { ToolCategory } from "@musterli/tool-registry";
 
 import { isConverterId, type ConverterId } from "@/lib/convert/ids";
 

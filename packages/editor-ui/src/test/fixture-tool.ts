@@ -9,7 +9,7 @@ import {
   keepLocked,
   visualParamsSchema,
   type Preset,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import * as z from "zod";
 
 const schema = visualParamsSchema.extend({

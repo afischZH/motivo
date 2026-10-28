@@ -1,5 +1,5 @@
 /**
- * Link to the external donation provider (docs/PRODUCT.md 6.1). Motivo only
+ * Link to the external donation provider (docs/PRODUCT.md 6.1). Musterli only
  * links there: no script, no widget, no payment data on our domain, so the
  * CSP stays unchanged.
  *

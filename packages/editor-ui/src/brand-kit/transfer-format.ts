@@ -18,7 +18,7 @@
  * passed on to someone else without one's designs, and the designs format
  * stays as it is.
  */
-import type { BrandAsset, BrandKitSnapshot, BrandPalette } from "@motivo/storage";
+import type { BrandAsset, BrandKitSnapshot, BrandPalette } from "@musterli/storage";
 import { packIntoFiles, partFileName, stringifyEach } from "../transfer/json";
 
 export const BRAND_KIT_FILE_FORMAT = "motivo-brandkit";
@@ -114,9 +114,9 @@ export async function brandKitFileTexts(
   );
 }
 
-/** `motivo-brandkit-v1-2026-10-28.json` (local date); several files get `-1`, `-2`. */
+/** `musterli-brandkit-v1-2026-10-28.json` (local date); several files get `-1`, `-2`. */
 export function brandKitFileName(date: Date, part = 0, parts = 1): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   const day = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  return partFileName(`${BRAND_KIT_FILE_FORMAT}-v${BRAND_KIT_FILE_VERSION}-${day}`, part, parts);
+  return partFileName(`musterli-brandkit-v${BRAND_KIT_FILE_VERSION}-${day}`, part, parts);
 }

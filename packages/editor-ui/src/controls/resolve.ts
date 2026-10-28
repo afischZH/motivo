@@ -13,7 +13,7 @@ import {
   type ControlKind,
   type ListHint,
   type OptionPreview,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import * as z from "zod";
 import type { ParamValues } from "../store/editor-store";
 import { LIST_DEFAULT_MAX, lengthBounds, type ListItem } from "../store/list";

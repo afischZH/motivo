@@ -1,4 +1,4 @@
-import { recolorSvgAsset, svgAssetFor, clearSvgAssetCache } from "@motivo/tool-registry";
+import { recolorSvgAsset, svgAssetFor, clearSvgAssetCache } from "@musterli/tool-registry";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { finishAsset, readAsset } from "./prepare";
 import {

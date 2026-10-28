@@ -1,4 +1,4 @@
-import type { AnyToolDefinition } from "@motivo/tool-registry";
+import type { AnyToolDefinition } from "@musterli/tool-registry";
 import { getTranslations } from "next-intl/server";
 
 import type { EnabledLocale } from "@/i18n/locales";

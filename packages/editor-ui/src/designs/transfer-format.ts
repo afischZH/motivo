@@ -3,7 +3,7 @@
  * validation, so pages can export without loading every tool. See
  * transfer.ts for the format and the import rules.
  */
-import type { ImportedDesign } from "@motivo/storage";
+import type { ImportedDesign } from "@musterli/storage";
 import { packIntoFiles, partFileName, stringifyEach } from "../transfer/json";
 
 export const DESIGNS_FILE_FORMAT = "motivo-designs";
@@ -101,11 +101,11 @@ export async function designsFileTexts(
 }
 
 /**
- * `motivo-designs-v1-2026-10-28.json` (local date); an export in several
+ * `musterli-designs-v1-2026-10-28.json` (local date); an export in several
  * files numbers them `…-2026-10-28-1.json`, `-2.json` and so on.
  */
 export function designsFileName(date: Date, part = 0, parts = 1): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   const day = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-  return partFileName(`${DESIGNS_FILE_FORMAT}-v${DESIGNS_FILE_VERSION}-${day}`, part, parts);
+  return partFileName(`musterli-designs-v${DESIGNS_FILE_VERSION}-${day}`, part, parts);
 }

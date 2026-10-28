@@ -12,8 +12,8 @@ import {
   type ClipboardResult,
   type ExtraExportInfo,
   type RasterFormat,
-} from "@motivo/exporters";
-import { CANVAS_EDGE_MAX, type AnyToolDefinition, type CanvasSize } from "@motivo/tool-registry";
+} from "@musterli/exporters";
+import { CANVAS_EDGE_MAX, type AnyToolDefinition, type CanvasSize } from "@musterli/tool-registry";
 
 /** Card groups of the format choice (docs/DESIGN.md 6: Bild, Vektor, Code). */
 export type ExportCategory = "image" | "vector" | "code";

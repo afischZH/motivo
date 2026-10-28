@@ -1,4 +1,4 @@
-import type { ToolCategory } from "@motivo/tool-registry";
+import type { ToolCategory } from "@musterli/tool-registry";
 
 import type { CollectionKind } from "@/i18n/slugs";
 

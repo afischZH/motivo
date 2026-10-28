@@ -1,6 +1,6 @@
 "use client";
 
-import type { DesignStore } from "@motivo/storage";
+import type { DesignStore } from "@musterli/storage";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { peekMotif } from "../shell/render";
 import type { EditorStoreApi } from "../store/editor-store";

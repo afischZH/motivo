@@ -9,7 +9,7 @@
  *    `prototype`) reject the whole file;
  *  - every palette and asset is checked against the storage schema
  *    (colours normalised to `#rrggbb` first);
- *  - SVG images are sanitised again with `@motivo/svg-sanitizer` and
+ *  - SVG images are sanitised again with `@musterli/svg-sanitizer` and
  *    replaced by its output; own shapes must stay SVG;
  *  - raster images must be the PNG or JPEG their data URI claims (magic
  *    bytes), within 1024 px per edge (header dimensions).
@@ -25,8 +25,8 @@ import {
   normalizeBrandHex,
   type BrandAsset,
   type BrandPalette,
-} from "@motivo/storage";
-import { sanitizeSvg } from "@motivo/svg-sanitizer";
+} from "@musterli/storage";
+import { sanitizeSvg } from "@musterli/svg-sanitizer";
 import * as z from "zod";
 import { DESIGNS_FILE_FORMAT, isSafeRasterHref } from "../designs/transfer";
 import { ForbiddenKeyError, fileFormatOf, parseUntrustedJson, utf8Length } from "../transfer/json";

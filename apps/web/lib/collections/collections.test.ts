@@ -3,9 +3,9 @@
  * sRGB gamut, unique ids and slugs, texts in every enabled locale (Swiss
  * German without Eszett or dashes), and designs every target tool accepts.
  */
-import { designFromHash } from "@motivo/editor-ui/share";
-import { HEX_COLOR_PATTERN, registry } from "@motivo/tool-registry";
-import { hexToOklch } from "@motivo/engine";
+import { designFromHash } from "@musterli/editor-ui/share";
+import { HEX_COLOR_PATTERN, registry } from "@musterli/tool-registry";
+import { hexToOklch } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 
 import de from "@/messages/de.json";

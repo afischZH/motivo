@@ -3,8 +3,8 @@
  * request handler with its browser APIs injected, so it is unit-testable.
  * Messages carry plain data only; nothing from the image is ever evaluated.
  */
-import { toBase64 } from "@motivo/engine";
-import { deriveFromImage, type AnyToolDefinition, type PixelBuffer } from "@motivo/tool-registry";
+import { toBase64 } from "@musterli/engine";
+import { deriveFromImage, type AnyToolDefinition, type PixelBuffer } from "@musterli/tool-registry";
 import { fitWithin } from "./dimensions";
 
 /** A rectangle in source pixels. */

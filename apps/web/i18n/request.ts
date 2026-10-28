@@ -5,8 +5,8 @@ import { routing, type AppLocale } from "./routing";
 
 /** Texts owned by workspace packages, merged under their own top-level namespace. */
 const packageMessages: Record<AppLocale, () => Promise<{ default: object }>> = {
-  de: () => import("@motivo/editor-ui/messages/de.json"),
-  en: () => import("@motivo/editor-ui/messages/en.json"),
+  de: () => import("@musterli/editor-ui/messages/de.json"),
+  en: () => import("@musterli/editor-ui/messages/en.json"),
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {

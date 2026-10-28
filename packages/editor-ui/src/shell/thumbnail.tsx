@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnyToolDefinition, CanvasSize } from "@motivo/tool-registry";
+import type { AnyToolDefinition, CanvasSize } from "@musterli/tool-registry";
 import { memo, useMemo } from "react";
 import type { ParamValues } from "../store/editor-store";
 import { Motif } from "./motif";

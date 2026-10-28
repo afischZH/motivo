@@ -10,7 +10,7 @@
  * The logic is a small framework-free controller (unit-testable without
  * React); `useImageInput` binds it to a component.
  */
-import type { AnyToolDefinition, PixelBuffer } from "@motivo/tool-registry";
+import type { AnyToolDefinition, PixelBuffer } from "@musterli/tool-registry";
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import type { EditorState, EditorStoreApi } from "../store/editor-store";
 import type { ImageInputError } from "./check";

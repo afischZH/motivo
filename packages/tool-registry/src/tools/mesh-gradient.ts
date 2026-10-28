@@ -8,7 +8,7 @@
  * warp deforms the paths, grain is the shared raster tile (see `./grain`).
  * One SVG for preview and export.
  */
-import { MESH_POINTS_MAX, MESH_POINTS_MIN, meshGradientSvg, randomPalette } from "@motivo/engine";
+import { MESH_POINTS_MAX, MESH_POINTS_MIN, meshGradientSvg, randomPalette } from "@musterli/engine";
 import * as z from "zod";
 import { TRANSPARENT, visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

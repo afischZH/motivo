@@ -8,7 +8,7 @@
  *
  * Own shapes must be SVG: the tools recolour them.
  */
-import type { BrandAssetKind, BrandImage } from "@motivo/storage";
+import type { BrandAssetKind, BrandImage } from "@musterli/storage";
 import { finishAsset, readAsset, type AssetError } from "../asset-input/prepare";
 import type { SvgSanitizer } from "../asset-input/sanitize-client";
 import type { ImageInputServices } from "../image-input/services";

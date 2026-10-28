@@ -4,7 +4,7 @@ title: The first four generators and six converters
 tools: [css-gradient, svg-waves, blob, polka-dots]
 ---
 
-**Motivo launches with four generators.**
+**Musterli launches with four generators.**
 
 - **CSS Gradient**: linear, radial and conic gradients with smooth OKLCH transitions.
 - **SVG Waves**: layered waves for sections, headers and backgrounds.

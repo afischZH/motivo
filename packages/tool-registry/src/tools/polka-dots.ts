@@ -8,7 +8,7 @@ import {
   DOT_SHAPES,
   polkaDotsSvg,
   randomPalette,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

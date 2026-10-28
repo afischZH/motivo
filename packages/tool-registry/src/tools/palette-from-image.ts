@@ -21,7 +21,7 @@ import {
   tailwindConfig,
   tailwindTheme,
   type NamedColor,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema } from "../common";
 import { keepLocked } from "../randomize";

@@ -10,18 +10,20 @@ describe("parseDonationUrl", () => {
   });
 
   it("accepts absolute https URLs", () => {
-    expect(parseDonationUrl("https://donate.example/motivo")).toBe("https://donate.example/motivo");
-    expect(parseDonationUrl(" https://donate.example/?ref=motivo ")).toBe(
-      "https://donate.example/?ref=motivo",
+    expect(parseDonationUrl("https://donate.example/musterli")).toBe(
+      "https://donate.example/musterli",
+    );
+    expect(parseDonationUrl(" https://donate.example/?ref=musterli ")).toBe(
+      "https://donate.example/?ref=musterli",
     );
   });
 
   it("rejects other schemes, relative URLs and credentials", () => {
     for (const raw of [
-      "http://donate.example/motivo",
+      "http://donate.example/musterli",
       "javascript:alert(1)",
       "data:text/html,<script>alert(1)</script>",
-      "//donate.example/motivo",
+      "//donate.example/musterli",
       "/unterstuetzen",
       "donate.example",
       "https://user:secret@donate.example/",

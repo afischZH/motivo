@@ -4,9 +4,9 @@
  * can be edited by hand, and a broken record must never break a page.
  *
  * Assets hold exactly what an upload param (`kind: "image"`, see
- * `imageAssetSchema` in `@motivo/tool-registry`) holds: sanitised SVG markup
+ * `imageAssetSchema` in `@musterli/tool-registry`) holds: sanitised SVG markup
  * or a re-encoded PNG/JPEG data URI of at most 1024 px. The limits mirror
- * the tool registry's (a test in `@motivo/editor-ui` keeps them equal); the
+ * the tool registry's (a test in `@musterli/editor-ui` keeps them equal); the
  * storage package stays free of the tools.
  */
 // Namespace import keeps zod tree-shakable (see tool-registry/common.ts).

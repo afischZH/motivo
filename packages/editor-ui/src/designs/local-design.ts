@@ -1,6 +1,6 @@
 /**
  * Saving in the editor (M3-AP03), without React: save or update the current
- * design in the browser (`@motivo/storage`), keep an autosave draft per tool
+ * design in the browser (`@musterli/storage`), keep an autosave draft per tool
  * and reopen designs from `#design=<id>`. Nothing is sent anywhere.
  *
  * On start:
@@ -20,8 +20,8 @@ import {
   type DesignRecord,
   type DesignStore,
   type Draft,
-} from "@motivo/storage";
-import type { AnyToolDefinition, CanvasSize } from "@motivo/tool-registry";
+} from "@musterli/storage";
+import type { AnyToolDefinition, CanvasSize } from "@musterli/tool-registry";
 import { DEFAULT_SEED, type EditorStoreApi, type ParamValues } from "../store/editor-store";
 import { valuesEqual } from "../store/values";
 import { designHash, designIdFromHash } from "./hash";

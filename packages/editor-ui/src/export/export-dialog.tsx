@@ -18,7 +18,7 @@ import {
   textBlob,
   MIME_TYPES,
   type RasterFormat,
-} from "@motivo/exporters";
+} from "@musterli/exporters";
 import {
   CANVAS_EDGE_MAX,
   CANVAS_EDGE_MIN,
@@ -27,7 +27,7 @@ import {
   type CanvasSize,
   type Params,
   type ParamsSchema,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";

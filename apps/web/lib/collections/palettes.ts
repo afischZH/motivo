@@ -1,7 +1,7 @@
 /**
  * Curated palette collection: our own named palettes by mood, defined as
  * OKLCH colours (light to dark where it fits). Clean-room: colours, names
- * and texts were made for Motivo and are not taken from any palette site.
+ * and texts were made for Musterli and are not taken from any palette site.
  *
  * Adding one: an entry here, its slugs in `PALETTE_SLUGS` (`i18n/slugs.ts`)
  * and `PaletteCollection.items.<id>` in both message files. The contract

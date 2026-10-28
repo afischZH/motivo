@@ -4,13 +4,13 @@ import { indexableHostPattern, isIndexableHost, noindexHeaderRule } from "./inde
 import { FALLBACK_SITE_URL } from "./site-url";
 
 const fallback = new URL(FALLBACK_SITE_URL);
-const custom = new URL("https://motivo.example");
+const custom = new URL("https://musterli.example");
 
 describe("indexing policy", () => {
   it("indexes only the production host", () => {
     expect(isIndexableHost(fallback.host, fallback)).toBe(true);
     expect(isIndexableHost(`${fallback.hostname.toUpperCase()}:443`, fallback)).toBe(true);
-    expect(isIndexableHost("motivo.example", custom)).toBe(true);
+    expect(isIndexableHost("musterli.example", custom)).toBe(true);
   });
 
   it("keeps previews, other hosts and local servers out of the index", () => {
@@ -24,14 +24,14 @@ describe("indexing policy", () => {
   });
 
   it("escapes the dots of the host pattern", () => {
-    expect(indexableHostPattern(custom)).toBe("motivo\\.example");
-    expect(isIndexableHost("motivoXexample", custom)).toBe(false);
+    expect(indexableHostPattern(custom)).toBe("musterli\\.example");
+    expect(isIndexableHost("musterliXexample", custom)).toBe(false);
   });
 
   it("builds a next.config header rule for every other host", () => {
     expect(noindexHeaderRule(custom)).toEqual({
       source: "/:path*",
-      missing: [{ type: "host", value: "motivo\\.example" }],
+      missing: [{ type: "host", value: "musterli\\.example" }],
       headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
     });
   });

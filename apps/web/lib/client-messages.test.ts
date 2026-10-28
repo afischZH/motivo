@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import editorDe from "@motivo/editor-ui/messages/de.json";
+import editorDe from "@musterli/editor-ui/messages/de.json";
 import de from "@/messages/de.json";
 
 import { CONVERTER_CLIENT_NAMESPACES, editorMessages, pickMessages } from "./client-messages";

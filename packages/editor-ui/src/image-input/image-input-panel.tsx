@@ -6,7 +6,7 @@
  * thumbnail of the active picture and a way back to the sample. Status and
  * errors are announced through live regions. No tool-specific code.
  */
-import type { PixelBuffer } from "@motivo/tool-registry";
+import type { PixelBuffer } from "@musterli/tool-registry";
 import { useEffect, useId, useRef, useState, type DragEvent } from "react";
 import { cx, FOCUS_RING } from "../controls/primitives";
 import { useT } from "../i18n";

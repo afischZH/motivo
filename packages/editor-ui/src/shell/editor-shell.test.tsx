@@ -1,4 +1,4 @@
-import { createRegistry, type ToolRegistry } from "@motivo/tool-registry";
+import { createRegistry, type ToolRegistry } from "@musterli/tool-registry";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import type { ExportServices } from "../export/export-dialog";

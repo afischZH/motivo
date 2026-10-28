@@ -6,7 +6,7 @@
 @source "../../../packages/editor-ui/src";
 
 /*
- * Motivo design tokens (docs/DESIGN.md section 5).
+ * Musterli design tokens (docs/DESIGN.md section 5).
  *
  * Layers:
  *  1. Raw scales: a 12-step neutral gray (--gray-1 .. --gray-12) and ONE accent

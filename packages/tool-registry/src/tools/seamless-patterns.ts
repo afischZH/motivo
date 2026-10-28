@@ -21,7 +21,7 @@ import {
   svgBase64DataUri,
   type SeamlessLayout,
   type SeamlessMotif,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema, imageAssetSchema, visualParamsSchema, type ImageAsset } from "../common";
 import { keepLocked } from "../randomize";

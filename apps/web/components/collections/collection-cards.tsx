@@ -1,4 +1,4 @@
-import type { AnyToolDefinition } from "@motivo/tool-registry";
+import type { AnyToolDefinition } from "@musterli/tool-registry";
 
 import { MotifImage } from "@/components/seo/motif-image";
 import { IntentLink } from "@/i18n/intent-link";

@@ -21,7 +21,7 @@
  * here on demand: still correct, just slower. Pure and DOM-free; safe in
  * workers and on the server.
  */
-import { sanitizeSvg, type SvgRect } from "@motivo/svg-sanitizer";
+import { sanitizeSvg, type SvgRect } from "@musterli/svg-sanitizer";
 
 export interface PreparedSvgAsset {
   /** The input this entry is for (sanitizer output: canonical). */

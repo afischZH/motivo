@@ -3,7 +3,7 @@
  * files must neither break the app nor smuggle anything past validation, and
  * must stay cheap enough for the import worker.
  */
-import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import {
   DESIGNS_FILE_FORMAT,
@@ -208,7 +208,7 @@ describe("designs import under attack", { timeout: 60_000 }, () => {
     }
     expect(ids).toEqual(designs.map((d) => d.id));
     expect(designsFileName(new Date(2026, 9, 28), 1, texts.length)).toBe(
-      "motivo-designs-v1-2026-10-28-2.json",
+      "musterli-designs-v1-2026-10-28-2.json",
     );
     // Small exports stay one file, identical to the single-file format.
     expect(await designsFileTexts([entry()], 1)).toEqual([

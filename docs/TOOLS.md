@@ -88,7 +88,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 - **Parameter**: 2 bis 6 Farben, `style` (Liquid, Silk, Streaked, Grainy als Presets), `frequency`, `amplitude`, `warp` (Domain-Warping-Stärke), `speed`, `dither` (aus/Bayer 2/4/8, Stufenanzahl), `grain`, `vignette`, `angle`, `zoom`.
 - **Algorithmus (GLSL, WebGL2)**: Simplex/Value-Noise, Domain Warping (`p += warp * noise(p)` mehrfach), Ergebnis als Index in eine Farbrampe (Palette als 1D-Texture), danach Bayer-Dithering (Schwellwert-Matrix), Film Grain (Hash-Noise pro Pixel und Frame), Vignette.
 - **Video-Modus**: Keyframes für numerische Parameter über Zeit, Timeline-UI, Loop-Länge, nahtloser Loop durch periodische Zeitfunktion (`t` auf Kreis abbilden: `noise(p, cos(2πt), sin(2πt))`).
-- **Exporte**: PNG/JPG (bis 8K via Kachel-Rendering), MP4/WebM, Clipboard; P2: Web-Component `<motivo-shader>` mit eingebettetem Shader.
+- **Exporte**: PNG/JPG (bis 8K via Kachel-Rendering), MP4/WebM, Clipboard; P2: Web-Component `<musterli-shader>` mit eingebettetem Shader.
 
 ## D. Backgrounds
 
@@ -157,7 +157,7 @@ Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grös
 SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), Base64 zu SVG, Bild zu Base64 (optional Komprimierung via Canvas), Base64 zu Bild. Jede Seite mit Erklärung, Beispielen und FAQ.
 
 ## H. Social Media Editor · M6 · G/P
-- **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Motivo-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
+- **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Musterli-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
 - **Text-Effekte**: Schatten, Outline, Verlauf, "Highlight-Balken", Gradient-Fill; eigene und Google Fonts (Lizenz der Fonts prüfen: nur OFL/Apache).
 - **Grössen**: Instagram Feed (1080x1080, 1080x1350), Story (1080x1920), LinkedIn, X/Twitter, Facebook, Pinterest, YouTube-Thumbnail; Werte bei Umsetzung aktuell recherchieren.
 - **Magic Resize**: Layout-Constraints pro Ebene (Anker + relative Grösse), beim Formatwechsel neu berechnen; danach manuell feinjustieren.

@@ -2,7 +2,7 @@
  * M2-AP01: Starry Sky (docs/TOOLS.md A3). Sky gradient from the palette with
  * Poisson-disk stars, optional glow and a few large sparkles.
  */
-import { MAX_SPARKLES, oklchToHex, randomPalette, starrySkySvg } from "@motivo/engine";
+import { MAX_SPARKLES, oklchToHex, randomPalette, starrySkySvg } from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema, paletteSchema } from "../common";
 import { keepLocked } from "../randomize";

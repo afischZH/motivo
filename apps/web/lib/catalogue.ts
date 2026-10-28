@@ -8,7 +8,7 @@ import {
   registry,
   type AnyToolDefinition,
   type ToolCategory,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 
 /** How many related tools a landing page links to. */
 export const RELATED_TOOL_COUNT = 6;

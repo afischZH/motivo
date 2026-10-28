@@ -26,7 +26,7 @@ import type {
   ParamsSchema,
   RenderContext,
   ToolDefinition,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { ExportError, throwIfAborted } from "./errors";
 import { compressionStreamSupported, PngStreamEncoder } from "./png-stream";
 import {
@@ -67,7 +67,7 @@ export const SAFE_CANVAS_AREA = 4096 * 4096;
  * limit of `browserRasterEnv` (never raises it), so end-to-end tests can
  * exercise the strip path at small sizes.
  */
-export const MAX_CANVAS_AREA_OVERRIDE = "__motivoMaxCanvasArea";
+export const MAX_CANVAS_AREA_OVERRIDE = "__musterliMaxCanvasArea";
 
 /** A decoded image; `release` frees its resources (object URL). */
 export interface LoadedImage {
@@ -624,7 +624,7 @@ export interface RasterExportResult {
   height: number;
   /** The requested size exceeded `maxEdge` and was scaled down. */
   clamped: boolean;
-  /** `motivo-<toolId>-<seed>.<ext>` */
+  /** `musterli-<toolId>-<seed>.<ext>` */
   filename: string;
 }
 

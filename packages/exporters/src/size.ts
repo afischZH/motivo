@@ -1,7 +1,7 @@
 /**
  * Pure size math for raster exports.
  */
-import { CANVAS_EDGE_MAX, type CanvasSize } from "@motivo/tool-registry";
+import { CANVAS_EDGE_MAX, type CanvasSize } from "@musterli/tool-registry";
 
 /** What the user asked for. Missing values keep the design's aspect ratio. */
 export interface RasterSizeRequest {

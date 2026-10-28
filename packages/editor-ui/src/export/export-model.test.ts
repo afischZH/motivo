@@ -1,5 +1,5 @@
-import { ExportError, type ExportErrorCode } from "@motivo/exporters";
-import { registry } from "@motivo/tool-registry";
+import { ExportError, type ExportErrorCode } from "@musterli/exporters";
+import { registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { fixtureTool } from "../test/fixture-tool";
 import {

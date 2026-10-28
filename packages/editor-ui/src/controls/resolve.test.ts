@@ -4,7 +4,7 @@ import {
   defineTool,
   paletteSchema,
   type AnyToolDefinition,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import * as z from "zod";
 import { fixtureDefaults, fixtureTool, listFixtureDefaults, listTool } from "../test/fixture-tool";

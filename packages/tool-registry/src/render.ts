@@ -1,4 +1,4 @@
-import { createRng } from "@motivo/engine";
+import { createRng } from "@musterli/engine";
 import type { CanvasSize, RenderContext } from "./types";
 
 /**

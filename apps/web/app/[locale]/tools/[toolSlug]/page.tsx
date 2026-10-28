@@ -1,4 +1,4 @@
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";

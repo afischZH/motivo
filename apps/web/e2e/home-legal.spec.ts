@@ -20,7 +20,7 @@ test.describe("home page", () => {
     const main = page.getByRole("main");
     await expect(main.getByRole("heading", { level: 1 })).toHaveText("Motifs in one click");
     for (const name of [
-      "Why Motivo",
+      "Why Musterli",
       "Tools by category",
       "Popular generators",
       "How it works",
@@ -60,7 +60,7 @@ test.describe("home page", () => {
     expect(text).not.toMatch(/CHF|EUR|USD|€|\$/);
     expect(text).not.toMatch(/Lifetime|Founders|Lizenz ab|Warteliste/);
     await expect(main.getByRole("heading", { name: "Getragen von Spenden" })).toBeVisible();
-    await expect(main.getByRole("link", { name: "Motivo unterstützen" })).toHaveAttribute(
+    await expect(main.getByRole("link", { name: "Musterli unterstützen" })).toHaveAttribute(
       "href",
       "/de/unterstuetzen",
     );

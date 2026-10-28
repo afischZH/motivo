@@ -6,7 +6,7 @@
  * Render approach: rects and linear gradients only (no filter), grain is the
  * shared raster tile. One SVG for preview and export.
  */
-import { STRIPES_MAX, STRIPES_MIN, randomPalette, stripedGradientSvg } from "@motivo/engine";
+import { STRIPES_MAX, STRIPES_MIN, randomPalette, stripedGradientSvg } from "@musterli/engine";
 import * as z from "zod";
 import { paletteSchema } from "../common";
 import { keepLocked } from "../randomize";

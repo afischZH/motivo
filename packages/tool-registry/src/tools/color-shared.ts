@@ -3,7 +3,7 @@
  * swatch display params, a CSS name param and a random base colour.
  * Internal to the package.
  */
-import { SWATCH_LABELS, oklchToHex, type Rng } from "@motivo/engine";
+import { SWATCH_LABELS, oklchToHex, type Rng } from "@musterli/engine";
 import * as z from "zod";
 import type { CanvasSize, ControlGroup, ControlHint } from "../types";
 

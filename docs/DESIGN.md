@@ -75,7 +75,7 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 4. **Meine Designs** (lokal im Browser, ohne Konto): Raster gespeicherter Designs mit Thumbnails, Ordner links, Suche, Filter nach Tool, Mehrfachauswahl (Verschieben, Löschen, Duplizieren). Leerer Zustand: "Dein erstes Motiv in 10 Sekunden" mit 4 Schnellstart-Tools.
 5. **Brand Kit**: Paletten, Logos, eigene Shapes/Packs, Fonts; "Aus Website importieren" (P2).
 6. **Export-Dialog**: Formatwahl als Karten (Bild · Vektor · Code · Animation), Grössen-Presets + frei, Qualität, Transparenz, Dateiname, Vorschau der Dateigrösse; Code-Formate mit Copy-Button und Syntax-Highlighting.
-7. **Unterstützen** (`/de/unterstuetzen`, `/en/support`, seit M3-AP14): kurzer, ehrlicher Text (gratis, ohne Konto, ohne Tracking, Exporte frei nutzbar), wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung), hervorgehobener Block mit Knopf "Jetzt spenden" zum externen Anbieter. Ohne konfigurierten Link (`NEXT_PUBLIC_DONATION_URL`) neutraler Hinweis "Spenden-Link folgt bald", kein toter Knopf. Dezente Hinweise nur im Footer ("Motivo unterstützen") und als eine leise Zeile im Export-Dialog nach erfolgreichem Export (öffnet in neuem Tab, damit das Design im Editor bleibt). Nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
+7. **Unterstützen** (`/de/unterstuetzen`, `/en/support`, seit M3-AP14): kurzer, ehrlicher Text (gratis, ohne Konto, ohne Tracking, Exporte frei nutzbar), wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung), hervorgehobener Block mit Knopf "Jetzt spenden" zum externen Anbieter. Ohne konfigurierten Link (`NEXT_PUBLIC_DONATION_URL`) neutraler Hinweis "Spenden-Link folgt bald", kein toter Knopf. Dezente Hinweise nur im Footer ("Musterli unterstützen") und als eine leise Zeile im Export-Dialog nach erfolgreichem Export (öffnet in neuem Tab, damit das Design im Editor bleibt). Nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
 
 ## 7. Barrierefreiheit (WCAG 2.2 AA)
 
@@ -88,5 +88,5 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 ## 8. Microcopy (Ton)
 
 - Du-Form, freundlich, kurz, leicht verspielt, nie belehrend. Beispiel: "Neu würfeln", "Gefällt dir? Speichern", "Kopiert! Ab ins Projekt damit."
-- Spendenhinweise leise und ohne Druck: "Gefällt dir Motivo? Unterstütze das Projekt." Keine Schuldgefühle, keine Countdown- oder Knappheitstexte, keine Upgrade-Sprache.
+- Spendenhinweise leise und ohne Druck: "Gefällt dir Musterli? Unterstütze das Projekt." Keine Schuldgefühle, keine Countdown- oder Knappheitstexte, keine Upgrade-Sprache.
 - Schweizer Rechtschreibung im Deutschen (kein Eszett, immer ss).

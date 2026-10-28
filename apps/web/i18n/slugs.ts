@@ -10,13 +10,13 @@
  * Slugs are lowercase ASCII words joined by "-", unique per locale, and stay
  * stable once published (changing one needs a redirect).
  */
-import type { ToolCategory } from "@motivo/tool-registry";
+import type { ToolCategory } from "@musterli/tool-registry";
 
 import type { ConverterId } from "@/lib/convert/ids";
 
 import { ALL_LOCALES, SLUG_FALLBACK_LOCALE, type AnyLocale, type LocalizedSlugs } from "./locales";
 
-/** Tool id (from `@motivo/tool-registry`) to its localized slugs. */
+/** Tool id (from `@musterli/tool-registry`) to its localized slugs. */
 export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "css-gradient": { de: "css-verlauf-generator", en: "css-gradient-generator" },
   blob: { de: "blob-generator", en: "blob-generator" },
@@ -48,7 +48,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
 };
 
 /**
- * CSS pattern library id (`CSS_PATTERNS` in `@motivo/engine`) to its
+ * CSS pattern library id (`CSS_PATTERNS` in `@musterli/engine`) to its
  * localized slugs, used in `/[locale]/<cssPatterns section>/<slug>`. The
  * contract test in `slugs.test.ts` requires an entry for every pattern.
  */

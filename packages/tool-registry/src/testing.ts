@@ -1,9 +1,9 @@
 /**
  * Generic vitest suites every tool must pass. Import from
- * `@motivo/tool-registry/testing` in test files only; this module imports
+ * `@musterli/tool-registry/testing` in test files only; this module imports
  * vitest and must never end up in the app bundle.
  */
-import { createRng } from "@motivo/engine";
+import { createRng } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import * as z from "zod";
 import { DEFAULT_CANVAS_SIZE } from "./common";

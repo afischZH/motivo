@@ -12,7 +12,7 @@ import {
   BLURRY_LAYOUTS,
   blurryGradientSvg,
   randomPalette,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { TRANSPARENT, visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

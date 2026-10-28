@@ -5,7 +5,7 @@
  *
  *  1. `readAsset`: size limit, type by magic bytes (name and declared type
  *     are ignored), pixel count from the header; SVG is sanitised right away
- *     by the whitelist sanitizer (`@motivo/svg-sanitizer`) in the sanitize
+ *     by the whitelist sanitizer (`@musterli/svg-sanitizer`) in the sanitize
  *     worker (sanitize-client.ts).
  *  2. The crop dialog picks a part (`CropRect`, fractions of the source).
  *  3. `finishAsset`: SVG is cropped by the sanitizer (new viewBox) in the
@@ -13,14 +13,14 @@
  *     renders never sanitise it on the main thread); raster pictures are
  *     cropped, downsampled and re-encoded in the image worker.
  */
-import type { SvgRect } from "@motivo/svg-sanitizer";
+import type { SvgRect } from "@musterli/svg-sanitizer";
 import {
   IMAGE_ASSET_MAX_SVG_LENGTH,
   IMAGE_ASSET_RASTER_MAX_EDGE,
   imageAssetSchema,
   primeSvgAsset,
   type ImageAsset,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { checkImageBytes, checkImageSize, type ImageInputError } from "../image-input/check";
 import type { ImageInputServices } from "../image-input/services";
 import { cropToSource, type CropRect } from "./crop";

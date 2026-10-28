@@ -1,4 +1,4 @@
-import { createRng, sampleImagePixels } from "@motivo/engine";
+import { createRng, sampleImagePixels } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import { deriveFromImage, withoutDerivedParams } from "../image-input";
 import { createRenderContext } from "../render";

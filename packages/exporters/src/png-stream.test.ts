@@ -1,4 +1,4 @@
-import { zlibStored } from "@motivo/engine";
+import { zlibStored } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import { decodePng, sameBytes } from "./__fixtures__/png-decode";
 import {

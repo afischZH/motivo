@@ -2,7 +2,7 @@
  * M2-AP01: Dieter Dots (docs/TOOLS.md A3). Concentric rings of dots around
  * the canvas centre, like a perforated speaker grille.
  */
-import { DIETER_COLOR_MODES, dieterDotsSvg, randomPalette } from "@motivo/engine";
+import { DIETER_COLOR_MODES, dieterDotsSvg, randomPalette } from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

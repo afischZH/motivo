@@ -1,5 +1,5 @@
 /**
- * Motivo's own starter shape library for Seamless Patterns: 24 simple
+ * Musterli's own starter shape library for Seamless Patterns: 24 simple
  * geometric and organic motifs, drawn here from basic geometry (circles,
  * arcs, regular polygons, Bezier curves). No shapes are taken from other
  * products or icon sets.

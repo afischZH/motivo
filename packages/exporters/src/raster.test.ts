@@ -4,7 +4,7 @@ import {
   cssGradientTool,
   defineTool,
   polkaDotsTool,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import * as z from "zod";
 import { decodePng } from "./__fixtures__/png-decode";
@@ -405,7 +405,7 @@ describe("exportRaster", () => {
       width: 600,
       height: 400,
       clamped: false,
-      filename: "motivo-polka-dots-42.png",
+      filename: "musterli-polka-dots-42.png",
     });
     expect(env.loadedSvgs[0]).toMatch(
       /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" width="600" height="400" viewBox="0 0 300 200">/,
@@ -426,7 +426,7 @@ describe("exportRaster", () => {
       env,
     );
     expect(out).toMatchObject({ width: 1080, height: 720, clamped: true });
-    expect(out.filename).toBe("motivo-css-gradient-42.jpg");
+    expect(out.filename).toBe("musterli-css-gradient-42.jpg");
   });
 
   it("rejects formats the tool does not offer", async () => {

@@ -6,7 +6,7 @@ import {
   BRAND_SHAPES_MAX,
   BRAND_SVG_MAX_LENGTH,
   type BrandAsset,
-} from "@motivo/storage";
+} from "@musterli/storage";
 import { describe, expect, it } from "vitest";
 import {
   BRAND_KIT_FILE_FORMAT,
@@ -163,7 +163,7 @@ describe("brand kit import under attack", { timeout: 60_000 }, () => {
     });
     expect(ids).toEqual(kit.assets.map((a) => a.id));
     expect(brandKitFileName(new Date(2026, 9, 28), 0, 2)).toBe(
-      "motivo-brandkit-v1-2026-10-28-1.json",
+      "musterli-brandkit-v1-2026-10-28-1.json",
     );
   });
 

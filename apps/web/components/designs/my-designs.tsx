@@ -18,7 +18,7 @@ import {
   type DesignSummary,
   type SkippedDesign,
   type StorageErrorCode,
-} from "@motivo/editor-ui/designs";
+} from "@musterli/editor-ui/designs";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import NextLink from "next/link";
 import {
@@ -172,8 +172,8 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
     const queue = missingKey.split(",");
     void (async () => {
       const [{ createDesignThumbnail }, { registry, parseToolParams }] = await Promise.all([
-        import("@motivo/editor-ui/designs/thumbnail"),
-        import("@motivo/tool-registry"),
+        import("@musterli/editor-ui/designs/thumbnail"),
+        import("@musterli/tool-registry"),
       ]);
       for (const id of queue) {
         if (cancelled) return;
@@ -267,7 +267,7 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
         if (all.length === 0) return { tone: "info", text: tPage("exportEmpty") };
         // Several files when uploads make one too large to import again.
         const texts = await designsFileTexts(all, Date.now());
-        const { downloadBlob } = await import("@motivo/exporters");
+        const { downloadBlob } = await import("@musterli/exporters");
         const date = new Date();
         texts.forEach((text, part) => {
           const blob = new Blob([text], { type: "application/json" });

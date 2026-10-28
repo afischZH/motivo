@@ -85,7 +85,7 @@ test.describe("export dialog", () => {
       page.waitForEvent("download"),
       dialog.getByRole("button", { name: "Download" }).click(),
     ]);
-    expect(download.suggestedFilename()).toMatch(/^motivo-blob-\d+\.svg$/);
+    expect(download.suggestedFilename()).toMatch(/^musterli-blob-\d+\.svg$/);
     const text = (await downloaded(download)).toString("utf8");
     expect(text.startsWith("<svg")).toBe(true);
     expect(text).toContain('viewBox="0 0 1080 1080"');
@@ -104,7 +104,7 @@ test.describe("export dialog", () => {
       page.waitForEvent("download"),
       dialog.getByRole("button", { name: "Download" }).click(),
     ]);
-    expect(download.suggestedFilename()).toMatch(/^motivo-blob-\d+\.png$/);
+    expect(download.suggestedFilename()).toMatch(/^musterli-blob-\d+\.png$/);
     const png = await downloaded(download);
     expect(png.subarray(0, 8).equals(PNG_MAGIC)).toBe(true);
     // IHDR: width and height as big-endian uint32 at bytes 16 and 20.

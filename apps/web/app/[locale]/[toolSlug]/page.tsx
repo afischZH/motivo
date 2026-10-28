@@ -5,7 +5,7 @@
  * messages, motifs from the tool's own render function. No client JS
  * beyond the shared layout.
  */
-import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";

@@ -4,14 +4,14 @@
  * tool's default size, so a preset thumbnail looks exactly like the preset
  * in the editor. Server only: pages and route handlers call it at build time.
  */
-import { designToHash } from "@motivo/editor-ui/share";
+import { designToHash } from "@musterli/editor-ui/share";
 import {
   DEFAULT_CANVAS_SIZE,
   createRenderContext,
   registry,
   type AnyToolDefinition,
   type CanvasSize,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 
 /** Seed of every static motif, as in the editor's first render. */
 export const STATIC_SEED = 1;

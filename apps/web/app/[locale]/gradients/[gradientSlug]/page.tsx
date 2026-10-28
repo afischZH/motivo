@@ -5,7 +5,7 @@
  * CSS and Tailwind code, the same colours in the Mesh, Blurry and Striped
  * tools (share links `#d=`), the colour tools, and similar gradients.
  */
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";

@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 
 import AxeBuilder from "@axe-core/playwright";
-import { designToHash } from "@motivo/editor-ui/share";
-import { registry } from "@motivo/tool-registry";
+import { designToHash } from "@musterli/editor-ui/share";
+import { registry } from "@musterli/tool-registry";
 import { expect, test, type Page, type Request } from "@playwright/test";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
@@ -213,7 +213,7 @@ test.describe("saving designs locally", () => {
     await page.goto(EDITOR);
     await expect(page.getByTestId("save-design")).toBeEnabled();
     await page.getByTestId("save-design").click();
-    await expect(page.getByTestId("design-notice")).toContainText("does not let Motivo save");
+    await expect(page.getByTestId("design-notice")).toContainText("does not let Musterli save");
   });
 });
 
@@ -228,7 +228,7 @@ test.describe("moving designs with a file", () => {
     const downloadPromise = page.waitForEvent("download");
     await page.getByTestId("designs-export").click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toMatch(/^motivo-designs-v1-\d{4}-\d{2}-\d{2}\.json$/);
+    expect(download.suggestedFilename()).toMatch(/^musterli-designs-v1-\d{4}-\d{2}-\d{2}\.json$/);
     const path = await download.path();
     const text = await readFile(path, "utf8");
     const file = JSON.parse(text) as { format: string; version: number; designs: unknown[] };
@@ -283,7 +283,7 @@ test.describe("moving designs with a file", () => {
       mimeType: "application/json",
       buffer: Buffer.from('{"hello":"world"}'),
     });
-    await expect(message).toContainText("not a Motivo designs file");
+    await expect(message).toContainText("not a Musterli designs file");
 
     await input.setInputFiles({
       name: "broken.json",

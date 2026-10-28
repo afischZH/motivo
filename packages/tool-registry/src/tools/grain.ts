@@ -13,7 +13,7 @@ import {
   grainTile,
   pngDataUri,
   type Rng,
-} from "@motivo/engine";
+} from "@musterli/engine";
 
 const TILE_CACHE_MAX = 16;
 const tileCache = new Map<string, string>();

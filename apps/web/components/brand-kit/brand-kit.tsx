@@ -26,8 +26,8 @@ import {
   type BrandPalette,
   type SkippedBrandEntry,
   type StorageErrorCode,
-} from "@motivo/editor-ui/brand-kit";
-import { formatOklch } from "@motivo/engine";
+} from "@musterli/editor-ui/brand-kit";
+import { formatOklch } from "@musterli/engine";
 import { useTranslations } from "next-intl";
 import {
   useCallback,
@@ -52,7 +52,7 @@ interface Message {
   undo?: () => Promise<string>;
 }
 
-type Upload = typeof import("@motivo/editor-ui/brand-kit/upload");
+type Upload = typeof import("@musterli/editor-ui/brand-kit/upload");
 type UploadServices = {
   crop: ReturnType<Upload["browserImageInputServices"]>;
   svg: ReturnType<Upload["browserSvgSanitizer"]>;
@@ -191,7 +191,7 @@ export function BrandKit() {
     });
 
   const uploadServices = async (): Promise<UploadServices & { mod: Upload }> => {
-    const mod = await import("@motivo/editor-ui/brand-kit/upload");
+    const mod = await import("@musterli/editor-ui/brand-kit/upload");
     services.current ??= {
       crop: mod.browserImageInputServices(),
       svg: mod.browserSvgSanitizer(),
@@ -251,7 +251,7 @@ export function BrandKit() {
         }
         // Several files when large logos make one too large to import again.
         const texts = await brandKitFileTexts(kit, Date.now());
-        const { downloadBlob } = await import("@motivo/exporters");
+        const { downloadBlob } = await import("@musterli/exporters");
         const date = new Date();
         texts.forEach((text, part) => {
           const blob = new Blob([text], { type: "application/json" });

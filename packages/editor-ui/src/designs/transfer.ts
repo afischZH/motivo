@@ -23,13 +23,13 @@
  *    its tool (`parseToolParams`: `migrateParams`, then the tool's Zod
  *    schema, which drops unknown keys);
  *  - uploaded SVGs (`kind: "image"` params) are sanitised again with
- *    `@motivo/svg-sanitizer` and replaced by the sanitizer's output; raster
+ *    `@musterli/svg-sanitizer` and replaced by the sanitizer's output; raster
  *    uploads must be PNG or JPEG by their magic bytes, matching the declared
  *    type, within the size limits.
  * Designs that fail are skipped with a reason; the rest is imported.
  */
-import { sanitizeSvg } from "@motivo/svg-sanitizer";
-import type { ImportedDesign } from "@motivo/storage";
+import { sanitizeSvg } from "@musterli/svg-sanitizer";
+import type { ImportedDesign } from "@musterli/storage";
 import {
   designIdSchema,
   designNameSchema,
@@ -39,7 +39,7 @@ import {
   timestampSchema,
   toolIdSchema,
   toolVersionSchema,
-} from "@motivo/storage";
+} from "@musterli/storage";
 import {
   IMAGE_ASSET_MAX_SVG_LENGTH,
   IMAGE_ASSET_RASTER_MAX_EDGE,
@@ -47,7 +47,7 @@ import {
   parseToolParams,
   type AnyToolDefinition,
   type ToolRegistry,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import * as z from "zod";
 import { BRAND_KIT_FILE_FORMAT } from "../brand-kit/transfer-format";
 import { imageDimensions } from "../image-input/dimensions";

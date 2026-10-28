@@ -1,4 +1,4 @@
-import { ExportError, type RasterExportResult } from "@motivo/exporters";
+import { ExportError, type RasterExportResult } from "@musterli/exporters";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
@@ -137,7 +137,7 @@ describe("ExportDialog formats", () => {
     expect(services.downloadBlob).toHaveBeenCalledTimes(1);
     const [blob, name] = services.downloadBlob.mock.calls[0] ?? [];
     expect(blob?.type).toBe("image/svg+xml");
-    expect(name).toBe(`motivo-blob-${store.getState().seed}.svg`);
+    expect(name).toBe(`musterli-blob-${store.getState().seed}.svg`);
     expect(status().textContent).toBe("Heruntergeladen.");
   });
 });

@@ -5,6 +5,6 @@
 export function createBrandKitWorker(): Worker {
   return new Worker(new URL("./transfer.worker.ts", import.meta.url), {
     type: "module",
-    name: "motivo-brandkit-import",
+    name: "musterli-brandkit-import",
   });
 }

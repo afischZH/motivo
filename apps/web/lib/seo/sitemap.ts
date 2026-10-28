@@ -17,7 +17,7 @@ import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { legalPagesIndexable } from "@/lib/legal/config";
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 
 import { pageAlternates } from "./alternates";
 import { siteUrl } from "./site-url";
