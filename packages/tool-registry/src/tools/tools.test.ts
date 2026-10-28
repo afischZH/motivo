@@ -79,12 +79,28 @@ function digestDataUris(svg: string): string {
   });
 }
 
+/**
+ * Tools whose SVG runs to hundreds of KB (thousands of generated lines):
+ * snapshotted as length, CRC-32 and the first 600 characters, exact but small.
+ */
+const DIGEST_TOOLS: ReadonlySet<string> = new Set(["topo-lines", "flow-field"]);
+
+function digestSvg(svg: string): string {
+  // The generated SVG is ASCII, so code units are bytes.
+  const crc = crc32(Uint8Array.from(svg, (c) => c.charCodeAt(0)))
+    .toString(16)
+    .padStart(8, "0");
+  return `svg:${svg.length}:${crc}:${svg.slice(0, 600)}`;
+}
+
 for (const tool of builtInTools) {
   describeToolContract(tool);
   describePresetSnapshots(tool, {
     normalize: (out) =>
       typeof out === "string"
-        ? digestDataUris(out)
+        ? DIGEST_TOOLS.has(tool.id)
+          ? digestSvg(out)
+          : digestDataUris(out)
         : (JSON.parse(digestDataUris(JSON.stringify(out))) as CssOutput),
   });
 }
@@ -118,6 +134,8 @@ describe("built-in tool registration", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "topo-lines",
+      "flow-field",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -141,6 +159,8 @@ describe("built-in tool registration", () => {
       "grid-patterns",
       "confetti",
       "dieter-dots",
+      "topo-lines",
+      "flow-field",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });

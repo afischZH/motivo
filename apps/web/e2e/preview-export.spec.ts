@@ -102,6 +102,12 @@ const CASES: Case[] = [
   { toolId: "css-shadow", css: true },
   { toolId: "css-shadow", preset: "Inner", css: true },
   { toolId: "css-shadow", preset: "Floating", css: true },
+  // M4b-AP01: hundreds of thin contour lines and filled even-odd bands; flow
+  // lines as strokes and as tapered fills.
+  { toolId: "topo-lines" },
+  { toolId: "topo-lines", preset: "Lagoon" },
+  { toolId: "flow-field" },
+  { toolId: "flow-field", preset: "Whirlpool" },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

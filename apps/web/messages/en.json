@@ -2270,6 +2270,185 @@
           "a4": "Shadows pick up some of the color around them. That is why Musterli darkens the hue of the background by default. You can still pick your own color."
         }
       }
+    },
+    "topo-lines": {
+      "name": "Topographic Lines",
+      "description": "Contour lines like on a map, as outlines or filled elevation bands. Export as SVG, image or GIF.",
+      "params": {
+        "scale": {
+          "label": "Scale"
+        },
+        "octaves": {
+          "label": "Detail levels"
+        },
+        "roughness": {
+          "label": "Roughness"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "levels": {
+          "label": "Number of lines"
+        },
+        "style": {
+          "label": "Style",
+          "options": {
+            "lines": "Lines",
+            "bands": "Bands",
+            "bands-lines": "Bands and lines"
+          }
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "majorEvery": {
+          "label": "Index line every",
+          "description": "Every nth line is drawn wider, like the index contours of a map. 0 turns them off."
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "gradient": "Low to high",
+            "cycle": "Alternating"
+          }
+        },
+        "lineColor": {
+          "label": "Line color"
+        }
+      },
+      "presets": {
+        "survey": "Survey",
+        "lagoon": "Lagoon",
+        "night-map": "Night map",
+        "terraces": "Terraces",
+        "marble": "Marble",
+        "alpine": "Alpine",
+        "candy": "Cotton candy"
+      },
+      "seo": {
+        "whatIs": "Contour lines connect points of equal height, just like on a hiking map. Musterli creates a random terrain from noise and draws its contours at even intervals. The result works as a calm background for websites, slides, posters or packaging and stays sharp as SVG.",
+        "howTo": "Shape the terrain with scale, detail levels, roughness and warp, and choose how many lines to draw. Show lines, filled elevation bands or both, and highlight every nth line as an index line. Press the space bar for a new terrain. Export as SVG, PNG, JPG, WebP or as a GIF in which the lines slowly move.",
+        "faq": {
+          "q1": {
+            "question": "Are the contour lines real map data?",
+            "answer": "No. The terrain comes from mathematical noise and is entirely made up. That means you can use the graphic without licensing questions, and every seed gives you a new landscape."
+          },
+          "q2": {
+            "question": "How large is the SVG file?",
+            "answer": "With the default settings usually between 100 and 400 KB. Musterli simplifies the lines and rounds coordinates. Many lines, many detail levels and bands with lines make the file larger, but it always stays below about 1.5 MB."
+          },
+          "q3": {
+            "question": "What does warp do?",
+            "answer": "It shifts the terrain through itself with a second layer of noise. Small values make the shapes more organic, large values give flowing patterns reminiscent of marble or wood grain."
+          },
+          "q4": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. With a brand palette from your Brand Kit the tool takes your colors for the lines or bands and picks the darkest color for the lines on top of the bands."
+          }
+        }
+      }
+    },
+    "flow-field": {
+      "name": "Flow Fields",
+      "description": "Thousands of lines follow an invisible flow, like wind, water or hair. Export as SVG, image or GIF.",
+      "params": {
+        "mode": {
+          "label": "Field",
+          "options": {
+            "noise": "Noise",
+            "curl": "Swirl"
+          }
+        },
+        "scale": {
+          "label": "Scale"
+        },
+        "octaves": {
+          "label": "Detail levels"
+        },
+        "turbulence": {
+          "label": "Turbulence"
+        },
+        "direction": {
+          "label": "Main direction"
+        },
+        "seeding": {
+          "label": "Start points",
+          "options": {
+            "poisson": "Evenly spread",
+            "grid": "Grid",
+            "random": "Random"
+          }
+        },
+        "spacing": {
+          "label": "Line spacing"
+        },
+        "separation": {
+          "label": "Minimum distance",
+          "description": "Share of the line spacing that lines keep from each other. At 0 lines may touch and cross."
+        },
+        "length": {
+          "label": "Line length"
+        },
+        "step": {
+          "label": "Step size"
+        },
+        "maxLines": {
+          "label": "Maximum lines"
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "taper": {
+          "label": "Stroke shape",
+          "options": {
+            "none": "Even width",
+            "tail": "Thinner towards the end",
+            "both": "Pointed ends"
+          }
+        },
+        "colorMode": {
+          "label": "Color by",
+          "options": {
+            "palette": "Random from palette",
+            "angle": "Direction",
+            "position": "Position"
+          }
+        },
+        "opacity": {
+          "label": "Opacity"
+        }
+      },
+      "presets": {
+        "current": "Current",
+        "silk": "Silk",
+        "whirlpool": "Whirlpool",
+        "breeze": "Breeze",
+        "ink": "Ink",
+        "meadow": "Meadow",
+        "dune": "Desert wind"
+      },
+      "seo": {
+        "whatIs": "A flow field is a field of directions that gives every point of the canvas an angle. Let many lines follow it and you get images reminiscent of wind, currents, fur or silk. Musterli computes the field from noise or from swirls and can keep a minimum distance, so the lines never clump together.",
+        "howTo": "Pick the field, its scale and turbulence, then the start points, line spacing and length. Stroke shape, line width and opacity set the character, and the colors come from the palette, the direction or the position. Press the space bar for a new variation. Export as SVG, PNG, JPG, WebP or as a GIF with travelling strokes.",
+        "faq": {
+          "q1": {
+            "question": "What is the difference between noise and swirl?",
+            "answer": "With noise, the lines roughly follow a main direction and stray from it depending on the turbulence. The swirl field derives its directions from noise so that lines circle around and never converge in a single point."
+          },
+          "q2": {
+            "question": "What is the minimum distance for?",
+            "answer": "A line stops as soon as it gets too close to another one, so the lines spread evenly across the canvas. At 0 they may overlap, which gives soft, hair-like textures at a low opacity."
+          },
+          "q3": {
+            "question": "How large is the SVG file?",
+            "answer": "With the default settings usually below 300 KB. Musterli simplifies every line and rounds coordinates. The number of lines, steps and points is capped, so the file stays below about 1.5 MB and the preview stays responsive."
+          },
+          "q4": {
+            "question": "What does the GIF animation look like?",
+            "answer": "With the motion source the lines turn into strokes that travel along the field, in a seamless loop. Alternatively the frames show new variations or cycle through the colors."
+          }
+        }
+      }
     }
   },
   "Converters": {

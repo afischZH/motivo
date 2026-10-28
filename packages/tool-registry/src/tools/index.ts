@@ -30,6 +30,8 @@ import { bentoGridTool } from "./bento-grid";
 import { geometricPatternsTool } from "./geometric-patterns";
 import { contrastCheckerTool } from "./contrast-checker";
 import { cssShadowTool } from "./css-shadow";
+import { topoLinesTool } from "./topo-lines";
+import { flowFieldTool } from "./flow-field";
 
 export {
   blobTool,
@@ -58,6 +60,8 @@ export {
   geometricPatternsTool,
   contrastCheckerTool,
   cssShadowTool,
+  topoLinesTool,
+  flowFieldTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -96,6 +100,8 @@ export {
 export type { ContrastCheckerParams } from "./contrast-checker";
 export { CONTRAST_SUGGESTION_IDS, contrastSuggestions } from "./contrast-checker";
 export type { CssShadowParams } from "./css-shadow";
+export type { TopoLinesParams } from "./topo-lines";
+export type { FlowFieldParams } from "./flow-field";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -125,6 +131,8 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   bentoGridTool,
   contrastCheckerTool,
   cssShadowTool,
+  topoLinesTool,
+  flowFieldTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

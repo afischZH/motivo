@@ -53,6 +53,8 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "bento-grid": { de: "bento-grid-generator", en: "bento-grid-generator" },
   "contrast-checker": { de: "kontrast-checker", en: "contrast-checker" },
   "css-shadow": { de: "css-schatten-generator", en: "css-shadow-generator" },
+  "topo-lines": { de: "hoehenlinien-generator", en: "topographic-pattern-generator" },
+  "flow-field": { de: "flow-field-generator", en: "flow-field-generator" },
 };
 
 /**

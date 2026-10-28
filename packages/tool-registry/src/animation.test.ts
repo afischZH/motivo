@@ -14,6 +14,7 @@ import { colorSchema, paletteSchema } from "./common";
 import { registry } from "./index";
 import { parseToolParams } from "./randomize";
 import { defineTool } from "./registry";
+import { createRenderContext } from "./render";
 import { renderStatic } from "./testing";
 
 const SIZE = { width: 320, height: 200 };
@@ -21,8 +22,13 @@ const SIZE = { width: 320, height: 200 };
 /** Output of one frame as a comparable string (SVG, or the CSS plus its preview SVG). */
 function frameOutput(
   tool: ReturnType<typeof registry.list>[number],
-  frame: { params: unknown; seed: number },
+  frame: { params: unknown; seed: number; t?: number },
 ): string {
+  // Frames of the "time" source carry `t`, which only an SVG renderer with a context sees.
+  if (frame.t !== undefined && tool.render.kind === "svg") {
+    const p = tool.schema.parse(frame.params);
+    return tool.render.render(p, createRenderContext(frame.seed, SIZE, frame.t));
+  }
   const out = renderStatic(tool, frame.params, frame.seed, SIZE);
   return typeof out === "string" ? out : JSON.stringify(out);
 }
@@ -200,11 +206,16 @@ describe("animated tools in the registry", () => {
           for (const frame of frames) {
             expect(parseToolParams(tool, frame.params).success).toBe(true);
           }
-          const first = frameOutput(tool, frames[0] as { params: unknown; seed: number });
+          const first = frameOutput(
+            tool,
+            frames[0] as { params: unknown; seed: number; t?: number },
+          );
           // Frame 0 is the design as shown in the preview.
           expect(first).toBe(frameOutput(tool, { params: tool.defaults, seed: 1 }));
           const distinct = new Set(
-            frames.map((f) => frameOutput(tool, f as { params: unknown; seed: number })),
+            frames.map((f) =>
+              frameOutput(tool, f as { params: unknown; seed: number; t?: number }),
+            ),
           );
           expect(distinct.size).toBeGreaterThan(1);
         });
