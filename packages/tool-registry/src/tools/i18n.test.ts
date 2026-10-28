@@ -10,6 +10,8 @@ import de from "../../../../apps/web/messages/de.json";
 import en from "../../../../apps/web/messages/en.json";
 import type { AnyToolDefinition } from "../types";
 import { builtInTools } from "./index";
+import { SHAPE_IDS, SHAPE_PACK_IDS } from "@musterli/engine";
+import { shapeLabelKey, shapePackLabelKey } from "../shapes";
 
 type Messages = Record<string, unknown>;
 
@@ -34,6 +36,7 @@ function paramKeys(toolId: string, shape: z.ZodRawShape, controls: Hints | undef
     const hint = hints[param];
     if (hint?.kind === "hidden") continue;
     keys.push(hint?.labelKey ?? `tools.${toolId}.params.${param}.label`);
+    for (const group of hint?.optionGroups ?? []) keys.push(group.labelKey);
     if (schema instanceof z.ZodEnum) {
       const labels = hint?.optionLabelKeys ?? {};
       for (const option of schema.options) {
@@ -66,6 +69,13 @@ describe.each(Object.entries(LOCALES))("messages %s", (_, messages) => {
   });
 });
 
+describe.each(Object.entries(LOCALES))("shape library messages %s", (_, messages) => {
+  it("names every pack and every shape", () => {
+    const keys = [...SHAPE_PACK_IDS.map(shapePackLabelKey), ...SHAPE_IDS.map(shapeLabelKey)];
+    expect(keys.filter((k) => typeof lookup(messages, k) !== "string")).toEqual([]);
+  });
+});
+
 describe("German tool copy", () => {
   const strings = (node: unknown): string[] =>
     typeof node === "string"
@@ -73,7 +83,7 @@ describe("German tool copy", () => {
       : typeof node === "object" && node !== null
         ? Object.values(node).flatMap(strings)
         : [];
-  const de = strings(LOCALES.de.tools);
+  const de = [...strings(LOCALES.de.tools), ...strings(LOCALES.de.Shapes)];
 
   it("uses Swiss spelling (no ß)", () => {
     expect(de.filter((s) => s.includes("ß"))).toEqual([]);

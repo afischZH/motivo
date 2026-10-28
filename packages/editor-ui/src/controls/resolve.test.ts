@@ -207,4 +207,33 @@ describe("list and thumbnail controls", () => {
     const tool = { id: "t", schema: z.object({ k: z.enum(["a", "b"]) }), defaults: { k: "a" } };
     expect(resolveControl(tool, "k", { kind: "thumbnails" })?.kind).toBe("select");
   });
+
+  it("passes option groups (known values only) and the brand shapes param", () => {
+    const tool = {
+      id: "t",
+      schema: z.object({ k: z.enum(["a", "b", "c"]) }),
+      defaults: { k: "a" },
+    };
+    const c = resolveControl(
+      tool,
+      "k",
+      {
+        kind: "thumbnails",
+        optionPreview: () => ({ css: "" }),
+        optionGroups: [
+          { id: "one", labelKey: "g.one", values: ["a", "x"] },
+          { id: "two", labelKey: "g.two", values: ["c", "b"] },
+          { id: "empty", labelKey: "g.empty", values: ["x"] },
+        ],
+        brandShapesParam: "upload",
+      },
+      { params: { k: "a" }, root: { k: "a" } },
+    );
+    if (c?.kind !== "thumbnails") throw new Error("expected thumbnails");
+    expect(c.groups?.map((g) => [g.id, g.options.map((o) => o.value)])).toEqual([
+      ["one", ["a"]],
+      ["two", ["c", "b"]],
+    ]);
+    expect(c.brandShapesParam).toBe("upload");
+  });
 });

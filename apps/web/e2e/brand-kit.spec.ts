@@ -430,6 +430,35 @@ test.describe("brand palette in the editor", () => {
     expect(src).not.toMatch(/script|onload|foreignObject|example\.com/i);
     expect(await page.evaluate(() => (window as { __pwned?: number }).__pwned)).toBeUndefined();
   });
+
+  test("offers brand shapes as a pack in the shape picker", async ({ page }) => {
+    await openBrandKit(page);
+    await page.getByTestId("shape-file").setInputFiles({
+      name: "badge.svg",
+      mimeType: "image/svg+xml",
+      buffer: Buffer.from(HOSTILE_SVG),
+    });
+    await expect(page.getByTestId("shape-card")).toHaveCount(1);
+
+    await page.goto(editorPath("seamless-patterns"));
+    await expect(page.getByTestId("preview")).toBeVisible();
+    await page.getByLabel("Shape: collection").selectOption({ label: "Brand Kit" });
+    const item = page.getByTestId("thumbnail-brand-item");
+    await expect(item).toHaveCount(1);
+    await item.click();
+    const dialog = page.getByRole("dialog", { name: "Crop" });
+    await dialog.getByRole("button", { name: "Apply" }).click();
+    await expect(dialog).toBeHidden();
+    await expect(page.getByTestId("asset-thumbnail")).toBeVisible();
+    await expect(page.getByRole("radiogroup", { name: "Shape" })).toHaveCount(0);
+    // Focus lands on the upload field that now holds the shape.
+    await expect(page.getByTestId("asset-file")).toBeFocused();
+    const src = decodeURIComponent(
+      (await page.getByTestId("preview").locator("img").getAttribute("src")) ?? "",
+    );
+    expect(src).not.toMatch(/script|onload|foreignObject|example\.com/i);
+    expect(await page.evaluate(() => (window as { __pwned?: number }).__pwned)).toBeUndefined();
+  });
 });
 
 test.describe("moving the brand kit with a file", () => {

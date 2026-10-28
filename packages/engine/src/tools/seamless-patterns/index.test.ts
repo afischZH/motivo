@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createRng } from "../../rng";
+import { pathBounds } from "../../shapes";
 import { GENERATOR_BUDGET_MS, fastest } from "../../testing/timing";
 import {
   SEAMLESS_MAX_CELLS,
@@ -259,16 +260,15 @@ describe("seamless SVG", () => {
 });
 
 describe("seamless shapes", () => {
-  it("has 24 unique, well-formed paths inside the 100-unit box", () => {
-    expect(SEAMLESS_SHAPES).toHaveLength(24);
+  it("draws from the whole shape library, unique well-formed paths inside the box", () => {
+    expect(SEAMLESS_SHAPES.length).toBeGreaterThanOrEqual(150);
     const paths = SEAMLESS_SHAPES.map(seamlessShapePath);
-    expect(new Set(paths).size).toBe(24);
+    expect(new Set(paths).size).toBe(SEAMLESS_SHAPES.length);
     for (const d of paths) {
       expect(d).toMatch(/^M[-\d. MLHVCQAZ]+$/);
       expect(d).not.toMatch(/NaN|Infinity/);
-      // Every coordinate stays inside the box (with arcs' radii, which are positive).
-      for (const n of d.match(/-?\d+(?:\.\d+)?/g) ?? [])
-        expect(Math.abs(Number(n))).toBeLessThanOrEqual(56);
+      const b = pathBounds(d);
+      expect(Math.max(-b.minX, -b.minY, b.maxX, b.maxY)).toBeLessThanOrEqual(50.02);
     }
   });
 });

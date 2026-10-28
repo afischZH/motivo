@@ -304,7 +304,12 @@
       "loading": "Wird geladen …",
       "assetsEmpty": "Noch keine Logos oder Shapes.",
       "openKit": "Zum Brand Kit",
-      "useAsset": "{name} verwenden"
+      "useAsset": "{name} verwenden",
+      "shapesEmpty": "Noch keine eigenen Shapes im Brand Kit."
+    },
+    "thumbnails": {
+      "group": "{label}: Sammlung",
+      "brandKit": "Brand Kit"
     },
     "suggestions": {
       "title": "Vorschläge",
