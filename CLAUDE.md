@@ -22,7 +22,7 @@
 ## Arbeitsweise
 
 1. **Meilenstein für Meilenstein.** Arbeite nur an Aufgaben des aktuellen Meilensteins in `ROADMAP.md`. Hake Checkboxen ab, wenn erledigt und getestet.
-2. **Kleine Schritte.** Pro Aufgabe: kurz planen, umsetzen, Tests schreiben/ausführen, typecheck + lint, dann committen (Conventional Commits, z. B. `feat(engine): add blob generator`).
+2. **Kleine Schritte.** Pro Aufgabe: kurz planen, umsetzen, Tests schreiben und nur die betroffenen ausführen (`pnpm test:affected`, E2E nur Chromium und nur betroffene Specs), typecheck + lint, dann committen (Conventional Commits, z. B. `feat(engine): add blob generator`).
 3. **Erst fragen, dann bauen**, wenn: eine Anforderung unklar ist, eine neue Dependency mit > 50 KB gzip nötig wäre, das Datenmodell geändert werden muss, oder etwas den Nicht-Zielen in `PRODUCT.md` widerspricht.
 4. **Nichts erfinden.** Bei APIs von Libraries (Next.js, OpenNext/Cloudflare, WebCodecs, IndexedDB, Konva, Figma) die aktuelle offizielle Doku prüfen statt aus dem Gedächtnis zu arbeiten. Versionen in `package.json` sind die Wahrheit.
 5. **Doku nachführen.** Wenn sich eine Entscheidung ändert, die betroffene Datei in `docs/` im selben Commit aktualisieren und unten im Entscheidungslog eintragen.
@@ -71,6 +71,7 @@ pnpm install            # Abhängigkeiten
 pnpm dev                # Web-App lokal (apps/web)
 pnpm build              # Alle Pakete bauen
 pnpm test               # Vitest (alle Pakete)
+pnpm test:affected      # Vitest nur geänderte Pakete (Standard nach jeder Aufgabe; Basis: TURBO_SCM_BASE)
 pnpm test:e2e           # Playwright (alle Browser)
 pnpm test:e2e:chromium  # Playwright nur Chromium
 pnpm --filter @musterli/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
@@ -131,3 +132,4 @@ pnpm lint && pnpm typecheck
 | 2026-10-28 | Kachel-Editing über generischen Hook `ToolDefinition.regionEditor` (Zellen-Wähler und Popover in der Editor-Shell); Bearbeitungen als normaler Param `tileOverrides` (höchstens 128, Zellen-Id aus der Rasterposition) | Shell bleibt Tool-neutral; Teilen-Link, Designs und Undo funktionieren ohne Sonderweg; 128 Bearbeitungen passen sicher in den Teilen-Link (Details `docs/ARCHITECTURE.md` Abschnitt 4.8) |
 | 2026-10-28 | Scope-Erweiterung M4-AP06b (Entscheid Andreas): Bento-Grid mit Kachelinhalten (Titel, Untertitel, Symbol, eigene Grafik, Kachel- und Raster-Hintergrundbild) über den `regionEditor`, Glas- und Rahmen-Effekte mit eigenem Hintergrundbild. Kachel-Key `t<n>` nach Lesereihenfolge; Text und Symbole im Teilen-Link, alle Uploads nur lokal (`localParams`, Share-Codec lässt sie weg); Code-Exporte mit Platzhaltern statt data-URI (Glas optional eingebettet) | Wunsch nach echten Inhalten statt Platzhaltern; kein freier Layout-Editor, keine neue Dependency, keine Kosten; Teilen-Links bleiben kurz, Nutzerdateien verlassen das Gerät nicht (Details `docs/TOOLS.md` J2/J3, `docs/ARCHITECTURE.md` 4.8 und Sicherheit) |
 | 2026-10-28 | Ko-fi-Widget (schwebender Spendenknopf, Script von storage.ko-fi.com) nur auf der Startseite statt reinem Link; aktiv nur, wenn `NEXT_PUBLIC_DONATION_URL` eine Ko-fi-Seite ist; CSP als Dienst `kofi` geöffnet, ohne Google Fonts; Datenschutzerklärung ergänzt (juristisch zu prüfen) | Entscheid Andreas; Ko-fi erhält beim Aufruf der Startseite IP und User Agent, Cookies nur im Spendenformular auf ko-fi.com |
+| 2026-10-28 | Schlanke Tests: nach jeder Aufgabe nur Lint, Typecheck, `test:affected` und betroffene Chromium-Specs; CI-E2E in Draft-PRs und auf main nur Chromium, alle drei Browser erst bei "ready for review" (Meilenstein-Abnahme) | Wunsch Andreas; kürzere Wartezeiten, Firefox/WebKit-Fehler werden trotzdem vor jedem Release gefunden |

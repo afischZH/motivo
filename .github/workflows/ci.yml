@@ -1,9 +1,13 @@
 name: CI
 
+# E2E depth depends on the stage (keeps runs short while work is in progress):
+# - draft pull requests and pushes to main: Chromium only
+# - pull requests ready for review: Chromium, Firefox and WebKit (milestone gate)
 on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -54,6 +58,7 @@ jobs:
       # Placeholder donation link, so e2e/support.spec.ts checks the button
       # (without it, the spec checks the "link follows soon" state instead).
       NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
+      ALL_BROWSERS: ${{ github.event_name == 'pull_request' && !github.event.pull_request.draft }}
     steps:
       - uses: actions/checkout@v5
 
@@ -67,14 +72,17 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm --filter @musterli/web exec playwright install --with-deps chromium firefox webkit
+        run: |
+          if [ "$ALL_BROWSERS" = "true" ]; then browsers="chromium firefox webkit"; else browsers="chromium"; fi
+          pnpm --filter @musterli/web exec playwright install --with-deps $browsers
 
       # The Playwright web server runs `next start` in CI, so the app must be built first.
       - name: Build
         run: pnpm build
 
-      - name: Run E2E tests (chromium, firefox, webkit)
-        run: pnpm test:e2e
+      - name: Run E2E tests
+        run: |
+          if [ "$ALL_BROWSERS" = "true" ]; then pnpm test:e2e; else pnpm test:e2e:chromium; fi
 
       - name: Upload Playwright report
         if: ${{ failure() }}
