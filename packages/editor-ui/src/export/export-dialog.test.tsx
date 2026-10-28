@@ -302,6 +302,17 @@ describe("ExportDialog errors", () => {
     );
   });
 
+  it("explains too-large (large JPG or WebP the browser cannot draw)", async () => {
+    setup("blob", failing("too-large"));
+    fireEvent.click(formatRadio("JPG"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Dein Browser kann ein Bild dieser Grösse nicht in diesem Format erzeugen. Wähle PNG oder eine kleinere Grösse.",
+      ),
+    );
+  });
+
   it("explains decode-failed and unknown errors", async () => {
     setup("blob", failing("decode-failed"));
     fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));

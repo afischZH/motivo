@@ -217,6 +217,9 @@ importers:
 
   packages/exporters:
     dependencies:
+      '@motivo/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@motivo/tool-registry':
         specifier: workspace:*
         version: link:../tool-registry

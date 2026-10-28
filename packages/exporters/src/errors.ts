@@ -10,6 +10,11 @@ export type ExportErrorCode =
   | "encode-unsupported"
   /** Encoding failed, typically because the canvas is too large for this device. */
   | "encode-failed"
+  /**
+   * The browser could not draw an image this large in this format (canvas
+   * size limit, e.g. Safari); PNG still works through strips.
+   */
+  | "too-large"
   /** The required browser API is missing (Canvas, Clipboard, ...). */
   | "unavailable"
   | "aborted";
