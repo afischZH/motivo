@@ -138,15 +138,23 @@ export const EFFECT_PHOTO_MAX_RASTER_LENGTH = 24_000_000;
  * resolution), uploaded with `ImageHint` `{ photo: true, rasterOnly: true }`
  * so it arrives as JPEG. Same shape as a raster `ImageAsset`.
  */
-export const effectPhotoAssetSchema = z
-  .object({
-    kind: z.literal("raster"),
-    href: z.string().max(EFFECT_PHOTO_MAX_RASTER_LENGTH).regex(RASTER_HREF_PATTERN),
-    width: z.int().min(1).max(EFFECT_PHOTO_RASTER_MAX_EDGE),
-    height: z.int().min(1).max(EFFECT_PHOTO_RASTER_MAX_EDGE),
-    name: assetName,
-  })
-  .register(controlKindRegistry, { kind: "image" });
+export const effectPhotoAssetSchema = effectPhotoAssetSchemaWith({
+  maxEdge: EFFECT_PHOTO_RASTER_MAX_EDGE,
+  maxRasterLength: EFFECT_PHOTO_MAX_RASTER_LENGTH,
+});
+
+/** A raster-only photo schema with its own limits (e.g. ASCII art reads at most 1024 px). */
+export function effectPhotoAssetSchemaWith(limits: { maxEdge: number; maxRasterLength: number }) {
+  return z
+    .object({
+      kind: z.literal("raster"),
+      href: z.string().max(limits.maxRasterLength).regex(RASTER_HREF_PATTERN),
+      width: z.int().min(1).max(limits.maxEdge),
+      height: z.int().min(1).max(limits.maxEdge),
+      name: assetName,
+    })
+    .register(controlKindRegistry, { kind: "image" });
+}
 
 export type EffectPhotoAsset = z.output<typeof effectPhotoAssetSchema>;
 

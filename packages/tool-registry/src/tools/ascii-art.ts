@@ -27,7 +27,7 @@ import {
 } from "@musterli/effects";
 import { hexToOklch, oklchToHex } from "@musterli/engine";
 import * as z from "zod";
-import { backgroundSchema, colorSchema, effectPhotoAssetSchema } from "../common";
+import { backgroundSchema, colorSchema, effectPhotoAssetSchemaWith } from "../common";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
 import type { Preset, RenderContext } from "../types";
@@ -45,10 +45,25 @@ export const ASCII_DOT_SHAPES = ["round", "square"] as const;
 
 /** Longest edge of the photo the grid is computed from (more is never needed). */
 export const ASCII_PHOTO_MAX_EDGE = 1024;
+/**
+ * Longest data URI of the photo: the image input decodes files up to 5 MB
+ * (base64 adds a third); a 1024 px JPEG is far smaller.
+ */
+export const ASCII_PHOTO_MAX_RASTER_LENGTH = 7_000_000;
+
+/**
+ * The photo of ASCII art (docs/TOOLS.md L5): raster only, at most
+ * `ASCII_PHOTO_MAX_EDGE`, so an imported design cannot bring a photo the
+ * image input would refuse to analyse.
+ */
+export const asciiPhotoAssetSchema = effectPhotoAssetSchemaWith({
+  maxEdge: ASCII_PHOTO_MAX_EDGE,
+  maxRasterLength: ASCII_PHOTO_MAX_RASTER_LENGTH,
+});
 
 const schema = z.object({
   /** The user's photo; `null` shows the demo picture. Local only. */
-  photo: effectPhotoAssetSchema.nullable(),
+  photo: asciiPhotoAssetSchema.nullable(),
   /** Cells derived from the photo (`encodeAsciiGrid`); empty = demo picture. */
   grid: z.string().max(ASCII_GRID_MAX_LENGTH).regex(ASCII_GRID_PATTERN),
   mode: z.enum(ASCII_MODES),
