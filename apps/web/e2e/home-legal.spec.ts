@@ -29,10 +29,12 @@ test.describe("home page", () => {
     ]) {
       await expect(main.getByRole("heading", { level: 2, name })).toBeVisible();
     }
-    // Hero motifs come from the tools' own static renders.
-    const showcase = main.getByRole("list", { name: "Sample motifs" });
-    await expect(showcase.locator('img[src^="/motifs/"]')).toHaveCount(3);
-    await expect(showcase.locator("img").first()).toHaveJSProperty("complete", true);
+    // The hero preview shows the tool's own static renders and opens its editor.
+    const preview = main.getByRole("link", { name: /^Open / });
+    const frames = preview.locator('img[src^="/motifs/"]');
+    expect(await frames.count()).toBeGreaterThan(0);
+    await expect(frames.first()).toHaveJSProperty("complete", true);
+    await expect(preview).toHaveAttribute("href", /\/en\/tools\//);
 
     await main.getByRole("link", { name: "Explore all tools" }).click();
     await expect(page).toHaveURL(/\/en\/tools$/);
