@@ -77,7 +77,7 @@ Zusätzlich verfügbar (eingebaut): `Explore` für schnelle Code-Suche, `Plan` f
 |---|---|---|
 | Lint, Typecheck, Unit-Tests der betroffenen Pakete (`pnpm test:affected`) | immer | du selbst |
 | E2E nur Chromium, nur die betroffenen Specs | bei UI- und Tool-Änderungen | du selbst oder `qa-tester` |
-| Volle Testsuite: alle Unit-Tests, E2E in Chromium, Firefox und WebKit | nur vor der Meilenstein-Abnahme (CI, sobald der PR "ready for review" ist) | CI |
+| Volle Testsuite: alle Unit-Tests, ganze E2E-Suite in Chromium | vor der Meilenstein-Abnahme (CI im PR) | CI |
 | Code-Review | immer | `code-reviewer` |
 | Tests ergänzt (Snapshots pro Preset, E2E für User-Flows) | bei jedem Feature | `qa-tester` |
 | Security-Review | bei Uploads, Datei-Importen, lokaler Speicherung, CSP/Headern, Drittanbietern, Server-Fetches | `security-reviewer` |

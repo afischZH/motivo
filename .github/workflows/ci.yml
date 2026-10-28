@@ -1,8 +1,7 @@
 name: CI
 
-# E2E depth depends on the stage (keeps runs short while work is in progress):
-# - draft pull requests and pushes to main: Chromium only
-# - pull requests ready for review: Chromium, Firefox and WebKit (milestone gate)
+# E2E runs in Chromium only (decision Andreas 2026-10-28). Firefox and WebKit
+# projects stay in playwright.config.ts for manual runs (`pnpm test:e2e`).
 on:
   push:
     branches: [main]
@@ -51,15 +50,9 @@ jobs:
         run: pnpm build
 
   e2e:
-    name: E2E (Playwright, ${{ matrix.browser }})
+    name: E2E (Playwright, chromium)
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        # One job per browser, in parallel (a single job with all three no
-        # longer fits the timeout). Draft PRs and main: Chromium only.
-        browser: ${{ fromJSON(github.event_name == 'pull_request' && !github.event.pull_request.draft && '["chromium", "firefox", "webkit"]' || '["chromium"]') }}
     env:
       # Placeholder donation link, so e2e/support.spec.ts checks the button
       # (without it, the spec checks the "link follows soon" state instead).
@@ -77,20 +70,20 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browser
-        run: pnpm --filter @musterli/web exec playwright install --with-deps ${{ matrix.browser }}
+        run: pnpm --filter @musterli/web exec playwright install --with-deps chromium
 
       # The Playwright web server runs `next start` in CI, so the app must be built first.
       - name: Build
         run: pnpm build
 
       - name: Run E2E tests
-        run: pnpm --filter @musterli/web exec playwright test --project=${{ matrix.browser }}
+        run: pnpm --filter @musterli/web exec playwright test --project=chromium
 
       - name: Upload Playwright report
         if: ${{ failure() }}
         uses: actions/upload-artifact@v5
         with:
-          name: playwright-report-${{ matrix.browser }}
+          name: playwright-report-chromium
           path: |
             apps/web/playwright-report/
             apps/web/test-results/
