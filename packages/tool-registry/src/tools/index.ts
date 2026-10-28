@@ -27,6 +27,7 @@ import { tailwindPaletteTool } from "./tailwind-palette";
 import { tintsShadesTool } from "./tints-shades";
 import { glassEffectsTool } from "./glass-effects";
 import { bentoGridTool } from "./bento-grid";
+import { geometricPatternsTool } from "./geometric-patterns";
 import { contrastCheckerTool } from "./contrast-checker";
 import { cssShadowTool } from "./css-shadow";
 
@@ -54,6 +55,7 @@ export {
   tintsShadesTool,
   glassEffectsTool,
   bentoGridTool,
+  geometricPatternsTool,
   contrastCheckerTool,
   cssShadowTool,
 };
@@ -82,6 +84,15 @@ export type { TailwindPaletteParams } from "./tailwind-palette";
 export type { TintsShadesParams } from "./tints-shades";
 export type { GlassEffectsParams } from "./glass-effects";
 export type { BentoGridParams } from "./bento-grid";
+export type { GeometricPatternsParams, TileOverride, TileValues } from "./geometric-patterns";
+export {
+  GEOMETRIC_PACKS,
+  GEOMETRIC_SHAPES_MAX,
+  TILE_OVERRIDES_MAX,
+  geometricShapesOf,
+  tileOverrideSchema,
+  tileOverridesSchema,
+} from "./geometric-patterns";
 export type { ContrastCheckerParams } from "./contrast-checker";
 export { CONTRAST_SUGGESTION_IDS, contrastSuggestions } from "./contrast-checker";
 export type { CssShadowParams } from "./css-shadow";
@@ -96,6 +107,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   doodlesTool,
   svgChartsTool,
   polkaDotsTool,
+  geometricPatternsTool,
   seamlessPatternsTool,
   noiseGrainTool,
   gridPatternsTool,

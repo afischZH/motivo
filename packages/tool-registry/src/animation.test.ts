@@ -162,6 +162,7 @@ describe("animated tools in the registry", () => {
       "blurry-gradient",
       "css-patterns",
       "bento-grid",
+      "geometric-patterns",
     ]) {
       expect(ids).toContain(id);
     }

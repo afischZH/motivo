@@ -48,6 +48,7 @@ import {
   UndoIcon,
 } from "./icons";
 import { PreviewStage, ZOOM_LEVELS, type Zoom } from "./preview";
+import { RegionLayer, regionEditorOf } from "./region-editor";
 import { renderMotifCached } from "./render";
 import { ToolAdvisories } from "./advisories";
 import { ShortcutHelp } from "./shortcut-help";
@@ -584,6 +585,9 @@ function PreviewSection(props: {
   const seed = useDeferredValue(useEditorStore((s) => s.seed));
   const size = useDeferredValue(useEditorStore((s) => s.size));
   const liveSize = useEditorStore((s) => s.size);
+  const liveParams = useEditorStore((s) => s.params);
+  const liveSeed = useEditorStore((s) => s.seed);
+  const regionEditor = regionEditorOf(tool);
 
   const output = useMemo(
     () => renderMotifCached(tool, params, seed, size),
@@ -653,6 +657,17 @@ function PreviewSection(props: {
         })}
         transparent={transparent}
         unsupportedText={t("Editor.shell.unsupported")}
+        overlay={
+          regionEditor ? (
+            <RegionLayer
+              tool={tool}
+              editor={regionEditor}
+              params={liveParams}
+              seed={liveSeed}
+              size={liveSize}
+            />
+          ) : undefined
+        }
         className="h-[55dvh] min-h-64 lg:h-auto lg:min-h-0 lg:flex-1"
       />
     </section>

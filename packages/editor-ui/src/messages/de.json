@@ -329,12 +329,24 @@
     },
     "thumbnails": {
       "group": "{label}: Sammlung",
-      "brandKit": "Brand Kit"
+      "brandKit": "Brand Kit",
+      "chosen": "{count} gewählt"
     },
     "suggestions": {
       "title": "Vorschläge",
       "hint": "Ein Klick übernimmt den Vorschlag, Rückgängig macht ihn ungeschehen.",
       "applied": "Übernommen: {label}"
+    },
+    "regions": {
+      "picker": "Kacheln der Vorschau",
+      "pickerHint": "Pfeiltasten wählen eine Kachel, Enter öffnet sie.",
+      "edited": "{label}, geändert",
+      "resetRegion": "Kachel zurücksetzen",
+      "resetAll": "Alle zurücksetzen ({count})",
+      "close": "Fertig",
+      "limit": "Du hast {max} Kacheln geändert, mehr geht nicht. Setz eine zurück, um eine weitere zu ändern.",
+      "resetDone": "Kachel zurückgesetzt.",
+      "resetAllDone": "Alle Kacheln zurückgesetzt."
     }
   },
   "sizes": {

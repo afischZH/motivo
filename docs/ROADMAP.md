@@ -71,7 +71,7 @@ Gesamtüberblick:
 
 ## M4: Flaggschiff-Patterns und Launch (Woche 11 bis 14) ► öffentlicher Launch
 
-- [ ] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing); **Seamless Patterns** in M3 vorgezogen (M3-AP12)
+- [x] Tools: **Geometric Patterns** (uniform + dynamic Grid, Tile-Editing); **Seamless Patterns** in M3 vorgezogen (M3-AP12)
 - [x] Eigene Shape-Bibliothek (Startziel 150+ Shapes, 12 Packs) + Custom Packs aus Brand Kit: 170 Formen, Pack "Brand Kit" im Picker (M4-AP01, Cross-Browser über CI)
 - [x] **GIF-Export** im Worker (M4-AP04)
 - [ ] Code-first-Welle (Entscheid 2026-10-28): **Kontrast-Checker** (F6), **CSS-Schatten-Generator** (J1), **Glas- und Rahmen-Effekte** (J2), **Bento-Grid-Generator** (J3), je mit SEO-Landingpage

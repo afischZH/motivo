@@ -377,6 +377,69 @@ export interface ExtraExport<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Editable preview regions
+// ---------------------------------------------------------------------------
+
+/**
+ * A clickable area of the preview (e.g. one tile of a grid), in CSS px of
+ * the render size. See `RegionEditor`.
+ */
+export interface PreviewRegion {
+  /** Stable id within the design; also the key of its stored edits. */
+  readonly id: string;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  /** i18n key of the accessible name, with `labelValues` as placeholders. */
+  readonly labelKey: string;
+  readonly labelValues?: Readonly<Record<string, string | number>>;
+  /** The region carries an edit (enables "reset", announced as edited). */
+  readonly edited: boolean;
+}
+
+/**
+ * Lets the user edit single regions of the preview (M4-AP03: tiles of
+ * Geometric Patterns). The shell shows a generic cell picker over the
+ * preview (click, or focus plus arrow keys and Enter) and a popover whose
+ * form is built from `schema` and `controls` like a list item sub-form.
+ * Edits are ordinary params (`set`/`reset` return new params), so they are
+ * part of undo, share links and saved designs without any extra code.
+ *
+ * Every function is pure and deterministic; `ctx` is a fresh render
+ * context of the design (same seed and size as the preview).
+ */
+/** Values of one editable region (the popover form). */
+export type RegionValues = Readonly<Record<string, unknown>>;
+
+export interface RegionEditor<P, V extends RegionValues = RegionValues> {
+  /** i18n key of the popover title (e.g. "Edit tile"). */
+  titleKey: string;
+  /** The regions of these params, in reading order. Must stay cheap (capped count). */
+  regions(params: P, ctx: RenderContext): readonly PreviewRegion[];
+  /** Schema of the values of one region (the popover form). */
+  schema: ParamsSchema;
+  /**
+   * Hints of the form fields; `optionPreview` receives the region values as
+   * `params` and the tool params as `root`.
+   */
+  controls?: ControlHints<V>;
+  /** Current values of a region (generated or edited), `undefined` for unknown ids. */
+  values(params: P, regionId: string, ctx: RenderContext): V | undefined;
+  /**
+   * Params with fields of one region changed. Returns `params` itself when
+   * the edit does not apply (unknown region, limit of edited regions reached).
+   */
+  set(params: P, regionId: string, patch: Partial<V>, ctx: RenderContext): P;
+  /** Params with one region (or every region for `null`) back to generated. */
+  reset(params: P, regionId: string | null): P;
+  /** Number of edited regions stored in the params (also ones outside the current grid). */
+  editedCount(params: P): number;
+  /** Most edited regions the params may hold (share link size). */
+  maxEdited: number;
+}
+
+// ---------------------------------------------------------------------------
 // Suggestions
 // ---------------------------------------------------------------------------
 
@@ -556,6 +619,11 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * line: `animation: SEED_AND_COLOR_ANIMATION`.
    */
   animation?: AnimationSupport<Params<S>>;
+  /**
+   * Single regions of the preview the user can click and edit (e.g. tiles);
+   * see `RegionEditor`. Without it the preview is not interactive.
+   */
+  regionEditor?: RegionEditor<Params<S>>;
   /**
    * One-click changes for the current params; see `ParamSuggestion`. Pure
    * and cheap (runs on every change); an empty list shows nothing.

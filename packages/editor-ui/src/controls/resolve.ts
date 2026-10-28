@@ -87,6 +87,11 @@ export interface ThumbnailControl extends ControlBase {
   groups?: ThumbnailGroup[];
   /** Image param that takes Brand Kit shapes (adds a "Brand Kit" group). */
   brandShapesParam?: string;
+  /**
+   * Multi-select: the param is an array of choices (`z.array(z.enum(...))`)
+   * with these length bounds; tiles are checkboxes instead of radios.
+   */
+  multiple?: { min: number; max: number };
 }
 
 /** One group of a thumbnail picker: its options, in the control's order. */
@@ -320,7 +325,12 @@ export function resolveControl(
     case "segmented":
     case "select":
     case "thumbnails": {
-      const values = choiceValues(inner);
+      // An array of choices is a multi-select picker (thumbnails only).
+      const many =
+        kind === "thumbnails" && inner instanceof z.ZodArray
+          ? { element: unwrap(inner.element as AnySchema), ...lengthBounds(inner) }
+          : null;
+      const values = choiceValues(many ? many.element : inner);
       if (!values) return null;
       const options = values.map((value) => ({
         value,
@@ -329,7 +339,7 @@ export function resolveControl(
       const optionPreview = hint.optionPreview;
       if (kind !== "thumbnails") return { ...base, kind, options };
       // Without a preview (or params to draw it with) a grid would be blank: use a select.
-      if (!optionPreview || !context) return { ...base, kind: "select", options };
+      if (!optionPreview || !context) return many ? null : { ...base, kind: "select", options };
       const { params, root } = context;
       const c: ThumbnailControl = {
         ...base,
@@ -348,6 +358,12 @@ export function resolveControl(
           .filter((g) => g.options.length > 0);
       }
       if (hint.brandShapesParam) c.brandShapesParam = hint.brandShapesParam;
+      if (many) {
+        c.multiple = {
+          min: Math.max(0, many.min ?? 0),
+          max: Math.max(1, many.max ?? values.length),
+        };
+      }
       return c;
     }
     case "list": {

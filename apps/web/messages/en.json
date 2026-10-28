@@ -660,6 +660,113 @@
         }
       }
     },
+    "geometric-patterns": {
+      "name": "Geometric Patterns",
+      "description": "Grids of tiles with geometric shapes, even or nested. Edit any single tile, export as SVG, CSS or image.",
+      "params": {
+        "pack": {
+          "label": "Shape pack",
+          "options": {
+            "custom": "Your selection"
+          }
+        },
+        "shapes": {
+          "label": "Shapes"
+        },
+        "gridMode": {
+          "label": "Grid",
+          "options": {
+            "uniform": "Even",
+            "dynamic": "Nested"
+          }
+        },
+        "columns": {
+          "label": "Tiles per row"
+        },
+        "depth": {
+          "label": "Split levels"
+        },
+        "splitChance": {
+          "label": "Split chance"
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "rotationMode": {
+          "label": "Rotation",
+          "options": {
+            "none": "None",
+            "quarter": "Quarter turns",
+            "free": "Free"
+          }
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "tile": "Random per tile",
+            "layer": "Per shape layer"
+          }
+        },
+        "tileFill": {
+          "label": "Fill tiles"
+        },
+        "duotoneOpacity": {
+          "label": "Second layer opacity"
+        },
+        "strokeOnly": {
+          "label": "Outline only"
+        },
+        "strokeWidth": {
+          "label": "Outline width"
+        }
+      },
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Maze",
+        "mosaic": "Mosaic",
+        "night-garden": "Night garden",
+        "blueprint": "Blueprint",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Shooting stars"
+      },
+      "tile": {
+        "title": "Edit tile",
+        "cell": "Tile row {row}, column {col}",
+        "cellPart": "Tile row {row}, column {col}, part {part}",
+        "shape": "Shape",
+        "color": "Color",
+        "rotation": "Rotation"
+      },
+      "seo": {
+        "whatIs": "A geometric pattern is a grid of tiles, each holding one simple shape: circles, quarter circles, triangles, stars or arcs. Rotation and color changes turn a handful of shapes into lively surfaces, familiar from Bauhaus posters, tiles and quilts. Such patterns work well for website backgrounds, slides, packaging and social media graphics.",
+        "howTo": "Pick a shape pack or put together your own shapes. Set the number of tiles per row, choose an even or nested grid and how shapes rotate. Color the tiles at random from your palette or per shape layer, with or without tile fills. Press the space bar for new variations. Click a tile to change its shape, color and rotation. Export as SVG, as a CSS background or as an image.",
+        "faq": {
+          "q1": {
+            "question": "Can I change single tiles?",
+            "answer": "Yes. Click a tile in the preview, or reach it with Tab and the arrow keys and press Enter. The popup lets you swap shape, color and rotation. Edited tiles survive new variations and travel with share links and saved designs."
+          },
+          "q2": {
+            "question": "What is the difference between an even and a nested grid?",
+            "answer": "Even means all tiles have the same size. In a nested grid every tile splits into four smaller ones with the chance you choose, up to four levels deep. The result is a mosaic of large and small tiles."
+          },
+          "q3": {
+            "question": "Does the pattern tile seamlessly?",
+            "answer": "Yes. The grid always fills the canvas with whole tiles, so the full design repeats without a visible edge. The CSS export uses it as a background with background-repeat."
+          },
+          "q4": {
+            "question": "What are the tile shapes and quarter turns for?",
+            "answer": "The shapes of the “Tiles and quarters” pack meet the tile edges at fixed points. With quarter turns neighbouring tiles connect, which creates mazes and arc patterns in the spirit of Truchet tiles."
+          },
+          "q5": {
+            "question": "May I use the patterns freely?",
+            "answer": "Yes. Musterli drew every shape itself. You can use your exports privately and commercially, without an account and without watermarks."
+          }
+        }
+      }
+    },
     "seamless-patterns": {
       "name": "Seamless Patterns",
       "description": "Seamlessly tiling patterns made of shapes or your own graphic. Export as SVG, CSS, tile or image.",

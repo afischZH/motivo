@@ -660,6 +660,113 @@
         }
       }
     },
+    "geometric-patterns": {
+      "name": "Geometrische Muster",
+      "description": "Raster aus Kacheln mit geometrischen Formen, gleichmässig oder verschachtelt. Jede Kachel einzeln anpassbar, als SVG, CSS oder Bild.",
+      "params": {
+        "pack": {
+          "label": "Formen-Pack",
+          "options": {
+            "custom": "Eigene Auswahl"
+          }
+        },
+        "shapes": {
+          "label": "Formen"
+        },
+        "gridMode": {
+          "label": "Raster",
+          "options": {
+            "uniform": "Gleichmässig",
+            "dynamic": "Verschachtelt"
+          }
+        },
+        "columns": {
+          "label": "Kacheln pro Zeile"
+        },
+        "depth": {
+          "label": "Teilungsstufen"
+        },
+        "splitChance": {
+          "label": "Teilungswahrscheinlichkeit"
+        },
+        "padding": {
+          "label": "Innenabstand"
+        },
+        "gap": {
+          "label": "Fuge"
+        },
+        "rotationMode": {
+          "label": "Drehung",
+          "options": {
+            "none": "Keine",
+            "quarter": "Vierteldrehungen",
+            "free": "Frei"
+          }
+        },
+        "colorMode": {
+          "label": "Farbwahl",
+          "options": {
+            "tile": "Pro Kachel zufällig",
+            "layer": "Pro Formebene"
+          }
+        },
+        "tileFill": {
+          "label": "Kachelflächen einfärben"
+        },
+        "duotoneOpacity": {
+          "label": "Deckkraft Zweitebene"
+        },
+        "strokeOnly": {
+          "label": "Nur Kontur"
+        },
+        "strokeWidth": {
+          "label": "Konturstärke"
+        }
+      },
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Labyrinth",
+        "mosaic": "Mosaik",
+        "night-garden": "Nachtgarten",
+        "blueprint": "Blaupause",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Sternschnuppen"
+      },
+      "tile": {
+        "title": "Kachel bearbeiten",
+        "cell": "Kachel Zeile {row}, Spalte {col}",
+        "cellPart": "Kachel Zeile {row}, Spalte {col}, Teil {part}",
+        "shape": "Form",
+        "color": "Farbe",
+        "rotation": "Drehung"
+      },
+      "seo": {
+        "whatIs": "Ein geometrisches Muster besteht aus einem Raster von Kacheln, in denen je eine einfache Form sitzt: Kreise, Viertelkreise, Dreiecke, Sterne oder Bögen. Durch Drehung und Farbwechsel entstehen aus wenigen Formen lebendige Flächen, wie man sie von Bauhaus-Plakaten, Fliesen oder Quilts kennt. Solche Muster eignen sich für Website-Hintergründe, Präsentationen, Verpackungen und Social-Media-Grafiken.",
+        "howTo": "Wähl ein Formen-Pack oder stell dir eigene Formen zusammen. Bestimme, wie viele Kacheln pro Zeile es gibt, ob das Raster gleichmässig oder verschachtelt ist und wie die Formen gedreht werden. Färbe die Kacheln zufällig aus deiner Palette oder pro Formebene, mit oder ohne Kachelflächen. Mit der Leertaste würfelst du neue Varianten. Klick auf eine Kachel, um Form, Farbe und Drehung einzeln anzupassen. Exportiere als SVG, als CSS-Hintergrund oder als Bild.",
+        "faq": {
+          "q1": {
+            "question": "Kann ich einzelne Kacheln ändern?",
+            "answer": "Ja. Klick in der Vorschau auf eine Kachel, oder wähl sie per Tab und Pfeiltasten und drück Enter. Im Fenster tauschst du Form, Farbe und Drehung. Geänderte Kacheln bleiben beim Würfeln erhalten und stecken auch im Teilen-Link und im gespeicherten Design."
+          },
+          "q2": {
+            "question": "Was ist der Unterschied zwischen gleichmässigem und verschachteltem Raster?",
+            "answer": "Gleichmässig heisst: alle Kacheln sind gleich gross. Beim verschachtelten Raster wird jede Kachel mit einer gewählten Wahrscheinlichkeit in vier kleinere geteilt, und das bis zu vier Stufen tief. So entsteht ein Mosaik aus grossen und kleinen Kacheln."
+          },
+          "q3": {
+            "question": "Ist das Muster nahtlos kachelbar?",
+            "answer": "Ja. Das Raster füllt die Fläche immer mit ganzen Kacheln, darum lässt sich das ganze Motiv ohne Kante wiederholen. Der CSS-Export setzt es als Hintergrund mit background-repeat ein."
+          },
+          "q4": {
+            "question": "Wofür sind die Kachelformen und Vierteldrehungen gut?",
+            "answer": "Die Formen aus dem Pack „Kacheln und Viertel“ treffen die Kachelränder an festen Punkten. Mit Vierteldrehungen schliessen benachbarte Kacheln aneinander an, so entstehen Labyrinthe und Bogenmuster nach dem Prinzip der Truchet-Kacheln."
+          },
+          "q5": {
+            "question": "Darf ich die Muster frei verwenden?",
+            "answer": "Ja. Alle Formen hat Musterli selbst gezeichnet. Deine Exporte kannst du privat und kommerziell nutzen, ohne Konto und ohne Wasserzeichen."
+          }
+        }
+      }
+    },
     "seamless-patterns": {
       "name": "Nahtlose Muster",
       "description": "Nahtlos kachelbare Muster aus Formen oder deiner eigenen Grafik. Als SVG, CSS, Kachel oder Bild exportieren.",

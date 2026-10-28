@@ -70,11 +70,34 @@ export function thumbnailKeyTarget(key: string, index: number, count: number): n
 /** The group that holds `value` (else the first group), or `undefined` without groups. */
 export function thumbnailGroupOf(
   control: ThumbnailControl,
-  value: OptionValue,
+  value: ThumbnailFieldValue,
 ): string | undefined {
   const groups = control.groups;
   if (!groups) return undefined;
-  return (groups.find((g) => g.options.some((o) => o.value === value)) ?? groups[0])?.id;
+  // Multi-select: the group of the first chosen option.
+  const first = Array.isArray(value) ? value[0] : value;
+  return (groups.find((g) => g.options.some((o) => o.value === first)) ?? groups[0])?.id;
+}
+
+/** A single choice, or the chosen options of a multi-select (`ThumbnailControl.multiple`). */
+export type ThumbnailFieldValue = OptionValue | readonly OptionValue[];
+
+const isChosen = (value: ThumbnailFieldValue, option: OptionValue): boolean =>
+  Array.isArray(value) ? value.includes(option) : value === option;
+
+/**
+ * Multi-select toggle within the length bounds; `null` when the bounds
+ * forbid it (last chosen option, or the list is full).
+ */
+export function toggleChoice(
+  value: readonly OptionValue[],
+  option: OptionValue,
+  bounds: { min: number; max: number },
+): OptionValue[] | null {
+  if (value.includes(option)) {
+    return value.length > bounds.min ? value.filter((v) => v !== option) : null;
+  }
+  return value.length < bounds.max ? [...value, option] : null;
 }
 
 /** Becomes true once the element is (nearly) visible in `root`, and stays true. */
@@ -103,6 +126,8 @@ interface TileProps {
   value: OptionValue;
   label: string;
   checked: boolean;
+  /** Checkbox (multi-select) instead of radio. */
+  multiple: boolean;
   tabbable: boolean;
   preview: ThumbnailControl["preview"];
   rootRef: RefObject<HTMLDivElement | null>;
@@ -129,7 +154,7 @@ function Tile(props: TileProps) {
         props.setRef(el);
       }}
       type="button"
-      role="radio"
+      role={props.multiple ? "checkbox" : "radio"}
       aria-checked={props.checked}
       aria-label={props.label}
       title={props.label}
@@ -153,7 +178,7 @@ function Tile(props: TileProps) {
   );
 }
 
-export interface ThumbnailFieldProps extends FieldProps<ThumbnailControl, OptionValue> {
+export interface ThumbnailFieldProps extends FieldProps<ThumbnailControl, ThumbnailFieldValue> {
   /** Sets another param of the same level (Brand Kit shapes go into `brandShapesParam`). */
   onChangeParam?(key: string, value: unknown): void;
 }
@@ -170,11 +195,12 @@ export function ThumbnailField(props: ThumbnailFieldProps) {
   // The value changed elsewhere (variant, undo, preset): show its group.
   if (view.value !== value) {
     const current = control.groups?.find((g) => g.id === view.group);
-    const keep = current?.options.some((o) => o.value === value) ?? false;
+    const keep = current?.options.some((o) => isChosen(value, o.value)) ?? Array.isArray(value);
     setView({ value, group: keep ? view.group : thumbnailGroupOf(control, value) });
   }
   const groupId =
     view.group === BRAND_GROUP && !brandParam ? thumbnailGroupOf(control, value) : view.group;
+  // A multi-select keeps the group the user looks at while toggling options.
   const groupSelectId = useId();
 
   const options =
@@ -220,13 +246,28 @@ export function ThumbnailField(props: ThumbnailFieldProps) {
 function ThumbnailGrid(props: ThumbnailFieldProps & { options: ControlOption[] }) {
   const t = useT();
   const { control, value, options } = props;
+  const multiple = control.multiple;
   const rootRef = useRef<HTMLDivElement | null>(null);
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
-  const checkedIndex = options.findIndex((o) => o.value === value);
+  const checkedIndex = options.findIndex((o) => isChosen(value, o.value));
+  // Multi-select: the roving tab stop follows the focus, not the choice.
+  const [focusIndex, setFocusIndex] = useState<number | null>(null);
+  const tabIndex =
+    multiple && focusIndex !== null && focusIndex < options.length
+      ? focusIndex
+      : checkedIndex === -1
+        ? 0
+        : checkedIndex;
 
   const select = (index: number) => {
     const option = options[index];
-    if (option && option.value !== value) props.onChange(option.value);
+    if (!option) return;
+    if (multiple) {
+      const next = toggleChoice(Array.isArray(value) ? value : [], option.value, multiple);
+      if (next) props.onChange(next);
+      return;
+    }
+    if (option.value !== value) props.onChange(option.value);
   };
 
   const onKeyDown = (index: number) => (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -235,14 +276,16 @@ function ThumbnailGrid(props: ThumbnailFieldProps & { options: ControlOption[] }
     if (target === null) return;
     event.preventDefault();
     tiles.current[target]?.focus();
-    select(target);
+    // Radios select on arrow keys; checkboxes only move (Space or Enter toggles).
+    if (multiple) setFocusIndex(target);
+    else select(target);
   };
 
   return (
     <div
       ref={rootRef}
       id={props.ids.input}
-      role="radiogroup"
+      role={multiple ? "group" : "radiogroup"}
       aria-labelledby={props.ids.label}
       aria-describedby={props.ids.description}
       className="grid max-h-64 grid-cols-5 gap-1.5 overflow-y-auto p-1"
@@ -255,14 +298,18 @@ function ThumbnailGrid(props: ThumbnailFieldProps & { options: ControlOption[] }
           key={String(option.value)}
           value={option.value}
           label={t(option.labelKey)}
-          checked={i === checkedIndex}
-          tabbable={i === (checkedIndex === -1 ? 0 : checkedIndex)}
+          checked={isChosen(value, option.value)}
+          multiple={multiple !== undefined}
+          tabbable={i === tabIndex}
           preview={control.preview}
           rootRef={rootRef}
           setRef={(el) => {
             tiles.current[i] = el;
           }}
-          onSelect={() => select(i)}
+          onSelect={() => {
+            if (multiple) setFocusIndex(i);
+            select(i);
+          }}
           onKeyDown={onKeyDown(i)}
         />
       ))}
@@ -389,6 +436,13 @@ function BrandShapeGroup(props: {
 /** Name of the checked option, shown next to the label. */
 export function ThumbnailValue(props: { control: ThumbnailControl; value: unknown }) {
   const t = useT();
+  if (props.control.multiple && Array.isArray(props.value)) {
+    return (
+      <span className="truncate text-xs text-muted-foreground" aria-hidden="true">
+        {t("Editor.thumbnails.chosen", { count: props.value.length })}
+      </span>
+    );
+  }
   const option = props.control.options.find((o) => o.value === props.value);
   if (!option) return null;
   return (

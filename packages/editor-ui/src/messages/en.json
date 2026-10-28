@@ -329,12 +329,24 @@
     },
     "thumbnails": {
       "group": "{label}: collection",
-      "brandKit": "Brand Kit"
+      "brandKit": "Brand Kit",
+      "chosen": "{count} chosen"
     },
     "suggestions": {
       "title": "Suggestions",
       "hint": "One click applies a suggestion; undo reverts it.",
       "applied": "Applied: {label}"
+    },
+    "regions": {
+      "picker": "Preview tiles",
+      "pickerHint": "Arrow keys pick a tile, Enter opens it.",
+      "edited": "{label}, changed",
+      "resetRegion": "Reset tile",
+      "resetAll": "Reset all ({count})",
+      "close": "Done",
+      "limit": "You have changed {max} tiles, the limit. Reset one to change another.",
+      "resetDone": "Tile reset.",
+      "resetAllDone": "All tiles reset."
     }
   },
   "sizes": {

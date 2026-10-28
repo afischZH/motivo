@@ -69,6 +69,10 @@ const CASES: Case[] = [
   // M3-AP12: SVG <pattern> fills (brick by default, mirror with flips).
   { toolId: "seamless-patterns" },
   { toolId: "seamless-patterns", preset: "Botanical" },
+  // M4-AP02: tile fills plus shapes in a nested grid, and outlines with free rotation.
+  { toolId: "geometric-patterns" },
+  { toolId: "geometric-patterns", preset: "Mosaic" },
+  { toolId: "geometric-patterns", preset: "Blueprint" },
   // M3-AP08: layered blobs (partly translucent, gradients), many thin strokes, charts.
   { toolId: "blob-composition" },
   { toolId: "blob-composition", preset: "Dusk" },

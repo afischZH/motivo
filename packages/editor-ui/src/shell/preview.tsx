@@ -1,7 +1,14 @@
 "use client";
 
 import type { CanvasSize } from "@musterli/tool-registry";
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import { cx } from "../controls/primitives";
 import { Motif } from "./motif";
 import type { MotifOutput } from "./render";
@@ -51,6 +58,8 @@ export interface PreviewStageProps {
   transparent: boolean;
   /** Shown instead of the motif when the render kind has no preview yet. */
   unsupportedText: string;
+  /** Interactive layer over the motif (region editing), sized like the motif. */
+  overlay?: ReactNode;
   className?: string;
 }
 
@@ -112,24 +121,28 @@ export function PreviewStage(props: PreviewStageProps) {
       className={cx("relative flex overflow-auto bg-canvas", props.className)}
       data-testid="preview-stage"
     >
-      <div
-        role="img"
-        aria-label={props.label}
-        className="m-auto shrink-0 shadow-sm"
-        style={props.transparent ? CHECKERBOARD_STYLE : undefined}
-        data-testid="preview"
-      >
-        {scale !== null &&
-          (props.output.kind === "unsupported" ? (
-            <div
-              className="flex items-center justify-center p-4 text-center text-sm text-muted-foreground"
-              style={{ width: size.width * scale, height: size.height * scale }}
-            >
-              {props.unsupportedText}
-            </div>
-          ) : (
-            <Motif output={props.output} width={size.width} height={size.height} scale={scale} />
-          ))}
+      <div className="relative m-auto shrink-0">
+        <div
+          role="img"
+          aria-label={props.label}
+          className="shadow-sm"
+          style={props.transparent ? CHECKERBOARD_STYLE : undefined}
+          data-testid="preview"
+        >
+          {scale !== null &&
+            (props.output.kind === "unsupported" ? (
+              <div
+                className="flex items-center justify-center p-4 text-center text-sm text-muted-foreground"
+                style={{ width: size.width * scale, height: size.height * scale }}
+              >
+                {props.unsupportedText}
+              </div>
+            ) : (
+              <Motif output={props.output} width={size.width} height={size.height} scale={scale} />
+            ))}
+        </div>
+        {/* Outside the role="img" box: an image's children are hidden from assistive tech. */}
+        {scale !== null && props.output.kind !== "unsupported" && props.overlay}
       </div>
     </div>
   );
