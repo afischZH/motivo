@@ -6,6 +6,7 @@
  * sends the photo's data URI the first time (or after a worker restart).
  */
 import {
+  CANVAS_EDGE_MAX,
   coverRect,
   photoSampleSize,
   renderImageEffect,
@@ -48,6 +49,8 @@ export type EffectWorkerError =
   | "unknown-tool"
   /** No `OffscreenCanvas` or `createImageBitmap` in this worker. */
   | "unsupported"
+  /** The request is malformed (sizes out of range, params the schema refuses). */
+  | "invalid-request"
   | "render-failed";
 
 export type EffectRenderResponse =
@@ -77,6 +80,42 @@ export interface EffectWorkerEnv {
   /** Pixels to an encoded file (export). */
   encode(pixels: PixelBuffer, options: EffectEncodeOptions): Promise<Blob>;
   lookup(toolId: string): AnyToolDefinition | undefined;
+}
+
+/**
+ * Largest image-effect output in pixels: 8192 × 6144 (50 MP) keeps the
+ * worker's buffers (source, result, canvas) below about 1 GB.
+ */
+export const IMAGE_EFFECT_MAX_PIXELS = 50_331_648;
+
+const isEdge = (v: unknown): v is number =>
+  typeof v === "number" && Number.isInteger(v) && v >= 1 && v <= CANVAS_EDGE_MAX;
+
+/** A size of whole pixels, 1 to `CANVAS_EDGE_MAX` per edge. */
+function isSize(value: unknown): value is CanvasSize {
+  if (typeof value !== "object" || value === null) return false;
+  const { width, height } = value as Record<string, unknown>;
+  return isEdge(width) && isEdge(height);
+}
+
+/**
+ * Whether a request is well-formed for `tool`: sizes in range (the output
+ * within `IMAGE_EFFECT_MAX_PIXELS`) and params the tool's schema accepts.
+ * Requests only come from the editor, which holds validated params; this is
+ * defence in depth, so a bad message cannot allocate gigabytes or feed an
+ * effect values it was never written for.
+ */
+export function isValidEffectRequest(
+  tool: AnyToolDefinition,
+  request: EffectRenderRequest,
+): boolean {
+  return (
+    isSize(request.design) &&
+    isSize(request.out) &&
+    request.out.width * request.out.height <= IMAGE_EFFECT_MAX_PIXELS &&
+    Number.isFinite(request.seed) &&
+    tool.schema.safeParse(request.params).success
+  );
 }
 
 /** Photos kept decoded (the current one, plus one for a quick undo). */
@@ -184,6 +223,7 @@ export function createEffectHandler(env: EffectWorkerEnv) {
     const { id } = request;
     const tool = env.lookup(request.toolId);
     if (!tool) return { id, ok: false, error: "unknown-tool" };
+    if (!isValidEffectRequest(tool, request)) return { id, ok: false, error: "invalid-request" };
     if (!env.decode) return { id, ok: false, error: "unsupported" };
     let pending: Promise<EffectBitmap | null>;
     if (request.photo) {

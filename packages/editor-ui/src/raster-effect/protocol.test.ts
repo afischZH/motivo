@@ -164,4 +164,27 @@ describe("raster-effect handler", () => {
     // The queue goes on after a failure.
     expect(await failing(request({ id: 5 }))).toMatchObject({ id: 5, ok: true });
   });
+
+  it("refuses malformed requests before decoding anything", async () => {
+    const { env } = fakeEnv();
+    const handle = createEffectHandler(env);
+    const bad: Partial<EffectRenderRequest>[] = [
+      { out: { width: 0, height: 40 } },
+      { out: { width: 60.5, height: 40 } },
+      { out: { width: 8192, height: 8192 } },
+      { design: { width: 1e9, height: 1000 } },
+      { params: { ...duotoneTool.defaults, contrast: 1e6 } },
+      { params: { ...duotoneTool.defaults, shadows: "red;}" } },
+      { params: {} },
+      { seed: Number.NaN },
+    ];
+    for (const patch of bad) {
+      const reply = await handle(request({ ...patch, photo: { key: "p", href: PNG_HREF } }));
+      expect(reply).toMatchObject({ ok: false, error: "invalid-request" });
+    }
+    expect(env.decode).not.toHaveBeenCalled();
+    // The photo travels separately: params hold null in its place.
+    const ok = await handle(request({ params: { ...duotoneTool.defaults, photo: null } }));
+    expect(ok).toMatchObject({ ok: true });
+  });
 });

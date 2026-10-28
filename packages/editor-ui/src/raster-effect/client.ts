@@ -46,7 +46,7 @@ export interface RasterEffectJob {
   out: CanvasSize;
 }
 
-export type RasterEffectFailure = EffectWorkerError | "timeout" | "unavailable";
+export type RasterEffectFailure = EffectWorkerError | "timeout" | "unavailable" | "aborted";
 
 export class RasterEffectError extends Error {
   constructor(readonly code: RasterEffectFailure) {
@@ -58,8 +58,12 @@ export class RasterEffectError extends Error {
 export interface RasterEffectClient {
   /** Preview frame. Rejects with `RasterEffectError`. */
   preview(job: RasterEffectJob): Promise<ImageBitmap>;
-  /** Full-size export. Rejects with `RasterEffectError`. */
-  encode(job: RasterEffectJob, options: EffectEncodeOptions): Promise<Blob>;
+  /**
+   * Full-size export. Rejects with `RasterEffectError`. Aborting `signal`
+   * stops the export worker at once (a 50 MP effect would otherwise keep
+   * running, holding about 1 GB, and delay the next export).
+   */
+  encode(job: RasterEffectJob, options: EffectEncodeOptions, signal?: AbortSignal): Promise<Blob>;
   dispose(): void;
 }
 
@@ -152,18 +156,35 @@ function createChannel(env: RasterEffectEnv, timeoutMs: number) {
 
   const post = async (
     request: Omit<EffectRenderRequest, "id">,
+    signal?: AbortSignal,
   ): Promise<EffectRenderResponse | RasterEffectFailure> => {
+    if (signal?.aborted) return "aborted";
     const w = await getWorker();
     if (!w) return "unavailable";
+    if (signal?.aborted) return "aborted";
     const id = nextId++;
     return new Promise((resolve) => {
-      const timer = env.setTimeout(() => {
+      // Ends every call in flight on this worker: it is restarted on the next call.
+      const restart = (failure: RasterEffectFailure) => {
+        signal?.removeEventListener("abort", onAbort);
         pending.delete(id);
         stop();
-        settleAll("timeout");
-        resolve("timeout");
-      }, timeoutMs);
-      pending.set(id, { resolve, timer });
+        settleAll(failure);
+        resolve(failure);
+      };
+      const onAbort = () => {
+        env.clearTimeout(timer);
+        restart("aborted");
+      };
+      const timer = env.setTimeout(() => restart("timeout"), timeoutMs);
+      pending.set(id, {
+        resolve: (reply) => {
+          signal?.removeEventListener("abort", onAbort);
+          resolve(reply);
+        },
+        timer,
+      });
+      signal?.addEventListener("abort", onAbort, { once: true });
       w.postMessage({ ...request, id });
     });
   };
@@ -172,6 +193,7 @@ function createChannel(env: RasterEffectEnv, timeoutMs: number) {
     async run(
       job: RasterEffectJob,
       encode?: EffectEncodeOptions,
+      signal?: AbortSignal,
     ): Promise<Extract<EffectRenderResponse, { ok: true }>> {
       const { tool } = job;
       const photo = photoAssetOf(tool, job.params);
@@ -191,11 +213,18 @@ function createChannel(env: RasterEffectEnv, timeoutMs: number) {
         const withHref = photo !== null && key !== null && (attempt > 0 || !sent.has(key));
         // Marked before the reply, so requests in flight do not post the photo again.
         if (withHref && key !== null) sent.add(key);
-        const reply = await post({
-          ...base,
-          photo:
-            photo === null || key === null ? null : withHref ? { key, href: photo.href } : { key },
-        });
+        const reply = await post(
+          {
+            ...base,
+            photo:
+              photo === null || key === null
+                ? null
+                : withHref
+                  ? { key, href: photo.href }
+                  : { key },
+          },
+          signal,
+        );
         if (typeof reply === "string") throw new RasterEffectError(reply);
         if (reply.ok) return reply;
         if (reply.error !== "missing-photo") throw new RasterEffectError(reply.error);
@@ -219,8 +248,8 @@ export function createRasterEffectClient(env: RasterEffectEnv): RasterEffectClie
       if (!("bitmap" in reply)) throw new RasterEffectError("render-failed");
       return reply.bitmap;
     },
-    async encode(job, options) {
-      const reply = await exportChannel.run(job, options);
+    async encode(job, options, signal) {
+      const reply = await exportChannel.run(job, options, signal);
       if (!("blob" in reply)) throw new RasterEffectError("render-failed");
       return reply.blob;
     },

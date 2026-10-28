@@ -111,6 +111,21 @@ describe("raster-effect client", () => {
     await expect(none.client.preview(job())).rejects.toMatchObject({ code: "unavailable" });
     expect(EFFECT_EXPORT_TIMEOUT_MS).toBeGreaterThan(60_000);
   });
+
+  it("stops the export worker when an export is cancelled", async () => {
+    const stuck = setup(() => null);
+    const controller = new AbortController();
+    const pending = stuck.client.encode(job(), { mime: "image/png" }, controller.signal);
+    await vi.waitFor(() => expect(stuck.sent).toHaveLength(1));
+    controller.abort();
+    await expect(pending).rejects.toMatchObject({ code: "aborted" });
+    expect(stuck.fake.worker.terminate).toHaveBeenCalledTimes(1);
+    // An export already cancelled never reaches the worker.
+    await expect(
+      stuck.client.encode(job(), { mime: "image/png" }, controller.signal),
+    ).rejects.toMatchObject({ code: "aborted" });
+    expect(stuck.sent).toHaveLength(1);
+  });
 });
 
 describe("exportImageEffect", () => {
@@ -137,6 +152,7 @@ describe("exportImageEffect", () => {
         out: { width: 3000, height: 2000 },
       }),
       { mime: "image/jpeg", quality: 0.5, background: "#ffffff" },
+      undefined,
     );
     expect(result).toMatchObject({ width: 3000, height: 2000, clamped: false });
     expect(result.filename).toMatch(/^musterli-duotone-7\.jpg$/);

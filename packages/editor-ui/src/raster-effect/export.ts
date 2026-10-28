@@ -28,13 +28,9 @@ import {
   type ToolDefinition,
 } from "@musterli/tool-registry";
 import { RasterEffectError, rasterEffectClient, type RasterEffectClient } from "./client";
-import type { EffectEncodeOptions } from "./protocol";
+import { IMAGE_EFFECT_MAX_PIXELS, type EffectEncodeOptions } from "./protocol";
 
-/**
- * Largest image-effect export in pixels: 8192 × 6144 (50 MP) keeps the
- * worker's buffers (source, result, canvas) below about 1 GB.
- */
-export const IMAGE_EFFECT_MAX_PIXELS = 50_331_648;
+export { IMAGE_EFFECT_MAX_PIXELS };
 
 export async function exportImageEffect(
   tool: AnyToolDefinition,
@@ -69,6 +65,7 @@ export async function exportImageEffect(
       out: { width: size.width, height: size.height },
     },
     encode,
+    options.signal,
   );
   const aborted = new Promise<never>((_, reject) => {
     options.signal?.addEventListener(
