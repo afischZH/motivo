@@ -2957,6 +2957,263 @@
           "a5": "Wähl unter Gerät «Responsive-Set». Ein Screenshot reicht: Jedes Gerät zeigt ihn, oben ausgerichtet auf seinen Bildschirm zugeschnitten. Für Tablet und Smartphone kannst du eigene Screenshots hochladen. Mit der Live-Ansicht lädt dein Browser die Website direkt in die Geräte, «Ansicht übernehmen» macht daraus Bilder. Manche Websites erlauben kein Einbetten, dann lädst du einen Screenshot hoch."
         }
       }
+    },
+    "avatar": {
+      "name": "Avatar-Generator",
+      "description": "Profilbilder mit Initialen, Identicons oder Formen, abgeleitet aus einem Namen. Als Kreis, abgerundet oder eckig, mit Farbe, Verlauf oder Muster.",
+      "groups": {
+        "content": "Inhalt",
+        "type": "Schrift"
+      },
+      "params": {
+        "style": {
+          "label": "Stil",
+          "options": {
+            "initials": "Initialen",
+            "identicon": "Identicon",
+            "shapes": "Formen"
+          }
+        },
+        "name": {
+          "label": "Name",
+          "description": "Ergibt Initialen, Farbe und Muster. Gleicher Name, gleicher Avatar."
+        },
+        "letters": {
+          "label": "Buchstaben"
+        },
+        "initials": {
+          "label": "Eigene Initialen",
+          "description": "Bis zu drei Zeichen, ersetzen die Initialen aus dem Namen."
+        },
+        "source": {
+          "label": "Farbe und Muster aus",
+          "options": {
+            "name": "Name",
+            "seed": "Zufall"
+          },
+          "description": "Mit Zufall bringt die Leertaste jedes Mal ein neues Identicon."
+        },
+        "grid": {
+          "label": "Raster"
+        },
+        "cellShape": {
+          "label": "Zellen",
+          "options": {
+            "square": "Quadrate",
+            "dot": "Punkte",
+            "rounded": "Abgerundet"
+          }
+        },
+        "cellGap": {
+          "label": "Zellabstand"
+        },
+        "inset": {
+          "label": "Rand"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "rounded": "Abgerundet",
+            "square": "Quadrat"
+          }
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "fill": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "gradient": "Verlauf",
+            "pattern": "Muster"
+          }
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "pattern": {
+          "label": "Muster"
+        },
+        "patternOpacity": {
+          "label": "Deckkraft des Musters"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "inkAuto": {
+          "label": "Vordergrund automatisch"
+        },
+        "ink": {
+          "label": "Vordergrundfarbe"
+        },
+        "patternScale": {
+          "label": "Mustergrösse"
+        },
+        "fontSize": {
+          "label": "Schriftgrösse"
+        },
+        "background": {
+          "label": "Hintergrund aussen",
+          "description": "Fläche ausserhalb der Form, transparent für runde Avatare."
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "pastel": "Pastell",
+        "pattern": "Muster",
+        "gradient": "Verlauf",
+        "identicon": "Identicon",
+        "pixel": "Pixel",
+        "bauhaus": "Bauhaus"
+      },
+      "sizes": {
+        "s128": "Avatar 128 px",
+        "s256": "Avatar 256 px",
+        "s512": "Avatar 512 px",
+        "s1024": "Avatar 1024 px"
+      },
+      "seo": {
+        "whatIs": "Ein Avatar-Generator erstellt Profilbilder ohne Foto: Initialen auf einer Farbfläche, ein symmetrisches Identicon oder eine kleine Komposition aus Formen. Solche Avatare brauchst du als Platzhalter für Nutzerkonten, in Kommentaren, Teamseiten, Chats und Prototypen. Farbe und Muster leiten sich aus dem Namen ab, darum sieht jede Person immer gleich aus.",
+        "howTo": "Tipp einen Namen oder eine E-Mail-Adresse ein und wähl Initialen, Identicon oder Formen. Stell Form, Füllung (Farbe, Verlauf oder Muster), Schrift und Raster ein und wähl eine Palette, aus der jeder Name seine Farbe bekommt. Die Leertaste würfelt Palette, Füllung und Schrift, der Name bleibt. Exportiere als SVG, PNG, JPG oder WebP, zum Beispiel in 128, 256, 512 oder 1024 Pixel.",
+        "faq": {
+          "q1": {
+            "question": "Bekommt derselbe Name immer denselben Avatar?",
+            "answer": "Ja. Farbe, Identicon und Formen entstehen aus einem Hash des Namens, ohne Zufall. Gross- und Kleinschreibung und Leerzeichen am Rand spielen keine Rolle. Nur die Palette und die übrigen Einstellungen ändern das Ergebnis."
+          },
+          "q2": {
+            "question": "Welche Schriften werden verwendet?",
+            "answer": "Nur die Systemschriften deines Geräts (Sans, Serif, Mono oder Rund). Es werden keine Schriftdateien geladen oder eingebettet, darum kann das Schriftbild je nach Betriebssystem leicht abweichen. Für ein festes Schriftbild exportierst du PNG, JPG oder WebP."
+          },
+          "q3": {
+            "question": "Was ist ein Identicon?",
+            "answer": "Ein Identicon ist ein kleines, symmetrisches Pixelmuster, das aus einem Text berechnet wird. Es macht Konten unterscheidbar, ohne dass jemand ein Bild hochladen muss. Hier wählst du Raster, Zellform und Abstand."
+          },
+          "q4": {
+            "question": "Wird der Name irgendwo gespeichert?",
+            "answer": "Nein. Alles läuft in deinem Browser. Der Name steht nur im Teilen-Link, wenn du einen erstellst, und im Design, wenn du es lokal speicherst."
+          },
+          "q5": {
+            "question": "Kann ich viele Avatare auf einmal erstellen?",
+            "answer": "Ein Export enthält einen Avatar. Tipp die Namen nacheinander ein: Weil Farbe und Muster aus dem Namen folgen, sieht jede Person auch später gleich aus, wenn du weitere Avatare ergänzt."
+          }
+        }
+      }
+    },
+    "placeholder-image": {
+      "name": "Platzhalterbild-Generator",
+      "description": "Platzhalterbilder in jeder Grösse mit Grössenangabe oder eigenem Text, als Farbe, Verlauf oder Muster. Für Wireframes, Mockups und Layouts.",
+      "groups": {
+        "label": "Beschriftung",
+        "lines": "Linien"
+      },
+      "params": {
+        "label": {
+          "label": "Beschriftung",
+          "options": {
+            "size": "Grösse",
+            "custom": "Eigener Text",
+            "none": "Keine"
+          }
+        },
+        "text": {
+          "label": "Text"
+        },
+        "fontSize": {
+          "label": "Schriftgrösse"
+        },
+        "fill": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "gradient": "Verlauf",
+            "pattern": "Muster"
+          }
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "pattern": {
+          "label": "Muster"
+        },
+        "patternOpacity": {
+          "label": "Deckkraft des Musters"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "inkAuto": {
+          "label": "Vordergrund automatisch"
+        },
+        "ink": {
+          "label": "Vordergrundfarbe"
+        },
+        "patternScale": {
+          "label": "Mustergrösse"
+        },
+        "cross": {
+          "label": "Diagonalen"
+        },
+        "border": {
+          "label": "Rahmen"
+        }
+      },
+      "presets": {
+        "gray": "Grau",
+        "light": "Hell",
+        "dark": "Dunkel",
+        "gradient": "Verlauf",
+        "pattern": "Muster",
+        "blueprint": "Blaupause",
+        "banner": "Banner"
+      },
+      "sizes": {
+        "medium-rectangle": "Medium Rectangle",
+        "leaderboard": "Leaderboard",
+        "skyscraper": "Skyscraper",
+        "vga": "4:3 klein",
+        "svga": "4:3 mittel"
+      },
+      "seo": {
+        "whatIs": "Ein Platzhalterbild hält in einem Layout den Platz für ein Bild frei, das noch fehlt. Es zeigt seine Grösse in Pixeln oder einen eigenen Text, damit alle sehen, was dort hinkommt. Platzhalter brauchst du in Wireframes, Mockups, Prototypen, Präsentationen und beim Entwickeln von Websites.",
+        "howTo": "Wähl eine Grösse aus der Liste (Social Media, Bildschirme, Werbeformate) oder gib Breite und Höhe ein. Die Beschriftung zeigt automatisch Breite × Höhe, einen eigenen Text oder nichts. Wähl dann Farbe, Verlauf oder ein Muster und schalte Diagonalen oder einen Rahmen ein. Exportiere als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Brauche ich einen Dienst wie eine Platzhalter-URL?",
+            "answer": "Nein. Du lädst das Bild als Datei herunter und legst es in dein Projekt. Es gibt keine Abhängigkeit von einem fremden Server, und nichts verschwindet, wenn ein Dienst abgeschaltet wird."
+          },
+          "q2": {
+            "question": "Welche Grössen gehen?",
+            "answer": "Jede Grösse von 16 bis 8192 Pixel pro Seite. Die Liste enthält gängige Social-Media-Formate, Bildschirme, Druckformate und Werbebanner wie 300 × 250 oder 728 × 90."
+          },
+          "q3": {
+            "question": "Passt sich die Schrift an schmale Bilder an?",
+            "answer": "Ja. Die Beschriftung wird kleiner, bis sie in die Breite passt. Verwendet werden nur Systemschriften, es werden keine Schriftdateien geladen."
+          },
+          "q4": {
+            "question": "Ist SVG oder PNG besser?",
+            "answer": "SVG ist winzig und bleibt in jeder Grösse scharf, ideal für Prototypen im Code. PNG, JPG und WebP sehen überall gleich aus, auch wenn eine andere Systemschrift installiert ist."
+          }
+        }
+      }
     }
   },
   "Converters": {

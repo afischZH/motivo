@@ -2957,6 +2957,263 @@
           "a5": "Choose “Responsive set” under Device. One screenshot is enough: every device shows it, cropped to its screen from the top. You can add separate screenshots for tablet and phone. With the live view your browser loads the website right into the devices, and “Take this view” turns it into pictures. Some websites do not allow embedding; then upload a screenshot."
         }
       }
+    },
+    "avatar": {
+      "name": "Avatar Generator",
+      "description": "Profile pictures with initials, identicons or shapes, derived from a name. Circle, rounded or square, with a solid color, gradient or pattern.",
+      "groups": {
+        "content": "Content",
+        "type": "Type"
+      },
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "initials": "Initials",
+            "identicon": "Identicon",
+            "shapes": "Shapes"
+          }
+        },
+        "name": {
+          "label": "Name",
+          "description": "Gives initials, color and pattern. Same name, same avatar."
+        },
+        "letters": {
+          "label": "Letters"
+        },
+        "initials": {
+          "label": "Custom initials",
+          "description": "Up to three characters, replace the initials from the name."
+        },
+        "source": {
+          "label": "Color and pattern from",
+          "options": {
+            "name": "Name",
+            "seed": "Random"
+          },
+          "description": "With Random, the space bar makes a new identicon every time."
+        },
+        "grid": {
+          "label": "Grid"
+        },
+        "cellShape": {
+          "label": "Cells",
+          "options": {
+            "square": "Squares",
+            "dot": "Dots",
+            "rounded": "Rounded"
+          }
+        },
+        "cellGap": {
+          "label": "Cell gap"
+        },
+        "inset": {
+          "label": "Margin"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Circle",
+            "rounded": "Rounded",
+            "square": "Square"
+          }
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "fill": {
+          "label": "Fill",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "pattern": "Pattern"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "pattern": {
+          "label": "Pattern"
+        },
+        "patternOpacity": {
+          "label": "Pattern opacity"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "inkAuto": {
+          "label": "Automatic foreground"
+        },
+        "ink": {
+          "label": "Foreground color"
+        },
+        "patternScale": {
+          "label": "Pattern size"
+        },
+        "fontSize": {
+          "label": "Font size"
+        },
+        "background": {
+          "label": "Outer background",
+          "description": "Area outside the shape, transparent for round avatars."
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "pastel": "Pastel",
+        "pattern": "Pattern",
+        "gradient": "Gradient",
+        "identicon": "Identicon",
+        "pixel": "Pixel",
+        "bauhaus": "Bauhaus"
+      },
+      "sizes": {
+        "s128": "Avatar 128 px",
+        "s256": "Avatar 256 px",
+        "s512": "Avatar 512 px",
+        "s1024": "Avatar 1024 px"
+      },
+      "seo": {
+        "whatIs": "An avatar generator creates profile pictures without a photo: initials on a colored shape, a symmetric identicon or a small composition of shapes. Use them as default avatars for user accounts, in comments, team pages, chats and prototypes. Color and pattern are derived from the name, so every person always looks the same.",
+        "howTo": "Type a name or an email address and choose initials, identicon or shapes. Set the shape, the fill (solid, gradient or pattern), the font and the grid, and pick a palette each name takes its color from. The space bar shuffles palette, fill and font while the name stays. Export as SVG, PNG, JPG or WebP, for example at 128, 256, 512 or 1024 pixels.",
+        "faq": {
+          "q1": {
+            "question": "Does the same name always get the same avatar?",
+            "answer": "Yes. Color, identicon and shapes come from a hash of the name, not from chance. Upper and lower case and surrounding spaces do not matter. Only the palette and your other settings change the result."
+          },
+          "q2": {
+            "question": "Which fonts are used?",
+            "answer": "Only the system fonts of your device (sans, serif, mono or rounded). No font files are loaded or embedded, so the lettering can look slightly different on another operating system. For a fixed look, export PNG, JPG or WebP."
+          },
+          "q3": {
+            "question": "What is an identicon?",
+            "answer": "An identicon is a small, symmetric pixel pattern computed from a piece of text. It tells accounts apart without anyone uploading a picture. Here you choose the grid, the cell shape and the gap."
+          },
+          "q4": {
+            "question": "Is the name stored anywhere?",
+            "answer": "No. Everything runs in your browser. The name is only part of a share link if you create one, and of the design if you save it locally."
+          },
+          "q5": {
+            "question": "Can I create many avatars at once?",
+            "answer": "Each export holds one avatar. Enter the names one after another: since color and pattern follow from the name, every person keeps the same look when you add more avatars later."
+          }
+        }
+      }
+    },
+    "placeholder-image": {
+      "name": "Placeholder Image Generator",
+      "description": "Placeholder images in any size with a size label or your own text, as a solid color, gradient or pattern. For wireframes, mockups and layouts.",
+      "groups": {
+        "label": "Label",
+        "lines": "Lines"
+      },
+      "params": {
+        "label": {
+          "label": "Label",
+          "options": {
+            "size": "Size",
+            "custom": "Custom text",
+            "none": "None"
+          }
+        },
+        "text": {
+          "label": "Text"
+        },
+        "fontSize": {
+          "label": "Font size"
+        },
+        "fill": {
+          "label": "Fill",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "pattern": "Pattern"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "pattern": {
+          "label": "Pattern"
+        },
+        "patternOpacity": {
+          "label": "Pattern opacity"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "inkAuto": {
+          "label": "Automatic foreground"
+        },
+        "ink": {
+          "label": "Foreground color"
+        },
+        "patternScale": {
+          "label": "Pattern size"
+        },
+        "cross": {
+          "label": "Diagonals"
+        },
+        "border": {
+          "label": "Border"
+        }
+      },
+      "presets": {
+        "gray": "Gray",
+        "light": "Light",
+        "dark": "Dark",
+        "gradient": "Gradient",
+        "pattern": "Pattern",
+        "blueprint": "Blueprint",
+        "banner": "Banner"
+      },
+      "sizes": {
+        "medium-rectangle": "Medium rectangle",
+        "leaderboard": "Leaderboard",
+        "skyscraper": "Skyscraper",
+        "vga": "4:3 small",
+        "svga": "4:3 medium"
+      },
+      "seo": {
+        "whatIs": "A placeholder image holds the space for a picture that is still missing from a layout. It shows its size in pixels or your own text, so everyone knows what goes there. You need placeholders in wireframes, mockups, prototypes, presentations and while building websites.",
+        "howTo": "Pick a size from the list (social media, screens, ad formats) or enter width and height. The label shows width × height automatically, your own text or nothing. Then choose a solid color, a gradient or a pattern and turn on diagonals or a border. Export as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Do I need a placeholder URL service?",
+            "answer": "No. You download the image as a file and add it to your project. There is no dependency on someone else's server, and nothing breaks when a service shuts down."
+          },
+          "q2": {
+            "question": "Which sizes are possible?",
+            "answer": "Any size from 16 to 8192 pixels per side. The list has common social media formats, screens, print formats and ad banners such as 300 × 250 or 728 × 90."
+          },
+          "q3": {
+            "question": "Does the text fit narrow images?",
+            "answer": "Yes. The label gets smaller until it fits the width. Only system fonts are used; no font files are loaded."
+          },
+          "q4": {
+            "question": "Is SVG or PNG better?",
+            "answer": "SVG is tiny and stays sharp at any size, ideal for prototypes in code. PNG, JPG and WebP look the same everywhere, even where another system font is installed."
+          }
+        }
+      }
     }
   },
   "Converters": {

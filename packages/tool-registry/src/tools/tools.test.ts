@@ -140,8 +140,13 @@ describe("built-in tool registration", () => {
       "low-poly",
       "terrazzo",
       "screenshot-beautifier",
+      "avatar",
+      "placeholder-image",
     ]);
-    expect(registry.listByCategory("social").map((t) => t.id)).toEqual(["screenshot-beautifier"]);
+    expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
+      "screenshot-beautifier",
+      "avatar",
+    ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
       "tints-shades",
@@ -169,6 +174,7 @@ describe("built-in tool registration", () => {
       "flow-field",
       "low-poly",
       "terrazzo",
+      "avatar",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
   });

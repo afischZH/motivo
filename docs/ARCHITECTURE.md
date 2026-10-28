@@ -186,6 +186,13 @@ Gemeinsame, reine Bausteine in `packages/engine/src/geometry/` (über `@musterli
 - **Shell** (`packages/editor-ui/src/shell/live-view.tsx`): `LiveFrameLayer` legt pro Frame ein `<iframe>` (Sandbox, `no-referrer`, `lazy`) in Viewport-Grösse über die Vorschau, per `transform: scale` verkleinert, Ecken in Prozent, verdeckte Teile per `mask-image` (SVG mit `<mask>`). `LiveCaptureBar` unter der Vorschau zeigt immer den Hinweis, dass leere Frames Einbetten-Verbote bedeuten, und den Knopf "Ansicht übernehmen": `getDisplayMedia({ video: true, preferCurrentTab: true, selfBrowserSurface: "include" })`, pro Frame mit Ziel-Param wird das Frame kurz gross und fixiert gezeigt, mit Region Capture (`CropTarget.fromElement`, `track.cropTo`) oder sonst über das Element-Rechteck zugeschnitten, ein Bild in ein Canvas gezeichnet (höchstens 3840 px), als PNG durch `readAsset`/`finishAsset` mit dem Schema des Params geprüft. Die Spuren werden sofort beendet. Alles zusammen ist ein Undo-Schritt (`setParams`). Ohne `getDisplayMedia` ist der Knopf deaktiviert, der Hinweis verweist auf den Upload.
 - **Grenzen**: Viele Websites verbieten Einbetten (`X-Frame-Options`, `frame-ancestors`), das lässt sich nicht zuverlässig erkennen. Die Aufnahme zeigt, was der Bildschirm zeigt: Auflösung = Frame-Grösse auf dem Bildschirm mal `devicePixelRatio` (darum die grosse Darstellung während der Aufnahme), eingeloggte Inhalte und Cookie-Banner der Website inklusive. Nur Chrome getestet.
 
+### 4.13 Text, Füllungen und Hash für Avatare (ab M4c-AP01)
+Reine Helfer in `packages/engine/src/tools/avatar/` (`docs/TOOLS.md` L1), nutzbar für weitere Tools mit Beschriftung:
+- **Text ohne DOM**: `estimateTextWidth(text, font)` (0.62 em je Zeichen, 0.6 mono, 1 em für CJK und Emoji, eher zu breit), `fitFontSize` (Schrift so gross wie gewünscht, höchstens so, dass Breite und Höhe passen), `centeredText` (escapter `<text>`, senkrecht über 0.35 em zentriert statt `dominant-baseline`). Nur System-Schriftstapel `AVATAR_FONT_STACKS` (sans, serif, mono, rounded), nie Schriftdateien.
+- **Füllungen** (`fillMarkup`): Farbe, linearer OKLCH-Verlauf (9 Stopps, CSS-Winkel über die Box) oder ein Muster der CSS-Muster-Bibliothek (B1) als verschachteltes SVG über `cssPattern`. Der Picker nutzt die Namen und Kategorien der Bibliothek (`tool-registry/src/tools/avatar-shared.ts`).
+- **Hash** (`avatarHash`): FNV-1a plus Murmur3-Finalizer über den getrimmten, NFC-normalisierten, kleingeschriebenen Text; Grundlage für Farbe, Identicon und Formen, damit derselbe Name überall gleich aussieht.
+- Keine neuen Hooks: beide Tools nutzen `sizePresets`, `brandPalette` und Thumbnail-Picker mit `optionGroups`.
+
 ## 5. Render- und Export-Pipeline
 
 ```

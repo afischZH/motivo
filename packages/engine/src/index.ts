@@ -44,3 +44,4 @@ export * from "./tools/low-poly";
 export * from "./tools/terrazzo";
 export * from "./tools/screenshot-beautifier";
 export * from "./tools/screenshot-beautifier/mockup";
+export * from "./tools/avatar";
