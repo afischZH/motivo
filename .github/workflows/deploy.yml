@@ -72,6 +72,9 @@ jobs:
           # without scripts, so previews may show it too (optional; empty =
           # the page says the link follows soon).
           NEXT_PUBLIC_DONATION_URL: ${{ vars.NEXT_PUBLIC_DONATION_URL || '' }}
+          # Production base URL for canonical links, sitemap and indexing
+          # (optional; empty = the workers.dev fallback in lib/seo/site-url.ts).
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || '' }}
         run: pnpm cf:build
 
       - name: Deploy production

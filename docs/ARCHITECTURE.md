@@ -270,7 +270,7 @@ ai_requests     (id, user_id, tool_id, prompt, result_params jsonb, tokens_in, t
 - **Seitenmodell**: `i18n/paths.ts` beschreibt Seiten sprachunabhängig (`AppRoute`) und liefert `routeHref` (für `Link`), `routePath`, `localizedPaths`, `toolEditorPaths`, `toolSlugs` sowie `routeFromPathname` (Sprachumschalter). Sitemap, Katalog und Landingpages bauen darauf auf.
 - **Alte Pfade**: `proxy.ts` leitet Tool-IDs (M1-Links wie `/en/tools/blob#d=…`), Slugs oder Segmente einer anderen Sprache mit einem 308 auf die kanonische URL um (`i18n/legacy.ts`). Der Hash `#d=` bleibt dabei im Browser erhalten.
 - **`hreflang` und Canonical** über die Metadata API (`lib/seo/alternates.ts`): Canonical, alle aktivierten Sprachen und `x-default`. `x-default` zeigt seit M2-AP08 überall (auch auf der Startseite) auf die englische Seite, weil Englisch die internationale Rückfallsprache ist; die Routing-Standardsprache für die Spracherkennung bleibt DE. Die Link-Header der next-intl-Middleware sind aus (`alternateLinks: false`), weil sie die Slugs nicht kennen.
-- **Basis-URL** aus `NEXT_PUBLIC_SITE_URL` (wird beim Build eingesetzt), Fallback `https://motivo-web.andreas-65d.workers.dev`, bis `musterli.app` (registriert am 2026-10-28) angeschlossen ist und die Variable darauf zeigt.
+- **Basis-URL** aus `NEXT_PUBLIC_SITE_URL` (wird beim Build eingesetzt), Fallback `https://motivo-web.andreas-65d.workers.dev`, bis `musterli.app` (registriert am 2026-10-28) angeschlossen ist und die Repo-Variable `NEXT_PUBLIC_SITE_URL` (in `deploy.yml` an den Build übergeben) darauf zeigt.
 - **Sprachumschalter** bleibt auf der gleichen Seite und übersetzt Abschnitt und Slug (z. B. `/de/konverter/svg-zu-css` ► `/en/convert/svg-to-css`).
 
 **SEO-Seiten (seit M2-AP08)**
