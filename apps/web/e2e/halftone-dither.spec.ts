@@ -16,6 +16,7 @@ import { toolSlug } from "../i18n/slugs";
 import { enableClipboard } from "./support/clipboard";
 import { comparePngs } from "./support/compare";
 import { decodePng, encodeRgbPng } from "./support/png";
+import { LONG_TASKS } from "./support/long-tasks";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const SIZE = { width: 480, height: 320 };
@@ -340,62 +341,64 @@ test.describe("photos", () => {
   });
 
   for (const tool of TOOLS) {
-    test(`${tool} handles a 12 MP photo without long tasks over 50 ms`, async ({
-      page,
-    }, testInfo) => {
-      test.slow();
-      const file = testInfo.outputPath("photo-12mp.png");
-      await writeFile(file, photo12mp());
-      await page.addInitScript(() => {
-        const w = window as unknown as { __longTasks: [at: number, ms: number][] };
-        w.__longTasks = [];
-        new PerformanceObserver((list) => {
-          for (const entry of list.getEntries()) {
-            w.__longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
-          }
-        }).observe({ type: "longtask" });
-      });
-      const longTasksSince = (from: number) =>
-        page.evaluate(
-          (t) =>
-            (window as unknown as { __longTasks: [number, number][] }).__longTasks.filter(
-              ([at]) => at >= t,
-            ),
-          from,
+    test(
+      `${tool} handles a 12 MP photo without long tasks over 50 ms`,
+      LONG_TASKS,
+      async ({ page }, testInfo) => {
+        test.slow();
+        const file = testInfo.outputPath("photo-12mp.png");
+        await writeFile(file, photo12mp());
+        await page.addInitScript(() => {
+          const w = window as unknown as { __longTasks: [at: number, ms: number][] };
+          w.__longTasks = [];
+          new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              w.__longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
+            }
+          }).observe({ type: "longtask" });
+        });
+        const longTasksSince = (from: number) =>
+          page.evaluate(
+            (t) =>
+              (window as unknown as { __longTasks: [number, number][] }).__longTasks.filter(
+                ([at]) => at >= t,
+              ),
+            from,
+          );
+        const now = () => page.evaluate(() => performance.now());
+        await openEditor(page, tool);
+        await expectRendered(page, { width: 1500, height: 1000 });
+        await expect
+          .poll(
+            async () => {
+              const t = await now();
+              return (await longTasksSince(t - 1000)).length;
+            },
+            { timeout: 15_000, intervals: [250] },
+          )
+          .toBe(0);
+        const start = await now();
+        await choosePhoto(page, file);
+        await expectRendered(page, { width: 4000, height: 3000 });
+        // Edits with the photo in place: each renders the preview again in the worker.
+        if (tool === "dither") {
+          await page.getByLabel("Algorithm", { exact: true }).selectOption("atkinson");
+          await page.getByLabel("Algorithm", { exact: true }).selectOption("bayer8");
+        } else {
+          await page.getByRole("radio", { name: "Lines", exact: true }).click();
+          await page.getByRole("radio", { name: "Diamonds", exact: true }).click();
+        }
+        await page.waitForTimeout(2000);
+        const longTasks = (await longTasksSince(start)).map(([at, ms]) => [
+          Math.round(at - start),
+          ms,
+        ]);
+        console.log(
+          `${tool} 12 MP long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
         );
-      const now = () => page.evaluate(() => performance.now());
-      await openEditor(page, tool);
-      await expectRendered(page, { width: 1500, height: 1000 });
-      await expect
-        .poll(
-          async () => {
-            const t = await now();
-            return (await longTasksSince(t - 1000)).length;
-          },
-          { timeout: 15_000, intervals: [250] },
-        )
-        .toBe(0);
-      const start = await now();
-      await choosePhoto(page, file);
-      await expectRendered(page, { width: 4000, height: 3000 });
-      // Edits with the photo in place: each renders the preview again in the worker.
-      if (tool === "dither") {
-        await page.getByLabel("Algorithm", { exact: true }).selectOption("atkinson");
-        await page.getByLabel("Algorithm", { exact: true }).selectOption("bayer8");
-      } else {
-        await page.getByRole("radio", { name: "Lines", exact: true }).click();
-        await page.getByRole("radio", { name: "Diamonds", exact: true }).click();
-      }
-      await page.waitForTimeout(2000);
-      const longTasks = (await longTasksSince(start)).map(([at, ms]) => [
-        Math.round(at - start),
-        ms,
-      ]);
-      console.log(
-        `${tool} 12 MP long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
-      );
-      expect(Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0))).toBeLessThanOrEqual(50);
-    });
+        expect(Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0))).toBeLessThanOrEqual(50);
+      },
+    );
   }
 });
 

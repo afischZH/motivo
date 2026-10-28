@@ -10,6 +10,7 @@ import { readGifInfo } from "@musterli/exporters/gif-info";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { toolSlug } from "../i18n/slugs";
+import { LONG_TASKS } from "./support/long-tasks";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
@@ -116,37 +117,38 @@ test.describe("GIF export", () => {
     expect(downloaded).toBe(false);
   });
 
-  test("keeps the main thread free while encoding a blurred gradient", async ({
-    page,
-    browserName,
-  }) => {
-    // The Long Tasks API exists in Chromium only.
-    test.skip(browserName !== "chromium", "Long Tasks API is Chromium-only");
-    const { dialog, panel } = await chooseGif(page, "mesh-gradient");
-    await choose(panel, "Color cycle");
-    await panel.getByRole("slider", { name: "Frames" }).fill("20");
-    await choose(panel, "1024 × 1024");
-    await page.evaluate(() => {
-      const w = window as unknown as { __longTasks: number[] };
-      w.__longTasks = [];
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
-      }).observe({ type: "longtask" });
-    });
-    const { bytes } = await downloadGif(page, dialog);
-    expect(readGifInfo(bytes).frames).toBe(20);
-    const longTasks = await page.evaluate(
-      () => (window as unknown as { __longTasks: number[] }).__longTasks,
-    );
-    // Locally none at all. Drawing and reading 20 frames on the main thread
-    // gave a long task of 50 to 130 ms per frame; a busy CI machine may add
-    // one or two short ones (garbage collection, React updating progress).
-    expect(longTasks.length, JSON.stringify(longTasks)).toBeLessThanOrEqual(2);
-    expect(
-      longTasks.every((ms) => ms < 100),
-      JSON.stringify(longTasks),
-    ).toBe(true);
-  });
+  test(
+    "keeps the main thread free while encoding a blurred gradient",
+    LONG_TASKS,
+    async ({ page, browserName }) => {
+      // The Long Tasks API exists in Chromium only.
+      test.skip(browserName !== "chromium", "Long Tasks API is Chromium-only");
+      const { dialog, panel } = await chooseGif(page, "mesh-gradient");
+      await choose(panel, "Color cycle");
+      await panel.getByRole("slider", { name: "Frames" }).fill("20");
+      await choose(panel, "1024 × 1024");
+      await page.evaluate(() => {
+        const w = window as unknown as { __longTasks: number[] };
+        w.__longTasks = [];
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
+        }).observe({ type: "longtask" });
+      });
+      const { bytes } = await downloadGif(page, dialog);
+      expect(readGifInfo(bytes).frames).toBe(20);
+      const longTasks = await page.evaluate(
+        () => (window as unknown as { __longTasks: number[] }).__longTasks,
+      );
+      // Locally none at all. Drawing and reading 20 frames on the main thread
+      // gave a long task of 50 to 130 ms per frame; a busy CI machine may add
+      // one or two short ones (garbage collection, React updating progress).
+      expect(longTasks.length, JSON.stringify(longTasks)).toBeLessThanOrEqual(2);
+      expect(
+        longTasks.every((ms) => ms < 100),
+        JSON.stringify(longTasks),
+      ).toBe(true);
+    },
+  );
 
   test("over the pixel budget, download is blocked with an explanation", async ({ page }) => {
     const { dialog, panel } = await chooseGif(page, "blob");

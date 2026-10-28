@@ -17,6 +17,7 @@ import { toolSlug } from "../i18n/slugs";
 import { enableClipboard } from "./support/clipboard";
 import { comparePngs } from "./support/compare";
 import { decodePng, encodeRgbPng } from "./support/png";
+import { LONG_TASKS } from "./support/long-tasks";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const SIZE = { width: 480, height: 320 };
@@ -338,56 +339,63 @@ test.describe("duotone", () => {
     );
   });
 
-  test("handles a 12 MP photo without long tasks over 50 ms", async ({ page }, testInfo) => {
-    test.slow();
-    const buffer = photo12mp();
-    expect(buffer.length).toBeLessThan(5 * 1024 * 1024);
-    const file = testInfo.outputPath("photo-12mp.png");
-    await writeFile(file, buffer);
-    await page.addInitScript(() => {
-      const w = window as unknown as { __longTasks: [at: number, ms: number][] };
-      w.__longTasks = [];
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          w.__longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
-        }
-      }).observe({ type: "longtask" });
-    });
-    const longTasksSince = (from: number) =>
-      page.evaluate(
-        (t) =>
-          (window as unknown as { __longTasks: [number, number][] }).__longTasks.filter(
-            ([at]) => at >= t,
-          ),
-        from,
+  test(
+    "handles a 12 MP photo without long tasks over 50 ms",
+    LONG_TASKS,
+    async ({ page }, testInfo) => {
+      test.slow();
+      const buffer = photo12mp();
+      expect(buffer.length).toBeLessThan(5 * 1024 * 1024);
+      const file = testInfo.outputPath("photo-12mp.png");
+      await writeFile(file, buffer);
+      await page.addInitScript(() => {
+        const w = window as unknown as { __longTasks: [at: number, ms: number][] };
+        w.__longTasks = [];
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            w.__longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
+          }
+        }).observe({ type: "longtask" });
+      });
+      const longTasksSince = (from: number) =>
+        page.evaluate(
+          (t) =>
+            (window as unknown as { __longTasks: [number, number][] }).__longTasks.filter(
+              ([at]) => at >= t,
+            ),
+          from,
+        );
+      const now = () => page.evaluate(() => performance.now());
+      await openEditor(page, "duotone");
+      await expectRendered(page, { width: 1500, height: 1000 });
+      // Page load (hydration, lazy chunks) is not part of this check: wait for a quiet second.
+      await expect
+        .poll(
+          async () => {
+            const t = await now();
+            return (await longTasksSince(t - 1000)).length;
+          },
+          { timeout: 15_000, intervals: [250] },
+        )
+        .toBe(0);
+      const start = await now();
+      await choosePhoto(page, file);
+      // The photo keeps its full resolution (up to 4096 px).
+      await expectRendered(page, { width: 4000, height: 3000 });
+      // A few edits with the photo in place: each renders the preview again.
+      await page.getByRole("radio", { name: "Tritone", exact: true }).click();
+      await page.getByRole("radio", { name: "Gradient", exact: true }).click();
+      await page.waitForTimeout(1500);
+      const longTasks = (await longTasksSince(start)).map(([at, ms]) => [
+        Math.round(at - start),
+        ms,
+      ]);
+      console.log(
+        `12 MP photo long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
       );
-    const now = () => page.evaluate(() => performance.now());
-    await openEditor(page, "duotone");
-    await expectRendered(page, { width: 1500, height: 1000 });
-    // Page load (hydration, lazy chunks) is not part of this check: wait for a quiet second.
-    await expect
-      .poll(
-        async () => {
-          const t = await now();
-          return (await longTasksSince(t - 1000)).length;
-        },
-        { timeout: 15_000, intervals: [250] },
-      )
-      .toBe(0);
-    const start = await now();
-    await choosePhoto(page, file);
-    // The photo keeps its full resolution (up to 4096 px).
-    await expectRendered(page, { width: 4000, height: 3000 });
-    // A few edits with the photo in place: each renders the preview again.
-    await page.getByRole("radio", { name: "Tritone", exact: true }).click();
-    await page.getByRole("radio", { name: "Gradient", exact: true }).click();
-    await page.waitForTimeout(1500);
-    const longTasks = (await longTasksSince(start)).map(([at, ms]) => [Math.round(at - start), ms]);
-    console.log(
-      `12 MP photo long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
-    );
-    expect(Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0))).toBeLessThanOrEqual(50);
-  });
+      expect(Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0))).toBeLessThanOrEqual(50);
+    },
+  );
 });
 
 test.describe("ascii art", () => {

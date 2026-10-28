@@ -12,6 +12,7 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { toolSlug } from "../i18n/slugs";
 import { enableClipboard } from "./support/clipboard";
+import { LONG_TASKS } from "./support/long-tasks";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const TOOL = "seamless-patterns";
@@ -237,63 +238,64 @@ test.describe("seamless patterns", () => {
     expect((await download).suggestedFilename()).toMatch(/-tile\.png$/);
   });
 
-  test("sanitises a large hostile SVG without a long main-thread task", async ({
-    page,
-    browserName,
-  }, testInfo) => {
-    test.skip(browserName !== "chromium", "Long Tasks API is Chromium only");
-    // Same guard as the main-thread budget in m1-audit.spec.ts: parallel workers
-    // share the CPU and inflate task times.
-    test.skip(
-      testInfo.config.workers > 1,
-      "needs an idle CPU: runs in CI (1 worker) or --workers=1",
-    );
-    test.setTimeout(90_000);
-    const svg = largeHostileSvg();
-    expect(svg.length).toBeGreaterThan(900_000);
-    expect(svg.length).toBeLessThan(1_048_576);
-    // From disk, not a buffer: Playwright builds buffer files with page script,
-    // which itself is a long task for 1 MB.
-    const file = testInfo.outputPath("large-hostile.svg");
-    mkdirSync(dirname(file), { recursive: true });
-    writeFileSync(file, svg);
-    await page.addInitScript(() => {
-      const w = window as unknown as { __longTasks: number[] };
-      w.__longTasks = [];
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
-      }).observe({ type: "longtask" });
-    });
-
-    // Fastest of a few runs: one slow run on a busy machine is no regression.
-    const worstPerRun: number[] = [];
-    for (let run = 0; run < RUNS; run++) {
-      await openEditor(page);
-      // Let hydration and thumbnails settle, then measure the upload only.
-      await page.waitForTimeout(500);
-      await page.evaluate(() => {
-        (window as unknown as { __longTasks: number[] }).__longTasks = [];
-      });
-      await page.getByLabel("Datei wählen").setInputFiles(file);
-      const dialog = cropDialog(page);
-      await expect(dialog).toBeVisible({ timeout: 15_000 });
-      await dialog.getByRole("button", { name: "Übernehmen" }).click();
-      await expect(dialog).toBeHidden({ timeout: 15_000 });
-      await expect(page.getByTestId("asset-thumbnail")).toBeVisible();
-      const src = decodeURIComponent(await motifSrc(page));
-      expect(src).not.toMatch(/script|onclick/i);
-      await page.waitForTimeout(300);
-      const longTasks = await page.evaluate(
-        () => (window as unknown as { __longTasks: number[] }).__longTasks,
+  test(
+    "sanitises a large hostile SVG without a long main-thread task",
+    LONG_TASKS,
+    async ({ page, browserName }, testInfo) => {
+      test.skip(browserName !== "chromium", "Long Tasks API is Chromium only");
+      // Same guard as the main-thread budget in m1-audit.spec.ts: parallel workers
+      // share the CPU and inflate task times.
+      test.skip(
+        testInfo.config.workers > 1,
+        "needs an idle CPU: runs in CI (1 worker), pnpm test:e2e:chromium or --workers=1",
       );
-      worstPerRun.push(Math.max(0, ...longTasks));
-    }
-    testInfo.annotations.push({
-      type: "long-tasks",
-      description: `worst long task per run: ${worstPerRun.join(", ")} ms (0 = none over 50 ms)`,
-    });
-    expect(Math.min(...worstPerRun)).toBeLessThanOrEqual(UPLOAD_LONG_TASK_BUDGET_MS);
-  });
+      test.setTimeout(90_000);
+      const svg = largeHostileSvg();
+      expect(svg.length).toBeGreaterThan(900_000);
+      expect(svg.length).toBeLessThan(1_048_576);
+      // From disk, not a buffer: Playwright builds buffer files with page script,
+      // which itself is a long task for 1 MB.
+      const file = testInfo.outputPath("large-hostile.svg");
+      mkdirSync(dirname(file), { recursive: true });
+      writeFileSync(file, svg);
+      await page.addInitScript(() => {
+        const w = window as unknown as { __longTasks: number[] };
+        w.__longTasks = [];
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
+        }).observe({ type: "longtask" });
+      });
+
+      // Fastest of a few runs: one slow run on a busy machine is no regression.
+      const worstPerRun: number[] = [];
+      for (let run = 0; run < RUNS; run++) {
+        await openEditor(page);
+        // Let hydration and thumbnails settle, then measure the upload only.
+        await page.waitForTimeout(500);
+        await page.evaluate(() => {
+          (window as unknown as { __longTasks: number[] }).__longTasks = [];
+        });
+        await page.getByLabel("Datei wählen").setInputFiles(file);
+        const dialog = cropDialog(page);
+        await expect(dialog).toBeVisible({ timeout: 15_000 });
+        await dialog.getByRole("button", { name: "Übernehmen" }).click();
+        await expect(dialog).toBeHidden({ timeout: 15_000 });
+        await expect(page.getByTestId("asset-thumbnail")).toBeVisible();
+        const src = decodeURIComponent(await motifSrc(page));
+        expect(src).not.toMatch(/script|onclick/i);
+        await page.waitForTimeout(300);
+        const longTasks = await page.evaluate(
+          () => (window as unknown as { __longTasks: number[] }).__longTasks,
+        );
+        worstPerRun.push(Math.max(0, ...longTasks));
+      }
+      testInfo.annotations.push({
+        type: "long-tasks",
+        description: `worst long task per run: ${worstPerRun.join(", ")} ms (0 = none over 50 ms)`,
+      });
+      expect(Math.min(...worstPerRun)).toBeLessThanOrEqual(UPLOAD_LONG_TASK_BUDGET_MS);
+    },
+  );
 
   for (const scheme of ["light", "dark"] as const) {
     test(`editor and crop dialog have no axe violations (${scheme})`, async ({ page }) => {

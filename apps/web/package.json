@@ -12,6 +12,7 @@
     "test": "vitest run --passWithNoTests --exclude 'e2e/**'",
     "headers:write": "node scripts/headers.mjs",
     "test:e2e": "playwright test",
+    "test:e2e:chromium": "node scripts/e2e-chromium.mjs",
     "cf:build": "NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
     "cf:preview": "NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf:deploy": "NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build && opennextjs-cloudflare deploy",

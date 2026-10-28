@@ -14,7 +14,7 @@
     "test": "turbo run test",
     "test:affected": "turbo run test --affected",
     "test:e2e": "pnpm --filter @musterli/web test:e2e",
-    "test:e2e:chromium": "pnpm --filter @musterli/web test:e2e --project=chromium",
+    "test:e2e:chromium": "pnpm --filter @musterli/web test:e2e:chromium",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"
