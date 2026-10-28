@@ -3,6 +3,7 @@ import {
   createRenderContext,
   cssPatternsTool,
   gridPatternsTool,
+  shaderGradientTool,
 } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { FakeBitmap, fakeCanvas, type DrawLog } from "./__fixtures__/raster-fakes";
@@ -302,6 +303,43 @@ describe("exportGif", () => {
     expect(info.loop).toBeUndefined();
     // Two colours swap and come back: frames 1 and 2 mirror each other.
     expect(new Set(env.loadedSvgs).size).toBe(2);
+  });
+
+  it("draws WebGL frames through the caller's frame renderer", async () => {
+    const env = fakeGifEnv();
+    const drawn: { t: number | undefined; width: number; height: number }[] = [];
+    const result = await exportGif(
+      shaderGradientTool,
+      shaderGradientTool.defaults,
+      ctx(3),
+      {
+        source: "time",
+        frames: 4,
+        edge: 80,
+        renderFrame: (f, size) => {
+          drawn.push({ t: f.t, ...size });
+          return Promise.resolve({ data: frame(size.width, size.height, drawn.length) });
+        },
+      },
+      env,
+    );
+    expect(result).toMatchObject({ width: 80, height: 40, frames: 4 });
+    expect(readGifInfo(await bytesOf(result.blob)).frames).toBe(4);
+    expect(env.loadedSvgs).toEqual([]);
+    expect(drawn.map((d) => d.t)).toEqual([0, 0.25, 0.5, 0.75]);
+    expect(drawn.every((d) => d.width === 80 && d.height === 40)).toBe(true);
+  });
+
+  it("refuses WebGL tools without a frame renderer", async () => {
+    await expect(
+      exportGif(
+        shaderGradientTool,
+        shaderGradientTool.defaults,
+        ctx(),
+        { source: "time", frames: 2, edge: 64 },
+        fakeGifEnv(),
+      ),
+    ).rejects.toMatchObject({ code: "unsupported-format" });
   });
 
   it("refuses tools and sources without animation", async () => {

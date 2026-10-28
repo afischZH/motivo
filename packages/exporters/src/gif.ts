@@ -14,11 +14,16 @@
  * `gifenc` is only reachable from the worker entry, so it never lands in a
  * page or server bundle (every supported browser has module workers).
  *
+ * WebGL tools (docs/ARCHITECTURE.md 4.15) have no SVG: the caller passes
+ * `renderFrame`, which draws each frame at GIF size in the editor's shader
+ * worker and returns a bitmap; the rest of the flow is the same.
+ *
  * Browser APIs only go through `GifEnv`, so the flow is testable in Node.
  */
 import {
   createRenderContext,
   planAnimationFrames,
+  type AnimationFrame,
   type AnimationSource,
   type AnyToolDefinition,
   type Params,
@@ -56,6 +61,19 @@ export interface GifEnv extends Pick<RasterEnv, "loadSvgImage" | "createCanvas" 
   createWorker(): GifWorkerLike;
 }
 
+/** One frame drawn by the caller: a bitmap (transferred to the worker) or pixels. */
+export type GifRenderedFrame = { bitmap: ImageBitmap } | { data: Uint8ClampedArray };
+
+/**
+ * Draws one animation frame at exactly `size` pixels (the design scaled to
+ * the GIF), for tools without SVG output (WebGL). Rejects with `ExportError`.
+ */
+export type GifFrameRenderer = (
+  frame: AnimationFrame<unknown>,
+  size: { width: number; height: number },
+  signal: AbortSignal | undefined,
+) => Promise<GifRenderedFrame>;
+
 export interface GifExportOptions {
   source: AnimationSource;
   /** 2 to 60 (`GIF_FRAMES_MIN`..`GIF_FRAMES_MAX`). */
@@ -69,6 +87,8 @@ export interface GifExportOptions {
   signal?: AbortSignal;
   /** 0 to 1. */
   onProgress?: (fraction: number) => void;
+  /** Required for WebGL tools, ignored otherwise (they render SVG frames). */
+  renderFrame?: GifFrameRenderer;
 }
 
 export interface GifExportResult {
@@ -240,6 +260,10 @@ export async function exportGif<S extends ParamsSchema>(
   ) {
     throw new ExportError("unsupported-format", `Tool "${tool.id}" cannot export this GIF`);
   }
+  const renderFrame = anyTool.render.kind === "webgl" ? options.renderFrame : undefined;
+  if (anyTool.render.kind === "webgl" && !renderFrame) {
+    throw new ExportError("unsupported-format", `Tool "${tool.id}" needs a GIF frame renderer`);
+  }
   const design = { width: ctx.width, height: ctx.height };
   const plan: GifPlan = planGif(
     design,
@@ -271,6 +295,13 @@ export async function exportGif<S extends ParamsSchema>(
     let canvas: MainCanvasLike | undefined;
     for (const [i, frame] of frames.entries()) {
       throwIfAborted(signal);
+      if (renderFrame) {
+        const drawn = await renderFrame(frame, { width: plan.width, height: plan.height }, signal);
+        await sink.frame(drawn);
+        options.onProgress?.(((i + 1) / frames.length) * 0.95);
+        await e.yieldToMain();
+        continue;
+      }
       const svg = renderDesignSvg(
         tool,
         frame.params,

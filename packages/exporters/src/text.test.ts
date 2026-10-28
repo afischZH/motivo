@@ -126,8 +126,8 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
     }
   });
 
-  // Image effects have no SVG; their determinism is tested in the tool registry.
-  it.runIf(tool.render.kind !== "image-effect")(
+  // Image effects and WebGL tools have no SVG; their determinism is tested in the tool registry.
+  it.runIf(tool.render.kind !== "image-effect" && tool.render.kind !== "webgl")(
     "is unaffected by an rng the caller already consumed",
     () => {
       const used = ctx(5);

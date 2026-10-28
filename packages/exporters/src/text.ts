@@ -47,7 +47,8 @@ function kindSupports(tool: AnyToolDefinition, format: ExportFormat): boolean {
         format === "webp"
       );
     case "image-effect":
-      // Pixels only: the editor renders them in its raster-effect worker.
+    case "webgl":
+      // Pixels only: the editor renders them in its raster-effect or shader worker.
       return format === "png" || format === "jpg" || format === "webp";
     default:
       return false;
@@ -74,8 +75,9 @@ export function supportsExport(
 
 /**
  * GIF is not listed in `exports`: it follows from the tool's opt-in
- * `animation` (one line per tool), and every frame is rendered as SVG, so
- * the render kind must produce one (svg, or css with a preview SVG). With
+ * `animation` (one line per tool). Frames are rendered as SVG (svg, or css
+ * with a preview SVG); WebGL tools need the caller's frame renderer
+ * (`GifExportOptions.renderFrame`, the editor's shader worker). With
  * `params`, a tool whose `exportsFor` drops raster output for these params
  * (no PNG, or GIF named explicitly) offers no GIF either.
  */
@@ -86,7 +88,7 @@ export function supportsAnimatedExport(
   if (
     tool.animation === undefined ||
     tool.animation.sources.length === 0 ||
-    (tool.render.kind !== "svg" && tool.render.kind !== "css")
+    (tool.render.kind !== "svg" && tool.render.kind !== "css" && tool.render.kind !== "webgl")
   ) {
     return false;
   }
