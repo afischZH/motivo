@@ -1,5 +1,13 @@
-import { CSS_PATTERN_IDS, GRAIN_TILE_EDGE, MAX_DOT_SITES, createRng, crc32 } from "@motivo/engine";
+import {
+  CSS_PATTERN_IDS,
+  GRAIN_TILE_EDGE,
+  MAX_DOT_SITES,
+  MESH_OUTPUT_EDGE_MAX,
+  createRng,
+  crc32,
+} from "@motivo/engine";
 import { describe, expect, it } from "vitest";
+import { CANVAS_EDGE_MAX } from "../common";
 import { registry } from "../registry";
 import { createRenderContext } from "../render";
 import { parseToolParams } from "../randomize";
@@ -624,7 +632,9 @@ describe.each([
 
   it("does not move the geometry when only the grain changes", () => {
     const strip = (svg: string) =>
-      svg.replace(/<pattern[\s\S]*?<\/pattern>|<rect [^>]*mix-blend[^>]*>/g, "");
+      svg
+        .replace(/<pattern[\s\S]*?<\/pattern>|<rect [^>]*mix-blend[^>]*>/g, "")
+        .replace("<defs></defs>", "");
     expect(strip(render({ grain: 0 }))).toBe(strip(render({ grain: 40 })));
   });
 
@@ -649,14 +659,25 @@ describe.each([
 });
 
 describe("mesh-gradient", () => {
-  it("uses one Gaussian blur and no turbulence", () => {
-    const svg = renderStatic(meshGradientTool, meshGradientTool.defaults, 1, {
+  it("uses one Gaussian blur for small blurs and no turbulence", () => {
+    const svg = renderStatic(meshGradientTool, { ...meshGradientTool.defaults, blur: 5 }, 1, {
       width: 600,
       height: 400,
     }) as string;
     expect(svg.match(/<feGaussianBlur /g)).toHaveLength(1);
     expect(svg).not.toContain("feTurbulence");
     expect(svg.match(/<path /g)).toHaveLength(meshGradientTool.defaults.points);
+  });
+
+  it("renders large blurs as a raster field, sized for the largest export", () => {
+    // The engine plans the blur for exports up to its own edge limit; it must match the registry's.
+    expect(MESH_OUTPUT_EDGE_MAX).toBe(CANVAS_EDGE_MAX);
+    const svg = renderStatic(meshGradientTool, meshGradientTool.defaults, 1, {
+      width: 1920,
+      height: 1080,
+    }) as string;
+    expect(svg).not.toContain("<filter");
+    expect(svg.match(/<image x=/g)).toHaveLength(1);
   });
 
   it("keeps a transparent background on a new variant", () => {

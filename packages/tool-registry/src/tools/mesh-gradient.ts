@@ -3,8 +3,10 @@
  * well spread seeded positions, optionally warped, with optional grain.
  *
  * Render approach: plain paths plus one `feGaussianBlur` (no `feTurbulence`,
- * which renders differently per browser); warp deforms the paths, grain is
- * the shared raster tile (see `./grain`). One SVG for preview and export.
+ * which renders differently per browser); blurs too large for browser
+ * filters at 8K become a small pre-blurred raster field (`meshBlurPlan`);
+ * warp deforms the paths, grain is the shared raster tile (see `./grain`).
+ * One SVG for preview and export.
  */
 import { MESH_POINTS_MAX, MESH_POINTS_MIN, meshGradientSvg, randomPalette } from "@motivo/engine";
 import * as z from "zod";
