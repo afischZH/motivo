@@ -96,6 +96,19 @@ Sechs neue Generatoren aus der Ideenliste, alle rein im Browser, ohne Kosten, mi
 
 **DoD**: Jedes Tool mit mindestens 6 Presets, Snapshot pro Preset, Vorschau == Export in Chrome; SVG-Exporte kompakt (Pfade vereinfacht, Budget dokumentiert); Screenshot-Uploads bleiben lokal und SVG wird sanitisiert.
 
+## M4c: Kleine Welle (Entscheid Andreas 2026-10-28)
+
+Die restlichen fünf Ideen aus der Ideenliste, rein im Browser, ohne neue Library, mit SEO-Landingpage (Specs `docs/TOOLS.md` L1 bis L5). Danach M5-Plan an Andreas.
+
+- [ ] **Avatar- und Platzhalter-Generator** (L1): Initialen-Avatare, Identicons, Platzhalterbilder in jeder Grösse
+- [ ] **Favicon- und App-Icon-Paket** (L2): Icon in allen Grössen plus `manifest.json` und HTML-Snippet als ZIP
+- [ ] **Animierter CSS-Verlauf** (L3): Verlauf als `@keyframes`-Animation mit `prefers-reduced-motion`
+- [ ] **Duotone und Gradient Map** (L4): Foto auf zwei Farben oder einen Verlauf abbilden (Bildeffekt-Basis im Worker)
+- [ ] **ASCII- und Punktmatrix-Art** (L5): Foto als Zeichen oder LED-Punkte, Export als Bild, SVG oder Text
+- [ ] Changelog, QA in Chrome, Code- und Security-Review
+
+**DoD**: Jedes Tool mit mindestens 6 Presets, Snapshot pro Preset, Vorschau == Export in Chrome; Fotos bleiben lokal und nie im Teilen-Link; Bildeffekte im Worker, UI-Thread nie über 50 ms.
+
 ## M5: WebGL, Bildeffekte, Video (Woche 15 bis 18)
 
 - [ ] WebGL2-Wrapper, Shader-Hot-Reload im Dev-Modus

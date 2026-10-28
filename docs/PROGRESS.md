@@ -4,11 +4,21 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M4b (Generative Welle, 6 Tools), freigegeben von Andreas 2026-10-28 12:10. Branch `m5/generative` ab `main`. M4 live seit 2026-10-28 11:45 (PR #9, Merge 19d7d19); AP08 (Launch-Vorbereitung) noch offen.
+- **Meilenstein**: M4c (Kleine Welle, 5 Tools), freigegeben von Andreas 2026-10-28 17:34 ("Erst Welle, dann M5"). Branch `m4c/wave` ab `main`. M4b live seit 2026-10-28 (PR #11, Website-Mockups PR #12, Merge d52361a); M4-AP08 (Launch-Vorbereitung) noch offen.
 - **Letzte Sitzung**: 2026-10-28 (Cloud-Sitzung)
-- **Nächster Schritt**: M4b-AP01 bis AP04 parallel in Worktrees, danach AP05 Integration. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung, Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
+- **Nächster Schritt**: M4c-AP01 bis AP04 parallel in Worktrees, danach AP05 Integration und Review, dann M5-Plan an Andreas. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
+
+### M4c: Kleine Welle (freigegeben 2026-10-28)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M4c-AP01 | **Avatar- und Platzhalter-Generator** (L1) | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap01-avatar` |
+| M4c-AP02 | **Favicon- und App-Icon-Paket** (L2), ZIP ohne Library | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap02-favicon` |
+| M4c-AP03 | **Animierter CSS-Verlauf** (L3) | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap03-animated-gradient` |
+| M4c-AP04 | **Duotone und Gradient Map** (L4) und **ASCII- und Punktmatrix-Art** (L5), gemeinsame Bildeffekt-Basis im Worker | engine-dev + ui-dev | in Arbeit | – | Branch `m4c/ap04-image-effects` |
+| M4c-AP05 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | AP01 bis AP04 | |
 
 ### M4b: Generative Welle (freigegeben 2026-10-28)
 

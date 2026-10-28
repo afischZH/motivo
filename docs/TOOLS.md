@@ -343,6 +343,16 @@ Entscheid Andreas 2026-10-28. Alle Tools rein clientseitig, deterministisch übe
 - **Grössen**: zusätzlich Dribbble 1600 × 1200 (4:3) und Quadrat 1600 × 1600.
 - **Vorlagen** (6 neu, die 7 bisherigen unverändert): Responsive (Set gestaffelt, Silber, Mesh), Laptop (Graphit auf Hellgrau), Smartphone (Weiss, Verlauf), Monitor (Silber, Blurry Ozean), Geräte-Reihe (Laptop, Tablet, Smartphone in Reihe, Graphit, Sternenhimmel), Bühne (alle vier, Weiss, Fensterleiste, Kerbe).
 
+## L. Kleine Welle · M4c · G
+
+Specs schreibt das jeweilige AP vor dem Bau (Parameter, Algorithmus, Presets, Exporte, Grenzen).
+
+### L1. Avatar- und Platzhalter-Generator · M4c · G
+### L2. Favicon- und App-Icon-Paket · M4c · G
+### L3. Animierter CSS-Verlauf · M4c · G
+### L4. Duotone und Gradient Map · M4c · G
+### L5. ASCII- und Punktmatrix-Art · M4c · G
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
