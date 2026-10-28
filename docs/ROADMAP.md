@@ -91,9 +91,9 @@ Sechs neue Generatoren aus der Ideenliste, alle rein im Browser, ohne Kosten, mi
 - [x] **Guilloche** (K4): feine verschlungene Kurven (Spirograph-Mathematik)
 - [x] **Terrazzo** (K5): Steinsplitter per Poisson-Disk auf Grundfarbe
 - [x] **Screenshot-Verschönerer** (K6): Screenshot auf Musterli-Hintergrund mit Rand, Ecken, Schatten, Browser-Rahmen
-- [ ] Changelog, QA in 3 Browsern, Code- und Security-Review
+- [ ] Changelog, QA in Chrome, Code- und Security-Review
 
-**DoD**: Jedes Tool mit mindestens 6 Presets, Snapshot pro Preset, Vorschau == Export in Chrome, Safari, Firefox; SVG-Exporte kompakt (Pfade vereinfacht, Budget dokumentiert); Screenshot-Uploads bleiben lokal und SVG wird sanitisiert.
+**DoD**: Jedes Tool mit mindestens 6 Presets, Snapshot pro Preset, Vorschau == Export in Chrome; SVG-Exporte kompakt (Pfade vereinfacht, Budget dokumentiert); Screenshot-Uploads bleiben lokal und SVG wird sanitisiert.
 
 ## M5: WebGL, Bildeffekte, Video (Woche 15 bis 18)
 

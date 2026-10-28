@@ -72,7 +72,7 @@ pnpm dev                # Web-App lokal (apps/web)
 pnpm build              # Alle Pakete bauen
 pnpm test               # Vitest (alle Pakete)
 pnpm test:affected      # Vitest nur geänderte Pakete (Standard nach jeder Aufgabe; Basis: TURBO_SCM_BASE)
-pnpm test:e2e           # Playwright (alle Browser)
+pnpm test:e2e           # Playwright (alle Browser, nur manuell)
 pnpm test:e2e:chromium  # Playwright nur Chromium
 pnpm --filter @musterli/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
 pnpm lint && pnpm typecheck
@@ -91,7 +91,7 @@ pnpm lint && pnpm typecheck
 
 ## Definition of Done (für jede Aufgabe)
 
-- [ ] Funktioniert in Chrome, Safari, Firefox (aktuelle Versionen)
+- [ ] Funktioniert in Chrome (aktuelle Version); Safari und Firefox werden nicht mehr getestet (Entscheid Andreas 2026-10-28)
 - [ ] Light und Dark Mode geprüft
 - [ ] Tastaturbedienung geprüft
 - [ ] Tests geschrieben und grün; `pnpm lint && pnpm typecheck` grün
@@ -135,3 +135,4 @@ pnpm lint && pnpm typecheck
 | 2026-10-28 | Schlanke Tests: nach jeder Aufgabe nur Lint, Typecheck, `test:affected` und betroffene Chromium-Specs; CI-E2E in Draft-PRs und auf main nur Chromium, alle drei Browser erst bei "ready for review" (Meilenstein-Abnahme) | Wunsch Andreas; kürzere Wartezeiten, Firefox/WebKit-Fehler werden trotzdem vor jedem Release gefunden |
 | 2026-10-28 | Generative Welle M4b (Entscheid Andreas): Höhenlinien, Flow Fields, Low-Poly/Voronoi, Guilloche, Terrazzo, Screenshot-Verschönerer; eigene Helfer ohne Library (Rauschen, Marching Squares, Polylinien, Delaunay/Voronoi, Scheiben-Streuung, adaptive Kurvenabtastung); Budgets unabhängig von der Leinwandgrösse statt SVGO; GIF-Quelle "time" mit Bild 0 = Vorschau | Keine Dependency, deterministisch, kompakte SVGs; Details `docs/TOOLS.md` K1 bis K6, `docs/ARCHITECTURE.md` 4.9 bis 4.11 |
 | 2026-10-28 | Screenshot-Verschönerer: Screenshots lokal als PNG bis 3840 px, nie im Teilen-Link; generischer Hook `sizePresets`; grosse Uploads in der Vorschau als `blob:`-URLs | Nutzerdateien verlassen das Gerät nicht; Shell bleibt Tool-neutral (M4b-AP04) |
+| 2026-10-28 | Browser-Tests nur noch in Chrome (Chromium), auch in CI und vor dem Live-Schalten; Firefox- und WebKit-Projekte bleiben in `playwright.config.ts` für manuelle Läufe; ersetzt die 3-Browser-Regel vom selben Tag | Wunsch Andreas; schnellere Durchläufe. Risiko: Safari-spezifische Fehler (z. B. grosse Canvas, Select-Überlauf) fallen erst bei Nutzern auf |
