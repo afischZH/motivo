@@ -115,7 +115,8 @@
       "categories": {
         "image": "Bild",
         "vector": "Vektor",
-        "code": "Code"
+        "code": "Code",
+        "animation": "Animation"
       },
       "formats": {
         "png": "PNG",
@@ -123,7 +124,8 @@
         "webp": "WebP",
         "svg": "SVG",
         "css": "CSS",
-        "png-tile": "PNG-Kachel"
+        "png-tile": "PNG-Kachel",
+        "gif": "GIF"
       },
       "size": "Grösse",
       "scale": "{scale}× ({width} × {height})",
@@ -160,7 +162,8 @@
         "tooLarge": "Dein Browser kann ein Bild dieser Grösse nicht in diesem Format erzeugen. Wähle PNG oder eine kleinere Grösse.",
         "unavailable": "Dein Browser unterstützt diesen Export nicht. Versuch es mit einem aktuellen Browser.",
         "aborted": "Export abgebrochen.",
-        "unknown": "Etwas ist schiefgelaufen. Versuch es nochmals."
+        "unknown": "Etwas ist schiefgelaufen. Versuch es nochmals.",
+        "gifBudget": "Das ist zu viel für ein GIF. Wähle weniger Bilder oder eine kleinere Grösse."
       },
       "copyErrors": {
         "unsupported": "Dein Browser kann das nicht in die Zwischenablage legen.",
@@ -177,6 +180,23 @@
         "hslList": "HSL-Liste",
         "tailwindConfig": "tailwind.config.js",
         "tailwindTheme": "Tailwind v4 @theme"
+      },
+      "gif": {
+        "title": "GIF-Einstellungen",
+        "source": "Animation",
+        "sources": {
+          "seeds": "Neue Varianten",
+          "colors": "Farbwechsel",
+          "time": "Bewegung",
+          "custom": "Eigene Animation"
+        },
+        "frames": "Anzahl Bilder",
+        "delay": "Dauer pro Bild",
+        "delayValue": "{ms} ms",
+        "loop": "Endlos wiederholen",
+        "edgeOption": "{width} × {height}",
+        "summary": "Ergebnis: {width} × {height} px, {frames} Bilder, {seconds} s pro Durchgang.",
+        "overBudget": "Das ist zu viel für ein GIF (höchstens {megapixels} Mio. Pixel über alle Bilder). Wähle höchstens {max} Bilder oder eine kleinere Grösse."
       }
     },
     "share": {

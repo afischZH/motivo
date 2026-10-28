@@ -54,8 +54,19 @@ describe("supportsExport", () => {
   it("needs the format declared and a render kind that can produce it", () => {
     expect(supportsExport(blobTool, "svg")).toBe(true);
     expect(supportsExport(cssGradientTool, "css")).toBe(true);
-    expect(supportsExport(blobTool, "gif")).toBe(false);
     expect(supportsExport(textTool, "svg")).toBe(false);
+  });
+
+  it("derives GIF from the animation opt-in", () => {
+    expect(supportsExport(blobTool, "gif")).toBe(true);
+    expect(supportsExport(cssGradientTool, "gif")).toBe(true);
+    expect(supportsExport(textTool, "gif")).toBe(false);
+    expect(
+      supportsExport(
+        { ...textTool, animation: { sources: ["seeds"] } } as AnyToolDefinition,
+        "gif",
+      ),
+    ).toBe(false);
   });
 });
 

@@ -12,6 +12,7 @@ import {
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
+import { COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
 import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
@@ -168,4 +169,5 @@ export const polkaDotsTool = defineTool({
     },
   },
   exports: ["svg", "css", "png", "jpg", "webp"],
+  animation: COLOR_ANIMATION,
 });

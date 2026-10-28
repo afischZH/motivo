@@ -6,7 +6,8 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./gif-info": "./src/gif-info.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -14,7 +15,8 @@
   },
   "dependencies": {
     "@musterli/engine": "workspace:*",
-    "@musterli/tool-registry": "workspace:*"
+    "@musterli/tool-registry": "workspace:*",
+    "gifenc": "1.0.3"
   },
   "devDependencies": {
     "@musterli/config": "workspace:*",

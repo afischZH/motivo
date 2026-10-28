@@ -349,6 +349,54 @@ export interface ImageInput<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Animation (GIF export)
+// ---------------------------------------------------------------------------
+
+/**
+ * Where the frames of an animated export come from:
+ *  - `seeds`: frame i renders the same params with seed `seed + i` (the
+ *    tool's own randomness, e.g. a new blob outline per frame);
+ *  - `colors`: the colour params rotate through the frames, blended in
+ *    OKLab, so the last frame leads smoothly back to the first;
+ *  - `time`: the renderer reads `RenderContext.t` = i / count (looped
+ *    motion); only for tools whose renderer uses `t`;
+ *  - `custom`: the tool's own `AnimationSupport.frame`.
+ */
+export type AnimationSource = "seeds" | "colors" | "time" | "custom";
+
+/** Position of one frame in an animation. */
+export interface AnimationFrameInfo {
+  /** 0-based frame index. */
+  index: number;
+  /** Number of frames. */
+  count: number;
+  /** `index / count`, in [0, 1). */
+  t: number;
+  /** Seed of the design (uint32). */
+  seed: number;
+}
+
+/** What one frame renders: params, seed and an optional time. */
+export interface AnimationFrame<P> {
+  params: P;
+  seed: number;
+  t?: number;
+}
+
+/** Opt-in of a tool for animated exports. */
+export interface AnimationSupport<P> {
+  /** Frame sources in display order; the first is the default. */
+  sources: readonly [AnimationSource, ...AnimationSource[]];
+  /**
+   * Frames of the `custom` source. Pure and deterministic; must return
+   * params that pass the schema. Required when `sources` has `custom`.
+   */
+  frame?(params: P, info: AnimationFrameInfo): AnimationFrame<P>;
+  /** i18n key of the `custom` source label. Required with `frame`. */
+  customLabelKey?: string;
+}
+
+// ---------------------------------------------------------------------------
 // Tool definition
 // ---------------------------------------------------------------------------
 
@@ -415,8 +463,13 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   localParams?: readonly ParamKey<Params<S>>[];
   /** The repeat tile of a seamless design; see `TileRenderer`. */
   tile?: TileRenderer<Params<S>>;
-  /** Uses `RenderContext.t` (GIF/video export). */
-  supportsAnimation?: boolean;
+  /**
+   * Opt-in for animated exports (GIF): which frame sources the export
+   * dialog offers. Every frame is rendered by `render` (one render path);
+   * see `AnimationSupport` and `planAnimationFrames`. Most tools need one
+   * line: `animation: SEED_AND_COLOR_ANIMATION`.
+   */
+  animation?: AnimationSupport<Params<S>>;
 }
 
 /** A tool of any schema, as stored in a registry. */

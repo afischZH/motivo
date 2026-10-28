@@ -1,4 +1,4 @@
-import { ExportError, type RasterExportResult } from "@musterli/exporters";
+import { ExportError, type GifExportResult, type RasterExportResult } from "@musterli/exporters";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
@@ -82,7 +82,7 @@ describe("ExportDialog formats", () => {
       .getAllByRole("radio")
       .filter((r) => r.getAttribute("data-format") !== null)
       .map((r) => r.getAttribute("data-format"));
-    expect(names).toEqual(["png", "jpg", "webp", "svg", "css", "extra:clip-path"]);
+    expect(names).toEqual(["png", "jpg", "webp", "svg", "css", "extra:clip-path", "gif"]);
     const group = (name: string) =>
       within(within(dialog()).getByRole("group", { name }))
         .getAllByRole("radio")
@@ -90,6 +90,7 @@ describe("ExportDialog formats", () => {
     expect(group("Bild")).toEqual(["png", "jpg", "webp"]);
     expect(group("Vektor")).toEqual(["svg"]);
     expect(group("Code")).toEqual(["css", "extra:clip-path"]);
+    expect(group("Animation")).toEqual(["gif"]);
     expect(formatRadio("CSS clip-path")).toBeTruthy();
     expect((formatRadio("PNG") as HTMLInputElement).checked).toBe(true);
   });
@@ -269,6 +270,134 @@ describe("ExportDialog raster options", () => {
     await waitFor(() => expect(status().textContent).toBe("Export abgebrochen."));
     expect(screen.queryByRole("progressbar")).toBeNull();
     expect(services.downloadBlob).not.toHaveBeenCalled();
+  });
+});
+
+type GifArgs = Parameters<ExportServices["exportGif"]>;
+
+describe("ExportDialog GIF", () => {
+  const gifPanel = () => screen.getByTestId("export-gif");
+
+  it("offers frame source, frames, delay, loop and size, then exports", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.click(formatRadio("GIF"));
+    const panel = within(gifPanel());
+    expect((panel.getByRole("radio", { name: "Neue Varianten" }) as HTMLInputElement).checked).toBe(
+      true,
+    );
+    expect(panel.getByRole("radio", { name: "Farbwechsel" })).toBeTruthy();
+    expect((panel.getByRole("slider", { name: "Anzahl Bilder" }) as HTMLInputElement).value).toBe(
+      "12",
+    );
+    expect((panel.getByRole("slider", { name: "Dauer pro Bild" }) as HTMLInputElement).value).toBe(
+      "100",
+    );
+    expect(
+      (panel.getByRole("checkbox", { name: "Endlos wiederholen" }) as HTMLInputElement).checked,
+    ).toBe(true);
+    // 1080 × 1350 at a long edge of 640 px.
+    expect((panel.getByRole("radio", { name: "512 × 640" }) as HTMLInputElement).checked).toBe(
+      true,
+    );
+    expect(screen.getByTestId("export-gif-summary").textContent).toBe(
+      "Ergebnis: 512 × 640 px, 12 Bilder, 1.2 s pro Durchgang.",
+    );
+    // Only PNG can be copied.
+    expect(
+      (screen.getByRole("button", { name: "Bild kopieren" }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+
+    fireEvent.click(panel.getByRole("radio", { name: "Farbwechsel" }));
+    fireEvent.change(panel.getByRole("slider", { name: "Anzahl Bilder" }), {
+      target: { value: "24" },
+    });
+    fireEvent.change(panel.getByRole("slider", { name: "Dauer pro Bild" }), {
+      target: { value: "50" },
+    });
+    fireEvent.click(panel.getByRole("checkbox", { name: "Endlos wiederholen" }));
+    fireEvent.click(panel.getByRole("radio", { name: "256 × 320" }));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(status().textContent).toBe("Heruntergeladen."));
+    const [tool, , ctx, options] = services.exportGif.mock.calls[0] as GifArgs;
+    expect(tool.id).toBe("blob");
+    expect([ctx.width, ctx.height]).toEqual([1080, 1350]);
+    expect(options).toMatchObject({
+      source: "colors",
+      frames: 24,
+      delay: 50,
+      loop: false,
+      edge: 320,
+    });
+    expect(services.downloadBlob).toHaveBeenCalledWith(expect.any(Blob), "musterli-blob.gif");
+  });
+
+  it("blocks exports over the pixel budget with an explanation", () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.click(formatRadio("GIF"));
+    const panel = within(gifPanel());
+    fireEvent.change(panel.getByRole("slider", { name: "Anzahl Bilder" }), {
+      target: { value: "60" },
+    });
+    fireEvent.click(panel.getByRole("radio", { name: "819 × 1024" }));
+    expect(screen.getByTestId("export-gif-budget").textContent).toBe(
+      "Das ist zu viel für ein GIF (höchstens 30 Mio. Pixel über alle Bilder). Wähle höchstens 35 Bilder oder eine kleinere Grösse.",
+    );
+    const download = screen.getByRole("button", { name: "Herunterladen" }) as HTMLButtonElement;
+    expect(download.disabled).toBe(true);
+    fireEvent.change(panel.getByRole("slider", { name: "Anzahl Bilder" }), {
+      target: { value: "35" },
+    });
+    expect(screen.queryByTestId("export-gif-budget")).toBeNull();
+    expect(download.disabled).toBe(false);
+  });
+
+  it("shows progress and cancels a running GIF export", async () => {
+    const services = fakeServices({
+      exportGif: vi.fn(
+        (...[, , , options]: GifArgs) =>
+          new Promise<GifExportResult>((_, reject) => {
+            options.onProgress?.(0.25);
+            options.signal?.addEventListener("abort", () =>
+              reject(new ExportError("aborted", "aborted")),
+            );
+          }),
+      ),
+    });
+    setup("blob", services);
+    fireEvent.click(formatRadio("GIF"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    const progress = await screen.findByRole("progressbar", { name: "Exportfortschritt" });
+    expect(progress.getAttribute("value")).toBe("0.25");
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Abbrechen" }));
+    });
+    await waitFor(() => expect(status().textContent).toBe("Export abgebrochen."));
+    expect(services.downloadBlob).not.toHaveBeenCalled();
+  });
+
+  it("explains a refused budget from the exporter", async () => {
+    setup(
+      "blob",
+      fakeServices({
+        exportGif: vi.fn(async () => {
+          throw new ExportError("budget-exceeded", "too many");
+        }),
+      }),
+    );
+    fireEvent.click(formatRadio("GIF"));
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() =>
+      expect(alert().textContent).toBe(
+        "Das ist zu viel für ein GIF. Wähle weniger Bilder oder eine kleinere Grösse.",
+      ),
+    );
+  });
+
+  it("is not offered for tools without animation", () => {
+    setup("test-fixture");
+    expect(within(dialog()).queryByRole("radio", { name: "GIF" })).toBeNull();
   });
 });
 

@@ -34,6 +34,7 @@ import {
 import * as z from "zod";
 import { HEX_COLOR_PATTERN, backgroundSchema, colorSchema } from "../common";
 import { isItemLocked, keepLocked } from "../randomize";
+import { COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { ControlHints, OptionPreview, Preset } from "../types";
 import { COMMON_LABELS, EXTRA_EXPORT_LABELS } from "./shared";
@@ -314,6 +315,7 @@ export const cssPatternsTool = defineTool({
     },
   },
   exports: ["css", "svg", "png", "jpg", "webp"],
+  animation: COLOR_ANIMATION,
   extraExports: [
     {
       id: "tailwind",

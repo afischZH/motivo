@@ -4,11 +4,14 @@ import { describe, expect, it } from "vitest";
 import { fixtureTool } from "../test/fixture-tool";
 import {
   clipboardErrorKey,
+  defaultGifSettings,
   defaultJpgBackground,
   exportErrorKey,
   formatBytes,
+  gifSourceLabelKey,
   listExportChoices,
   pickInitialChoice,
+  planGifExport,
   planRasterSize,
   sameAspect,
   utf8Bytes,
@@ -22,20 +25,30 @@ const ids = (toolId: string) => {
 
 describe("listExportChoices", () => {
   it("lists raster, vector, CSS and extra exports of SVG tools in display order", () => {
-    expect(ids("blob")).toEqual(["png", "jpg", "webp", "svg", "css", "extra:clip-path"]);
-    expect(ids("polka-dots")).toEqual(["png", "jpg", "webp", "svg", "css"]);
-    expect(ids("svg-waves")).toEqual(["png", "jpg", "webp", "svg", "css"]);
+    expect(ids("blob")).toEqual(["png", "jpg", "webp", "svg", "css", "extra:clip-path", "gif"]);
+    expect(ids("polka-dots")).toEqual(["png", "jpg", "webp", "svg", "css", "gif"]);
+    expect(ids("svg-waves")).toEqual(["png", "jpg", "webp", "svg", "css", "gif"]);
+    // No animation opt-in: no GIF.
+    expect(ids("grid-patterns")).toEqual(["png", "jpg", "webp", "svg", "css"]);
   });
 
   it("lists the Tailwind extra for the CSS gradient", () => {
-    expect(ids("css-gradient")).toEqual(["png", "jpg", "webp", "svg", "css", "extra:tailwind"]);
+    expect(ids("css-gradient")).toEqual([
+      "png",
+      "jpg",
+      "webp",
+      "svg",
+      "css",
+      "extra:tailwind",
+      "gif",
+    ]);
   });
 
   it("only offers what the tool declares", () => {
     expect(listExportChoices(fixtureTool as never).map((c) => c.id)).toEqual(["svg"]);
   });
 
-  it("groups formats into image, vector and code", () => {
+  it("groups formats into image, vector, code and animation", () => {
     const tool = registry.get("blob");
     if (!tool) throw new Error("blob");
     const categories = Object.fromEntries(listExportChoices(tool).map((c) => [c.id, c.category]));
@@ -46,6 +59,7 @@ describe("listExportChoices", () => {
       svg: "vector",
       css: "code",
       "extra:clip-path": "code",
+      gif: "animation",
     });
   });
 });
@@ -132,6 +146,33 @@ describe("sameAspect", () => {
   });
 });
 
+describe("GIF settings", () => {
+  it("start with the tool's first source, 12 frames, 100 ms, a loop and 640 px", () => {
+    const blob = registry.get("blob");
+    const css = registry.get("css-patterns");
+    if (!blob || !css) throw new Error("tools");
+    expect(defaultGifSettings(blob)).toEqual({
+      source: "seeds",
+      frames: 12,
+      delay: 100,
+      loop: true,
+      edge: 640,
+    });
+    expect(defaultGifSettings(css).source).toBe("colors");
+    expect(gifSourceLabelKey(blob, "colors")).toBe("Editor.export.gif.sources.colors");
+  });
+
+  it("plans size and budget from the design", () => {
+    const blob = registry.get("blob");
+    if (!blob) throw new Error("blob");
+    const plan = planGifExport(
+      { width: 1920, height: 1080 },
+      { ...defaultGifSettings(blob), edge: 1024, frames: 60 },
+    );
+    expect(plan).toMatchObject({ width: 1024, height: 576, frames: 60, overBudget: true });
+  });
+});
+
 describe("error keys", () => {
   it("maps every export error code", () => {
     const cases: [ExportErrorCode, string][] = [
@@ -142,6 +183,7 @@ describe("error keys", () => {
       ["encode-failed", "encodeFailed"],
       ["too-large", "tooLarge"],
       ["unavailable", "unavailable"],
+      ["budget-exceeded", "gifBudget"],
       ["aborted", "aborted"],
     ];
     for (const [code, key] of cases) {

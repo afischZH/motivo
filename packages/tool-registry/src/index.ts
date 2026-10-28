@@ -8,4 +8,5 @@ export * from "./randomize";
 export * from "./image-input";
 export * from "./svg-asset";
 export * from "./brand-palette";
+export * from "./animation";
 export * from "./tools";

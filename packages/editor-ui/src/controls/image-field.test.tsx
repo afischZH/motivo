@@ -198,6 +198,7 @@ describe("repeat tile export", () => {
       "png-tile",
       "svg",
       "css",
+      "gif",
     ]);
   });
 

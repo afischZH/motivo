@@ -12,6 +12,7 @@ import { MESH_POINTS_MAX, MESH_POINTS_MIN, meshGradientSvg, randomPalette } from
 import * as z from "zod";
 import { TRANSPARENT, visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";
+import { SEED_AND_COLOR_ANIMATION } from "../animation";
 import { defineTool } from "../registry";
 import type { Preset } from "../types";
 import { gradientGrain } from "./grain";
@@ -158,4 +159,5 @@ export const meshGradientTool = defineTool({
     },
   },
   exports: ["png", "jpg", "webp", "svg", "css"],
+  animation: SEED_AND_COLOR_ANIMATION,
 });

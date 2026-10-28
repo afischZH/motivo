@@ -56,7 +56,21 @@ function kindSupports(tool: AnyToolDefinition, format: ExportFormat): boolean {
  * the tool must declare it in `exports` and its render kind must support it.
  */
 export function supportsExport(tool: AnyToolDefinition, format: ExportFormat): boolean {
+  if (format === "gif") return supportsAnimatedExport(tool);
   return tool.exports.includes(format) && kindSupports(tool, format);
+}
+
+/**
+ * GIF is not listed in `exports`: it follows from the tool's opt-in
+ * `animation` (one line per tool), and every frame is rendered as SVG, so
+ * the render kind must produce one (svg, or css with a preview SVG).
+ */
+export function supportsAnimatedExport(tool: AnyToolDefinition): boolean {
+  return (
+    tool.animation !== undefined &&
+    tool.animation.sources.length > 0 &&
+    (tool.render.kind === "svg" || tool.render.kind === "css")
+  );
 }
 
 function requireFormat(tool: AnyToolDefinition, format: ExportFormat): void {

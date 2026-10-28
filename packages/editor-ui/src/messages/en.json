@@ -115,7 +115,8 @@
       "categories": {
         "image": "Image",
         "vector": "Vector",
-        "code": "Code"
+        "code": "Code",
+        "animation": "Animation"
       },
       "formats": {
         "png": "PNG",
@@ -123,7 +124,8 @@
         "webp": "WebP",
         "svg": "SVG",
         "css": "CSS",
-        "png-tile": "PNG tile"
+        "png-tile": "PNG tile",
+        "gif": "GIF"
       },
       "size": "Size",
       "scale": "{scale}× ({width} × {height})",
@@ -160,7 +162,8 @@
         "tooLarge": "Your browser cannot create an image of this size in this format. Choose PNG or a smaller size.",
         "unavailable": "Your browser does not support this export. Try a current browser.",
         "aborted": "Export cancelled.",
-        "unknown": "Something went wrong. Please try again."
+        "unknown": "Something went wrong. Please try again.",
+        "gifBudget": "That is too much for one GIF. Choose fewer frames or a smaller size."
       },
       "copyErrors": {
         "unsupported": "Your browser cannot put this on the clipboard.",
@@ -177,6 +180,23 @@
         "hslList": "HSL list",
         "tailwindConfig": "tailwind.config.js",
         "tailwindTheme": "Tailwind v4 @theme"
+      },
+      "gif": {
+        "title": "GIF settings",
+        "source": "Animation",
+        "sources": {
+          "seeds": "New variants",
+          "colors": "Color cycle",
+          "time": "Motion",
+          "custom": "Custom animation"
+        },
+        "frames": "Frames",
+        "delay": "Time per frame",
+        "delayValue": "{ms} ms",
+        "loop": "Loop forever",
+        "edgeOption": "{width} × {height}",
+        "summary": "Result: {width} × {height} px, {frames} frames, {seconds} s per loop.",
+        "overBudget": "That is too much for one GIF (at most {megapixels} million pixels across all frames). Choose at most {max} frames or a smaller size."
       }
     },
     "share": {
