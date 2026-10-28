@@ -8,8 +8,13 @@ import { packIntoFiles, partFileName, stringifyEach } from "../transfer/json";
 
 export const DESIGNS_FILE_FORMAT = "motivo-designs";
 export const DESIGNS_FILE_VERSION = 1;
-/** Largest accepted file (bytes). Real files are a few KB per design, uploads aside. */
-export const DESIGNS_FILE_MAX_BYTES = 20 * 1024 * 1024;
+/**
+ * Largest accepted file (bytes). Real files are a few KB per design, uploads
+ * aside. One design must always fit, or the export of it could not be
+ * imported again: the largest is a Bento grid with full tile pictures
+ * (12 MB) plus a grid photo (9 MB), about 21 MB (M4-AP09).
+ */
+export const DESIGNS_FILE_MAX_BYTES = 32 * 1024 * 1024;
 /** Most designs one file may hold. */
 export const DESIGNS_FILE_MAX_DESIGNS = 2000;
 

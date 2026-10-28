@@ -449,7 +449,7 @@
         "unsafe-upload": "unsafe or damaged file in the design"
       },
       "importErrors": {
-        "too-large": "The file is too large. At most 20 MB are allowed.",
+        "too-large": "The file is too large. At most 32 MB are allowed.",
         "empty": "The file is empty.",
         "malformed": "The file is damaged or not JSON.",
         "forbidden-keys": "The file contains forbidden entries and was not imported.",
