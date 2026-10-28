@@ -1,6 +1,7 @@
 "use client";
 
 import { supportsExport } from "@motivo/exporters";
+import type { DesignStore } from "@motivo/storage";
 import {
   TRANSPARENT,
   createRenderContext,
@@ -9,9 +10,20 @@ import {
   type Params,
   type ParamsSchema,
 } from "@motivo/tool-registry";
-import { useDeferredValue, useEffect, useId, useMemo, useState, type ReactNode } from "react";
+import { useLocale } from "next-intl";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { AssetServicesContext } from "../asset-input/services-context";
 import { EditorControls } from "../controls/control-panel";
+import type { LocalDesignController, LocalDesignView } from "../designs/local-design";
+import { useLocalDesign } from "../designs/use-local-design";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
 import { ImageInputSection } from "../image-input/image-input-section";
 import type { ImageInputServices } from "../image-input/services";
@@ -28,6 +40,7 @@ import {
   CloseIcon,
   LinkIcon,
   RedoIcon,
+  SaveIcon,
   ShuffleIcon,
   UndoIcon,
 } from "./icons";
@@ -47,6 +60,11 @@ export interface EditorShellProps {
   exportServices?: ExportServices;
   /** Decoding and analysis of user images (tools with `imageInput`); replaceable in tests. */
   imageInputServices?: ImageInputServices;
+  /**
+   * Local saving (IndexedDB). Without it the editor has no save button, no
+   * autosave draft and ignores `#design=` (tests, embeds).
+   */
+  designs?: DesignStore;
   className?: string;
 }
 
@@ -77,9 +95,11 @@ export function EditorShell({
   headerStart,
   exportServices = browserExportServices,
   imageInputServices,
+  designs,
   className,
 }: EditorShellProps) {
   const t = useT();
+  const locale = useLocale();
   const store = useEditorStoreApi();
   const tool = useEditorStore((s) => s.tool);
   const canUndo = useEditorStore(selectCanUndo);
@@ -106,6 +126,18 @@ export function EditorShell({
   }, [flash]);
 
   const toolName = t(`tools.${tool.id}.name`);
+
+  const defaultName = useCallback(
+    () =>
+      t("Designs.editor.defaultName", {
+        tool: toolName,
+        date: new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" }).format(
+          new Date(),
+        ),
+      }),
+    [t, toolName, locale],
+  );
+  const local = useLocalDesign(store, designs, defaultName);
 
   // Announce the variant position whenever the active variant or the variant
   // count changes. Not on array identity: edits replace `variants` without
@@ -203,7 +235,19 @@ export function EditorShell({
       }
     : undefined;
 
-  useEditorShortcuts(copyImage ? { ...actions, copyImage } : actions);
+  const save = local
+    ? () => {
+        void local.controller.save().then((ok) => {
+          if (ok) confirm(t("Designs.editor.saved"));
+        });
+      }
+    : undefined;
+
+  useEditorShortcuts({
+    ...actions,
+    ...(copyImage ? { copyImage } : {}),
+    ...(save ? { save } : {}),
+  });
 
   const shownNotice: ShellNotice | null =
     notice ??
@@ -222,6 +266,14 @@ export function EditorShell({
           {headerStart}
           <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
         </div>
+        {local && save && (
+          <DesignBar
+            controller={local.controller}
+            view={local.view}
+            onSave={save}
+            enabled={hydrated}
+          />
+        )}
         <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-1">
           <button
             type="button"
@@ -333,6 +385,8 @@ export function EditorShell({
         </div>
       )}
 
+      {local?.view.notice && <DesignNotice controller={local.controller} view={local.view} />}
+
       <div
         className={cx(
           "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
@@ -371,6 +425,115 @@ export function EditorShell({
         onClose={() => setExportOpen(false)}
         services={exportServices}
       />
+    </div>
+  );
+}
+
+/** Name field, save button and save state (docs/DESIGN.md 2: title editable, Speichern). */
+function DesignBar(props: {
+  controller: LocalDesignController;
+  view: LocalDesignView;
+  onSave(): void;
+  enabled: boolean;
+}) {
+  const t = useT();
+  const id = useId();
+  const { controller, view } = props;
+  const status =
+    view.designId === null
+      ? null
+      : view.dirty
+        ? t("Designs.editor.statusChanged")
+        : t("Designs.editor.statusSaved");
+  return (
+    <div
+      role="group"
+      aria-label={t("Designs.editor.group")}
+      className="flex min-w-0 flex-[1_1_14rem] items-center gap-2 sm:flex-initial"
+      data-testid="design-bar"
+    >
+      <label htmlFor={`${id}-name`} className="sr-only">
+        {t("Designs.editor.nameLabel")}
+      </label>
+      <input
+        id={`${id}-name`}
+        type="text"
+        value={view.name}
+        maxLength={120}
+        placeholder={t("Designs.editor.namePlaceholder")}
+        onChange={(event) => controller.setName(event.currentTarget.value)}
+        onBlur={() => void controller.commitName()}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") void controller.commitName();
+        }}
+        disabled={!props.enabled}
+        className="h-8 w-full min-w-0 rounded-md border border-input bg-background px-2 text-sm placeholder:text-muted-foreground sm:w-44"
+        data-testid="design-name"
+      />
+      <button
+        type="button"
+        className={BUTTON_CLASS}
+        onClick={props.onSave}
+        disabled={!props.enabled || !view.ready || view.saving}
+        title={`${t("Designs.editor.saveHint")} (⌘/Ctrl+S)`}
+        aria-keyshortcuts="Control+S Meta+S"
+        data-testid="save-design"
+      >
+        <SaveIcon />
+        {view.saving ? t("Designs.editor.saving") : t("Designs.editor.save")}
+      </button>
+      {status !== null && (
+        <span className="shrink-0 text-xs text-muted-foreground" data-testid="design-status">
+          {status}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** Notice about drafts, old versions and storage problems, with its actions. */
+function DesignNotice({
+  controller,
+  view,
+}: {
+  controller: LocalDesignController;
+  view: LocalDesignView;
+}) {
+  const t = useT();
+  const notice = view.notice;
+  if (!notice) return null;
+  const error = notice.kind === "error";
+  const message = error
+    ? t(`Designs.errors.${notice.code}`)
+    : t(`Designs.editor.notices.${notice.kind}`);
+  return (
+    <div
+      role={error ? "alert" : "status"}
+      className={cx(
+        "flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-4 py-2 text-sm",
+        error ? "bg-destructive/10" : "bg-muted",
+      )}
+      data-testid="design-notice"
+    >
+      <p className="min-w-0 flex-[1_1_16rem]">{message}</p>
+      {notice.kind === "draft-restored" && (
+        <button type="button" className={BUTTON_CLASS} onClick={() => controller.startNew()}>
+          {t("Designs.editor.startNew")}
+        </button>
+      )}
+      {notice.kind === "draft-available" && (
+        <button type="button" className={BUTTON_CLASS} onClick={() => controller.restoreDraft()}>
+          {t("Designs.editor.restore")}
+        </button>
+      )}
+      <button
+        type="button"
+        className={ICON_BUTTON}
+        onClick={() => controller.dismissNotice()}
+        aria-label={t("Designs.editor.dismiss")}
+      >
+        <CloseIcon />
+      </button>
     </div>
   );
 }
