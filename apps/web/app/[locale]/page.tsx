@@ -93,7 +93,7 @@ export default async function HomePage({ params }: HomePageProps) {
 const WRAP = "mx-auto w-full max-w-6xl px-4 sm:px-6";
 const SECTION = cn(WRAP, "flex flex-col gap-10 py-20 sm:py-24");
 const H2 = "text-3xl font-semibold tracking-[-0.025em] text-balance sm:text-4xl";
-const LEAD = "max-w-prose text-lg text-muted-foreground";
+const LEAD = "max-w-prose text-lg text-pretty text-muted-foreground";
 const TEXT_LINK =
   "rounded-control text-sm font-medium text-link underline-offset-4 hover:underline";
 
@@ -143,7 +143,7 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
       <div
         className={cn(
           WRAP,
-          "grid items-center gap-14 py-16 sm:py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:py-28",
+          "grid items-center gap-14 py-16 sm:py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:pt-28 lg:pb-24",
         )}
       >
         <div className="flex flex-col items-start gap-7">
@@ -153,7 +153,7 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
           >
             {text("Home.hero.title")}
           </h1>
-          <p className="max-w-[40ch] text-lg text-muted-foreground sm:text-xl">
+          <p className="max-w-[40ch] text-lg text-pretty text-muted-foreground sm:text-xl">
             {text("Home.hero.lead")}
           </p>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
@@ -213,19 +213,21 @@ function Values({ text }: { text: Text }) {
     { key: "donations", Icon: HeartIcon },
   ] as const;
   return (
-    <section aria-labelledby="values-heading" className={SECTION}>
+    <section aria-labelledby="values-heading" className={cn(SECTION, "pt-16 sm:pt-20")}>
       <SectionHeading id="values-heading" title={text("Home.values.heading")} />
-      <ul className="grid gap-5 md:grid-cols-3">
+      {/* Open columns on a shared rule instead of boxed cards: the motifs below carry the weight. */}
+      <ul className="grid gap-x-10 md:grid-cols-3">
         {items.map(({ key, Icon }) => (
-          <li
-            key={key}
-            className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6"
-          >
-            <span className="flex size-10 items-center justify-center rounded-lg bg-highlight text-link">
-              <Icon className="size-5" />
-            </span>
-            <h3 className="text-lg font-semibold">{text(`Home.values.${key}.title`)}</h3>
-            <p className="text-muted-foreground">{text(`Home.values.${key}.text`)}</p>
+          <li key={key} className="flex flex-col gap-3 border-t border-border py-6 md:pb-0">
+            <div className="flex items-center gap-2.5">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-highlight text-link">
+                <Icon className="size-4" />
+              </span>
+              <h3 className="text-lg font-semibold">{text(`Home.values.${key}.title`)}</h3>
+            </div>
+            <p className="max-w-[44ch] text-pretty text-muted-foreground">
+              {text(`Home.values.${key}.text`)}
+            </p>
             {key === "donations" && (
               <Link href="/support" className={cn(TEXT_LINK, "mt-auto self-start")}>
                 {text("Footer.support")}
@@ -354,7 +356,9 @@ function HowItWorks({ text }: { text: Text }) {
               )}
             </span>
             <h3 className="text-lg font-semibold">{text(`Home.how.${step}.title`)}</h3>
-            <p className="max-w-[36ch] text-muted-foreground">{text(`Home.how.${step}.text`)}</p>
+            <p className="max-w-[36ch] text-pretty text-muted-foreground">
+              {text(`Home.how.${step}.text`)}
+            </p>
           </li>
         ))}
       </ol>
@@ -370,7 +374,7 @@ function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text:
         {faq.map((entry) => (
           <div key={entry.question} className="flex flex-col gap-2 border-t border-border py-6">
             <dt className="font-semibold">{entry.question}</dt>
-            <dd className="text-muted-foreground">{entry.answer}</dd>
+            <dd className="max-w-prose text-pretty text-muted-foreground">{entry.answer}</dd>
           </div>
         ))}
       </dl>
