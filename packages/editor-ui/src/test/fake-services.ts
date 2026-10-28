@@ -17,6 +17,16 @@ export function fakeServices(overrides: Partial<ExportServices> = {}): FakeServi
           filename: `motivo-${tool.id}.${options.format}`,
         })),
     ),
+    exportRasterTile: vi.fn<ExportServices["exportRasterTile"]>(
+      overrides.exportRasterTile ??
+        (async (tool, _params, ctx, options) => ({
+          blob: new Blob(["x"], { type: "image/png" }),
+          width: ctx.width * (options.size?.scale ?? 1),
+          height: ctx.height * (options.size?.scale ?? 1),
+          clamped: false,
+          filename: `motivo-${tool.id}-tile.${options.format}`,
+        })),
+    ),
     downloadBlob: vi.fn<ExportServices["downloadBlob"]>(
       overrides.downloadBlob ?? (() => undefined),
     ),

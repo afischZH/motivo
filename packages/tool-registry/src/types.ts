@@ -297,6 +297,22 @@ export type Renderer<P> =
   | WebglRenderer<P>
   | ImageEffectRenderer<P>;
 
+/** A repeat tile: SVG of exactly one tile, `width` × `height` CSS pixels. */
+export interface TileOutput {
+  svg: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * Seamless tools describe their repeat tile, built from the same markup as
+ * `render` (one render path). Exporters use it for CSS backgrounds
+ * (`background-size` + `repeat`) and the PNG tile export.
+ */
+export interface TileRenderer<P> {
+  render(params: P, ctx: RenderContext): TileOutput;
+}
+
 // ---------------------------------------------------------------------------
 // Extra exports
 // ---------------------------------------------------------------------------
@@ -406,6 +422,15 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   needsImageInput?: boolean;
   /** Derives params from a user image; see `ImageInput`. */
   imageInput?: ImageInput<Params<S>>;
+  /**
+   * Params that hold the user's own files (uploads, `kind: "image"`). They
+   * stay on the device: share links (and later saved designs) reset them
+   * to the defaults in both directions, presets and variants keep them.
+   * `render` must fall back to something sensible for the default value.
+   */
+  localParams?: readonly ParamKey<Params<S>>[];
+  /** The repeat tile of a seamless design; see `TileRenderer`. */
+  tile?: TileRenderer<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
 }

@@ -1,0 +1,4 @@
+{
+  "extends": "@motivo/config/tsconfig.base.json",
+  "include": ["src"]
+}

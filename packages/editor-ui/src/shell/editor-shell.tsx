@@ -4,11 +4,13 @@ import { supportsExport } from "@motivo/exporters";
 import {
   TRANSPARENT,
   createRenderContext,
+  hasLocalContent,
   type AnyToolDefinition,
   type Params,
   type ParamsSchema,
 } from "@motivo/tool-registry";
 import { useDeferredValue, useEffect, useId, useMemo, useState, type ReactNode } from "react";
+import { AssetServicesContext } from "../asset-input/services-context";
 import { EditorControls } from "../controls/control-panel";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
 import { ImageInputSection } from "../image-input/image-input-section";
@@ -159,7 +161,13 @@ export function EditorShell({
     }
     const result = await exportServices.copyText(built.url);
     if (result.ok) {
-      setNotice(null);
+      const s = store.getState();
+      // Uploads stay on this device: say so instead of sharing a different picture silently.
+      setNotice(
+        hasLocalContent(s.tool, s.params)
+          ? { tone: "info", message: t("Editor.share.localLeftOut") }
+          : null,
+      );
       confirm(t("Editor.share.copied"));
     } else {
       setNotice({ tone: "error", message: t("Editor.share.copyFailed"), url: built.url });
@@ -348,7 +356,9 @@ export function EditorShell({
             {t("Editor.shell.settings")}
           </h2>
           <ImageInputSection services={imageInputServices} />
-          <EditorControls />
+          <AssetServicesContext.Provider value={imageInputServices}>
+            <EditorControls />
+          </AssetServicesContext.Provider>
         </section>
       </div>
 

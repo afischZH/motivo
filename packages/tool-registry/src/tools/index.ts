@@ -18,6 +18,7 @@ import { noiseGrainTool } from "./noise-grain";
 import { paletteFromImageTool } from "./palette-from-image";
 import { paletteGeneratorTool } from "./palette-generator";
 import { polkaDotsTool } from "./polka-dots";
+import { seamlessPatternsTool } from "./seamless-patterns";
 import { starrySkyTool } from "./starry-sky";
 import { stripedGradientTool } from "./striped-gradient";
 import { svgChartsTool } from "./svg-charts";
@@ -40,6 +41,7 @@ export {
   paletteFromImageTool,
   paletteGeneratorTool,
   polkaDotsTool,
+  seamlessPatternsTool,
   starrySkyTool,
   stripedGradientTool,
   svgChartsTool,
@@ -62,6 +64,8 @@ export type { NoiseGrainParams } from "./noise-grain";
 export type { PaletteFromImageParams } from "./palette-from-image";
 export type { PaletteGeneratorParams } from "./palette-generator";
 export type { PolkaDotsParams } from "./polka-dots";
+export type { SeamlessPatternsParams } from "./seamless-patterns";
+export { SEAMLESS_COLOR_MODES } from "./seamless-patterns";
 export type { StarrySkyParams } from "./starry-sky";
 export type { StripedGradientParams } from "./striped-gradient";
 export type { SvgChartsParams } from "./svg-charts";
@@ -79,6 +83,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   doodlesTool,
   svgChartsTool,
   polkaDotsTool,
+  seamlessPatternsTool,
   noiseGrainTool,
   gridPatternsTool,
   confettiTool,

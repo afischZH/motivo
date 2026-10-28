@@ -52,7 +52,7 @@ import {
   type RasterSizeRequest,
 } from "./size";
 import { resizeSvg } from "./svg-size";
-import { renderDesignSvg, supportsExport } from "./text";
+import { exportTile, renderDesignSvg, supportsExport } from "./text";
 
 /**
  * Largest canvas area in pixels that every supported browser draws: 4096 x
@@ -657,5 +657,42 @@ export async function exportRaster<S extends ParamsSchema>(
     height: size.height,
     clamped: size.clamped,
     filename: exportFilename(tool.id, ctx.seed, FILE_EXTENSIONS[options.format]),
+  };
+}
+
+/**
+ * Rasterises the repeat tile of a seamless design (PNG tile export). The
+ * tile is drawn at its own size times `options.size.scale` (default 1);
+ * width/height requests are ignored, a tile has a fixed aspect ratio.
+ */
+export async function exportRasterTile<S extends ParamsSchema>(
+  tool: ToolDefinition<S>,
+  params: Params<S>,
+  ctx: RenderContext,
+  options: RasterExportOptions,
+  env?: RasterEnv,
+): Promise<RasterExportResult> {
+  const anyTool: AnyToolDefinition = tool;
+  if (!supportsExport(anyTool, options.format)) {
+    throw new ExportError(
+      "unsupported-format",
+      `Tool "${tool.id}" cannot export ${options.format}`,
+    );
+  }
+  const tile = exportTile(tool, params, ctx);
+  const scale = options.size?.scale;
+  const size = resolveRasterSize(
+    { width: tile.width, height: tile.height },
+    scale === undefined ? {} : { scale },
+    options.maxEdge,
+  );
+  const raster: RasterizeOptions = { ...options, width: size.width, height: size.height };
+  const blob = await rasterizeSvg(tile.svg, raster, env);
+  return {
+    blob,
+    width: size.width,
+    height: size.height,
+    clamped: size.clamped,
+    filename: exportFilename(tool.id, ctx.seed, FILE_EXTENSIONS[options.format], "tile"),
   };
 }

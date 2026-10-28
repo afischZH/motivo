@@ -40,7 +40,7 @@ function PixelThumbnail({ pixels, label }: { pixels: PixelBuffer | null; label: 
 }
 
 /** True when the paste target edits text, so pasting there must not load an image. */
-function isTextTarget(target: EventTarget | null): boolean {
+export function isTextTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false;
   if (target.isContentEditable) return true;
   if (target instanceof HTMLTextAreaElement) return true;
