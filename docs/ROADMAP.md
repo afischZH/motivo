@@ -61,8 +61,8 @@ Gesamtüberblick:
 - [x] Programmatic-SEO: Gradient- und Paletten-Sammlungsseiten
 - [x] Tool **Seamless Patterns** (aus M4 vorgezogen): 4 Kachel-Modi, eigene Shapes, SVG/Bild-Upload mit Zuschnitt nur im Browser (Cross-Browser in CI grün)
 - [x] Warteliste, Supabase- und Resend-Anbindung sowie Gating-Reste entfernen; alles gratis ohne Limits
-- [ ] Designs lokal speichern (IndexedDB), Autosave-Entwurf, Übersicht "Meine Designs" mit Suche, Duplizieren, Löschen, Vorschaubild
-- [ ] Export und Import aller Designs als Datei (JSON, versioniert, beim Import validiert) für andere Geräte
+- [x] Designs lokal speichern (IndexedDB), Autosave-Entwurf, Übersicht "Meine Designs" mit Suche, Duplizieren, Löschen, Vorschaubild
+- [x] Export und Import aller Designs als Datei (JSON, versioniert, beim Import validiert) für andere Geräte
 - [x] Brand Kit lokal: Paletten (max. 10 Farben), Logos, eigene SVG-Shapes (**Sanitizer!**), Export/Import als Datei
 - [x] Brand-Palette in jedem Tool nutzbar
 - [x] Seite "Unterstützen" mit Link zum externen Spendenanbieter, dezenter Hinweis in Footer und Export-Dialog (DE/EN)
