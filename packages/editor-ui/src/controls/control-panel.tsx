@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnyToolDefinition } from "@motivo/tool-registry";
+import type { AnyToolDefinition, ImageAsset } from "@motivo/tool-registry";
 import { useId, useMemo, type ReactNode } from "react";
 import { useT } from "../i18n";
 import type { ParamValues } from "../store/editor-store";
@@ -15,6 +15,7 @@ import {
   SwitchField,
   TextField,
 } from "./fields";
+import { ImageField } from "./image-field";
 import { ListField } from "./list-field";
 import { ControlRow, cx, type ControlIds } from "./primitives";
 import {
@@ -268,9 +269,19 @@ function ControlField({ control, value, level }: ControlFieldProps) {
         />,
       );
     }
-    case "shape":
     case "image":
-      // Pickers for shapes and image upload arrive with the tools that need them.
+      return row(
+        false,
+        <ImageField
+          ids={ids}
+          label={label}
+          value={(value ?? null) as ImageAsset | null}
+          onChange={onChange}
+          {...(level.onCommit ? { onCommit: level.onCommit } : {})}
+        />,
+      );
+    case "shape":
+      // Shapes are picked through `thumbnails` controls with `shapePreview`.
       return null;
   }
 }

@@ -11,7 +11,9 @@ import {
   exportExtra,
   exportFilename,
   exportRaster,
+  exportRasterTile,
   exportSvg,
+  exportTile,
   resolveQuality,
   textBlob,
   MIME_TYPES,
@@ -55,6 +57,8 @@ import { useBackdropClose } from "../shell/use-backdrop-close";
 /** Browser side effects of the dialog, replaceable in tests. */
 export interface ExportServices {
   exportRaster: typeof exportRaster;
+  /** Repeat tile of seamless tools (scale only, the tile has its own size). */
+  exportRasterTile: typeof exportRasterTile;
   downloadBlob: typeof downloadBlob;
   copyText: typeof copyText;
   copyPng: typeof copyPng;
@@ -64,6 +68,7 @@ export interface ExportServices {
 
 export const browserExportServices: ExportServices = {
   exportRaster,
+  exportRasterTile,
   downloadBlob,
   copyText,
   copyPng,
@@ -221,8 +226,13 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     return <p className="p-5 text-sm text-muted-foreground">{t("Editor.export.noFormats")}</p>;
   }
 
-  const raster = choice.kind === "raster" ? choice.format : null;
-  const plan = planRasterSize(size, sizeMode);
+  const raster = choice.kind === "raster" || choice.kind === "tile" ? choice.format : null;
+  const tileChoice = choice.kind === "tile";
+  const tileSize = tileChoice ? tileSizeOf(tool, params, seed, size) : null;
+  // The tile has its own size and only scales; a custom size would cut it.
+  const effectiveMode: ExportSizeMode =
+    tileChoice && sizeMode.kind === "custom" ? { kind: "scale", scale: 1 } : sizeMode;
+  const plan = planRasterSize(tileSize ?? size, effectiveMode);
   const quality =
     raster === null
       ? undefined
@@ -255,10 +265,13 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     const controller = new AbortController();
     abortRef.current = controller;
     setStatus({ kind: "busy", action, progress: null });
-    const ctx = createRenderContext(seed, plan.render);
+    const ctx = createRenderContext(seed, tileChoice ? size : plan.render);
     const options: Parameters<typeof exportRaster>[3] = {
       format,
-      size: { width: plan.output.width, height: plan.output.height },
+      size:
+        tileChoice && effectiveMode.kind === "scale"
+          ? { scale: effectiveMode.scale }
+          : { width: plan.output.width, height: plan.output.height },
       signal: controller.signal,
       onProgress: (fraction) => {
         if (!controller.signal.aborted) {
@@ -268,7 +281,9 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
     };
     if (quality !== undefined) options.quality = quality;
     if (format === "jpg") options.background = jpgBackground;
-    return services.exportRaster(tool, params as AnyParams, ctx, options);
+    return tileChoice
+      ? services.exportRasterTile(tool, params as AnyParams, ctx, options)
+      : services.exportRaster(tool, params as AnyParams, ctx, options);
   };
 
   const finishRaster = () => {
@@ -352,8 +367,9 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
       {raster !== null && (
         <>
           <SizeSection
-            design={size}
-            mode={sizeMode}
+            design={tileSize ?? size}
+            mode={effectiveMode}
+            allowCustom={!tileChoice}
             onChange={setSizeMode}
             plan={plan}
             disabled={busy}
@@ -465,6 +481,21 @@ function ExportDialogBody({ services }: { services: ExportServices }) {
   );
 }
 
+/** Pixel size of the repeat tile at scale 1, or null when it cannot be built. */
+function tileSizeOf(
+  tool: AnyToolDefinition,
+  params: ParamValues,
+  seed: number,
+  size: CanvasSize,
+): CanvasSize | null {
+  try {
+    const tile = exportTile(tool, params as AnyParams, createRenderContext(seed, size));
+    return { width: Math.round(tile.width), height: Math.round(tile.height) };
+  } catch {
+    return null;
+  }
+}
+
 function textFile(choice: TextChoice): { mime: string; extension: string; suffix?: string } {
   switch (choice.kind) {
     case "svg":
@@ -554,6 +585,8 @@ function SizeSection(props: {
   onChange(mode: ExportSizeMode): void;
   plan: ReturnType<typeof planRasterSize>;
   disabled: boolean;
+  /** False for the repeat tile: it only scales. */
+  allowCustom?: boolean;
 }) {
   const t = useT();
   const id = useId();
@@ -600,17 +633,18 @@ function SizeSection(props: {
             }),
           ),
         )}
-        {option(
-          "custom",
-          custom,
-          () =>
-            props.onChange({
-              kind: "custom",
-              width: plan.output.width,
-              height: plan.output.height,
-            }),
-          t("Editor.export.customSize"),
-        )}
+        {props.allowCustom !== false &&
+          option(
+            "custom",
+            custom,
+            () =>
+              props.onChange({
+                kind: "custom",
+                width: plan.output.width,
+                height: plan.output.height,
+              }),
+            t("Editor.export.customSize"),
+          )}
       </div>
       {custom && (
         <div className="flex flex-wrap items-end gap-2">

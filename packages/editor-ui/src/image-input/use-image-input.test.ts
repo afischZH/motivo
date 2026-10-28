@@ -25,6 +25,7 @@ function fakeServices(decoded: ImageDecodeResult[] = []) {
       async (): Promise<ImageDecodeResult> =>
         decoded.shift() ?? { ok: false, error: "decode-failed" },
     ),
+    crop: vi.fn(async () => ({ ok: false as const, error: "decode-failed" as const })),
     derive: vi.fn(async (t, pixels, params, seed) => {
       const patch = deriveFromImage(t, pixels, params, seed);
       return patch

@@ -121,7 +121,8 @@
         "jpg": "JPG",
         "webp": "WebP",
         "svg": "SVG",
-        "css": "CSS"
+        "css": "CSS",
+        "png-tile": "PNG-Kachel"
       },
       "size": "Grösse",
       "scale": "{scale}× ({width} × {height})",
@@ -200,7 +201,8 @@
         "invalid-size": "Die Grösse im Link ist ungültig. Du siehst die Standardeinstellungen.",
         "other-tool": "Dieser Link gehört zu einem anderen Tool. Du siehst die Standardeinstellungen.",
         "outdated": "Dieser Link stammt aus einer älteren Version. Das Motiv kann leicht anders aussehen."
-      }
+      },
+      "localLeftOut": "Deine eigene Datei ist nicht im Link, sie bleibt auf deinem Gerät. Wer den Link öffnet, sieht das Muster mit der gewählten Form."
     },
     "imageInput": {
       "title": "Bild",
@@ -224,6 +226,54 @@
         "decode-failed": "Das Bild liess sich nicht öffnen. Vielleicht ist die Datei beschädigt.",
         "timeout": "Das Auswerten dauert zu lange und wurde abgebrochen. Versuch ein kleineres Bild.",
         "no-result": "In diesem Bild gibt es nichts auszuwerten, zum Beispiel weil es ganz durchsichtig ist."
+      }
+    },
+    "asset": {
+      "none": "Keine eigene Datei, es wird die gewählte Form verwendet",
+      "yourFile": "Deine Datei",
+      "choose": "Datei wählen",
+      "replace": "Ersetzen",
+      "remove": "Entfernen",
+      "removedFile": "Deine Datei ist entfernt. Das Muster verwendet wieder die gewählte Form.",
+      "dropNow": "Loslassen, um die Datei zu laden",
+      "hint": "Zieh ein SVG, PNG, JPG oder WebP hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Die Datei bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
+      "thumbnail": "Deine Datei: {name}",
+      "reading": "Datei wird gelesen …",
+      "ready": "{name} ist zugeschnitten und im Muster.",
+      "removed": "Aus Sicherheitsgründen hat Motivo Teile der SVG-Datei entfernt, zum Beispiel Skripte oder externe Verweise (Anzahl: {count}).",
+      "dismiss": "Meldung schliessen",
+      "errors": {
+        "too-large": "Die Datei ist grösser als 5 MB. Verkleinere sie und versuch es nochmals.",
+        "unsupported-type": "Dieses Format geht hier nicht. Nimm ein SVG, PNG, JPG oder WebP.",
+        "too-many-pixels": "Das Bild hat zu viele Pixel (über 64 Megapixel). Verkleinere es und versuch es nochmals.",
+        "read-failed": "Die Datei liess sich nicht lesen. Versuch es nochmals.",
+        "decode-failed": "Das Bild liess sich nicht öffnen. Vielleicht ist die Datei beschädigt.",
+        "timeout": "Das Zuschneiden dauert zu lange und wurde abgebrochen. Versuch ein kleineres Bild.",
+        "no-result": "Das Bild liess sich nicht zuschneiden. Versuch es nochmals.",
+        "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
+        "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals."
+      },
+      "crop": {
+        "title": "Zuschneiden",
+        "hint": "Wähl den Teil von {name}, der als Motiv ins Muster kommt.",
+        "frame": "Zuschnitt",
+        "frameLabel": "Zuschnitt: links {x} %, oben {y} %, Breite {w} %, Höhe {h} %",
+        "keys": "Pfeiltasten verschieben den Rahmen, mit Alt änderst du die Grösse, mit Shift geht es in grösseren Schritten.",
+        "aspect": "Seitenverhältnis",
+        "aspects": {
+          "free": "Frei",
+          "square": "Quadratisch"
+        },
+        "fields": {
+          "x": "Links",
+          "y": "Oben",
+          "w": "Breite",
+          "h": "Höhe"
+        },
+        "reset": "Zurücksetzen",
+        "cancel": "Abbrechen",
+        "apply": "Übernehmen",
+        "working": "Wird zugeschnitten …"
       }
     }
   },

@@ -121,7 +121,8 @@
         "jpg": "JPG",
         "webp": "WebP",
         "svg": "SVG",
-        "css": "CSS"
+        "css": "CSS",
+        "png-tile": "PNG tile"
       },
       "size": "Size",
       "scale": "{scale}× ({width} × {height})",
@@ -200,7 +201,8 @@
         "invalid-size": "The size in the link is invalid. You are seeing the default settings.",
         "other-tool": "This link belongs to another tool. You are seeing the default settings.",
         "outdated": "This link comes from an older version. The design may look slightly different."
-      }
+      },
+      "localLeftOut": "Your own file is not in the link, it stays on your device. Anyone opening the link sees the pattern with the chosen shape."
     },
     "imageInput": {
       "title": "Image",
@@ -224,6 +226,54 @@
         "decode-failed": "The image could not be opened. The file may be damaged.",
         "timeout": "Analyzing took too long and was stopped. Try a smaller image.",
         "no-result": "There is nothing to analyze in this image, for example because it is fully transparent."
+      }
+    },
+    "asset": {
+      "none": "No file of your own, the chosen shape is used",
+      "yourFile": "Your file",
+      "choose": "Choose file",
+      "replace": "Replace",
+      "remove": "Remove",
+      "removedFile": "Your file is removed. The pattern uses the chosen shape again.",
+      "dropNow": "Drop to load the file",
+      "hint": "Drag an SVG, PNG, JPG or WebP here, paste it with Ctrl+V or choose a file (up to 5 MB). The file stays on your device, is not uploaded and is not shared in links.",
+      "thumbnail": "Your file: {name}",
+      "reading": "Reading file …",
+      "ready": "{name} is cropped and in the pattern.",
+      "removed": "For safety, Motivo removed parts of the SVG file, for example scripts or external references (count: {count}).",
+      "dismiss": "Dismiss message",
+      "errors": {
+        "too-large": "The file is larger than 5 MB. Make it smaller and try again.",
+        "unsupported-type": "This format does not work here. Use an SVG, PNG, JPG or WebP.",
+        "too-many-pixels": "The image has too many pixels (over 64 megapixels). Make it smaller and try again.",
+        "read-failed": "The file could not be read. Please try again.",
+        "decode-failed": "The image could not be opened. The file may be damaged.",
+        "timeout": "Cropping took too long and was stopped. Try a smaller image.",
+        "no-result": "The image could not be cropped. Please try again.",
+        "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
+        "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again."
+      },
+      "crop": {
+        "title": "Crop",
+        "hint": "Choose the part of {name} that becomes the motif of the pattern.",
+        "frame": "Crop frame",
+        "frameLabel": "Crop: left {x} %, top {y} %, width {w} %, height {h} %",
+        "keys": "Arrow keys move the frame, hold Alt to resize, hold Shift for bigger steps.",
+        "aspect": "Aspect ratio",
+        "aspects": {
+          "free": "Free",
+          "square": "Square"
+        },
+        "fields": {
+          "x": "Left",
+          "y": "Top",
+          "w": "Width",
+          "h": "Height"
+        },
+        "reset": "Reset",
+        "cancel": "Cancel",
+        "apply": "Apply",
+        "working": "Cropping …"
       }
     }
   },
