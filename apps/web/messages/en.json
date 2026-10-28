@@ -2957,6 +2957,103 @@
           "a5": "Choose “Responsive set” under Device. One screenshot is enough: every device shows it, cropped to its screen from the top. You can add separate screenshots for tablet and phone. With the live view your browser loads the website right into the devices, and “Take this view” turns it into pictures. Some websites do not allow embedding; then upload a screenshot."
         }
       }
+    },
+    "animated-gradient": {
+      "name": "Animated Gradient Generator",
+      "description": "Moving, rotating and color-shifting gradients and floating blobs as pure CSS. Copy CSS, Tailwind or HTML, or export PNG and GIF.",
+      "params": {
+        "mode": {
+          "label": "Animation",
+          "description": "Pan moves a large gradient, Rotate turns it, Shift lets the colors trade places, Blobs float soft color spots.",
+          "options": {
+            "pan": "Pan",
+            "rotate": "Rotate",
+            "shift": "Shift",
+            "blobs": "Blobs"
+          }
+        },
+        "rotateShape": {
+          "label": "Gradient type",
+          "options": {
+            "conic": "Conic",
+            "linear": "Linear"
+          }
+        },
+        "angle": {
+          "label": "Angle",
+          "description": "Direction of the gradient. When panning, the gradient also moves along this axis."
+        },
+        "duration": {
+          "label": "Duration"
+        },
+        "timing": {
+          "label": "Easing",
+          "options": {
+            "linear": "Linear",
+            "ease": "Ease",
+            "ease-in": "Ease in",
+            "ease-out": "Ease out",
+            "ease-in-out": "Ease in and out"
+          }
+        },
+        "direction": {
+          "label": "Direction",
+          "options": {
+            "normal": "Forward",
+            "reverse": "Backward"
+          }
+        },
+        "motion": {
+          "label": "Motion",
+          "description": "How far the gradient or the blobs travel."
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "intensity": {
+          "label": "Intensity"
+        }
+      },
+      "groups": {
+        "animation": "Animation",
+        "blobs": "Blobs"
+      },
+      "presets": {
+        "aurora": "Aurora",
+        "sunset": "Sunset",
+        "radar": "Radar",
+        "lighthouse": "Lighthouse",
+        "chameleon": "Chameleon",
+        "ocean": "Ocean",
+        "lava": "Lava lamp",
+        "pastel": "Pastel clouds"
+      },
+      "seo": {
+        "whatIs": "An animated gradient is a background that moves slowly: the gradient pans, turns, changes its colors or soft blobs drift across it. Musterli writes it as pure CSS with keyframes, without JavaScript or video, so it stays light and sharp at any size.",
+        "howTo": "Pick Pan, Rotate, Shift or Blobs, choose your colors and set duration, easing and direction. Press Space for new colors and a new blob layout. The preview runs the real CSS. Copy the CSS, an HTML example or Tailwind classes, export a still image as PNG, JPG, WebP or SVG, or the whole loop as a GIF.",
+        "faq": {
+          "q1": {
+            "question": "What happens for people who prefer reduced motion?",
+            "answer": "Every code export includes a prefers-reduced-motion rule. People who ask their system for less motion see a calm, still gradient, exactly the first frame of the animation. The preview here behaves the same way."
+          },
+          "q2": {
+            "question": "Which browsers support the rotating and color-shifting gradients?",
+            "answer": "They use @property, which Chrome and Edge support since version 85, Safari since 16.4 and Firefox since 128. Older browsers show a still gradient instead of a broken background."
+          },
+          "q3": {
+            "question": "Does the animation slow down my page?",
+            "answer": "The blobs only move with transform, which the browser handles on the graphics card. Panning, rotating and shifting repaint the background, so keep them for one hero area rather than many small elements. Longer durations look calmer anyway."
+          },
+          "q4": {
+            "question": "How do I use it with Tailwind?",
+            "answer": "The Tailwind export gives you classes with arbitrary values plus a note to add the keyframes. For Tailwind v4 there is an @theme version that defines --animate-* and the keyframes, so you can write animate-gradient-pan."
+          },
+          "q5": {
+            "question": "Can I get the animation as an image?",
+            "answer": "PNG, JPG, WebP and SVG show the still start state. The GIF export draws the whole loop frame by frame, seamlessly, for places where CSS is not possible such as emails or chats."
+          }
+        }
+      }
     }
   },
   "Converters": {

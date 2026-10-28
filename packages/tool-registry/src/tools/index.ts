@@ -36,6 +36,7 @@ import { flowFieldTool } from "./flow-field";
 import { lowPolyTool } from "./low-poly";
 import { terrazzoTool } from "./terrazzo";
 import { screenshotBeautifierTool } from "./screenshot-beautifier";
+import { animatedGradientTool } from "./animated-gradient";
 
 export {
   blobTool,
@@ -70,6 +71,7 @@ export {
   lowPolyTool,
   terrazzoTool,
   screenshotBeautifierTool,
+  animatedGradientTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -114,6 +116,7 @@ export type { FlowFieldParams } from "./flow-field";
 export type { LowPolyParams } from "./low-poly";
 export type { TerrazzoParams } from "./terrazzo";
 export type { ScreenshotBeautifierParams } from "./screenshot-beautifier";
+export type { AnimatedGradientParams } from "./animated-gradient";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -149,6 +152,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   lowPolyTool,
   terrazzoTool,
   screenshotBeautifierTool,
+  animatedGradientTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

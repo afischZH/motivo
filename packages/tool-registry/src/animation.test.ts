@@ -172,6 +172,8 @@ describe("animated tools in the registry", () => {
     // contrast checker is a measuring tool, nothing to animate.
     expect(ids).toContain("css-shadow");
     expect(ids).not.toContain("contrast-checker");
+    // Animated gradient: time frames drawn by its SVG twin, plus colours.
+    expect(ids).toContain("animated-gradient");
   });
 
   it("the shared opt-ins are well-formed", () => {
