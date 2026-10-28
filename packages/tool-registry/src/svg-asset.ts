@@ -110,10 +110,13 @@ export const SVG_ASSET_CACHE_CHARS = 24_000_000;
 class LruCache<V> {
   private readonly map = new Map<string, { value: V; weight: number }>();
   private total = 0;
-  constructor(
-    private readonly maxEntries: number,
-    private readonly maxWeight: number,
-  ) {}
+  // Plain fields, no parameter properties: Node's type stripping (OG image script) rejects them.
+  private readonly maxEntries: number;
+  private readonly maxWeight: number;
+  constructor(maxEntries: number, maxWeight: number) {
+    this.maxEntries = maxEntries;
+    this.maxWeight = maxWeight;
+  }
   get(key: string): V | undefined {
     const hit = this.map.get(key);
     if (!hit) return undefined;
