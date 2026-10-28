@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
+import { mixHex } from "../../color";
 import { shapePath } from "../../shapes";
 import {
   FAVICON_PATTERNS,
   MASKABLE_CONTENT_MAX,
+  PATTERN_MIX,
   faviconLayout,
   faviconOutline,
   faviconSvg,
@@ -223,6 +225,15 @@ describe("faviconSvg", () => {
       expect(svg).toContain('width="128" height="128"');
       expect(svg).toContain('fill="#ff0000"');
     }
+  });
+
+  it("derives the pattern colour per scheme when none is given", () => {
+    const pattern = { kind: "grid" as const, density: 4 };
+    const light = faviconSvg(options({ backgroundType: "pattern", pattern }));
+    const dark = faviconSvg(options({ backgroundType: "pattern", pattern, scheme: "dark" }));
+    const ink = (svg: string) => /<pattern [^>]+><[^>]+fill="(#[0-9a-f]{6})"/.exec(svg)?.[1];
+    expect(ink(light)).toBe(mixHex("#4f46e5", "#ffffff", PATTERN_MIX, "oklab"));
+    expect(ink(dark)).toBe(mixHex("#a5b4fc", "#111827", PATTERN_MIX, "oklab"));
   });
 
   it("fills a transparent background only in opaque variants", () => {

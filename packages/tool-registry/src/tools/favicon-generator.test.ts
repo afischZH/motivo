@@ -13,6 +13,7 @@ import {
   faviconHeadSnippet,
   faviconManifest,
   faviconSvgFile,
+  faviconThemeColor,
   iconPackFiles,
   type FaviconParams,
 } from "./index";
@@ -37,8 +38,8 @@ describe("favicon-generator render", () => {
 
   it("shows the dark colours only in the dark variant with dark mode on", () => {
     const dark = render({ ...d, variant: "dark", darkMode: true });
-    expect(dark).toContain(d.darkBackground);
-    expect(dark).not.toContain(d.backgroundColor);
+    expect(dark).toContain(d.darkFill);
+    expect(dark).not.toContain(d.fillColor);
     // Without dark mode the dark variant is the standard icon (an advisory explains why).
     expect(render({ ...d, variant: "dark" })).toBe(render(d));
     expect(
@@ -51,8 +52,8 @@ describe("favicon-generator render", () => {
 
   it("draws the apple and maskable variants full bleed and opaque", () => {
     for (const variant of ["apple", "maskable"] as const) {
-      const svg = render({ ...d, variant, backgroundType: "transparent", corner: "circle" });
-      expect(svg).toContain(`<path d="M0 0H512V512H0Z" fill="${d.appBackground}"/>`);
+      const svg = render({ ...d, variant, fill: "transparent", corner: "circle" });
+      expect(svg).toContain(`<path d="M0 0H512V512H0Z" fill="${d.splash}"/>`);
       expect(svg).not.toContain("clip-path");
     }
   });
@@ -87,15 +88,15 @@ describe("favicon-generator render", () => {
       atob(m[1] ?? ""),
     );
     expect(hrefs).toHaveLength(2);
-    expect(hrefs[0]).toContain(d.foreground);
-    expect(hrefs[1]).toContain(d.darkForeground);
+    expect(hrefs[0]).toContain(d.color);
+    expect(hrefs[1]).toContain(d.darkColor);
   });
 
   it("tints raster logos with a filter", () => {
     const logo = { kind: "raster" as const, href: PNG_1PX, width: 1, height: 1, name: "logo.png" };
     expect(render({ ...d, content: "image", logo })).not.toContain("<filter");
     const svg = render({ ...d, content: "image", logo, logoTint: true });
-    expect(svg).toContain(`<feFlood flood-color="${d.foreground}"/>`);
+    expect(svg).toContain(`<feFlood flood-color="${d.color}"/>`);
     expect(svg).toContain(`href="${PNG_1PX}"`);
   });
 
@@ -145,8 +146,8 @@ describe("favicon-generator icon pack", () => {
     expect(manifest).toMatchObject({
       name: 'Café "Zürich" <3',
       short_name: "Café",
-      theme_color: d.themeColor,
-      background_color: d.appBackground,
+      theme_color: d.fillColor,
+      background_color: d.splash,
       display: "standalone",
     });
     expect(manifest.icons).toEqual([
@@ -165,17 +166,36 @@ describe("favicon-generator icon pack", () => {
     expect(html).toContain('<link rel="apple-touch-icon" href="/apple-touch-icon.png">');
     expect(html).toContain('<link rel="manifest" href="/site.webmanifest">');
     expect(html).toContain('content="&lt;b&gt;&quot;x&quot;"');
-    expect(html).toContain(`<meta name="theme-color" content="${d.themeColor}">`);
+    expect(html).toContain(`<meta name="theme-color" content="${d.fillColor}">`);
     const dark = faviconHeadSnippet({ ...d, darkMode: true });
     expect(dark).toContain('media="(prefers-color-scheme: light)"');
-    expect(dark).toContain(`content="${d.darkBackground}" media="(prefers-color-scheme: dark)"`);
+    expect(dark).toContain(`content="${d.darkFill}" media="(prefers-color-scheme: dark)"`);
+  });
+
+  it("derives the theme colour from the fill", () => {
+    expect(faviconThemeColor(d)).toBe(d.fillColor);
+    expect(faviconThemeColor({ ...d, fill: "gradient", gradient: ["#ABCDEF", "#000000"] })).toBe(
+      "#abcdef",
+    );
+    expect(faviconThemeColor({ ...d, fill: "transparent" })).toBe(d.splash);
+    const dark = faviconHeadSnippet({ ...d, fill: "transparent", darkMode: true });
+    expect(dark).toContain(`content="${d.darkColor}" media="(prefers-color-scheme: dark)"`);
+  });
+
+  it("derives the pattern colour per scheme", () => {
+    const light = render({ ...d, fill: "pattern" });
+    const dark = render({ ...d, fill: "pattern", variant: "dark", darkMode: true });
+    const ink = (svg: string) => /<pattern [^>]+><[^>]+fill="(#[0-9a-f]{6})"/.exec(svg)?.[1];
+    expect(ink(light)).toMatch(/^#/);
+    expect(ink(light)).not.toBe(d.fillColor);
+    expect(ink(dark)).not.toBe(ink(light));
   });
 
   it("makes favicon.svg adaptive only in dark mode", () => {
     expect(faviconSvgFile(d)).not.toContain("prefers-color-scheme");
     const svg = faviconSvgFile({ ...d, darkMode: true });
     expect(svg).toContain("@media (prefers-color-scheme:dark)");
-    expect(svg).toContain(d.darkBackground);
+    expect(svg).toContain(d.darkFill);
     expect(svg).toContain('viewBox="0 0 512 512"');
   });
 });
@@ -186,9 +206,8 @@ describe("favicon-generator colours", () => {
       const out = tool.randomize(createRng(s), { ...d, text: "Q", content: "text" }, new Set());
       expect(out.text).toBe("Q");
       expect(out.content).toBe("text");
-      expect(contrastRatio(out.backgroundColor, out.foreground)).toBeGreaterThanOrEqual(4.5);
-      expect(out.themeColor).toBe(out.backgroundColor);
-      expect(out.gradientColors.length).toBeGreaterThanOrEqual(2);
+      expect(contrastRatio(out.fillColor, out.color)).toBeGreaterThanOrEqual(4.5);
+      expect(out.gradient.length).toBeGreaterThanOrEqual(2);
     }
   });
 
@@ -203,12 +222,11 @@ describe("favicon-generator colours", () => {
     expect(tool.randomize(createRng(1), d, new Set()).shape).toBe(d.shape);
   });
 
-  it("maps a brand palette to base, readable foreground, gradient and theme colour", () => {
+  it("maps a brand palette to fill, readable colour and gradient", () => {
     const result = applyBrandPalette(tool, d, ["#0f766e", "#99f6e4", "#f59e0b"], new Set());
     const out = result?.params as FaviconParams;
-    expect(out.backgroundColor).toBe("#0f766e");
-    expect(out.themeColor).toBe("#0f766e");
-    expect(out.gradientColors).toEqual(["#0f766e", "#99f6e4", "#f59e0b"]);
-    expect(contrastRatio(out.backgroundColor, out.foreground)).toBeGreaterThanOrEqual(4.5);
+    expect(out.fillColor).toBe("#0f766e");
+    expect(out.gradient).toEqual(["#0f766e", "#99f6e4", "#f59e0b"]);
+    expect(contrastRatio(out.fillColor, out.color)).toBeGreaterThanOrEqual(4.5);
   });
 });

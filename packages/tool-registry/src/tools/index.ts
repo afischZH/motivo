@@ -121,6 +121,7 @@ export {
   faviconHeadSnippet,
   faviconManifest,
   faviconSvgFile,
+  faviconThemeColor,
   iconPackFiles,
 } from "./favicon-generator";
 

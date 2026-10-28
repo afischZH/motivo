@@ -113,7 +113,11 @@ export interface FaviconOptions {
   };
   readonly pattern: {
     readonly kind: FaviconPattern;
-    readonly color: string;
+    /**
+     * Colour of the pattern marks. Left out, it is derived per scheme: a
+     * quarter of the way from the background to the foreground (OKLab).
+     */
+    readonly color?: string;
     /** Cells per icon edge. */
     readonly density: number;
   };
@@ -265,6 +269,9 @@ interface Paint {
   body: string;
 }
 
+/** Share of the foreground in a derived pattern colour. */
+export const PATTERN_MIX = 0.25;
+
 /** Background of one scheme, drawn inside `outline`. */
 function backgroundPaint(
   o: FaviconOptions,
@@ -295,7 +302,9 @@ function backgroundPaint(
     case "pattern": {
       const density = Math.min(Math.max(Math.round(o.pattern.density), 1), 64);
       const cell = layout.size / density;
-      const tile = patternTile(o.pattern.kind, cell, o.pattern.color);
+      const fg = dark ? o.colors.darkForeground : o.colors.foreground;
+      const ink = o.pattern.color ?? mixHex(base, fg, PATTERN_MIX, "oklab");
+      const tile = patternTile(o.pattern.kind, cell, ink);
       const id = stableId("fp", `${f(layout.x)},${f(layout.y)},${f(cell)}${tile}`);
       return {
         defs: [

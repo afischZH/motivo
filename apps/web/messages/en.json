@@ -3009,16 +3009,16 @@
             "rounded": "Rounded"
           }
         },
-        "fontWeight": {
+        "weight": {
           "label": "Font weight"
         },
         "textSize": {
           "label": "Text size"
         },
-        "foreground": {
+        "color": {
           "label": "Foreground"
         },
-        "backgroundType": {
+        "fill": {
           "label": "Background",
           "options": {
             "solid": "Solid",
@@ -3027,24 +3027,21 @@
             "transparent": "Transparent"
           }
         },
-        "backgroundColor": {
+        "fillColor": {
           "label": "Base color"
         },
-        "gradientColors": {
+        "gradient": {
           "label": "Gradient colors"
         },
-        "gradientType": {
-          "label": "Gradient type",
-          "options": {
-            "linear": "Linear",
-            "radial": "Radial"
-          }
+        "radial": {
+          "label": "Radial gradient"
         },
-        "gradientAngle": {
+        "angle": {
           "label": "Angle"
         },
         "pattern": {
           "label": "Pattern",
+          "description": "The pattern color sits between the base color and the foreground.",
           "options": {
             "dots": "Dots",
             "grid": "Grid",
@@ -3053,10 +3050,7 @@
             "checks": "Checks"
           }
         },
-        "patternColor": {
-          "label": "Pattern color"
-        },
-        "patternDensity": {
+        "density": {
           "label": "Pattern density"
         },
         "corner": {
@@ -3078,10 +3072,10 @@
           "label": "Own colors in dark mode",
           "description": "favicon.svg then switches by itself when the browser uses a dark theme."
         },
-        "darkForeground": {
+        "darkColor": {
           "label": "Dark foreground"
         },
-        "darkBackground": {
+        "darkFill": {
           "label": "Dark background"
         },
         "appName": {
@@ -3091,12 +3085,9 @@
           "label": "Short name",
           "description": "Shown under the icon on the home screen, up to 12 characters."
         },
-        "themeColor": {
-          "label": "Theme color"
-        },
-        "appBackground": {
+        "splash": {
           "label": "App background",
-          "description": "For the splash screen and behind transparent Apple and maskable icons."
+          "description": "For the splash screen and behind transparent Apple and maskable icons. The theme color follows the icon background."
         }
       },
       "advisories": {

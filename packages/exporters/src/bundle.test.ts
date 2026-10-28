@@ -116,9 +116,9 @@ describe("exportBundle", () => {
       "icon-pack",
       {
         ...tool.defaults,
-        backgroundType: "transparent",
+        fill: "transparent",
         variant: "maskable",
-        appBackground: "#abcdef",
+        splash: "#abcdef",
       },
       ctx,
       {},

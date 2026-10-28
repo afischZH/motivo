@@ -3009,16 +3009,16 @@
             "rounded": "Rund"
           }
         },
-        "fontWeight": {
+        "weight": {
           "label": "Schriftstärke"
         },
         "textSize": {
           "label": "Textgrösse"
         },
-        "foreground": {
+        "color": {
           "label": "Vordergrund"
         },
-        "backgroundType": {
+        "fill": {
           "label": "Hintergrund",
           "options": {
             "solid": "Einfarbig",
@@ -3027,24 +3027,21 @@
             "transparent": "Transparent"
           }
         },
-        "backgroundColor": {
+        "fillColor": {
           "label": "Grundfarbe"
         },
-        "gradientColors": {
+        "gradient": {
           "label": "Verlaufsfarben"
         },
-        "gradientType": {
-          "label": "Verlaufsart",
-          "options": {
-            "linear": "Linear",
-            "radial": "Radial"
-          }
+        "radial": {
+          "label": "Radialer Verlauf"
         },
-        "gradientAngle": {
+        "angle": {
           "label": "Winkel"
         },
         "pattern": {
           "label": "Muster",
+          "description": "Die Musterfarbe liegt zwischen Grundfarbe und Vordergrund.",
           "options": {
             "dots": "Punkte",
             "grid": "Raster",
@@ -3053,10 +3050,7 @@
             "checks": "Karo"
           }
         },
-        "patternColor": {
-          "label": "Musterfarbe"
-        },
-        "patternDensity": {
+        "density": {
           "label": "Musterdichte"
         },
         "corner": {
@@ -3078,10 +3072,10 @@
           "label": "Eigene Farben im Dunkelmodus",
           "description": "favicon.svg wechselt dann automatisch, wenn der Browser dunkel eingestellt ist."
         },
-        "darkForeground": {
+        "darkColor": {
           "label": "Vordergrund dunkel"
         },
-        "darkBackground": {
+        "darkFill": {
           "label": "Hintergrund dunkel"
         },
         "appName": {
@@ -3091,12 +3085,9 @@
           "label": "Kurzname",
           "description": "Steht unter dem Icon auf dem Startbildschirm, bis 12 Zeichen."
         },
-        "themeColor": {
-          "label": "Theme-Farbe"
-        },
-        "appBackground": {
+        "splash": {
           "label": "App-Hintergrund",
-          "description": "Für den Startbildschirm und als Fläche hinter transparenten Apple- und Maskable-Icons."
+          "description": "Für den Startbildschirm und als Fläche hinter transparenten Apple- und Maskable-Icons. Die Theme-Farbe folgt dem Hintergrund des Icons."
         }
       },
       "advisories": {

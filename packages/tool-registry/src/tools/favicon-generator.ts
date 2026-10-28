@@ -18,7 +18,6 @@ import {
   FAVICON_CONTENTS,
   FAVICON_CORNERS,
   FAVICON_FONTS,
-  FAVICON_GRADIENTS,
   FAVICON_PADDING_MAX,
   FAVICON_PATTERNS,
   FAVICON_TEXT_MAX,
@@ -50,31 +49,32 @@ const schema = z.object({
   content: z.enum(FAVICON_CONTENTS),
   text: z.string().max(FAVICON_TEXT_MAX),
   font: z.enum(FAVICON_FONTS),
-  fontWeight: z.int().min(300).max(900),
+  weight: z.int().min(300).max(900),
   textSize: z.int().min(20).max(100),
   shape: z.enum(SHAPE_IDS),
   /** The user's own logo; `null` = the text is shown. Local only. */
   logo: imageAssetSchema.nullable(),
   logoTint: z.boolean(),
-  foreground: colorSchema,
-  backgroundType: z.enum(FAVICON_BACKGROUNDS),
-  backgroundColor: colorSchema,
-  gradientColors: paletteSchema,
-  gradientType: z.enum(FAVICON_GRADIENTS),
-  gradientAngle: z.number().min(0).max(360),
+  /** Colour of the text, shape or tinted logo. */
+  color: colorSchema,
+  fill: z.enum(FAVICON_BACKGROUNDS),
+  fillColor: colorSchema,
+  gradient: paletteSchema,
+  radial: z.boolean(),
+  angle: z.number().min(0).max(360),
+  /** Pattern marks take a colour between `fillColor` and `color`. */
   pattern: z.enum(FAVICON_PATTERNS),
-  patternColor: colorSchema,
-  patternDensity: z.int().min(2).max(16),
+  density: z.int().min(2).max(16),
   corner: z.enum(FAVICON_CORNERS),
   radius: z.int().min(0).max(50),
   padding: z.int().min(0).max(FAVICON_PADDING_MAX),
   darkMode: z.boolean(),
-  darkForeground: colorSchema,
-  darkBackground: colorSchema,
+  darkColor: colorSchema,
+  darkFill: colorSchema,
   appName: z.string().max(45),
   shortName: z.string().max(12),
-  themeColor: colorSchema,
-  appBackground: colorSchema,
+  /** Splash screen background (manifest) and fill of transparent app icons. */
+  splash: colorSchema,
 });
 
 export type FaviconParams = z.output<typeof schema>;
@@ -84,30 +84,28 @@ const defaults: FaviconParams = {
   content: "text",
   text: "M",
   font: "sans",
-  fontWeight: 800,
+  weight: 800,
   textSize: 72,
   shape: "star",
   logo: null,
   logoTint: false,
-  foreground: "#ffffff",
-  backgroundType: "solid",
-  backgroundColor: "#4f46e5",
-  gradientColors: ["#6366f1", "#ec4899"],
-  gradientType: "linear",
-  gradientAngle: 135,
+  color: "#ffffff",
+  fill: "solid",
+  fillColor: "#4f46e5",
+  gradient: ["#6366f1", "#ec4899"],
+  radial: false,
+  angle: 135,
   pattern: "dots",
-  patternColor: "#818cf8",
-  patternDensity: 6,
+  density: 6,
   corner: "rounded",
   radius: 22,
   padding: 14,
   darkMode: false,
-  darkForeground: "#1e1b4b",
-  darkBackground: "#c7d2fe",
+  darkColor: "#1e1b4b",
+  darkFill: "#c7d2fe",
   appName: "",
   shortName: "",
-  themeColor: "#4f46e5",
-  appBackground: "#ffffff",
+  splash: "#ffffff",
 };
 
 const preset = (id: string, params: Partial<FaviconParams>): Preset<FaviconParams> => ({
@@ -151,7 +149,7 @@ function logoUri(svg: string): string {
 }
 
 function textContent(p: FaviconParams): FaviconContent {
-  return { kind: "text", text: p.text, font: p.font, weight: p.fontWeight, size: p.textSize };
+  return { kind: "text", text: p.text, font: p.font, weight: p.weight, size: p.textSize };
 }
 
 /** The content to draw; a missing or rejected logo falls back to the text. */
@@ -167,8 +165,8 @@ function resolveContent(p: FaviconParams): FaviconContent {
   }
   // Defence in depth: whatever arrives in params is sanitised again (prepared once).
   const clean = svgAssetFor(logo.svg);
-  const light = clean && recolorSvgAsset(clean, p.foreground);
-  const dark = clean && recolorSvgAsset(clean, p.darkForeground);
+  const light = clean && recolorSvgAsset(clean, p.color);
+  const dark = clean && recolorSvgAsset(clean, p.darkColor);
   if (!clean || !light || !dark) return textContent(p);
   return { kind: "image", href: logoUri(light), darkHref: logoUri(dark), aspect, tint: false };
 }
@@ -188,15 +186,15 @@ function engineOptions(
     scheme,
     content: resolveContent(p),
     colors: {
-      foreground: p.foreground,
-      background: p.backgroundColor,
-      darkForeground: p.darkForeground,
-      darkBackground: p.darkBackground,
-      appBackground: p.appBackground,
+      foreground: p.color,
+      background: p.fillColor,
+      darkForeground: p.darkColor,
+      darkBackground: p.darkFill,
+      appBackground: p.splash,
     },
-    backgroundType: p.backgroundType,
-    gradient: { colors: p.gradientColors, type: p.gradientType, angle: p.gradientAngle },
-    pattern: { kind: p.pattern, color: p.patternColor, density: p.patternDensity },
+    backgroundType: p.fill,
+    gradient: { colors: p.gradient, type: p.radial ? "radial" : "linear", angle: p.angle },
+    pattern: { kind: p.pattern, density: p.density },
     padding: p.padding,
     corner: p.corner,
     radius: p.radius,
@@ -230,6 +228,25 @@ function appName(p: FaviconParams): string {
   return p.appName.trim() || p.shortName.trim() || p.text.trim() || "App";
 }
 
+/**
+ * Browser UI colour (`theme-color`): the fill, the first gradient colour or,
+ * for a transparent icon, the splash colour.
+ */
+export function faviconThemeColor(p: FaviconParams): string {
+  const color =
+    p.fill === "gradient"
+      ? (p.gradient[0] ?? p.fillColor)
+      : p.fill === "transparent"
+        ? p.splash
+        : p.fillColor;
+  return color.toLowerCase();
+}
+
+/** `theme-color` in dark mode: the dark fill, or the dark text colour on transparent icons. */
+function darkThemeColor(p: FaviconParams): string {
+  return (p.fill === "transparent" ? p.darkColor : p.darkFill).toLowerCase();
+}
+
 /** `site.webmanifest` (JSON, pretty printed). */
 export function faviconManifest(p: FaviconParams): string {
   const name = appName(p);
@@ -244,8 +261,8 @@ export function faviconManifest(p: FaviconParams): string {
       })),
       { src: "/icon-512-maskable.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
-    theme_color: p.themeColor.toLowerCase(),
-    background_color: p.appBackground.toLowerCase(),
+    theme_color: faviconThemeColor(p),
+    background_color: p.splash.toLowerCase(),
     display: "standalone",
   };
   return `${JSON.stringify(manifest, null, 2)}\n`;
@@ -266,11 +283,11 @@ export function faviconHeadSnippet(p: FaviconParams): string {
   // Colours passed the hex schema, so they need no escaping.
   if (p.darkMode) {
     lines.push(
-      `<meta name="theme-color" content="${p.themeColor.toLowerCase()}" media="(prefers-color-scheme: light)">`,
-      `<meta name="theme-color" content="${p.darkBackground.toLowerCase()}" media="(prefers-color-scheme: dark)">`,
+      `<meta name="theme-color" content="${faviconThemeColor(p)}" media="(prefers-color-scheme: light)">`,
+      `<meta name="theme-color" content="${darkThemeColor(p)}" media="(prefers-color-scheme: dark)">`,
     );
   } else {
-    lines.push(`<meta name="theme-color" content="${p.themeColor.toLowerCase()}">`);
+    lines.push(`<meta name="theme-color" content="${faviconThemeColor(p)}">`);
   }
   return `${lines.join("\n")}\n`;
 }
@@ -334,8 +351,7 @@ function readableForeground(background: string, palette: readonly string[]): str
 
 const showsText = (p: FaviconParams): boolean =>
   p.content === "text" || (p.content === "image" && p.logo === null);
-const usesBase = (p: FaviconParams): boolean =>
-  p.backgroundType === "solid" || p.backgroundType === "pattern";
+const usesBase = (p: FaviconParams): boolean => p.fill === "solid" || p.fill === "pattern";
 
 /** i18n key of a param help text. */
 const describe = (param: keyof FaviconParams): string => `tools.${ID}.params.${param}.description`;
@@ -363,78 +379,71 @@ export const faviconGeneratorTool = defineTool({
     preset("gradient", {
       text: "A",
       font: "rounded",
-      fontWeight: 700,
-      backgroundType: "gradient",
-      gradientColors: ["#f97316", "#db2777", "#7c3aed"],
-      gradientAngle: 135,
+      weight: 700,
+      fill: "gradient",
+      gradient: ["#f97316", "#db2777", "#7c3aed"],
+      angle: 135,
       corner: "squircle",
       padding: 16,
-      themeColor: "#db2777",
     }),
     preset("badge", {
       content: "shape",
       shape: "star",
-      foreground: "#fbbf24",
-      backgroundColor: "#1e3a8a",
+      color: "#fbbf24",
+      fillColor: "#1e3a8a",
       corner: "circle",
       padding: 20,
-      themeColor: "#1e3a8a",
     }),
     preset("pattern", {
       text: "K",
       font: "serif",
-      fontWeight: 700,
+      weight: 700,
       textSize: 80,
-      foreground: "#7c2d12",
-      backgroundType: "pattern",
-      backgroundColor: "#fed7aa",
+      color: "#7c2d12",
+      fill: "pattern",
+      fillColor: "#fed7aa",
       pattern: "dots",
-      patternColor: "#fdba74",
-      patternDensity: 5,
+      density: 5,
       corner: "rounded",
       radius: 30,
-      themeColor: "#fed7aa",
-      appBackground: "#fff7ed",
+      splash: "#fff7ed",
     }),
     preset("minimal", {
       text: "m",
       font: "sans",
-      fontWeight: 900,
+      weight: 900,
       textSize: 100,
-      foreground: "#111827",
-      backgroundType: "transparent",
+      color: "#111827",
+      fill: "transparent",
       padding: 4,
       darkMode: true,
-      darkForeground: "#f9fafb",
-      darkBackground: "#111827",
-      themeColor: "#ffffff",
+      darkColor: "#f9fafb",
+      darkFill: "#111827",
     }),
     preset("code", {
       text: "</>",
       font: "mono",
-      fontWeight: 700,
+      weight: 700,
       textSize: 86,
-      foreground: "#4ade80",
-      backgroundColor: "#0f172a",
+      color: "#4ade80",
+      fillColor: "#0f172a",
       corner: "square",
       padding: 10,
       darkMode: true,
-      darkForeground: "#0f172a",
-      darkBackground: "#4ade80",
-      themeColor: "#0f172a",
-      appBackground: "#0f172a",
+      darkColor: "#0f172a",
+      darkFill: "#4ade80",
+      splash: "#0f172a",
     }),
     preset("leaf", {
       content: "shape",
       shape: "leaf",
-      foreground: "#166534",
-      backgroundType: "gradient",
-      gradientColors: ["#dcfce7", "#86efac"],
-      gradientType: "radial",
+      color: "#166534",
+      fill: "gradient",
+      gradient: ["#dcfce7", "#86efac"],
+      radial: true,
       corner: "squircle",
       padding: 18,
-      themeColor: "#22c55e",
-      appBackground: "#f0fdf4",
+      splash: "#f0fdf4",
     }),
   ],
   controls: {
@@ -447,27 +456,25 @@ export const faviconGeneratorTool = defineTool({
       "logoTint",
       "shape",
       "font",
-      "fontWeight",
+      "weight",
       "textSize",
-      "foreground",
-      "backgroundType",
-      "backgroundColor",
-      "gradientColors",
-      "gradientType",
-      "gradientAngle",
+      "color",
+      "fill",
+      "fillColor",
+      "gradient",
+      "radial",
+      "angle",
       "pattern",
-      "patternColor",
-      "patternDensity",
+      "density",
       "corner",
       "radius",
       "padding",
       "darkMode",
-      "darkForeground",
-      "darkBackground",
+      "darkColor",
+      "darkFill",
       "appName",
       "shortName",
-      "themeColor",
-      "appBackground",
+      "splash",
     ],
     params: {
       variant: {
@@ -501,7 +508,7 @@ export const faviconGeneratorTool = defineTool({
         group: "content",
         kind: "thumbnails",
         optionLabelKeys: SHAPE_OPTION_LABEL_KEYS,
-        optionPreview: (value, p) => shapePreview(value, p.foreground, p.backgroundColor),
+        optionPreview: (value, p) => shapePreview(value, p.color, p.fillColor),
         optionGroups: shapePackGroups(),
         visibleWhen: (p) => p.content === "shape",
       },
@@ -510,50 +517,41 @@ export const faviconGeneratorTool = defineTool({
         optionLabelKeys: optionLabels(ID, "font", FAVICON_FONTS),
         visibleWhen: showsText,
       },
-      fontWeight: { group: "content", step: 100, visibleWhen: showsText, advanced: true },
+      weight: { group: "content", step: 100, visibleWhen: showsText, advanced: true },
       textSize: { group: "content", step: 1, unit: "%", visibleWhen: showsText },
-      foreground: {
+      color: {
         group: "content",
         kind: "color",
         visibleWhen: (p) => p.content !== "image" || p.logo === null || p.logoTint,
       },
-      backgroundType: {
+      fill: {
         group: "background",
-        optionLabelKeys: optionLabels(ID, "backgroundType", FAVICON_BACKGROUNDS),
+        optionLabelKeys: optionLabels(ID, "fill", FAVICON_BACKGROUNDS),
       },
-      backgroundColor: { group: "background", kind: "color", visibleWhen: usesBase },
-      gradientColors: {
+      fillColor: { group: "background", kind: "color", visibleWhen: usesBase },
+      gradient: {
         group: "background",
         kind: "palette",
-        visibleWhen: (p) => p.backgroundType === "gradient",
+        visibleWhen: (p) => p.fill === "gradient",
       },
-      gradientType: {
-        group: "background",
-        kind: "segmented",
-        optionLabelKeys: optionLabels(ID, "gradientType", FAVICON_GRADIENTS),
-        visibleWhen: (p) => p.backgroundType === "gradient",
-      },
-      gradientAngle: {
+      radial: { group: "background", visibleWhen: (p) => p.fill === "gradient" },
+      angle: {
         group: "background",
         kind: "angle",
         step: 1,
         unit: "°",
-        visibleWhen: (p) => p.backgroundType === "gradient" && p.gradientType === "linear",
+        visibleWhen: (p) => p.fill === "gradient" && !p.radial,
       },
       pattern: {
         group: "background",
         optionLabelKeys: optionLabels(ID, "pattern", FAVICON_PATTERNS),
-        visibleWhen: (p) => p.backgroundType === "pattern",
+        descriptionKey: describe("pattern"),
+        visibleWhen: (p) => p.fill === "pattern",
       },
-      patternColor: {
-        group: "background",
-        kind: "color",
-        visibleWhen: (p) => p.backgroundType === "pattern",
-      },
-      patternDensity: {
+      density: {
         group: "background",
         step: 1,
-        visibleWhen: (p) => p.backgroundType === "pattern",
+        visibleWhen: (p) => p.fill === "pattern",
       },
       corner: {
         group: "form",
@@ -567,8 +565,8 @@ export const faviconGeneratorTool = defineTool({
       },
       padding: { group: "form", step: 1, unit: "%" },
       darkMode: { group: "dark", descriptionKey: describe("darkMode") },
-      darkForeground: { group: "dark", kind: "color", visibleWhen: (p) => p.darkMode },
-      darkBackground: { group: "dark", kind: "color", visibleWhen: (p) => p.darkMode },
+      darkColor: { group: "dark", kind: "color", visibleWhen: (p) => p.darkMode },
+      darkFill: { group: "dark", kind: "color", visibleWhen: (p) => p.darkMode },
       appName: { group: "app", kind: "text", lockable: false },
       shortName: {
         group: "app",
@@ -576,42 +574,32 @@ export const faviconGeneratorTool = defineTool({
         lockable: false,
         descriptionKey: describe("shortName"),
       },
-      themeColor: { group: "app", kind: "color" },
-      appBackground: { group: "app", kind: "color", descriptionKey: describe("appBackground") },
+      splash: { group: "app", kind: "color", descriptionKey: describe("splash") },
     },
   },
   randomize(rng, current, locks) {
     const colors = randomPalette(rng, 4);
     const base = rng.pick(colors);
-    const foreground = readableForeground(base, colors);
-    const others = colors.filter((c) => c !== base && c !== foreground);
+    const color = readableForeground(base, colors);
+    const others = colors.filter((c) => c !== base && c !== color);
     const next: FaviconParams = {
       ...current,
       shape: current.content === "shape" ? rng.pick(RANDOM_SHAPES) : current.shape,
-      foreground,
-      backgroundColor: base,
-      gradientColors: [base, ...others.slice(0, rng.int(1, 2))],
-      gradientAngle: rng.pick([0, 45, 90, 135, 180, 225, 270, 315]),
+      color,
+      fillColor: base,
+      gradient: [base, ...others.slice(0, rng.int(1, 2))],
+      angle: rng.pick([0, 45, 90, 135, 180, 225, 270, 315]),
       pattern: rng.pick(FAVICON_PATTERNS),
-      patternColor: others[0] ?? foreground,
-      patternDensity: rng.int(3, 10),
-      themeColor: base,
+      density: rng.int(3, 10),
     };
     // A gradient needs two colours (the palette may have repeated its first one).
-    if (next.gradientColors.length < 2) next.gradientColors = [base, foreground];
+    if (next.gradient.length < 2) next.gradient = [base, color];
     return keepLocked(next, current, locks);
   },
   brandPalette(colors) {
-    const base = colors[0] ?? defaults.backgroundColor;
-    const rest = colors.slice(1);
-    const foreground = readableForeground(base, rest);
-    return {
-      backgroundColor: base,
-      foreground,
-      gradientColors: [...colors],
-      patternColor: rest.find((c) => c !== foreground) ?? foreground,
-      themeColor: base,
-    };
+    const base = colors[0] ?? defaults.fillColor;
+    const color = readableForeground(base, colors.slice(1));
+    return { fillColor: base, color, gradient: [...colors] };
   },
   advisories(p) {
     const out: ToolAdvisory[] = [];
