@@ -127,7 +127,10 @@ export function parseBrandKitFile(text: string): BrandKitFileParseResult {
   }
   const header = headerSchema.safeParse(json);
   if (!header.success) {
-    const tooMany = header.error.issues.some((i) => i.code === "too_big");
+    // Only the lists count as "too many"; an oversized default id is just malformed.
+    const tooMany = header.error.issues.some(
+      (i) => i.code === "too_big" && (i.path[0] === "palettes" || i.path[0] === "assets"),
+    );
     return { ok: false, error: tooMany ? "too-many" : "wrong-format" };
   }
 

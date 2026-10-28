@@ -120,8 +120,19 @@ export function serveFileWorker<R>(
       reply(options.tooLarge);
       return;
     }
+    // `parse` never throws by contract; if it still does (a stack overflow in
+    // a dependency), answer anyway instead of leaving the page waiting for
+    // the import timeout.
     file.text().then(
-      (text) => reply(options.parse(text)),
+      (text) => {
+        let result: R;
+        try {
+          result = options.parse(text);
+        } catch {
+          result = options.unreadable;
+        }
+        reply(result);
+      },
       () => reply(options.unreadable),
     );
   });
