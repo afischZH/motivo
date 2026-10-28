@@ -32,3 +32,4 @@ export * from "./tools/bento-grid";
 export * from "./tools/geometric-patterns";
 export * from "./tools/contrast-checker";
 export * from "./tools/css-shadow";
+export * from "./tools/screenshot-beautifier";

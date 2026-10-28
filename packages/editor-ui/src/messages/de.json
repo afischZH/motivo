@@ -80,7 +80,8 @@
         "social": "Social Media",
         "desktop": "Desktop",
         "mobile": "Mobil",
-        "print": "Druck"
+        "print": "Druck",
+        "tool": "Für dieses Tool"
       }
     },
     "shortcuts": {

@@ -74,6 +74,9 @@ export interface ReadAssetOptions {
 
 const fileName = (file: { name?: string }): string => (file.name ?? "").slice(0, 200);
 
+/** Lets the browser run other tasks (input, paint) before continuing. */
+const nextTask = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+
 /** Size of the source in its own units (pixels or viewBox units). */
 export function sourceSize(source: AssetSource): { width: number; height: number } {
   return source.kind === "svg"
@@ -179,8 +182,12 @@ export async function finishAsset(
       name: source.name,
     };
   }
-  // The schema is the final judge (size limits, data URI shape).
+  // The schema is the final judge (size limits, data URI shape). Checking a
+  // multi-megabyte data URI takes about 20 ms: in a task of its own, apart
+  // from the worker reply and from the render that follows.
+  await nextTask();
   const parsed = (output.schema ?? imageAssetSchema).safeParse(asset);
+  await nextTask();
   return parsed.success && parsed.data
     ? { ok: true, asset: parsed.data as ImageAsset }
     : { ok: false, error: "too-large" };

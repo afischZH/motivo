@@ -2270,6 +2270,134 @@
           "a4": "Schatten nehmen etwas von der Farbe der Umgebung an. Musterli dunkelt darum standardmässig den Farbton des Hintergrunds ab. Du kannst die Farbe aber auch selbst wählen."
         }
       }
+    },
+    "screenshot-beautifier": {
+      "name": "Screenshot-Verschönerer",
+      "description": "Leg deinen Screenshot auf einen schönen Hintergrund, mit Abstand, runden Ecken, weichem Schatten und Browser-Fenster. Fertig für Doku, Social Media und Product Hunt.",
+      "groups": {
+        "screenshot": "Screenshot",
+        "frame": "Fenster",
+        "style": "Rand und Schatten",
+        "background": "Hintergrund"
+      },
+      "params": {
+        "screenshot": {
+          "label": "Dein Screenshot",
+          "description": "PNG, JPG, WebP oder SVG bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V (Mac: Cmd+V) ein. Es bleibt in deinem Browser, Teilen-Links lassen es weg."
+        },
+        "padding": {
+          "label": "Abstand"
+        },
+        "align": {
+          "label": "Ausrichtung",
+          "description": "Wohin das Fenster rückt, wenn es nicht genau ins Format passt.",
+          "options": {
+            "center": "Mitte",
+            "top": "Oben",
+            "bottom": "Unten",
+            "left": "Links",
+            "right": "Rechts"
+          }
+        },
+        "frame": {
+          "label": "Rahmen",
+          "options": {
+            "none": "Ohne",
+            "window": "Fenster",
+            "browser": "Browser"
+          }
+        },
+        "theme": {
+          "label": "Farbschema",
+          "description": "Gilt für die Fensterleiste und den Platzhalter.",
+          "options": {
+            "light": "Hell",
+            "dark": "Dunkel"
+          }
+        },
+        "url": {
+          "label": "Adresse oder Titel",
+          "description": "Steht in der Leiste. Bleibt auf deinem Gerät, Teilen-Links lassen sie weg."
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "shadow": {
+          "label": "Schatten"
+        },
+        "shadowColor": {
+          "label": "Schattenfarbe"
+        },
+        "border": {
+          "label": "Rand"
+        },
+        "borderColor": {
+          "label": "Randfarbe"
+        },
+        "borderOpacity": {
+          "label": "Deckkraft des Rands"
+        },
+        "highlight": {
+          "label": "Lichtkante",
+          "description": "Eine feine helle Linie am Innenrand, schön auf dunklen Fenstern."
+        },
+        "backgroundType": {
+          "label": "Hintergrund",
+          "options": {
+            "solid": "Einfarbig",
+            "gradient": "Verlauf",
+            "musterli": "Musterli"
+          }
+        },
+        "backdrop": {
+          "label": "Musterli-Hintergrund"
+        },
+        "backdropColors": {
+          "label": "Farben des Hintergrunds",
+          "options": {
+            "preset": "Aus der Vorlage",
+            "palette": "Eigene Palette"
+          }
+        },
+        "palette": {
+          "label": "Farben"
+        },
+        "gradientAngle": {
+          "label": "Winkel"
+        },
+        "backgroundColor": {
+          "label": "Hintergrundfarbe"
+        }
+      },
+      "presets": {
+        "aurora": "Polarlicht",
+        "clean": "Schlicht",
+        "sunset": "Abendrot",
+        "ocean": "Ozean",
+        "paper": "Papier",
+        "waves": "Wellen",
+        "night-sky": "Nachthimmel"
+      },
+      "sizes": {
+        "wide": "16:9 (X, Präsentation)",
+        "product-hunt": "Product Hunt",
+        "linkedin": "LinkedIn",
+        "docs": "16:10 (Dokumentation)"
+      },
+      "seo": {
+        "whatIs": "Ein Screenshot-Verschönerer setzt ein nacktes Bildschirmfoto in Szene. Das Bild liegt auf einem Hintergrund und bekommt Abstand, runde Ecken, einen weichen Schatten und auf Wunsch eine Fenster- oder Browserleiste mit Adresse. So wirken Screenshots in Dokumentationen, Blogbeiträgen, auf Social Media und auf Product Hunt sauber und einheitlich.",
+        "howTo": "Zieh deinen Screenshot in den Editor, wähl eine Datei oder füg ihn mit Ctrl+V ein. Wähl dann Rahmen, Abstand, Ecken, Schatten und einen Hintergrund: eine Farbe, einen Verlauf oder einen Musterli-Hintergrund wie Mesh, Blurry oder Wellen. Die Leertaste würfelt einen neuen Hintergrund, dein Bild bleibt. Exportiere als PNG, JPG, WebP oder SVG oder kopier das Ergebnis direkt in die Zwischenablage.",
+        "faq": {
+          "q1": "Wird mein Screenshot hochgeladen?",
+          "a1": "Nein. Das Bild wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten weder das Bild noch die Adresse in der Leiste. Speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Welche Dateien und Grössen gehen?",
+          "a2": "PNG, JPG, WebP und SVG bis 5 MB. Rasterbilder werden auf höchstens 3840 Pixel an der langen Seite verkleinert und als PNG gespeichert, damit Text scharf bleibt. SVG wird vorher von Scripts und externen Verweisen bereinigt.",
+          "q3": "Welche Grösse passt für Product Hunt, X oder LinkedIn?",
+          "a3": "Im Grössenmenü findest du fertige Formate: 1270 × 760 für Product Hunt, 1600 × 900 für X und Präsentationen, 1200 × 627 für LinkedIn und 1920 × 1200 für Dokumentationen. Der Screenshot passt sich automatisch an.",
+          "q4": "Was steckt im SVG-Export?",
+          "a4": "Hintergrund, Schatten und Fensterleiste sind Vektoren, dein Screenshot ist als Bild (data-URI) eingebettet. Die Datei braucht nichts weiter, ist aber etwa so gross wie dein Bild."
+        }
+      }
     }
   },
   "Converters": {

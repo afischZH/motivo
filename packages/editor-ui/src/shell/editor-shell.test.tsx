@@ -9,7 +9,7 @@ import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fix
 import { fakeServices } from "../test/fake-services";
 import { fixtureMessages, renderWithIntl } from "../test/render";
 import { EditorShell } from "./editor-shell";
-import { matchSizePreset, parseEdge } from "./size-picker";
+import { matchSizePreset, parseEdge, sizeOfOption } from "./size-picker";
 
 const presetNames = Object.fromEntries(
   ["classic", "dense", "square", "outlined", "faint", "dark"].map((id) => [id, `Preset ${id}`]),
@@ -330,6 +330,20 @@ describe("size helpers", () => {
   it("matches size presets", () => {
     expect(matchSizePreset({ width: 1080, height: 1350 })).toBe("portrait");
     expect(matchSizePreset({ width: 1081, height: 1350 })).toBe("custom");
+  });
+
+  it("prefers the tool's own sizes and maps option values back to sizes", () => {
+    const own = [
+      { id: "product-hunt", width: 1270, height: 760, nameKey: "x" },
+      { id: "same-as-square", width: 1080, height: 1080, nameKey: "y" },
+    ];
+    expect(matchSizePreset({ width: 1270, height: 760 }, own)).toBe("tool:product-hunt");
+    expect(matchSizePreset({ width: 1080, height: 1080 }, own)).toBe("tool:same-as-square");
+    expect(matchSizePreset({ width: 1080, height: 1350 }, own)).toBe("portrait");
+    expect(sizeOfOption("tool:product-hunt", own)).toEqual({ width: 1270, height: 760 });
+    expect(sizeOfOption("portrait", own)).toEqual({ width: 1080, height: 1350 });
+    expect(sizeOfOption("tool:missing", own)).toBeUndefined();
+    expect(sizeOfOption("custom")).toBeUndefined();
   });
 
   it("parses edges within the canvas limits only", () => {

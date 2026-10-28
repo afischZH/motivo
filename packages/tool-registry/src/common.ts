@@ -109,6 +109,31 @@ export const photoAssetSchema = imageAssetSchemaWith({
   maxRasterLength: PHOTO_ASSET_MAX_RASTER_LENGTH,
 }).register(controlKindRegistry, { kind: "image" });
 
+/** Longest edge of a screenshot (`screenshotAssetSchema`): 4K UHD width. */
+export const SCREENSHOT_ASSET_RASTER_MAX_EDGE = 3840;
+/**
+ * About 18 MB of PNG: a 4K screenshot re-encoded by the browser stays well
+ * below (uploads are at most 5 MB; re-encoding can grow them a little).
+ */
+export const SCREENSHOT_ASSET_MAX_RASTER_LENGTH = 24_000_000;
+
+/**
+ * A screenshot (Screenshot Beautifier): up to 3840 px and kept as PNG
+ * (`ImageHint` `{ maxEdge: 3840 }`, no `photo`), so text stays sharp. Same
+ * shape as `ImageAsset`.
+ */
+export const screenshotAssetSchema = imageAssetSchemaWith({
+  maxEdge: SCREENSHOT_ASSET_RASTER_MAX_EDGE,
+  maxRasterLength: SCREENSHOT_ASSET_MAX_RASTER_LENGTH,
+}).register(controlKindRegistry, { kind: "image" });
+
+/** Largest raster edge any upload schema accepts (checks of imported designs). */
+export const UPLOAD_RASTER_MAX_EDGE = Math.max(
+  IMAGE_ASSET_RASTER_MAX_EDGE,
+  PHOTO_ASSET_RASTER_MAX_EDGE,
+  SCREENSHOT_ASSET_RASTER_MAX_EDGE,
+);
+
 /** Placeholder file name of an upload in code exports (`your-image.jpg`, `.png`, `.svg`). */
 export function assetPlaceholderName(base: string, asset: { kind: string; href?: string }): string {
   const ext =

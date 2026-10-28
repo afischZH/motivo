@@ -102,6 +102,10 @@ const CASES: Case[] = [
   { toolId: "css-shadow", css: true },
   { toolId: "css-shadow", preset: "Inner", css: true },
   { toolId: "css-shadow", preset: "Floating", css: true },
+  // M4b-AP04: nested backdrop SVG of another tool, layered blurred shadows,
+  // clipped placeholder, window bar with text; solid background with border.
+  { toolId: "screenshot-beautifier", css: true },
+  { toolId: "screenshot-beautifier", preset: "Paper", css: true },
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).

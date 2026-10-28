@@ -118,7 +118,9 @@ describe("built-in tool registration", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "screenshot-beautifier",
     ]);
+    expect(registry.listByCategory("social").map((t) => t.id)).toEqual(["screenshot-beautifier"]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
       "tints-shades",

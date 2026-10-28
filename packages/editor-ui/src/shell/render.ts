@@ -180,10 +180,22 @@ export function parseCssDeclarations(css: string): CssDeclarations {
   let depth = 0;
   let quote: string | null = null;
   let start = 0;
+  /** Index of the next backslash at or after the scan position (searched again once passed). */
+  let nextEscape = -1;
   for (let i = 0; i < css.length; i++) {
     const ch = css[i];
     if (quote !== null) {
-      if (ch === "\\") i++;
+      // Jump to the closing quote when no escape comes first: a data URL of
+      // several megabytes (an uploaded picture) is skipped in native code.
+      const close = css.indexOf(quote, i);
+      if (nextEscape < i) {
+        const found = css.indexOf("\\", i);
+        nextEscape = found === -1 ? Infinity : found;
+      }
+      if (close !== -1 && nextEscape > close) {
+        i = close;
+        quote = null;
+      } else if (ch === "\\") i++;
       else if (ch === quote) quote = null;
     } else if (ch === '"' || ch === "'") quote = ch;
     else if (ch === "(") depth++;

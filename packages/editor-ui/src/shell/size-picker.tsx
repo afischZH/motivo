@@ -6,6 +6,7 @@ import {
   SIZE_PRESETS,
   type CanvasSize,
   type SizePresetGroup,
+  type ToolSizePreset,
 } from "@musterli/tool-registry";
 import { useId, useState, type KeyboardEvent } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
@@ -13,10 +14,33 @@ import { useT } from "../i18n";
 
 const GROUPS: readonly SizePresetGroup[] = ["social", "desktop", "mobile", "print"];
 const CUSTOM = "custom";
+/** Option values of the tool's own sizes (`ToolDefinition.sizePresets`) carry this prefix. */
+const TOOL_PREFIX = "tool:";
 
-/** Id of the size preset with exactly this size, or `"custom"`. */
-export function matchSizePreset(size: CanvasSize): string {
-  return SIZE_PRESETS.find((p) => p.width === size.width && p.height === size.height)?.id ?? CUSTOM;
+const sameSize = (a: CanvasSize, b: CanvasSize) => a.width === b.width && a.height === b.height;
+
+/**
+ * Option value of the size preset with exactly this size, or `"custom"`.
+ * The tool's own sizes win over common ones of the same size.
+ */
+export function matchSizePreset(
+  size: CanvasSize,
+  toolPresets: readonly ToolSizePreset[] = [],
+): string {
+  const own = toolPresets.find((p) => sameSize(p, size));
+  if (own) return `${TOOL_PREFIX}${own.id}`;
+  return SIZE_PRESETS.find((p) => sameSize(p, size))?.id ?? CUSTOM;
+}
+
+/** The size behind an option value of the picker, `undefined` for "custom". */
+export function sizeOfOption(
+  value: string,
+  toolPresets: readonly ToolSizePreset[] = [],
+): CanvasSize | undefined {
+  const preset = value.startsWith(TOOL_PREFIX)
+    ? toolPresets.find((p) => `${TOOL_PREFIX}${p.id}` === value)
+    : SIZE_PRESETS.find((p) => p.id === value);
+  return preset ? { width: preset.width, height: preset.height } : undefined;
 }
 
 /** Parses an edge length; `null` unless it is an integer within the canvas limits. */
@@ -30,14 +54,16 @@ export function parseEdge(text: string): number | null {
 export interface SizePickerProps {
   size: CanvasSize;
   onChange(size: CanvasSize): void;
+  /** Sizes the tool suggests, shown first ("For this tool"). */
+  toolPresets?: readonly ToolSizePreset[] | undefined;
   className?: string;
 }
 
-/** Size presets (Social, Desktop, Mobile, Print) plus free width and height. */
-export function SizePicker({ size, onChange, className }: SizePickerProps) {
+/** Size presets (the tool's own, Social, Desktop, Mobile, Print) plus free width and height. */
+export function SizePicker({ size, onChange, toolPresets = [], className }: SizePickerProps) {
   const t = useT();
   const id = useId();
-  const selected = matchSizePreset(size);
+  const selected = matchSizePreset(size, toolPresets);
 
   return (
     <div className={cx("flex flex-wrap items-end gap-2", className)}>
@@ -50,12 +76,25 @@ export function SizePicker({ size, onChange, className }: SizePickerProps) {
           className={cx(INPUT_CLASS, "max-w-56 pr-7")}
           value={selected}
           onChange={(event) => {
-            const preset = SIZE_PRESETS.find((p) => p.id === event.target.value);
-            if (preset) onChange({ width: preset.width, height: preset.height });
+            const next = sizeOfOption(event.target.value, toolPresets);
+            if (next) onChange(next);
             else document.getElementById(`${id}-width`)?.focus();
           }}
         >
           <option value={CUSTOM}>{t("Editor.size.custom")}</option>
+          {toolPresets.length > 0 && (
+            <optgroup label={t("Editor.size.groups.tool")}>
+              {toolPresets.map((p) => (
+                <option key={p.id} value={`${TOOL_PREFIX}${p.id}`}>
+                  {t("Editor.size.option", {
+                    name: t(p.nameKey),
+                    width: p.width,
+                    height: p.height,
+                  })}
+                </option>
+              ))}
+            </optgroup>
+          )}
           {GROUPS.map((group) => (
             <optgroup key={group} label={t(`Editor.size.groups.${group}`)}>
               {SIZE_PRESETS.filter((p) => p.group === group).map((p) => (

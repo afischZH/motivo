@@ -612,7 +612,7 @@ function PreviewSection(props: {
         {t("Editor.shell.preview")}
       </h2>
       <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-border px-4 py-2">
-        <SizePicker size={liveSize} onChange={setSize} />
+        <SizePicker size={liveSize} onChange={setSize} toolPresets={tool.sizePresets} />
         {/*
           Wraps instead of overflowing: at 375 px the zoom buttons plus the
           scale readout are wider than the row (font metrics differ per
