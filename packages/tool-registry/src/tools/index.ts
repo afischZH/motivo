@@ -42,6 +42,7 @@ import { animatedGradientTool } from "./animated-gradient";
 import { faviconGeneratorTool } from "./favicon-generator";
 import { duotoneTool } from "./duotone";
 import { asciiArtTool } from "./ascii-art";
+import { perspectiveGridTool } from "./perspective-grid";
 
 export {
   blobTool,
@@ -82,6 +83,7 @@ export {
   faviconGeneratorTool,
   duotoneTool,
   asciiArtTool,
+  perspectiveGridTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -143,6 +145,7 @@ export type { DuotoneParams } from "./duotone";
 export { duotoneStops } from "./duotone";
 export type { AsciiArtParams } from "./ascii-art";
 export { asciiStyle, sampleAsciiGrid } from "./ascii-art";
+export type { PerspectiveGridParams } from "./perspective-grid";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -184,6 +187,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   faviconGeneratorTool,
   duotoneTool,
   asciiArtTool,
+  perspectiveGridTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

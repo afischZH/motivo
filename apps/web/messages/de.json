@@ -3697,6 +3697,125 @@
           "a5": "Ja. Im Export findest du reinen Text für README-Dateien, Code-Kommentare und Terminals sowie ein HTML-Snippet mit Inline-Stilen, das Farben und Monospace-Schrift mitbringt."
         }
       }
+    },
+    "perspective-grid": {
+      "name": "3D-Perspektivgitter",
+      "description": "Retro-Gitter in 3D-Perspektive mit Sonne, Sternen, Bergen und Leuchten, wie in Synthwave und Outrun. Als SVG, Bild oder bewegtes GIF exportieren.",
+      "groups": {
+        "camera": "Kamera",
+        "grid": "Gitter",
+        "scene": "Szene"
+      },
+      "params": {
+        "horizon": {
+          "label": "Horizont"
+        },
+        "tilt": {
+          "label": "Neigung"
+        },
+        "fov": {
+          "label": "Blickwinkel"
+        },
+        "cameraHeight": {
+          "label": "Kamerahöhe",
+          "description": "Höhe über dem Boden in Gitterzellen. Tief über dem Boden wirken die Zellen gross und flach, von weit oben siehst du viele kleine Zellen. Das ist zugleich der Linienabstand."
+        },
+        "cellDepth": {
+          "label": "Zellentiefe"
+        },
+        "distance": {
+          "label": "Sichtweite"
+        },
+        "lineWidth": {
+          "label": "Linienbreite"
+        },
+        "taper": {
+          "label": "Perspektivische Linienbreite"
+        },
+        "lineColor": {
+          "label": "Linienfarbe"
+        },
+        "fade": {
+          "label": "Ausblenden zum Horizont"
+        },
+        "glow": {
+          "label": "Leuchten"
+        },
+        "haze": {
+          "label": "Dunst am Horizont"
+        },
+        "ceiling": {
+          "label": "Gespiegelte Decke"
+        },
+        "sun": {
+          "label": "Sonne"
+        },
+        "sunSize": {
+          "label": "Sonnengrösse"
+        },
+        "sunRise": {
+          "label": "Sonnenstand"
+        },
+        "sunStripes": {
+          "label": "Streifen in der Sonne"
+        },
+        "sunTop": {
+          "label": "Sonne oben"
+        },
+        "sunBottom": {
+          "label": "Sonne unten"
+        },
+        "stars": {
+          "label": "Sterne"
+        },
+        "starColor": {
+          "label": "Sternfarbe"
+        },
+        "mountains": {
+          "label": "Berge"
+        },
+        "mountainColor": {
+          "label": "Bergfarbe"
+        },
+        "palette": {
+          "label": "Himmel"
+        },
+        "background": {
+          "label": "Boden"
+        }
+      },
+      "presets": {
+        "synthwave": "Synthwave",
+        "terminal": "Terminal",
+        "ice": "Gletscher",
+        "sunset": "Sonnenuntergang",
+        "mono": "Schwarzweiss",
+        "blueprint": "Blaupause",
+        "night-drive": "Nachtfahrt",
+        "tunnel": "Tunnel"
+      },
+      "seo": {
+        "whatIs": "Ein Perspektivgitter ist ein Bodenraster, das in die Tiefe läuft und am Horizont verschwindet. Bekannt ist es aus Synthwave, Outrun und Videospielen der Achtzigerjahre. Musterli berechnet das Gitter mit einer echten Kameraprojektion und ergänzt auf Wunsch eine gestreifte Sonne, Sterne, Berge, Dunst und ein Leuchten. Das Ergebnis passt als Hintergrund für Albumcover, Streams, Präsentationen oder Websites.",
+        "howTo": "Wähle eine Vorlage oder lege Horizont, Neigung, Blickwinkel und Kamerahöhe selbst fest. Unter Gitter stellst du Sichtweite, Linienbreite, Ausblenden und Leuchten ein, unter Szene Sonne, Sterne, Berge und Dunst. Mit der Leertaste würfelst du neue Farben und eine neue Kamera. Exportiere als SVG, PNG, JPG oder WebP oder als GIF, in dem das Gitter nahtlos nach vorne fährt.",
+        "faq": {
+          "q1": {
+            "question": "Brauche ich dafür ein 3D-Programm?",
+            "answer": "Nein. Musterli rechnet die Perspektive direkt im Browser aus und zeichnet jede Linie als Vektor. Darum bleibt das Bild als SVG in jeder Grösse scharf und lässt sich in Figma, Illustrator oder Inkscape weiterbearbeiten."
+          },
+          "q2": {
+            "question": "Wie entsteht die Animation?",
+            "answer": "Wähle im Export GIF und die Quelle Bewegung. Das Gitter fährt pro Durchlauf genau eine Zellentiefe auf dich zu, deshalb ist die Schleife nahtlos. Das erste Bild entspricht der Vorschau."
+          },
+          "q3": {
+            "question": "Warum endet das Gitter vor dem Horizont?",
+            "answer": "Weit hinten liegen die Linien so dicht, dass nur noch ein unruhiges Flimmern bleibt. Musterli blendet das Gitter darum vorher aus und füllt den Rest mit Dunst. Mit Sichtweite und Ausblenden bestimmst du, wie weit es reicht."
+          },
+          "q4": {
+            "question": "Kann ich die Farben meiner Marke verwenden?",
+            "answer": "Ja. Mit einer Brand-Palette aus deinem Brand Kit übernimmt das Tool deine Farben für Himmel, Linien, Sonne, Sterne und Berge. Die Bodenfarbe bleibt, damit der Kontrast stimmt."
+          }
+        }
+      }
     }
   },
   "Converters": {

@@ -9,7 +9,7 @@
  * before → after the fix): Topo Lines 120 to 365 ms → about 40 ms, Flow
  * Fields up to 12 s (8192 × 16, 1 % spacing) → about 45 ms, Guilloche
  * 0.2 to 0.7 s → about 30 ms, Low-Poly 50 to 57 ms → about 35 ms, Terrazzo
- * 42 ms → about 10 ms. The assertion is deliberately loose (shared CI
+ * 42 ms → about 10 ms; Perspective Grid (M5-AP03) about 10 ms. The assertion is deliberately loose (shared CI
  * runners are slower and noisy); it catches lost caps, which cost seconds,
  * not single milliseconds. The engine tests check the caps themselves.
  */
@@ -19,6 +19,7 @@ import type { AnyToolDefinition, CanvasSize } from "../types";
 import { flowFieldTool } from "./flow-field";
 import { guillocheTool } from "./guilloche";
 import { lowPolyTool } from "./low-poly";
+import { perspectiveGridTool } from "./perspective-grid";
 import { screenshotBeautifierTool } from "./screenshot-beautifier";
 import { terrazzoTool } from "./terrazzo";
 import { topoLinesTool } from "./topo-lines";
@@ -199,6 +200,26 @@ const CASES: readonly WorstCase[] = [
       shadow: 100,
     },
     sizes: [HD, HUGE, WIDE, TALL],
+  },
+  {
+    // M5-AP03: densest grid (low camera, short cells, 120 rows, thin constant
+    // lines), ceiling, most stars, highest mountains, full glow, tilted.
+    tool: perspectiveGridTool,
+    params: {
+      fov: 140,
+      cameraHeight: 0.25,
+      cellDepth: 0.25,
+      distance: 120,
+      lineWidth: 0.5,
+      taper: 0,
+      ceiling: true,
+      stars: 100,
+      mountains: 40,
+      glow: 1,
+      tilt: 30,
+    },
+    sizes: [HD, HUGE, WIDE, TALL],
+    t: 0.5,
   },
 ];
 

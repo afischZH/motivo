@@ -3697,6 +3697,125 @@
           "a5": "Yes. The export offers plain text for README files, code comments and terminals, plus an HTML snippet with inline styles that brings its colors and the monospace font along."
         }
       }
+    },
+    "perspective-grid": {
+      "name": "3D Perspective Grid",
+      "description": "Retro grid in 3D perspective with sun, stars, mountains and glow, the synthwave and outrun look. Export as SVG, image or animated GIF.",
+      "groups": {
+        "camera": "Camera",
+        "grid": "Grid",
+        "scene": "Scene"
+      },
+      "params": {
+        "horizon": {
+          "label": "Horizon"
+        },
+        "tilt": {
+          "label": "Tilt"
+        },
+        "fov": {
+          "label": "Field of view"
+        },
+        "cameraHeight": {
+          "label": "Camera height",
+          "description": "Height above the floor in grid cells. Close to the floor the cells look large and flat, from high up you see many small cells. This is also the line spacing."
+        },
+        "cellDepth": {
+          "label": "Cell depth"
+        },
+        "distance": {
+          "label": "View distance"
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "taper": {
+          "label": "Perspective line width"
+        },
+        "lineColor": {
+          "label": "Line color"
+        },
+        "fade": {
+          "label": "Fade to horizon"
+        },
+        "glow": {
+          "label": "Glow"
+        },
+        "haze": {
+          "label": "Horizon haze"
+        },
+        "ceiling": {
+          "label": "Mirrored ceiling"
+        },
+        "sun": {
+          "label": "Sun"
+        },
+        "sunSize": {
+          "label": "Sun size"
+        },
+        "sunRise": {
+          "label": "Sun height"
+        },
+        "sunStripes": {
+          "label": "Sun stripes"
+        },
+        "sunTop": {
+          "label": "Sun top"
+        },
+        "sunBottom": {
+          "label": "Sun bottom"
+        },
+        "stars": {
+          "label": "Stars"
+        },
+        "starColor": {
+          "label": "Star color"
+        },
+        "mountains": {
+          "label": "Mountains"
+        },
+        "mountainColor": {
+          "label": "Mountain color"
+        },
+        "palette": {
+          "label": "Sky"
+        },
+        "background": {
+          "label": "Floor"
+        }
+      },
+      "presets": {
+        "synthwave": "Synthwave",
+        "terminal": "Terminal",
+        "ice": "Glacier",
+        "sunset": "Sunset",
+        "mono": "Mono",
+        "blueprint": "Blueprint",
+        "night-drive": "Night drive",
+        "tunnel": "Tunnel"
+      },
+      "seo": {
+        "whatIs": "A perspective grid is a floor grid that runs into the distance and vanishes at the horizon, familiar from synthwave, outrun and eighties video games. Musterli computes the grid with a real camera projection and can add a striped sun, stars, mountains, haze and glow. Use it as a background for album covers, streams, slides or websites.",
+        "howTo": "Pick a preset or set horizon, tilt, field of view and camera height yourself. Under Grid you adjust view distance, line width, fade and glow, under Scene the sun, stars, mountains and haze. Press the space bar for new colors and a new camera. Export as SVG, PNG, JPG or WebP, or as a GIF in which the grid moves forward in a seamless loop.",
+        "faq": {
+          "q1": {
+            "question": "Do I need 3D software for this?",
+            "answer": "No. Musterli computes the perspective right in your browser and draws every line as a vector. The SVG stays sharp at any size and opens in Figma, Illustrator or Inkscape."
+          },
+          "q2": {
+            "question": "How is the animation made?",
+            "answer": "Choose GIF in the export and the Motion source. The grid moves exactly one cell depth towards you per loop, so the loop is seamless. The first frame matches the preview."
+          },
+          "q3": {
+            "question": "Why does the grid end before the horizon?",
+            "answer": "Far away the lines lie so close together that only flicker remains. Musterli fades the grid out before that and fills the rest with haze. View distance and fade decide how far it reaches."
+          },
+          "q4": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. With a brand palette from your Brand Kit the tool uses your colors for the sky, lines, sun, stars and mountains. The floor color stays so the contrast works."
+          }
+        }
+      }
     }
   },
   "Converters": {
