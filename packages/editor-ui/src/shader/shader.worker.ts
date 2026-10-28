@@ -55,6 +55,10 @@ function createComposer(width: number, height: number): ShaderComposer {
       if (blob.type !== options.mime) throw new Error(`Encoded ${blob.type}, not ${options.mime}`);
       return blob;
     },
+    dispose() {
+      canvas.width = 0;
+      canvas.height = 0;
+    },
   };
 }
 

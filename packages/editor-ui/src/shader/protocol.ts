@@ -75,6 +75,8 @@ export interface ShaderRuntimeLike {
 export interface ShaderComposer {
   putStrip(strip: Uint8ClampedArray, y: number, height: number): void;
   encode(options: ShaderEncodeOptions): Promise<Blob>;
+  /** Frees the canvas at once (up to 200 MB) instead of waiting for GC. */
+  dispose?(): void;
 }
 
 /** The browser APIs the handler uses. */
@@ -215,11 +217,15 @@ export function createShaderHandler(env: ShaderWorkerEnv) {
     }
     const { width, height } = request.out;
     const composer = env.createComposer(width, height);
-    await renderInStrips(width, height, drawTile, (strip, row, index, rows) => {
-      composer.putStrip(strip, row.y, row.height);
-      progress(((index + 1) / rows) * 0.9);
-    });
-    return { id, ok: true, blob: await composer.encode(encode) };
+    try {
+      await renderInStrips(width, height, drawTile, (strip, row, index, rows) => {
+        composer.putStrip(strip, row.y, row.height);
+        progress(((index + 1) / rows) * 0.9);
+      });
+      return { id, ok: true, blob: await composer.encode(encode) };
+    } finally {
+      composer.dispose?.();
+    }
   };
 
   const run = async (request: ShaderRenderRequest): Promise<ShaderRenderResponse> => {

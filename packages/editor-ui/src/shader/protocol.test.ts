@@ -56,6 +56,7 @@ interface Harness {
   runtimes: number;
   progress: number[];
   composed: Uint8ClampedArray | null;
+  composersDisposed: number;
 }
 
 function harness(
@@ -67,6 +68,7 @@ function harness(
     runtimes: 0,
     progress: [],
     composed: null,
+    composersDisposed: 0,
   };
   let draws = 0;
   const env: ShaderWorkerEnv = {
@@ -98,6 +100,7 @@ function harness(
           all.set(strip, y * width * 4);
         },
         encode: (o) => Promise.resolve(new Blob([all], { type: o.mime })),
+        dispose: () => void h.composersDisposed++,
       };
     },
     lookup: (id) => registry.get(id),
@@ -147,6 +150,8 @@ describe("shader worker handler", () => {
     expect(h.draws.map((d) => d.tile?.x)).toEqual([0, 1024]);
     expect(h.composed).toEqual(reference(r));
     expect(h.progress.at(-1)).toBeCloseTo(0.9);
+    // The large composing canvas is freed right after encoding.
+    expect(h.composersDisposed).toBe(1);
   });
 
   it("streams PNG exports", async () => {
@@ -179,7 +184,7 @@ describe("shader worker handler", () => {
     );
     expect(await errorOf({ out: { width: 0, height: 10 } })).toBe("invalid-request");
     expect(await errorOf({ t: 1.5 })).toBe("invalid-request");
-    const encode = (e: unknown) => ({ encode: e as ShaderRenderRequest["encode"] });
+    const encode = (e: unknown) => ({ encode: e as NonNullable<ShaderRenderRequest["encode"]> });
     expect(await errorOf(encode({ mime: "image/gif" }))).toBe("invalid-request");
     expect(await errorOf(encode({ mime: "image/jpeg", quality: 2 }))).toBe("invalid-request");
     expect(await errorOf(encode({ mime: "image/jpeg", quality: Number.NaN }))).toBe(
