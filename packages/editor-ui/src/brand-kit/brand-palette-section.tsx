@@ -38,7 +38,7 @@ export function BrandPaletteSection(props: BrandPaletteSectionProps) {
   return (
     <section
       aria-labelledby={`${ids}-title`}
-      className="mb-4 grid gap-2 border-b border-border pb-4"
+      className="mb-4 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 border-b border-border pb-4"
       data-testid="brand-palette"
     >
       <h3 id={`${ids}-title`} className="text-sm font-semibold">
@@ -65,7 +65,7 @@ export function BrandPaletteSection(props: BrandPaletteSectionProps) {
             </label>
             <select
               id={`${ids}-select`}
-              className={cx(INPUT_CLASS, "h-8 min-w-0 flex-1")}
+              className={cx(INPUT_CLASS, "h-8 w-0 min-w-0 flex-1")}
               value={selected.id}
               onChange={(event) => {
                 setChosen(event.currentTarget.value);
