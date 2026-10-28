@@ -278,6 +278,27 @@
         "apply": "Übernehmen",
         "working": "Wird zugeschnitten …"
       }
+    },
+    "brand": {
+      "title": "Brand-Palette",
+      "choose": "Brand-Palette wählen",
+      "defaultName": "{name} (Standard)",
+      "unnamed": "Ohne Namen",
+      "apply": "Anwenden",
+      "preview": "Farben der gewählten Palette",
+      "hint": "Ersetzt die Farben des Motivs und sperrt sie, damit neue Varianten sie behalten. Der Hintergrund bleibt. Rückgängig mit ⌘/Ctrl+Z.",
+      "applied": "Brand-Palette „{name}“ angewendet.",
+      "failed": "Diese Palette passt hier nicht.",
+      "empty": "Noch keine Brand-Palette.",
+      "create": "Im Brand Kit anlegen",
+      "swatches": "Brand-Farben",
+      "swatch": "Brand-Farbe {value} übernehmen",
+      "fromKit": "Aus Brand Kit",
+      "assetsTitle": "Logos und Shapes aus deinem Brand Kit",
+      "loading": "Wird geladen …",
+      "assetsEmpty": "Noch keine Logos oder Shapes.",
+      "openKit": "Zum Brand Kit",
+      "useAsset": "{name} verwenden"
     }
   },
   "sizes": {
@@ -303,7 +324,8 @@
       "failed": "Das hat nicht geklappt. Versuch es nochmals.",
       "not-found": "Dieses Design gibt es in diesem Browser nicht (mehr).",
       "other-tool": "Dieses Design gehört zu einem anderen Tool.",
-      "invalid": "Dieses Design lässt sich mit der aktuellen Version nicht mehr öffnen."
+      "invalid": "Dieses Design lässt sich mit der aktuellen Version nicht mehr öffnen.",
+      "limit": "Hier ist kein Platz mehr. Lösche zuerst etwas."
     },
     "editor": {
       "group": "Design speichern",
@@ -386,9 +408,135 @@
         "unsupported-version": "Diese Datei stammt von einer neueren Version von Motivo.",
         "too-many": "Die Datei enthält zu viele Designs (höchstens 2000).",
         "timeout": "Das Prüfen der Datei hat zu lange gedauert.",
-        "aborted": "Import abgebrochen."
+        "aborted": "Import abgebrochen.",
+        "brand-kit-file": "Das ist eine Brand-Kit-Datei. Importiere sie im Brand Kit."
       },
       "dismiss": "Meldung schliessen"
+    }
+  },
+  "BrandKit": {
+    "nav": "Brand Kit",
+    "page": {
+      "metaTitle": "Brand Kit",
+      "metaDescription": "Deine Markenfarben, Logos und Shapes, nur in diesem Browser.",
+      "title": "Brand Kit",
+      "intro": "Leg deine Markenfarben, Logos und eigenen Shapes an. In jedem Tool wendest du deine Palette mit einem Klick an.",
+      "storageHint": "Dein Brand Kit bleibt in diesem Browser auf diesem Gerät, ohne Konto und ohne Server. Wenn du die Browserdaten löschst, ist es weg. Sichere es darum ab und zu als Datei. Mit dieser Datei holst du es auch auf ein anderes Gerät.",
+      "loading": "Brand Kit wird geladen …",
+      "export": "Exportieren",
+      "import": "Importieren",
+      "importing": "Importiert …",
+      "exported": "Brand Kit als Datei gespeichert.",
+      "exportEmpty": "Dein Brand Kit ist noch leer.",
+      "imported": "{palettes, plural, =0 {Keine Palette} one {# Palette} other {# Paletten}} und {assets, plural, =0 {kein Bild} one {# Bild} other {# Bilder}} importiert.",
+      "importDuplicates": "{count, plural, one {# Eintrag war} other {# Einträge waren}} schon vorhanden.",
+      "importOverLimit": "{count, plural, one {# Eintrag hatte} other {# Einträge hatten}} keinen Platz mehr.",
+      "importSkipped": "{count, plural, one {# Eintrag wurde} other {# Einträge wurden}} übersprungen:",
+      "importRemoved": "Aus Sicherheitsgründen hat Motivo Teile von SVG-Dateien entfernt (Anzahl: {count}).",
+      "skippedPalette": "Palette {name}: {reason}",
+      "skippedAsset": "Bild {name}: {reason}",
+      "skippedUnnamed": "Eintrag {index}: {reason}",
+      "skipReasons": {
+        "invalid": "ungültige Daten",
+        "unsafe-image": "unsichere oder beschädigte Bilddatei"
+      },
+      "importErrors": {
+        "too-large": "Die Datei ist zu gross. Höchstens 30 MB sind erlaubt.",
+        "empty": "Die Datei ist leer.",
+        "malformed": "Die Datei ist beschädigt oder kein JSON.",
+        "forbidden-keys": "Die Datei enthält unzulässige Einträge und wurde nicht importiert.",
+        "wrong-format": "Das ist keine Brand-Kit-Datei von Motivo.",
+        "unsupported-version": "Diese Datei stammt von einer neueren Version von Motivo.",
+        "too-many": "Die Datei enthält zu viele Einträge.",
+        "designs-file": "Das ist eine Designdatei. Importiere sie unter „Meine Designs“.",
+        "timeout": "Das Prüfen der Datei hat zu lange gedauert.",
+        "aborted": "Import abgebrochen."
+      },
+      "dismiss": "Meldung schliessen",
+      "undo": "Rückgängig"
+    },
+    "errors": {
+      "unavailable": "In diesem Browser kann Motivo nichts speichern, zum Beispiel in einem privaten Fenster oder wenn Websitedaten blockiert sind.",
+      "quota": "Der Speicher dieses Browsers ist voll. Lösche alte Einträge oder exportiere sie als Datei.",
+      "blocked": "Motivo ist noch in einem anderen Tab mit einer älteren Version offen. Schliesse den Tab und versuch es nochmals.",
+      "failed": "Das hat nicht geklappt. Versuch es nochmals.",
+      "not-found": "Diesen Eintrag gibt es in diesem Browser nicht (mehr).",
+      "limit": "Hier ist kein Platz mehr. Lösche zuerst etwas."
+    },
+    "palettes": {
+      "title": "Paletten",
+      "hint": "2 bis 10 Farben pro Palette. Die Standardpalette ist im Editor vorausgewählt.",
+      "empty": "Noch keine Palette. Leg deine erste an.",
+      "add": "Neue Palette",
+      "defaultBadge": "Standard",
+      "makeDefault": "Als Standard",
+      "makeDefaultLabel": "{name} als Standard festlegen",
+      "edit": "Bearbeiten",
+      "editLabel": "{name} bearbeiten",
+      "delete": "Löschen",
+      "deleteLabel": "{name} löschen",
+      "deleted": "Palette „{name}“ gelöscht.",
+      "restored": "Palette „{name}“ ist wieder da.",
+      "saved": "Palette „{name}“ gespeichert.",
+      "defaultSet": "„{name}“ ist jetzt die Standardpalette.",
+      "unnamed": "Unbenannte Palette",
+      "newName": "Palette {index}",
+      "colorsLabel": "Farben von {name}",
+      "form": {
+        "createTitle": "Neue Palette",
+        "editTitle": "Palette bearbeiten",
+        "name": "Name",
+        "colors": "Farben",
+        "count": "{count} von 10 Farben",
+        "picker": "Farbwähler für Farbe {index}",
+        "hex": "HEX-Wert von Farbe {index}",
+        "moveUp": "Farbe {index} nach oben",
+        "moveDown": "Farbe {index} nach unten",
+        "remove": "Farbe {index} entfernen",
+        "addColor": "Farbe hinzufügen",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "invalidHex": "Gib bei Farbe {index} einen HEX-Wert wie #1e90ff ein.",
+        "moved": "Farbe {index} ist jetzt an Position {position}."
+      }
+    },
+    "assets": {
+      "logos": {
+        "title": "Logos",
+        "hint": "SVG, PNG, JPG oder WebP bis 5 MB. SVG wird bereinigt, Bilder werden auf höchstens 1024 px verkleinert.",
+        "empty": "Noch keine Logos.",
+        "add": "Logo hinzufügen",
+        "added": "Logo „{name}“ hinzugefügt."
+      },
+      "shapes": {
+        "title": "Eigene Shapes",
+        "hint": "Nur SVG bis 1 MB. Die Tools färben Shapes in deinen Farben ein.",
+        "empty": "Noch keine Shapes.",
+        "add": "Shape hinzufügen",
+        "added": "Shape „{name}“ hinzugefügt."
+      },
+      "usage": "In Tools mit Bild-Upload wählst du Logos und Shapes unter „Aus Brand Kit“.",
+      "adding": "Datei wird geprüft …",
+      "removedParts": "Aus Sicherheitsgründen hat Motivo Teile der SVG-Datei entfernt, zum Beispiel Skripte oder externe Verweise (Anzahl: {count}).",
+      "delete": "Löschen",
+      "deleteLabel": "{name} löschen",
+      "deleted": "„{name}“ gelöscht.",
+      "restored": "„{name}“ ist wieder da.",
+      "previewAlt": "Vorschau von {name}",
+      "unnamed": "Ohne Namen",
+      "errors": {
+        "too-large": "Die Datei ist grösser als 5 MB. Verkleinere sie und versuch es nochmals.",
+        "unsupported-type": "Dieses Format geht hier nicht. Nimm ein SVG, PNG, JPG oder WebP.",
+        "too-many-pixels": "Das Bild hat zu viele Pixel (über 64 Megapixel). Verkleinere es und versuch es nochmals.",
+        "read-failed": "Die Datei liess sich nicht lesen. Versuch es nochmals.",
+        "decode-failed": "Das Bild liess sich nicht öffnen. Vielleicht ist die Datei beschädigt.",
+        "timeout": "Das Verarbeiten dauert zu lange und wurde abgebrochen. Versuch ein kleineres Bild.",
+        "no-result": "Das Bild liess sich nicht verarbeiten. Versuch es nochmals.",
+        "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
+        "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals.",
+        "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals.",
+        "shape-not-svg": "Shapes müssen SVG-Dateien sein. Logos dürfen auch PNG, JPG oder WebP sein."
+      }
     }
   }
 }

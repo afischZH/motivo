@@ -18,6 +18,7 @@
 import { createRng, toUint32 } from "@motivo/engine";
 import {
   DEFAULT_CANVAS_SIZE,
+  applyBrandPalette as brandPaletteFor,
   canvasSizeSchema,
   keepLocked,
   parseToolParams,
@@ -108,6 +109,14 @@ export interface EditorActions {
   listOp(key: string, op: ListOp): boolean;
   /** Sets several params as one undo step. */
   setParams(patch: ParamValues): void;
+  /**
+   * Puts a brand palette onto the tool's colour params (generic mapping,
+   * `applyBrandPalette` in the tool registry) as one undo step. Locked
+   * params stay. By default the recoloured params are locked afterwards, so
+   * new variants (Space) keep the brand colours. Returns false when the
+   * tool has no colour params or the palette does not fit.
+   */
+  applyBrandPalette(colors: readonly string[], options?: { lock?: boolean }): boolean;
   /**
    * Merges params derived from an image input (`tool.imageInput`) into the
    * current design and its filmstrip entry, without an undo step: they follow
@@ -436,6 +445,25 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
       setParams(patch) {
         const next = mergePatch(get(), patch);
         if (next) change({ params: next });
+      },
+
+      applyBrandPalette(colors, options = {}) {
+        const s = get();
+        const result = brandPaletteFor(s.tool, s.params, colors, s.locks);
+        if (!result) return false;
+        let locks = s.locks;
+        if (options.lock !== false) {
+          const added = result.applied.filter((key) => !locks.has(key) && isLockable(s.tool, key));
+          if (added.length > 0) locks = new Set([...locks, ...added]);
+        }
+        const params = valuesEqual(result.params, s.params) ? s.params : result.params;
+        if (params === s.params) {
+          // Nothing to recolour (already the brand colours): only the locks may change.
+          if (locks !== s.locks) set({ locks });
+          return true;
+        }
+        change({ params, locks });
+        return true;
       },
 
       applyDerived(patch) {

@@ -3,6 +3,7 @@
 import { HEX_COLOR_PATTERN, TRANSPARENT } from "@motivo/tool-registry";
 import { Popover, Switch } from "radix-ui";
 import { useId, useState, useSyncExternalStore, type ReactNode } from "react";
+import { brandSwatches, useBrandKit } from "../brand-kit/context";
 import { useT } from "../i18n";
 import type { FieldProps } from "./fields";
 import { FOCUS_RING, ICON_BUTTON_CLASS, INPUT_CLASS, cx } from "./primitives";
@@ -177,10 +178,51 @@ export function ColorPicker(props: ColorPickerProps) {
               </p>
             )}
           </div>
+          <BrandSwatches
+            value={props.value}
+            onPick={(color) => {
+              setDraft(null);
+              if (color !== props.value) props.onChange(color);
+              props.onCommit?.();
+            }}
+          />
           {props.actions}
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
+  );
+}
+
+/** Quick swatches of the brand colours (M3-AP06); nothing without a brand kit. */
+function BrandSwatches(props: { value: string; onPick(color: string): void }) {
+  const t = useT();
+  const id = useId();
+  const colors = brandSwatches(useBrandKit());
+  if (colors.length === 0) return null;
+  const current = HEX_COLOR_PATTERN.test(props.value) ? toLongHex(props.value) : props.value;
+  return (
+    <div className="grid gap-1" data-testid="brand-swatches">
+      <p id={id} className="text-xs text-muted-foreground">
+        {t("Editor.brand.swatches")}
+      </p>
+      <ul aria-labelledby={id} className="flex flex-wrap gap-1">
+        {colors.map((color) => (
+          <li key={color}>
+            <button
+              type="button"
+              className={cx("size-6 rounded-sm border border-border", FOCUS_RING)}
+              // The swatch shows user content, not a UI token.
+              style={{ backgroundColor: color }}
+              aria-label={t("Editor.brand.swatch", { value: color })}
+              aria-pressed={current === color}
+              title={color}
+              onClick={() => props.onPick(color)}
+              data-brand-color={color}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

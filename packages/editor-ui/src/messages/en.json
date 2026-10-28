@@ -278,6 +278,27 @@
         "apply": "Apply",
         "working": "Cropping …"
       }
+    },
+    "brand": {
+      "title": "Brand palette",
+      "choose": "Choose a brand palette",
+      "defaultName": "{name} (default)",
+      "unnamed": "Untitled",
+      "apply": "Apply",
+      "preview": "Colours of the chosen palette",
+      "hint": "Replaces the colours of the motif and locks them, so new variants keep them. The background stays. Undo with ⌘/Ctrl+Z.",
+      "applied": "Brand palette “{name}” applied.",
+      "failed": "This palette does not fit here.",
+      "empty": "No brand palette yet.",
+      "create": "Create one in the Brand Kit",
+      "swatches": "Brand colours",
+      "swatch": "Use brand colour {value}",
+      "fromKit": "From Brand Kit",
+      "assetsTitle": "Logos and shapes from your Brand Kit",
+      "loading": "Loading …",
+      "assetsEmpty": "No logos or shapes yet.",
+      "openKit": "Open the Brand Kit",
+      "useAsset": "Use {name}"
     }
   },
   "sizes": {
@@ -303,7 +324,8 @@
       "failed": "That did not work. Please try again.",
       "not-found": "This design does not exist in this browser (any more).",
       "other-tool": "This design belongs to another tool.",
-      "invalid": "This design can no longer be opened with the current version."
+      "invalid": "This design can no longer be opened with the current version.",
+      "limit": "There is no room left here. Delete something first."
     },
     "editor": {
       "group": "Save design",
@@ -386,9 +408,135 @@
         "unsupported-version": "This file comes from a newer version of Motivo.",
         "too-many": "The file holds too many designs (at most 2000).",
         "timeout": "Checking the file took too long.",
-        "aborted": "Import cancelled."
+        "aborted": "Import cancelled.",
+        "brand-kit-file": "This is a Brand Kit file. Import it in the Brand Kit."
       },
       "dismiss": "Dismiss message"
+    }
+  },
+  "BrandKit": {
+    "nav": "Brand Kit",
+    "page": {
+      "metaTitle": "Brand Kit",
+      "metaDescription": "Your brand colours, logos and shapes, only in this browser.",
+      "title": "Brand Kit",
+      "intro": "Add your brand colours, logos and own shapes. In every tool you apply your palette with one click.",
+      "storageHint": "Your Brand Kit stays in this browser on this device, with no account and no server. If you clear your browser data, it is gone. Back it up as a file now and then. With that file you also bring it to another device.",
+      "loading": "Loading Brand Kit …",
+      "export": "Export",
+      "import": "Import",
+      "importing": "Importing …",
+      "exported": "Brand Kit saved as a file.",
+      "exportEmpty": "Your Brand Kit is still empty.",
+      "imported": "Imported {palettes, plural, =0 {no palettes} one {# palette} other {# palettes}} and {assets, plural, =0 {no images} one {# image} other {# images}}.",
+      "importDuplicates": "{count, plural, one {# entry was} other {# entries were}} already there.",
+      "importOverLimit": "{count, plural, one {# entry did} other {# entries did}} not fit any more.",
+      "importSkipped": "{count, plural, one {# entry was} other {# entries were}} skipped:",
+      "importRemoved": "For safety, Motivo removed parts of SVG files (count: {count}).",
+      "skippedPalette": "Palette {name}: {reason}",
+      "skippedAsset": "Image {name}: {reason}",
+      "skippedUnnamed": "Entry {index}: {reason}",
+      "skipReasons": {
+        "invalid": "invalid data",
+        "unsafe-image": "unsafe or damaged image"
+      },
+      "importErrors": {
+        "too-large": "The file is too large. At most 30 MB are allowed.",
+        "empty": "The file is empty.",
+        "malformed": "The file is damaged or not JSON.",
+        "forbidden-keys": "The file contains forbidden entries and was not imported.",
+        "wrong-format": "This is not a Motivo Brand Kit file.",
+        "unsupported-version": "This file comes from a newer version of Motivo.",
+        "too-many": "The file contains too many entries.",
+        "designs-file": "This is a designs file. Import it in “My designs”.",
+        "timeout": "Checking the file took too long.",
+        "aborted": "Import cancelled."
+      },
+      "dismiss": "Dismiss message",
+      "undo": "Undo"
+    },
+    "errors": {
+      "unavailable": "Motivo cannot save anything in this browser, for example in a private window or when site data is blocked.",
+      "quota": "This browser's storage is full. Delete old entries or export them as a file.",
+      "blocked": "Motivo is still open with an older version in another tab. Close that tab and try again.",
+      "failed": "That did not work. Please try again.",
+      "not-found": "This entry does not exist (any more) in this browser.",
+      "limit": "There is no room left here. Delete something first."
+    },
+    "palettes": {
+      "title": "Palettes",
+      "hint": "2 to 10 colours per palette. The default palette is preselected in the editor.",
+      "empty": "No palette yet. Create your first one.",
+      "add": "New palette",
+      "defaultBadge": "Default",
+      "makeDefault": "Make default",
+      "makeDefaultLabel": "Make {name} the default",
+      "edit": "Edit",
+      "editLabel": "Edit {name}",
+      "delete": "Delete",
+      "deleteLabel": "Delete {name}",
+      "deleted": "Palette “{name}” deleted.",
+      "restored": "Palette “{name}” is back.",
+      "saved": "Palette “{name}” saved.",
+      "defaultSet": "“{name}” is now the default palette.",
+      "unnamed": "Untitled palette",
+      "newName": "Palette {index}",
+      "colorsLabel": "Colours of {name}",
+      "form": {
+        "createTitle": "New palette",
+        "editTitle": "Edit palette",
+        "name": "Name",
+        "colors": "Colours",
+        "count": "{count} of 10 colours",
+        "picker": "Colour picker for colour {index}",
+        "hex": "HEX value of colour {index}",
+        "moveUp": "Move colour {index} up",
+        "moveDown": "Move colour {index} down",
+        "remove": "Remove colour {index}",
+        "addColor": "Add colour",
+        "save": "Save",
+        "cancel": "Cancel",
+        "invalidHex": "Enter a HEX value like #1e90ff for colour {index}.",
+        "moved": "Colour {index} is now at position {position}."
+      }
+    },
+    "assets": {
+      "logos": {
+        "title": "Logos",
+        "hint": "SVG, PNG, JPG or WebP up to 5 MB. SVG is cleaned, pictures are scaled down to at most 1024 px.",
+        "empty": "No logos yet.",
+        "add": "Add logo",
+        "added": "Logo “{name}” added."
+      },
+      "shapes": {
+        "title": "Own shapes",
+        "hint": "SVG only, up to 1 MB. The tools recolour shapes in your colours.",
+        "empty": "No shapes yet.",
+        "add": "Add shape",
+        "added": "Shape “{name}” added."
+      },
+      "usage": "In tools with an image upload, pick logos and shapes under “From Brand Kit”.",
+      "adding": "Checking file …",
+      "removedParts": "For safety, Motivo removed parts of the SVG file, such as scripts or external references (count: {count}).",
+      "delete": "Delete",
+      "deleteLabel": "Delete {name}",
+      "deleted": "“{name}” deleted.",
+      "restored": "“{name}” is back.",
+      "previewAlt": "Preview of {name}",
+      "unnamed": "Untitled",
+      "errors": {
+        "too-large": "The file is larger than 5 MB. Make it smaller and try again.",
+        "unsupported-type": "This format does not work here. Use SVG, PNG, JPG or WebP.",
+        "too-many-pixels": "The picture has too many pixels (over 64 megapixels). Make it smaller and try again.",
+        "read-failed": "The file could not be read. Please try again.",
+        "decode-failed": "The picture could not be opened. The file may be damaged.",
+        "timeout": "Processing took too long and was stopped. Try a smaller picture.",
+        "no-result": "The picture could not be processed. Please try again.",
+        "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
+        "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
+        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again.",
+        "shape-not-svg": "Shapes must be SVG files. Logos may also be PNG, JPG or WebP."
+      }
     }
   }
 }

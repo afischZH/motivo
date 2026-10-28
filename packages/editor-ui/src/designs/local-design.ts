@@ -126,7 +126,8 @@ function sameDesign(a: Snapshot, b: Snapshot): boolean {
 }
 
 function errorCode(error: unknown): LocalDesignErrorCode {
-  return error instanceof StorageError ? error.code : "failed";
+  // `limit` only concerns the brand kit lists.
+  return error instanceof StorageError && error.code !== "limit" ? error.code : "failed";
 }
 
 function startState(tool: AnyToolDefinition): Snapshot {
