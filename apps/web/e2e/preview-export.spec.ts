@@ -124,6 +124,8 @@ const CASES: Case[] = [
   { toolId: "screenshot-beautifier", preset: "Paper", css: true },
   // M4b-AP07: responsive website mockup (four devices, placeholder sites, per-device shadows).
   { toolId: "screenshot-beautifier", preset: "Responsive", css: true },
+  // M4c-AP02 favicon-generator: the icon is a square with transparent sides
+  // on this wide canvas, so its comparison runs square in favicon-generator.spec.ts.
 ];
 
 // Compare device pixels 1:1 (Desktop Safari defaults to a 2× display).
