@@ -53,7 +53,10 @@ async function requestsDuring(page: Page, action: () => Promise<void>): Promise<
 test.describe("saving designs locally", () => {
   test("save, reload, reopen, rename, duplicate and delete without a server", async ({ page }) => {
     await openEditor(page);
+    const initial = await previewSrc(page);
     await page.getByTestId("new-variant").click();
+    // Wait until the new variant is rendered before remembering it.
+    await expect.poll(() => previewSrc(page)).not.toBe(initial);
     const src = await previewSrc(page);
 
     const name = "E2E Blob 7f3a";
@@ -75,7 +78,7 @@ test.describe("saving designs locally", () => {
     await page.reload();
     await expect(page.getByTestId("design-name")).toHaveValue(name);
     await expect(page.getByTestId("design-status")).toHaveText("Saved");
-    expect(await previewSrc(page)).toBe(src);
+    await expect.poll(() => previewSrc(page)).toBe(src);
 
     // A change marks it, Ctrl/Cmd+S saves it again under the same id.
     const id = new URL(page.url()).hash.replace("#design=", "");
@@ -142,7 +145,7 @@ test.describe("saving designs locally", () => {
     await page.getByTestId("design-card").getByTestId("design-open").click();
     await expect(page).toHaveURL(new RegExp(`/en/tools/blob-generator#design=${id}$`));
     await expect(page.getByTestId("design-name")).toHaveValue("Renamed blob");
-    expect(await previewSrc(page)).toBe(savedSrc);
+    await expect.poll(() => previewSrc(page)).toBe(savedSrc);
   });
 
   test("restores the draft on return and can start over", async ({ page }) => {
@@ -216,7 +219,9 @@ test.describe("saving designs locally", () => {
 test.describe("moving designs with a file", () => {
   test("exports all designs and imports them into a fresh browser", async ({ page, browser }) => {
     await openEditor(page);
+    const initial = await previewSrc(page);
     await page.getByTestId("new-variant").click();
+    await expect.poll(() => previewSrc(page)).not.toBe(initial);
     const src = await previewSrc(page);
     await saveDesign(page, "Travelling blob");
     await page.goto(MY_DESIGNS);
