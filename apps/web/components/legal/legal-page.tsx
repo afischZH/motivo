@@ -44,7 +44,9 @@ export async function LegalPage({ page, locale }: { page: LegalPageId; locale: E
             { name: title, route: { page } },
           ]}
         />
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
+        <h1 className="text-3xl font-semibold tracking-tight break-words hyphens-auto sm:text-4xl">
+          {title}
+        </h1>
         <p className="text-sm text-muted-foreground">
           {t("Legal.lastUpdated", {
             date: format.dateTime(new Date(`${lastUpdated}T12:00:00Z`), {
