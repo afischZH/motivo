@@ -3,7 +3,7 @@
  * a valid, unique slug in every enabled locale. A new tool only needs an entry
  * in `TOOL_SLUGS`; this test names the ones that are missing.
  */
-import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
+import { TOOL_CATEGORIES, registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";

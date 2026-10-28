@@ -9,7 +9,9 @@ const base = new URL("https://example.test");
 
 describe("resolveSiteUrl", () => {
   it("uses the env value's origin", () => {
-    expect(resolveSiteUrl("https://motivo.example/de/").toString()).toBe("https://motivo.example/");
+    expect(resolveSiteUrl("https://musterli.example/de/").toString()).toBe(
+      "https://musterli.example/",
+    );
   });
 
   it("falls back to the workers.dev URL when unset or invalid", () => {

@@ -1,4 +1,4 @@
-import { createDesignStore, type DesignStore } from "@motivo/storage";
+import { createDesignStore, type DesignStore } from "@musterli/storage";
 import { IDBFactory } from "fake-indexeddb";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";

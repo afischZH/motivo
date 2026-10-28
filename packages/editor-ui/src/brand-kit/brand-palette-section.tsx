@@ -6,7 +6,7 @@
  * step. Generic: shown for every tool whose schema has colour params
  * (`acceptsBrandPalette`), nothing here knows a tool.
  */
-import { acceptsBrandPalette } from "@motivo/tool-registry";
+import { acceptsBrandPalette } from "@musterli/tool-registry";
 import { useId, useState } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT } from "../i18n";

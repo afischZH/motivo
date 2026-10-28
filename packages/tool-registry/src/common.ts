@@ -46,7 +46,7 @@ export const backgroundSchema = z
  * A user's own image (upload) held in a param of `kind: "image"`. Lives
  * only on the device (`ToolDefinition.localParams`), never in share links.
  *
- * - `svg`: the output of `@motivo/svg-sanitizer` (cropped already); tools
+ * - `svg`: the output of `@musterli/svg-sanitizer` (cropped already); tools
  *   must sanitise it again before use through `svgAssetFor` (svg-asset.ts:
  *   prepared in the editor's worker, a cache hit on render) and embed it
  *   only as an image, never as markup;

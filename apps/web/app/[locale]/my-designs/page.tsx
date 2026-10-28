@@ -4,7 +4,7 @@
  * nothing about it reaches a server. Personal, so `noindex` and not in the
  * sitemap.
  */
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";

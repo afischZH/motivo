@@ -9,7 +9,7 @@
  * jsdom) or the worker cannot start, the pure handlers run on the main
  * thread instead: correct, just not off the main thread.
  */
-import type { SvgRect } from "@motivo/svg-sanitizer";
+import type { SvgRect } from "@musterli/svg-sanitizer";
 import {
   cropSvg,
   readSvg,

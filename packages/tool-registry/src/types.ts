@@ -1,9 +1,9 @@
 /**
- * The tool contract. Every generator in Motivo is a `ToolDefinition`; the
+ * The tool contract. Every generator in Musterli is a `ToolDefinition`; the
  * editor shell, persistence, API and SEO pages are derived from it, so a new
  * tool never needs tool-specific code outside its own definition file.
  */
-import type { Rng } from "@motivo/engine";
+import type { Rng } from "@musterli/engine";
 import type * as z from "zod";
 
 /** How a tool produces its output. Mirrors `Renderer["kind"]`. */

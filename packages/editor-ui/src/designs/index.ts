@@ -2,7 +2,7 @@
  * Saved designs outside the editor ("Meine Designs" page): file transfer,
  * thumbnails and the storage layer, without pulling in the editor shell.
  */
-export * from "@motivo/storage";
+export * from "@musterli/storage";
 export {
   DESIGNS_FILE_FORMAT,
   DESIGNS_FILE_MAX_BYTES,

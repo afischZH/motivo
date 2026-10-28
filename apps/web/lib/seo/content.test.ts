@@ -4,7 +4,7 @@
  * category has a name and description, and the German copy follows the
  * style rules. A new tool fails here until its texts are written.
  */
-import { TOOL_CATEGORIES, registry } from "@motivo/tool-registry";
+import { TOOL_CATEGORIES, registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import de from "@/messages/de.json";

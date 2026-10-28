@@ -29,7 +29,7 @@ const importer: FileImporter<DesignsFileParseResult> = {
   async parseOnMain(file) {
     const [{ parseDesignsFile }, { registry }] = await Promise.all([
       import("./transfer"),
-      import("@motivo/tool-registry"),
+      import("@musterli/tool-registry"),
     ]);
     try {
       return parseDesignsFile(await file.text(), registry);

@@ -1,6 +1,6 @@
 # PRODUCT.md: Produktdefinition
 
-> Arbeitstitel: **Motivo** (Name, Domain und Marke vor dem Launch prüfen). Überall im Code als Konstante `APP_NAME` führen, damit ein Rename trivial bleibt.
+> Name: **Musterli**, Domain `musterli.app` (registriert am 2026-10-28; bis 2026-10-28 Arbeitstitel Motivo). Marke vor dem Launch noch prüfen.
 
 ## 1. Vision in einem Satz
 
@@ -63,10 +63,10 @@ Prioritäten: **P0** = MVP, **P1** = öffentlicher Launch, **P2** = Wachstum, **
 
 ## 6. Finanzierung: gratis und spendenfinanziert
 
-**Grundentscheid (2026-10-28, Andreas)**: Motivo ist **komplett gratis**. Es gibt **keine Konten, keine Bezahlfunktionen, keine Lizenzen, keine Credits und keine Bezahlschranke**. Alle Tools, Auflösungen und Exporte stehen allen offen. Finanziert wird der Betrieb über **freiwillige Spenden**.
+**Grundentscheid (2026-10-28, Andreas)**: Musterli ist **komplett gratis**. Es gibt **keine Konten, keine Bezahlfunktionen, keine Lizenzen, keine Credits und keine Bezahlschranke**. Alle Tools, Auflösungen und Exporte stehen allen offen. Finanziert wird der Betrieb über **freiwillige Spenden**.
 
 ### 6.1 Spenden
-- Spenden laufen über einen **externen Anbieter** (Entscheid Andreas, siehe `PROGRESS.md`). Motivo verlinkt nur dorthin: keine Zahlungsintegration, keine Kundendaten, keine Webhooks, keine Cookies auf unserer Domain.
+- Spenden laufen über einen **externen Anbieter** (Entscheid Andreas, siehe `PROGRESS.md`). Musterli verlinkt nur dorthin: keine Zahlungsintegration, keine Kundendaten, keine Webhooks, keine Cookies auf unserer Domain.
 - Eine eigene Seite "Unterstützen" erklärt kurz, wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung). Im Editor und im Footer höchstens ein **dezenter Hinweis**, nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
 - Optional später: transparente Seite mit Kosten und Spendeneingang pro Jahr.
 

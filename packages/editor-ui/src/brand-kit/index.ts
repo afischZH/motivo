@@ -20,7 +20,7 @@ export {
   type BrandKitStore,
   type BrandPalette,
   type StorageErrorCode,
-} from "@motivo/storage";
+} from "@musterli/storage";
 export {
   BRAND_KIT_FILE_FORMAT,
   BRAND_KIT_FILE_MAX_BYTES,

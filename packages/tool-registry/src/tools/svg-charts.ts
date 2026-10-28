@@ -9,7 +9,7 @@ import {
   CHART_TYPES,
   chartSvg,
   randomPalette,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema, visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

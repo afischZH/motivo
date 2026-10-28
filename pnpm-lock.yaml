@@ -50,22 +50,22 @@ importers:
 
   apps/web:
     dependencies:
-      '@motivo/editor-ui':
+      '@musterli/editor-ui':
         specifier: workspace:*
         version: link:../../packages/editor-ui
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../../packages/engine
-      '@motivo/exporters':
+      '@musterli/exporters':
         specifier: workspace:*
         version: link:../../packages/exporters
-      '@motivo/storage':
+      '@musterli/storage':
         specifier: workspace:*
         version: link:../../packages/storage
-      '@motivo/svg-sanitizer':
+      '@musterli/svg-sanitizer':
         specifier: workspace:*
         version: link:../../packages/svg-sanitizer
-      '@motivo/tool-registry':
+      '@musterli/tool-registry':
         specifier: workspace:*
         version: link:../../packages/tool-registry
       '@opennextjs/cloudflare':
@@ -99,7 +99,7 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.14.0
         version: 4.14.0(playwright-core@1.63.0)
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@playwright/test':
@@ -134,19 +134,19 @@ importers:
 
   packages/editor-ui:
     dependencies:
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
-      '@motivo/exporters':
+      '@musterli/exporters':
         specifier: workspace:*
         version: link:../exporters
-      '@motivo/storage':
+      '@musterli/storage':
         specifier: workspace:*
         version: link:../storage
-      '@motivo/svg-sanitizer':
+      '@musterli/svg-sanitizer':
         specifier: workspace:*
         version: link:../svg-sanitizer
-      '@motivo/tool-registry':
+      '@musterli/tool-registry':
         specifier: workspace:*
         version: link:../tool-registry
       fflate:
@@ -159,7 +159,7 @@ importers:
         specifier: ^5.0.16
         version: 5.0.16(@types/react@19.3.0)(react@19.3.1)
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
       '@testing-library/dom':
@@ -198,7 +198,7 @@ importers:
 
   packages/effects:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
@@ -208,20 +208,20 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
   packages/exporters:
     dependencies:
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
-      '@motivo/tool-registry':
+      '@musterli/tool-registry':
         specifier: workspace:*
         version: link:../tool-registry
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
       zod:
@@ -230,7 +230,7 @@ importers:
 
   packages/shaders:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
@@ -240,7 +240,7 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
       fake-indexeddb:
@@ -249,29 +249,29 @@ importers:
 
   packages/svg-sanitizer:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
   packages/tool-registry:
     dependencies:
-      '@motivo/engine':
+      '@musterli/engine':
         specifier: workspace:*
         version: link:../engine
-      '@motivo/svg-sanitizer':
+      '@musterli/svg-sanitizer':
         specifier: workspace:*
         version: link:../svg-sanitizer
       zod:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 
   packages/ui:
     devDependencies:
-      '@motivo/config':
+      '@musterli/config':
         specifier: workspace:*
         version: link:../config
 

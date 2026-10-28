@@ -5,7 +5,7 @@
  * call to action. Built from the registry and `lib/home.ts`; the preview is
  * the only client component.
  */
-import { registry, type AnyToolDefinition, type ToolCategory } from "@motivo/tool-registry";
+import { registry, type AnyToolDefinition, type ToolCategory } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";

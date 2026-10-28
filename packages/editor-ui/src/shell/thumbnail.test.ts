@@ -1,4 +1,4 @@
-import { polkaDotsTool } from "@motivo/tool-registry";
+import { polkaDotsTool } from "@musterli/tool-registry";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";

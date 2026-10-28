@@ -33,7 +33,7 @@ export const COMMON_GROUPS = {
 
 /**
  * Labels of extra exports. Generic (not per tool) because the same output
- * kind recurs across tools; the messages live in `@motivo/editor-ui`
+ * kind recurs across tools; the messages live in `@musterli/editor-ui`
  * (`Editor.export.extras.*`) next to the export dialog.
  */
 export const EXTRA_EXPORT_LABELS = {

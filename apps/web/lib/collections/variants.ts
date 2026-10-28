@@ -7,8 +7,8 @@
  * CSS previews, the static thumbnail SVGs under `/motifs/<toolId>/` and the
  * OG images: one render path per tool. Server only, build time.
  */
-import { tailwindTheme, toCssName } from "@motivo/engine";
-import { createRenderContext, registry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { tailwindTheme, toCssName } from "@musterli/engine";
+import { createRenderContext, registry, type AnyToolDefinition } from "@musterli/tool-registry";
 
 import { STATIC_SEED, designSvg, toolSize, type StaticDesign } from "@/lib/seo/motifs";
 

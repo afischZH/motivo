@@ -1,5 +1,5 @@
-import { createRng } from "@motivo/engine";
-import { DEFAULT_CANVAS_SIZE, cssPatternsTool, registry } from "@motivo/tool-registry";
+import { createRng } from "@musterli/engine";
+import { DEFAULT_CANVAS_SIZE, cssPatternsTool, registry } from "@musterli/tool-registry";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fixture-tool";
 import {

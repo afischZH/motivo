@@ -1,5 +1,5 @@
 {
-  "name": "@motivo/svg-sanitizer",
+  "name": "@musterli/svg-sanitizer",
   "version": "0.0.0",
   "private": true,
   "description": "Strict whitelist SVG sanitizer without DOM (browser, worker, server)",
@@ -13,6 +13,6 @@
     "test": "vitest run --passWithNoTests"
   },
   "devDependencies": {
-    "@motivo/config": "workspace:*"
+    "@musterli/config": "workspace:*"
   }
 }

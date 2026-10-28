@@ -1,7 +1,7 @@
 /**
  * Curated gradient collection: our own named gradients, defined as OKLCH
  * stops plus the CSS Gradient tool's geometry. Clean-room: colours, names
- * and texts were made for Motivo and are not taken from any other gradient
+ * and texts were made for Musterli and are not taken from any other gradient
  * site. Each gradient renders through the `css-gradient` tool (one render
  * path: page preview, copied CSS and editor link use the same params).
  *
@@ -9,7 +9,7 @@
  * and `GradientCollection.items.<id>` in both message files. The contract
  * tests in `collections.test.ts` and `i18n/slugs.test.ts` name what is missing.
  */
-import type { GradientType } from "@motivo/engine";
+import type { GradientType } from "@musterli/engine";
 
 import { lchToHex, relatedItems, type Lch } from "./colors";
 

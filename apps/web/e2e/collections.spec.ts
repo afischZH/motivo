@@ -5,7 +5,7 @@
  * light and dark, and no horizontal overflow at 375/768/1280 px.
  */
 import AxeBuilder from "@axe-core/playwright";
-import { hexToRgb255 } from "@motivo/engine";
+import { hexToRgb255 } from "@musterli/engine";
 import { expect, test, type Page } from "@playwright/test";
 
 import { curatedGradients, findGradient } from "../lib/collections/gradients";

@@ -1,7 +1,7 @@
 "use client";
 
-import { supportsExport } from "@motivo/exporters";
-import type { BrandKitStore, DesignStore } from "@motivo/storage";
+import { supportsExport } from "@musterli/exporters";
+import type { BrandKitStore, DesignStore } from "@musterli/storage";
 import {
   TRANSPARENT,
   createRenderContext,
@@ -9,7 +9,7 @@ import {
   type AnyToolDefinition,
   type Params,
   type ParamsSchema,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { useLocale } from "next-intl";
 import {
   useCallback,

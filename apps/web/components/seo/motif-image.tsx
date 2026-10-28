@@ -1,4 +1,4 @@
-import type { AnyToolDefinition } from "@motivo/tool-registry";
+import type { AnyToolDefinition } from "@musterli/tool-registry";
 
 import { cn } from "@/lib/utils";
 import { DEFAULT_MOTIF, hasStaticMotif, motifPath, toolSize } from "@/lib/seo/motifs";

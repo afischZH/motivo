@@ -415,7 +415,7 @@ test.describe("preview equals PNG export in strips (canvas area limit)", () => {
     await page.addInitScript(
       ({ area }) => {
         const w = window as unknown as Record<string, unknown>;
-        w.__motivoMaxCanvasArea = area;
+        w.__musterliMaxCanvasArea = area;
         const log: string[] = [];
         w.__rasterWorkerLog = log;
         const post = Worker.prototype.postMessage;

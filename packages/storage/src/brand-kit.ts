@@ -1,7 +1,7 @@
 /**
  * The brand kit in IndexedDB (M3-AP05): palettes, logos and own shapes of
  * the user's brand. Everything stays in this browser; moving it to another
- * device goes through a brand kit file (`@motivo/editor-ui` brand-kit
+ * device goes through a brand kit file (`@musterli/editor-ui` brand-kit
  * transfer).
  *
  * Layout (database `motivo` version 2, see idb.ts):

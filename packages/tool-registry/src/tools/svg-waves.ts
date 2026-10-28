@@ -2,7 +2,7 @@
  * M1-AP09: SVG Waves (docs/TOOLS.md D3). Stacked wave layers with colours
  * blended across the palette.
  */
-import { WAVE_DIRECTIONS, randomPalette, wavesSvg } from "@motivo/engine";
+import { WAVE_DIRECTIONS, randomPalette, wavesSvg } from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { keepLocked } from "../randomize";

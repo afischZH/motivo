@@ -2,7 +2,7 @@
  * M3-AP08: tool-level tests of Blob Composition, Doodle Backgrounds and SVG
  * Charts beyond the generic contract and preset snapshots in tools.test.ts.
  */
-import { MAX_DOODLES, createRng } from "@motivo/engine";
+import { MAX_DOODLES, createRng } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import { itemLockKey, parseToolParams } from "../randomize";
 import { renderStatic } from "../testing";

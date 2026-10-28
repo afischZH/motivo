@@ -1,4 +1,4 @@
-import { createBrandKitStore, type BrandKitStore } from "@motivo/storage";
+import { createBrandKitStore, type BrandKitStore } from "@musterli/storage";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { IDBFactory } from "fake-indexeddb";

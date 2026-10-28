@@ -13,7 +13,7 @@ import {
   blobCompositionSvg,
   randomPalette,
   type Rng,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { visualParamsSchema } from "../common";
 import { isItemLocked, keepLocked } from "../randomize";

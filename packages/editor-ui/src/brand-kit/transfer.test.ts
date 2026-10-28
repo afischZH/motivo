@@ -5,15 +5,15 @@ import {
   BRAND_SVG_MAX_LENGTH,
   type BrandAsset,
   type BrandPalette,
-} from "@motivo/storage";
+} from "@musterli/storage";
 import {
   IMAGE_ASSET_MAX_RASTER_LENGTH,
   IMAGE_ASSET_MAX_SVG_LENGTH,
   IMAGE_ASSET_RASTER_MAX_EDGE,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { DESIGNS_FILE_FORMAT, parseDesignsFile } from "../designs/transfer";
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import { readBrandKitFile } from "./import-client";
 import { brandImageToFile } from "./prepare";
 import {
@@ -90,7 +90,7 @@ describe("brand kit file", () => {
     expect(parsed.defaultId).toBe("p2");
     expect(parsed.assets).toHaveLength(2);
     expect(parsed.skipped).toEqual([]);
-    expect(brandKitFileName(new Date(2026, 9, 28))).toBe("motivo-brandkit-v1-2026-10-28.json");
+    expect(brandKitFileName(new Date(2026, 9, 28))).toBe("musterli-brandkit-v1-2026-10-28.json");
   });
 
   it("normalises colours and skips invalid palettes", () => {

@@ -5,7 +5,7 @@
  * their text contrast, CSS variables and a Tailwind theme, gradients made
  * from the palette (share links `#d=`), the colour tools, similar palettes.
  */
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";

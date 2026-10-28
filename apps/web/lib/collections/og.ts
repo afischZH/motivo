@@ -5,7 +5,7 @@
  * Gradient for gradients, Palette Generator without labels for palettes).
  * Nothing here imports the app's routing: the build script loads this file.
  */
-import { createRenderContext } from "@motivo/tool-registry";
+import { createRenderContext } from "@musterli/tool-registry";
 
 import type { CollectionKind } from "@/i18n/slugs";
 import { OG_SIZE } from "@/lib/seo/og";

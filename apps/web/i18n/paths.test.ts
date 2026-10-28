@@ -1,4 +1,4 @@
-import type { ToolCategory } from "@motivo/tool-registry";
+import type { ToolCategory } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import { CONVERTER_IDS } from "@/lib/convert/ids";

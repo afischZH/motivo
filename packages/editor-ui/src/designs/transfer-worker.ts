@@ -5,6 +5,6 @@
 export function createTransferWorker(): Worker {
   return new Worker(new URL("./transfer.worker.ts", import.meta.url), {
     type: "module",
-    name: "motivo-designs-import",
+    name: "musterli-designs-import",
   });
 }

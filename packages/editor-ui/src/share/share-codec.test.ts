@@ -1,4 +1,4 @@
-import { createRng } from "@motivo/engine";
+import { createRng } from "@musterli/engine";
 import {
   builtInTools,
   createRegistry,
@@ -8,7 +8,7 @@ import {
   seamlessPatternsTool,
   withoutDerivedParams,
   type AnyToolDefinition,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { deflateSync, inflateSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import { createEditorStore, selectDesign, type Design } from "../store/editor-store";

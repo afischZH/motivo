@@ -1,7 +1,7 @@
 /**
  * Saved designs and autosave drafts in IndexedDB (M3-AP03). Everything stays
  * in this browser; moving designs to another device goes through a file
- * (export/import, see `@motivo/editor-ui` designs transfer).
+ * (export/import, see `@musterli/editor-ui` designs transfer).
  *
  * Layout (database `motivo`, see idb.ts):
  *  - `designs`: id, tool, name, seed, size, timestamps, thumbnail. Enough

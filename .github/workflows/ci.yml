@@ -53,7 +53,7 @@ jobs:
     env:
       # Placeholder donation link, so e2e/support.spec.ts checks the button
       # (without it, the spec checks the "link follows soon" state instead).
-      NEXT_PUBLIC_DONATION_URL: https://donate.example/motivo
+      NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
     steps:
       - uses: actions/checkout@v5
 
@@ -67,7 +67,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm --filter @motivo/web exec playwright install --with-deps chromium firefox webkit
+        run: pnpm --filter @musterli/web exec playwright install --with-deps chromium firefox webkit
 
       # The Playwright web server runs `next start` in CI, so the app must be built first.
       - name: Build

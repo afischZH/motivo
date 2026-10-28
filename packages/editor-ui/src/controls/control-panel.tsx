@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnyToolDefinition, ImageAsset } from "@motivo/tool-registry";
+import type { AnyToolDefinition, ImageAsset } from "@musterli/tool-registry";
 import { useId, useMemo, type ReactNode } from "react";
 import { useT } from "../i18n";
 import type { ParamValues } from "../store/editor-store";

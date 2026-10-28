@@ -1,8 +1,8 @@
 import { deflateRawSync } from "node:zlib";
 
-import { designFromHash } from "@motivo/editor-ui/share";
-import { exportCss, exportSvg } from "@motivo/exporters";
-import { createRenderContext, registry } from "@motivo/tool-registry";
+import { designFromHash } from "@musterli/editor-ui/share";
+import { exportCss, exportSvg } from "@musterli/exporters";
+import { createRenderContext, registry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 
 import de from "@/messages/de.json";

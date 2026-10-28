@@ -12,7 +12,7 @@
  * decoding falls back to an `<img>` on the main thread and deriving runs
  * there too (the pixels are at most `maxEdge`², so that stays short).
  */
-import { deriveFromImage, type AnyToolDefinition, type PixelBuffer } from "@motivo/tool-registry";
+import { deriveFromImage, type AnyToolDefinition, type PixelBuffer } from "@musterli/tool-registry";
 import type { ParamValues } from "../store/editor-store";
 import { checkImageBytes, checkImageSize, type ImageInputError } from "./check";
 import { fitWithin } from "./dimensions";

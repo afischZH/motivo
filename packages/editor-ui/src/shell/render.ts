@@ -9,7 +9,7 @@ import {
   type AnyToolDefinition,
   type CanvasSize,
   type RenderKind,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import type { ParamValues } from "../store/editor-store";
 
 /** A React-compatible inline style: camelCase or custom-property keys. */

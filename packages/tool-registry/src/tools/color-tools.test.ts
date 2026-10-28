@@ -1,4 +1,4 @@
-import { createRng, hexToOklch } from "@motivo/engine";
+import { createRng, hexToOklch } from "@musterli/engine";
 import { describe, expect, it } from "vitest";
 import { createRenderContext } from "../render";
 import { renderStatic } from "../testing";

@@ -2,7 +2,7 @@ import {
   seamlessPatternsTool,
   type ImageAsset,
   type SeamlessPatternsParams,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 // Test-only cross-package import: tool texts live in the web app.

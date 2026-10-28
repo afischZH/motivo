@@ -1,5 +1,5 @@
 /**
- * Support page (M3-AP14): why Motivo is free and what donations pay for,
+ * Support page (M3-AP14): why Musterli is free and what donations pay for,
  * with a plain link to the external donation provider. Static; the link
  * comes from `NEXT_PUBLIC_DONATION_URL` at build time (`lib/donation.ts`).
  * Without it, the page shows a neutral "link follows soon" note instead of a

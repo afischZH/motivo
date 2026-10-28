@@ -6,6 +6,6 @@
 export function createImageInputWorker(): Worker {
   return new Worker(new URL("./image-input.worker.ts", import.meta.url), {
     type: "module",
-    name: "motivo-image-input",
+    name: "musterli-image-input",
   });
 }

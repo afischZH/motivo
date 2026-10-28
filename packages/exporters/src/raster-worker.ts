@@ -6,6 +6,6 @@
 export function createRasterWorker(): Worker {
   return new Worker(new URL("./raster.worker.ts", import.meta.url), {
     type: "module",
-    name: "motivo-raster",
+    name: "musterli-raster",
   });
 }

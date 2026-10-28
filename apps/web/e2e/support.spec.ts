@@ -21,7 +21,7 @@ const PAGES = [
   {
     locale: "de",
     path: "/de/unterstuetzen",
-    title: "Motivo unterstützen",
+    title: "Musterli unterstützen",
     button: "Jetzt spenden",
     soon: "Spenden-Link folgt bald",
     other: "/en/support",
@@ -29,7 +29,7 @@ const PAGES = [
   {
     locale: "en",
     path: "/en/support",
-    title: "Support Motivo",
+    title: "Support Musterli",
     button: "Donate now",
     soon: "Donation link coming soon",
     other: "/de/unterstuetzen",
@@ -69,9 +69,9 @@ test.describe("support page", () => {
   test("the footer links to it", async ({ page }) => {
     await page.goto("/de");
     const footer = page.getByRole("contentinfo");
-    await footer.getByRole("link", { name: "Motivo unterstützen" }).click();
+    await footer.getByRole("link", { name: "Musterli unterstützen" }).click();
     await expect(page).toHaveURL(/\/de\/unterstuetzen$/);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Motivo unterstützen");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Musterli unterstützen");
   });
 
   for (const scheme of ["light", "dark"] as const) {
@@ -115,7 +115,7 @@ test.describe("export dialog hint", () => {
     await expect(dialog.getByRole("status")).toHaveText("Downloaded.");
 
     const hint = dialog.getByTestId("export-after");
-    await expect(hint).toHaveText("Enjoying Motivo? Support the project (opens in a new tab).");
+    await expect(hint).toHaveText("Enjoying Musterli? Support the project (opens in a new tab).");
     const link = hint.getByRole("link", { name: /Support the project/ });
     await expect(link).toHaveAttribute("href", "/en/support");
     await expect(link).toHaveAttribute("target", "_blank");

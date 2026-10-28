@@ -15,7 +15,7 @@ import { scrubEvent } from "./scrub";
 const TOKEN = "0123456789abcdef0123456789abcdef";
 const DSN = "https://public@o123.ingest.de.sentry.io/456";
 const PROD = { NODE_ENV: "production" } as const;
-const BASE = new URL("https://motivo.example");
+const BASE = new URL("https://musterli.example");
 const ALL: TelemetryEnv = {
   ...PROD,
   NEXT_PUBLIC_CF_ANALYTICS_TOKEN: TOKEN,
@@ -63,12 +63,15 @@ describe("telemetry config", () => {
 
 describe("telemetryPlan", () => {
   it("loads nothing without variables, on any host", () => {
-    expect(telemetryPlan(PROD, "motivo.example", BASE)).toEqual({ analytics: null, errors: null });
+    expect(telemetryPlan(PROD, "musterli.example", BASE)).toEqual({
+      analytics: null,
+      errors: null,
+    });
     expect(telemetryPlan(PROD, "localhost:3000", BASE)).toEqual({ analytics: null, errors: null });
   });
 
   it("runs analytics only on the production host", () => {
-    expect(telemetryPlan(ALL, "motivo.example", BASE).analytics).toEqual({
+    expect(telemetryPlan(ALL, "musterli.example", BASE).analytics).toEqual({
       token: TOKEN,
       script: "https://static.cloudflareinsights.com/beacon.min.js",
     });
@@ -77,7 +80,7 @@ describe("telemetryPlan", () => {
   });
 
   it("tags errors with the environment", () => {
-    expect(telemetryPlan(ALL, "motivo.example", BASE).errors).toEqual({
+    expect(telemetryPlan(ALL, "musterli.example", BASE).errors).toEqual({
       dsn: DSN,
       environment: "production",
     });

@@ -1,12 +1,12 @@
 {
   "Metadata": {
-    "title": "Motivo",
+    "title": "Musterli",
     "description": "Generatoren für Muster, Verläufe und Hintergründe, direkt im Browser."
   },
   "Layout": {
     "skipToContent": "Zum Inhalt springen",
-    "homeLink": "Motivo, zur Startseite",
-    "brand": "Motivo",
+    "homeLink": "Musterli, zur Startseite",
+    "brand": "Musterli",
     "footerTagline": "Grafiken für deine Projekte, gerendert auf deinem Gerät.",
     "languageNav": "Sprache",
     "languages": {
@@ -24,7 +24,7 @@
     "title": "Motive per Klick",
     "lead": "Muster, Verläufe und Hintergründe, direkt in deinem Browser gerendert. Die ersten Generatoren sind bald da.",
     "engineCheck": "Engine-Check:",
-    "metaTitle": "Motivo: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
+    "metaTitle": "Musterli: Muster, Verläufe und Hintergründe gratis im Browser erstellen",
     "metaDescription": "Gratis Generatoren für Muster, Verläufe, Hintergründe und Farbpaletten. Alles läuft in deinem Browser, Export als SVG, PNG oder CSS. Ohne Konto.",
     "hero": {
       "title": "Motive per Klick",
@@ -44,7 +44,7 @@
       "next": "Neue Variante"
     },
     "values": {
-      "heading": "Warum Motivo",
+      "heading": "Warum Musterli",
       "free": {
         "title": "Gratis Generatoren",
         "text": "Alle Generatoren und Konverter sind gratis nutzbar, ohne Anmeldung, ohne Limits und ohne Wasserzeichen auf deinen Motiven."
@@ -55,7 +55,7 @@
       },
       "donations": {
         "title": "Getragen von Spenden",
-        "text": "Motivo finanziert sich über freiwillige Spenden. Es gibt keine Bezahlschranke, kein Abo und keine Pro-Version."
+        "text": "Musterli finanziert sich über freiwillige Spenden. Es gibt keine Bezahlschranke, kein Abo und keine Pro-Version."
       }
     },
     "categories": {
@@ -86,8 +86,8 @@
     "faq": {
       "heading": "Häufige Fragen",
       "q1": {
-        "question": "Kostet Motivo etwas?",
-        "answer": "Nein. Alle Generatoren, Konverter und Exporte sind gratis, ohne Limits. Motivo finanziert sich über freiwillige Spenden."
+        "question": "Kostet Musterli etwas?",
+        "answer": "Nein. Alle Generatoren, Konverter und Exporte sind gratis, ohne Limits. Musterli finanziert sich über freiwillige Spenden."
       },
       "q2": {
         "question": "Brauche ich ein Konto?",
@@ -99,7 +99,7 @@
       },
       "q4": {
         "question": "Darf ich die Motive kommerziell nutzen?",
-        "answer": "Ja. Was du mit Motivo exportierst, darfst du frei verwenden, auch kommerziell. Den genauen Lizenztext veröffentlichen wir auf dieser Website."
+        "answer": "Ja. Was du mit Musterli exportierst, darfst du frei verwenden, auch kommerziell. Den genauen Lizenztext veröffentlichen wir auf dieser Website."
       },
       "q5": {
         "question": "Welche Formate kann ich exportieren?",
@@ -118,15 +118,15 @@
     "home": "Zur Startseite"
   },
   "ToolsIndex": {
-    "metaTitle": "Generatoren | Motivo",
+    "metaTitle": "Generatoren | Musterli",
     "metaDescription": "Alle Generatoren für Muster, Verläufe und Hintergründe, direkt in deinem Browser.",
     "title": "Generatoren",
     "lead": "Such dir einen Generator aus, drück die Leertaste und lass dich überraschen."
   },
   "ToolPage": {
-    "metaTitle": "{tool} | Motivo",
+    "metaTitle": "{tool} | Musterli",
     "allTools": "Alle Generatoren",
-    "supportHint": "Gefällt dir Motivo? <link>Unterstütze das Projekt</link>.",
+    "supportHint": "Gefällt dir Musterli? <link>Unterstütze das Projekt</link>.",
     "newTab": "(öffnet in neuem Tab)"
   },
   "tools": {
@@ -324,7 +324,7 @@
           },
           "q5": {
             "question": "Darf ich die Muster kommerziell nutzen?",
-            "answer": "Ja. Was du mit Motivo erstellst, gehört dir und darf in eigenen und kommerziellen Projekten verwendet werden."
+            "answer": "Ja. Was du mit Musterli erstellst, gehört dir und darf in eigenen und kommerziellen Projekten verwendet werden."
           }
         }
       },
@@ -769,11 +769,11 @@
           },
           "q4": {
             "question": "Warum ist meine SVG-Datei einfarbig?",
-            "answer": "Ohne die Option Originalfarben behalten färbt Motivo die Grafik in deiner Motivfarbe oder Palette ein. Schalte die Option ein, um die Farben der Datei zu behalten."
+            "answer": "Ohne die Option Originalfarben behalten färbt Musterli die Grafik in deiner Motivfarbe oder Palette ein. Schalte die Option ein, um die Farben der Datei zu behalten."
           },
           "q5": {
             "question": "Warum wurden Teile meiner SVG-Datei entfernt?",
-            "answer": "Motivo lässt aus Sicherheitsgründen nur einfache Grafikelemente durch. Skripte, eingebettete Webinhalte, Schriften und Verweise auf andere Dateien werden entfernt."
+            "answer": "Musterli lässt aus Sicherheitsgründen nur einfache Grafikelemente durch. Skripte, eingebettete Webinhalte, Schriften und Verweise auf andere Dateien werden entfernt."
           }
         }
       }
@@ -1397,7 +1397,7 @@
         "primaries": "Grundfarben"
       },
       "seo": {
-        "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Motivo rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
+        "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Musterli rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
         "howTo": "Drück die Leertaste für eine neue Palette. Sperr Farben, die dir gefallen, mit dem Schloss, wähl eine Harmonie und exportier die Palette als CSS-Variablen, HEX-Liste oder Bild.",
         "faq": {
           "q1": "Was bedeuten die Harmonien?",
@@ -1552,7 +1552,7 @@
           "q1": "Wird mein Bild hochgeladen?",
           "a1": "Nein. Das Bild wird in deinem Browser verkleinert und ausgewertet. Es verlässt dein Gerät nicht, landet nicht in geteilten Links und wird nicht gespeichert.",
           "q2": "Wie werden die Farben gefunden?",
-          "a2": "Motivo gruppiert die Pixel mit k-Means im OKLab-Farbraum, der Farbunterschiede so misst, wie das Auge sie wahrnimmt. Jede Gruppe ergibt eine Farbe, ihr Anteil ist die Fläche, die sie im Bild einnimmt.",
+          "a2": "Musterli gruppiert die Pixel mit k-Means im OKLab-Farbraum, der Farbunterschiede so misst, wie das Auge sie wahrnimmt. Jede Gruppe ergibt eine Farbe, ihr Anteil ist die Fläche, die sie im Bild einnimmt.",
           "q3": "Warum ändert die Leertaste die Palette?",
           "a3": "k-Means startet mit zufällig gewählten Farben und kann je nach Start bei leicht anderen Gruppen landen. Mit der Leertaste probierst du einen neuen Start aus und behältst die Variante, die dir am besten gefällt.",
           "q4": "Warum zeigt ein geteilter Link das Beispielbild?",
@@ -1913,12 +1913,12 @@
     "breadcrumbLabel": "Pfad"
   },
   "Landing": {
-    "metaTitle": "{tool} online | Motivo",
+    "metaTitle": "{tool} online | Musterli",
     "cta": "Generator öffnen",
     "ctaSecondary": "{tool} jetzt ausprobieren",
     "ctaHint": "Läuft direkt in deinem Browser. Deine Grafiken entstehen auf deinem Gerät.",
     "previewAlt": "Beispielmotiv aus dem {tool}",
-    "ogAlt": "{tool} von Motivo mit einem Beispielmotiv",
+    "ogAlt": "{tool} von Musterli mit einem Beispielmotiv",
     "presetsHeading": "Mit einem Preset starten",
     "presetsLead": "Wähle ein Preset, es öffnet sich direkt im Editor. Dort passt du alles an.",
     "presetLink": "{preset}, im Editor öffnen",
@@ -1939,7 +1939,7 @@
     "allConverters": "Alle Konverter"
   },
   "CategoryPage": {
-    "metaTitle": "{category}: Generatoren | Motivo",
+    "metaTitle": "{category}: Generatoren | Musterli",
     "otherCategories": "Weitere Kategorien",
     "backToCatalogue": "Alle Generatoren"
   },
@@ -1982,7 +1982,7 @@
     }
   },
   "PatternLibrary": {
-    "metaTitle": "CSS-Muster zum Kopieren: {count} Muster | Motivo",
+    "metaTitle": "CSS-Muster zum Kopieren: {count} Muster | Musterli",
     "metaDescription": "{count} Hintergrundmuster aus reinem CSS: Punkte, Raster, Streifen, Wellen und Geometrie. Kopieren, einfügen, fertig.",
     "title": "CSS-Muster",
     "lead": "Hintergründe aus reinem CSS, ganz ohne Bilddatei. Such dir ein Muster aus, kopiere den Code oder pass Farben und Grösse im Editor an.",
@@ -1990,11 +1990,11 @@
     "all": "Alle",
     "count": "{count, plural, one {# Muster} other {# Muster}}",
     "openGenerator": "Eigenes Muster im Editor gestalten",
-    "ogAlt": "Auswahl an CSS-Mustern von Motivo",
+    "ogAlt": "Auswahl an CSS-Mustern von Musterli",
     "nav": "CSS-Muster"
   },
   "PatternPage": {
-    "metaTitle": "{pattern}: CSS-Muster zum Kopieren | Motivo",
+    "metaTitle": "{pattern}: CSS-Muster zum Kopieren | Musterli",
     "metaDescription": "{description} Reines CSS, bereit zum Kopieren, mit Tailwind-Klassen und SVG-Export.",
     "heading": "{pattern} als CSS-Muster",
     "previewLabel": "Vorschau des Musters {pattern}",
@@ -2012,27 +2012,27 @@
     "howTo": "Kopiere das CSS in die Regel des Elements, das das Muster tragen soll, zum Beispiel einen Abschnitt, eine Karte oder den body. Die Farben stehen als Hex-Werte im Code und lassen sich direkt austauschen. Im Editor änderst du alles mit Reglern und exportierst das Muster auch als SVG oder PNG.",
     "relatedHeading": "Ähnliche Muster",
     "backToLibrary": "Alle CSS-Muster",
-    "ogAlt": "{pattern}, ein CSS-Muster von Motivo"
+    "ogAlt": "{pattern}, ein CSS-Muster von Musterli"
   },
   "Footer": {
     "nav": "Fusszeile",
-    "productHeading": "Motivo",
+    "productHeading": "Musterli",
     "legalHeading": "Rechtliches",
     "catalogue": "Alle Tools",
     "converters": "Konverter",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "support": "Motivo unterstützen",
+    "support": "Musterli unterstützen",
     "gradients": "Farbverläufe",
     "palettes": "Farbpaletten"
   },
   "Support": {
-    "metaTitle": "Motivo unterstützen",
-    "metaDescription": "Motivo ist gratis, ohne Konto und ohne Tracking. Mit einer Spende hilfst du, Domain, Hosting und die Weiterentwicklung zu finanzieren.",
-    "title": "Motivo unterstützen",
-    "lead": "Motivo ist gratis und bleibt es. Es gibt kein Konto, kein Abo und kein Tracking. Wenn dir Motivo hilft und du etwas zurückgeben möchtest, freuen wir uns über eine Spende.",
+    "metaTitle": "Musterli unterstützen",
+    "metaDescription": "Musterli ist gratis, ohne Konto und ohne Tracking. Mit einer Spende hilfst du, Domain, Hosting und die Weiterentwicklung zu finanzieren.",
+    "title": "Musterli unterstützen",
+    "lead": "Musterli ist gratis und bleibt es. Es gibt kein Konto, kein Abo und kein Tracking. Wenn dir Musterli hilft und du etwas zurückgeben möchtest, freuen wir uns über eine Spende.",
     "facts": {
-      "heading": "So funktioniert Motivo",
+      "heading": "So funktioniert Musterli",
       "free": {
         "title": "Gratis, ohne Konto",
         "text": "Alle Tools, Grössen und Exportformate stehen allen offen. Du musst dich nirgends anmelden."
@@ -2048,23 +2048,23 @@
     },
     "uses": {
       "heading": "Wofür deine Spende ist",
-      "domain": "Die Domain, damit Motivo unter seiner Adresse erreichbar bleibt.",
+      "domain": "Die Domain, damit Musterli unter seiner Adresse erreichbar bleibt.",
       "hosting": "Das Hosting, damit die Seiten schnell und zuverlässig laden.",
       "development": "Die Weiterentwicklung: neue Generatoren, Verbesserungen und Fehlerbehebungen."
     },
     "donate": {
       "heading": "Spenden",
-      "text": "Jeder Betrag hilft. Eine Spende ist freiwillig und schaltet nichts frei, denn bei Motivo ist schon alles offen.",
+      "text": "Jeder Betrag hilft. Eine Spende ist freiwillig und schaltet nichts frei, denn bei Musterli ist schon alles offen.",
       "button": "Jetzt spenden",
-      "external": "Der Link führt zu unserem externen Spendenanbieter. Zahlungsdaten gibst du nur dort ein, nie bei Motivo.",
+      "external": "Der Link führt zu unserem externen Spendenanbieter. Zahlungsdaten gibst du nur dort ein, nie bei Musterli.",
       "soon": "Spenden-Link folgt bald",
       "soonText": "Wir richten die Spendenmöglichkeit gerade ein. Schau bald wieder vorbei."
     },
     "other": {
       "heading": "Andere Wege zu helfen",
-      "text": "Erzähl anderen von Motivo oder teile ein Motiv, das dir gefällt. Auch das hilft uns sehr."
+      "text": "Erzähl anderen von Musterli oder teile ein Motiv, das dir gefällt. Auch das hilft uns sehr."
     },
-    "thanks": "Danke, dass du Motivo nutzt."
+    "thanks": "Danke, dass du Musterli nutzt."
   },
   "Legal": {
     "draftBanner": {
@@ -2080,7 +2080,7 @@
     },
     "imprint": {
       "metaTitle": "Impressum",
-      "metaDescription": "Impressum von Motivo: Betreiber, Kontakt und rechtliche Hinweise.",
+      "metaDescription": "Impressum von Musterli: Betreiber, Kontakt und rechtliche Hinweise.",
       "title": "Impressum",
       "sections": {
         "contact": {
@@ -2116,9 +2116,9 @@
     },
     "privacy": {
       "metaTitle": "Datenschutzerklärung",
-      "metaDescription": "Wie Motivo mit Daten umgeht: kein Konto, keine Cookies, Bilder bleiben im Browser, cookiefreie Statistik und Fehlerberichte.",
+      "metaDescription": "Wie Musterli mit Daten umgeht: kein Konto, keine Cookies, Bilder bleiben im Browser, cookiefreie Statistik und Fehlerberichte.",
       "title": "Datenschutzerklärung",
-      "intro": "Motivo ist so gebaut, dass möglichst wenige Daten anfallen. Es gibt kein Konto, keine Cookies und kein Tracking über Websites hinweg. Motive und Bilder werden in deinem Browser berechnet. Hier erfährst du, welche Daten trotzdem anfallen und wofür.",
+      "intro": "Musterli ist so gebaut, dass möglichst wenige Daten anfallen. Es gibt kein Konto, keine Cookies und kein Tracking über Websites hinweg. Motive und Bilder werden in deinem Browser berechnet. Hier erfährst du, welche Daten trotzdem anfallen und wofür.",
       "sections": {
         "controller": {
           "heading": "Verantwortliche Stelle",
@@ -2160,8 +2160,8 @@
         "cookies": {
           "heading": "Keine Cookies, nur lokale Einstellungen",
           "paragraphs": [
-            "Motivo setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen.",
-            "Designs, die du speicherst, automatische Entwürfe im Editor und dein Brand Kit (Paletten, Logos, Shapes) legt Motivo in der Datenbank deines Browsers ab (IndexedDB). Auch diese Daten bleiben auf deinem Gerät und werden nicht an uns gesendet. Du löschst sie in Motivo selbst oder, wie die Einstellungen, über die Browser-Einstellungen."
+            "Musterli setzt keine Cookies. Damit du dein Design und dein bevorzugtes Exportformat nicht jedes Mal neu wählen musst, speichert dein Browser diese zwei Einstellungen im lokalen Speicher (localStorage). Sie bleiben auf deinem Gerät, werden nicht an uns gesendet, und du kannst sie jederzeit in den Browser-Einstellungen löschen.",
+            "Designs, die du speicherst, automatische Entwürfe im Editor und dein Brand Kit (Paletten, Logos, Shapes) legt Musterli in der Datenbank deines Browsers ab (IndexedDB). Auch diese Daten bleiben auf deinem Gerät und werden nicht an uns gesendet. Du löschst sie in Musterli selbst oder, wie die Einstellungen, über die Browser-Einstellungen."
           ]
         },
         "local": {
@@ -2186,8 +2186,8 @@
         "donations": {
           "heading": "Spenden",
           "paragraphs": [
-            "Motivo ist gratis und finanziert sich über freiwillige Spenden. Auf der Seite «Unterstützen» verlinken wir auf einen externen Spendenanbieter. Motivo selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
-            "Erst wenn du dem Link folgst, verlässt du Motivo. Für die Bearbeitung deiner Daten beim Spendenanbieter ist dieser verantwortlich, und es gilt seine Datenschutzerklärung. Der Anbieter teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ihm ausdrücklich zur Weitergabe an uns überlässt."
+            "Musterli ist gratis und finanziert sich über freiwillige Spenden. Auf der Seite «Unterstützen» verlinken wir auf einen externen Spendenanbieter. Musterli selbst nimmt keine Zahlungen entgegen und erhält von dir weder Zahlungs- noch Kontodaten.",
+            "Erst wenn du dem Link folgst, verlässt du Musterli. Für die Bearbeitung deiner Daten beim Spendenanbieter ist dieser verantwortlich, und es gilt seine Datenschutzerklärung. Der Anbieter teilt uns allenfalls den gespendeten Betrag mit und die Angaben, die du ihm ausdrücklich zur Weitergabe an uns überlässt."
           ]
         },
         "transfer": {
@@ -2255,13 +2255,13 @@
   },
   "GradientCollection": {
     "nav": "Farbverläufe",
-    "metaTitle": "{count} Farbverläufe mit CSS-Code | Motivo",
+    "metaTitle": "{count} Farbverläufe mit CSS-Code | Musterli",
     "metaDescription": "{count} eigene Farbverläufe nach Stimmung: warm, kühl, pastell, leuchtend, dunkel und dezent. CSS kopieren oder im Editor als Mesh- oder verschwommenen Verlauf weiterbauen.",
     "title": "Farbverläufe",
     "lead": "Eine Sammlung eigener Verläufe, berechnet im OKLCH-Farbraum, damit die Übergänge sauber und ohne graue Mitte bleiben. Kopiere das CSS oder öffne einen Verlauf im Editor.",
     "count": "{count, plural, one {# Verlauf} other {# Verläufe}}",
     "openGenerator": "Eigenen Verlauf gestalten",
-    "ogAlt": "Auswahl an Farbverläufen von Motivo",
+    "ogAlt": "Auswahl an Farbverläufen von Musterli",
     "groups": {
       "warm": {
         "name": "Warm",
@@ -2436,7 +2436,7 @@
     }
   },
   "GradientPage": {
-    "metaTitle": "{gradient}: Farbverlauf mit CSS-Code | Motivo",
+    "metaTitle": "{gradient}: Farbverlauf mit CSS-Code | Musterli",
     "metaDescription": "{description} Mit CSS- und Tailwind-Code, Farbwerten in HEX, RGB und OKLCH und Varianten als Mesh-, verschwommener oder Streifenverlauf.",
     "heading": "Farbverlauf {gradient}",
     "previewLabel": "Vorschau des Farbverlaufs {gradient}",
@@ -2456,17 +2456,17 @@
     "howTo": "Kopiere das CSS in die Regel des Elements, das den Verlauf tragen soll, etwa einen Abschnitt, eine Karte oder einen Button. Für Text auf dem Verlauf wähle eine Schriftfarbe, die auf allen Farbstopps genügend Kontrast hat; die Werte bei den Farben helfen dir dabei. Im Editor änderst du Winkel, Form und Übergang und exportierst den Verlauf auch als Bild.",
     "relatedHeading": "Ähnliche Verläufe",
     "backToCollection": "Alle Farbverläufe",
-    "ogAlt": "Farbverlauf {gradient} von Motivo"
+    "ogAlt": "Farbverlauf {gradient} von Musterli"
   },
   "PaletteCollection": {
     "nav": "Farbpaletten",
-    "metaTitle": "{count} Farbpaletten nach Stimmung | Motivo",
+    "metaTitle": "{count} Farbpaletten nach Stimmung | Musterli",
     "metaDescription": "{count} eigene Farbpaletten: erdig, frisch, pastell, kräftig, dunkel und neutral. Mit HEX-, RGB- und OKLCH-Werten, CSS-Variablen und Tailwind-Code zum Kopieren.",
     "title": "Farbpaletten",
     "lead": "Paletten mit je fünf Farben, sortiert nach Stimmung. Kopiere die Werte, übernimm sie als CSS-Variablen oder mach daraus einen Verlauf.",
     "count": "{count, plural, one {# Palette} other {# Paletten}}",
     "openGenerator": "Eigene Palette erstellen",
-    "ogAlt": "Auswahl an Farbpaletten von Motivo",
+    "ogAlt": "Auswahl an Farbpaletten von Musterli",
     "groups": {
       "earthy": {
         "name": "Erdig",
@@ -2641,7 +2641,7 @@
     }
   },
   "PalettePage": {
-    "metaTitle": "{palette}: Farbpalette mit HEX und OKLCH | Motivo",
+    "metaTitle": "{palette}: Farbpalette mit HEX und OKLCH | Musterli",
     "metaDescription": "{description} Alle Farben als HEX, RGB und OKLCH, dazu CSS-Variablen, Tailwind-Code und passende Verläufe.",
     "heading": "Farbpalette {palette}",
     "previewLabel": "Die {count} Farben der Palette {palette}",
@@ -2661,6 +2661,6 @@
     "howTo": "Lege die hellste Farbe als Hintergrund fest und nutze die dunkelste für Text. Die kräftigen Farben dazwischen eignen sich für Buttons, Links und Hervorhebungen. Prüfe bei Text immer den Kontrast; die Angaben auf den Farbfeldern zeigen, ob Schwarz oder Weiss besser lesbar ist.",
     "relatedHeading": "Ähnliche Paletten",
     "backToCollection": "Alle Farbpaletten",
-    "ogAlt": "Farbpalette {palette} von Motivo"
+    "ogAlt": "Farbpalette {palette} von Musterli"
   }
 }

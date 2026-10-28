@@ -10,8 +10,8 @@
  * Everything stays in the browser. User SVG is only ever shown through
  * `<img>` (sanitised markup as data URI), never inserted as markup.
  */
-import type { BrandAsset } from "@motivo/storage";
-import type { ImageAsset } from "@motivo/tool-registry";
+import type { BrandAsset } from "@musterli/storage";
+import type { ImageAsset } from "@musterli/tool-registry";
 import { Popover } from "radix-ui";
 import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from "react";
 import { useBrandKit, type BrandKitView } from "../brand-kit/context";

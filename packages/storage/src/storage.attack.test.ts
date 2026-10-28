@@ -154,7 +154,7 @@ describe("other tabs", () => {
     const designs = createDesignStore({ indexedDB: factory });
     closers.push(designs.close);
     expect(await designs.list()).toEqual([]);
-    // A newer Motivo in another tab upgrades the database; ours must not block it.
+    // A newer Musterli in another tab upgrades the database; ours must not block it.
     const newer = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = factory.open(DB_NAME, 99);
       request.onblocked = () => reject(new Error("blocked by our connection"));

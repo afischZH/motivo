@@ -15,7 +15,7 @@
  *  - Undo/redo covers params, seed, size and the active variant. Locks and
  *    the filmstrip itself are not part of the history.
  */
-import { createRng, toUint32 } from "@motivo/engine";
+import { createRng, toUint32 } from "@musterli/engine";
 import {
   DEFAULT_CANVAS_SIZE,
   applyBrandPalette as brandPaletteFor,
@@ -27,7 +27,7 @@ import {
   type AnyToolDefinition,
   type CanvasSize,
   type ToolRegistry,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { createStore, type StoreApi } from "zustand/vanilla";
 import {
   applyListOp,

@@ -3,7 +3,7 @@
  * tool's `imageInput.derive` (e.g. k-means), off the main thread. Started by
  * `createImageInputWorker` (worker.ts).
  */
-import { registry, type PixelBuffer } from "@motivo/tool-registry";
+import { registry, type PixelBuffer } from "@musterli/tool-registry";
 import {
   CROP_JPEG_QUALITY,
   handleImageRequest,

@@ -2,7 +2,7 @@
 
 Annahme: 1 Person mit AI-Coding-Agent, rund 20 bis 25 Stunden pro Woche. Wochenangaben sind Richtwerte, keine Zusagen. Jeder Meilenstein endet mit einer **Definition of Done (DoD)**, die der Agent abhaken muss, bevor der nächste beginnt.
 
-Grundentscheid 2026-10-28 (Andreas): Motivo ist komplett gratis und spendenfinanziert. Keine Konten, keine Zahlungen, keine Lizenzen, keine Credits (siehe `PRODUCT.md` Abschnitt 6).
+Grundentscheid 2026-10-28 (Andreas): Musterli ist komplett gratis und spendenfinanziert. Keine Konten, keine Zahlungen, keine Lizenzen, keine Credits (siehe `PRODUCT.md` Abschnitt 6).
 
 Gesamtüberblick:
 

@@ -2,7 +2,7 @@
 
 ## Projekt in Kürze
 
-**Motivo** (Arbeitstitel) ist eine Web-Toolbox mit 30+ Generatoren für Muster, Verläufe, Hintergründe, Bildeffekte und Farben. Nutzer erzeugen per Klick (Leertaste = neue Variante) markengerechte Grafiken und exportieren sie als PNG/JPG/WebP, SVG, CSS, GIF, MP4/WebM oder Code. Inspiriert vom Funktionsumfang von magicpattern.design, aber **eigenständig umgesetzt** (Clean-Room, siehe unten).
+**Musterli** (früher Arbeitstitel Motivo, Domain `musterli.app`) ist eine Web-Toolbox mit 30+ Generatoren für Muster, Verläufe, Hintergründe, Bildeffekte und Farben. Nutzer erzeugen per Klick (Leertaste = neue Variante) markengerechte Grafiken und exportieren sie als PNG/JPG/WebP, SVG, CSS, GIF, MP4/WebM oder Code. Inspiriert vom Funktionsumfang von magicpattern.design, aber **eigenständig umgesetzt** (Clean-Room, siehe unten).
 
 **Finanzierung: komplett gratis, spendenfinanziert.** Keine Konten, keine Zahlungen, keine Lizenzen, keine Credits, keine Bezahlschranke. Speichern und Brand Kit nur lokal im Browser. Details in `docs/PRODUCT.md` Abschnitt 6.
 
@@ -73,7 +73,7 @@ pnpm build              # Alle Pakete bauen
 pnpm test               # Vitest (alle Pakete)
 pnpm test:e2e           # Playwright (alle Browser)
 pnpm test:e2e:chromium  # Playwright nur Chromium
-pnpm --filter @motivo/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
+pnpm --filter @musterli/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
 pnpm lint && pnpm typecheck
 ```
 
@@ -121,5 +121,6 @@ pnpm lint && pnpm typecheck
 | 2026-10-28 | Rasterexport über 4096² px: PNG in Streifen mit eigenem Streaming-Encoder, JPG/WebP mit Prüfpixeln und Fehlermeldung `too-large` | WebKit zeichnet grössere Canvas und Bitmaps leer; keine neue Dependency |
 | 2026-10-28 | Gating-Feld aus `ToolDefinition` und allen Tools entfernt (statt überall `{}`), Lizenzstufen-Typen gelöscht; Warteliste, `packages/db`, `supabase/`, API-Routen und Turnstile ausgebaut; alte Warteliste-URLs per 308 auf "Unterstützen" | Alles gratis ohne Limits; ein Feld ohne Bedeutung lädt zu neuem Gating ein. Worker 2284 ► 2194 KiB gzip (M3-AP13) |
 | 2026-10-28 | Spenden-Link als Build-Variable `NEXT_PUBLIC_DONATION_URL` (nur https, ohne Zugangsdaten, `lib/donation.ts`); ohne Variable zeigt die Seite "Spenden-Link folgt bald"; Hinweis im Export-Dialog über generischen Slot `afterExport` der Editor-Shell, öffnet in neuem Tab | Reiner Link ohne Script, CSP unverändert; Anbieter wechselbar ohne Code; Editor-Shell bleibt app-neutral (M3-AP14) |
-| 2026-10-28 | Designs lokal in IndexedDB ohne Library (`@motivo/storage`), Parameter getrennt von der Übersicht, Öffnen über `#design=<id>`, Datei-Import im Worker mit Zod, Tool-Schema und erneutem Sanitizing | Keine Dependency, keine Kosten, nichts verlässt den Browser; Details `docs/ARCHITECTURE.md` Abschnitt 6 |
+| 2026-10-28 | Designs lokal in IndexedDB ohne Library (`@musterli/storage`), Parameter getrennt von der Übersicht, Öffnen über `#design=<id>`, Datei-Import im Worker mit Zod, Tool-Schema und erneutem Sanitizing | Keine Dependency, keine Kosten, nichts verlässt den Browser; Details `docs/ARCHITECTURE.md` Abschnitt 6 |
 | 2026-10-28 | Brand Kit in IndexedDB Version 2 (eigene Stores), eigenes Dateiformat `motivo-brandkit` v1 getrennt von `motivo-designs`; Brand-Palette generisch aus dem Tool-Schema mit optionalem Hook `brandPalette`, Anwenden sperrt die Farben | Designs- und Brand-Kit-Dateien unabhängig versionierbar; neue Tools erhalten die Brand-Palette ohne Code; die Leertaste behält Markenfarben (Details `docs/ARCHITECTURE.md` Abschnitte 4.4 und 6) |
+| 2026-10-28 | Name **Musterli** statt Motivo, Domain `musterli.app` (Andreas); überall umbenannt inkl. Paketscope `@musterli/*` und Exportdateinamen. Unverändert bleiben gespeicherte Kennungen (IndexedDB `motivo`, Dateiformate `motivo-designs`/`motivo-brandkit`, localStorage `motivo-theme`/`motivo.export.format`), der Worker `motivo-web` und das Repo `afischZH/motivo` | Entscheid Andreas; bestehende Daten und Dateien bleiben lesbar, Preview- und Produktions-URLs ändern sich nicht |

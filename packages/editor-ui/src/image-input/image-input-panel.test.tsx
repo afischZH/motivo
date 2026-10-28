@@ -3,7 +3,7 @@ import {
   paletteFromImageTool,
   type PaletteFromImageParams,
   type PixelBuffer,
-} from "@motivo/tool-registry";
+} from "@musterli/tool-registry";
 import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 // Test-only cross-package import: tool texts live in the web app.

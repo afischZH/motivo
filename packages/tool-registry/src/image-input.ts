@@ -3,7 +3,7 @@
  * thread and worker), share links and tests, so every caller derives params
  * from an image the same way.
  */
-import { createRng, deriveSeed } from "@motivo/engine";
+import { createRng, deriveSeed } from "@musterli/engine";
 import type { AnyToolDefinition, PixelBuffer } from "./types";
 
 /** Salt of the rng stream handed to `imageInput.derive`. */

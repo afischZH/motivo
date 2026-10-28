@@ -7,7 +7,7 @@
  * when the window gets focus again, so changes made on the Brand Kit page
  * in another tab show up without a reload.
  */
-import type { BrandAsset, BrandKitStore, BrandPalette, BrandPalettes } from "@motivo/storage";
+import type { BrandAsset, BrandKitStore, BrandPalette, BrandPalettes } from "@musterli/storage";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export interface BrandKitView {

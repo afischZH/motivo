@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { encodePng } from "@motivo/engine";
+import { encodePng } from "@musterli/engine";
 import { expect, test, type Page } from "@playwright/test";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
@@ -117,7 +117,7 @@ test.describe("palette from image", () => {
       buffer: Buffer.from("<html><script>window.__pwned = 1</script></html>"),
     });
     await expect(page.getByTestId("image-input-error")).toContainText(
-      "Dieses Format kennt Motivo nicht.",
+      "Dieses Format kennt Musterli nicht.",
     );
     expect(await page.evaluate(() => (window as { __pwned?: number }).__pwned)).toBeUndefined();
   });

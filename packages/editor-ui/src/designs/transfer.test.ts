@@ -1,4 +1,4 @@
-import { registry, type AnyToolDefinition } from "@motivo/tool-registry";
+import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { readDesignsFile } from "./import-client";
 import {
@@ -73,7 +73,7 @@ describe("designs file", () => {
   });
 
   it("names files with format, version and date", () => {
-    expect(designsFileName(new Date(2026, 9, 28))).toBe("motivo-designs-v1-2026-10-28.json");
+    expect(designsFileName(new Date(2026, 9, 28))).toBe("musterli-designs-v1-2026-10-28.json");
   });
 
   it("refuses files that are not ours", () => {

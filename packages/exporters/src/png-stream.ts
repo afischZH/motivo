@@ -9,7 +9,7 @@
  *
  * No DOM: runs in the raster worker, on the main thread and in Node tests.
  */
-import { crc32 } from "@motivo/engine";
+import { crc32 } from "@musterli/engine";
 
 /** A deflate stream: `write` raw bytes, `close` flushes; output goes to the callback. */
 export interface DeflateSink {

@@ -1,5 +1,5 @@
 /**
- * Shapes of what Motivo keeps in the browser (docs/ARCHITECTURE.md
+ * Shapes of what Musterli keeps in the browser (docs/ARCHITECTURE.md
  * section 6). Records are validated on every read as well: browser storage
  * can be edited by hand, left behind by an older version or corrupted, and a
  * broken record must never break the page. Params are only checked to be a

@@ -1,4 +1,4 @@
-# ORCHESTRATOR.md: Web Dev Orchestrator für Motivo
+# ORCHESTRATOR.md: Web Dev Orchestrator für Musterli
 
 > **So startest du**: Claude Code im Projektordner öffnen und diese Nachricht senden:
 >
@@ -10,7 +10,7 @@
 
 ## 1. Rolle
 
-Du bist der **Orchestrator** (Tech Lead und Projektleiter) für **Motivo**, eine Web-Toolbox mit 30+ Grafik-Generatoren, **komplett gratis und spendenfinanziert** (keine Konten, keine Zahlungen, keine Lizenzen). Du schreibst selten selbst Code. Deine Aufgabe ist:
+Du bist der **Orchestrator** (Tech Lead und Projektleiter) für **Musterli**, eine Web-Toolbox mit 30+ Grafik-Generatoren, **komplett gratis und spendenfinanziert** (keine Konten, keine Zahlungen, keine Lizenzen). Du schreibst selten selbst Code. Deine Aufgabe ist:
 
 1. Den aktuellen Meilenstein aus `docs/ROADMAP.md` in klar abgegrenzte **Arbeitspakete** zerlegen.
 2. Jedes Paket an den passenden **Subagent** delegieren, parallel wo möglich.
@@ -104,7 +104,7 @@ Verwende für jeden Subagent-Auftrag diese Struktur:
 AUFTRAG M<x>-AP<yy>: <kurzer Titel>
 
 Kontext:
-- Projekt: Motivo, Web-Toolbox für Grafik-Generatoren, gratis und spendenfinanziert.
+- Projekt: Musterli, Web-Toolbox für Grafik-Generatoren, gratis und spendenfinanziert.
 - Relevante Docs: <Dateien und Abschnitte, z. B. docs/TOOLS.md D1, docs/ARCHITECTURE.md 4>
 - Bestehender Code, auf dem du aufbaust: <Pfade>
 
@@ -148,7 +148,7 @@ Alles andere entscheidest du selbst, dokumentierst es in `PROGRESS.md` und erwä
 
 ## 8. Kosten-Check (gratis und spendenfinanziert)
 
-Motivo ist gratis und lebt von Spenden. Deshalb prüfst du bei jedem AP:
+Musterli ist gratis und lebt von Spenden. Deshalb prüfst du bei jedem AP:
 
 - **Läuft es im Browser?** Dann keine laufenden Kosten. Bevorzugte und fast immer einzige Lösung (Rendern, Export, Speichern in IndexedDB, Brand Kit, Uploads).
 - **Braucht es Server, KI, API oder Speicher pro Nutzer?** Dann nicht bauen. Ausnahme nur mit Entscheid Andreas, fixem, durch Spenden gedecktem Budget und hartem Tageslimit (`PRODUCT.md` 6.2).

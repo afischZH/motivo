@@ -3,8 +3,8 @@
  * handlers both sides use (the worker, and the main-thread fallback where
  * workers are missing). Plain data only; nothing of the file is evaluated.
  */
-import { sanitizeSvg, type SvgRect } from "@motivo/svg-sanitizer";
-import { prepareSvgAsset, type PreparedSvgAsset } from "@motivo/tool-registry/svg-asset";
+import { sanitizeSvg, type SvgRect } from "@musterli/svg-sanitizer";
+import { prepareSvgAsset, type PreparedSvgAsset } from "@musterli/tool-registry/svg-asset";
 
 /** A prepared asset without its two copies of the SVG (the reply carries it once). */
 export type PreparedParts = Omit<PreparedSvgAsset, "input" | "svg">;

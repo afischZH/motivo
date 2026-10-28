@@ -10,7 +10,7 @@ import {
   formatRatio,
   oklchToHex,
   type ColorFormat,
-} from "@motivo/engine";
+} from "@musterli/engine";
 
 /** `[lightness 0..1, chroma, hue in degrees]`. */
 export type Lch = readonly [l: number, c: number, h: number];

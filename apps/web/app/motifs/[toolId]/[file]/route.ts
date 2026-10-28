@@ -7,7 +7,7 @@
  * Separate files instead of inline data URLs keep the HTML small (some
  * motifs weigh 100 KB and more) and let the browser lazy-load and cache them.
  */
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 
 import { collectionMotifs, findCollectionMotif } from "@/lib/collections/variants";
 import { designSvg, findDesign, hasStaticMotif, staticDesigns } from "@/lib/seo/motifs";

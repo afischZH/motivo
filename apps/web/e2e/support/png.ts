@@ -1,7 +1,7 @@
 /**
  * PNG decoding and area-average scaling in Node, for comparisons that must
  * not depend on the browser under test (e.g. an 8K export, which WebKit
- * cannot decode into one bitmap). Supports what browsers and the Motivo
+ * cannot decode into one bitmap). Supports what browsers and the Musterli
  * exporter write: 8-bit RGB or RGBA, non-interlaced.
  */
 import { deflateSync, inflateSync } from "node:zlib";

@@ -1,7 +1,7 @@
 "use client";
 
-import { EditorShell, EditorStoreProvider } from "@motivo/editor-ui";
-import { createBrandKitStore, createDesignStore } from "@motivo/storage";
+import { EditorShell, EditorStoreProvider } from "@musterli/editor-ui";
+import { createBrandKitStore, createDesignStore } from "@musterli/storage";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 

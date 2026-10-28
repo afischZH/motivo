@@ -19,7 +19,7 @@ import {
   randomPalette,
   type GrainBlend,
   type Rng,
-} from "@motivo/engine";
+} from "@musterli/engine";
 import * as z from "zod";
 import { colorSchema, paletteSchema } from "../common";
 import { grainTileCacheSize, grainTileDataUri } from "./grain";

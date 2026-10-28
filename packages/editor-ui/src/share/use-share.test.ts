@@ -1,4 +1,4 @@
-import { createRegistry } from "@motivo/tool-registry";
+import { createRegistry } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import { createEditorStore } from "../store/editor-store";
 import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fixture-tool";
@@ -73,7 +73,7 @@ describe("applyShareHash", () => {
   it("reports a known tool of another page as other-tool", () => {
     const s = store();
     const blob = createEditorStore({ toolId: "blob" });
-    const link = buildShareUrl(blob, "https://motivo.test/de/tools/blob");
+    const link = buildShareUrl(blob, "https://musterli.test/de/tools/blob");
     if (!link.ok) throw new Error(link.error);
     expect(applyShareHash(s, link.url.slice(link.url.indexOf("#")))).toEqual({
       tone: "error",
@@ -97,9 +97,9 @@ describe("buildShareUrl", () => {
   it("appends #d=<code> to the page URL and replaces an old hash", () => {
     const s = store();
     s.getState().loadDesign(shared);
-    const r = buildShareUrl(s, "https://motivo.test/de/tools/test-fixture?x=1#d=old");
+    const r = buildShareUrl(s, "https://musterli.test/de/tools/test-fixture?x=1#d=old");
     if (!r.ok) throw new Error(r.error);
-    expect(r.url.startsWith("https://motivo.test/de/tools/test-fixture?x=1#d=")).toBe(true);
+    expect(r.url.startsWith("https://musterli.test/de/tools/test-fixture?x=1#d=")).toBe(true);
     expect(r.url).not.toContain("old");
 
     const t = store();

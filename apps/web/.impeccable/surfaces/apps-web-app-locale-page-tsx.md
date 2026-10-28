@@ -13,7 +13,7 @@ Scope: home page (`/[locale]`), mode Persuade. Visitor: designers, developers an
 
 THESIS: The category standard, played straight (user chose the canon direction C on 2026-10-28, over A "Motiv-Automat" and B "Musterbuch"). Craft bar: Linear, Vercel, Raycast until the user names others.
 
-OWN-WORLD: Existing Motivo tokens: neutral grays, one indigo accent for primary actions, focus and highlights; system sans; 1px borders, rounded-2xl cards, soft offset shadows.
+OWN-WORLD: Existing Musterli tokens: neutral grays, one indigo accent for primary actions, focus and highlights; system sans; 1px borders, rounded-2xl cards, soft offset shadows.
 
 STORY: The visitor reads the offer, sees a real tool preview cycle presets on space, and opens the catalogue or the gradient tool.
 

@@ -3,7 +3,7 @@
  * (JSON parsing, every tool schema and the SVG sanitizer can take far more
  * than 50 ms for a large file). Started by `createTransferWorker`.
  */
-import { registry } from "@motivo/tool-registry";
+import { registry } from "@musterli/tool-registry";
 import { serveFileWorker } from "../transfer/read-file";
 import { DESIGNS_FILE_MAX_BYTES, parseDesignsFile, type DesignsFileParseResult } from "./transfer";
 
