@@ -47,9 +47,14 @@ export interface MotifProps {
 export function Motif({ output, width, height, scale, className }: MotifProps) {
   const supports = useCssSupports();
   const declarations = output.kind === "css" ? output.declarations : null;
+  const element = output.kind === "css" ? output.element : undefined;
   const cssStyle = useMemo(
     () => (declarations ? cssToStyle(declarations, supports) : null),
     [declarations, supports],
+  );
+  const backdropStyle = useMemo(
+    () => (element ? cssToStyle(element.backdrop, supports) : null),
+    [element, supports],
   );
   const svgSrc = useMemo(() => (output.kind === "svg" ? motifDataUrl(output) : null), [output]);
 
@@ -67,6 +72,24 @@ export function Motif({ output, width, height, scale, className }: MotifProps) {
         className={cx("block max-w-none select-none", className)}
         style={box}
       />
+    );
+  }
+
+  if (cssStyle !== null && element && backdropStyle !== null) {
+    // Code-first tools: the declarations style a centred element on a backdrop.
+    return (
+      <div aria-hidden="true" className={cx("relative overflow-hidden", className)} style={box}>
+        <div
+          className="absolute top-0 left-0 flex origin-top-left items-center justify-center"
+          style={{ ...backdropStyle, width, height, transform: `scale(${scale})` }}
+        >
+          <div
+            className="shrink-0"
+            style={{ ...cssStyle, width: element.width, height: element.height }}
+            data-testid="motif-element"
+          />
+        </div>
+      </div>
     );
   }
 

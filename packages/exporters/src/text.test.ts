@@ -70,8 +70,19 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
   // Colour tools offer code via extra exports instead of an SVG background.
   it.runIf(supportsExport(tool, "css"))("exports CSS declarations", () => {
     const css = exportCss(tool, tool.defaults, ctx());
-    expect(css).toMatch(/background-image: /);
+    // Code-first tools (CSS shadow) export the element's declarations instead.
+    expect(css).toMatch(/background-image: |box-shadow: /);
     expect(css).not.toMatch(/\b(?:NaN|undefined)\b/);
+  });
+
+  it("renders every extra export for defaults and presets", () => {
+    for (const params of [tool.defaults, ...tool.presets.map((p) => p.params)]) {
+      for (const extra of listExtraExports(tool)) {
+        const text = exportExtra(tool, extra.id, params, ctx());
+        expect(text.length).toBeGreaterThan(0);
+        expect(text).not.toMatch(/\b(?:NaN|undefined)\b/);
+      }
+    }
   });
 
   it("is unaffected by an rng the caller already consumed", () => {

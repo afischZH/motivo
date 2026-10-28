@@ -1737,6 +1737,176 @@
           }
         }
       }
+    },
+    "contrast-checker": {
+      "name": "Contrast Checker",
+      "description": "Check whether text and background are readable under WCAG, see the colors with color vision deficiency and apply better colors in one click.",
+      "params": {
+        "foreground": {
+          "label": "Text color"
+        },
+        "background": {
+          "label": "Background color"
+        },
+        "sample": {
+          "label": "Sample",
+          "description": "Decides which levels count: body text needs 4.5:1 for AA and 7:1 for AAA, large text 3:1 and 4.5:1, UI components 3:1.",
+          "options": {
+            "heading": "Heading",
+            "body": "Body text",
+            "ui": "UI element"
+          }
+        },
+        "simulation": {
+          "label": "Simulate color vision deficiency",
+          "description": "Also shows the pair as people with a color vision deficiency see it, including its contrast.",
+          "options": {
+            "none": "None",
+            "protanopia": "Protanopia (red-blind)",
+            "deuteranopia": "Deuteranopia (green-blind)",
+            "tritanopia": "Tritanopia (blue-blind)",
+            "achromatopsia": "Achromatopsia (no color)"
+          }
+        },
+        "pairs": {
+          "label": "All pairs of a palette",
+          "description": "Shows every palette color as text on every other one, with its contrast ratio."
+        }
+      },
+      "groups": {
+        "check": "Check",
+        "pairs": "Palette"
+      },
+      "presets": {
+        "slate": "Slate",
+        "night": "Dark mode",
+        "signal": "Signal",
+        "mint": "Mint",
+        "traffic-light": "Traffic light",
+        "sky": "Sky and sun",
+        "grey-scale": "Grayscale",
+        "palette-pairs": "Palette pairs"
+      },
+      "suggestions": {
+        "foreground-aa": "Text color for AA: {color} ({ratio}:1)",
+        "foreground-aaa": "Text color for AAA: {color} ({ratio}:1)",
+        "background-aa": "Background for AA: {color} ({ratio}:1)",
+        "background-aaa": "Background for AAA: {color} ({ratio}:1)"
+      },
+      "seo": {
+        "whatIs": "A contrast checker measures how much text and background colors differ in lightness. The Web Content Accessibility Guidelines (WCAG 2) set minimum ratios so text stays readable with low vision, glare or poor screens.",
+        "howTo": "Pick the text and background colors with the color picker, a HEX value or the eyedropper and read which WCAG levels pass. If the contrast falls short, apply the nearest color that reaches AA or AAA in one click. The simulation shows how the pair looks with color vision deficiency.",
+        "faq": {
+          "q1": "What do AA and AAA mean?",
+          "a1": "AA is the usual minimum: 4.5:1 for normal text and 3:1 for large text. AAA is stricter and asks for 7:1 and 4.5:1. UI components and graphics need 3:1.",
+          "q2": "When is text large?",
+          "a2": "From 18 point (24 px) in regular weight or from 14 point (about 18.7 px) in bold.",
+          "q3": "Why does Musterli round the contrast down?",
+          "a3": "So a value that just misses never looks like a pass. Musterli shows 4.49:1 as 4.4:1, because under WCAG it is not enough for AA.",
+          "q4": "How does the color vision simulation work?",
+          "a4": "Musterli converts the colors with the published matrices by Machado, Oliveira and Fernandes (2009); achromatopsia keeps only the lightness. The simulation is an approximation and does not replace testing with affected people.",
+          "q5": "How does Musterli find a better color?",
+          "a5": "It only moves the lightness in the OKLCH color space and keeps hue and chroma as far as possible. Your brand color stays recognizable and still reaches AA or AAA."
+        }
+      }
+    },
+    "css-shadow": {
+      "name": "CSS Shadow Generator",
+      "description": "Soft, layered shadows for cards and buttons. Real CSS preview, export as box-shadow, Tailwind or drop-shadow.",
+      "params": {
+        "layers": {
+          "label": "Layers"
+        },
+        "distance": {
+          "label": "Distance"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "spread": {
+          "label": "Spread"
+        },
+        "angle": {
+          "label": "Light direction",
+          "description": "Where the light comes from. At 0° it comes from the top and the shadow falls down."
+        },
+        "opacity": {
+          "label": "Opacity"
+        },
+        "autoColor": {
+          "label": "Color from background",
+          "description": "Darkens the hue of the background instead of using pure black. That looks more natural."
+        },
+        "color": {
+          "label": "Shadow color"
+        },
+        "easing": {
+          "label": "Easing",
+          "description": "How distance and blur grow from layer to layer.",
+          "options": {
+            "linear": "Linear",
+            "ease-out": "Ease-out",
+            "exponential": "Exponential"
+          }
+        },
+        "inset": {
+          "label": "Inner shadow"
+        },
+        "shape": {
+          "label": "Preview shape",
+          "options": {
+            "card": "Card",
+            "button": "Button"
+          }
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "elementColor": {
+          "label": "Surface color"
+        },
+        "stage": {
+          "label": "Stage",
+          "description": "A Musterli background for the preview. It is not part of the CSS export.",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "dots": "Dots",
+            "grid": "Grid"
+          }
+        },
+        "surface": {
+          "label": "Background color"
+        }
+      },
+      "groups": {
+        "shadow": "Shadow",
+        "element": "Surface and stage",
+        "code": "Code"
+      },
+      "presets": {
+        "soft": "Soft",
+        "floating": "Floating",
+        "crisp": "Crisp",
+        "deep": "Deep",
+        "inner": "Inner",
+        "button": "Button",
+        "sunset": "Evening light"
+      },
+      "seo": {
+        "whatIs": "A CSS shadow generator writes the code for box-shadow. Instead of one hard shadow, Musterli stacks several layers whose distance and blur grow along a curve. Cards and buttons look soft and naturally lit.",
+        "howTo": "Set layers, distance, blur and light direction, or press Space for a new variant. The preview is real CSS on a Musterli background. Then copy the box-shadow, the Tailwind class, the @theme variable or the drop-shadow version.",
+        "faq": {
+          "q1": "Why several shadow layers?",
+          "a1": "A real shadow is dark and sharp close to the object and gets lighter and softer further away. Several layers recreate that, while a single box-shadow often looks flat or muddy.",
+          "q2": "How do I use the shadow in Tailwind?",
+          "a2": "For Tailwind v3 and v4 there is the class shadow-[...] with all layers. In Tailwind v4 you can also store the shadow as a --shadow-name variable in @theme and simply write shadow-name.",
+          "q3": "What is the difference to drop-shadow?",
+          "a3": "box-shadow follows the element's rectangle, filter: drop-shadow() follows its shape, for example of a cut-out PNG or SVG. drop-shadow has no spread and no inner shadow.",
+          "q4": "Why is the shadow not black?",
+          "a4": "Shadows pick up some of the color around them. That is why Musterli darkens the hue of the background by default. You can still pick your own color."
+        }
+      }
     }
   },
   "Converters": {

@@ -6,3 +6,5 @@ export * from "./swatches";
 export * from "./code";
 export * from "./extract";
 export * from "./sample-image";
+export * from "./vision";
+export * from "./wcag";

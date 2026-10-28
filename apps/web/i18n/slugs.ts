@@ -45,6 +45,8 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   },
   "palette-from-image": { de: "farbpalette-aus-bild", en: "color-palette-from-image" },
   "css-patterns": { de: "css-muster-generator", en: "css-pattern-generator" },
+  "contrast-checker": { de: "kontrast-checker", en: "contrast-checker" },
+  "css-shadow": { de: "css-schatten-generator", en: "css-shadow-generator" },
 };
 
 /**

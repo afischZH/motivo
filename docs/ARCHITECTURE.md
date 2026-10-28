@@ -128,6 +128,11 @@ Jedes Tool mit Farb-Params bietet "Brand-Palette anwenden", ohne eigenen Code (`
 - **Store** (`applyBrandPalette` in `editor-store.ts`): ein Undo-Schritt; die geänderten Farb-Params werden gesperrt, damit die Leertaste (`randomize`) die Markenfarben behält (Locks sind nicht Teil der Undo-Historie).
 - **Shell**: `BrandKitContext` (optional, ohne Brand Kit erscheint nichts) liefert Paletten an den Abschnitt "Brand-Palette" (Auswahl, Standard vorausgewählt) und an jeden Color-Picker (Brand-Swatches). Upload-Felder (`kind: "image"`) bieten Logos und Shapes aus dem Brand Kit an; sie laufen durch dieselbe Pipeline wie ein Datei-Upload (Sanitizer im Worker, Zuschnitt).
 
+### 4.5 Code-first-Elemente und Vorschläge (ab M4-AP05)
+Zwei kleine generische Erweiterungen, zuerst genutzt von CSS-Schatten (J1) und Kontrast-Checker (F6). Die Shell enthält dafür keinen Tool-Code.
+- **`CssOutput.element`** (`{ width, height, backdrop }`): Ein CSS-Tool kann statt der ganzen Fläche ein zentriertes Element gestalten. `css` gilt dann für dieses Element (und ist der CSS-Export), `backdrop` sind Deklarationen der Fläche dahinter, nur für die Vorschau (z. B. ein Musterli-Verlauf als Bühne). `Motif` zeichnet beides als Inline-Styles (CSP-konform, mit derselben `CSS.supports`-Auswahl wie bisher), skaliert wie gehabt. SVG/PNG kommen weiter aus `previewSvg`, das dieselben Werte nachzeichnet (ein Render-Pfad; geprüft mit "Vorschau == PNG").
+- **`ToolDefinition.suggestions(params)`**: liefert Ein-Klick-Vorschläge `{ id, labelKey, values?, swatch?, patch }` (rein, billig, läuft bei jeder Änderung). Die Shell zeigt sie als Abschnitt "Vorschläge" über den Einstellungen (Buttons mit Farbfeld, Hinweis per `aria-describedby`); ein Klick übernimmt `patch` per `setParams` als ein Undo-Schritt und meldet es über die Statuszeile (aria-live). Eine leere Liste zeigt nichts.
+
 ## 5. Render- und Export-Pipeline
 
 ```

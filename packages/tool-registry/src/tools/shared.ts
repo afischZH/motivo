@@ -46,4 +46,6 @@ export const EXTRA_EXPORT_LABELS = {
   hslList: "Editor.export.extras.hslList",
   tailwindConfig: "Editor.export.extras.tailwindConfig",
   tailwindTheme: "Editor.export.extras.tailwindTheme",
+  report: "Editor.export.extras.report",
+  dropShadow: "Editor.export.extras.dropShadow",
 } as const;

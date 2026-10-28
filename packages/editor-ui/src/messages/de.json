@@ -176,7 +176,9 @@
         "rgbList": "RGB-Liste",
         "hslList": "HSL-Liste",
         "tailwindConfig": "tailwind.config.js",
-        "tailwindTheme": "Tailwind v4 @theme"
+        "tailwindTheme": "Tailwind v4 @theme",
+        "report": "Bericht als Text",
+        "dropShadow": "CSS drop-shadow()"
       }
     },
     "share": {
@@ -299,6 +301,11 @@
       "assetsEmpty": "Noch keine Logos oder Shapes.",
       "openKit": "Zum Brand Kit",
       "useAsset": "{name} verwenden"
+    },
+    "suggestions": {
+      "title": "Vorschläge",
+      "hint": "Ein Klick übernimmt den Vorschlag, Rückgängig macht ihn ungeschehen.",
+      "applied": "Übernommen: {label}"
     }
   },
   "sizes": {

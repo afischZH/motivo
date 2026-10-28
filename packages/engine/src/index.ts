@@ -26,3 +26,5 @@ export * from "./tools/mesh-gradient";
 export * from "./tools/blurry-gradient";
 export * from "./tools/striped-gradient";
 export * from "./tools/seamless-patterns";
+export * from "./tools/contrast-checker";
+export * from "./tools/css-shadow";

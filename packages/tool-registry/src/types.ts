@@ -214,6 +214,22 @@ export interface CssOutput {
   css: string;
   /** Optional SVG equivalent for preview and SVG/PNG export. */
   previewSvg?: string;
+  /**
+   * Code-first tools (docs/TOOLS.md J): `css` styles one element of this
+   * size, centred on the canvas, instead of the canvas itself, and
+   * `backdrop` (declarations, preview only, never exported) fills the canvas
+   * behind it, e.g. a Musterli gradient under a card with a shadow.
+   */
+  element?: CssElement;
+}
+
+/** The element a code-first CSS tool styles; see `CssOutput.element`. */
+export interface CssElement {
+  /** Size in CSS pixels; the element is centred on the canvas. */
+  width: number;
+  height: number;
+  /** CSS declarations of the canvas behind the element. */
+  backdrop: string;
 }
 
 /** Pure SVG string renderer; runs on the server and in workers. */
@@ -309,6 +325,27 @@ export interface ExtraExport<P> {
   language: CodeLanguage;
   /** Pure and deterministic, with the same inputs as the tool's `render`. */
   render(params: P, ctx: RenderContext): string;
+}
+
+// ---------------------------------------------------------------------------
+// Suggestions
+// ---------------------------------------------------------------------------
+
+/**
+ * A one-click change the tool proposes for the current params (e.g. the
+ * nearest text colour that passes WCAG AA). The editor lists them above the
+ * controls; choosing one merges `patch` into the params as one undo step.
+ */
+export interface ParamSuggestion<P> {
+  /** Stable kebab-case id, unique within one result. */
+  id: string;
+  /** i18n key of the button text; may use the placeholders in `values`. */
+  labelKey: string;
+  values?: Readonly<Record<string, string | number>>;
+  /** Optional colour shown as a swatch on the button (hex). */
+  swatch?: string;
+  /** Params to merge; must keep the params valid. */
+  patch: Partial<P>;
 }
 
 // ---------------------------------------------------------------------------
@@ -417,6 +454,11 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   tile?: TileRenderer<Params<S>>;
   /** Uses `RenderContext.t` (GIF/video export). */
   supportsAnimation?: boolean;
+  /**
+   * One-click changes for the current params; see `ParamSuggestion`. Pure
+   * and cheap (runs on every change); an empty list shows nothing.
+   */
+  suggestions?(params: Params<S>): readonly ParamSuggestion<Params<S>>[];
 }
 
 /** A tool of any schema, as stored in a registry. */
