@@ -252,7 +252,8 @@
         "timeout": "Das Zuschneiden dauert zu lange und wurde abgebrochen. Versuch ein kleineres Bild.",
         "no-result": "Das Bild liess sich nicht zuschneiden. Versuch es nochmals.",
         "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
-        "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals."
+        "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals.",
+        "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals."
       },
       "crop": {
         "title": "Zuschneiden",

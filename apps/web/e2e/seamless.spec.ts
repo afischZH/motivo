@@ -4,6 +4,9 @@
  * share links, the PNG tile export, and axe in light and dark mode with an
  * open crop dialog. Preview == PNG export lives in preview-export.spec.ts.
  */
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
+
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
@@ -85,6 +88,38 @@ function solidPng(width: number, height: number): Buffer {
     chunk("IEND", Buffer.alloc(0)),
   ]);
 }
+
+/**
+ * About 1 MB of SVG that keeps the sanitizer busy (about 100 ms per pass in
+ * Node, the security review's case): 1 MB of inline styles to parse, 3000
+ * compound selectors matched against 4000 elements, plus a script and event
+ * handlers to strip. The sanitised result stays small (about 25 KB), so the
+ * browser's own decoding of the motif images does not dominate the timing.
+ */
+function largeHostileSvg(): string {
+  const selectors = Array.from({ length: 3000 }, (_, i) => `.a.b${i}`).join(",");
+  const styled = `<rect width="1" height="1" onclick="window.__pwned=3" style="${"fill:#123456;stroke:url(#a);".repeat(1500)}"/>`;
+  return [
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20">',
+    `<style>${selectors}{fill:#2a9d8f}</style>`,
+    "<script>window.__pwned=2</script>",
+    styled.repeat(20),
+    '<g class="a b1" onclick="window.__pwned=4"/>'.repeat(4000),
+    '<rect width="40" height="20" fill="#2a9d8f"/>',
+    "</svg>",
+  ].join("");
+}
+
+/** Upload runs; the fastest one counts. */
+const RUNS = 3;
+/**
+ * The Long Tasks API only reports tasks over 50 ms, so the target is "none"
+ * (0, measured locally). Headless Chromium rasterises in software and image
+ * decodes can touch 50 to 60 ms (see m1-audit.spec.ts), hence a little
+ * headroom. With the sanitizer on the main thread this upload caused tasks
+ * of about 140 ms.
+ */
+const UPLOAD_LONG_TASK_BUDGET_MS = 60;
 
 const cropDialog = (page: Page) => page.getByRole("dialog", { name: "Zuschneiden" });
 
@@ -195,6 +230,64 @@ test.describe("seamless patterns", () => {
     const download = page.waitForEvent("download");
     await dialog.getByTestId("export-download").click();
     expect((await download).suggestedFilename()).toMatch(/-tile\.png$/);
+  });
+
+  test("sanitises a large hostile SVG without a long main-thread task", async ({
+    page,
+    browserName,
+  }, testInfo) => {
+    test.skip(browserName !== "chromium", "Long Tasks API is Chromium only");
+    // Same guard as the main-thread budget in m1-audit.spec.ts: parallel workers
+    // share the CPU and inflate task times.
+    test.skip(
+      testInfo.config.workers > 1,
+      "needs an idle CPU: runs in CI (1 worker) or --workers=1",
+    );
+    test.setTimeout(90_000);
+    const svg = largeHostileSvg();
+    expect(svg.length).toBeGreaterThan(900_000);
+    expect(svg.length).toBeLessThan(1_048_576);
+    // From disk, not a buffer: Playwright builds buffer files with page script,
+    // which itself is a long task for 1 MB.
+    const file = testInfo.outputPath("large-hostile.svg");
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, svg);
+    await page.addInitScript(() => {
+      const w = window as unknown as { __longTasks: number[] };
+      w.__longTasks = [];
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
+      }).observe({ type: "longtask" });
+    });
+
+    // Fastest of a few runs: one slow run on a busy machine is no regression.
+    const worstPerRun: number[] = [];
+    for (let run = 0; run < RUNS; run++) {
+      await openEditor(page);
+      // Let hydration and thumbnails settle, then measure the upload only.
+      await page.waitForTimeout(500);
+      await page.evaluate(() => {
+        (window as unknown as { __longTasks: number[] }).__longTasks = [];
+      });
+      await page.getByLabel("Datei wählen").setInputFiles(file);
+      const dialog = cropDialog(page);
+      await expect(dialog).toBeVisible({ timeout: 15_000 });
+      await dialog.getByRole("button", { name: "Übernehmen" }).click();
+      await expect(dialog).toBeHidden({ timeout: 15_000 });
+      await expect(page.getByTestId("asset-thumbnail")).toBeVisible();
+      const src = decodeURIComponent(await motifSrc(page));
+      expect(src).not.toMatch(/script|onclick/i);
+      await page.waitForTimeout(300);
+      const longTasks = await page.evaluate(
+        () => (window as unknown as { __longTasks: number[] }).__longTasks,
+      );
+      worstPerRun.push(Math.max(0, ...longTasks));
+    }
+    testInfo.annotations.push({
+      type: "long-tasks",
+      description: `worst long task per run: ${worstPerRun.join(", ")} ms (0 = none over 50 ms)`,
+    });
+    expect(Math.min(...worstPerRun)).toBeLessThanOrEqual(UPLOAD_LONG_TASK_BUDGET_MS);
   });
 
   for (const scheme of ["light", "dark"] as const) {

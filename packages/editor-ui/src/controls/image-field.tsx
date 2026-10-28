@@ -3,8 +3,9 @@
 /**
  * Upload field for params of `kind: "image"` (Seamless Patterns motif):
  * drop zone, file button, paste, a thumbnail of the current asset, replace
- * and remove. A new file is checked and (for SVG) sanitised by `readAsset`,
- * then cropped in the `CropDialog` and turned into an `ImageAsset`.
+ * and remove. A new file is checked and (for SVG) sanitised by `readAsset`
+ * in the sanitize worker, then cropped in the `CropDialog` and turned into
+ * an `ImageAsset`. A newer file or unmounting aborts the work in progress.
  *
  * Everything stays in the browser. User SVG is only ever shown through
  * `<img>` (sanitised markup as data URI), never inserted as markup.
@@ -20,7 +21,7 @@ import {
   type AssetError,
   type AssetSource,
 } from "../asset-input/prepare";
-import { useAssetServices } from "../asset-input/services-context";
+import { useAssetServices, useSvgSanitizer } from "../asset-input/services-context";
 import type { CropRect } from "../asset-input/crop";
 import { useT } from "../i18n";
 import { isTextTarget } from "../image-input/image-input-panel";
@@ -60,11 +61,24 @@ export function assetThumbnailUrl(asset: ImageAsset): string {
   return asset.kind === "svg" ? svgDataUrl(asset.svg) : asset.href;
 }
 
+/** Aborts the previous controller whenever a new one is taken, and on unmount. */
+function useAbortSlot(): () => AbortSignal {
+  const current = useRef<AbortController | null>(null);
+  useEffect(() => () => current.current?.abort(), []);
+  return () => {
+    current.current?.abort();
+    current.current = new AbortController();
+    return current.current.signal;
+  };
+}
+
 export function ImageField(props: ImageFieldProps) {
   const t = useT();
   const ids = useId();
   const fileRef = useRef<HTMLInputElement>(null);
   const getServices = useAssetServices();
+  const getSanitizer = useSvgSanitizer();
+  const nextSignal = useAbortSlot();
   const [dragging, setDragging] = useState(false);
   const [reading, setReading] = useState(false);
   const [error, setError] = useState<AssetError | null>(null);
@@ -80,12 +94,12 @@ export function ImageField(props: ImageFieldProps) {
     setError(null);
     setStatus(t("Editor.asset.reading"));
     setReading(true);
-    const result = await readAsset(file);
+    const result = await readAsset(file, { svg: getSanitizer(), signal: nextSignal() });
     if (token !== loadToken.current) return;
     setReading(false);
     if (!result.ok) {
       setStatus("");
-      setError(result.error);
+      if (result.error !== "aborted") setError(result.error);
       return;
     }
     setStatus(
@@ -132,10 +146,15 @@ export function ImageField(props: ImageFieldProps) {
     if (!source) return;
     setApplying(true);
     setCropError(null);
-    const result = await finishAsset(source, crop, getServices());
+    const result = await finishAsset(
+      source,
+      crop,
+      { crop: getServices().crop, svg: getSanitizer() },
+      nextSignal(),
+    );
     if (!result.ok) {
       setApplying(false);
-      setCropError(result.error);
+      if (result.error !== "aborted") setCropError(result.error);
       return;
     }
     const name = result.asset.name || t("Editor.asset.yourFile");
@@ -146,6 +165,8 @@ export function ImageField(props: ImageFieldProps) {
   };
 
   const asset = props.value;
+  // Encoding a large SVG takes a few ms: once per asset, not per render.
+  const thumbnailUrl = useMemo(() => (asset ? assetThumbnailUrl(asset) : null), [asset]);
   const name = asset ? asset.name || t("Editor.asset.yourFile") : null;
 
   return (
@@ -175,7 +196,7 @@ export function ImageField(props: ImageFieldProps) {
         <span className="flex size-16 items-center justify-center overflow-hidden rounded-md bg-canvas">
           {asset && (
             <img
-              src={assetThumbnailUrl(asset)}
+              src={thumbnailUrl ?? ""}
               alt={t("Editor.asset.thumbnail", { name: name ?? "" })}
               className="max-h-full max-w-full object-contain"
               data-testid="asset-thumbnail"

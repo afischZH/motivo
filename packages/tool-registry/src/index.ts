@@ -6,4 +6,5 @@ export * from "./registry";
 export * from "./render";
 export * from "./randomize";
 export * from "./image-input";
+export * from "./svg-asset";
 export * from "./tools";

@@ -252,7 +252,8 @@
         "timeout": "Cropping took too long and was stopped. Try a smaller image.",
         "no-result": "The image could not be cropped. Please try again.",
         "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
-        "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again."
+        "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
+        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again."
       },
       "crop": {
         "title": "Crop",
