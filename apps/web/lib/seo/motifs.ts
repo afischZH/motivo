@@ -5,6 +5,7 @@
  * in the editor. Server only: pages and route handlers call it at build time.
  */
 import { designToHash } from "@musterli/editor-ui/share";
+import { resizeCover } from "@musterli/effects";
 import { toBase64 } from "@musterli/engine";
 import { PngStreamEncoder } from "@musterli/exporters/png-stream";
 import {
@@ -12,10 +13,12 @@ import {
   createRenderContext,
   fitSize,
   isImageEffectTool,
+  photoSampleSize,
   registry,
   renderImageEffect,
   type AnyToolDefinition,
   type CanvasSize,
+  type PixelBuffer,
 } from "@musterli/tool-registry";
 
 /** Seed of every static motif, as in the editor's first render. */
@@ -79,6 +82,30 @@ export function designSvg(tool: AnyToolDefinition, design: StaticDesign): string
 export const EFFECT_MOTIF_EDGE = 480;
 
 /**
+ * The tool's sample picture scaled to `out`, per tool, version and size.
+ * Generating the sample (about 0.2 s for 1500 × 1000 px) dominated the
+ * build of every preset's motif; the pixels are the same as the ones
+ * `renderImageEffect` would generate itself.
+ */
+const effectSources = new Map<string, PixelBuffer>();
+
+function effectSource(tool: AnyToolDefinition, design: CanvasSize, out: CanvasSize): PixelBuffer {
+  const key = `${tool.id}@${tool.version}:${design.width}x${design.height}:${out.width}x${out.height}`;
+  let source = effectSources.get(key);
+  if (source === undefined && tool.photoSource) {
+    const s = photoSampleSize(design);
+    const sample = tool.photoSource.sample(s.width, s.height);
+    source =
+      sample.width === out.width && sample.height === out.height
+        ? sample
+        : resizeCover(sample, out.width, out.height);
+    effectSources.set(key, source);
+  }
+  if (source === undefined) throw new TypeError(`Tool "${tool.id}" has no photo source`);
+  return source;
+}
+
+/**
  * An image effect applied to the tool's sample picture (docs/ARCHITECTURE.md
  * 4.14), as an SVG that wraps one PNG of at most `EFFECT_MOTIF_EDGE` px.
  * Same `render` as the editor; the sample is scaled with `resizeCover`
@@ -91,7 +118,8 @@ export async function effectMotifSvg(
   if (!isImageEffectTool(tool)) return undefined;
   const size = toolSize(tool);
   const out = fitSize(size, EFFECT_MOTIF_EDGE);
-  const pixels = renderImageEffect(tool, design.params, design.seed, size, out);
+  const source = effectSource(tool, size, out);
+  const pixels = renderImageEffect(tool, design.params, design.seed, size, out, source);
   const encoder = new PngStreamEncoder(out.width, out.height);
   await encoder.addRows(pixels.data, out.height);
   const parts = await encoder.finish();
