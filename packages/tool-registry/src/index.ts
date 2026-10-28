@@ -6,6 +6,7 @@ export * from "./registry";
 export * from "./render";
 export * from "./randomize";
 export * from "./image-input";
+export * from "./photo-source";
 export * from "./svg-asset";
 export * from "./brand-palette";
 export * from "./animation";

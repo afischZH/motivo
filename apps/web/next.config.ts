@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   // Workspace packages ship TypeScript source and must be compiled by Next.
   transpilePackages: [
     "@musterli/engine",
+    "@musterli/effects",
     "@musterli/tool-registry",
     "@musterli/exporters",
     "@musterli/editor-ui",

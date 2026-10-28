@@ -127,11 +127,43 @@ export const screenshotAssetSchema = imageAssetSchemaWith({
   maxRasterLength: SCREENSHOT_ASSET_MAX_RASTER_LENGTH,
 }).register(controlKindRegistry, { kind: "image" });
 
+/** Longest edge of a photo for the photo effects (`effectPhotoAssetSchema`): 12 MP fit. */
+export const EFFECT_PHOTO_RASTER_MAX_EDGE = 4096;
+/** About 18 MB of JPEG: a 4096 px photo at quality 0.9 stays well below. */
+export const EFFECT_PHOTO_MAX_RASTER_LENGTH = 24_000_000;
+
+/**
+ * A photo for the photo effects (Duotone, ASCII art; later halftone and
+ * dither): raster only, up to 4096 px (a 12 MP camera picture keeps its full
+ * resolution), uploaded with `ImageHint` `{ photo: true, rasterOnly: true }`
+ * so it arrives as JPEG. Same shape as a raster `ImageAsset`.
+ */
+export const effectPhotoAssetSchema = effectPhotoAssetSchemaWith({
+  maxEdge: EFFECT_PHOTO_RASTER_MAX_EDGE,
+  maxRasterLength: EFFECT_PHOTO_MAX_RASTER_LENGTH,
+});
+
+/** A raster-only photo schema with its own limits (e.g. ASCII art reads at most 1024 px). */
+export function effectPhotoAssetSchemaWith(limits: { maxEdge: number; maxRasterLength: number }) {
+  return z
+    .object({
+      kind: z.literal("raster"),
+      href: z.string().max(limits.maxRasterLength).regex(RASTER_HREF_PATTERN),
+      width: z.int().min(1).max(limits.maxEdge),
+      height: z.int().min(1).max(limits.maxEdge),
+      name: assetName,
+    })
+    .register(controlKindRegistry, { kind: "image" });
+}
+
+export type EffectPhotoAsset = z.output<typeof effectPhotoAssetSchema>;
+
 /** Largest raster edge any upload schema accepts (checks of imported designs). */
 export const UPLOAD_RASTER_MAX_EDGE = Math.max(
   IMAGE_ASSET_RASTER_MAX_EDGE,
   PHOTO_ASSET_RASTER_MAX_EDGE,
   SCREENSHOT_ASSET_RASTER_MAX_EDGE,
+  EFFECT_PHOTO_RASTER_MAX_EDGE,
 );
 
 /** Placeholder file name of an upload in code exports (`your-image.jpg`, `.png`, `.svg`). */

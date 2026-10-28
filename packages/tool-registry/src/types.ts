@@ -25,6 +25,7 @@ export const TOOL_CATEGORIES = [
   "social",
   "composer",
   "css-effects",
+  "icons",
 ] as const;
 
 export type ToolCategory = (typeof TOOL_CATEGORIES)[number];
@@ -187,6 +188,12 @@ export interface ImageHint {
    * true; set false when several upload fields are visible at once.
    */
   readonly paste?: boolean;
+  /**
+   * Accept raster pictures only (PNG, JPEG, WebP): an SVG file is refused
+   * with a message. For photo effects, whose pixels are processed in a
+   * worker that cannot draw SVG.
+   */
+  readonly rasterOnly?: boolean;
 }
 
 /** A named group of options of a thumbnail picker. */
@@ -268,6 +275,11 @@ export interface CssBox {
   height: number;
   /** CSS declarations of the box, without a selector. */
   css: string;
+  /**
+   * Animation declarations of the box (e.g. floating blobs), applied like
+   * `CssElement.motionCss`: only when the viewer allows motion.
+   */
+  motionCss?: string;
 }
 
 /**
@@ -354,7 +366,16 @@ export interface PixelBuffer {
   readonly data: Uint8ClampedArray;
 }
 
-/** Placeholder until the first image effect (M2). Runs in a Web Worker. */
+/**
+ * A pixel effect on a photo (docs/ARCHITECTURE.md 4.14). `input` is the
+ * source picture (the user's photo, or `PhotoSource.sample`), already
+ * cropped to cover the design and scaled to the render resolution; `ctx`
+ * keeps the design size, so `input.width / ctx.width` is the scale of a
+ * preview. Must be pure and deterministic (randomness only from
+ * `ctx.seed`, independent of the resolution): the editor runs it in a
+ * worker at the preview resolution and again at full size for the export,
+ * so the same size gives the same pixels. Requires `photoSource`.
+ */
 export interface ImageEffectRenderer<P> {
   kind: "image-effect";
   render(input: PixelBuffer, params: P, ctx: RenderContext): PixelBuffer;
@@ -403,6 +424,63 @@ export interface ExtraExport<P> {
   language: CodeLanguage;
   /** Pure and deterministic, with the same inputs as the tool's `render`. */
   render(params: P, ctx: RenderContext): string;
+}
+
+// ---------------------------------------------------------------------------
+// Bundles (multi-file exports)
+// ---------------------------------------------------------------------------
+
+/**
+ * One file of a bundle. Image files are rendered by the exporter through
+ * the tool's own `render` (one render path) at their pixel size, with the
+ * design's seed and `params` (default: the current params), then encoded.
+ */
+export type BundleFile<P> =
+  /** UTF-8 text (manifest, HTML snippet, an SVG the tool built with its engine). */
+  | { readonly kind: "text"; readonly path: string; readonly text: string }
+  /** The design rendered at `width` × `height` as PNG. */
+  | {
+      readonly kind: "png";
+      readonly path: string;
+      readonly width: number;
+      readonly height: number;
+      readonly params?: P;
+    }
+  /** An `.ico` with one PNG image per square size (1 to 256 px). */
+  | {
+      readonly kind: "ico";
+      readonly path: string;
+      readonly sizes: readonly number[];
+      readonly params?: P;
+    };
+
+/** Text shown in the export dialog next to a bundle, ready to copy (e.g. HTML head tags). */
+export interface BundleSnippet<P> {
+  /** i18n key of the code label. */
+  labelKey: string;
+  language: CodeLanguage;
+  /** Pure and deterministic. */
+  render(params: P, ctx: RenderContext): string;
+}
+
+/**
+ * A multi-file export, downloaded as one ZIP (e.g. the icon pack of the
+ * favicon generator). Offered in the export dialog's "Bundle" group.
+ */
+export interface BundleExport<P> {
+  /** Stable kebab-case id, unique within the tool; also the file name suffix. */
+  id: string;
+  /** i18n key of the label in the export dialog. */
+  labelKey: string;
+  /** i18n key of a one-line description shown when the bundle is chosen. */
+  descriptionKey?: string;
+  /**
+   * The files in archive order. Pure and cheap (no rendering here); paths
+   * are relative, `/` separated and unique.
+   */
+  files(params: P, ctx: RenderContext): readonly BundleFile<P>[];
+  /** Optional copyable text shown in the dialog. */
+  snippet?: BundleSnippet<P>;
 }
 
 // ---------------------------------------------------------------------------
@@ -527,6 +605,32 @@ export interface ImageInput<P> {
 }
 
 // ---------------------------------------------------------------------------
+// Photo source
+// ---------------------------------------------------------------------------
+
+/**
+ * Where a photo tool takes its picture from (docs/ARCHITECTURE.md 4.14): an
+ * upload param, or a built-in picture while that param is empty. Used by
+ * image effects (`render.kind === "image-effect"`: the picture is the render
+ * input) and by `imageInput` tools that analyse it (the picture feeds
+ * `derive`, instead of the separate image picker).
+ */
+export interface PhotoSource<P> {
+  /**
+   * Upload param (`kind: "image"`, raster, listed in `localParams`) holding
+   * the user's photo; its default (`null`) means the sample. A new photo
+   * sets the design size to the photo size.
+   */
+  param: ParamKey<P>;
+  /**
+   * The built-in picture at exactly `width` × `height` pixels: procedural,
+   * pure and deterministic (no stock photo). Called with the design size
+   * fitted into `PHOTO_SAMPLE_MAX_EDGE`.
+   */
+  sample(width: number, height: number): PixelBuffer;
+}
+
+// ---------------------------------------------------------------------------
 // Animation (GIF export)
 // ---------------------------------------------------------------------------
 
@@ -634,8 +738,18 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   exports: readonly ExportFormat[];
   /** Tool-specific text outputs, offered next to `exports`. */
   extraExports?: readonly ExtraExport<Params<S>>[];
+  /**
+   * Multi-file exports downloaded as one ZIP (icon pack); see
+   * `BundleExport`. Needs SVG output (svg, or css with a preview SVG).
+   */
+  bundles?: readonly BundleExport<Params<S>>[];
   /** Needs an uploaded image as render input (halftone, dither, ...). */
   needsImageInput?: boolean;
+  /** The picture of a photo tool (upload param or built-in sample); see `PhotoSource`. */
+  // Spelled out instead of `PhotoSource<Params<S>>`: TypeScript measures the
+  // generic interface as contravariant (`keyof P`), which would make every
+  // tool unassignable to `AnyToolDefinition`; the structural form compares fine.
+  photoSource?: { param: ParamKey<Params<S>>; sample: PhotoSource<unknown>["sample"] };
   /** Derives params from a user image; see `ImageInput`. */
   imageInput?: ImageInput<Params<S>>;
   /**

@@ -146,6 +146,8 @@ export interface ImageControl extends ControlBase {
   maxEdge: number;
   /** Re-encode rasters as JPEG. */
   photo: boolean;
+  /** Refuse SVG uploads (photo effects). */
+  rasterOnly: boolean;
   /** Takes images pasted anywhere in the editor. */
   paste: boolean;
   /** The param schema: the final judge of a finished upload. */
@@ -429,6 +431,7 @@ export function resolveControl(
         kind,
         maxEdge: hint.image?.maxEdge ?? IMAGE_ASSET_RASTER_MAX_EDGE,
         photo: hint.image?.photo === true,
+        rasterOnly: hint.image?.rasterOnly === true,
         paste: hint.image?.paste !== false,
         schema: schema as z.ZodType,
       };

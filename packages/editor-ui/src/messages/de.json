@@ -131,7 +131,8 @@
         "image": "Bild",
         "vector": "Vektor",
         "code": "Code",
-        "animation": "Animation"
+        "animation": "Animation",
+        "bundle": "Paket"
       },
       "formats": {
         "png": "PNG",
@@ -170,6 +171,10 @@
       "copyOnlyPng": "Bilder lassen sich nur als PNG kopieren.",
       "copyUnavailableText": "Dein Browser kann nicht direkt kopieren. Lade die Datei herunter.",
       "copyUnavailableImage": "Dein Browser kann keine Bilder in die Zwischenablage legen. Lade das PNG herunter.",
+      "copyBundleNone": "Dieses Paket hat keinen Text zum Kopieren. Lade das ZIP herunter.",
+      "bundle": {
+        "files": "Inhalt des ZIP ({count} Dateien)"
+      },
       "errors": {
         "unsupportedFormat": "Dieses Format gibt es für dieses Tool nicht.",
         "decodeFailed": "Das Motiv liess sich nicht in ein Bild umwandeln. Versuch es nochmals oder exportiere als SVG.",
@@ -201,7 +206,9 @@
         "htmlExample": "HTML-Beispiel",
         "cssGrid": "CSS Grid + HTML",
         "report": "Bericht als Text",
-        "dropShadow": "CSS drop-shadow()"
+        "dropShadow": "CSS drop-shadow()",
+        "plainText": "Text (.txt)",
+        "htmlPre": "HTML (pre)"
       },
       "gif": {
         "title": "GIF-Einstellungen",
@@ -281,6 +288,7 @@
       "removedFile": "Deine Datei ist entfernt.",
       "dropNow": "Loslassen, um die Datei zu laden",
       "hint": "Zieh ein SVG, PNG, JPG oder WebP hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Die Datei bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
+      "hintRaster": "Zieh ein Foto (PNG, JPG oder WebP) hierher, füg es mit Ctrl+V ein oder wähl eine Datei (bis 5 MB). Das Foto bleibt auf deinem Gerät, wird nicht hochgeladen und nicht in Links geteilt.",
       "thumbnail": "Deine Datei: {name}",
       "reading": "Datei wird gelesen …",
       "ready": "{name} ist zugeschnitten und im Muster.",
@@ -296,7 +304,8 @@
         "no-result": "Das Bild liess sich nicht zuschneiden. Versuch es nochmals.",
         "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
         "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals.",
-        "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals."
+        "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals.",
+        "raster-only": "Hier geht nur ein Foto im Format PNG, JPG oder WebP. SVG-Dateien lassen sich nicht als Foto bearbeiten."
       },
       "crop": {
         "title": "Zuschneiden",
@@ -658,6 +667,7 @@
         "svg-too-large": "Die SVG-Datei ist grösser als 1 MB. Vereinfache sie und versuch es nochmals.",
         "svg-invalid": "Diese SVG-Datei lässt sich nicht sicher lesen. Speichere sie als einfaches SVG ohne Skripte und versuch es nochmals.",
         "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals.",
+        "raster-only": "Hier geht nur ein Bild im Format PNG, JPG oder WebP.",
         "shape-not-svg": "Shapes müssen SVG-Dateien sein. Logos dürfen auch PNG, JPG oder WebP sein."
       }
     }

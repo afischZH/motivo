@@ -83,7 +83,7 @@ function digestDataUris(svg: string): string {
  * Tools whose SVG runs to hundreds of KB (thousands of generated lines):
  * snapshotted as length, CRC-32 and the first 600 characters, exact but small.
  */
-const DIGEST_TOOLS: ReadonlySet<string> = new Set(["topo-lines", "flow-field"]);
+const DIGEST_TOOLS: ReadonlySet<string> = new Set(["topo-lines", "flow-field", "ascii-art"]);
 
 function digestSvg(svg: string): string {
   // The generated SVG is ASCII, so code units are bytes.
@@ -140,8 +140,18 @@ describe("built-in tool registration", () => {
       "low-poly",
       "terrazzo",
       "screenshot-beautifier",
+      "avatar",
+      "placeholder-image",
+      "animated-gradient",
+      "favicon-generator",
+      "duotone",
+      "ascii-art",
     ]);
-    expect(registry.listByCategory("social").map((t) => t.id)).toEqual(["screenshot-beautifier"]);
+    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
+    expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
+      "screenshot-beautifier",
+      "avatar",
+    ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
       "tints-shades",
@@ -154,6 +164,7 @@ describe("built-in tool registration", () => {
       "mesh-gradient",
       "blurry-gradient",
       "striped-gradient",
+      "animated-gradient",
     ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
@@ -169,8 +180,13 @@ describe("built-in tool registration", () => {
       "flow-field",
       "low-poly",
       "terrazzo",
+      "avatar",
     ]);
-    expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual(["noise-grain"]);
+    expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual([
+      "noise-grain",
+      "duotone",
+      "ascii-art",
+    ]);
   });
 
   it.each(builtInTools.map((t) => [t.id, t] as const))("%s has no gating (all free)", (_, tool) => {
@@ -461,6 +477,8 @@ describe("extra exports", () => {
       "bento-grid",
       "contrast-checker",
       "css-shadow",
+      "animated-gradient",
+      "ascii-art",
     ]);
   });
 });

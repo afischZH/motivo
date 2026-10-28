@@ -2957,6 +2957,746 @@
           "a5": "Choose “Responsive set” under Device. One screenshot is enough: every device shows it, cropped to its screen from the top. You can add separate screenshots for tablet and phone. With the live view your browser loads the website right into the devices, and “Take this view” turns it into pictures. Some websites do not allow embedding; then upload a screenshot."
         }
       }
+    },
+    "avatar": {
+      "name": "Avatar Generator",
+      "description": "Profile pictures with initials, identicons or shapes, derived from a name. Circle, rounded or square, with a solid color, gradient or pattern.",
+      "groups": {
+        "content": "Content",
+        "type": "Type"
+      },
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "initials": "Initials",
+            "identicon": "Identicon",
+            "shapes": "Shapes"
+          }
+        },
+        "name": {
+          "label": "Name",
+          "description": "Gives initials, color and pattern. Same name, same avatar."
+        },
+        "letters": {
+          "label": "Letters"
+        },
+        "initials": {
+          "label": "Custom initials",
+          "description": "Up to three characters, replace the initials from the name."
+        },
+        "source": {
+          "label": "Color and pattern from",
+          "options": {
+            "name": "Name",
+            "seed": "Random"
+          },
+          "description": "With Random, the space bar makes a new identicon every time."
+        },
+        "grid": {
+          "label": "Grid"
+        },
+        "cellShape": {
+          "label": "Cells",
+          "options": {
+            "square": "Squares",
+            "dot": "Dots",
+            "rounded": "Rounded"
+          }
+        },
+        "cellGap": {
+          "label": "Cell gap"
+        },
+        "inset": {
+          "label": "Margin"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Circle",
+            "rounded": "Rounded",
+            "square": "Square"
+          }
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "fill": {
+          "label": "Fill",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "pattern": "Pattern"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "pattern": {
+          "label": "Pattern"
+        },
+        "patternOpacity": {
+          "label": "Pattern opacity"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "inkAuto": {
+          "label": "Automatic foreground"
+        },
+        "ink": {
+          "label": "Foreground color"
+        },
+        "patternScale": {
+          "label": "Pattern size"
+        },
+        "fontSize": {
+          "label": "Font size"
+        },
+        "background": {
+          "label": "Outer background",
+          "description": "Area outside the shape, transparent for round avatars."
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "pastel": "Pastel",
+        "pattern": "Pattern",
+        "gradient": "Gradient",
+        "identicon": "Identicon",
+        "pixel": "Pixel",
+        "bauhaus": "Bauhaus"
+      },
+      "sizes": {
+        "s128": "Avatar 128 px",
+        "s256": "Avatar 256 px",
+        "s512": "Avatar 512 px",
+        "s1024": "Avatar 1024 px"
+      },
+      "seo": {
+        "whatIs": "An avatar generator creates profile pictures without a photo: initials on a colored shape, a symmetric identicon or a small composition of shapes. Use them as default avatars for user accounts, in comments, team pages, chats and prototypes. Color and pattern are derived from the name, so every person always looks the same.",
+        "howTo": "Type a name or an email address and choose initials, identicon or shapes. Set the shape, the fill (solid, gradient or pattern), the font and the grid, and pick a palette each name takes its color from. The space bar shuffles palette, fill and font while the name stays. Export as SVG, PNG, JPG or WebP, for example at 128, 256, 512 or 1024 pixels.",
+        "faq": {
+          "q1": {
+            "question": "Does the same name always get the same avatar?",
+            "answer": "Yes. Color, identicon and shapes come from a hash of the name, not from chance. Upper and lower case and surrounding spaces do not matter. Only the palette and your other settings change the result."
+          },
+          "q2": {
+            "question": "Which fonts are used?",
+            "answer": "Only the system fonts of your device (sans, serif, mono or rounded). No font files are loaded or embedded, so the lettering can look slightly different on another operating system. For a fixed look, export PNG, JPG or WebP."
+          },
+          "q3": {
+            "question": "What is an identicon?",
+            "answer": "An identicon is a small, symmetric pixel pattern computed from a piece of text. It tells accounts apart without anyone uploading a picture. Here you choose the grid, the cell shape and the gap."
+          },
+          "q4": {
+            "question": "Is the name stored anywhere?",
+            "answer": "No. Everything runs in your browser. The name is only part of a share link if you create one, and of the design if you save it locally."
+          },
+          "q5": {
+            "question": "Can I create many avatars at once?",
+            "answer": "Each export holds one avatar. Enter the names one after another: since color and pattern follow from the name, every person keeps the same look when you add more avatars later."
+          }
+        }
+      }
+    },
+    "placeholder-image": {
+      "name": "Placeholder Image Generator",
+      "description": "Placeholder images in any size with a size label or your own text, as a solid color, gradient or pattern. For wireframes, mockups and layouts.",
+      "groups": {
+        "label": "Label",
+        "lines": "Lines"
+      },
+      "params": {
+        "label": {
+          "label": "Label",
+          "options": {
+            "size": "Size",
+            "custom": "Custom text",
+            "none": "None"
+          }
+        },
+        "text": {
+          "label": "Text"
+        },
+        "fontSize": {
+          "label": "Font size"
+        },
+        "fill": {
+          "label": "Fill",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "pattern": "Pattern"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "pattern": {
+          "label": "Pattern"
+        },
+        "patternOpacity": {
+          "label": "Pattern opacity"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "inkAuto": {
+          "label": "Automatic foreground"
+        },
+        "ink": {
+          "label": "Foreground color"
+        },
+        "patternScale": {
+          "label": "Pattern size"
+        },
+        "cross": {
+          "label": "Diagonals"
+        },
+        "border": {
+          "label": "Border"
+        }
+      },
+      "presets": {
+        "gray": "Gray",
+        "light": "Light",
+        "dark": "Dark",
+        "gradient": "Gradient",
+        "pattern": "Pattern",
+        "blueprint": "Blueprint",
+        "banner": "Banner"
+      },
+      "sizes": {
+        "medium-rectangle": "Medium rectangle",
+        "leaderboard": "Leaderboard",
+        "skyscraper": "Skyscraper",
+        "vga": "4:3 small",
+        "svga": "4:3 medium"
+      },
+      "seo": {
+        "whatIs": "A placeholder image holds the space for a picture that is still missing from a layout. It shows its size in pixels or your own text, so everyone knows what goes there. You need placeholders in wireframes, mockups, prototypes, presentations and while building websites.",
+        "howTo": "Pick a size from the list (social media, screens, ad formats) or enter width and height. The label shows width × height automatically, your own text or nothing. Then choose a solid color, a gradient or a pattern and turn on diagonals or a border. Export as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Do I need a placeholder URL service?",
+            "answer": "No. You download the image as a file and add it to your project. There is no dependency on someone else's server, and nothing breaks when a service shuts down."
+          },
+          "q2": {
+            "question": "Which sizes are possible?",
+            "answer": "Any size from 16 to 8192 pixels per side. The list has common social media formats, screens, print formats and ad banners such as 300 × 250 or 728 × 90."
+          },
+          "q3": {
+            "question": "Does the text fit narrow images?",
+            "answer": "Yes. The label gets smaller until it fits the width. Only system fonts are used; no font files are loaded."
+          },
+          "q4": {
+            "question": "Is SVG or PNG better?",
+            "answer": "SVG is tiny and stays sharp at any size, ideal for prototypes in code. PNG, JPG and WebP look the same everywhere, even where another system font is installed."
+          }
+        }
+      }
+    },
+    "animated-gradient": {
+      "name": "Animated Gradient Generator",
+      "description": "Moving, rotating and color-shifting gradients and floating blobs as pure CSS. Copy CSS, Tailwind or HTML, or export PNG and GIF.",
+      "params": {
+        "mode": {
+          "label": "Animation",
+          "description": "Pan moves a large gradient, Rotate turns it, Shift lets the colors trade places, Blobs float soft color spots.",
+          "options": {
+            "pan": "Pan",
+            "rotate": "Rotate",
+            "shift": "Shift",
+            "blobs": "Blobs"
+          }
+        },
+        "rotateShape": {
+          "label": "Gradient type",
+          "options": {
+            "conic": "Conic",
+            "linear": "Linear"
+          }
+        },
+        "angle": {
+          "label": "Angle",
+          "description": "Direction of the gradient. When panning, the gradient also moves along this axis."
+        },
+        "duration": {
+          "label": "Duration"
+        },
+        "timing": {
+          "label": "Easing",
+          "options": {
+            "linear": "Linear",
+            "ease": "Ease",
+            "ease-in": "Ease in",
+            "ease-out": "Ease out",
+            "ease-in-out": "Ease in and out"
+          }
+        },
+        "direction": {
+          "label": "Direction",
+          "options": {
+            "normal": "Forward",
+            "reverse": "Backward"
+          }
+        },
+        "motion": {
+          "label": "Motion",
+          "description": "How far the gradient or the blobs travel."
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "intensity": {
+          "label": "Intensity"
+        }
+      },
+      "groups": {
+        "animation": "Animation",
+        "blobs": "Blobs"
+      },
+      "presets": {
+        "aurora": "Aurora",
+        "sunset": "Sunset",
+        "radar": "Radar",
+        "lighthouse": "Lighthouse",
+        "chameleon": "Chameleon",
+        "ocean": "Ocean",
+        "lava": "Lava lamp",
+        "pastel": "Pastel clouds"
+      },
+      "seo": {
+        "whatIs": "An animated gradient is a background that moves slowly: the gradient pans, turns, changes its colors or soft blobs drift across it. Musterli writes it as pure CSS with keyframes, without JavaScript or video, so it stays light and sharp at any size.",
+        "howTo": "Pick Pan, Rotate, Shift or Blobs, choose your colors and set duration, easing and direction. Press Space for new colors and a new blob layout. The preview runs the real CSS. Copy the CSS, an HTML example or Tailwind classes, export a still image as PNG, JPG, WebP or SVG, or the whole loop as a GIF.",
+        "faq": {
+          "q1": {
+            "question": "What happens for people who prefer reduced motion?",
+            "answer": "Every code export includes a prefers-reduced-motion rule. People who ask their system for less motion see a calm, still gradient, exactly the first frame of the animation. The preview here behaves the same way."
+          },
+          "q2": {
+            "question": "Which browsers support the rotating and color-shifting gradients?",
+            "answer": "They use @property, which Chrome and Edge support since version 85, Safari since 16.4 and Firefox since 128. Older browsers show a still gradient instead of a broken background."
+          },
+          "q3": {
+            "question": "Does the animation slow down my page?",
+            "answer": "The blobs only move with transform, which the browser handles on the graphics card. Panning, rotating and shifting repaint the background, so keep them for one hero area rather than many small elements. Longer durations look calmer anyway."
+          },
+          "q4": {
+            "question": "How do I use it with Tailwind?",
+            "answer": "The Tailwind export gives you classes with arbitrary values plus a note to add the keyframes. For Tailwind v4 there is an @theme version that defines --animate-* and the keyframes, so you can write animate-gradient-pan."
+          },
+          "q5": {
+            "question": "Can I get the animation as an image?",
+            "answer": "PNG, JPG, WebP and SVG show the still start state. The GIF export draws the whole loop frame by frame, seamlessly, for places where CSS is not possible such as emails or chats."
+          }
+        }
+      }
+    },
+    "favicon-generator": {
+      "name": "Favicon Generator",
+      "description": "Favicons and app icons from a letter, a shape or your logo. One click gives you a pack with every size, the manifest and the HTML.",
+      "groups": {
+        "view": "View",
+        "content": "Content",
+        "background": "Background",
+        "form": "Shape",
+        "dark": "Dark mode",
+        "app": "App and manifest"
+      },
+      "params": {
+        "variant": {
+          "label": "Variant",
+          "options": {
+            "standard": "Standard",
+            "dark": "Dark",
+            "apple": "Apple touch",
+            "maskable": "Maskable"
+          }
+        },
+        "content": {
+          "label": "Content",
+          "options": {
+            "text": "Text",
+            "shape": "Shape",
+            "image": "Logo"
+          }
+        },
+        "text": {
+          "label": "Text",
+          "description": "One to four characters, for example an initial."
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "logoTint": {
+          "label": "Paint in the foreground color"
+        },
+        "shape": {
+          "label": "Shape"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "weight": {
+          "label": "Font weight"
+        },
+        "textSize": {
+          "label": "Text size"
+        },
+        "color": {
+          "label": "Foreground"
+        },
+        "fill": {
+          "label": "Background",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "pattern": "Pattern",
+            "transparent": "Transparent"
+          }
+        },
+        "fillColor": {
+          "label": "Base color"
+        },
+        "gradient": {
+          "label": "Gradient colors"
+        },
+        "radial": {
+          "label": "Radial gradient"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "pattern": {
+          "label": "Pattern",
+          "description": "The pattern color sits between the base color and the foreground.",
+          "options": {
+            "dots": "Dots",
+            "grid": "Grid",
+            "stripes": "Stripes",
+            "diagonal": "Diagonal",
+            "checks": "Checks"
+          }
+        },
+        "density": {
+          "label": "Pattern density"
+        },
+        "corner": {
+          "label": "Tile shape",
+          "options": {
+            "square": "Square",
+            "rounded": "Rounded",
+            "squircle": "Squircle",
+            "circle": "Circle"
+          }
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "darkMode": {
+          "label": "Own colors in dark mode",
+          "description": "favicon.svg then switches by itself when the browser uses a dark theme."
+        },
+        "darkColor": {
+          "label": "Dark foreground"
+        },
+        "darkFill": {
+          "label": "Dark background"
+        },
+        "appName": {
+          "label": "App name"
+        },
+        "shortName": {
+          "label": "Short name",
+          "description": "Shown under the icon on the home screen, up to 12 characters."
+        },
+        "splash": {
+          "label": "App background",
+          "description": "For the splash screen and behind transparent Apple and maskable icons. The theme color follows the icon background."
+        }
+      },
+      "advisories": {
+        "darkOff": "The dark variant needs its own colors. Turn on own colors under Dark mode.",
+        "noLogo": "Upload a logo or pick one from your Brand Kit. Until then the icon shows the text."
+      },
+      "presets": {
+        "monogram": "Monogram",
+        "gradient": "Gradient",
+        "badge": "Badge",
+        "pattern": "Pattern",
+        "minimal": "Minimal",
+        "code": "Code",
+        "leaf": "Leaf"
+      },
+      "sizes": {
+        "icon-512": "Icon",
+        "icon-1024": "Large icon (App Store)",
+        "icon-192": "Android",
+        "apple-touch": "Apple touch icon"
+      },
+      "bundles": {
+        "iconPack": {
+          "label": "Icon pack (ZIP)",
+          "description": "favicon.ico (16, 32, 48 px), favicon.svg, Apple touch icon, app icons at 192 and 512 px, a maskable icon, site.webmanifest and the HTML for the head.",
+          "snippet": "HTML for the head"
+        }
+      },
+      "seo": {
+        "whatIs": "A favicon is the small picture in the browser tab, in bookmarks and in the history. Phones show an app icon when someone adds your website to the home screen. Modern websites need several files for this: favicon.ico for older browsers, favicon.svg for every size and dark mode, an Apple touch icon, icons for Android and a manifest. The favicon generator creates all of them from one design.",
+        "howTo": "Choose a letter, a shape from the library or your own logo as the content. Set the background (color, gradient, pattern or transparent), the tile shape and the padding. Press Space for new colors. Turn on own colors for dark mode if you like and enter the name and colors under App and manifest. Then export the icon pack as a ZIP, copy the files to the root folder of your website and paste the HTML into the head.",
+        "faq": {
+          "q1": {
+            "question": "Which files are in the icon pack?",
+            "answer": "favicon.ico with 16, 32 and 48 px, favicon.svg, apple-touch-icon.png (180 px), icon-192.png, icon-512.png, icon-512-maskable.png for Android, site.webmanifest and head-snippet.html with the matching tags. These are the files current browsers and phones actually use."
+          },
+          "q2": {
+            "question": "What is a maskable icon?",
+            "answer": "Android cuts app icons into circles, drops or rounded squares. A maskable icon therefore fills the whole area and keeps its content in the safe zone, a circle with 80 % diameter. The Maskable variant shows you how it looks."
+          },
+          "q3": {
+            "question": "How does the favicon work in dark mode?",
+            "answer": "With own colors in dark mode, favicon.svg holds both variants and the browser picks one through prefers-color-scheme. The HTML gets a second theme-color for dark interfaces as well."
+          },
+          "q4": {
+            "question": "Is my logo uploaded?",
+            "answer": "No. Everything happens in your browser, including packing the ZIP. Your logo is not part of the share link, and SVG files are cleaned of scripts and external references first."
+          },
+          "q5": {
+            "question": "Why does the letter look slightly different on another device?",
+            "answer": "Text uses the device's system fonts, so no font files are needed. The PNG files are drawn with the fonts of your computer. For an identical result everywhere, use a shape or your logo as SVG."
+          }
+        }
+      }
+    },
+    "duotone": {
+      "name": "Duotone and Gradient Map",
+      "description": "Tint photos in two, three or more colors: duotone, tritone and gradient map with a tone curve and grain. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "tone": "Tones",
+        "texture": "Grain and blend"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "mode": {
+          "label": "Type",
+          "options": {
+            "duotone": "Duotone",
+            "tritone": "Tritone",
+            "gradient": "Gradient"
+          }
+        },
+        "shadows": {
+          "label": "Shadows"
+        },
+        "midtones": {
+          "label": "Midtones"
+        },
+        "highlights": {
+          "label": "Highlights"
+        },
+        "weights": {
+          "label": "Brightness from",
+          "options": {
+            "rec709": "Rec. 709 (standard)",
+            "rec601": "Rec. 601",
+            "average": "Average",
+            "custom": "Custom weights"
+          }
+        },
+        "red": {
+          "label": "Red share"
+        },
+        "green": {
+          "label": "Green share"
+        },
+        "blue": {
+          "label": "Blue share"
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "grainSize": {
+          "label": "Grain size"
+        },
+        "amount": {
+          "label": "Strength"
+        }
+      },
+      "presets": {
+        "indigo-coral": "Indigo and coral",
+        "newsprint": "Newsprint",
+        "plum-mint": "Plum and mint",
+        "sunset": "Sunset",
+        "cyanotype": "Cyanotype",
+        "sepia": "Sepia",
+        "aurora": "Aurora"
+      },
+      "seo": {
+        "whatIs": "Duotone is an image effect that reduces a photo to two colors: dark areas take the shadow color, light areas the highlight color, with a smooth blend in between. With three colors it is called tritone, with any number a gradient map. The look is popular for posters, album covers, social media and websites because it tints photos in brand colors.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Choose duotone, tritone or gradient and set the shadow and highlight colors. Brightness, contrast and gamma decide how much area each color gets. Grain adds an analog print look, strength blends the original back in. Space rolls new color pairs. Export as PNG, JPG or WebP at full resolution.",
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "How large can the photo be?",
+          "a2": "Files up to 5 MB as PNG, JPG or WebP. Photos up to 4096 pixels on the long side keep their full resolution, 12 megapixel pictures included. The design size follows the photo, and the export computes the effect at that size.",
+          "q3": "What is the difference between duotone, tritone and gradient map?",
+          "a3": "Duotone gives every brightness a color between two colors, tritone adds a color for the midtones. A gradient map takes any number of colors, spread evenly from dark to light. Colors are blended in the OKLab color space, so the transitions stay clean.",
+          "q4": "Can I use my brand colors?",
+          "a4": "Yes. Apply a brand palette from your Brand Kit: Musterli sorts the colors by lightness, the darkest becomes the shadow color and the lightest the highlight color.",
+          "q5": "Why is there no SVG export?",
+          "a5": "The effect changes every pixel of the photo, so the result is a raster image. An SVG with a filter would look different from app to app. PNG, JPG and WebP show exactly what you see in the preview."
+        }
+      }
+    },
+    "ascii-art": {
+      "name": "ASCII Art",
+      "description": "Turn photos into ASCII art from characters, colored characters, an LED dot matrix or braille. Export as SVG, PNG, text or HTML.",
+      "groups": {
+        "photo": "Photo",
+        "characters": "Characters",
+        "tone": "Tones"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "mode": {
+          "label": "Style",
+          "options": {
+            "ascii": "Characters",
+            "dots": "Dots",
+            "braille": "Braille"
+          }
+        },
+        "ramp": {
+          "label": "Character set",
+          "options": {
+            "standard": "Standard",
+            "detailed": "Fine (70 characters)",
+            "blocks": "Blocks",
+            "minimal": "Minimal",
+            "binary": "Binary",
+            "custom": "Custom characters"
+          }
+        },
+        "customRamp": {
+          "label": "Custom characters",
+          "description": "From light to dark, at most 64 characters. The first one stands for the lightest areas, usually a space."
+        },
+        "columns": {
+          "label": "Columns"
+        },
+        "aspect": {
+          "label": "Character shape (width to height)"
+        },
+        "invert": {
+          "label": "Invert (for a dark background)"
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        },
+        "colorMode": {
+          "label": "Color",
+          "options": {
+            "single": "One color",
+            "photo": "From the photo"
+          }
+        },
+        "ink": {
+          "label": "Character color"
+        },
+        "dotMode": {
+          "label": "Dots",
+          "options": {
+            "size": "Size",
+            "lit": "Lit"
+          }
+        },
+        "dotShape": {
+          "label": "Shape",
+          "options": {
+            "round": "Round",
+            "square": "Square"
+          }
+        },
+        "dotSize": {
+          "label": "Dot size"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "terminal": "Terminal",
+        "colour": "Color",
+        "led": "LED",
+        "halftone": "Halftone dots",
+        "braille": "Braille",
+        "blocks": "Blocks"
+      },
+      "seo": {
+        "whatIs": "ASCII art is a picture made of text characters: dark areas get dense characters such as @ or #, light areas dots or spaces. From a little distance the photo appears again. Musterli also draws colored characters, an LED or dot matrix and braille patterns, for posters, terminal aesthetics, README files and websites.",
+        "howTo": "Upload a photo or start with the sample picture. Choose characters, dots or braille, the number of columns and a character set, including your own characters. Brightness, contrast and gamma decide how much detail shows; invert fits the picture to a dark background. Export as SVG, PNG, JPG or WebP, or as text and an HTML snippet.",
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links contain neither the photo nor the characters computed from it; a shared link shows the sample picture.",
+          "q2": "Which font is used?",
+          "a2": "Your system's monospace font, for example SF Mono, Menlo, Consolas or Liberation Mono. Musterli loads no web font. In the SVG every row is exactly as wide as the picture, so the art fits with another font too.",
+          "q3": "How large do SVG and text get?",
+          "a3": "At most 32,000 cells, or 32,000 dots for braille. More columns show finer detail; beyond that Musterli shrinks the grid evenly. That keeps an SVG under 1 MB, even in color.",
+          "q4": "What is the difference between size and lit dots?",
+          "a4": "With size, dots grow with darkness like in halftone print. With lit, all dots are the same size and their opacity follows the brightness, like an LED display. Invert makes the light areas glow.",
+          "q5": "Can I use the ASCII art as text?",
+          "a5": "Yes. The export offers plain text for README files, code comments and terminals, plus an HTML snippet with inline styles that brings its colors and the monospace font along."
+        }
+      }
     }
   },
   "Converters": {
@@ -3211,6 +3951,10 @@
     "css-effects": {
       "name": "CSS effects and layouts",
       "description": "Glass, gradient borders, glows and bento layouts as ready-to-copy code."
+    },
+    "icons": {
+      "name": "Icons",
+      "description": "Favicons and app icons in every size browsers and phones need."
     }
   },
   "PatternLibrary": {

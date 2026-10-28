@@ -2,11 +2,14 @@
 
 import {
   FILE_EXTENSIONS,
+  bundleFiles,
+  bundleSnippet,
   canCopyImage,
   canCopyText,
   copyPng,
   copyText,
   downloadBlob,
+  exportBundle,
   exportCss,
   exportExtra,
   exportFilename,
@@ -26,6 +29,7 @@ import {
   GIF_PIXEL_BUDGET,
   MIME_TYPES,
   gifSize,
+  type BundleInfo,
   type GifPlan,
   type RasterFormat,
 } from "@musterli/exporters";
@@ -42,6 +46,7 @@ import {
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";
+import { exportDesignRaster } from "../raster-effect/export";
 import type { ParamValues } from "../store/editor-store";
 import { useEditorStore } from "../store/react";
 import {
@@ -77,11 +82,14 @@ import { useBackdropClose } from "../shell/use-backdrop-close";
 
 /** Browser side effects of the dialog, replaceable in tests. */
 export interface ExportServices {
+  /** Image-effect tools render in the raster-effect worker (`exportDesignRaster`). */
   exportRaster: typeof exportRaster;
   /** Repeat tile of seamless tools (scale only, the tile has its own size). */
   exportRasterTile: typeof exportRasterTile;
   /** Animated GIF (tools with `animation`); frames are encoded in a worker. */
   exportGif: typeof exportGif;
+  /** Multi-file bundle as ZIP (tools with `bundles`); encoded in the raster worker. */
+  exportBundle: typeof exportBundle;
   downloadBlob: typeof downloadBlob;
   copyText: typeof copyText;
   copyPng: typeof copyPng;
@@ -90,9 +98,10 @@ export interface ExportServices {
 }
 
 export const browserExportServices: ExportServices = {
-  exportRaster,
+  exportRaster: exportDesignRaster,
   exportRasterTile,
   exportGif,
+  exportBundle,
   downloadBlob,
   copyText,
   copyPng,
@@ -254,11 +263,36 @@ function ExportDialogBody({
   useEffect(() => () => abortRef.current?.abort(), []);
 
   const text = useMemo(() => {
-    if (!choice || !isTextChoice(choice)) return null;
+    if (!choice) return null;
     try {
+      if (choice.kind === "bundle") {
+        // The bundle's snippet (e.g. HTML head tags) is shown and copied like code.
+        const value = bundleSnippet(
+          tool,
+          choice.bundle.id,
+          params as AnyParams,
+          createRenderContext(seed, size),
+        );
+        return value === null ? null : { ok: true as const, value };
+      }
+      if (!isTextChoice(choice)) return null;
       return { ok: true as const, value: renderTextExport(tool, choice, params, seed, size) };
     } catch (error) {
       return { ok: false as const, key: exportErrorKey(error) };
+    }
+  }, [choice, tool, params, seed, size]);
+
+  const bundlePaths = useMemo(() => {
+    if (choice?.kind !== "bundle") return null;
+    try {
+      return bundleFiles(
+        tool,
+        choice.bundle.id,
+        params as AnyParams,
+        createRenderContext(seed, size),
+      ).map((file) => file.path);
+    } catch {
+      return null;
     }
   }, [choice, tool, params, seed, size]);
 
@@ -268,6 +302,7 @@ function ExportDialogBody({
 
   const raster = choice.kind === "raster" || choice.kind === "tile" ? choice.format : null;
   const gifChoice = choice.kind === "gif";
+  const bundleChoice = choice.kind === "bundle" ? choice.bundle : null;
   const gifPlan = gifChoice ? planGifExport(size, gifSettings) : null;
   // Image formats (copy only works for PNG).
   const imageFormat = raster ?? (gifChoice ? "gif" : null);
@@ -354,7 +389,41 @@ function ExportDialogBody({
     });
   };
 
+  const startBundle = (bundleId: string) => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setStatus({ kind: "busy", action: "download", progress: null });
+    return services.exportBundle(
+      tool,
+      bundleId,
+      params as AnyParams,
+      createRenderContext(seed, size),
+      {
+        signal: controller.signal,
+        onProgress: (fraction) => {
+          if (!controller.signal.aborted) {
+            setStatus({ kind: "busy", action: "download", progress: fraction });
+          }
+        },
+      },
+    );
+  };
+
   const download = async () => {
+    if (bundleChoice) {
+      try {
+        const result = await startBundle(bundleChoice.id);
+        services.downloadBlob(result.blob, result.filename);
+        setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+        setExported(true);
+      } catch (error) {
+        fail(error);
+      } finally {
+        finishRaster();
+      }
+      return;
+    }
     if (gifChoice) {
       try {
         const result = await startGif();
@@ -427,17 +496,20 @@ function ExportDialogBody({
     );
   };
 
-  // Copy: text always (if the API exists), images only as PNG via ClipboardItem.
+  // Copy: text always (if the API exists), images only as PNG via ClipboardItem;
+  // a bundle copies its snippet, a bundle without one copies nothing.
   const copyBlockedKey: string | null =
-    imageFormat === null
-      ? clipboard.text
-        ? null
-        : "copyUnavailableText"
-      : imageFormat !== "png"
-        ? "copyOnlyPng"
-        : clipboard.image
+    bundleChoice !== null && text === null
+      ? "copyBundleNone"
+      : imageFormat === null
+        ? clipboard.text
           ? null
-          : "copyUnavailableImage";
+          : "copyUnavailableText"
+        : imageFormat !== "png"
+          ? "copyOnlyPng"
+          : clipboard.image
+            ? null
+            : "copyUnavailableImage";
   const copyDisabled = busy || copyBlockedKey !== null || text?.ok === false;
   const downloadDisabled = busy || text?.ok === false || gifPlan?.overBudget === true;
 
@@ -516,11 +588,17 @@ function ExportDialogBody({
         />
       )}
 
+      {bundleChoice !== null && <BundleSection bundle={bundleChoice} paths={bundlePaths} />}
+
       {text !== null && (
         <CodeView
           text={text.ok ? text.value : null}
           errorText={text.ok ? null : t(`Editor.export.errors.${text.key}`)}
-          label={t("Editor.export.code")}
+          label={
+            bundleChoice?.snippet !== undefined
+              ? t(bundleChoice.snippet.labelKey)
+              : t("Editor.export.code")
+          }
         />
       )}
 
@@ -611,9 +689,38 @@ function textFile(choice: TextChoice): { mime: string; extension: string; suffix
 
 /** Label of a format card. */
 function choiceLabel(t: Translate, choice: ExportChoice): string {
-  return choice.kind === "extra"
-    ? t(choice.extra.labelKey)
-    : t(`Editor.export.formats.${choice.id}`);
+  if (choice.kind === "extra") return t(choice.extra.labelKey);
+  if (choice.kind === "bundle") return t(choice.bundle.labelKey);
+  return t(`Editor.export.formats.${choice.id}`);
+}
+
+/** What a bundle contains: its description and the file names. */
+function BundleSection(props: { bundle: BundleInfo; paths: readonly string[] | null }) {
+  const t = useT();
+  const id = useId();
+  const { bundle, paths } = props;
+  return (
+    <section className="grid gap-2" aria-labelledby={id} data-testid="export-bundle">
+      <h3 id={id} className="text-sm font-semibold">
+        {t("Editor.export.bundle.files", { count: paths?.length ?? 0 })}
+      </h3>
+      {bundle.descriptionKey !== undefined && (
+        <p className="text-xs text-muted-foreground">{t(bundle.descriptionKey)}</p>
+      )}
+      {paths !== null && (
+        <ul className="flex flex-wrap gap-1.5" data-testid="export-bundle-files">
+          {paths.map((path) => (
+            <li
+              key={path}
+              className="rounded-md border border-border bg-muted px-2 py-0.5 font-mono text-xs"
+            >
+              {path}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
 }
 
 function FormatPicker(props: {

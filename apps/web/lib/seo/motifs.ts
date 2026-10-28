@@ -5,10 +5,15 @@
  * in the editor. Server only: pages and route handlers call it at build time.
  */
 import { designToHash } from "@musterli/editor-ui/share";
+import { toBase64 } from "@musterli/engine";
+import { PngStreamEncoder } from "@musterli/exporters/png-stream";
 import {
   DEFAULT_CANVAS_SIZE,
   createRenderContext,
+  fitSize,
+  isImageEffectTool,
   registry,
+  renderImageEffect,
   type AnyToolDefinition,
   type CanvasSize,
 } from "@musterli/tool-registry";
@@ -67,9 +72,53 @@ export function designSvg(tool: AnyToolDefinition, design: StaticDesign): string
   return undefined;
 }
 
-/** Whether every static motif of the tool can be rendered on the server. */
+/**
+ * Longest edge of the picture inside an image-effect motif: sharp enough
+ * for cards and OG images, about 150 to 300 KB per motif.
+ */
+export const EFFECT_MOTIF_EDGE = 480;
+
+/**
+ * An image effect applied to the tool's sample picture (docs/ARCHITECTURE.md
+ * 4.14), as an SVG that wraps one PNG of at most `EFFECT_MOTIF_EDGE` px.
+ * Same `render` as the editor; the sample is scaled with `resizeCover`
+ * instead of a canvas, so the pixels may differ slightly from the editor.
+ */
+export async function effectMotifSvg(
+  tool: AnyToolDefinition,
+  design: StaticDesign,
+): Promise<string | undefined> {
+  if (!isImageEffectTool(tool)) return undefined;
+  const size = toolSize(tool);
+  const out = fitSize(size, EFFECT_MOTIF_EDGE);
+  const pixels = renderImageEffect(tool, design.params, design.seed, size, out);
+  const encoder = new PngStreamEncoder(out.width, out.height);
+  await encoder.addRows(pixels.data, out.height);
+  const parts = await encoder.finish();
+  const png = new Uint8Array(parts.reduce((n, p) => n + p.length, 0));
+  let offset = 0;
+  for (const part of parts) {
+    png.set(part, offset);
+    offset += part.length;
+  }
+  const { width, height } = size;
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">` +
+    `<image width="${width}" height="${height}" preserveAspectRatio="none" href="data:image/png;base64,${toBase64(png)}"/></svg>`
+  );
+}
+
+/** `designSvg`, plus image effects (async: their PNG is compressed with `CompressionStream`). */
+export async function staticMotifSvg(
+  tool: AnyToolDefinition,
+  design: StaticDesign,
+): Promise<string | undefined> {
+  return designSvg(tool, design) ?? effectMotifSvg(tool, design);
+}
+
+/** Whether every static motif of the tool can be rendered on the server (`staticMotifSvg`). */
 export function hasStaticMotif(tool: AnyToolDefinition): boolean {
-  return tool.render.kind === "svg" || tool.render.kind === "css";
+  return tool.render.kind === "svg" || tool.render.kind === "css" || isImageEffectTool(tool);
 }
 
 /** Public path of a static motif SVG (see `app/motifs/[toolId]/[file]/route.ts`). */

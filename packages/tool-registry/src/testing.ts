@@ -9,6 +9,8 @@ import * as z from "zod";
 import { DEFAULT_CANVAS_SIZE } from "./common";
 import { itemLockKey, parseItemLockKey } from "./randomize";
 import { TOOL_ID_PATTERN } from "./registry";
+import { pixelDigest } from "@musterli/effects";
+import { fitSize, isImageEffectTool, renderImageEffect } from "./photo-source";
 import { createRenderContext } from "./render";
 import type {
   AnyToolDefinition,
@@ -32,10 +34,15 @@ export interface ContractOptions {
 /** What a static renderer returns, for comparisons and snapshots. */
 export type StaticRenderOutput = string | CssOutput;
 
+/** Longest edge image effects are rendered at in static checks (digest only). */
+export const IMAGE_EFFECT_TEST_EDGE = 96;
+
 /**
  * Renders svg, css and text tools once with a fresh context (with the
- * animation time `t` of a "time" frame, if given). Returns
- * `undefined` for kinds that need a browser (canvas2d, webgl, image-effect).
+ * animation time `t` of a "time" frame, if given). Image effects run on
+ * their sample picture at a small size (`IMAGE_EFFECT_TEST_EDGE`) and
+ * return `pixels <digest>`. Returns `undefined` for kinds that need a
+ * browser (canvas2d, webgl).
  */
 export function renderStatic(
   tool: AnyToolDefinition,
@@ -52,6 +59,11 @@ export function renderStatic(
     case "text":
     case "css":
       return tool.render.render(p, ctx);
+    case "image-effect": {
+      if (!isImageEffectTool(tool)) return undefined;
+      const out = renderImageEffect(tool, p, seed, size, fitSize(size, IMAGE_EFFECT_TEST_EDGE));
+      return `pixels ${pixelDigest(out)}`;
+    }
     default:
       return undefined;
   }
@@ -317,7 +329,7 @@ export function describeToolContract<S extends ParamsSchema>(
         for (const p of tool.presets) {
           const out = renderStatic(anyTool, p.params, p.seed ?? seed, size);
           const svg = typeof out === "string" ? out : out?.previewSvg;
-          if (tool.render.kind !== "text" && svg !== undefined) {
+          if ((tool.render.kind === "svg" || tool.render.kind === "css") && svg !== undefined) {
             expect(checkSvg(svg), `preset ${p.id}`).toEqual([]);
           }
         }
@@ -353,8 +365,68 @@ export function describeToolContract<S extends ParamsSchema>(
         },
       );
     });
+
+    describe("bundles", () => {
+      const bundles = anyTool.bundles ?? [];
+      const starts = [
+        { params: tool.defaults, seed },
+        ...tool.presets.map((pr) => ({ params: pr.params, seed: pr.seed ?? seed })),
+      ];
+
+      it("have unique kebab-case ids and label keys", () => {
+        const ids = bundles.map((b) => b.id);
+        expect(new Set(ids).size).toBe(ids.length);
+        for (const b of bundles) {
+          expect(b.id).toMatch(TOOL_ID_PATTERN);
+          expect(b.labelKey.length).toBeGreaterThan(0);
+        }
+      });
+
+      it.each(bundles.map((b) => [b.id, b] as const))(
+        "%s lists safe, unique files that render for defaults and presets",
+        (_, bundle) => {
+          for (const p of starts) {
+            const ctx = createRenderContext(p.seed, size);
+            const files = bundle.files(p.params, ctx);
+            expect(files.length).toBeGreaterThan(0);
+            const paths = files.map((file) => file.path);
+            expect(new Set(paths).size).toBe(paths.length);
+            for (const file of files) {
+              expect(file.path).toMatch(BUNDLE_PATH);
+              if (file.kind === "text") {
+                expect(file.text).not.toMatch(/\b(?:NaN|undefined|Infinity)\b/);
+                continue;
+              }
+              const params = file.params ?? p.params;
+              expect(anyTool.schema.safeParse(params).success, file.path).toBe(true);
+              const edges =
+                file.kind === "png" ? [file.width, file.height] : [...file.sizes, ...file.sizes];
+              for (const edge of edges) {
+                expect(Number.isInteger(edge) && edge >= 1, file.path).toBe(true);
+                if (file.kind === "ico") expect(edge).toBeLessThanOrEqual(256);
+              }
+              const out = renderStatic(anyTool, params, p.seed, {
+                width: edges[0] ?? 1,
+                height: edges[1] ?? 1,
+              });
+              const svg = typeof out === "string" ? out : out?.previewSvg;
+              expect(svg, `${file.path} needs SVG output`).toBeDefined();
+              expect(checkSvg(svg ?? ""), file.path).toEqual([]);
+            }
+            if (bundle.snippet) {
+              const text = bundle.snippet.render(p.params, ctx);
+              expect(text.trim().length).toBeGreaterThan(0);
+              expect(bundle.snippet.render(p.params, createRenderContext(p.seed, size))).toBe(text);
+            }
+          }
+        },
+      );
+    });
   });
 }
+
+/** Relative archive path: `/` separated segments of letters, digits, `.`, `_` and `-`. */
+const BUNDLE_PATH = /^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*$/;
 
 export interface SnapshotOptions extends Pick<ContractOptions, "seed" | "size"> {
   /**

@@ -45,6 +45,15 @@ describe("readAsset", () => {
     expect(sourceSize(result.source)).toEqual({ width: 20, height: 10 });
   });
 
+  it("refuses SVG in photo fields (rasterOnly), by bytes, before sanitising", async () => {
+    const svg = await readAsset(file([HOSTILE_SVG], "photo.jpg", "image/jpeg"), {
+      rasterOnly: true,
+    });
+    expect(svg).toEqual({ ok: false, error: "raster-only" });
+    const raster = await readAsset(file([png(30, 20)], "photo.png"), { rasterOnly: true });
+    expect(raster).toMatchObject({ ok: true, source: { kind: "raster" } });
+  });
+
   it("decides by bytes, not by name or declared type", async () => {
     const fakePng = await readAsset(file(["not an image"], "x.png", "image/png"));
     expect(fakePng).toEqual({ ok: false, error: "unsupported-type" });

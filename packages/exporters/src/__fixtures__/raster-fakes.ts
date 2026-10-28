@@ -9,11 +9,14 @@
 import {
   createStripSession,
   handleEncodeRequest,
+  handleZipMessage,
   isStripMessage,
+  isZipMessage,
   type EncodeRequest,
   type Context2dLike,
   type OffscreenCanvasLike,
   type StripMessage,
+  type ZipMessage,
 } from "../raster-encode";
 import type {
   LoadedImage,
@@ -45,6 +48,14 @@ export interface FakeCanvasOptions {
   noContext?: boolean;
   /** Canvases larger than this many pixels draw nothing (like WebKit above its limit). */
   blankAbove?: number;
+}
+
+const PNG_SIGNATURE = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+
+/** Fake encoder output: PNGs start with the PNG signature (for `.ico` checks), then `<w>x<h>`. */
+function fakeEncoded(type: string, width: number, height: number): Blob {
+  const body = `${width}x${height}`;
+  return new Blob(type === "image/png" ? [PNG_SIGNATURE, body] : [body], { type });
 }
 
 /** A canvas that records draw calls and "encodes" to a Blob of the requested type. */
@@ -96,11 +107,11 @@ export function fakeCanvas(
     getContext: () => (opts.noContext ? null : ctx),
     convertToBlob: (o?: ImageEncodeOptions) => {
       log.calls.push(`encode ${o?.type ?? ""} q=${String(o?.quality)} ${width}x${height}`);
-      return Promise.resolve(new Blob(["x"], { type: typeFor(o?.type) }));
+      return Promise.resolve(fakeEncoded(typeFor(o?.type), width, height));
     },
     toBlob(cb: (b: Blob | null) => void, type?: string, quality?: number) {
       log.calls.push(`toBlob ${type ?? ""} q=${String(quality)} ${width}x${height}`);
-      cb(new Blob(["x"], { type: typeFor(type) }));
+      cb(fakeEncoded(typeFor(type), width, height));
     },
   };
 }
@@ -172,7 +183,7 @@ export function fakeEnv(o: FakeEnvOptions = {}): FakeEnv {
       const worker: WorkerLike = {
         onmessage: null,
         onerror: null,
-        postMessage(message: EncodeRequest | StripMessage, transfer: Transferable[]) {
+        postMessage(message: EncodeRequest | StripMessage | ZipMessage, transfer: Transferable[]) {
           if (o.workerHangs) {
             log.calls.push(`post transfer=${transfer.length}`);
             return;
@@ -180,6 +191,13 @@ export function fakeEnv(o: FakeEnvOptions = {}): FakeEnv {
           if (o.workerCrashes) {
             log.calls.push(`post transfer=${transfer.length}`);
             queueMicrotask(() => worker.onerror?.({ message: "boom" } as ErrorEvent));
+            return;
+          }
+          if (isZipMessage(message)) {
+            log.calls.push(`zip ${message.entries.map((e) => e.path).join(",")}`);
+            void handleZipMessage(message).then((reply) =>
+              worker.onmessage?.({ data: reply } as MessageEvent),
+            );
             return;
           }
           if (isStripMessage(message)) {

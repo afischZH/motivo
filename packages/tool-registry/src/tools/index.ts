@@ -36,6 +36,12 @@ import { flowFieldTool } from "./flow-field";
 import { lowPolyTool } from "./low-poly";
 import { terrazzoTool } from "./terrazzo";
 import { screenshotBeautifierTool } from "./screenshot-beautifier";
+import { avatarTool } from "./avatar";
+import { placeholderImageTool } from "./placeholder-image";
+import { animatedGradientTool } from "./animated-gradient";
+import { faviconGeneratorTool } from "./favicon-generator";
+import { duotoneTool } from "./duotone";
+import { asciiArtTool } from "./ascii-art";
 
 export {
   blobTool,
@@ -70,6 +76,12 @@ export {
   lowPolyTool,
   terrazzoTool,
   screenshotBeautifierTool,
+  avatarTool,
+  placeholderImageTool,
+  animatedGradientTool,
+  faviconGeneratorTool,
+  duotoneTool,
+  asciiArtTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -114,6 +126,23 @@ export type { FlowFieldParams } from "./flow-field";
 export type { LowPolyParams } from "./low-poly";
 export type { TerrazzoParams } from "./terrazzo";
 export type { ScreenshotBeautifierParams } from "./screenshot-beautifier";
+export type { AvatarParams } from "./avatar";
+export { AVATAR_SOURCES, avatarSourceHash, avatarText } from "./avatar";
+export type { PlaceholderImageParams } from "./placeholder-image";
+export { PLACEHOLDER_LABELS, placeholderLabel } from "./placeholder-image";
+export type { AnimatedGradientParams } from "./animated-gradient";
+export type { FaviconParams } from "./favicon-generator";
+export {
+  faviconHeadSnippet,
+  faviconManifest,
+  faviconSvgFile,
+  faviconThemeColor,
+  iconPackFiles,
+} from "./favicon-generator";
+export type { DuotoneParams } from "./duotone";
+export { duotoneStops } from "./duotone";
+export type { AsciiArtParams } from "./ascii-art";
+export { asciiStyle, sampleAsciiGrid } from "./ascii-art";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -149,6 +178,12 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   lowPolyTool,
   terrazzoTool,
   screenshotBeautifierTool,
+  avatarTool,
+  placeholderImageTool,
+  animatedGradientTool,
+  faviconGeneratorTool,
+  duotoneTool,
+  asciiArtTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

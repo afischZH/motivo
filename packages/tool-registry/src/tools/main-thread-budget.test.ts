@@ -28,7 +28,15 @@ const clock = (globalThis as unknown as { performance: { now(): number } }).perf
 
 /** Loose bound per render (see the module comment); the target on a laptop is 50 ms. */
 const TEST_BUDGET_MS = 250;
-const RUNS = 3;
+/**
+ * At most this many runs per case; the fastest counts. Runs stop as soon as
+ * one is within budget, so a quiet machine renders once and a loaded one
+ * (parallel `turbo test`) gets more chances at an undisturbed run. A lost
+ * cap costs seconds on every run and still fails.
+ */
+const MAX_RUNS = 6;
+/** Vitest timeout per case: room for every run of a slow case on a busy machine. */
+const CASE_TIMEOUT_MS = 120_000;
 
 const WIDE: CanvasSize = { width: 8192, height: 16 };
 const TALL: CanvasSize = { width: 16, height: 8192 };
@@ -197,7 +205,7 @@ const CASES: readonly WorstCase[] = [
 function fastest(c: WorstCase, size: CanvasSize): number {
   const params = { ...(c.tool.defaults as object), ...c.params };
   let best = Infinity;
-  for (let i = 0; i < RUNS; i++) {
+  for (let i = 0; i < MAX_RUNS && best >= TEST_BUDGET_MS; i++) {
     const start = clock.now();
     const out = renderStatic(c.tool, params, 1, size, c.t);
     best = Math.min(best, clock.now() - start);
@@ -209,9 +217,13 @@ function fastest(c: WorstCase, size: CanvasSize): number {
 describe("main-thread budget of the generative tools", () => {
   for (const c of CASES) {
     for (const size of c.sizes) {
-      it(`${c.tool.id} ${size.width} × ${size.height} ${JSON.stringify(c.params)}`, () => {
-        expect(fastest(c, size)).toBeLessThan(TEST_BUDGET_MS);
-      });
+      it(
+        `${c.tool.id} ${size.width} × ${size.height} ${JSON.stringify(c.params)}`,
+        () => {
+          expect(fastest(c, size)).toBeLessThan(TEST_BUDGET_MS);
+        },
+        CASE_TIMEOUT_MS,
+      );
     }
   }
 });

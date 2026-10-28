@@ -16,7 +16,7 @@ import { Popover } from "radix-ui";
 import { useEffect, useId, useMemo, useRef, useState, type DragEvent } from "react";
 import { useBrandKit, type BrandKitView } from "../brand-kit/context";
 import { brandImageToFile } from "../brand-kit/prepare";
-import { ASSET_ACCEPT, type AssetOutputOptions } from "../asset-input/prepare";
+import { ASSET_ACCEPT, RASTER_ASSET_ACCEPT, type AssetOutputOptions } from "../asset-input/prepare";
 import { useAssetLoader } from "../asset-input/use-asset-loader";
 import { useT } from "../i18n";
 import { isTextTarget } from "../image-input/image-input-panel";
@@ -100,6 +100,7 @@ export function ImageField(props: ImageFieldProps) {
   };
 
   const asset = props.value;
+  const rasterOnly = props.output?.rasterOnly === true;
   // Encoding a large SVG takes a few ms: once per asset, not per render.
   const thumbnailUrl = useMemo(() => (asset ? assetThumbnailUrl(asset) : null), [asset]);
   // A large picture (a 4K screenshot) is shown through a blob: URL, decoded in steps.
@@ -149,7 +150,7 @@ export function ImageField(props: ImageFieldProps) {
               ref={fileRef}
               id={props.ids.input}
               type="file"
-              accept={ASSET_ACCEPT}
+              accept={rasterOnly ? RASTER_ASSET_ACCEPT : ASSET_ACCEPT}
               className="peer sr-only"
               aria-describedby={`${ids}-hint`}
               disabled={reading}
@@ -197,7 +198,7 @@ export function ImageField(props: ImageFieldProps) {
         </div>
       </div>
       <p id={`${ids}-hint`} className="text-xs text-muted-foreground">
-        {t("Editor.asset.hint")}
+        {t(rasterOnly ? "Editor.asset.hintRaster" : "Editor.asset.hint")}
       </p>
       <p
         role="status"

@@ -6,6 +6,7 @@
  */
 import { ExportError, type ExportErrorCode } from "./errors";
 import { PngStreamEncoder, type DeflateFactory } from "./png-stream";
+import { ZIP_MIME, createZip, type ZipEntry } from "./zip";
 
 /** The subset of `CanvasRenderingContext2D` / `OffscreenCanvasRenderingContext2D` used here. */
 export interface Context2dLike {
@@ -177,4 +178,29 @@ export function createStripSession(deflate?: DeflateFactory): {
       }
     },
   };
+}
+
+/** Message to the raster worker: build a ZIP from these entries. */
+export interface ZipMessage {
+  kind: "zip";
+  id: number;
+  entries: ZipEntry[];
+  /** Modification time in ms since the epoch. */
+  modified: number;
+}
+
+export function isZipMessage(message: unknown): message is ZipMessage {
+  return (message as { kind?: unknown } | null)?.kind === "zip";
+}
+
+/** Worker side of the `zip` message; never throws. */
+export async function handleZipMessage(message: ZipMessage): Promise<EncodeResponse> {
+  try {
+    const parts = await createZip(message.entries, { modified: new Date(message.modified) });
+    return { id: message.id, ok: true, blob: new Blob(parts, { type: ZIP_MIME }) };
+  } catch (error) {
+    const code = error instanceof ExportError ? error.code : "encode-failed";
+    const text = error instanceof Error ? error.message : String(error);
+    return { id: message.id, ok: false, code, message: text };
+  }
 }

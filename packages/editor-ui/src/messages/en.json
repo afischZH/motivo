@@ -131,7 +131,8 @@
         "image": "Image",
         "vector": "Vector",
         "code": "Code",
-        "animation": "Animation"
+        "animation": "Animation",
+        "bundle": "Bundle"
       },
       "formats": {
         "png": "PNG",
@@ -170,6 +171,10 @@
       "copyOnlyPng": "Images can only be copied as PNG.",
       "copyUnavailableText": "Your browser cannot copy directly. Download the file instead.",
       "copyUnavailableImage": "Your browser cannot put images on the clipboard. Download the PNG instead.",
+      "copyBundleNone": "This bundle has no text to copy. Download the ZIP.",
+      "bundle": {
+        "files": "Contents of the ZIP ({count} files)"
+      },
       "errors": {
         "unsupportedFormat": "This tool does not offer that format.",
         "decodeFailed": "The design could not be turned into an image. Try again or export as SVG.",
@@ -201,7 +206,9 @@
         "htmlExample": "HTML example",
         "cssGrid": "CSS Grid + HTML",
         "report": "Text report",
-        "dropShadow": "CSS drop-shadow()"
+        "dropShadow": "CSS drop-shadow()",
+        "plainText": "Plain text (.txt)",
+        "htmlPre": "HTML (pre)"
       },
       "gif": {
         "title": "GIF settings",
@@ -281,6 +288,7 @@
       "removedFile": "Your file is removed.",
       "dropNow": "Drop to load the file",
       "hint": "Drag an SVG, PNG, JPG or WebP here, paste it with Ctrl+V or choose a file (up to 5 MB). The file stays on your device, is not uploaded and is not shared in links.",
+      "hintRaster": "Drag a photo (PNG, JPG or WebP) here, paste it with Ctrl+V or choose a file (up to 5 MB). The photo stays on your device, is not uploaded and is not shared in links.",
       "thumbnail": "Your file: {name}",
       "reading": "Reading file …",
       "ready": "{name} is cropped and in the pattern.",
@@ -296,7 +304,8 @@
         "no-result": "The image could not be cropped. Please try again.",
         "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
         "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
-        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again."
+        "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again.",
+        "raster-only": "Only a photo works here: PNG, JPG or WebP. SVG files cannot be edited as a photo."
       },
       "crop": {
         "title": "Crop",
@@ -658,6 +667,7 @@
         "svg-too-large": "The SVG file is larger than 1 MB. Simplify it and try again.",
         "svg-invalid": "This SVG file cannot be read safely. Save it as a plain SVG without scripts and try again.",
         "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again.",
+        "raster-only": "Only a PNG, JPG or WebP picture works here.",
         "shape-not-svg": "Shapes must be SVG files. Logos may also be PNG, JPG or WebP."
       }
     }

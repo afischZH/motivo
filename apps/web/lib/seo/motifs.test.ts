@@ -7,10 +7,12 @@ import {
   LANDING_PRESET_COUNT,
   designEditorHash,
   designSvg,
+  effectMotifSvg,
   hasStaticMotif,
   landingPresets,
   motifPath,
   staticDesigns,
+  staticMotifSvg,
   toolSize,
 } from "./motifs";
 import { OG_SIZE, ogElement, ogImagePath } from "./og";
@@ -18,16 +20,34 @@ import { OG_SIZE, ogElement, ogImagePath } from "./og";
 const tools = registry.list().filter(hasStaticMotif);
 
 describe("static motifs", () => {
-  it.each(tools.map((t) => [t.id, t] as const))("%s renders every design as SVG", (_, tool) => {
-    const designs = staticDesigns(tool);
-    expect(designs[0]?.id).toBe(DEFAULT_MOTIF);
-    expect(designs).toHaveLength(tool.presets.length + 1);
-    for (const design of designs) {
-      const svg = designSvg(tool, design);
-      expect(svg?.startsWith("<svg")).toBe(true);
-      // Deterministic: the same design renders to the same file.
-      expect(designSvg(tool, design)).toBe(svg);
-    }
+  it.each(tools.map((t) => [t.id, t] as const))(
+    "%s renders every design as SVG",
+    async (_, tool) => {
+      const designs = staticDesigns(tool);
+      expect(designs[0]?.id).toBe(DEFAULT_MOTIF);
+      expect(designs).toHaveLength(tool.presets.length + 1);
+      for (const design of designs) {
+        const svg = await staticMotifSvg(tool, design);
+        expect(svg?.startsWith("<svg")).toBe(true);
+        // Deterministic: the same design renders to the same file.
+        expect(await staticMotifSvg(tool, design)).toBe(svg);
+      }
+    },
+    // Image effects encode a PNG per design (twice); slow on a busy CI runner.
+    60_000,
+  );
+
+  it("wraps image effects as a compressed PNG of the sample", async () => {
+    const tool = registry.get("duotone");
+    const design = tool && staticDesigns(tool)[0];
+    if (!tool || !design) throw new Error("duotone missing");
+    expect(designSvg(tool, design)).toBeUndefined();
+    const svg = (await effectMotifSvg(tool, design)) ?? "";
+    expect(svg).toMatch(
+      /^<svg [^>]*viewBox="0 0 1500 1000"><image [^>]*href="data:image\/png;base64,/,
+    );
+    // Compressed: far below the 480 x 320 x 4 raw bytes.
+    expect(svg.length).toBeLessThan(480 * 320 * 4 * 0.6);
   });
 
   it.each(tools.map((t) => [t.id, t] as const))("%s preset links open the preset", (_, tool) => {

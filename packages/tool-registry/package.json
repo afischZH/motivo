@@ -17,6 +17,7 @@
     "@musterli/config": "workspace:*"
   },
   "dependencies": {
+    "@musterli/effects": "workspace:*",
     "@musterli/engine": "workspace:*",
     "@musterli/svg-sanitizer": "workspace:*",
     "zod": "^4.6.7"

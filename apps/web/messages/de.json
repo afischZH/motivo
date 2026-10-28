@@ -2957,6 +2957,746 @@
           "a5": "Wähl unter Gerät «Responsive-Set». Ein Screenshot reicht: Jedes Gerät zeigt ihn, oben ausgerichtet auf seinen Bildschirm zugeschnitten. Für Tablet und Smartphone kannst du eigene Screenshots hochladen. Mit der Live-Ansicht lädt dein Browser die Website direkt in die Geräte, «Ansicht übernehmen» macht daraus Bilder. Manche Websites erlauben kein Einbetten, dann lädst du einen Screenshot hoch."
         }
       }
+    },
+    "avatar": {
+      "name": "Avatar-Generator",
+      "description": "Profilbilder mit Initialen, Identicons oder Formen, abgeleitet aus einem Namen. Als Kreis, abgerundet oder eckig, mit Farbe, Verlauf oder Muster.",
+      "groups": {
+        "content": "Inhalt",
+        "type": "Schrift"
+      },
+      "params": {
+        "style": {
+          "label": "Stil",
+          "options": {
+            "initials": "Initialen",
+            "identicon": "Identicon",
+            "shapes": "Formen"
+          }
+        },
+        "name": {
+          "label": "Name",
+          "description": "Ergibt Initialen, Farbe und Muster. Gleicher Name, gleicher Avatar."
+        },
+        "letters": {
+          "label": "Buchstaben"
+        },
+        "initials": {
+          "label": "Eigene Initialen",
+          "description": "Bis zu drei Zeichen, ersetzen die Initialen aus dem Namen."
+        },
+        "source": {
+          "label": "Farbe und Muster aus",
+          "options": {
+            "name": "Name",
+            "seed": "Zufall"
+          },
+          "description": "Mit Zufall bringt die Leertaste jedes Mal ein neues Identicon."
+        },
+        "grid": {
+          "label": "Raster"
+        },
+        "cellShape": {
+          "label": "Zellen",
+          "options": {
+            "square": "Quadrate",
+            "dot": "Punkte",
+            "rounded": "Abgerundet"
+          }
+        },
+        "cellGap": {
+          "label": "Zellabstand"
+        },
+        "inset": {
+          "label": "Rand"
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "circle": "Kreis",
+            "rounded": "Abgerundet",
+            "square": "Quadrat"
+          }
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "fill": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "gradient": "Verlauf",
+            "pattern": "Muster"
+          }
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "pattern": {
+          "label": "Muster"
+        },
+        "patternOpacity": {
+          "label": "Deckkraft des Musters"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "inkAuto": {
+          "label": "Vordergrund automatisch"
+        },
+        "ink": {
+          "label": "Vordergrundfarbe"
+        },
+        "patternScale": {
+          "label": "Mustergrösse"
+        },
+        "fontSize": {
+          "label": "Schriftgrösse"
+        },
+        "background": {
+          "label": "Hintergrund aussen",
+          "description": "Fläche ausserhalb der Form, transparent für runde Avatare."
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "pastel": "Pastell",
+        "pattern": "Muster",
+        "gradient": "Verlauf",
+        "identicon": "Identicon",
+        "pixel": "Pixel",
+        "bauhaus": "Bauhaus"
+      },
+      "sizes": {
+        "s128": "Avatar 128 px",
+        "s256": "Avatar 256 px",
+        "s512": "Avatar 512 px",
+        "s1024": "Avatar 1024 px"
+      },
+      "seo": {
+        "whatIs": "Ein Avatar-Generator erstellt Profilbilder ohne Foto: Initialen auf einer Farbfläche, ein symmetrisches Identicon oder eine kleine Komposition aus Formen. Solche Avatare brauchst du als Platzhalter für Nutzerkonten, in Kommentaren, Teamseiten, Chats und Prototypen. Farbe und Muster leiten sich aus dem Namen ab, darum sieht jede Person immer gleich aus.",
+        "howTo": "Tipp einen Namen oder eine E-Mail-Adresse ein und wähl Initialen, Identicon oder Formen. Stell Form, Füllung (Farbe, Verlauf oder Muster), Schrift und Raster ein und wähl eine Palette, aus der jeder Name seine Farbe bekommt. Die Leertaste würfelt Palette, Füllung und Schrift, der Name bleibt. Exportiere als SVG, PNG, JPG oder WebP, zum Beispiel in 128, 256, 512 oder 1024 Pixel.",
+        "faq": {
+          "q1": {
+            "question": "Bekommt derselbe Name immer denselben Avatar?",
+            "answer": "Ja. Farbe, Identicon und Formen entstehen aus einem Hash des Namens, ohne Zufall. Gross- und Kleinschreibung und Leerzeichen am Rand spielen keine Rolle. Nur die Palette und die übrigen Einstellungen ändern das Ergebnis."
+          },
+          "q2": {
+            "question": "Welche Schriften werden verwendet?",
+            "answer": "Nur die Systemschriften deines Geräts (Sans, Serif, Mono oder Rund). Es werden keine Schriftdateien geladen oder eingebettet, darum kann das Schriftbild je nach Betriebssystem leicht abweichen. Für ein festes Schriftbild exportierst du PNG, JPG oder WebP."
+          },
+          "q3": {
+            "question": "Was ist ein Identicon?",
+            "answer": "Ein Identicon ist ein kleines, symmetrisches Pixelmuster, das aus einem Text berechnet wird. Es macht Konten unterscheidbar, ohne dass jemand ein Bild hochladen muss. Hier wählst du Raster, Zellform und Abstand."
+          },
+          "q4": {
+            "question": "Wird der Name irgendwo gespeichert?",
+            "answer": "Nein. Alles läuft in deinem Browser. Der Name steht nur im Teilen-Link, wenn du einen erstellst, und im Design, wenn du es lokal speicherst."
+          },
+          "q5": {
+            "question": "Kann ich viele Avatare auf einmal erstellen?",
+            "answer": "Ein Export enthält einen Avatar. Tipp die Namen nacheinander ein: Weil Farbe und Muster aus dem Namen folgen, sieht jede Person auch später gleich aus, wenn du weitere Avatare ergänzt."
+          }
+        }
+      }
+    },
+    "placeholder-image": {
+      "name": "Platzhalterbild-Generator",
+      "description": "Platzhalterbilder in jeder Grösse mit Grössenangabe oder eigenem Text, als Farbe, Verlauf oder Muster. Für Wireframes, Mockups und Layouts.",
+      "groups": {
+        "label": "Beschriftung",
+        "lines": "Linien"
+      },
+      "params": {
+        "label": {
+          "label": "Beschriftung",
+          "options": {
+            "size": "Grösse",
+            "custom": "Eigener Text",
+            "none": "Keine"
+          }
+        },
+        "text": {
+          "label": "Text"
+        },
+        "fontSize": {
+          "label": "Schriftgrösse"
+        },
+        "fill": {
+          "label": "Füllung",
+          "options": {
+            "solid": "Farbe",
+            "gradient": "Verlauf",
+            "pattern": "Muster"
+          }
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "pattern": {
+          "label": "Muster"
+        },
+        "patternOpacity": {
+          "label": "Deckkraft des Musters"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "inkAuto": {
+          "label": "Vordergrund automatisch"
+        },
+        "ink": {
+          "label": "Vordergrundfarbe"
+        },
+        "patternScale": {
+          "label": "Mustergrösse"
+        },
+        "cross": {
+          "label": "Diagonalen"
+        },
+        "border": {
+          "label": "Rahmen"
+        }
+      },
+      "presets": {
+        "gray": "Grau",
+        "light": "Hell",
+        "dark": "Dunkel",
+        "gradient": "Verlauf",
+        "pattern": "Muster",
+        "blueprint": "Blaupause",
+        "banner": "Banner"
+      },
+      "sizes": {
+        "medium-rectangle": "Medium Rectangle",
+        "leaderboard": "Leaderboard",
+        "skyscraper": "Skyscraper",
+        "vga": "4:3 klein",
+        "svga": "4:3 mittel"
+      },
+      "seo": {
+        "whatIs": "Ein Platzhalterbild hält in einem Layout den Platz für ein Bild frei, das noch fehlt. Es zeigt seine Grösse in Pixeln oder einen eigenen Text, damit alle sehen, was dort hinkommt. Platzhalter brauchst du in Wireframes, Mockups, Prototypen, Präsentationen und beim Entwickeln von Websites.",
+        "howTo": "Wähl eine Grösse aus der Liste (Social Media, Bildschirme, Werbeformate) oder gib Breite und Höhe ein. Die Beschriftung zeigt automatisch Breite × Höhe, einen eigenen Text oder nichts. Wähl dann Farbe, Verlauf oder ein Muster und schalte Diagonalen oder einen Rahmen ein. Exportiere als SVG, PNG, JPG oder WebP.",
+        "faq": {
+          "q1": {
+            "question": "Brauche ich einen Dienst wie eine Platzhalter-URL?",
+            "answer": "Nein. Du lädst das Bild als Datei herunter und legst es in dein Projekt. Es gibt keine Abhängigkeit von einem fremden Server, und nichts verschwindet, wenn ein Dienst abgeschaltet wird."
+          },
+          "q2": {
+            "question": "Welche Grössen gehen?",
+            "answer": "Jede Grösse von 16 bis 8192 Pixel pro Seite. Die Liste enthält gängige Social-Media-Formate, Bildschirme, Druckformate und Werbebanner wie 300 × 250 oder 728 × 90."
+          },
+          "q3": {
+            "question": "Passt sich die Schrift an schmale Bilder an?",
+            "answer": "Ja. Die Beschriftung wird kleiner, bis sie in die Breite passt. Verwendet werden nur Systemschriften, es werden keine Schriftdateien geladen."
+          },
+          "q4": {
+            "question": "Ist SVG oder PNG besser?",
+            "answer": "SVG ist winzig und bleibt in jeder Grösse scharf, ideal für Prototypen im Code. PNG, JPG und WebP sehen überall gleich aus, auch wenn eine andere Systemschrift installiert ist."
+          }
+        }
+      }
+    },
+    "animated-gradient": {
+      "name": "Animierter Farbverlauf",
+      "description": "Wandernde, drehende und farbwechselnde Verläufe und schwebende Flecken als reines CSS. CSS, Tailwind oder HTML kopieren, PNG und GIF exportieren.",
+      "params": {
+        "mode": {
+          "label": "Animation",
+          "description": "Wandern bewegt einen grossen Verlauf, Drehen dreht ihn, Farbwechsel lässt die Farben die Plätze tauschen, Flecken lässt weiche Farbflecken schweben.",
+          "options": {
+            "pan": "Wandern",
+            "rotate": "Drehen",
+            "shift": "Farbwechsel",
+            "blobs": "Flecken"
+          }
+        },
+        "rotateShape": {
+          "label": "Verlaufsart",
+          "options": {
+            "conic": "Konisch",
+            "linear": "Linear"
+          }
+        },
+        "angle": {
+          "label": "Winkel",
+          "description": "Richtung des Verlaufs. Beim Wandern bewegt sich der Verlauf auch entlang dieser Achse."
+        },
+        "duration": {
+          "label": "Dauer"
+        },
+        "timing": {
+          "label": "Beschleunigung",
+          "options": {
+            "linear": "Gleichmässig",
+            "ease": "Sanft",
+            "ease-in": "Langsam anfangen",
+            "ease-out": "Langsam enden",
+            "ease-in-out": "Langsam anfangen und enden"
+          }
+        },
+        "direction": {
+          "label": "Richtung",
+          "options": {
+            "normal": "Vorwärts",
+            "reverse": "Rückwärts"
+          }
+        },
+        "motion": {
+          "label": "Bewegung",
+          "description": "Wie weit sich der Verlauf oder die Flecken bewegen."
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "intensity": {
+          "label": "Intensität"
+        }
+      },
+      "groups": {
+        "animation": "Animation",
+        "blobs": "Flecken"
+      },
+      "presets": {
+        "aurora": "Polarlicht",
+        "sunset": "Abendrot",
+        "radar": "Radar",
+        "lighthouse": "Leuchtturm",
+        "chameleon": "Chamäleon",
+        "ocean": "Ozean",
+        "lava": "Lavalampe",
+        "pastel": "Pastellwolken"
+      },
+      "seo": {
+        "whatIs": "Ein animierter Farbverlauf ist ein Hintergrund, der sich langsam bewegt: Der Verlauf wandert, dreht sich, wechselt seine Farben, oder weiche Flecken schweben darüber. Musterli schreibt ihn als reines CSS mit Keyframes, ohne JavaScript und ohne Video. So bleibt er leicht und in jeder Grösse scharf.",
+        "howTo": "Wähl Wandern, Drehen, Farbwechsel oder Flecken, such deine Farben aus und stell Dauer, Beschleunigung und Richtung ein. Die Leertaste würfelt neue Farben und eine neue Anordnung der Flecken. Die Vorschau zeigt das echte CSS. Kopier danach das CSS, ein HTML-Beispiel oder Tailwind-Klassen, exportier ein Standbild als PNG, JPG, WebP oder SVG oder die ganze Schleife als GIF.",
+        "faq": {
+          "q1": {
+            "question": "Was passiert bei Menschen, die weniger Bewegung wünschen?",
+            "answer": "Jeder Code-Export enthält eine Regel für prefers-reduced-motion. Wer im System weniger Bewegung einstellt, sieht einen ruhigen, stehenden Verlauf, genau das erste Bild der Animation. Die Vorschau hier verhält sich gleich."
+          },
+          "q2": {
+            "question": "Welche Browser können drehende und farbwechselnde Verläufe?",
+            "answer": "Sie nutzen @property. Das können Chrome und Edge ab Version 85, Safari ab 16.4 und Firefox ab 128. Ältere Browser zeigen einen stehenden Verlauf statt eines kaputten Hintergrunds."
+          },
+          "q3": {
+            "question": "Macht die Animation meine Website langsam?",
+            "answer": "Die Flecken bewegen sich nur mit transform, das erledigt der Browser auf der Grafikkarte. Wandern, Drehen und Farbwechsel zeichnen den Hintergrund neu. Setz sie darum lieber für einen grossen Bereich ein als für viele kleine Elemente. Längere Dauern wirken ohnehin ruhiger."
+          },
+          "q4": {
+            "question": "Wie nutze ich das mit Tailwind?",
+            "answer": "Der Tailwind-Export liefert Klassen mit Arbitrary Values und einen Hinweis, die Keyframes zu ergänzen. Für Tailwind v4 gibt es eine @theme-Fassung mit --animate-* und den Keyframes. Dann schreibst du einfach animate-gradient-pan."
+          },
+          "q5": {
+            "question": "Bekomme ich die Animation auch als Bild?",
+            "answer": "PNG, JPG, WebP und SVG zeigen den ruhigen Anfangszustand. Der GIF-Export zeichnet die ganze Schleife Bild für Bild und nahtlos, für Orte ohne CSS wie E-Mails oder Chats."
+          }
+        }
+      }
+    },
+    "favicon-generator": {
+      "name": "Favicon-Generator",
+      "description": "Favicons und App-Icons aus Buchstabe, Form oder Logo. Mit einem Klick als Paket mit allen Grössen, Manifest und HTML-Code.",
+      "groups": {
+        "view": "Ansicht",
+        "content": "Inhalt",
+        "background": "Hintergrund",
+        "form": "Form",
+        "dark": "Dunkelmodus",
+        "app": "App und Manifest"
+      },
+      "params": {
+        "variant": {
+          "label": "Variante",
+          "options": {
+            "standard": "Standard",
+            "dark": "Dunkel",
+            "apple": "Apple Touch",
+            "maskable": "Maskable"
+          }
+        },
+        "content": {
+          "label": "Inhalt",
+          "options": {
+            "text": "Text",
+            "shape": "Form",
+            "image": "Logo"
+          }
+        },
+        "text": {
+          "label": "Text",
+          "description": "Ein bis vier Zeichen, zum Beispiel eine Initiale."
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "logoTint": {
+          "label": "In Vordergrundfarbe einfärben"
+        },
+        "shape": {
+          "label": "Form"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "weight": {
+          "label": "Schriftstärke"
+        },
+        "textSize": {
+          "label": "Textgrösse"
+        },
+        "color": {
+          "label": "Vordergrund"
+        },
+        "fill": {
+          "label": "Hintergrund",
+          "options": {
+            "solid": "Einfarbig",
+            "gradient": "Verlauf",
+            "pattern": "Muster",
+            "transparent": "Transparent"
+          }
+        },
+        "fillColor": {
+          "label": "Grundfarbe"
+        },
+        "gradient": {
+          "label": "Verlaufsfarben"
+        },
+        "radial": {
+          "label": "Radialer Verlauf"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "pattern": {
+          "label": "Muster",
+          "description": "Die Musterfarbe liegt zwischen Grundfarbe und Vordergrund.",
+          "options": {
+            "dots": "Punkte",
+            "grid": "Raster",
+            "stripes": "Streifen",
+            "diagonal": "Diagonal",
+            "checks": "Karo"
+          }
+        },
+        "density": {
+          "label": "Musterdichte"
+        },
+        "corner": {
+          "label": "Kachelform",
+          "options": {
+            "square": "Quadrat",
+            "rounded": "Abgerundet",
+            "squircle": "Squircle",
+            "circle": "Kreis"
+          }
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "padding": {
+          "label": "Innenabstand"
+        },
+        "darkMode": {
+          "label": "Eigene Farben im Dunkelmodus",
+          "description": "favicon.svg wechselt dann automatisch, wenn der Browser dunkel eingestellt ist."
+        },
+        "darkColor": {
+          "label": "Vordergrund dunkel"
+        },
+        "darkFill": {
+          "label": "Hintergrund dunkel"
+        },
+        "appName": {
+          "label": "App-Name"
+        },
+        "shortName": {
+          "label": "Kurzname",
+          "description": "Steht unter dem Icon auf dem Startbildschirm, bis 12 Zeichen."
+        },
+        "splash": {
+          "label": "App-Hintergrund",
+          "description": "Für den Startbildschirm und als Fläche hinter transparenten Apple- und Maskable-Icons. Die Theme-Farbe folgt dem Hintergrund des Icons."
+        }
+      },
+      "advisories": {
+        "darkOff": "Die dunkle Variante braucht eigene Farben. Schalte unter Dunkelmodus die eigenen Farben ein.",
+        "noLogo": "Lade ein Logo hoch oder wähle eines aus deinem Brand Kit. Bis dahin zeigt das Icon den Text."
+      },
+      "presets": {
+        "monogram": "Monogramm",
+        "gradient": "Verlauf",
+        "badge": "Abzeichen",
+        "pattern": "Muster",
+        "minimal": "Minimal",
+        "code": "Code",
+        "leaf": "Blatt"
+      },
+      "sizes": {
+        "icon-512": "Icon",
+        "icon-1024": "Icon gross (App Store)",
+        "icon-192": "Android",
+        "apple-touch": "Apple Touch Icon"
+      },
+      "bundles": {
+        "iconPack": {
+          "label": "Icon-Paket (ZIP)",
+          "description": "favicon.ico (16, 32, 48 px), favicon.svg, Apple Touch Icon, App-Icons in 192 und 512 px, ein Maskable-Icon, site.webmanifest und der HTML-Code für den head.",
+          "snippet": "HTML für den head"
+        }
+      },
+      "seo": {
+        "whatIs": "Ein Favicon ist das kleine Bild im Browser-Tab, in Lesezeichen und im Verlauf. Smartphones zeigen dazu ein App-Icon, wenn jemand deine Website auf dem Startbildschirm ablegt. Moderne Websites brauchen dafür mehrere Dateien: favicon.ico für ältere Browser, favicon.svg in jeder Grösse und für den Dunkelmodus, ein Apple Touch Icon, Icons für Android und ein Manifest. Der Favicon-Generator erstellt alles aus einem einzigen Entwurf.",
+        "howTo": "Wähle als Inhalt einen Buchstaben, eine Form aus der Bibliothek oder dein eigenes Logo. Lege Hintergrund (Farbe, Verlauf, Muster oder transparent), Kachelform und Innenabstand fest. Mit der Leertaste würfelst du neue Farben. Schalte bei Bedarf eigene Farben für den Dunkelmodus ein und trage unter App und Manifest Name und Farben ein. Exportiere dann das Icon-Paket als ZIP, kopiere die Dateien in den Stammordner deiner Website und füge den HTML-Code in den head ein.",
+        "faq": {
+          "q1": {
+            "question": "Welche Dateien sind im Icon-Paket?",
+            "answer": "favicon.ico mit 16, 32 und 48 px, favicon.svg, apple-touch-icon.png (180 px), icon-192.png, icon-512.png, icon-512-maskable.png für Android, site.webmanifest und head-snippet.html mit den passenden Tags. Das sind die Dateien, die aktuelle Browser und Smartphones tatsächlich nutzen."
+          },
+          "q2": {
+            "question": "Was ist ein Maskable-Icon?",
+            "answer": "Android schneidet App-Icons in Kreise, Tropfen oder abgerundete Quadrate. Ein Maskable-Icon füllt deshalb die ganze Fläche, und der Inhalt liegt in der sicheren Zone, einem Kreis mit 80 % Durchmesser. Die Variante Maskable zeigt dir, wie es aussieht."
+          },
+          "q3": {
+            "question": "Wie funktioniert das Favicon im Dunkelmodus?",
+            "answer": "Mit eigenen Farben im Dunkelmodus enthält favicon.svg beide Varianten. Der Browser wählt sie selbst über prefers-color-scheme. Dazu bekommt das HTML eine zweite theme-color für dunkle Oberflächen."
+          },
+          "q4": {
+            "question": "Wird mein Logo hochgeladen?",
+            "answer": "Nein. Alles passiert in deinem Browser, auch das Packen des ZIP. Dein Logo landet nicht im Teilen-Link; SVG-Dateien werden vorher von Scripts und externen Verweisen befreit."
+          },
+          "q5": {
+            "question": "Warum sieht der Buchstabe auf einem anderen Gerät leicht anders aus?",
+            "answer": "Text nutzt die Systemschriften des Geräts, damit keine Schriftdateien nötig sind. Die PNG-Dateien entstehen mit den Schriften deines Computers. Für ein exakt gleiches Ergebnis überall nimm eine Form oder dein Logo als SVG."
+          }
+        }
+      }
+    },
+    "duotone": {
+      "name": "Duotone und Gradient Map",
+      "description": "Färbe Fotos in zwei, drei oder mehr Farben ein: Duotone, Tritone und Gradient Map mit Tonkurve und Körnung. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "tone": "Tonwerte",
+        "texture": "Körnung und Mischung"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "mode": {
+          "label": "Art",
+          "options": {
+            "duotone": "Duotone",
+            "tritone": "Tritone",
+            "gradient": "Verlauf"
+          }
+        },
+        "shadows": {
+          "label": "Schatten"
+        },
+        "midtones": {
+          "label": "Mitteltöne"
+        },
+        "highlights": {
+          "label": "Lichter"
+        },
+        "weights": {
+          "label": "Helligkeit aus",
+          "options": {
+            "rec709": "Rec. 709 (Standard)",
+            "rec601": "Rec. 601",
+            "average": "Mittelwert",
+            "custom": "Eigene Gewichte"
+          }
+        },
+        "red": {
+          "label": "Anteil Rot"
+        },
+        "green": {
+          "label": "Anteil Grün"
+        },
+        "blue": {
+          "label": "Anteil Blau"
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        },
+        "grain": {
+          "label": "Körnung"
+        },
+        "grainSize": {
+          "label": "Korngrösse"
+        },
+        "amount": {
+          "label": "Stärke"
+        }
+      },
+      "presets": {
+        "indigo-coral": "Indigo und Koralle",
+        "newsprint": "Zeitung",
+        "plum-mint": "Pflaume und Minze",
+        "sunset": "Abendrot",
+        "cyanotype": "Cyanotypie",
+        "sepia": "Sepia",
+        "aurora": "Polarlicht"
+      },
+      "seo": {
+        "whatIs": "Duotone ist ein Bildeffekt, bei dem ein Foto nur noch aus zwei Farben besteht: Die dunklen Stellen nehmen die Schattenfarbe an, die hellen die Lichterfarbe, dazwischen entsteht ein weicher Verlauf. Mit drei Farben heisst das Tritone, mit beliebig vielen Gradient Map. Der Look ist beliebt für Plakate, Albumcover, Social Media und Websites, weil er Fotos in Markenfarben einfärbt.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle Duotone, Tritone oder Verlauf und stelle Schatten- und Lichterfarbe ein. Mit Helligkeit, Kontrast und Gamma steuerst du, wie viel Fläche jede Farbe bekommt. Körnung gibt einen analogen Druck-Look, Stärke mischt das Original wieder hinzu. Die Leertaste würfelt neue Farbpaare. Exportiere als PNG, JPG oder WebP in voller Auflösung.",
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Wie gross darf das Foto sein?",
+          "a2": "Dateien bis 5 MB im Format PNG, JPG oder WebP. Fotos bis 4096 Pixel an der langen Seite behalten ihre volle Auflösung, also auch Bilder mit 12 Megapixeln. Die Grösse des Designs passt sich dem Foto an, und der Export rechnet den Effekt in dieser Grösse.",
+          "q3": "Was ist der Unterschied zwischen Duotone, Tritone und Gradient Map?",
+          "a3": "Duotone ordnet jeder Helligkeit eine Farbe zwischen zwei Farben zu, Tritone fügt eine Farbe für die Mitteltöne hinzu. Die Gradient Map nimmt beliebig viele Farben, gleichmässig von dunkel nach hell verteilt. Gemischt wird im Farbraum OKLab, darum bleiben die Übergänge sauber.",
+          "q4": "Kann ich meine Markenfarben verwenden?",
+          "a4": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an: Musterli sortiert die Farben nach Helligkeit, die dunkelste wird zur Schattenfarbe, die hellste zur Lichterfarbe.",
+          "q5": "Warum gibt es keinen SVG-Export?",
+          "a5": "Der Effekt verändert jedes Pixel des Fotos, das Ergebnis ist also ein Rasterbild. Ein SVG mit Filter sähe je nach Programm anders aus. PNG, JPG und WebP zeigen genau, was du in der Vorschau siehst."
+        }
+      }
+    },
+    "ascii-art": {
+      "name": "ASCII-Art",
+      "description": "Verwandle Fotos in ASCII-Art aus Zeichen, farbige Zeichen, eine LED-Punktmatrix oder Braille. Export als SVG, PNG, Text oder HTML.",
+      "groups": {
+        "photo": "Foto",
+        "characters": "Zeichen",
+        "tone": "Tonwerte"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "mode": {
+          "label": "Darstellung",
+          "options": {
+            "ascii": "Zeichen",
+            "dots": "Punkte",
+            "braille": "Braille"
+          }
+        },
+        "ramp": {
+          "label": "Zeichensatz",
+          "options": {
+            "standard": "Standard",
+            "detailed": "Fein (70 Zeichen)",
+            "blocks": "Blöcke",
+            "minimal": "Minimal",
+            "binary": "Binär",
+            "custom": "Eigene Zeichen"
+          }
+        },
+        "customRamp": {
+          "label": "Eigene Zeichen",
+          "description": "Von hell nach dunkel, höchstens 64 Zeichen. Das erste Zeichen steht für die hellsten Stellen, meist ein Leerzeichen."
+        },
+        "columns": {
+          "label": "Spalten"
+        },
+        "aspect": {
+          "label": "Zeichenform (Breite zu Höhe)"
+        },
+        "invert": {
+          "label": "Umkehren (für dunklen Grund)"
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        },
+        "colorMode": {
+          "label": "Farbe",
+          "options": {
+            "single": "Eine Farbe",
+            "photo": "Aus dem Foto"
+          }
+        },
+        "ink": {
+          "label": "Zeichenfarbe"
+        },
+        "dotMode": {
+          "label": "Punkte",
+          "options": {
+            "size": "Grösse",
+            "lit": "Leuchtend"
+          }
+        },
+        "dotShape": {
+          "label": "Form",
+          "options": {
+            "round": "Rund",
+            "square": "Eckig"
+          }
+        },
+        "dotSize": {
+          "label": "Punktgrösse"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "terminal": "Terminal",
+        "colour": "Farbig",
+        "led": "LED",
+        "halftone": "Rasterpunkte",
+        "braille": "Braille",
+        "blocks": "Blöcke"
+      },
+      "seo": {
+        "whatIs": "ASCII-Art ist ein Bild aus Schriftzeichen: Dunkle Stellen bekommen dichte Zeichen wie @ oder #, helle Stellen Punkte oder Leerzeichen. Aus etwas Abstand entsteht wieder das Foto. Musterli zeichnet daraus auch farbige Zeichen, eine LED- oder Punktmatrix und Braille-Muster, für Plakate, Terminal-Ästhetik, README-Dateien und Websites.",
+        "howTo": "Lade ein Foto hoch oder starte mit dem Beispielbild. Wähle Zeichen, Punkte oder Braille, die Anzahl Spalten und einen Zeichensatz, auch mit eigenen Zeichen. Helligkeit, Kontrast und Gamma bestimmen, wie viel Zeichnung sichtbar ist; mit Umkehren passt das Bild auf einen dunklen Grund. Exportiere als SVG, PNG, JPG oder WebP, oder als Text und HTML-Snippet.",
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten weder das Foto noch die daraus berechneten Zeichen; ein geteilter Link zeigt das Beispielbild.",
+          "q2": "Welche Schrift wird verwendet?",
+          "a2": "Die Monospace-Schrift deines Systems, zum Beispiel SF Mono, Menlo, Consolas oder Liberation Mono. Musterli lädt keine Webschrift. Im SVG ist jede Zeile genau so breit wie das Bild, darum passt die Art auch mit einer anderen Schrift.",
+          "q3": "Wie gross werden SVG und Text?",
+          "a3": "Höchstens 32 000 Zellen, bei Braille 32 000 Punkte. Mehr Spalten zeigen feinere Details; darüber verkleinert Musterli das Raster gleichmässig. So bleibt ein SVG auch farbig unter 1 MB.",
+          "q4": "Was ist der Unterschied zwischen Grösse und Leuchtend bei den Punkten?",
+          "a4": "Bei Grösse wachsen die Punkte mit der Dunkelheit wie bei einem Rasterdruck. Bei Leuchtend sind alle Punkte gleich gross und ihre Deckkraft folgt der Helligkeit, wie bei einer LED-Anzeige. Mit Umkehren leuchten die hellen Stellen.",
+          "q5": "Kann ich die ASCII-Art als Text verwenden?",
+          "a5": "Ja. Im Export findest du reinen Text für README-Dateien, Code-Kommentare und Terminals sowie ein HTML-Snippet mit Inline-Stilen, das Farben und Monospace-Schrift mitbringt."
+        }
+      }
     }
   },
   "Converters": {
@@ -3211,6 +3951,10 @@
     "css-effects": {
       "name": "CSS-Effekte und Layouts",
       "description": "Glas, Verlaufsrahmen, Leuchten und Bento-Layouts als fertiger Code zum Kopieren."
+    },
+    "icons": {
+      "name": "Icons",
+      "description": "Favicons und App-Icons in allen Grössen, die Browser und Smartphones brauchen."
     }
   },
   "PatternLibrary": {

@@ -93,7 +93,11 @@ export function useAssetLoader(options: AssetLoaderOptions): AssetLoader {
     setError(null);
     setStatus(t("Editor.asset.reading"));
     setReading(true);
-    const result = await readAsset(file, { svg: getSanitizer(), signal: nextSignal() });
+    const result = await readAsset(file, {
+      svg: getSanitizer(),
+      signal: nextSignal(),
+      rasterOnly: options.output?.rasterOnly === true,
+    });
     if (token !== loadToken.current) return;
     setReading(false);
     if (!result.ok) {

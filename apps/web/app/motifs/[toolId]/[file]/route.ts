@@ -10,7 +10,7 @@
 import { registry } from "@musterli/tool-registry";
 
 import { collectionMotifs, findCollectionMotif } from "@/lib/collections/variants";
-import { designSvg, findDesign, hasStaticMotif, staticDesigns } from "@/lib/seo/motifs";
+import { findDesign, hasStaticMotif, staticDesigns, staticMotifSvg } from "@/lib/seo/motifs";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -36,7 +36,7 @@ export async function GET(_request: Request, { params }: { params: Promise<Param
   const id = file.endsWith(".svg") ? file.slice(0, -4) : undefined;
   const design =
     tool && id ? (findDesign(tool, id) ?? findCollectionMotif(tool.id, id)) : undefined;
-  const svg = tool && design ? designSvg(tool, design) : undefined;
+  const svg = tool && design ? await staticMotifSvg(tool, design) : undefined;
   if (svg === undefined) return new Response(null, { status: 404 });
 
   return new Response(svg, {
