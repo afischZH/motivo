@@ -144,6 +144,28 @@ export interface ControlHint<P> {
     params: P,
     root: Readonly<Record<string, unknown>>,
   ): OptionPreview;
+  /**
+   * For `kind: "thumbnails"`: the options in named groups (e.g. shape packs).
+   * The picker shows one group at a time behind a group select, which keeps
+   * long option lists small. Options missing from every group are not shown
+   * in the grid (they stay valid values).
+   */
+  optionGroups?: readonly OptionGroup[];
+  /**
+   * For `kind: "thumbnails"`: an image param (`kind: "image"`) that takes
+   * the user's own shapes. With a Brand Kit, the picker adds a "Brand Kit"
+   * group whose shapes go into that param, through the same checks,
+   * sanitizer and crop dialog as an upload.
+   */
+  brandShapesParam?: string;
+}
+
+/** A named group of options of a thumbnail picker. */
+export interface OptionGroup {
+  readonly id: string;
+  /** i18n key of the group name. */
+  readonly labelKey: string;
+  readonly values: readonly (string | number)[];
 }
 
 /**

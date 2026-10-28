@@ -14,13 +14,17 @@ type Messages = Record<string, unknown>;
 /** Converter pages: the converter UI. */
 export const CONVERTER_CLIENT_NAMESPACES = ["Converters"] as const;
 
-/** Editor pages: page chrome, editor shell, saving and tool texts (`tools.*`). */
+/**
+ * Editor pages: page chrome, editor shell, saving, tool texts (`tools.*`)
+ * and the names of the shape library (`Shapes.*`, about 4 KB).
+ */
 export const EDITOR_CLIENT_NAMESPACES = [
   "ToolPage",
   "Editor",
   "Designs",
   "sizes",
   "tools",
+  "Shapes",
 ] as const;
 
 /** "Meine Designs": only its own texts (tool names come as props). */

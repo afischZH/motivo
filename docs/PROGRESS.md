@@ -14,7 +14,7 @@
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
-| M4-AP01 | Eigene Shape-Bibliothek: 150+ Formen in 12 Packs (100er-Box, Nonzero), Pack-API in `@musterli/engine`, Brand-Kit-Shapes als eigenes Pack, Seamless Patterns nutzt die Bibliothek | engine-dev | in Arbeit | – | Clean-Room, selbst gezeichnet, Lizenz in `assets/LICENSES.md` |
+| M4-AP01 | Eigene Shape-Bibliothek: 150+ Formen in 12 Packs (100er-Box, Nonzero), Pack-API in `@musterli/engine`, Brand-Kit-Shapes als eigenes Pack, Seamless Patterns nutzt die Bibliothek | engine-dev | Review (Branch `m4/ap01-shapes`) | – | 170 Formen in 12 Packs, selbst gezeichnet (Lizenz `assets/LICENSES.md`); API `listShapePacks`, `getShape`, `shapePath`, `shapeLayers`, `tileShapeIds` (ARCHITECTURE 4.5); 24 alte Seamless-Formen byte-gleich (Fixture-Test, Snapshots unverändert); Picker mit Pack-Auswahl und Gruppe "Brand Kit" (generisch: `optionGroups`, `brandShapesParam`); 18 Tile-Formen und 18 Formen mit Duotone-Ebene für AP02 |
 | M4-AP02 | Tool **Geometric Patterns** (TOOLS.md A1): uniform und dynamic Grid, Rotation, Duotone, nur Kontur, mind. 6 Presets, CSS-Kachel | engine-dev | offen | AP01 | |
 | M4-AP03 | Kachel-Editing in Geometric Patterns (`tileOverrides`, Popover per Klick und Tastatur) | ui-dev | offen | AP02 | Overrides in Teilen-Link und gespeicherten Designs |
 | M4-AP04 | **GIF-Export** im Worker (gifenc, dynamisch geladen), generisch für Tools mit `supportsAnimation` (Seed-Varianten, Farbwechsel) | engine-dev + ui-dev | in Arbeit | – | Dependency-Grösse vor Einbau messen (Grenze 50 KB gzip) |

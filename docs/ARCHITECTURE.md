@@ -136,6 +136,16 @@ Drei optionale, generische Erweiterungen, zuerst genutzt von Glas- und Rahmen-Ef
 - **`ToolDefinition.advisories(params, ctx)`**: Hinweise zu den aktuellen Params (`{ id, messageKey, values }`), rein und billig. Die Shell zeigt sie über den Einstellungen in einer `role="status"`-Region (aria-live polite), ohne Hinweise nichts.
 - Neue Kategorie `css-effects` („CSS-Effekte und Layouts“, Slugs `css-effekte`/`css-effects`) für die Tools aus J.
 
+### 4.6 Formenbibliothek (ab M4-AP01)
+Eigene Formen für alle Tools mit Shapes (`packages/engine/src/shapes/`, Lizenz in `assets/LICENSES.md`). 170 Formen in 12 Packs: `basics`, `geometric`, `organic`, `blobs`, `stars`, `lines`, `retro`, `bauhaus`, `nature`, `symbols`, `tiles`, `decorative`.
+- **Format**: absolute SVG-Pfaddaten (M, L, H, V, C, Q, A, Z) in einer 100er-Box, Nonzero-Füllung (Löcher laufen gegen ihre Kontur), keine Konturen, keine Glyphen. Zentriert gespeichert (x und y von -50 bis 50), damit ein Renderer mit einem Transform platziert, dreht und skaliert; `"box"` liefert dieselbe Form in 0 bis 100.
+- **API** (rein, deterministisch, gecacht): `SHAPE_PACK_IDS`, `SHAPE_IDS` (als `z.enum` nutzbar, Typ `ShapeId`), `listShapePacks()` (Packs mit Shape-Ids in Anzeigereihenfolge), `getShape(id)` (`{ id, pack, primary, accent?, path, tile }` oder `undefined`), `isShapeId`, `shapePackOf`, `shapePath(id, origin?)` (beide Ebenen, unbekannte Ids fallen auf `circle` zurück), `shapeLayers(id, origin?)` (`{ primary, accent? }` für Duotone), `shapesInPacks(packs)`, `tileShapeIds()`. Dazu `parsePathData`, `pathBounds`, `flattenPath`, `translatePath`, `windingNumber` für Tests und Umrechnungen.
+- **Ebenen**: 18 Formen haben eine zweite Ebene `accent`, die die erste nicht überdeckt (Würfel, Zielscheibe, Tulpe ...). Duotone zeichnet sie mit geringerer Deckkraft oder zweiter Farbe; einfarbige Tools nehmen `path` (beide Ebenen).
+- **Kacheln**: Die Formen des Packs `tiles` (`tile: true`, 18 Stück) füllen die Box und treffen die Ränder an festen Punkten (Ecken, Kantenmitten), damit Vierteldrehungen benachbarter Zellen anschliessen (Truchet).
+- **Stabilität**: Ids nie umbenennen oder entfernen (gespeicherte Designs, Teilen-Links); neue Formen hinten im Pack anfügen. Die 24 Formen von Seamless Patterns (M3-AP12) sind byte-gleich übernommen, ein Fixture-Test sichert das.
+- **Controls** (`packages/tool-registry/src/shapes.ts`): `SHAPE_OPTION_LABEL_KEYS` (Namen unter `Shapes.names.<id>` in den Web-Messages), `shapePackGroups(only?)` für den Picker, `shapePreview(id, fill, background)` (kleines SVG, Accent mit 50 % Deckkraft). Der Namespace `Shapes` geht mit den Editor-Messages an den Client (ca. 4 KB).
+- **Picker**: Der Thumbnail-Picker kennt generisch `ControlHint.optionGroups` (eine Gruppe sichtbar, Auswahlfeld darüber, die Gruppe folgt dem Wert bei Variante, Undo, Vorlage) und `ControlHint.brandShapesParam` (Name eines Bild-Params): Mit Brand Kit erscheint die Gruppe "Brand Kit" mit den eigenen Shapes; ein gewählter Shape läuft durch dieselbe Pipeline wie ein Upload (`useAssetLoader`: Prüfung, Sanitizer im Worker, Zuschnitt) in diesen Param, danach liegt der Fokus im Upload-Feld.
+
 ## 5. Render- und Export-Pipeline
 
 ```

@@ -83,6 +83,17 @@ export interface ThumbnailControl extends ControlBase {
   options: ControlOption[];
   /** Preview of one option for the current params; cheap, called lazily per visible tile. */
   preview(value: OptionValue): OptionPreview;
+  /** Named groups of options (e.g. shape packs); the picker shows one at a time. */
+  groups?: ThumbnailGroup[];
+  /** Image param that takes Brand Kit shapes (adds a "Brand Kit" group). */
+  brandShapesParam?: string;
+}
+
+/** One group of a thumbnail picker: its options, in the control's order. */
+export interface ThumbnailGroup {
+  id: string;
+  labelKey: string;
+  options: ControlOption[];
 }
 
 /** An array of objects: item list plus a sub-form for the selected item. */
@@ -320,7 +331,24 @@ export function resolveControl(
       // Without a preview (or params to draw it with) a grid would be blank: use a select.
       if (!optionPreview || !context) return { ...base, kind: "select", options };
       const { params, root } = context;
-      return { ...base, kind, options, preview: (value) => optionPreview(value, params, root) };
+      const c: ThumbnailControl = {
+        ...base,
+        kind,
+        options,
+        preview: (value) => optionPreview(value, params, root),
+      };
+      if (hint.optionGroups) {
+        const byValue = new Map(options.map((o) => [o.value, o]));
+        c.groups = hint.optionGroups
+          .map((g) => ({
+            id: g.id,
+            labelKey: g.labelKey,
+            options: g.values.flatMap((v) => byValue.get(v) ?? []),
+          }))
+          .filter((g) => g.options.length > 0);
+      }
+      if (hint.brandShapesParam) c.brandShapesParam = hint.brandShapesParam;
+      return c;
     }
     case "list": {
       if (!(inner instanceof z.ZodArray)) return null;
