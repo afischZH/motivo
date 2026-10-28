@@ -47,8 +47,14 @@ function kindSupports(tool: AnyToolDefinition, format: ExportFormat): boolean {
         format === "webp"
       );
     case "image-effect":
-      // Pixels only: the editor renders them in its raster-effect worker.
-      return format === "png" || format === "jpg" || format === "webp";
+      // Pixels from the editor's raster-effect worker; SVG only with a vector
+      // output (halftone), built in the same worker (docs/ARCHITECTURE.md 4.16).
+      return (
+        format === "png" ||
+        format === "jpg" ||
+        format === "webp" ||
+        (format === "svg" && tool.render.vector !== undefined)
+      );
     default:
       return false;
   }

@@ -37,6 +37,7 @@ import {
   CANVAS_EDGE_MAX,
   CANVAS_EDGE_MIN,
   createRenderContext,
+  effectVectorBudget,
   type AnyToolDefinition,
   type CanvasSize,
   type Params,
@@ -46,7 +47,7 @@ import {
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";
-import { exportDesignRaster } from "../raster-effect/export";
+import { exportDesignRaster, exportImageEffectSvg } from "../raster-effect/export";
 import type { ParamValues } from "../store/editor-store";
 import { useEditorStore } from "../store/react";
 import {
@@ -90,6 +91,8 @@ export interface ExportServices {
   exportGif: typeof exportGif;
   /** Multi-file bundle as ZIP (tools with `bundles`); encoded in the raster worker. */
   exportBundle: typeof exportBundle;
+  /** SVG of an image effect with vector output (halftone), built in the raster-effect worker. */
+  exportEffectSvg: typeof exportImageEffectSvg;
   downloadBlob: typeof downloadBlob;
   copyText: typeof copyText;
   copyPng: typeof copyPng;
@@ -102,6 +105,7 @@ export const browserExportServices: ExportServices = {
   exportRasterTile,
   exportGif,
   exportBundle,
+  exportEffectSvg: exportImageEffectSvg,
   downloadBlob,
   copyText,
   copyPng,
@@ -303,6 +307,9 @@ function ExportDialogBody({
   const raster = choice.kind === "raster" || choice.kind === "tile" ? choice.format : null;
   const gifChoice = choice.kind === "gif";
   const bundleChoice = choice.kind === "bundle" ? choice.bundle : null;
+  const effectSvgChoice = choice.kind === "effect-svg";
+  const vectorBudget = effectSvgChoice ? effectVectorBudget(tool, params, size) : null;
+  const overVectorBudget = vectorBudget !== null && vectorBudget.shapes > vectorBudget.max;
   const gifPlan = gifChoice ? planGifExport(size, gifSettings) : null;
   // Image formats (copy only works for PNG).
   const imageFormat = raster ?? (gifChoice ? "gif" : null);
@@ -410,7 +417,30 @@ function ExportDialogBody({
     );
   };
 
+  const startEffectSvg = (action: "download" | "copy") => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    setStatus({ kind: "busy", action, progress: null });
+    return services.exportEffectSvg(tool, params, createRenderContext(seed, size), {
+      signal: controller.signal,
+    });
+  };
+
   const download = async () => {
+    if (effectSvgChoice) {
+      try {
+        const result = await startEffectSvg("download");
+        services.downloadBlob(result.blob, result.filename);
+        setStatus({ kind: "done", message: t("Editor.export.downloaded") });
+        setExported(true);
+      } catch (error) {
+        fail(error);
+      } finally {
+        finishRaster();
+      }
+      return;
+    }
     if (bundleChoice) {
       try {
         const result = await startBundle(bundleChoice.id);
@@ -485,8 +515,22 @@ function ExportDialogBody({
       );
       return;
     }
-    if (!text?.ok) return;
-    const result = await services.copyText(text.value);
+    let value: string;
+    if (effectSvgChoice) {
+      // The SVG is built in the worker first, then copied as text.
+      try {
+        value = await (await startEffectSvg("copy")).blob.text();
+      } catch (error) {
+        fail(error);
+        return;
+      } finally {
+        finishRaster();
+      }
+    } else {
+      if (!text?.ok) return;
+      value = text.value;
+    }
+    const result = await services.copyText(value);
     const key = clipboardErrorKey(result);
     if (key === null) setExported(true);
     setStatus(
@@ -510,8 +554,9 @@ function ExportDialogBody({
           : clipboard.image
             ? null
             : "copyUnavailableImage";
-  const copyDisabled = busy || copyBlockedKey !== null || text?.ok === false;
-  const downloadDisabled = busy || text?.ok === false || gifPlan?.overBudget === true;
+  const copyDisabled = busy || copyBlockedKey !== null || text?.ok === false || overVectorBudget;
+  const downloadDisabled =
+    busy || text?.ok === false || gifPlan?.overBudget === true || overVectorBudget;
 
   return (
     <div className="grid max-h-[calc(100dvh-6rem)] gap-5 overflow-y-auto px-5 py-4">
@@ -589,6 +634,19 @@ function ExportDialogBody({
       )}
 
       {bundleChoice !== null && <BundleSection bundle={bundleChoice} paths={bundlePaths} />}
+
+      {vectorBudget !== null && (
+        <p
+          className={cx("text-sm", overVectorBudget ? "text-destructive" : "text-muted-foreground")}
+          data-testid="export-vector-budget"
+          {...(overVectorBudget ? { role: "alert" } : {})}
+        >
+          {t(overVectorBudget ? "Editor.export.vectorTooMany" : "Editor.export.vectorShapes", {
+            shapes: vectorBudget.shapes,
+            max: vectorBudget.max,
+          })}
+        </p>
+      )}
 
       {text !== null && (
         <CodeView
