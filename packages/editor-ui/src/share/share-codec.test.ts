@@ -465,14 +465,15 @@ describe("share links: uploads never travel (security review M3-AP12)", () => {
     }
   });
 
-  it("rejects links whose upload does not even match the schema", () => {
+  it("ignores an upload in a link even when it does not match the schema", () => {
+    // M4-AP09: local params are reset before validation, so a planted value is
+    // never validated or kept, and cannot make an otherwise valid link fail.
     const bad = {
       ...tool.defaults,
       upload: { kind: "svg", svg: "", width: -1, height: 0, name: 1 },
     };
-    expect(errorOf(decodeDesign(packJson([tool.id, tool.version, 1, 1080, 1080, bad])))).toBe(
-      "invalid-params",
-    );
+    const r = decodeDesign(packJson([tool.id, tool.version, 1, 1080, 1080, bad]));
+    expect(r.ok && r.design.params).toEqual(tool.defaults);
   });
 
   it("never encodes the upload into a link", () => {

@@ -184,12 +184,12 @@ function decodeUnsafe(input: unknown, registry: Lookup): ShareDecodeResult {
   }
   const tool = registry.get(toolId);
   // Links leave private keys out (see `encodeDesign`): put the defaults back before validation.
+  // A crafted link that carries them anyway gets the defaults too, whatever it put there:
+  // never validated, never kept, and a bad value cannot make the whole link fail.
   const full: Record<string, unknown> = { ...(params as Record<string, unknown>) };
   if (tool) {
     const defaults = tool.defaults as Record<string, unknown>;
-    for (const key of privateParamKeys(tool)) {
-      if (!Object.prototype.hasOwnProperty.call(full, key)) full[key] = defaults[key];
-    }
+    for (const key of privateParamKeys(tool)) full[key] = defaults[key];
   }
   const v = validate(registry, toolId, full, seed, { width, height });
   if (!v.ok) return v;

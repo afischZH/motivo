@@ -267,6 +267,9 @@ const tilePatchSchema = tileFormSchema.partial();
 const without = <T>(r: Readonly<Record<string, T>>, key: string): Record<string, T> =>
   Object.fromEntries(Object.entries(r).filter(([k]) => k !== key));
 
+/** Own keys only: `"toString" in {}` is true. */
+const has = (r: object, key: string): boolean => Object.prototype.hasOwnProperty.call(r, key);
+
 const same = (a: object, b: object): boolean =>
   Object.entries(a).every(([k, v]) => (b as Record<string, unknown>)[k] === v);
 
@@ -286,7 +289,7 @@ function tileRegion(
     height: r.height,
     labelKey: `tools.${ID}.tile.label`,
     labelValues: { index: i + 1, cols: t.colSpan, rows: t.rowSpan },
-    edited: key in p.tileContent || key in p.tileImages,
+    edited: has(p.tileContent, key) || has(p.tileImages, key),
   };
 }
 
@@ -386,7 +389,7 @@ const regionEditor = defineRegionEditor<BentoGridParams, TileValues>({
       if (editedKeys(p).size === 0) return p;
       return { ...p, tileContent: {}, tileImages: {} };
     }
-    if (!(id in p.tileContent) && !(id in p.tileImages)) return p;
+    if (!has(p.tileContent, id) && !has(p.tileImages, id)) return p;
     return { ...p, tileContent: without(p.tileContent, id), tileImages: without(p.tileImages, id) };
   },
   editedCount: (p) => editedKeys(p).size,

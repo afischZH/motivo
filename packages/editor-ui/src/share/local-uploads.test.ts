@@ -12,7 +12,7 @@ import {
 import { deflateSync, inflateSync } from "fflate";
 import { describe, expect, it } from "vitest";
 import { pasteBelongsTo } from "../controls/image-field";
-import { parseDesignsFile, DESIGNS_FILE_FORMAT } from "../designs/transfer";
+import { designsFileTexts, parseDesignsFile, DESIGNS_FILE_FORMAT } from "../designs/transfer";
 import { decodeDesign, encodeDesign } from "./share-codec";
 
 const PNG =
@@ -84,6 +84,48 @@ describe("share links without uploads", () => {
       encodeRaw(["glass-effects", glassEffectsTool.version, 1, 1200, 800, crafted]),
     );
     expect(dec.ok && (dec.design.params as GlassEffectsParams).backgroundImage).toBeNull();
+  });
+
+  // M4-AP09: local params in a link are ignored, not validated. Before, a
+  // crafted value made the whole link fail as "invalid-params" (and a huge
+  // planted upload was run through the schema first).
+  it("ignores malformed local params in a crafted link instead of rejecting it", () => {
+    const junk: unknown[] = [
+      "javascript:alert(1)",
+      { kind: "svg", svg: "<svg onload=alert(1)>", width: -1, height: 0, name: 1 },
+      { t1: { graphic: "junk", background: { kind: "raster", href: "data:text/html,x" } } },
+      // Own `__proto__` key, as JSON.parse creates it from a link.
+      JSON.parse('{"__proto__":{"polluted":true},"constructor":{"prototype":{"polluted":true}}}'),
+    ];
+    for (const value of junk) {
+      const crafted = {
+        ...bentoGridTool.defaults,
+        tileContent: bento.tileContent,
+        tileImages: value,
+        backgroundImage: value,
+      };
+      const dec = decodeDesign(
+        encodeRaw(["bento-grid", bentoGridTool.version, 1, 1200, 800, crafted]),
+      );
+      expect(dec.ok).toBe(true);
+      if (!dec.ok) continue;
+      const p = dec.design.params as BentoGridParams;
+      expect(p.tileImages).toEqual({});
+      expect(p.backgroundImage).toBeNull();
+      expect(p.tileContent).toEqual(bento.tileContent);
+      expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+    }
+    const glass = decodeDesign(
+      encodeRaw([
+        "glass-effects",
+        glassEffectsTool.version,
+        1,
+        1200,
+        800,
+        { ...glassEffectsTool.defaults, backgroundImage: junk[1], imageFit: "evil", embedImage: 1 },
+      ]),
+    );
+    expect(glass.ok && glass.design.params).toEqual(glassEffectsTool.defaults);
   });
 });
 
@@ -158,6 +200,34 @@ describe("design files with nested uploads", () => {
       registry,
     );
     expect(parsed.ok && parsed.designs[0]?.params.backgroundImage).toEqual(raster);
+  });
+
+  // M4-AP09: the largest Bento design (all tile pictures plus a grid photo, about
+  // 21 MB) was over the old 20 MiB import limit: its own export could not be imported.
+  it("imports the export of a Bento design with the largest pictures again", async () => {
+    const png = Uint8Array.from(atob(PNG.split(",")[1] ?? ""), (c) => c.charCodeAt(0));
+    const padded = (bytes: number) => {
+      const out = new Uint8Array(bytes);
+      out.set(png);
+      return `data:image/png;base64,${Buffer.from(out).toString("base64")}`;
+    };
+    const tile = { ...raster, href: padded(4_499_000) };
+    const photo = { ...raster, href: padded(6_749_000) };
+    const params = {
+      ...bentoGridTool.defaults,
+      tileImages: {
+        t1: { graphic: tile, background: null },
+        t2: { graphic: tile, background: null },
+      },
+      backgroundImage: photo,
+    };
+    expect(bentoGridTool.schema.safeParse(params).success).toBe(true);
+    const texts = await designsFileTexts([entry(params)], 1);
+    expect(texts).toHaveLength(1);
+    expect(texts[0]?.length).toBeGreaterThan(20 * 1024 * 1024);
+    const parsed = parseDesignsFile(texts[0] ?? "", registry);
+    expect(parsed.ok && parsed.skipped).toEqual([]);
+    expect(parsed.ok && parsed.designs[0]?.params.backgroundImage).toEqual(photo);
   });
 });
 

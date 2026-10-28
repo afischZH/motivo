@@ -312,6 +312,17 @@ describe("bento-grid: tile editor", () => {
     expect(editor.reset(p, null)).toMatchObject({ tileContent: {}, tileImages: {} });
   });
 
+  // M4-AP09: inherited keys (`"toString" in {}` is true) are not tiles with content.
+  it("treats inherited keys as unedited", () => {
+    const p = set(bento, "t1", { title: "A" });
+    for (const id of ["toString", "constructor", "__proto__", "hasOwnProperty"]) {
+      expect(editor.reset(p, id)).toBe(p);
+      expect(editor.reset(bento, id)).toBe(bento);
+    }
+    const regions = editor.regions(bento, ctx());
+    expect(regions.some((r) => r.edited)).toBe(false);
+  });
+
   it("keeps content when Space rolls a new variant", () => {
     const p = set(bento, "t1", { title: "Keep", background: raster() });
     const next = bentoGridTool.randomize(createRng(5), p, new Set());
