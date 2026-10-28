@@ -31,15 +31,17 @@
       "lead": "Muster, Verläufe, Hintergründe und Farbpaletten für Websites, Slides und Social Media. Leertaste drücken, neue Variante bekommen, als SVG, PNG oder CSS exportieren.",
       "ctaPrimary": "Alle Tools entdecken",
       "ctaSecondary": "Mit {tool} starten",
-      "hint": "Gratis und ohne Konto. Deine Motive entstehen direkt auf deinem Gerät.",
       "showcaseLink": "{tool} öffnen",
-      "spaceHint": "Leertaste"
+      "spaceHint": "Leertaste",
+      "points": {
+        "free": "Gratis, ohne Limits",
+        "local": "Läuft in deinem Browser",
+        "noAccount": "Kein Konto nötig"
+      }
     },
-    "machine": {
-      "label": "Motiv-Automat mit drei Beispielmotiven",
-      "spin": "Drehen",
-      "round": "Variante {n}",
-      "landed": "Neue Varianten: {tools}"
+    "preview": {
+      "default": "Standard",
+      "next": "Neue Variante"
     },
     "values": {
       "heading": "Warum Motivo",

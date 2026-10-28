@@ -11,14 +11,14 @@ Scope: home page (`/[locale]`), mode Persuade. Visitor: designers, developers an
 
 ## Direction contract
 
-THESIS: The home page is a motif machine, not a SaaS landing. Pressing space pulls the lever and three reels land on real tool presets. It refuses the default split hero with a floating screenshot and three value cards.
+THESIS: The category standard, played straight (user chose the canon direction C on 2026-10-28, over A "Motiv-Automat" and B "Musterbuch"). Craft bar: Linear, Vercel, Raycast until the user names others.
 
-OWN-WORLD: Brand indigo drenches the hero as the machine's cabinet field; one hot coral for the lever and the active reel frame only; reels are white glass windows with a heavy dark bezel. Chunky display grotesque (Bricolage Grotesque, OFL), system sans for body. Thick 3px ink outlines, large radii, hard tactile pressed states.
+OWN-WORLD: Existing Motivo tokens: neutral grays, one indigo accent for primary actions, focus and highlights; system sans; 1px borders, rounded-2xl cards, soft offset shadows.
 
-STORY: The visitor sees the machine, presses space or the lever, watches three reels land, understands "one key, new variant", then opens a tool from a reel or the catalogue rows below.
+STORY: The visitor reads the offer, sees a real tool preview cycle presets on space, and opens the catalogue or the gradient tool.
 
-FIRST VIEWPORT: Full-bleed indigo. Left: giant headline (clamp to ~6rem), lead, primary button "Alle Tools entdecken". Right/below on mobile: the machine with three reels, seed counter, coral lever and a "Leertaste" key cap button.
+FIRST VIEWPORT: Left: large headline, lead, primary and outline buttons, three check points. Right: editor-style preview window of SVG waves with its presets, status bar and "Leertaste / Neue Variante".
 
-FORM: Motiv-Automat (slot machine without casino tropes), position 6 of 7, seed key d581cfd8.
+FORM: Canon (standing exit), seed key d581cfd8, recorded with --kind canon.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

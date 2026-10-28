@@ -31,15 +31,17 @@
       "lead": "Patterns, gradients, backgrounds and color palettes for websites, slides and social media. Press the space bar for a new variant, then export as SVG, PNG or CSS.",
       "ctaPrimary": "Explore all tools",
       "ctaSecondary": "Start with {tool}",
-      "hint": "Free and no account needed. Your motifs are created right on your device.",
       "showcaseLink": "Open {tool}",
-      "spaceHint": "Space"
+      "spaceHint": "Space",
+      "points": {
+        "free": "Free, no limits",
+        "local": "Runs in your browser",
+        "noAccount": "No account needed"
+      }
     },
-    "machine": {
-      "label": "Motif machine with three sample motifs",
-      "spin": "Spin",
-      "round": "Variant {n}",
-      "landed": "New variants: {tools}"
+    "preview": {
+      "default": "Default",
+      "next": "New variant"
     },
     "values": {
       "heading": "Why Motivo",

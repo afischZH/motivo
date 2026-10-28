@@ -94,20 +94,6 @@
 
   /* Kept for shadcn components that compute from it. */
   --radius: 0.625rem;
-
-  /*
-   * Home page "motif machine". The cabinet field is the brand indigo pushed
-   * to full saturation; it is the same in both themes because it is the
-   * page's color, not a surface. Coral is reserved for the lever.
-   */
-  --machine: oklch(0.4 0.2 275);
-  --machine-deep: oklch(0.3 0.16 275);
-  --machine-ink: oklch(0.17 0.04 275);
-  --machine-foreground: oklch(0.985 0.01 275);
-  --machine-muted: oklch(0.86 0.06 275);
-  --lever: oklch(0.74 0.17 38);
-  --lever-hover: oklch(0.79 0.15 45);
-  --lever-foreground: oklch(0.17 0.04 275);
 }
 
 .dark {
@@ -173,14 +159,6 @@
   --color-link: var(--link);
   --color-highlight: var(--highlight);
   --color-canvas: var(--canvas);
-  --color-machine: var(--machine);
-  --color-machine-deep: var(--machine-deep);
-  --color-machine-ink: var(--machine-ink);
-  --color-machine-foreground: var(--machine-foreground);
-  --color-machine-muted: var(--machine-muted);
-  --color-lever: var(--lever);
-  --color-lever-hover: var(--lever-hover);
-  --color-lever-foreground: var(--lever-foreground);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -259,100 +237,6 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/*
- * Home page motif machine. Tactile, not glossy: a thick ink outline, a hard
- * shadow that sits under the object, and pressed states that drop into it.
- */
-@utility font-display {
-  font-family: var(--font-display), var(--font-sans);
-  font-optical-sizing: auto;
-}
-
-.machine-cabinet {
-  background: var(--lever);
-  border: 3px solid var(--machine-ink);
-  box-shadow:
-    0 6px 0 var(--machine-ink),
-    0 30px 60px -20px oklch(0.12 0.08 275 / 0.6);
-}
-
-.reel-window {
-  border: 3px solid var(--machine-ink);
-}
-
-.reel-strip {
-  transition-property: transform;
-  /* Fast start, long settle, a hair of overshoot as the reel catches. */
-  transition-timing-function: cubic-bezier(0.2, 0.7, 0.25, 1.06);
-  will-change: transform;
-}
-
-.reel-window.is-spinning .reel-strip {
-  filter: blur(1.5px);
-}
-
-.reel-glass {
-  background: linear-gradient(
-    to bottom,
-    oklch(0.17 0.04 275 / 0.28),
-    transparent 22%,
-    transparent 78%,
-    oklch(0.17 0.04 275 / 0.28)
-  );
-  box-shadow: inset 0 2px 0 oklch(1 0 0 / 0.5);
-}
-
-.lever-button,
-.key-cap,
-.machine-press {
-  border: 3px solid var(--machine-ink);
-  box-shadow: 0 4px 0 var(--machine-ink);
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    box-shadow var(--duration-fast) var(--ease-out),
-    background-color var(--duration-fast) var(--ease-out);
-}
-
-.lever-button {
-  background: var(--machine-ink);
-  color: var(--machine-foreground);
-}
-
-.lever-button:hover {
-  background: var(--machine-deep);
-}
-
-.lever-button:active,
-.machine-press:active {
-  transform: translateY(4px);
-  box-shadow: 0 0 0 var(--machine-ink);
-}
-
-.lever-knob {
-  background: var(--lever);
-  box-shadow: inset 0 -3px 0 oklch(0 0 0 / 0.2);
-}
-
-.key-cap {
-  background: var(--machine-foreground);
-  color: var(--machine-ink);
-}
-
-.machine-press {
-  background: var(--lever);
-  color: var(--lever-foreground);
-}
-
-.machine-press:hover {
-  background: var(--lever-hover);
-}
-
-/* Focus on the indigo field: a light ring reads, the brand ring would not. */
-.on-machine :focus-visible {
-  outline-color: var(--machine-foreground);
-  outline-offset: 3px;
 }
 
 /* Home hero: a slow drift of the stage motif (only with motion allowed, see motion-safe). */
