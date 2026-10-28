@@ -14,6 +14,7 @@ import {
   staticDesigns,
   staticMotifSvg,
   toolSize,
+  webglMotifSvg,
 } from "./motifs";
 import { OG_SIZE, ogElement, ogImagePath } from "./og";
 
@@ -29,8 +30,12 @@ describe("static motifs", () => {
       for (const design of designs) {
         const svg = await staticMotifSvg(tool, design);
         expect(svg?.startsWith("<svg")).toBe(true);
-        // Deterministic: the same design renders to the same file.
-        expect(await staticMotifSvg(tool, design)).toBe(svg);
+        // Deterministic: the same design renders to the same file. WebGL
+        // motifs run the CPU twin (about 0.3 s each), so only the default
+        // is rendered twice; the twin's determinism is tested in its package.
+        if (tool.render.kind !== "webgl" || design.id === DEFAULT_MOTIF) {
+          expect(await staticMotifSvg(tool, design)).toBe(svg);
+        }
       }
     },
     // Image effects encode a PNG per design (twice); slow on a busy CI runner.
@@ -48,6 +53,20 @@ describe("static motifs", () => {
     );
     // Compressed: far below the 480 x 320 x 4 raw bytes.
     expect(svg.length).toBeLessThan(480 * 320 * 4 * 0.6);
+  });
+
+  it("draws WebGL tools with their CPU twin as a compressed PNG", async () => {
+    const tool = registry.get("shader-gradient");
+    const design = tool && staticDesigns(tool)[0];
+    if (!tool || !design) throw new Error("shader-gradient missing");
+    expect(hasStaticMotif(tool)).toBe(true);
+    expect(designSvg(tool, design)).toBeUndefined();
+    expect(await effectMotifSvg(tool, design)).toBeUndefined();
+    const svg = (await webglMotifSvg(tool, design)) ?? "";
+    expect(svg).toMatch(
+      /^<svg [^>]*viewBox="0 0 1600 1000"><image [^>]*href="data:image\/png;base64,/,
+    );
+    expect(svg.length).toBeLessThan(480 * 300 * 4 * 0.8);
   });
 
   it.each(tools.map((t) => [t.id, t] as const))("%s preset links open the preset", (_, tool) => {

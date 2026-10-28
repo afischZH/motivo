@@ -22,6 +22,7 @@
     "@musterli/effects": "workspace:*",
     "@musterli/engine": "workspace:*",
     "@musterli/exporters": "workspace:*",
+    "@musterli/shaders": "workspace:*",
     "@musterli/storage": "workspace:*",
     "@musterli/svg-sanitizer": "workspace:*",
     "@musterli/tool-registry": "workspace:*",

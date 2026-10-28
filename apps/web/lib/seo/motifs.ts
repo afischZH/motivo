@@ -11,11 +11,14 @@ import {
   DEFAULT_CANVAS_SIZE,
   createRenderContext,
   fitSize,
+  hasWebglReference,
   isImageEffectTool,
   registry,
   renderImageEffect,
+  renderWebglReference,
   type AnyToolDefinition,
   type CanvasSize,
+  type PixelBuffer,
 } from "@musterli/tool-registry";
 
 /** Seed of every static motif, as in the editor's first render. */
@@ -73,10 +76,28 @@ export function designSvg(tool: AnyToolDefinition, design: StaticDesign): string
 }
 
 /**
- * Longest edge of the picture inside an image-effect motif: sharp enough
- * for cards and OG images, about 150 to 300 KB per motif.
+ * Longest edge of the picture inside an image-effect or WebGL motif: sharp
+ * enough for cards and OG images, about 150 to 300 KB per motif.
  */
 export const EFFECT_MOTIF_EDGE = 480;
+
+/** Pixels as an SVG of the design size that wraps one PNG. */
+async function pngMotifSvg(pixels: PixelBuffer, size: CanvasSize): Promise<string> {
+  const encoder = new PngStreamEncoder(pixels.width, pixels.height);
+  await encoder.addRows(pixels.data, pixels.height);
+  const parts = await encoder.finish();
+  const png = new Uint8Array(parts.reduce((n, p) => n + p.length, 0));
+  let offset = 0;
+  for (const part of parts) {
+    png.set(part, offset);
+    offset += part.length;
+  }
+  const { width, height } = size;
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">` +
+    `<image width="${width}" height="${height}" preserveAspectRatio="none" href="data:image/png;base64,${toBase64(png)}"/></svg>`
+  );
+}
 
 /**
  * An image effect applied to the tool's sample picture (docs/ARCHITECTURE.md
@@ -92,33 +113,50 @@ export async function effectMotifSvg(
   const size = toolSize(tool);
   const out = fitSize(size, EFFECT_MOTIF_EDGE);
   const pixels = renderImageEffect(tool, design.params, design.seed, size, out);
-  const encoder = new PngStreamEncoder(out.width, out.height);
-  await encoder.addRows(pixels.data, out.height);
-  const parts = await encoder.finish();
-  const png = new Uint8Array(parts.reduce((n, p) => n + p.length, 0));
-  let offset = 0;
-  for (const part of parts) {
-    png.set(part, offset);
-    offset += part.length;
-  }
-  const { width, height } = size;
-  return (
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">` +
-    `<image width="${width}" height="${height}" preserveAspectRatio="none" href="data:image/png;base64,${toBase64(png)}"/></svg>`
-  );
+  return pngMotifSvg(pixels, size);
 }
 
-/** `designSvg`, plus image effects (async: their PNG is compressed with `CompressionStream`). */
+/**
+ * A WebGL tool's design (docs/ARCHITECTURE.md 4.15), drawn by its CPU twin
+ * (`WebglRenderer.reference`) at most `EFFECT_MOTIF_EDGE` px and wrapped
+ * as PNG in an SVG. Same algorithm, constants and uniforms as the shader;
+ * Node has no GPU, and a headless browser in the build would be slow and
+ * fragile. The CPU twin matches the GPU within one level per channel.
+ */
+export async function webglMotifSvg(
+  tool: AnyToolDefinition,
+  design: StaticDesign,
+): Promise<string | undefined> {
+  if (!hasWebglReference(tool)) return undefined;
+  const size = toolSize(tool);
+  const out = fitSize(size, EFFECT_MOTIF_EDGE);
+  const pixels = renderWebglReference(tool, design.params, design.seed, size, out);
+  return pngMotifSvg(pixels, size);
+}
+
+/**
+ * `designSvg`, plus image effects and WebGL tools (async: their PNG is
+ * compressed with `CompressionStream`).
+ */
 export async function staticMotifSvg(
   tool: AnyToolDefinition,
   design: StaticDesign,
 ): Promise<string | undefined> {
-  return designSvg(tool, design) ?? effectMotifSvg(tool, design);
+  return (
+    designSvg(tool, design) ??
+    (await effectMotifSvg(tool, design)) ??
+    (await webglMotifSvg(tool, design))
+  );
 }
 
 /** Whether every static motif of the tool can be rendered on the server (`staticMotifSvg`). */
 export function hasStaticMotif(tool: AnyToolDefinition): boolean {
-  return tool.render.kind === "svg" || tool.render.kind === "css" || isImageEffectTool(tool);
+  return (
+    tool.render.kind === "svg" ||
+    tool.render.kind === "css" ||
+    isImageEffectTool(tool) ||
+    hasWebglReference(tool)
+  );
 }
 
 /** Public path of a static motif SVG (see `app/motifs/[toolId]/[file]/route.ts`). */

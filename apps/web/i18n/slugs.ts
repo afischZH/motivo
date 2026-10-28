@@ -68,6 +68,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "favicon-generator": { de: "favicon-generator", en: "favicon-generator" },
   duotone: { de: "duotone-generator", en: "duotone-generator" },
   "ascii-art": { de: "ascii-art-generator", en: "ascii-art-generator" },
+  "shader-gradient": { de: "shader-farbverlauf-generator", en: "shader-gradient-generator" },
 };
 
 /**

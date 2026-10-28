@@ -62,6 +62,9 @@ importers:
       '@musterli/exporters':
         specifier: workspace:*
         version: link:../../packages/exporters
+      '@musterli/shaders':
+        specifier: workspace:*
+        version: link:../../packages/shaders
       '@musterli/storage':
         specifier: workspace:*
         version: link:../../packages/storage
