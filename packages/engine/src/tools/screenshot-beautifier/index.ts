@@ -48,7 +48,7 @@ export const PLACEHOLDER_HEIGHT = 900;
 const SHADOW_SIGMA_AT_8K = 200;
 const OUTPUT_EDGE_MAX = 8192;
 
-export interface Rect {
+export interface ScreenshotRect {
   readonly x: number;
   readonly y: number;
   readonly width: number;
@@ -80,11 +80,11 @@ export interface ScreenshotLayoutOptions {
 
 export interface ScreenshotLayout {
   /** The window: bar plus screenshot. */
-  readonly window: Rect;
+  readonly window: ScreenshotRect;
   /** The bar on top of the window, `null` without frame. */
-  readonly bar: Rect | null;
+  readonly bar: ScreenshotRect | null;
   /** The screenshot inside the window. */
-  readonly shot: Rect;
+  readonly shot: ScreenshotRect;
   /** Corner radius of the window after clamping. */
   readonly radius: number;
   /** Border width after clamping. */
@@ -132,7 +132,7 @@ export function screenshotLayout(o: ScreenshotLayoutOptions): ScreenshotLayout {
 const f = (v: number): string => formatNumber(v, 2);
 
 /** Rounded rectangle as a path (absolute start, relative segments). */
-export function roundedRectPath(rect: Rect, radius: number): string {
+export function roundedRectPath(rect: ScreenshotRect, radius: number): string {
   const { x, y, width: w, height: h } = rect;
   if (!(w > 0 && h > 0)) return "";
   const rr = Math.max(0, Math.min(radius, w / 2, h / 2));
@@ -144,7 +144,7 @@ export function roundedRectPath(rect: Rect, radius: number): string {
   );
 }
 
-const grow = (r: Rect, d: number): Rect => ({
+const grow = (r: ScreenshotRect, d: number): ScreenshotRect => ({
   x: r.x - d,
   y: r.y - d,
   width: r.width + 2 * d,
@@ -180,7 +180,7 @@ export function screenshotShadowLayers(
 /** Blurred rounded rectangles under `shape`, back to front as in CSS. */
 function shadowMarkup(
   layers: readonly ShadowLayer[],
-  shape: Rect,
+  shape: ScreenshotRect,
   radius: number,
   color: string,
   width: number,
@@ -270,7 +270,7 @@ export function fitBarText(text: string, maxWidth: number, fontSize: number): st
 }
 
 function barMarkup(
-  bar: Rect,
+  bar: ScreenshotRect,
   frame: ScreenshotFrame,
   theme: ScreenshotTheme,
   text: string,
@@ -421,7 +421,7 @@ function attributeHref(href: string): string {
 /** Where the picture sits, for previews that show it as a layer of its own. */
 export interface ScreenshotPictureLayer {
   /** The window (bar plus picture), in px of the canvas. */
-  readonly window: Rect;
+  readonly window: ScreenshotRect;
   /** Height of the bar above the picture (0 without frame). */
   readonly barHeight: number;
   /** Corner radius of the window. */
