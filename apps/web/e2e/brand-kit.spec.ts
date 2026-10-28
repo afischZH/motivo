@@ -275,15 +275,31 @@ test.describe("brand kit page", () => {
       // Name the widest offenders so a failure in one browser is diagnosable from the log.
       const offenders = await page.evaluate(() => {
         const limit = document.documentElement.clientWidth;
-        return [...document.querySelectorAll("body *")]
-          .map((el) => ({ el, right: el.getBoundingClientRect().right }))
-          .filter(({ right }) => right > limit + 0.5)
-          .slice(0, 8)
-          .map(({ el, right }) => {
-            const testId = el.getAttribute("data-testid");
-            const cls = (el.getAttribute("class") ?? "").slice(0, 80);
-            return `${el.tagName.toLowerCase()}${testId ? `[${testId}]` : ""} .${cls} right=${Math.round(right)}`;
-          });
+        const clipped = (el: Element) => {
+          for (let p = el.parentElement; p; p = p.parentElement) {
+            const style = getComputedStyle(p);
+            if (
+              style.overflowX !== "visible" &&
+              p !== document.body &&
+              p !== document.documentElement
+            )
+              return true;
+          }
+          return false;
+        };
+        const wide = (el: Element | null) => !!el && el.getBoundingClientRect().right > limit + 0.5;
+        return (
+          [...document.querySelectorAll("body *")]
+            // Outermost offenders only: the parent fits, the element does not, nothing clips it.
+            .filter((el) => wide(el) && !wide(el.parentElement) && !clipped(el))
+            .map((el) => ({ el, right: el.getBoundingClientRect().right }))
+            .slice(0, 8)
+            .map(({ el, right }) => {
+              const testId = el.getAttribute("data-testid");
+              const cls = (el.getAttribute("class") ?? "").slice(0, 80);
+              return `${el.tagName.toLowerCase()}${testId ? `[${testId}]` : ""} .${cls} right=${Math.round(right)}`;
+            })
+        );
       });
       expect(await overflow(), offenders.join("\n")).toBeLessThanOrEqual(0);
     });
