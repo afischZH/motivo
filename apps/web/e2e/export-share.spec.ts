@@ -137,6 +137,49 @@ test.describe("export dialog", () => {
     expect(png.readUInt32BE(20)).toBe(400);
   });
 
+  test("exports at a common size picked from the list", async ({ page }) => {
+    await openEditor(page, "/en/tools/blob-generator");
+    const dialog = await openExport(page);
+    await choose(dialog, "PNG");
+    await dialog
+      .getByLabel("Common size", { exact: true })
+      .selectOption({ label: "Pinterest pin 2:3 (1000 × 1500, portrait)" });
+    await expect(dialog.getByRole("radio", { name: "Custom size", exact: true })).toBeChecked();
+    await expect(dialog.getByTestId("export-output-size")).toHaveText(
+      "Result: 1000 × 1500 px. Different aspect ratio: the design is recomposed for this format.",
+    );
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      dialog.getByRole("button", { name: "Download" }).click(),
+    ]);
+    const png = await downloaded(download);
+    expect(png.readUInt32BE(16)).toBe(1000);
+    expect(png.readUInt32BE(20)).toBe(1500);
+  });
+
+  test("size controls fit 375 px and the orientation swaps", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 800 });
+    await openEditor(page, "/en/tools/blob-generator");
+    const select = page.getByRole("combobox", { name: "Size", exact: true });
+    await select.selectOption({ label: "iPhone Air (1260 × 2736, portrait)" });
+    await page.getByRole("button", { name: "Swap orientation" }).click();
+    await expect(page.getByLabel("Width", { exact: true })).toHaveValue("2736");
+    await expect(page.getByLabel("Height", { exact: true })).toHaveValue("1260");
+    await expect(select).toHaveValue("custom");
+    const overflow = () =>
+      page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+    expect(await overflow()).toBe(0);
+    const dialog = await openExport(page);
+    await choose(dialog, "PNG");
+    await dialog.getByLabel("Common size", { exact: true }).selectOption("a4-portrait");
+    await expect(dialog.getByTestId("export-output-size")).toContainText("2480 × 3508");
+    const box = await dialog.getByLabel("Common size", { exact: true }).boundingBox();
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(375);
+    expect(await overflow()).toBe(0);
+  });
+
   test("shows code with a copy button for CSS exports", async ({ page, context, browserName }) => {
     await enableClipboard(context, browserName);
     await openEditor(page, "/en/tools/css-gradient-generator", { svg: false });
@@ -157,6 +200,7 @@ test.describe("export dialog", () => {
       const dialog = await openExport(page);
       await choose(dialog, "JPG");
       await expect(dialog.getByLabel("Quality")).toBeVisible();
+      await dialog.getByLabel("Common size", { exact: true }).selectOption("story");
       const results = await new AxeBuilder({ page })
         .include('[data-testid="export-dialog"]')
         .withTags(AXE_TAGS)

@@ -207,7 +207,7 @@ test.describe("screenshot beautifier", () => {
       "label",
       "For this tool",
     );
-    await select.selectOption({ label: "Product Hunt (1270 × 760)" });
+    await select.selectOption({ label: "Product Hunt (1270 × 760, landscape)" });
     await expect(stage(page)).toHaveCSS("width", "1270px");
     await expect(stage(page)).toHaveCSS("height", "760px");
   });

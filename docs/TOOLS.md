@@ -4,7 +4,17 @@ Jedes Tool wird als `ToolDefinition` umgesetzt (siehe `ARCHITECTURE.md`, Abschni
 
 Legende Phase: **M1** bis **M7** = Meilensteine aus `ROADMAP.md`. Alle Tools, Grössen und Exporte sind gratis und ohne Limits (Entscheid 2026-10-28, `PRODUCT.md` Abschnitt 6); es gibt kein Gating mehr. Grössenobergrenzen sind nur technisch begründet (z. B. 8192 px pro Kante im Browser).
 
-Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grössen-Presets: Social, Desktop, Mobile, A4), `background` (Farbe oder transparent), `palette` (2 bis 10 Farben, Brand-Paletten wählbar), `seed`.
+Allgemein gilt für alle visuellen Tools: Parameter `width`, `height` (mit Grössen-Presets, siehe unten), `background` (Farbe oder transparent), `palette` (2 bis 10 Farben, Brand-Paletten wählbar), `seed`.
+
+**Grössen-Katalog** (`SIZE_PRESETS` in `packages/tool-registry/src/common.ts`, seit M4b-AP06; Werte geprüft am 2026-10-28, Quellen als Kommentar im Code). 56 Grössen in 6 Gruppen, alle innerhalb von 8192 px pro Kante (nichts musste weggelassen oder gekappt werden). Smartphones und Tablets stehen hochkant (wie gehalten), Bildschirme quer; der Tausch-Knopf neben Breite und Höhe dreht jede Grösse. Bestehende Ids (`square`, `portrait`, `story`, `landscape`, `banner`, `full-hd`, `qhd`, `uhd-4k`, `phone`, `tablet`, `a4-portrait`, `a4-landscape`) bleiben unverändert, nur ihre Namen wurden genauer.
+- **Social Media** (13): Instagram/Facebook/LinkedIn 1:1 1080 × 1080 und 4:5 1080 × 1350, Instagram 3:4 1080 × 1440, Story/Reel/TikTok/Shorts 9:16 1080 × 1920, Open Graph 1200 × 630, Facebook-Titelbild 1702 × 630 (2× der empfohlenen 851 × 315), X-Titelbild 1500 × 500, X-Beitrag 16:9 1600 × 900, LinkedIn-Hintergrundbild 1584 × 396, LinkedIn-Beitrag 1200 × 627, YouTube-Thumbnail 3840 × 2160 (aktuelle Empfehlung von YouTube), YouTube-Kanalbanner 2560 × 1440, Pinterest-Pin 1000 × 1500.
+- **Bildschirme und Hintergründe** (13): HD, Full HD (auch Videocall-Hintergrund), WQHD, 4K UHD, 5K, 8K UHD (7680 × 4320), Ultrawide 2560 × 1080 und 3440 × 1440, MacBook Air 13/15 Zoll (2560 × 1664, 2880 × 1864), MacBook Pro 14/16 Zoll (3024 × 1964, 3456 × 2234), iMac 24 Zoll (4480 × 2520).
+- **Smartphones** (9): iPhone 17/17 Pro/18 Pro 1206 × 2622, iPhone 17 Pro Max/18 Pro Max 1320 × 2868, iPhone Air 1260 × 2736, iPhone 16e/17e 1170 × 2532, iPhone Duo aufgeklappt 1878 × 2670, Pixel 11 Pro 1280 × 2856, Pixel 11 Pro XL 1344 × 2992, Galaxy S26 1080 × 2340, Galaxy S26 Ultra 1440 × 3120.
+- **Tablets** (5): iPad und iPad Air 11 Zoll 1640 × 2360, iPad Air 13 Zoll 2048 × 2732, iPad Pro 11 Zoll 1668 × 2420, iPad Pro 13 Zoll 2064 × 2752, iPad mini 1488 × 2266.
+- **Druck (300 dpi)** (8): A3 hoch/quer, A4 hoch/quer, A5 hoch, A6 hoch, US Letter hoch/quer (mm / 25.4 × 300, gerundet).
+- **Seitenverhältnisse** (8): 1:1, 4:5, 3:2, 2:3, 4:3, 16:9, 9:16 mit längerer Kante 2400 px, 21:9 als 2520 × 1080 (ganze Pixel).
+
+Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner und WQHD), zeigt der Wähler den zuletzt gewählten; sonst gewinnt die Tool-eigene, dann die allgemeine vor der Social-Media-Bezeichnung. Gerätenamen erscheinen nur als Text, ohne Logos. Neue Gerätegenerationen: Werte auf den offiziellen Spezifikationsseiten prüfen, Namen in `sizes.*` nachführen, Ids nicht ändern.
 
 ---
 
@@ -170,7 +180,7 @@ SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), 
 ## H. Social Media Editor · M6 · G/P
 - **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Musterli-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
 - **Text-Effekte**: Schatten, Outline, Verlauf, "Highlight-Balken", Gradient-Fill; eigene und Google Fonts (Lizenz der Fonts prüfen: nur OFL/Apache).
-- **Grössen**: Instagram Feed (1080x1080, 1080x1350), Story (1080x1920), LinkedIn, X/Twitter, Facebook, Pinterest, YouTube-Thumbnail; Werte bei Umsetzung aktuell recherchieren.
+- **Grössen**: Instagram Feed (1080x1080, 1080x1350), Story (1080x1920), LinkedIn, X/Twitter, Facebook, Pinterest, YouTube-Thumbnail; seit M4b-AP06 im allgemeinen Grössen-Katalog (oben), bei Umsetzung erneut prüfen.
 - **Magic Resize**: Layout-Constraints pro Ebene (Anker + relative Grösse), beim Formatwechsel neu berechnen; danach manuell feinjustieren.
 - **Templates**: als JSON (Konva-Szene mit Platzhaltern), eigene Vorlagenbibliothek (Ziel 100 zum Launch des Editors).
 - **Brand-Apply**: Ein Klick ersetzt Template-Farbslots durch Brand-Palette und Fonts.

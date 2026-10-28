@@ -95,8 +95,14 @@ export function pickInitialChoice(
 export const EXPORT_SCALES = [1, 2, 4] as const;
 export type ExportScale = (typeof EXPORT_SCALES)[number];
 
+/**
+ * Output size of a raster export: a scale of the design size, or a custom
+ * size. `preset` is the size-picker option a custom size came from (display
+ * only; two presets may share a size).
+ */
 export type ExportSizeMode =
-  { kind: "scale"; scale: ExportScale } | { kind: "custom"; width: number; height: number };
+  | { kind: "scale"; scale: ExportScale }
+  | { kind: "custom"; width: number; height: number; preset?: string };
 
 export interface RasterSizePlan {
   /** Size the design is rendered at (the `RenderContext` size). */

@@ -187,6 +187,36 @@ describe("ExportDialog size", () => {
     expect(options?.size).toEqual({ width: 1920, height: 1080 });
   });
 
+  it("re-renders at a common size picked from the list", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    const select = within(dialog()).getByLabelText("Gängige Grösse") as HTMLSelectElement;
+    expect(select.value).toBe("");
+    expect(within(select).getAllByRole("group").length).toBeGreaterThanOrEqual(6);
+    fireEvent.change(select, { target: { value: "youtube-thumbnail" } });
+    expect(select.value).toBe("youtube-thumbnail");
+    expect(screen.getByRole("radio", { name: "Eigene Grösse" })).toHaveProperty("checked", true);
+    expect(screen.getByTestId("export-output-size").textContent).toBe(
+      "Ergebnis: 3840 × 2160 px. Anderes Seitenverhältnis: Das Motiv wird für dieses Format neu berechnet.",
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(services.downloadBlob).toHaveBeenCalled());
+    const [, , ctx, options] = services.exportRaster.mock.calls[0] ?? [];
+    expect({ width: ctx?.width, height: ctx?.height }).toEqual({ width: 3840, height: 2160 });
+    expect(options?.size).toEqual({ width: 3840, height: 2160 });
+  });
+
+  it("scales the vector for a common size with the design's aspect ratio", async () => {
+    const services = fakeServices();
+    setup("blob", services);
+    fireEvent.change(within(dialog()).getByLabelText("Gängige Grösse"), {
+      target: { value: "portrait" },
+    });
+    expect(screen.getByTestId("export-output-size").textContent).toBe("Ergebnis: 1080 × 1350 px.");
+    fireEvent.click(screen.getByRole("radio", { name: "2× (2160 × 2700)" }));
+    expect((within(dialog()).getByLabelText("Gängige Grösse") as HTMLSelectElement).value).toBe("");
+  });
+
   it("rejects custom edges outside the canvas limits", () => {
     setup("blob");
     fireEvent.click(screen.getByRole("radio", { name: "Eigene Grösse" }));

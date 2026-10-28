@@ -1,4 +1,4 @@
-import { builtInTools } from "@musterli/tool-registry";
+import { SIZE_PRESETS, SIZE_PRESET_GROUPS, builtInTools } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import de from "./de.json";
 import en from "./en.json";
@@ -47,6 +47,19 @@ describe("editor messages", () => {
       expect(enMessages.has(key), key).toBe(true);
       expect(deMessages.has(key), key).toBe(true);
     }
+  });
+
+  it("names every common size preset and group", () => {
+    for (const p of SIZE_PRESETS) {
+      expect(enMessages.has(p.nameKey), p.nameKey).toBe(true);
+      expect(deMessages.has(p.nameKey), p.nameKey).toBe(true);
+    }
+    for (const group of [...SIZE_PRESET_GROUPS, "tool"]) {
+      expect(deMessages.has(`Editor.size.groups.${group}`), group).toBe(true);
+    }
+    // No orphaned names of removed presets.
+    const ids = new Set(SIZE_PRESETS.map((p) => p.nameKey));
+    expect([...deMessages.keys()].filter((k) => k.startsWith("sizes.") && !ids.has(k))).toEqual([]);
   });
 
   it("has no empty texts", () => {

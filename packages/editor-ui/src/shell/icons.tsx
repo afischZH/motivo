@@ -146,3 +146,13 @@ export const SaveIcon = () => (
     <path d="M7 21v-7h10v7" />
   </Icon>
 );
+
+/** Two opposite arrows: swap width and height. */
+export const SwapIcon = () => (
+  <Icon>
+    <path d="m16 3 4 4-4 4" />
+    <path d="M20 7H4" />
+    <path d="m8 21-4-4 4-4" />
+    <path d="M4 17h16" />
+  </Icon>
+);
