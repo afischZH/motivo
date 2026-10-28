@@ -30,6 +30,12 @@ import { bentoGridTool } from "./bento-grid";
 import { geometricPatternsTool } from "./geometric-patterns";
 import { contrastCheckerTool } from "./contrast-checker";
 import { cssShadowTool } from "./css-shadow";
+import { guillocheTool } from "./guilloche";
+import { topoLinesTool } from "./topo-lines";
+import { flowFieldTool } from "./flow-field";
+import { lowPolyTool } from "./low-poly";
+import { terrazzoTool } from "./terrazzo";
+import { screenshotBeautifierTool } from "./screenshot-beautifier";
 
 export {
   blobTool,
@@ -58,6 +64,12 @@ export {
   geometricPatternsTool,
   contrastCheckerTool,
   cssShadowTool,
+  guillocheTool,
+  topoLinesTool,
+  flowFieldTool,
+  lowPolyTool,
+  terrazzoTool,
+  screenshotBeautifierTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -96,6 +108,12 @@ export {
 export type { ContrastCheckerParams } from "./contrast-checker";
 export { CONTRAST_SUGGESTION_IDS, contrastSuggestions } from "./contrast-checker";
 export type { CssShadowParams } from "./css-shadow";
+export type { GuillocheParams } from "./guilloche";
+export type { TopoLinesParams } from "./topo-lines";
+export type { FlowFieldParams } from "./flow-field";
+export type { LowPolyParams } from "./low-poly";
+export type { TerrazzoParams } from "./terrazzo";
+export type { ScreenshotBeautifierParams } from "./screenshot-beautifier";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -125,6 +143,12 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   bentoGridTool,
   contrastCheckerTool,
   cssShadowTool,
+  guillocheTool,
+  topoLinesTool,
+  flowFieldTool,
+  lowPolyTool,
+  terrazzoTool,
+  screenshotBeautifierTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

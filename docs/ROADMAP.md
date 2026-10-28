@@ -13,6 +13,7 @@ Gesamtüberblick:
 | **M2** | Gratis-Welle, SEO, i18n | 5 bis 7 | **Öffentliche Gratis-Beta** |
 | **M3** | Gradient-Tools, lokales Speichern, lokales Brand Kit, Spenden | 8 bis 10 | Nutzer können ohne Konto speichern |
 | **M4** | Flaggschiff-Patterns, Shape-Bibliothek, GIF | 11 bis 14 | **Öffentlicher Launch** |
+| **M4b** | Generative Welle: 6 neue Generatoren | 15 bis 17 | Eigener Charakter, SEO |
 | **M5** | WebGL & Bildeffekte & Video | 15 bis 18 | Trend-Tools |
 | **M6** | Social Media Editor + restliche Effekte | 19 bis 23 | Marketing-Zielgruppe |
 | **M7** | Differenzierung: Composer, Code-Exporte, Plugins | 24+ | Wachstum |
@@ -79,6 +80,20 @@ Gesamtüberblick:
 - [ ] Launch-Kommunikation (Product Hunt, Reddit, Swiss-Communities), Changelog
 
 **DoD**: Geometric Patterns und GIF-Export in Chrome, Safari, Firefox identisch zur Vorschau; Shape-Bibliothek mit Lizenzen in `assets/LICENSES.md`; Nutzungsbedingungen geprüft.
+
+## M4b: Generative Welle (Entscheid Andreas 2026-10-28)
+
+Sechs neue Generatoren aus der Ideenliste, alle rein im Browser, ohne Kosten, mit SEO-Landingpage (Specs `docs/TOOLS.md` K1 bis K6):
+
+- [x] **Höhenlinien** (K1): Rauschfeld, Konturen per Marching Squares, optional gefüllt
+- [x] **Flow Fields** (K2): Linien folgen einem Rauschfeld
+- [x] **Low-Poly und Voronoi** (K3): Poisson-Disk-Punkte, Delaunay-Dreiecke oder Voronoi-Zellen mit Verlaufsfärbung
+- [x] **Guilloche** (K4): feine verschlungene Kurven (Spirograph-Mathematik)
+- [x] **Terrazzo** (K5): Steinsplitter per Poisson-Disk auf Grundfarbe
+- [x] **Screenshot-Verschönerer** (K6): Screenshot auf Musterli-Hintergrund mit Rand, Ecken, Schatten, Browser-Rahmen
+- [x] Changelog, QA in Chrome, Code- und Security-Review
+
+**DoD**: Jedes Tool mit mindestens 6 Presets, Snapshot pro Preset, Vorschau == Export in Chrome; SVG-Exporte kompakt (Pfade vereinfacht, Budget dokumentiert); Screenshot-Uploads bleiben lokal und SVG wird sanitisiert.
 
 ## M5: WebGL, Bildeffekte, Video (Woche 15 bis 18)
 

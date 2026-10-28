@@ -37,13 +37,20 @@ import {
   type CanvasSize,
   type Params,
   type ParamsSchema,
+  type ToolSizePreset,
 } from "@musterli/tool-registry";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { INPUT_CLASS, cx } from "../controls/primitives";
 import { useT, type Translate } from "../i18n";
 import type { ParamValues } from "../store/editor-store";
 import { useEditorStore } from "../store/react";
-import { parseEdge } from "../shell/size-picker";
+import {
+  CUSTOM_SIZE,
+  SizePresetOptions,
+  matchSizePreset,
+  parseEdge,
+  sizeOfOption,
+} from "../shell/size-picker";
 import { BUTTON_CLASS, PRIMARY_BUTTON_CLASS } from "../shell/styles";
 import {
   EXPORT_CATEGORIES,
@@ -444,6 +451,7 @@ function ExportDialogBody({
             design={tileSize ?? size}
             mode={effectiveMode}
             allowCustom={!tileChoice}
+            toolPresets={tool.sizePresets}
             onChange={setSizeMode}
             plan={plan}
             disabled={busy}
@@ -677,11 +685,15 @@ function SizeSection(props: {
   disabled: boolean;
   /** False for the repeat tile: it only scales. */
   allowCustom?: boolean;
+  /** The tool's own sizes, listed first among the common sizes. */
+  toolPresets?: readonly ToolSizePreset[] | undefined;
 }) {
   const t = useT();
   const id = useId();
-  const { design, mode, plan } = props;
+  const { design, mode, plan, toolPresets } = props;
   const custom = mode.kind === "custom";
+  const matched = custom ? matchSizePreset(mode, toolPresets, mode.preset) : CUSTOM_SIZE;
+  const presetValue = matched === CUSTOM_SIZE ? "" : matched;
 
   const option = (key: string, checked: boolean, onSelect: () => void, label: ReactNode) => (
     <div key={key}>
@@ -736,6 +748,26 @@ function SizeSection(props: {
             t("Editor.export.customSize"),
           )}
       </div>
+      {props.allowCustom !== false && (
+        <div className="grid min-w-0 gap-1">
+          <label htmlFor={`${id}-preset`} className="text-xs font-medium text-muted-foreground">
+            {t("Editor.export.preset")}
+          </label>
+          <select
+            id={`${id}-preset`}
+            className={cx(INPUT_CLASS, "w-full min-w-0 pr-7")}
+            value={presetValue}
+            onChange={(event) => {
+              const value = event.target.value;
+              const size = sizeOfOption(value, toolPresets);
+              if (size) props.onChange({ kind: "custom", ...size, preset: value });
+            }}
+          >
+            <option value="">{t("Editor.export.presetNone")}</option>
+            <SizePresetOptions toolPresets={toolPresets} />
+          </select>
+        </div>
+      )}
       {custom && (
         <div className="flex flex-wrap items-end gap-2">
           <ExportEdgeInput

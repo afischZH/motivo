@@ -9,7 +9,7 @@ import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fix
 import { fakeServices } from "../test/fake-services";
 import { fixtureMessages, renderWithIntl } from "../test/render";
 import { EditorShell } from "./editor-shell";
-import { matchSizePreset, parseEdge } from "./size-picker";
+import { matchSizePreset, orientationOf, parseEdge, sizeOfOption } from "./size-picker";
 
 const presetNames = Object.fromEntries(
   ["classic", "dense", "square", "outlined", "faint", "dark"].map((id) => [id, `Preset ${id}`]),
@@ -211,6 +211,38 @@ describe("EditorShell", () => {
     expect(store.getState().size).toEqual({ width: 640, height: 1080 });
   });
 
+  it("groups the size presets with orientation and swaps the orientation", () => {
+    const store = setup();
+    const select = screen.getByLabelText("Grösse");
+    const groups = within(select)
+      .getAllByRole("group")
+      .map((g) => g.getAttribute("label"));
+    expect(groups).toEqual([
+      "Social Media",
+      "Bildschirme und Hintergründe",
+      "Smartphones",
+      "Tablets",
+      "Druck (300 dpi)",
+      "Seitenverhältnisse",
+    ]);
+    expect(
+      within(select).getByRole("option", { name: "iPhone Air (1260 × 2736, hoch)" }),
+    ).toBeTruthy();
+
+    // Two presets share 3840 × 2160: the one picked stays selected.
+    fireEvent.change(select, { target: { value: "youtube-thumbnail" } });
+    expect(store.getState().size).toEqual({ width: 3840, height: 2160 });
+    expect((select as HTMLSelectElement).value).toBe("youtube-thumbnail");
+
+    const swap = screen.getByRole("button", { name: "Ausrichtung tauschen" });
+    fireEvent.click(swap);
+    expect(store.getState().size).toEqual({ width: 2160, height: 3840 });
+    expect((select as HTMLSelectElement).value).toBe("custom");
+
+    fireEvent.change(select, { target: { value: "square" } });
+    expect((swap as HTMLButtonElement).disabled).toBe(true);
+  });
+
   it("opens the shortcut help with ?", () => {
     setup();
     press("?", { shiftKey: true });
@@ -330,6 +362,35 @@ describe("size helpers", () => {
   it("matches size presets", () => {
     expect(matchSizePreset({ width: 1080, height: 1350 })).toBe("portrait");
     expect(matchSizePreset({ width: 1081, height: 1350 })).toBe("custom");
+  });
+
+  it("prefers the tool's own sizes and maps option values back to sizes", () => {
+    const own = [
+      { id: "product-hunt", width: 1270, height: 760, nameKey: "x" },
+      { id: "same-as-square", width: 1080, height: 1080, nameKey: "y" },
+    ];
+    expect(matchSizePreset({ width: 1270, height: 760 }, own)).toBe("tool:product-hunt");
+    expect(matchSizePreset({ width: 1080, height: 1080 }, own)).toBe("tool:same-as-square");
+    expect(matchSizePreset({ width: 1080, height: 1350 }, own)).toBe("portrait");
+    expect(sizeOfOption("tool:product-hunt", own)).toEqual({ width: 1270, height: 760 });
+    expect(sizeOfOption("portrait", own)).toEqual({ width: 1080, height: 1350 });
+    expect(sizeOfOption("tool:missing", own)).toBeUndefined();
+    expect(sizeOfOption("custom")).toBeUndefined();
+  });
+
+  it("keeps the preferred option while its size matches", () => {
+    const uhd = { width: 3840, height: 2160 };
+    expect(matchSizePreset(uhd)).toBe("uhd-4k");
+    expect(matchSizePreset(uhd, [], "youtube-thumbnail")).toBe("youtube-thumbnail");
+    expect(matchSizePreset(uhd, [], "full-hd")).toBe("uhd-4k");
+    expect(matchSizePreset(uhd, [], "custom")).toBe("uhd-4k");
+    expect(matchSizePreset({ width: 1000, height: 1500 })).toBe("pinterest-pin");
+  });
+
+  it("tells the orientation", () => {
+    expect(orientationOf({ width: 1080, height: 1920 })).toBe("portrait");
+    expect(orientationOf({ width: 1920, height: 1080 })).toBe("landscape");
+    expect(orientationOf({ width: 500, height: 500 })).toBe("square");
   });
 
   it("parses edges within the canvas limits only", () => {

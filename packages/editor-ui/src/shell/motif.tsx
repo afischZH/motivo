@@ -1,15 +1,64 @@
 "use client";
 
-import { useMemo, useSyncExternalStore, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from "react";
 import { cx } from "../controls/primitives";
+import {
+  canUseObjectUrls,
+  largeDataUrls,
+  loadObjectUrl,
+  objectUrlOf,
+  withObjectUrls,
+} from "./large-data-urls";
 import {
   cssToStyle,
   motifDataUrl,
+  type CssDeclarations,
   type CssSupports,
   type MotifBox,
   type MotifElement,
   type MotifOutput,
 } from "./render";
+
+type SwapUrls = (declarations: CssDeclarations) => CssDeclarations;
+
+/**
+ * Shows large data URIs of a CSS output through `blob:` URLs (see
+ * `large-data-urls.ts`): returns a function that swaps them in, and renders
+ * again once each one is decoded.
+ */
+function useLargeDataUrls(output: MotifOutput): SwapUrls {
+  const large = useMemo(() => {
+    if (output.kind !== "css" || !canUseObjectUrls()) return [];
+    const el = output.element;
+    const lists = [output.declarations];
+    if (el) lists.push(el.declarations, el.motion, ...el.content.map((b) => b.declarations));
+    return [...new Set(lists.flatMap(largeDataUrls))];
+  }, [output]);
+  const [, setDecoded] = useState(0);
+  useEffect(() => {
+    let live = true;
+    for (const url of large) {
+      if (objectUrlOf(url) !== undefined) continue;
+      void loadObjectUrl(url).then(() => {
+        if (live) setDecoded((n) => n + 1);
+      });
+    }
+    return () => {
+      live = false;
+    };
+  }, [large]);
+  const missing = large.filter((url) => objectUrlOf(url) === undefined).length;
+  // `missing` changes once a picture is decoded, so the styles are rebuilt.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useCallback((d: CssDeclarations) => withObjectUrls(d, large), [large, missing]);
+}
 
 const noopSubscribe = () => () => undefined;
 
@@ -85,18 +134,20 @@ const absolute = (b: MotifBox): CSSProperties => ({
 function MotifElementView({
   element,
   supports,
+  swapUrls,
 }: {
   element: MotifElement;
   supports: CssSupports | undefined;
+  swapUrls: SwapUrls;
 }) {
   const motionAllowed = useMotionAllowed();
   const style = useMemo(
     () => ({
-      ...cssToStyle(element.declarations, supports),
-      ...(motionAllowed ? cssToStyle(element.motion, supports) : {}),
+      ...cssToStyle(swapUrls(element.declarations), supports),
+      ...(motionAllowed ? cssToStyle(swapUrls(element.motion), supports) : {}),
       ...absolute(element),
     }),
-    [element, supports, motionAllowed],
+    [element, supports, motionAllowed, swapUrls],
   );
   return (
     <>
@@ -105,7 +156,7 @@ function MotifElementView({
         <div
           key={i}
           style={{
-            ...cssToStyle(b.declarations, supports),
+            ...cssToStyle(swapUrls(b.declarations), supports),
             ...absolute({ ...b, x: element.x + b.x, y: element.y + b.y }),
           }}
         />
@@ -132,10 +183,11 @@ export interface MotifProps {
  */
 export function Motif({ output, width, height, scale, className }: MotifProps) {
   const supports = useCssSupports();
+  const swapUrls = useLargeDataUrls(output);
   const declarations = output.kind === "css" ? output.declarations : null;
   const cssStyle = useMemo(
-    () => (declarations ? cssToStyle(declarations, supports) : null),
-    [declarations, supports],
+    () => (declarations ? cssToStyle(swapUrls(declarations), supports) : null),
+    [declarations, supports, swapUrls],
   );
   const svgSrc = useMemo(() => (output.kind === "svg" ? motifDataUrl(output) : null), [output]);
 
@@ -171,7 +223,7 @@ export function Motif({ output, width, height, scale, className }: MotifProps) {
           style={{ ...cssStyle, width, height, transform: `scale(${scale})` }}
         >
           {output.kind === "css" && output.element && (
-            <MotifElementView element={output.element} supports={supports} />
+            <MotifElementView element={output.element} supports={supports} swapUrls={swapUrls} />
           )}
         </div>
       </div>

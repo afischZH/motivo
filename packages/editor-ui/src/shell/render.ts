@@ -180,13 +180,36 @@ export function parseCssDeclarations(css: string): CssDeclarations {
   let depth = 0;
   let quote: string | null = null;
   let start = 0;
+  /** Index of the next backslash at or after the scan position (searched again once passed). */
+  let nextEscape = -1;
+  /**
+   * Index of the next current quote character, cached like `nextEscape`
+   * (Infinity: none). Searching again per character made values with many
+   * escapes, or an unterminated quote, quadratic (M4b-AP05).
+   */
+  let nextClose = -1;
   for (let i = 0; i < css.length; i++) {
     const ch = css[i];
     if (quote !== null) {
-      if (ch === "\\") i++;
+      // Jump to the closing quote when no escape comes first: a data URL of
+      // several megabytes (an uploaded picture) is skipped in native code.
+      if (nextClose < i) {
+        const found = css.indexOf(quote, i);
+        nextClose = found === -1 ? Infinity : found;
+      }
+      if (nextEscape < i) {
+        const found = css.indexOf("\\", i);
+        nextEscape = found === -1 ? Infinity : found;
+      }
+      if (nextClose !== Infinity && nextEscape > nextClose) {
+        i = nextClose;
+        quote = null;
+      } else if (ch === "\\") i++;
       else if (ch === quote) quote = null;
-    } else if (ch === '"' || ch === "'") quote = ch;
-    else if (ch === "(") depth++;
+    } else if (ch === '"' || ch === "'") {
+      quote = ch;
+      nextClose = -1;
+    } else if (ch === "(") depth++;
     else if (ch === ")") depth = Math.max(0, depth - 1);
     else if (ch === ";" && depth === 0) {
       push(css.slice(start, i));

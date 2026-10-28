@@ -2270,6 +2270,624 @@
           "a4": "Shadows pick up some of the color around them. That is why Musterli darkens the hue of the background by default. You can still pick your own color."
         }
       }
+    },
+    "guilloche": {
+      "name": "Guilloche",
+      "description": "Fine interlaced line work like on banknotes and certificates: rosettes, borders and frames. Export as SVG, image or GIF.",
+      "params": {
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "rosette": "Rosette",
+            "band": "Band (tileable)",
+            "frame": "Frame"
+          }
+        },
+        "repeats": {
+          "label": "Repeats"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "inner": {
+          "label": "Inner edge",
+          "description": "Rosette and frame: distance from the center relative to half the shorter edge. Band: height above the bottom edge relative to the image height."
+        },
+        "outer": {
+          "label": "Outer edge",
+          "description": "Rosette and frame: distance from the center relative to half the shorter edge. Band: height above the bottom edge relative to the image height."
+        },
+        "curve": {
+          "label": "Curve",
+          "options": {
+            "weave": "Weave",
+            "spiro": "Spirograph",
+            "harmonic": "Harmonic"
+          }
+        },
+        "lines": {
+          "label": "Lines"
+        },
+        "petals": {
+          "label": "Petals",
+          "description": "How often the base shape appears per turn or per repeat."
+        },
+        "frequency": {
+          "label": "Swings",
+          "description": "How often every line swings between the edges per turn or per repeat."
+        },
+        "amplitude": {
+          "label": "Depth"
+        },
+        "spread": {
+          "label": "Offset",
+          "description": "How far the lines are shifted against each other. At 1 they are spread evenly."
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "colorMode": {
+          "label": "Coloring",
+          "description": "Blend: each line in one color, spread across the lines. Iris print: one gradient across the whole image. Along: the color changes along every line.",
+          "options": {
+            "single": "One color",
+            "alternate": "Alternating",
+            "blend": "Blend",
+            "iris": "Iris print",
+            "along": "Along"
+          }
+        },
+        "gradientAngle": {
+          "label": "Iris print angle"
+        },
+        "overlay": {
+          "label": "Show second layer"
+        },
+        "overlayCurve": {
+          "label": "Curve"
+        },
+        "overlayLines": {
+          "label": "Lines"
+        },
+        "overlayPetals": {
+          "label": "Petals"
+        },
+        "overlayFrequency": {
+          "label": "Swings"
+        },
+        "overlayAmplitude": {
+          "label": "Depth"
+        },
+        "overlayColor": {
+          "label": "Color"
+        }
+      },
+      "groups": {
+        "overlay": "Second layer"
+      },
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Certificate",
+        "voucher": "Voucher",
+        "spirograph": "Spirograph",
+        "seal": "Seal",
+        "lace": "Lace",
+        "ribbon": "Border"
+      },
+      "seo": {
+        "whatIs": "Guilloche is the name for fine, interlaced line patterns as you know them from banknotes, share certificates, diplomas and vouchers. They used to be engraved into metal with rose engine lathes; today they come from simple formulas: lines swinging between two edges, spirographs made of rotating pointers and overlaid sine waves. The generator computes everything right in your browser.",
+        "howTo": "Pick a layout: rosette for a seal or watermark, band for a tileable border, or frame for the edge of a certificate. Then set the curve, the number of lines, petals and swings, place the inner and outer edge and choose colors, including an iris print or a blend along the lines. Press the space bar for new variations. Export as SVG, PNG, JPG, WebP or as an animated GIF.",
+        "faq": {
+          "q1": {
+            "question": "Can I use the patterns for real banknotes or ID documents?",
+            "answer": "No. The patterns are decorative and offer no protection against counterfeiting. Use them for certificates, vouchers, invitations, labels, packaging or backgrounds."
+          },
+          "q2": {
+            "question": "How do I make a border that repeats?",
+            "answer": "Choose the band layout and a wide, low format such as 1600 × 200 pixels. Set the inner edge close to 0 and the outer edge close to 1. The band joins seamlessly on the left and right, so you can place it side by side as often as you like."
+          },
+          "q3": {
+            "question": "Why does my pattern look like a solid area?",
+            "answer": "With many lines and many swings the lines sit very close together. Reduce the number of lines or swings, or make the lines thinner."
+          },
+          "q4": {
+            "question": "How large is the SVG file?",
+            "answer": "Curves are sampled just finely enough to look smooth and stored with one decimal place. Typical patterns are 50 to 250 KB; even extreme settings stay below about 1.5 MB."
+          },
+          "q5": {
+            "question": "What does the animation show?",
+            "answer": "In a GIF export with motion, the phase of every line moves once all the way around. The pattern seems to flow, and the loop has no jump."
+          }
+        }
+      }
+    },
+    "topo-lines": {
+      "name": "Topographic Lines",
+      "description": "Contour lines like on a map, as outlines or filled elevation bands. Export as SVG, image or GIF.",
+      "params": {
+        "scale": {
+          "label": "Scale"
+        },
+        "octaves": {
+          "label": "Detail levels"
+        },
+        "roughness": {
+          "label": "Roughness"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "levels": {
+          "label": "Number of lines"
+        },
+        "style": {
+          "label": "Style",
+          "options": {
+            "lines": "Lines",
+            "bands": "Bands",
+            "bands-lines": "Bands and lines"
+          }
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "majorEvery": {
+          "label": "Index line every",
+          "description": "Every nth line is drawn wider, like the index contours of a map. 0 turns them off."
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "gradient": "Low to high",
+            "cycle": "Alternating"
+          }
+        },
+        "lineColor": {
+          "label": "Line color"
+        }
+      },
+      "presets": {
+        "survey": "Survey",
+        "lagoon": "Lagoon",
+        "night-map": "Night map",
+        "terraces": "Terraces",
+        "marble": "Marble",
+        "alpine": "Alpine",
+        "candy": "Cotton candy"
+      },
+      "seo": {
+        "whatIs": "Contour lines connect points of equal height, just like on a hiking map. Musterli creates a random terrain from noise and draws its contours at even intervals. The result works as a calm background for websites, slides, posters or packaging and stays sharp as SVG.",
+        "howTo": "Shape the terrain with scale, detail levels, roughness and warp, and choose how many lines to draw. Show lines, filled elevation bands or both, and highlight every nth line as an index line. Press the space bar for a new terrain. Export as SVG, PNG, JPG, WebP or as a GIF in which the lines slowly move.",
+        "faq": {
+          "q1": {
+            "question": "Are the contour lines real map data?",
+            "answer": "No. The terrain comes from mathematical noise and is entirely made up. That means you can use the graphic without licensing questions, and every seed gives you a new landscape."
+          },
+          "q2": {
+            "question": "How large is the SVG file?",
+            "answer": "With the default settings usually between 100 and 400 KB. Musterli simplifies the lines and rounds coordinates. Many lines, many detail levels and bands with lines make the file larger, but it always stays below about 1.5 MB."
+          },
+          "q3": {
+            "question": "What does warp do?",
+            "answer": "It shifts the terrain through itself with a second layer of noise. Small values make the shapes more organic, large values give flowing patterns reminiscent of marble or wood grain."
+          },
+          "q4": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. With a brand palette from your Brand Kit the tool takes your colors for the lines or bands and picks the darkest color for the lines on top of the bands."
+          }
+        }
+      }
+    },
+    "flow-field": {
+      "name": "Flow Fields",
+      "description": "Thousands of lines follow an invisible flow, like wind, water or hair. Export as SVG, image or GIF.",
+      "params": {
+        "mode": {
+          "label": "Field",
+          "options": {
+            "noise": "Noise",
+            "curl": "Swirl"
+          }
+        },
+        "scale": {
+          "label": "Scale"
+        },
+        "octaves": {
+          "label": "Detail levels"
+        },
+        "turbulence": {
+          "label": "Turbulence"
+        },
+        "direction": {
+          "label": "Main direction"
+        },
+        "seeding": {
+          "label": "Start points",
+          "options": {
+            "poisson": "Evenly spread",
+            "grid": "Grid",
+            "random": "Random"
+          }
+        },
+        "spacing": {
+          "label": "Line spacing"
+        },
+        "separation": {
+          "label": "Minimum distance",
+          "description": "Share of the line spacing that lines keep from each other. At 0 lines may touch and cross."
+        },
+        "length": {
+          "label": "Line length"
+        },
+        "step": {
+          "label": "Step size"
+        },
+        "maxLines": {
+          "label": "Maximum lines"
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "taper": {
+          "label": "Stroke shape",
+          "options": {
+            "none": "Even width",
+            "tail": "Thinner towards the end",
+            "both": "Pointed ends"
+          }
+        },
+        "colorMode": {
+          "label": "Color by",
+          "options": {
+            "palette": "Random from palette",
+            "angle": "Direction",
+            "position": "Position"
+          }
+        },
+        "opacity": {
+          "label": "Opacity"
+        }
+      },
+      "presets": {
+        "current": "Current",
+        "silk": "Silk",
+        "whirlpool": "Whirlpool",
+        "breeze": "Breeze",
+        "ink": "Ink",
+        "meadow": "Meadow",
+        "dune": "Desert wind"
+      },
+      "seo": {
+        "whatIs": "A flow field is a field of directions that gives every point of the canvas an angle. Let many lines follow it and you get images reminiscent of wind, currents, fur or silk. Musterli computes the field from noise or from swirls and can keep a minimum distance, so the lines never clump together.",
+        "howTo": "Pick the field, its scale and turbulence, then the start points, line spacing and length. Stroke shape, line width and opacity set the character, and the colors come from the palette, the direction or the position. Press the space bar for a new variation. Export as SVG, PNG, JPG, WebP or as a GIF with travelling strokes.",
+        "faq": {
+          "q1": {
+            "question": "What is the difference between noise and swirl?",
+            "answer": "With noise, the lines roughly follow a main direction and stray from it depending on the turbulence. The swirl field derives its directions from noise so that lines circle around and never converge in a single point."
+          },
+          "q2": {
+            "question": "What is the minimum distance for?",
+            "answer": "A line stops as soon as it gets too close to another one, so the lines spread evenly across the canvas. At 0 they may overlap, which gives soft, hair-like textures at a low opacity."
+          },
+          "q3": {
+            "question": "How large is the SVG file?",
+            "answer": "With the default settings usually below 300 KB. Musterli simplifies every line and rounds coordinates. The number of lines, steps and points is capped, so the file stays below about 1.5 MB and the preview stays responsive."
+          },
+          "q4": {
+            "question": "What does the GIF animation look like?",
+            "answer": "With the motion source the lines turn into strokes that travel along the field, in a seamless loop. Alternatively the frames show new variations or cycle through the colors."
+          }
+        }
+      }
+    },
+    "low-poly": {
+      "name": "Low Poly & Voronoi",
+      "description": "Faceted backgrounds from triangles or Voronoi cells, colored by a gradient through your palette. Export as SVG, image or GIF.",
+      "groups": {
+        "lines": "Lines"
+      },
+      "params": {
+        "mode": {
+          "label": "Mode",
+          "options": {
+            "delaunay": "Triangles",
+            "voronoi": "Voronoi cells"
+          }
+        },
+        "distribution": {
+          "label": "Points",
+          "options": {
+            "poisson": "Natural",
+            "grid": "Grid"
+          }
+        },
+        "spacing": {
+          "label": "Point spacing"
+        },
+        "jitter": {
+          "label": "Jitter"
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "rounding": {
+          "label": "Corner rounding"
+        },
+        "gradient": {
+          "label": "Gradient",
+          "options": {
+            "linear": "Linear",
+            "radial": "Radial",
+            "mesh": "Mesh"
+          }
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "variance": {
+          "label": "Color variation"
+        },
+        "lighting": {
+          "label": "Lighting"
+        },
+        "lightAngle": {
+          "label": "Light direction"
+        },
+        "strokeWidth": {
+          "label": "Line width"
+        },
+        "strokeColor": {
+          "label": "Line color"
+        },
+        "strokeOpacity": {
+          "label": "Line opacity"
+        }
+      },
+      "presets": {
+        "crystal": "Crystal",
+        "ember": "Ember",
+        "glacier": "Glacier",
+        "wireframe": "Wireframe",
+        "mosaic": "Mosaic",
+        "stained-glass": "Stained glass",
+        "cells": "Cells",
+        "dusk": "Dusk"
+      },
+      "seo": {
+        "whatIs": "Low poly is a faceted look made of flat triangles, like a cut gem or a paper model. Voronoi cells split the surface into organic regions around scattered points, like dry earth or a mosaic. Both make striking backgrounds for websites, slides, posters and social posts.",
+        "howTo": "Pick triangles or Voronoi cells, set the point spacing and choose a gradient through your colors. Add light for a sculpted look, lines for a wireframe, or a gap and rounded corners for mosaic tiles. Press Space for a new arrangement. Export as SVG, PNG, JPG, WebP, CSS or animated GIF.",
+        "faq": {
+          "q1": {
+            "question": "How are the triangles made?",
+            "answer": "Points are spread evenly with Poisson-disk sampling (or a jittered grid) and connected by a Delaunay triangulation: no triangle's circumcircle contains another point, which avoids thin slivers."
+          },
+          "q2": {
+            "question": "What are Voronoi cells?",
+            "answer": "Each cell holds the part of the surface that is closer to its point than to any other point. The cells are clipped to the canvas, so the whole image is covered."
+          },
+          "q3": {
+            "question": "Where do the colors come from?",
+            "answer": "Each face takes the color of the gradient at its center. Color variation and lighting change the brightness per face; lighting uses a random relief and the light direction you set."
+          },
+          "q4": {
+            "question": "Can I animate it?",
+            "answer": "Yes. The GIF export can let the points drift on small loops (Motion), cycle the colors or show new arrangements."
+          },
+          "q5": {
+            "question": "Is the SVG editable?",
+            "answer": "Yes. Every face is a plain path with its own fill color, without filters or transforms."
+          }
+        }
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo Pattern",
+      "description": "Terrazzo surfaces with stone chips in several sizes, speckles and fine grain. Seamless tiles for CSS, or export as SVG and image.",
+      "groups": {
+        "effects": "Finish"
+      },
+      "params": {
+        "seamless": {
+          "label": "Seamless tile"
+        },
+        "tileSize": {
+          "label": "Tile size"
+        },
+        "chipSize": {
+          "label": "Chip size"
+        },
+        "sizeClasses": {
+          "label": "Size classes"
+        },
+        "sizeVariance": {
+          "label": "Size variation"
+        },
+        "density": {
+          "label": "Coverage"
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "angular": "Angular",
+            "pebble": "Pebbles",
+            "mixed": "Mixed"
+          }
+        },
+        "irregularity": {
+          "label": "Irregularity"
+        },
+        "gap": {
+          "label": "Spacing"
+        },
+        "dominance": {
+          "label": "Main color weight"
+        },
+        "speckles": {
+          "label": "Speckles"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "venetian": "Venetian",
+        "midnight": "Midnight",
+        "pastel": "Pastel",
+        "pebbles": "Pebbles",
+        "pop": "Pop",
+        "granite": "Granite"
+      },
+      "seo": {
+        "whatIs": "Terrazzo is a floor and wall material made of stone and glass chips set in a binder and ground smooth. As a graphic it makes a lively, tactile pattern for packaging, websites, posters and product mockups.",
+        "howTo": "Choose angular chips, pebbles or a mix, then set the chip size, the number of size classes and how much of the surface they cover. Pick a base color and chip colors; the first color can dominate. Add speckles and grain for a natural finish. Keep Seamless tile on for patterns and export the tile as CSS or PNG, or the whole canvas as SVG, PNG, JPG or WebP.",
+        "faq": {
+          "q1": {
+            "question": "Do the chips overlap?",
+            "answer": "No. Each chip has a bounding circle, and a new chip is only placed where it keeps the set spacing to all others. Large chips come first, then medium and small ones fill the gaps."
+          },
+          "q2": {
+            "question": "How does the seamless tile work?",
+            "answer": "Chips that cross an edge of the tile continue on the opposite side. The tile repeats in every direction without visible seams, as a CSS background or as a PNG tile."
+          },
+          "q3": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. Apply a brand palette from your Brand Kit; the base color stays. The main color weight decides how often the first color appears."
+          },
+          "q4": {
+            "question": "How large does the SVG get?",
+            "answer": "At most 2000 chips and 2500 speckles per tile. On very large surfaces the chips grow instead, so the SVG stays compact."
+          }
+        }
+      }
+    },
+    "screenshot-beautifier": {
+      "name": "Screenshot Beautifier",
+      "description": "Put your screenshot on a beautiful background with padding, rounded corners, a soft shadow and a browser window. Ready for docs, social media and Product Hunt.",
+      "groups": {
+        "screenshot": "Screenshot",
+        "frame": "Window",
+        "style": "Border and shadow",
+        "background": "Background"
+      },
+      "params": {
+        "screenshot": {
+          "label": "Your screenshot",
+          "description": "PNG, JPG, WebP or SVG up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out."
+        },
+        "padding": {
+          "label": "Padding"
+        },
+        "align": {
+          "label": "Alignment",
+          "description": "Where the window moves when it does not fill the format exactly.",
+          "options": {
+            "center": "Center",
+            "top": "Top",
+            "bottom": "Bottom",
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "frame": {
+          "label": "Frame",
+          "options": {
+            "none": "None",
+            "window": "Window",
+            "browser": "Browser"
+          }
+        },
+        "theme": {
+          "label": "Color scheme",
+          "description": "Applies to the window bar and the placeholder.",
+          "options": {
+            "light": "Light",
+            "dark": "Dark"
+          }
+        },
+        "url": {
+          "label": "Address or title",
+          "description": "Shown in the bar. Stays on your device; share links leave it out."
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "shadowColor": {
+          "label": "Shadow color"
+        },
+        "border": {
+          "label": "Border"
+        },
+        "borderColor": {
+          "label": "Border color"
+        },
+        "borderOpacity": {
+          "label": "Border opacity"
+        },
+        "highlight": {
+          "label": "Light edge",
+          "description": "A fine light line along the inner edge, nice on dark windows."
+        },
+        "backgroundType": {
+          "label": "Background",
+          "options": {
+            "solid": "Solid",
+            "gradient": "Gradient",
+            "musterli": "Musterli"
+          }
+        },
+        "backdrop": {
+          "label": "Musterli background"
+        },
+        "backdropColors": {
+          "label": "Background colors",
+          "options": {
+            "preset": "From the preset",
+            "palette": "Own palette"
+          }
+        },
+        "palette": {
+          "label": "Colors"
+        },
+        "gradientAngle": {
+          "label": "Angle"
+        },
+        "backgroundColor": {
+          "label": "Background color"
+        }
+      },
+      "presets": {
+        "aurora": "Aurora",
+        "clean": "Clean",
+        "sunset": "Sunset",
+        "ocean": "Ocean",
+        "paper": "Paper",
+        "waves": "Waves",
+        "night-sky": "Night sky"
+      },
+      "sizes": {
+        "wide": "16:9 (X, slides)",
+        "product-hunt": "Product Hunt",
+        "linkedin": "LinkedIn",
+        "docs": "16:10 (docs)"
+      },
+      "seo": {
+        "whatIs": "A screenshot beautifier turns a plain screen capture into a polished image. The picture sits on a background and gets padding, rounded corners, a soft shadow and, if you like, a window or browser bar with an address. Screenshots in documentation, blog posts, on social media and on Product Hunt look clean and consistent.",
+        "howTo": "Drop your screenshot into the editor, choose a file or paste it with Ctrl+V. Then pick a frame, padding, corners, shadow and a background: a color, a gradient or a Musterli background such as mesh, blurry or waves. Space rolls a new background and keeps your picture. Export as PNG, JPG, WebP or SVG, or copy the result straight to the clipboard.",
+        "faq": {
+          "q1": "Is my screenshot uploaded?",
+          "a1": "No. The picture is processed in your browser only and never sent to a server. Share links contain neither the picture nor the address in the bar. If you save the design, everything stays local in your browser.",
+          "q2": "Which files and sizes work?",
+          "a2": "PNG, JPG, WebP and SVG up to 5 MB. Raster pictures are scaled down to at most 3840 pixels on the long side and kept as PNG so text stays sharp. SVG is cleaned of scripts and external references first.",
+          "q3": "Which size fits Product Hunt, X or LinkedIn?",
+          "a3": "The size menu has ready formats: 1270 × 760 for Product Hunt, 1600 × 900 for X and slides, 1200 × 627 for LinkedIn and 1920 × 1200 for documentation. The screenshot adapts automatically.",
+          "q4": "What is in the SVG export?",
+          "a4": "Background, shadow and window bar are vectors; your screenshot is embedded as an image (data URI). The file needs nothing else but is about as large as your picture."
+        }
+      }
     }
   },
   "Converters": {

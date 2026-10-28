@@ -11,6 +11,7 @@ import {
   paletteSchema,
   seedSchema,
   SIZE_PRESETS,
+  SIZE_PRESET_GROUPS,
   visualParamsSchema,
   visualParamsShape,
 } from "./common";
@@ -85,8 +86,56 @@ describe("canvasSizeSchema", () => {
   it("accepts every size preset", () => {
     for (const p of SIZE_PRESETS) {
       expect(canvasSizeSchema.safeParse(p).success, p.id).toBe(true);
+      expect(Math.max(p.width, p.height), p.id).toBeLessThanOrEqual(CANVAS_EDGE_MAX);
+      expect(p.id, p.id).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+      expect(p.nameKey).toBe(`sizes.${p.id}`);
     }
     expect(new Set(SIZE_PRESETS.map((p) => p.id)).size).toBe(SIZE_PRESETS.length);
+  });
+
+  it("keeps the ids of the first size presets stable", () => {
+    const ids = new Set(SIZE_PRESETS.map((p) => p.id));
+    for (const id of [
+      "square",
+      "portrait",
+      "story",
+      "landscape",
+      "banner",
+      "full-hd",
+      "qhd",
+      "uhd-4k",
+      "phone",
+      "tablet",
+      "a4-portrait",
+      "a4-landscape",
+    ]) {
+      expect(ids.has(id), id).toBe(true);
+    }
+    expect(SIZE_PRESETS.find((p) => p.id === "a4-portrait")).toMatchObject({
+      width: 2480,
+      height: 3508,
+    });
+  });
+
+  it("fills every group in order, without a size twice in one group", () => {
+    const groups = SIZE_PRESETS.map((p) => p.group);
+    expect([...new Set(groups)]).toEqual([...SIZE_PRESET_GROUPS]);
+    for (const group of SIZE_PRESET_GROUPS) {
+      const sizes = SIZE_PRESETS.filter((p) => p.group === group).map(
+        (p) => `${p.width}x${p.height}`,
+      );
+      expect(new Set(sizes).size, group).toBe(sizes.length);
+    }
+  });
+
+  it("matches the paper sizes at 300 dpi", () => {
+    const px = (mm: number) => Math.round((mm / 25.4) * 300);
+    const paper = Object.fromEntries(SIZE_PRESETS.map((p) => [p.id, [p.width, p.height]]));
+    expect(paper["a3-portrait"]).toEqual([px(297), px(420)]);
+    expect(paper["a4-portrait"]).toEqual([px(210), px(297)]);
+    expect(paper["a5-portrait"]).toEqual([px(148), px(210)]);
+    expect(paper["a6-portrait"]).toEqual([px(105), px(148)]);
+    expect(paper["letter-portrait"]).toEqual([8.5 * 300, 11 * 300]);
   });
 });
 

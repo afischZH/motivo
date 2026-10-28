@@ -21,6 +21,7 @@ import { useAssetLoader } from "../asset-input/use-asset-loader";
 import { useT } from "../i18n";
 import { isTextTarget } from "../image-input/image-input-panel";
 import { CloseIcon } from "../shell/icons";
+import { useDisplayUrl } from "../shell/large-data-urls";
 import { svgDataUrl } from "../shell/render";
 import { BUTTON_CLASS, ICON_BUTTON } from "../shell/styles";
 import { cx, FOCUS_RING, type ControlIds } from "./primitives";
@@ -101,6 +102,8 @@ export function ImageField(props: ImageFieldProps) {
   const asset = props.value;
   // Encoding a large SVG takes a few ms: once per asset, not per render.
   const thumbnailUrl = useMemo(() => (asset ? assetThumbnailUrl(asset) : null), [asset]);
+  // A large picture (a 4K screenshot) is shown through a blob: URL, decoded in steps.
+  const thumbnailSrc = useDisplayUrl(thumbnailUrl);
   const name = asset ? asset.name || t("Editor.asset.yourFile") : null;
 
   return (
@@ -130,7 +133,7 @@ export function ImageField(props: ImageFieldProps) {
         <span className="flex size-16 items-center justify-center overflow-hidden rounded-md bg-canvas">
           {asset && (
             <img
-              src={thumbnailUrl ?? ""}
+              src={thumbnailSrc}
               alt={t("Editor.asset.thumbnail", { name: name ?? "" })}
               className="max-h-full max-w-full object-contain"
               data-testid="asset-thumbnail"

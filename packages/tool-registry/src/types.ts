@@ -73,6 +73,14 @@ export interface CanvasSize {
   height: number;
 }
 
+/** An output size a tool suggests; see `ToolDefinition.sizePresets`. */
+export interface ToolSizePreset extends CanvasSize {
+  /** Stable kebab-case id, unique within the tool. */
+  id: string;
+  /** i18n key of the display name. */
+  nameKey: string;
+}
+
 // ---------------------------------------------------------------------------
 // Controls
 // ---------------------------------------------------------------------------
@@ -592,6 +600,12 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   presets: readonly Preset<Params<S>>[];
   /** Initial canvas size. Default: `DEFAULT_CANVAS_SIZE`. */
   defaultSize?: CanvasSize;
+  /**
+   * Output sizes suggested for this tool (e.g. Product Hunt for the
+   * screenshot beautifier), offered first in the size picker next to the
+   * common `SIZE_PRESETS`. Ids unique within the tool.
+   */
+  sizePresets?: readonly ToolSizePreset[];
   controls?: ControlHints<Params<S>>;
   /**
    * Returns a new param set for "new variant". Must be deterministic for a
