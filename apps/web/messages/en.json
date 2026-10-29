@@ -6654,6 +6654,7 @@
       "format": "File format",
       "size": "Size",
       "scale": "{scale}× ({width} × {height})",
+      "scaleTooLarge": "{scale}× (over {max} px, not available)",
       "running": "Exporting …",
       "run": "Export"
     },

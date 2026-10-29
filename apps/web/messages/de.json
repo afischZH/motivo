@@ -6665,6 +6665,7 @@
       "format": "Dateiformat",
       "size": "Grösse",
       "scale": "{scale}× ({width} × {height})",
+      "scaleTooLarge": "{scale}× (über {max} px, nicht verfügbar)",
       "running": "Exportiert …",
       "run": "Exportieren"
     },

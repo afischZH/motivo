@@ -116,3 +116,26 @@ export function randomSeed(): number {
   crypto.getRandomValues(value);
   return value[0] ?? 1;
 }
+
+/**
+ * Whether the autosave draft should be written for this state. A saved
+ * design without changes is already safe in IndexedDB: writing it again
+ * would give the draft a newer timestamp than the saved design and make an
+ * unchanged design look edited after a reload (see `draftWins`). New,
+ * unsaved scenes (a starter scene, a template) are always kept.
+ */
+export function shouldWriteDraft(state: Pick<SocialEditorState, "designId" | "dirty">): boolean {
+  return state.designId === null || state.dirty;
+}
+
+/**
+ * Whether the autosave draft holds newer, unsaved changes of the saved
+ * design `record` (a reload or a crash after editing it): then the draft
+ * opens instead of the saved version, so those changes are not lost.
+ */
+export function draftWins(
+  draft: { designId: string | null; updatedAt: number } | null,
+  record: { id: string; updatedAt: number },
+): boolean {
+  return draft !== null && draft.designId === record.id && draft.updatedAt > record.updatedAt;
+}

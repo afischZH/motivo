@@ -10,6 +10,7 @@
  */
 import type { Scene } from "@musterli/scene";
 
+import { effectiveExportScale, exportOutputSize } from "./export-size";
 import { loadSceneFonts } from "./fonts";
 import type { KonvaKit } from "./konva";
 import { drawScene, type ScenePictures } from "./konva-scene";
@@ -66,10 +67,9 @@ export async function exportScene(
   options: SceneExportOptions,
 ): Promise<Blob> {
   const { width, height } = scene.format;
-  const out = {
-    width: Math.round(width * options.scale),
-    height: Math.round(height * options.scale),
-  };
+  // Never over the canvas limit, whatever the format (a custom size from an import).
+  const scale = effectiveExportScale(scene.format, options.scale);
+  const out = exportOutputSize(scene.format, options.scale);
   const background =
     scene.layers[0]?.kind === "background" && scene.layers[0].visible ? scene.layers[0] : null;
   const [bitmap, images] = await Promise.all([
@@ -91,7 +91,7 @@ export async function exportScene(
     const layer = new kit.Konva.Layer({ listening: false });
     stage.add(layer);
     drawScene(kit, layer, scene, pictures, { interactive: false });
-    const canvas = stage.toCanvas({ pixelRatio: options.scale, x: 0, y: 0, width, height });
+    const canvas = stage.toCanvas({ pixelRatio: scale, x: 0, y: 0, width, height });
     return await canvasToBlob(canvas, MIME[options.format], options.quality);
   } finally {
     bitmap?.close();
@@ -101,9 +101,8 @@ export async function exportScene(
 
 /** `musterli-social-1080x1350.png` */
 export function exportFileName(scene: Scene, format: SceneExportFormat, scale: number): string {
-  const w = Math.round(scene.format.width * scale);
-  const h = Math.round(scene.format.height * scale);
-  return `musterli-social-${w}x${h}.${format}`;
+  const out = exportOutputSize(scene.format, scale);
+  return `musterli-social-${out.width}x${out.height}.${format}`;
 }
 
 /** A thumbnail of about 400 px for "Meine Designs" (WebP, PNG where the browser cannot). */
