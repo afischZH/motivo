@@ -47,7 +47,7 @@ export function PatternBrowser({
               aria-pressed={filter.id === active}
               onClick={() => setActive(filter.id)}
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-control border border-border px-3 py-1.5 text-sm transition-colors",
+                "inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm shadow-xs transition-colors",
                 "hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                 "aria-pressed:border-foreground aria-pressed:bg-foreground aria-pressed:text-background",
               )}

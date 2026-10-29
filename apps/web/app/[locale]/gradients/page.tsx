@@ -12,6 +12,7 @@ import { CollectionCard } from "@/components/collections/collection-cards";
 import { CollectionTeaser } from "@/components/collections/collection-teaser";
 import { teaserPreviews } from "@/lib/collections/teaser";
 import { GroupNav } from "@/components/collections/group-nav";
+import { PageHeader } from "@/components/layout/page-header";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { buttonVariants } from "@/components/ui/button";
@@ -93,23 +94,27 @@ export default async function GradientCollectionPage({ params }: CollectionPageP
           ),
         })}
       />
-      <div className="flex flex-col gap-4">
-        <Breadcrumbs
-          locale={locale}
-          items={[
-            { name: t("Seo.home"), route: { page: "home" } },
-            { name: title, route: ROUTE },
-          ]}
-        />
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
-        <p className="max-w-prose text-muted-foreground">{t("GradientCollection.lead")}</p>
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { name: t("Seo.home"), route: { page: "home" } },
+              { name: title, route: ROUTE },
+            ]}
+          />
+        }
+        eyebrow={t("Layout.collectionEyebrow")}
+        title={title}
+        lead={t("GradientCollection.lead")}
+      >
         <a
           href={routePath({ page: "tool", toolId: CSS_GRADIENT_TOOL }, locale)}
-          className={buttonVariants({ variant: "outline", className: "self-start" })}
+          className={buttonVariants({ variant: "outline", className: "rounded-full" })}
         >
           {t("GradientCollection.openGenerator")}
         </a>
-      </div>
+      </PageHeader>
 
       <GroupNav
         label={t("Collections.groupsLabel")}
@@ -125,7 +130,7 @@ export default async function GradientCollectionPage({ params }: CollectionPageP
           key={g.group}
           id={`group-${g.group}`}
           aria-labelledby={`group-${g.group}-heading`}
-          className="flex scroll-mt-6 flex-col gap-4"
+          className="flex scroll-mt-20 flex-col gap-4"
         >
           <div className="flex flex-col gap-1">
             <h2 id={`group-${g.group}-heading`} className="text-xl font-semibold tracking-tight">

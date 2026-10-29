@@ -109,7 +109,7 @@ export default async function SupportPage({ params }: SupportPageProps) {
               href={url}
               rel="noopener noreferrer"
               data-testid="support-donate-link"
-              className={buttonVariants({ size: "lg" })}
+              className={buttonVariants({ size: "lg", className: "rounded-full px-6" })}
             >
               {t("Support.donate.button")}
             </a>

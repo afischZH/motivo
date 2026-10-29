@@ -197,7 +197,7 @@
   --radius-xl: 0.625rem;
   --radius-2xl: 1rem;
   --radius-control: 0.375rem;
-  --radius-card: 0.625rem;
+  --radius-card: 0.875rem;
   --radius-sheet: 1rem;
 
   /* Spacing stays on Tailwind's 4 px grid (--spacing: 0.25rem). */

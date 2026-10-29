@@ -17,7 +17,8 @@
     "toolsNav": "Tools",
     "menu": "Menü",
     "closeMenu": "Menü schliessen",
-    "supportCta": "Unterstützen"
+    "supportCta": "Unterstützen",
+    "collectionEyebrow": "Sammlung"
   },
   "Theme": {
     "toggle": "Dunkles Design",
@@ -40,7 +41,8 @@
         "free": "Gratis, ohne Limits",
         "local": "Läuft in deinem Browser",
         "noAccount": "Kein Konto nötig"
-      }
+      },
+      "badge": "{count} Generatoren, alle gratis"
     },
     "preview": {
       "default": "Standard",
@@ -59,17 +61,25 @@
       "donations": {
         "title": "Getragen von Spenden",
         "text": "Musterli finanziert sich über freiwillige Spenden. Es gibt keine Bezahlschranke, kein Abo und keine Pro-Version."
+      },
+      "eyebrow": "Überblick",
+      "lead": "Ein Werkzeugkasten für Grafiken, der nichts kostet und nichts von dir will.",
+      "formats": {
+        "title": "Alle gängigen Formate",
+        "text": "SVG, PNG, JPG, WebP, CSS und Code, bei vielen Tools auch GIF. Raster bis 8192 Pixel Kantenlänge."
       }
     },
     "categories": {
       "heading": "Tools nach Kategorie",
       "lead": "Such dir einen Bereich aus oder stöbere im ganzen Katalog.",
       "converters": "SVG, CSS, Base64 und Bilder umwandeln.",
-      "all": "Zum ganzen Katalog"
+      "all": "Zum ganzen Katalog",
+      "eyebrow": "Katalog"
     },
     "featured": {
       "heading": "Beliebte Generatoren",
-      "lead": "Ein guter Start, falls du gleich loslegen willst."
+      "lead": "Ein guter Start, falls du gleich loslegen willst.",
+      "eyebrow": "Beliebt"
     },
     "how": {
       "heading": "So funktioniert's",
@@ -84,7 +94,8 @@
       "step3": {
         "title": "Exportieren",
         "text": "Lade dein Motiv als SVG, PNG, JPG oder WebP herunter oder kopier den CSS-Code direkt in dein Projekt."
-      }
+      },
+      "eyebrow": "In drei Schritten"
     },
     "faq": {
       "heading": "Häufige Fragen",
@@ -107,7 +118,8 @@
       "q5": {
         "question": "Welche Formate kann ich exportieren?",
         "answer": "Je nach Tool SVG, PNG, JPG, WebP und CSS. Farbtools liefern zusätzlich Tailwind-Konfiguration und CSS-Variablen."
-      }
+      },
+      "eyebrow": "FAQ"
     },
     "cta": {
       "heading": "Bereit für dein erstes Motiv?",

@@ -17,7 +17,9 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
 import { ToolCard } from "@/components/seo/tool-card";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { chipClass } from "@/components/ui/chip";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
 import { routeHref, routePath } from "@/i18n/paths";
@@ -137,22 +139,35 @@ export default async function LandingPage({ params }: LandingPageProps) {
 
         <header className="grid items-center gap-8 lg:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
-            <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+            <Badge
+              variant="outline"
+              className="h-7 rounded-full bg-background px-3 text-sm font-normal"
+            >
+              {text(`Categories.${category}.name`)}
+            </Badge>
+            <h1 className="text-4xl font-semibold tracking-[-0.03em] text-balance sm:text-5xl">
               {name}
             </h1>
             <p className="max-w-prose text-lg text-muted-foreground">{description}</p>
-            <a href={editorPath} className={buttonVariants({ size: "lg" })}>
+            <a
+              href={editorPath}
+              className={buttonVariants({ size: "lg", className: "rounded-full px-6" })}
+            >
               {text("Landing.cta")}
             </a>
             <p className="text-sm text-muted-foreground">{text("Landing.ctaHint")}</p>
             <CategoryChips tool={tool} locale={locale} text={text} />
           </div>
-          <figure className="flex items-center justify-center rounded-card bg-canvas p-4 sm:p-6">
+          <figure className="relative isolate flex items-center justify-center overflow-hidden rounded-3xl border border-border bg-canvas p-6 sm:p-10">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 bg-[radial-gradient(var(--border)_1px,transparent_1px)] bg-[size:16px_16px]"
+            />
             <MotifImage
               tool={tool}
               alt={text("Landing.previewAlt", { tool: name })}
               priority
-              className="max-h-96 w-auto rounded-md shadow-sm"
+              className="max-h-96 w-auto rounded-xl shadow-lg ring-1 ring-black/5"
             />
           </figure>
         </header>
@@ -175,7 +190,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
                   <a
                     href={`${editorPath}${designEditorHash(tool, preset)}`}
                     aria-label={text("Landing.presetLink", { preset: presetName })}
-                    className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-card transition-colors hover:border-ring"
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-[border-color,box-shadow,translate] duration-200 ease-out hover:-translate-y-0.5 hover:border-ring hover:shadow-[0_12px_32px_-16px_oklch(0.3_0.12_275/0.35)]"
                   >
                     <span className="flex h-36 items-center justify-center bg-canvas p-3">
                       <MotifImage
@@ -257,10 +272,7 @@ function CategoryChips({
     <ul aria-label={text("Landing.categoriesLabel")} className="flex flex-wrap gap-2">
       {tool.category.map((category) => (
         <li key={category}>
-          <Link
-            href={routeHref({ page: "category", category }, locale)}
-            className="inline-flex rounded-control border border-border px-2.5 py-1 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
-          >
+          <Link href={routeHref({ page: "category", category }, locale)} className={chipClass}>
             {text(`Categories.${category}.name`)}
           </Link>
         </li>

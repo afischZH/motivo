@@ -16,7 +16,7 @@ export function GroupNav({
           <li key={group.id}>
             <a
               href={`#group-${group.id}`}
-              className="inline-flex items-center gap-2 rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm shadow-xs transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               {group.name}
               <span className="text-muted-foreground">{group.count}</span>

@@ -9,6 +9,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { CollectionTeaser } from "@/components/collections/collection-teaser";
+import { PageHeader } from "@/components/layout/page-header";
+import { chipClass } from "@/components/ui/chip";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ToolCard } from "@/components/seo/tool-card";
 import type { EnabledLocale } from "@/i18n/locales";
@@ -69,20 +71,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-8 sm:py-12">
-      <div className="flex flex-col gap-4">
-        <Breadcrumbs
-          locale={locale}
-          items={[
-            { name: t("Seo.home"), route: { page: "home" } },
-            { name: t("ToolsIndex.title"), route: { page: "tools" } },
-            { name, route: { page: "category", category } },
-          ]}
-        />
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{name}</h1>
-        <p className="max-w-prose text-muted-foreground">
-          {t(`Categories.${category}.description`)}
-        </p>
-      </div>
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { name: t("Seo.home"), route: { page: "home" } },
+              { name: t("ToolsIndex.title"), route: { page: "tools" } },
+              { name, route: { page: "category", category } },
+            ]}
+          />
+        }
+        eyebrow={t("Catalogue.toolCount", { count: categoryTools(category).length })}
+        title={name}
+        lead={t(`Categories.${category}.description`)}
+      />
 
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {categoryTools(category).map((tool) => (
@@ -106,17 +109,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <li key={other}>
                 <Link
                   href={routeHref({ page: "category", category: other }, locale)}
-                  className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
+                  className={chipClass}
                 >
                   {t(`Categories.${other}.name`)}
                 </Link>
               </li>
             ))}
             <li>
-              <Link
-                href="/tools"
-                className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
-              >
+              <Link href="/tools" className={chipClass}>
                 {t("CategoryPage.backToCatalogue")}
               </Link>
             </li>

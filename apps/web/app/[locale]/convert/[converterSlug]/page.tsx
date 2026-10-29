@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { Converter } from "@/components/convert/converter";
 import { JsonLdScript } from "@/components/seo/json-ld";
+import { chipClass } from "@/components/ui/chip";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
 import { routeHref, routePath } from "@/i18n/paths";
@@ -150,7 +151,7 @@ export default async function ConverterPage({ params }: ConverterPageProps) {
             <li key={other}>
               <Link
                 href={routeHref({ page: "converter", converterId: other }, locale)}
-                className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
+                className={chipClass}
               >
                 {t(`items.${other}.name`)}
               </Link>
