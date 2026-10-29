@@ -14,7 +14,10 @@
     "./designs": "./src/designs/index.ts",
     "./designs/thumbnail": "./src/designs/thumbnail.ts",
     "./brand-kit": "./src/brand-kit/index.ts",
-    "./brand-kit/upload": "./src/brand-kit/upload.ts"
+    "./brand-kit/upload": "./src/brand-kit/upload.ts",
+    "./transfer": "./src/transfer/index.ts",
+    "./asset-input": "./src/asset-input/index.ts",
+    "./render-image": "./src/designs/render-image.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

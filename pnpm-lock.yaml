@@ -62,6 +62,9 @@ importers:
       '@musterli/exporters':
         specifier: workspace:*
         version: link:../../packages/exporters
+      '@musterli/scene':
+        specifier: workspace:*
+        version: link:../../packages/scene
       '@musterli/shaders':
         specifier: workspace:*
         version: link:../../packages/shaders
@@ -86,6 +89,9 @@ importers:
       cn:
         specifier: ^0.5.0
         version: 0.5.0
+      konva:
+        specifier: 10.9.0
+        version: 10.9.0
       lucide-react:
         specifier: 1.57.0
         version: 1.57.0(@types/react@19.3.0)(react@19.3.1)
@@ -3815,6 +3821,17 @@ packages:
   kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
+
+  konva@10.9.0:
+    resolution: {integrity: sha512-3NOOlcbimFDp4+/DfXGTBkfn3cn3VP1BESPySQ6ayCzgMA9JSMGJNNxeIKw5jpHL6SAl6gHsrv10DUEjNRL0Qg==}
+    peerDependencies:
+      canvas: ^3.0.0
+      skia-canvas: ^3.0.0
+    peerDependenciesMeta:
+      canvas:
+        optional: true
+      skia-canvas:
+        optional: true
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -8865,6 +8882,8 @@ snapshots:
   kleur@3.0.3: {}
 
   kleur@4.1.5: {}
+
+  konva@10.9.0: {}
 
   levn@0.4.1:
     dependencies:

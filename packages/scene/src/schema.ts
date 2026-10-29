@@ -46,6 +46,11 @@ export const SCENE_IMAGE_MAX_RASTER_LENGTH = 12_000_000;
 export const SCENE_IMAGE_MAX_SVG_LENGTH = 1_048_576;
 /** Pictures (image and logo layers) per scene. */
 export const SCENE_IMAGES_MAX = 24;
+/**
+ * Characters of all pictures of a scene together (data URIs and SVG
+ * markup): one scene always fits an import file (32 MB).
+ */
+export const SCENE_IMAGES_MAX_TOTAL_LENGTH = 24_000_000;
 /** Brand palette of a scene: same bounds as tool palettes. */
 export const SCENE_PALETTE_MIN = 2;
 export const SCENE_PALETTE_MAX = 10;
@@ -290,9 +295,26 @@ export const sceneSchema = z
         });
       }
     }
-    const images = scene.layers.filter((l) => l.kind === "image" || l.kind === "logo").length;
+    let images = 0;
+    let chars = 0;
+    for (const l of scene.layers) {
+      if (l.kind !== "image" && l.kind !== "logo") continue;
+      images++;
+      chars += l.image.kind === "svg" ? l.image.svg.length : l.image.href.length;
+    }
     if (images > SCENE_IMAGES_MAX) {
       ctx.addIssue({ code: "custom", message: "Too many pictures", path: ["layers"] });
+    }
+    if (chars > SCENE_IMAGES_MAX_TOTAL_LENGTH) {
+      ctx.addIssue({ code: "custom", message: "Pictures too large together", path: ["layers"] });
+    }
+    // Background params hold uploads of the tool too (counted by their JSON length).
+    const background = scene.layers[0];
+    if (
+      background?.kind === "background" &&
+      JSON.stringify(background.params).length > SCENE_IMAGES_MAX_TOTAL_LENGTH
+    ) {
+      ctx.addIssue({ code: "custom", message: "Background too large", path: ["layers", 0] });
     }
   });
 
