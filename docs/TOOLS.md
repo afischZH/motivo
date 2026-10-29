@@ -254,6 +254,8 @@ SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), 
 - **Brand-Apply**: Ein Klick ersetzt Template-Farbslots durch Brand-Palette und Fonts.
 - Exporte: PNG/JPG, ohne Wasserzeichen.
 
+**Stand M6-AP02 (Grundlage umgesetzt)**: Seite `/social-media-editor` (Landingpage) und `/social-media-editor/bearbeiten` bzw. `/edit` (Editor). Umgesetzt: Szenenmodell `@musterli/scene` mit Hintergrund als Tool-Referenz, Text, Bild, Form (Rechteck, Ellipse, Linie, Formenbibliothek), Logo aus dem Brand Kit, Gruppen, Sichtbarkeit, Sperre, Deckkraft, Drehung, Farbplätze; Magic Resize mit Constraints und Textanpassung (13 Formate, YouTube-Thumbnail mit 1280 × 720); Ebenenliste, Transformer, Einrasten mit Hilfslinien, Ausrichten, Verteilen, Gruppieren, Rückgängig; PNG/JPG in 1× und 2×; lokales Speichern mit Entwurf und Abschnitt in "Meine Designs"; Datei `motivo-social` v1. Texteffekte Schatten und Kontur. Offen: eigene Schriften und Brand-Fonts, Highlight-Balken und Verlauf (AP03), Vorlagen und Brand-Apply für Vorlagen (AP05). Details `docs/ARCHITECTURE.md` 4.19.
+
 ## I. Composer (Differenzierung) · M7 · P
 - Generalisierung des Social-Editors: beliebige Tool-Ergebnisse als Ebenen mit Blend-Modes und Masken (z. B. Pattern nur innerhalb eines Blobs). Ebenen bleiben **parametrisch** (Klick auf Ebene öffnet das Tool-Panel).
 - Exporte: PNG/JPG/WebP, SVG wenn alle Ebenen vektoriell sind.
