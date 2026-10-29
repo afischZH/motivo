@@ -276,6 +276,11 @@ export interface CssBox {
   /** CSS declarations of the box, without a selector. */
   css: string;
   /**
+   * Plain text shown in the box (one line, already broken by the tool), e.g.
+   * the user's card title. Rendered as text content, never as markup.
+   */
+  text?: string;
+  /**
    * Animation declarations of the box (e.g. floating blobs), applied like
    * `CssElement.motionCss`: only when the viewer allows motion.
    */
@@ -830,6 +835,12 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * `render` must fall back to something sensible for the default value.
    */
   localParams?: readonly ParamKey<Params<S>>[];
+  /**
+   * Params that hold the user's own content (e.g. a card title). Presets
+   * keep them like `localParams`, so a preset restyles the user's text
+   * instead of wiping it; unlike `localParams` they travel in share links.
+   */
+  contentParams?: readonly ParamKey<Params<S>>[];
   /** The repeat tile of a seamless design; see `TileRenderer`. */
   tile?: TileRenderer<Params<S>>;
   /**

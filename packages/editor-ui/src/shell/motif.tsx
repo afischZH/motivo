@@ -182,7 +182,9 @@ function MotifElementView({
             ...(motionAllowed && b.motion ? cssToStyle(swapUrls(b.motion), supports) : {}),
             ...absolute({ ...b, x: element.x + b.x, y: element.y + b.y }),
           }}
-        />
+        >
+          {b.text}
+        </div>
       ))}
     </>
   );

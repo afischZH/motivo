@@ -200,3 +200,65 @@ describe("code exports", () => {
     expect(hexAlpha("#000000", 2)).toBe("#000000");
   });
 });
+
+describe("own text", () => {
+  const withText: GlassOptions = {
+    ...base,
+    title: "Hello <Musterli>",
+    body: "Some words on the glass card that wrap onto more than one line for sure.",
+  };
+
+  it("keeps the bars while title and body are empty", () => {
+    const r = glassEffect(createRng(1), { ...base, title: "  ", body: "" });
+    expect(r.card.content.every((b) => b.text === undefined)).toBe(true);
+    expect(r.svg).not.toContain("<text");
+  });
+
+  it("shows the same escaped lines in the boxes and the SVG twin", () => {
+    const r = glassEffect(createRng(1), withText);
+    const lines = r.card.content.map((b) => b.text);
+    expect(lines[0]).toBe("Hello <Musterli>");
+    expect(lines.length).toBeGreaterThan(2);
+    for (const b of r.card.content) {
+      expect(b.css).toContain("white-space: pre;");
+      expect(b.y + b.height).toBeLessThanOrEqual(r.card.height);
+    }
+    expect(r.svg).toContain("Hello &lt;Musterli&gt;");
+    expect(r.svg.match(/<text /g)?.length).toBe(lines.length);
+    expect(r.svg).not.toContain("<Musterli>");
+  });
+
+  it("centres the lines on request", () => {
+    const left = glassEffect(createRng(1), withText);
+    const centred = glassEffect(createRng(1), { ...withText, textAlign: "center" });
+    expect(centred.card.content[0]?.css).toContain("text-align: center;");
+    expect(centred.svg).toContain('text-anchor="middle"');
+    expect(centred.card.content[0]?.y).toBeGreaterThan(left.card.content[0]?.y ?? 0);
+  });
+
+  it("drops lines that do not fit a small card", () => {
+    const r = glassEffect(createRng(1), {
+      ...withText,
+      body: "word ".repeat(60),
+      cardWidth: 25,
+      cardHeight: 20,
+    });
+    const last = r.card.content[r.card.content.length - 1];
+    expect(last?.text?.endsWith("…")).toBe(true);
+    for (const b of r.card.content) expect(b.y + b.height).toBeLessThanOrEqual(r.card.height);
+  });
+
+  it("writes the text into the HTML and Tailwind examples, escaped", () => {
+    const o = { ...withText, textAlign: "center" as const };
+    const r = glassEffect(createRng(1), o);
+    const html = glassHtml(r, o);
+    expect(html).toContain("<h2>Hello &lt;Musterli&gt;</h2>");
+    expect(html).toContain("<p>Some words on the glass card");
+    expect(html).toContain("text-align: center;");
+    expect(html).not.toContain("Card title");
+    const tw = glassTailwind(r, o);
+    expect(tw).toContain("text-center");
+    expect(tw).toContain("<h2>Hello &lt;Musterli&gt;</h2>");
+    expect(glassTailwind(glassEffect(createRng(1), base), base)).toContain("\n  …\n");
+  });
+});

@@ -140,6 +140,28 @@ test.describe("glass and border effects", () => {
     expect(copied).toMatch(/^\.glass-card \{/);
   });
 
+  test("shows the own card text in the preview and the HTML example", async ({ page }) => {
+    await openEditor(page, "glass-effects");
+    const preview = page.getByTestId("preview");
+    const title = page.getByRole("textbox", { name: "Title", exact: true });
+    // Typing a space in the field adds text and does not roll a new variant.
+    await title.fill("Hello");
+    await title.press("Space");
+    await title.pressSequentially("glass");
+    await page.getByRole("textbox", { name: "Text", exact: true }).fill("Readable on any stage.");
+    await expect(preview.getByText("Hello glass", { exact: true })).toBeVisible();
+    await expect(preview.getByText("Readable on any stage.", { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Text color #ffffff" })).toBeVisible();
+    await pick(page, "Center");
+    await expect(preview.getByText("Hello glass", { exact: true })).toHaveCSS(
+      "text-align",
+      "center",
+    );
+    const dialog = await openExport(page);
+    await choose(dialog, "HTML example");
+    await expect(dialog.getByTestId("export-code")).toContainText("<h2>Hello glass</h2>");
+  });
+
   test("shows a contrast hint for unreadable text on glass", async ({ page }) => {
     await openEditor(page, "glass-effects");
     const hint = page.getByTestId("advisory-text-contrast");

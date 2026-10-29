@@ -2263,7 +2263,8 @@
         "border": "Gradient border",
         "glow": "Glow",
         "card": "Card",
-        "stage": "Stage"
+        "stage": "Stage",
+        "text": "Text"
       },
       "params": {
         "effect": {
@@ -2372,6 +2373,20 @@
         "embedImage": {
           "label": "Embed picture in the code",
           "description": "Writes the picture into the code as a data URI instead of a placeholder. The code gets much longer."
+        },
+        "title": {
+          "label": "Title",
+          "description": "Your own text on the card. With title and text empty, the card shows neutral placeholder bars."
+        },
+        "body": {
+          "label": "Text"
+        },
+        "textAlign": {
+          "label": "Alignment",
+          "options": {
+            "left": "Left",
+            "center": "Center"
+          }
         }
       },
       "presets": {

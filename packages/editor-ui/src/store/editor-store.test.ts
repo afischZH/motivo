@@ -502,6 +502,22 @@ describe("applyPreset", () => {
     expect(store.getState().past).toHaveLength(0);
   });
 
+  it("keeps the tool's content params (own text) and still matches the preset", () => {
+    const glass = registry.get("glass-effects");
+    if (!glass) throw new Error("glass-effects missing");
+    const store = setup({
+      toolId: glass.id,
+      registry,
+      params: { ...glass.defaults, title: "Hello", body: "World" },
+    });
+    store.getState().applyPreset("ice");
+    const s = store.getState();
+    expect(s.params.title).toBe("Hello");
+    expect(s.params.body).toBe("World");
+    expect(s.params.tint).toBe("#ffffff");
+    expect(findMatchingPresetId(glass, s.params)).toBe("ice");
+  });
+
   it("findMatchingPresetId returns undefined after an edit", () => {
     const store = setup();
     store.getState().applyPreset("square");

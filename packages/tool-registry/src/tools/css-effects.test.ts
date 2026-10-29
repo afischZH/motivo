@@ -109,6 +109,24 @@ describe("glass-effects", () => {
       expect(glassEffectsTool.advisories?.(next, ctx(s))).toEqual([]);
     }
   });
+
+  it("shows the own text in preview and HTML, and keeps it on Space", () => {
+    const own: GlassEffectsParams = {
+      ...glass,
+      title: "Grüezi",
+      body: "Mehr Text",
+      textAlign: "center",
+    };
+    expect(glassEffectsTool.schema.safeParse(own).success).toBe(true);
+    const content = css(own).element?.content ?? [];
+    expect(content.map((b) => b.text)).toEqual(["Grüezi", "Mehr Text"]);
+    expect(extra("html", own)).toContain("<h2>Grüezi</h2>");
+    const next = glassEffectsTool.randomize(createRng(3), own, new Set());
+    expect([next.title, next.body, next.textAlign]).toEqual(["Grüezi", "Mehr Text", "center"]);
+    expect(glassEffectsTool.schema.safeParse({ ...own, title: "x".repeat(81) }).success).toBe(
+      false,
+    );
+  });
 });
 
 describe("bento-grid", () => {
