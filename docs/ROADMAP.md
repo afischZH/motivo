@@ -15,6 +15,7 @@ Gesamtüberblick:
 | **M4** | Flaggschiff-Patterns, Shape-Bibliothek, GIF | 11 bis 14 | **Öffentlicher Launch** |
 | **M4b** | Generative Welle: 6 neue Generatoren | 15 bis 17 | Eigener Charakter, SEO |
 | **M5** | WebGL & Bildeffekte & Video | 15 bis 18 | Trend-Tools |
+| **M5b** | Tiefe statt Breite: Restpunkte, Einheitlichkeit, SEO, Workflows zwischen Tools | 19 bis 20 | Rundere Tools |
 | **M6** | Social Media Editor + restliche Effekte | 19 bis 23 | Marketing-Zielgruppe |
 | **M7** | Differenzierung: Composer, Code-Exporte, Plugins | 24+ | Wachstum |
 
@@ -121,6 +122,19 @@ Die restlichen fünf Ideen aus der Ideenliste, rein im Browser, ohne neue Librar
 **DoD**: Shader-Vorschau == PNG-Export in Chrome (auch 4K/8K über Kacheln); Effekt-Vorschau bleibt bei 12-MP-Bildern flüssig (UI-Thread nie > 50 ms blockiert); ohne WebGL2 klare Meldung statt leerer Fläche.
 
 **Später (eigener Meilenstein nach Entscheid Andreas)**: **Video-Modus**: Keyframes, Timeline, nahtloser Loop; Export MP4/WebM via WebCodecs + Muxer.
+
+## M5b: Tiefe statt Breite (Entscheid Andreas 2026-10-29, vor M6)
+
+Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-29). Andreas hat alle vier Empfehlungen freigegeben: Tiefe vor M6, deutsche Tool-Namen auf DE-Seiten, Video später, React-Export später (Paket C).
+
+- [ ] Restpunkte: Vorschaubilder für alle Designs (auch Shader und Bildeffekte), Shader-Worker startet nach Absturz neu, Blob-URLs sofort freigeben, Import-Grenze pro Bild-Param, wackelnder 4K-Screenshot-Test stabil
+- [ ] Einheitlichkeit als Test: Presets, Exporte, verwandte Tools, i18n und SEO-Texte für jedes Tool automatisch geprüft
+- [ ] SEO: deutsche Namen in Titel und H1 (Slugs bleiben), Landingpages mit Anwendungsbeispielen und Tipps (rund 800 Wörter), Bilder-Sitemap
+- [ ] "Weiterverwenden in": Ergebnis eines Tools als Bild an ein anderes Tool übergeben (lokal, nie im Teilen-Link)
+- [ ] Palette mit einem Klick aus den Farbtools ins Brand Kit
+- [ ] Changelog, QA in Chrome, Code- und Security-Review
+
+**DoD**: Jedes Design in "Meine Designs" hat ein Vorschaubild; der Einheitlichkeitstest ist grün und läuft in CI; eine Übergabe Verlauf ► Screenshot-Verschönerer und Muster ► Halftone funktioniert mit Tastatur; kein Nutzerbild landet im Teilen-Link.
 
 ## M6: Social Media Editor + restliche Effekte (Woche 19 bis 23)
 

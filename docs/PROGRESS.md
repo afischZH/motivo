@@ -4,11 +4,21 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M5 (WebGL und Bildeffekte, ohne Video), freigegeben von Andreas 2026-10-28 19:39 ("Ohne Video-Export"). Branch `m5/wave` ab `main`. M4c live seit 2026-10-28 19:25 (PR #15, Merge 5f4ab20); M4-AP08 (Launch-Vorbereitung) noch offen.
-- **Letzte Sitzung**: 2026-10-28 (Cloud-Sitzung)
-- **Nächster Schritt**: M5-AP01 bis AP03 parallel in Worktrees, danach AP04 Integration und Review. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
+- **Meilenstein**: M5b (Tiefe statt Breite), freigegeben von Andreas 2026-10-29 03:35 ("starte mit empfehlungen"). Branch `claude/project-thread-693ltv` ab `main` (317e7db, inkl. Redesign PR #17). M5 live seit 2026-10-29 02:55 (PR #16); M4-AP08 (Launch-Vorbereitung) noch offen.
+- **Letzte Sitzung**: 2026-10-29 (Cloud-Sitzung)
+- **Nächster Schritt**: M5b-AP01 bis AP04 parallel in Worktrees, danach AP05 Integration und Review. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
+
+### M5b: Tiefe statt Breite (freigegeben 2026-10-29)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M5b-AP01 | Restpunkte: Vorschaubilder für Shader- und Bildeffekt-Designs, Shader-Worker-Neustart, Blob-URLs sofort widerrufen, Import-Grenze pro Bild-Param, 4K-Screenshot-Test stabil | ui-dev | offen | – | Aus M3-AP11, M4b-AP05, M5-AP04 |
+| M5b-AP02 | Einheitlichkeitstest über alle Tools (Presets, Exporte, verwandte Tools, i18n, SEO-Texte) und gefundene Lücken schliessen (u. a. Favicon ohne verwandte Tools) | qa-tester + engine-dev | offen | – | |
+| M5b-AP03 | SEO: deutsche Namen in Titel und H1, Anwendungsbeispiele und Tipps pro Tool (DE/EN), Bilder-Sitemap | ui-dev | offen | – | Slugs und Teilen-Links bleiben; kein HowTo-Markup (Google zeigt es seit 2023 nicht mehr) |
+| M5b-AP04 | "Weiterverwenden in" (Ergebnis als Bild an Tools mit Bild-Eingabe) und "Ins Brand Kit" für Farbtools, je über generische Hooks | ui-dev | offen | – | Übergabe nur lokal, nie im Teilen-Link |
+| M5b-AP05 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | AP01 bis AP04 | |
 
 ### M5: WebGL und Bildeffekte (freigegeben 2026-10-28, ohne Video)
 
