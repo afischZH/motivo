@@ -219,9 +219,9 @@ describe("database upgrade to version 3", () => {
 
   it("keeps every version 2 record and adds the social stores", async () => {
     await createVersion2();
-    expect(DB_VERSION).toBe(3);
+    expect(DB_VERSION).toBeGreaterThanOrEqual(3);
     const db = await openDatabase(factory);
-    expect(db.version).toBe(3);
+    expect(db.version).toBe(DB_VERSION);
     for (const name of [STORE.socialDesigns, STORE.socialScenes, STORE.socialDrafts]) {
       expect(db.objectStoreNames.contains(name), name).toBe(true);
     }

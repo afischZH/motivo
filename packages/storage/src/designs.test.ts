@@ -216,6 +216,7 @@ describe("design store", () => {
     expect([...db.objectStoreNames].sort()).toEqual(
       [
         "brand-assets",
+        "brand-fonts",
         "brand-palettes",
         "design-params",
         "designs",

@@ -7,7 +7,7 @@
 
 export const DB_NAME = "motivo";
 /** Bump with a new `upgrade` step; never change an existing step. */
-export const DB_VERSION = 3;
+export const DB_VERSION = 4;
 
 export const STORE = {
   designs: "designs",
@@ -24,6 +24,8 @@ export const STORE = {
   socialScenes: "social-scenes",
   /** Version 3: the social editor's autosave draft. */
   socialDrafts: "social-drafts",
+  /** Version 4 (M6-AP03): the brand kit's own fonts (file bytes, at most 10). */
+  brandFonts: "brand-fonts",
 } as const;
 
 export type StoreName = (typeof STORE)[keyof typeof STORE];
@@ -83,6 +85,9 @@ function upgrade(db: IDBDatabase, oldVersion: number): void {
     db.createObjectStore(STORE.socialDesigns, { keyPath: "id" });
     db.createObjectStore(STORE.socialScenes, { keyPath: "id" });
     db.createObjectStore(STORE.socialDrafts, { keyPath: "id" });
+  }
+  if (oldVersion < 4) {
+    db.createObjectStore(STORE.brandFonts, { keyPath: "id" });
   }
 }
 
