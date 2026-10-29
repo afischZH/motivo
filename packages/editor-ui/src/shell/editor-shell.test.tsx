@@ -1,6 +1,6 @@
 import { createRegistry, type ToolRegistry } from "@musterli/tool-registry";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ExportServices } from "../export/export-dialog";
 import { designToHash } from "../share/share-codec";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
@@ -27,7 +27,7 @@ const messages = {
 };
 
 function setup(
-  options: { registry?: ToolRegistry; services?: ExportServices } = {},
+  options: { registry?: ToolRegistry; services?: ExportServices; onSwitchTool?: () => void } = {},
 ): EditorStoreApi {
   let seed = 100;
   const store = createEditorStore({
@@ -37,7 +37,10 @@ function setup(
   });
   renderWithIntl(
     <EditorStoreProvider store={store}>
-      <EditorShell exportServices={options.services ?? fakeServices()} />
+      <EditorShell
+        exportServices={options.services ?? fakeServices()}
+        {...(options.onSwitchTool ? { onSwitchTool: options.onSwitchTool } : {})}
+      />
     </EditorStoreProvider>,
     messages,
   );
@@ -46,6 +49,7 @@ function setup(
 
 afterEach(() => {
   window.history.replaceState(null, "", "/");
+  window.localStorage.clear();
 });
 
 const press = (key: string, init: KeyboardEventInit = {}, target: Element = document.body) =>
@@ -63,6 +67,49 @@ describe("EditorShell", () => {
     expect(
       screen.getByRole("img", { name: "Vorschau: Testwerkzeug, 1080 × 1080 px" }),
     ).toBeTruthy();
+  });
+
+  it("opens the tool switcher from the name pill", () => {
+    const onSwitchTool = vi.fn();
+    setup({ onSwitchTool });
+    fireEvent.click(screen.getByRole("button", { name: "Tool wechseln" }));
+    expect(onSwitchTool).toHaveBeenCalledOnce();
+  });
+
+  it("shows the name without a switcher when the app offers none", () => {
+    setup();
+    expect(screen.queryByRole("button", { name: "Tool wechseln" })).toBeNull();
+  });
+
+  it("hides and shows the side panels and remembers the choice", () => {
+    setup();
+    const toggle = screen.getByRole("button", { name: "Linke Leiste ausblenden" });
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    fireEvent.click(toggle);
+    const show = screen.getByRole("button", { name: "Linke Leiste einblenden" });
+    expect(show.getAttribute("aria-expanded")).toBe("false");
+    expect(screen.getByTestId("left-panel").className).toContain("lg:hidden");
+    expect(JSON.parse(window.localStorage.getItem("musterli.editor.panels") ?? "{}")).toEqual({
+      left: false,
+      right: true,
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Einstellungen ausblenden" }));
+    fireEvent.click(show);
+    expect(screen.getByTestId("left-panel").className).not.toContain("lg:hidden");
+    expect(screen.getByRole("button", { name: "Einstellungen einblenden" })).toBeTruthy();
+  });
+
+  it("steps the zoom with the floating zoom bar", () => {
+    setup();
+    fireEvent.click(screen.getByRole("button", { name: /^100\s%$/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Vergrössern" }));
+    expect(screen.getByLabelText("Aktueller Zoom").textContent).toMatch(/^150\s%$/);
+    fireEvent.click(screen.getByRole("button", { name: "Verkleinern" }));
+    fireEvent.click(screen.getByRole("button", { name: "Verkleinern" }));
+    expect(screen.getByLabelText("Aktueller Zoom").textContent).toMatch(/^75\s%$/);
+    expect(screen.getByRole("button", { name: "Einpassen" }).getAttribute("aria-pressed")).toBe(
+      "false",
+    );
   });
 
   it("Space adds a variant and announces it; undo and redo work by keyboard", () => {

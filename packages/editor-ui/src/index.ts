@@ -49,3 +49,17 @@ export {
   type ImageInputEnv,
   type ImageInputServices,
 } from "./image-input/services";
+export {
+  PanelSection,
+  SECTION_SUMMARY_CLASS,
+  SECTION_TITLE_CLASS,
+  type PanelSectionProps,
+} from "./shell/panel-section";
+export {
+  FLOATING_BAR_CLASS,
+  FLOATING_BUTTON_CLASS,
+  ZOOM_STEPS,
+  ZoomDock,
+  stepZoom,
+} from "./shell/zoom-dock";
+export { ZOOM_MAX, ZOOM_MIN, type Zoom } from "./shell/preview";

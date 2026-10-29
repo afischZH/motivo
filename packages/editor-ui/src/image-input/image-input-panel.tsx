@@ -14,6 +14,7 @@ import { CloseIcon } from "../shell/icons";
 import { BUTTON_CLASS, ICON_BUTTON } from "../shell/styles";
 import { IMAGE_INPUT_ACCEPT } from "./check";
 import type { ImageInputControls } from "./use-image-input";
+import { SECTION_TITLE_CLASS } from "../shell/panel-section";
 
 /** Draws the downsampled pixels; CSS scales the canvas to fit its box. */
 function PixelThumbnail({ pixels, label }: { pixels: PixelBuffer | null; label: string }) {
@@ -100,10 +101,10 @@ export function ImageInputPanel({ input }: { input: ImageInputControls }) {
   return (
     <section
       aria-labelledby={`${ids}-title`}
-      className="mb-4 grid grid-cols-[minmax(0,1fr)] gap-2 border-b border-border pb-4"
+      className="-mx-4 grid grid-cols-[minmax(0,1fr)] gap-2 border-b border-border px-4 py-4"
       data-testid="image-input"
     >
-      <h3 id={`${ids}-title`} className="text-sm font-semibold">
+      <h3 id={`${ids}-title`} className={SECTION_TITLE_CLASS}>
         {t("Editor.imageInput.title")}
       </h3>
       <div

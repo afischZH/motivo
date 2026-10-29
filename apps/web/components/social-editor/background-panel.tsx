@@ -11,7 +11,7 @@ import { ControlPanel } from "@musterli/editor-ui";
 import type { BrandPalette } from "@musterli/storage";
 import type { AnyToolDefinition } from "@musterli/tool-registry";
 import type { BackgroundLayer, Scene } from "@musterli/scene";
-import { DicesIcon, PaletteIcon } from "lucide-react";
+import { DicesIcon, PaletteIcon, WallpaperIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useId } from "react";
 
@@ -43,8 +43,8 @@ export function BackgroundPanel(props: BackgroundPanelProps) {
   const selectId = useId();
   const { layer, tool } = props;
   return (
-    <div className="flex flex-col gap-5" data-testid="background-panel">
-      <Section title={t("title")}>
+    <div className="flex flex-col" data-testid="background-panel">
+      <Section icon={WallpaperIcon} title={t("title")}>
         <div className="flex flex-col gap-1">
           <label htmlFor={selectId} className={LABEL}>
             {t("tool")}
@@ -108,7 +108,7 @@ function PaletteSection(props: BackgroundPanelProps) {
   const selectId = useId();
   const { palette } = props.scene;
   return (
-    <Section title={t("title")} testId="scene-palette">
+    <Section icon={PaletteIcon} title={t("title")} testId="scene-palette">
       <p className="text-xs text-muted-foreground">{t("hint")}</p>
       <ul className="flex flex-wrap gap-2">
         {palette.map((color, i) => {

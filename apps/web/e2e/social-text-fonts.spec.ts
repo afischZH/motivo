@@ -28,6 +28,7 @@ async function addText(page: Page, text: string) {
 }
 
 async function exportPng(page: Page): Promise<Buffer> {
+  await page.getByTestId("export-menu").click();
   const download = page.waitForEvent("download");
   await page.getByTestId("export").click();
   const file = await download;

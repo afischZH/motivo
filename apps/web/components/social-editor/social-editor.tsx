@@ -12,7 +12,16 @@
  * and the autosave draft go to IndexedDB (`createSocialDesignStore`),
  * nothing leaves the browser.
  */
-import { isShortcutBlocked, resolveShortcut, useT } from "@musterli/editor-ui";
+import {
+  PanelSection,
+  SECTION_TITLE_CLASS,
+  ZoomDock,
+  isShortcutBlocked,
+  resolveShortcut,
+  useT,
+  type Zoom,
+} from "@musterli/editor-ui";
+import { openToolSwitcher } from "@musterli/editor-ui/commands";
 import {
   ASSET_ACCEPT,
   browserImageInputServices,
@@ -83,15 +92,25 @@ import {
 import type { SceneTemplate } from "@musterli/scene/templates";
 import { applyBrandPalette, registry } from "@musterli/tool-registry";
 import {
+  ChevronDownIcon,
   ChevronLeftIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  ChevronsUpDownIcon,
   CircleIcon,
+  CopyPlusIcon,
   DownloadIcon,
+  EllipsisVerticalIcon,
   FilePlusIcon,
+  FolderOpenIcon,
+  FrameIcon as FrameLucideIcon,
   ImagePlusIcon,
+  LayersIcon,
   LayoutTemplateIcon,
   MinusIcon,
   MonitorSmartphoneIcon,
   PaletteIcon,
+  PlusIcon,
   Redo2Icon,
   SaveIcon,
   SquareIcon,
@@ -101,6 +120,7 @@ import {
   Undo2Icon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { DropdownMenu, Popover } from "radix-ui";
 import {
   useCallback,
   useEffect,
@@ -149,6 +169,9 @@ export interface SocialEditorProps {
 
 const OUTLINE = buttonVariants({ variant: "outline", size: "sm" });
 const GHOST_ICON = buttonVariants({ variant: "ghost", size: "icon-sm" });
+const OUTLINE_ICON = buttonVariants({ variant: "outline", size: "icon-sm" });
+const MENU_ITEM =
+  "flex h-9 cursor-default items-center gap-2 rounded-md px-2 text-sm outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground [&_svg]:size-4 [&_svg]:text-muted-foreground";
 const DRAFT_DELAY_MS = 800;
 const NUDGE = 1;
 const NUDGE_BIG = 10;
@@ -1170,18 +1193,26 @@ export function SocialEditor(props: SocialEditorProps) {
     observer.observe(el);
     return () => observer.disconnect();
   }, [load]);
-  const zoom = useMemo(() => {
+  // "fit" follows the viewport; a number is a fixed scale chosen in the zoom bar.
+  const [zoomChoice, setZoomChoice] = useState<Zoom>("fit");
+  // Side panels on large screens; hiding one gives the stage more room.
+  const [panels, setPanels] = useState({ left: true, right: true });
+  const [exportOpen, setExportOpen] = useState(false);
+  const fitZoom = useMemo(() => {
     if (viewport.width === 0) return 0.25;
-    const pad = 32;
+    // Room for the card frame around the stage, and below for the zoom bar.
+    const padX = 44;
+    const padY = 100;
     return Math.max(
       0.05,
       Math.min(
         1,
-        (viewport.width - pad) / scene.format.width,
-        (viewport.height - pad) / scene.format.height,
+        (viewport.width - padX) / scene.format.width,
+        (viewport.height - padY) / scene.format.height,
       ),
     );
   }, [viewport, scene.format.width, scene.format.height]);
+  const zoom = zoomChoice === "fit" ? fitZoom : zoomChoice;
 
   const editText = useCallback(
     (id: string) => {
@@ -1264,84 +1295,80 @@ export function SocialEditor(props: SocialEditorProps) {
       <div
         role="group"
         aria-label={t("toolbar")}
-        className="flex flex-wrap items-end gap-2 border-b border-border px-3 py-2"
+        className="flex flex-wrap items-center gap-2 border-b border-border bg-background px-4 py-2 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(max-content,1fr)] lg:gap-4"
       >
-        <a
-          href={props.landingHref}
-          className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-border bg-background ps-1.5 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground"
-        >
-          <ChevronLeftIcon aria-hidden="true" className="size-4" />
-          {t("back")}
-        </a>
-        <div className="flex min-w-36 flex-[1_1_10rem] flex-col gap-0.5">
-          <label htmlFor={nameId} className="text-[11px] text-muted-foreground">
+        <div className="flex min-w-0 flex-[1_1_14rem] items-center gap-2">
+          <a
+            href={props.landingHref}
+            className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-border bg-background ps-1.5 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <ChevronLeftIcon aria-hidden="true" className="size-4" />
+            {t("back")}
+          </a>
+          <label htmlFor={nameId} className="sr-only">
             {t("name")}
           </label>
           <input
             id={nameId}
-            className={INPUT}
+            className="h-8 w-full max-w-56 min-w-0 rounded-md border border-transparent bg-transparent px-2 text-sm font-medium transition-colors placeholder:text-muted-foreground hover:border-border focus-visible:border-ring focus-visible:bg-background focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
             value={state.name}
             placeholder={t("untitled")}
+            title={t("name")}
             maxLength={120}
             data-testid="design-name"
             onChange={(event) => dispatch({ type: "rename", name: event.currentTarget.value })}
           />
         </div>
-        <div className="flex min-w-44 flex-[1_1_12rem] flex-col gap-0.5">
-          <label htmlFor={formatId} className="text-[11px] text-muted-foreground">
-            {t("format")}
-          </label>
-          <select
-            id={formatId}
-            className={INPUT}
-            value={scene.format.id ?? ""}
-            disabled={!measure}
-            data-testid="format"
-            onChange={(event) => void changeFormat(event.currentTarget.value)}
-          >
-            {scene.format.id === null && (
-              <option value="">
-                {t("customFormat", { width: scene.format.width, height: scene.format.height })}
-              </option>
-            )}
-            {SOCIAL_FORMATS.map((f) => (
-              <option key={f.id} value={f.id}>
-                {formatLabel(f.id, f.width, f.height)}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex items-center gap-1">
+        <div
+          className="relative flex h-9 min-w-0 items-center gap-2 rounded-full border border-border bg-background ps-4 pe-2 shadow-xs transition-colors focus-within:ring-[3px] focus-within:ring-ring/50 hover:bg-accent max-lg:order-first max-lg:basis-full max-lg:justify-center lg:justify-self-center"
+          data-testid="tool-switcher"
+        >
+          <span className="text-[11px] font-semibold tracking-[0.06em] text-muted-foreground uppercase">
+            {tRoot("Editor.shell.toolLabel")}
+          </span>
+          <span className="truncate text-[15px] font-semibold tracking-tight" aria-hidden="true">
+            {t("title")}
+          </span>
           <button
             type="button"
-            className={GHOST_ICON}
-            aria-label={t("undo")}
-            title={t("undo")}
-            aria-keyshortcuts="Control+Z Meta+Z"
-            disabled={!canUndo}
-            data-testid="undo"
-            onClick={() => dispatch({ type: "undo" })}
+            onClick={() => openToolSwitcher()}
+            aria-haspopup="dialog"
+            aria-label={tRoot("Editor.shell.switchTool")}
+            title={tRoot("Editor.shell.switchTool")}
+            className="inline-flex size-6 items-center justify-center rounded-full text-muted-foreground outline-none after:absolute after:inset-0 after:rounded-full after:content-[''] [&_svg]:size-4"
+            data-testid="switch-tool"
           >
-            <Undo2Icon aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            className={GHOST_ICON}
-            aria-label={t("redo")}
-            title={t("redo")}
-            aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
-            disabled={!canRedo}
-            data-testid="redo"
-            onClick={() => dispatch({ type: "redo" })}
-          >
-            <Redo2Icon aria-hidden="true" />
+            <ChevronsUpDownIcon aria-hidden="true" />
           </button>
         </div>
-        <div className="ms-auto flex flex-wrap items-end gap-1.5">
-          <button type="button" className={OUTLINE} onClick={startNew} data-testid="new-design">
-            <FilePlusIcon aria-hidden="true" />
-            {t("new")}
-          </button>
+        <div className="flex flex-wrap items-center justify-end gap-1.5 lg:flex-nowrap">
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              className={GHOST_ICON}
+              aria-label={t("undo")}
+              title={t("undo")}
+              aria-keyshortcuts="Control+Z Meta+Z"
+              disabled={!canUndo}
+              data-testid="undo"
+              onClick={() => dispatch({ type: "undo" })}
+            >
+              <Undo2Icon aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={GHOST_ICON}
+              aria-label={t("redo")}
+              title={t("redo")}
+              aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
+              disabled={!canRedo}
+              data-testid="redo"
+              onClick={() => dispatch({ type: "redo" })}
+            >
+              <Redo2Icon aria-hidden="true" />
+            </button>
+          </div>
+          <span aria-hidden="true" className="mx-0.5 hidden h-5 w-px bg-border sm:block" />
           <button
             type="button"
             className={OUTLINE}
@@ -1363,23 +1390,59 @@ export function SocialEditor(props: SocialEditorProps) {
             data-testid="apply-brand"
           >
             <PaletteIcon aria-hidden="true" />
-            {busy === "brand" ? tBrand("applying") : tBrand("apply")}
+            <span className="max-2xl:sr-only">
+              {busy === "brand" ? tBrand("applying") : tBrand("apply")}
+            </span>
           </button>
           <span id={`${fileId}-brand-hint`} hidden>
             {tBrand("applyHint")}
           </span>
+          <DropdownMenu.Root modal={false}>
+            <DropdownMenu.Trigger
+              className={OUTLINE_ICON}
+              aria-label={t("moreActions")}
+              title={t("moreActions")}
+              data-testid="more-actions"
+            >
+              <EllipsisVerticalIcon aria-hidden="true" />
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content
+                align="end"
+                sideOffset={6}
+                collisionPadding={12}
+                className="z-50 w-56 rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-md"
+              >
+                <DropdownMenu.Item
+                  className={MENU_ITEM}
+                  onSelect={startNew}
+                  data-testid="new-design"
+                >
+                  <FilePlusIcon aria-hidden="true" />
+                  {t("new")}
+                </DropdownMenu.Item>
+                <DropdownMenu.Item
+                  className={MENU_ITEM}
+                  disabled={!kit || busy !== null || state.designId === null}
+                  onSelect={() => void save(true)}
+                  data-testid="save-copy"
+                >
+                  <CopyPlusIcon aria-hidden="true" />
+                  {t("saveCopy")}
+                </DropdownMenu.Item>
+                <DropdownMenu.Separator className="my-1 h-px bg-border" />
+                <DropdownMenu.Item className={MENU_ITEM} asChild>
+                  <a href={props.myDesignsHref}>
+                    <FolderOpenIcon aria-hidden="true" />
+                    {t("myDesigns")}
+                  </a>
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
           <button
             type="button"
             className={OUTLINE}
-            onClick={() => void save(true)}
-            disabled={!kit || busy !== null || state.designId === null}
-            data-testid="save-copy"
-          >
-            {t("saveCopy")}
-          </button>
-          <button
-            type="button"
-            className={buttonVariants({ size: "sm" })}
             onClick={() => void save()}
             disabled={!kit || busy !== null}
             aria-keyshortcuts="Control+S Meta+S"
@@ -1388,22 +1451,138 @@ export function SocialEditor(props: SocialEditorProps) {
             <SaveIcon aria-hidden="true" />
             {busy === "save" ? t("saving") : t("save")}
           </button>
-          <a href={props.myDesignsHref} className={OUTLINE}>
-            {t("myDesigns")}
-          </a>
+          <Popover.Root open={exportOpen} onOpenChange={setExportOpen}>
+            <Popover.Trigger
+              className={buttonVariants({ size: "sm" })}
+              disabled={!kit}
+              data-testid="export-menu"
+            >
+              <DownloadIcon aria-hidden="true" />
+              {t("export.run")}
+              <ChevronDownIcon aria-hidden="true" />
+            </Popover.Trigger>
+            <Popover.Portal>
+              <Popover.Content
+                align="end"
+                sideOffset={6}
+                collisionPadding={12}
+                className="z-50 grid w-72 gap-3 rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-lg"
+                aria-label={t("export.title")}
+              >
+                <div className="grid gap-1">
+                  <label htmlFor={exportFormatId} className={SECTION_TITLE_CLASS}>
+                    {t("export.format")}
+                  </label>
+                  <select
+                    id={exportFormatId}
+                    className={INPUT}
+                    value={exportFormat}
+                    data-testid="export-format"
+                    onChange={(event) =>
+                      setExportFormat(event.currentTarget.value as "png" | "jpg")
+                    }
+                  >
+                    <option value="png">PNG</option>
+                    <option value="jpg">JPG</option>
+                  </select>
+                </div>
+                <div className="grid gap-1">
+                  <label htmlFor={exportScaleId} className={SECTION_TITLE_CLASS}>
+                    {t("export.size")}
+                  </label>
+                  <select
+                    id={exportScaleId}
+                    className={INPUT}
+                    value={exportScaleFits(scene.format, exportScale) ? exportScale : 1}
+                    data-testid="export-scale"
+                    onChange={(event) => setExportScale(event.currentTarget.value === "2" ? 2 : 1)}
+                  >
+                    <option value="1">
+                      {t("export.scale", {
+                        scale: 1,
+                        width: scene.format.width,
+                        height: scene.format.height,
+                      })}
+                    </option>
+                    {/* Over the canvas limit (a huge custom size): 2x is not offered. */}
+                    <option value="2" disabled={!exportScaleFits(scene.format, 2)}>
+                      {exportScaleFits(scene.format, 2)
+                        ? t("export.scale", {
+                            scale: 2,
+                            width: scene.format.width * 2,
+                            height: scene.format.height * 2,
+                          })
+                        : t("export.scaleTooLarge", { scale: 2, max: SCENE_EXPORT_EDGE_MAX })}
+                    </option>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  className={buttonVariants({ size: "sm", className: "w-full" })}
+                  onClick={() => {
+                    // Closed first, so the focus is back on the trigger while the file is made.
+                    setExportOpen(false);
+                    void runExport();
+                  }}
+                  disabled={!kit || busy !== null}
+                  aria-keyshortcuts="Control+E Meta+E"
+                  data-testid="export"
+                >
+                  <DownloadIcon aria-hidden="true" />
+                  {busy === "export" ? t("export.running") : t("export.download")}
+                </button>
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
         </div>
       </div>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[16rem_minmax(0,1fr)_20rem]">
+      <div
+        className={cn(
+          "grid min-h-0 flex-1 grid-cols-1",
+          panels.left && panels.right
+            ? "lg:grid-cols-[17rem_minmax(0,1fr)_20rem]"
+            : panels.left
+              ? "lg:grid-cols-[17rem_minmax(0,1fr)_0px]"
+              : panels.right
+                ? "lg:grid-cols-[0px_minmax(0,1fr)_20rem]"
+                : "lg:grid-cols-[0px_minmax(0,1fr)_0px]",
+        )}
+      >
         <aside
+          id={`${fileId}-left`}
           aria-label={t("layersPanel")}
-          className="order-2 flex min-h-0 flex-col gap-4 overflow-y-auto border-border p-3 lg:order-1 lg:border-e"
+          className={cn(
+            "order-2 flex min-h-0 flex-col overflow-y-auto border-border bg-card lg:order-1 lg:border-e",
+            !panels.left && "lg:hidden",
+          )}
         >
-          <section aria-labelledby={`${fileId}-add`} className="flex flex-col gap-2">
-            <h2 id={`${fileId}-add`} className="text-sm font-semibold">
-              {t("add.title")}
-            </h2>
-            <div className="grid grid-cols-2 gap-1.5">
+          <PanelSection title={t("format")} icon={FrameLucideIcon}>
+            <label htmlFor={formatId} className="sr-only">
+              {t("format")}
+            </label>
+            <select
+              id={formatId}
+              className={INPUT}
+              value={scene.format.id ?? ""}
+              disabled={!measure}
+              data-testid="format"
+              onChange={(event) => void changeFormat(event.currentTarget.value)}
+            >
+              {scene.format.id === null && (
+                <option value="">
+                  {t("customFormat", { width: scene.format.width, height: scene.format.height })}
+                </option>
+              )}
+              {SOCIAL_FORMATS.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {formatLabel(f.id, f.width, f.height)}
+                </option>
+              ))}
+            </select>
+          </PanelSection>
+          <PanelSection title={t("add.title")} titleId={`${fileId}-add`} icon={PlusIcon}>
+            <section aria-labelledby={`${fileId}-add`} className="grid grid-cols-2 gap-1.5">
               <AddButton
                 icon={<TypeIcon />}
                 label={t("add.text")}
@@ -1447,152 +1626,125 @@ export function SocialEditor(props: SocialEditorProps) {
                 testId="add-logo"
                 onClick={() => void openLogos()}
               />
-            </div>
-            <input
-              ref={fileRef}
-              type="file"
-              accept={ASSET_ACCEPT}
-              className="sr-only"
-              tabIndex={-1}
-              aria-hidden="true"
-              data-testid="image-file"
-              onChange={(event) => {
-                const file = event.currentTarget.files?.[0];
-                event.currentTarget.value = "";
-                if (file) void upload(file);
-              }}
-            />
-          </section>
-          <section aria-labelledby={`${fileId}-layers`} className="flex flex-col gap-2">
-            <h2 id={`${fileId}-layers`} className="text-sm font-semibold">
-              {t("layers.title")}
-            </h2>
-            <p className="text-xs text-muted-foreground">{t("layers.hint")}</p>
-            <LayerList
-              scene={scene}
-              selection={state.selection}
-              onSelect={selectFromList}
-              onToggleVisible={(id) =>
-                updateOne(id, (l) => ({ ...l, visible: !l.visible }), `visible-${id}`)
-              }
-              onToggleLock={(id) =>
-                updateOne(id, (l) => ({ ...l, locked: !l.locked }), `lock-${id}`)
-              }
-              onRename={(id, name) =>
-                updateOne(id, (l) => ({ ...l, name: name.trim().slice(0, 80) }), `name-${id}`)
-              }
-              onMove={(id, move: StackMove) => change(moveInStack(scene, id, move))}
-              onReorder={(id, index) => change(reorderLayer(scene, id, index))}
-            />
-          </section>
+              <input
+                ref={fileRef}
+                type="file"
+                accept={ASSET_ACCEPT}
+                className="sr-only"
+                tabIndex={-1}
+                aria-hidden="true"
+                data-testid="image-file"
+                onChange={(event) => {
+                  const file = event.currentTarget.files?.[0];
+                  event.currentTarget.value = "";
+                  if (file) void upload(file);
+                }}
+              />
+            </section>
+          </PanelSection>
+          <PanelSection title={t("layers.title")} titleId={`${fileId}-layers`} icon={LayersIcon}>
+            <section aria-labelledby={`${fileId}-layers`} className="flex flex-col gap-2">
+              <p className="text-xs text-muted-foreground">{t("layers.hint")}</p>
+              <LayerList
+                scene={scene}
+                selection={state.selection}
+                onSelect={selectFromList}
+                onToggleVisible={(id) =>
+                  updateOne(id, (l) => ({ ...l, visible: !l.visible }), `visible-${id}`)
+                }
+                onToggleLock={(id) =>
+                  updateOne(id, (l) => ({ ...l, locked: !l.locked }), `lock-${id}`)
+                }
+                onRename={(id, name) =>
+                  updateOne(id, (l) => ({ ...l, name: name.trim().slice(0, 80) }), `name-${id}`)
+                }
+                onMove={(id, move: StackMove) => change(moveInStack(scene, id, move))}
+                onReorder={(id, index) => change(reorderLayer(scene, id, index))}
+              />
+            </section>
+          </PanelSection>
         </aside>
 
         <section
-          className="order-1 flex min-h-[50vh] min-w-0 flex-col bg-canvas lg:order-2 lg:min-h-0"
+          className="relative order-1 flex min-h-[50vh] min-w-0 flex-col bg-stage [background-image:radial-gradient(var(--stage-dot)_1px,transparent_1px)] [background-size:16px_16px] lg:order-2 lg:min-h-0"
           aria-label={t("canvasRegion")}
         >
-          <div
-            ref={viewportRef}
-            className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden p-4"
-          >
+          <div ref={viewportRef} className="relative flex min-h-0 flex-1 overflow-auto p-4">
             {load !== "ready" || !kit ? (
-              <p className="text-sm text-muted-foreground" data-testid="editor-loading">
+              <p className="m-auto text-sm text-muted-foreground" data-testid="editor-loading">
                 {t("loading")}
               </p>
             ) : (
-              <div
-                tabIndex={0}
-                role="group"
-                aria-roledescription={t("canvasRole")}
-                aria-label={t("canvasLabel", {
-                  width: scene.format.width,
-                  height: scene.format.height,
-                  selection:
-                    editable.length === 0
-                      ? t("nothingSelected")
-                      : editable.map((l) => nameOf(l)).join(", "),
-                })}
-                className="rounded-sm shadow-lg ring-1 ring-black/10 focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:outline-none"
-                style={{
-                  width: Math.round(scene.format.width * zoom),
-                  height: Math.round(scene.format.height * zoom),
-                }}
-                data-testid="stage"
-                data-format={`${scene.format.width}x${scene.format.height}`}
-                data-fit-problems={fitProblems}
-                data-fonts={fontsVersion}
-                data-pictures={pictures.images.size}
-                data-background={
-                  pictures.rendering ? "rendering" : pictures.failed ? "failed" : "ready"
-                }
-              >
-                <div ref={containerRef} />
+              <div className="m-auto shrink-0 rounded-2xl bg-card p-2.5 shadow-[0_1px_2px_oklch(0_0_0/0.08),0_16px_48px_-16px_oklch(0_0_0/0.3)] ring-1 ring-border/70">
+                <div
+                  tabIndex={0}
+                  role="group"
+                  aria-roledescription={t("canvasRole")}
+                  aria-label={t("canvasLabel", {
+                    width: scene.format.width,
+                    height: scene.format.height,
+                    selection:
+                      editable.length === 0
+                        ? t("nothingSelected")
+                        : editable.map((l) => nameOf(l)).join(", "),
+                  })}
+                  className="focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:outline-none"
+                  style={{
+                    width: Math.round(scene.format.width * zoom),
+                    height: Math.round(scene.format.height * zoom),
+                  }}
+                  data-testid="stage"
+                  data-format={`${scene.format.width}x${scene.format.height}`}
+                  data-fit-problems={fitProblems}
+                  data-fonts={fontsVersion}
+                  data-pictures={pictures.images.size}
+                  data-background={
+                    pictures.rendering ? "rendering" : pictures.failed ? "failed" : "ready"
+                  }
+                >
+                  <div ref={containerRef} />
+                </div>
               </div>
             )}
           </div>
-          <div className="flex flex-wrap items-end justify-center gap-2 border-t border-border bg-background px-3 py-2">
-            <div className="flex flex-col gap-0.5">
-              <label htmlFor={exportFormatId} className="text-[11px] text-muted-foreground">
-                {t("export.format")}
-              </label>
-              <select
-                id={exportFormatId}
-                className={cn(INPUT, "w-24")}
-                value={exportFormat}
-                data-testid="export-format"
-                onChange={(event) => setExportFormat(event.currentTarget.value as "png" | "jpg")}
-              >
-                <option value="png">PNG</option>
-                <option value="jpg">JPG</option>
-              </select>
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <label htmlFor={exportScaleId} className="text-[11px] text-muted-foreground">
-                {t("export.size")}
-              </label>
-              <select
-                id={exportScaleId}
-                className={cn(INPUT, "w-44")}
-                value={exportScaleFits(scene.format, exportScale) ? exportScale : 1}
-                data-testid="export-scale"
-                onChange={(event) => setExportScale(event.currentTarget.value === "2" ? 2 : 1)}
-              >
-                <option value="1">
-                  {t("export.scale", {
-                    scale: 1,
-                    width: scene.format.width,
-                    height: scene.format.height,
-                  })}
-                </option>
-                {/* Over the canvas limit (a huge custom size): 2x is not offered. */}
-                <option value="2" disabled={!exportScaleFits(scene.format, 2)}>
-                  {exportScaleFits(scene.format, 2)
-                    ? t("export.scale", {
-                        scale: 2,
-                        width: scene.format.width * 2,
-                        height: scene.format.height * 2,
-                      })
-                    : t("export.scaleTooLarge", { scale: 2, max: SCENE_EXPORT_EDGE_MAX })}
-                </option>
-              </select>
-            </div>
-            <button
-              type="button"
-              className={buttonVariants({ size: "sm" })}
-              onClick={() => void runExport()}
-              disabled={!kit || busy !== null}
-              aria-keyshortcuts="Control+E Meta+E"
-              data-testid="export"
-            >
-              <DownloadIcon aria-hidden="true" />
-              {busy === "export" ? t("export.running") : t("export.run")}
-            </button>
+          <div className="pointer-events-none absolute inset-x-3 bottom-3 flex">
+            <ZoomDock zoom={zoomChoice} shownScale={zoom} onZoomChange={setZoomChoice} />
           </div>
+          {(["left", "right"] as const).map((side) => {
+            const open = panels[side];
+            const label = tRoot(`Editor.shell.panels.${side}${open ? "Hide" : "Show"}`);
+            return (
+              <button
+                key={side}
+                type="button"
+                className={cn(
+                  "absolute top-1/2 z-10 hidden size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none lg:inline-flex [&_svg]:size-4",
+                  side === "left" ? "left-2" : "right-2",
+                )}
+                aria-expanded={open}
+                aria-controls={`${fileId}-${side}`}
+                aria-label={label}
+                title={label}
+                onClick={() => setPanels((p) => ({ ...p, [side]: !p[side] }))}
+                data-testid={`toggle-${side}-panel`}
+              >
+                {(side === "left") === open ? (
+                  <ChevronsLeftIcon aria-hidden="true" />
+                ) : (
+                  <ChevronsRightIcon aria-hidden="true" />
+                )}
+              </button>
+            );
+          })}
         </section>
 
         <aside
+          id={`${fileId}-right`}
           aria-label={t("propertiesPanel")}
-          className="order-3 min-h-0 overflow-y-auto border-border p-3 lg:border-s"
+          className={cn(
+            "order-3 min-h-0 overflow-y-auto border-border bg-card lg:border-s",
+            !panels.right && "lg:hidden",
+          )}
         >
           {editable.length > 0 ? (
             <Inspector

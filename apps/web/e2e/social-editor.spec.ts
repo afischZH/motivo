@@ -255,6 +255,7 @@ test.describe("social media editor", () => {
     await expect(stage(page)).toHaveAttribute("data-background", "ready");
 
     // PNG export at the format size, then at 2x.
+    await page.getByTestId("export-menu").click();
     const download = page.waitForEvent("download");
     await page.getByTestId("export").click();
     const file = await download;
@@ -263,6 +264,8 @@ test.describe("social media editor", () => {
       width: 1080,
       height: 1920,
     });
+    // The menu closes once the download starts.
+    await page.getByTestId("export-menu").click();
     await page.getByTestId("export-scale").selectOption("2");
     const download2 = page.waitForEvent("download");
     await page.getByTestId("export").click();

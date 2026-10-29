@@ -7,7 +7,9 @@ import type { ParamValues } from "../store/editor-store";
 import { applyListOp, type ListItem, type ListOp } from "../store/list";
 import { useEditorStore } from "../store/react";
 import { valuesEqual } from "../store/values";
+import { groupIcon } from "../shell/group-icons";
 import { ChevronDownIcon } from "../shell/icons";
+import { PanelSection } from "../shell/panel-section";
 import { BackgroundField, ColorField, PaletteField } from "./color";
 import {
   NumberField,
@@ -89,9 +91,11 @@ export function ControlPanel(props: ControlPanelProps) {
     onChange(key, next);
     return true;
   };
+  const sections = (tool.controls?.groups?.length ?? 0) > 0;
   return (
     <div
-      className={cx("grid grid-cols-[minmax(0,1fr)] gap-4", props.className)}
+      // Sections abut (each draws its own divider); a plain form keeps its gaps.
+      className={cx("grid grid-cols-[minmax(0,1fr)]", sections ? "" : "gap-4", props.className)}
       data-tool={tool.id}
     >
       <ControlLevel
@@ -100,7 +104,7 @@ export function ControlPanel(props: ControlPanelProps) {
         root={params}
         locks={props.locks}
         lockPrefix=""
-        sections={(tool.controls?.groups?.length ?? 0) > 0}
+        sections={sections}
         onChange={onChange}
         onListOp={listOp}
         {...(props.onCommit ? { onCommit: props.onCommit } : {})}
@@ -174,20 +178,16 @@ function ControlLevel(level: Level) {
     if (!level.sections) return <div key={group.id ?? "__ungrouped"}>{body}</div>;
     const title = group.labelKey ? t(group.labelKey) : t("Editor.controls.moreSettings");
     return (
-      <details
+      <PanelSection
         key={group.id ?? "__ungrouped"}
-        open={!group.collapsed}
-        className="group/section -mx-4 border-b border-border px-4 pb-4 last:border-b-0"
+        title={title}
+        icon={groupIcon(group.id)}
+        defaultOpen={!group.collapsed}
+        className="-mx-4"
         data-group={group.id ?? undefined}
       >
-        <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-2 rounded-md px-2 py-2 text-[13px] font-semibold text-foreground select-none hover:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
-          {title}
-          <span className="text-muted-foreground transition-transform duration-200 ease-out group-open/section:rotate-180 [&_svg]:size-4">
-            <ChevronDownIcon />
-          </span>
-        </summary>
-        <div className="mt-2">{body}</div>
-      </details>
+        {body}
+      </PanelSection>
     );
   });
 }

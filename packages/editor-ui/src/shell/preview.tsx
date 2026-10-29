@@ -22,13 +22,20 @@ export const ZOOM_LEVELS: readonly number[] = [0.5, 1, 2];
 export const ZOOM_MIN = 0.05;
 export const ZOOM_MAX = 4;
 
-/** Space between the motif and the stage edge in fit mode, in CSS pixels. */
-const FIT_PADDING = 24;
+/** Width of the card frame around the motif, in CSS pixels (`p-2.5`). */
+const FRAME = 10;
+/**
+ * Space between the motif and the stage edge in fit mode, in CSS pixels:
+ * margin, the frame, and room for the floating zoom bar below.
+ */
+const FIT_PADDING = 32 + FRAME;
+/** Extra room above and below, so the floating zoom bar never covers the motif. */
+const DOCK_ROOM = 28;
 
 /** Scale that fits `size` into a stage of `stage` pixels, never above 100 %. */
 export function fitScale(size: CanvasSize, stage: { width: number; height: number }): number {
   const w = Math.max(1, stage.width - 2 * FIT_PADDING);
-  const h = Math.max(1, stage.height - 2 * FIT_PADDING);
+  const h = Math.max(1, stage.height - 2 * (FIT_PADDING + DOCK_ROOM));
   return Math.min(1, w / size.width, h / size.height);
 }
 
@@ -127,43 +134,45 @@ export function PreviewStage(props: PreviewStageProps) {
       )}
       data-testid="preview-stage"
     >
-      <div className="relative m-auto shrink-0">
-        {/* A notice replacing the picture is a child of the image, so it is named as its description. */}
-        <div
-          role="img"
-          aria-label={props.label}
-          aria-describedby={
-            scale !== null && (props.output.kind === "unsupported" || motifNotice)
-              ? noticeId
-              : undefined
-          }
-          className="shadow-[0_1px_2px_oklch(0_0_0/0.12),0_12px_40px_-12px_oklch(0_0_0/0.35)]"
-          style={props.transparent ? CHECKERBOARD_STYLE : undefined}
-          data-testid="preview"
-        >
-          {scale !== null &&
-            (props.output.kind === "unsupported" ? (
-              <div
-                id={noticeId}
-                className="flex items-center justify-center p-4 text-center text-sm text-muted-foreground"
-                style={{ width: size.width * scale, height: size.height * scale }}
-              >
-                {props.unsupportedText}
-              </div>
-            ) : (
-              <Motif
-                output={props.output}
-                width={size.width}
-                height={size.height}
-                scale={scale}
-                animate
-                noticeId={noticeId}
-                onNoticeChange={setMotifNotice}
-              />
-            ))}
+      {/* The card frame around the motif (like a sheet on the workbench). */}
+      <div className="m-auto shrink-0 rounded-2xl bg-card p-2.5 shadow-[0_1px_2px_oklch(0_0_0/0.08),0_16px_48px_-16px_oklch(0_0_0/0.3)] ring-1 ring-border/70">
+        <div className="relative">
+          {/* A notice replacing the picture is a child of the image, so it is named as its description. */}
+          <div
+            role="img"
+            aria-label={props.label}
+            aria-describedby={
+              scale !== null && (props.output.kind === "unsupported" || motifNotice)
+                ? noticeId
+                : undefined
+            }
+            style={props.transparent ? CHECKERBOARD_STYLE : undefined}
+            data-testid="preview"
+          >
+            {scale !== null &&
+              (props.output.kind === "unsupported" ? (
+                <div
+                  id={noticeId}
+                  className="flex items-center justify-center p-4 text-center text-sm text-muted-foreground"
+                  style={{ width: size.width * scale, height: size.height * scale }}
+                >
+                  {props.unsupportedText}
+                </div>
+              ) : (
+                <Motif
+                  output={props.output}
+                  width={size.width}
+                  height={size.height}
+                  scale={scale}
+                  animate
+                  noticeId={noticeId}
+                  onNoticeChange={setMotifNotice}
+                />
+              ))}
+          </div>
+          {/* Outside the role="img" box: an image's children are hidden from assistive tech. */}
+          {scale !== null && props.output.kind !== "unsupported" && props.overlay}
         </div>
-        {/* Outside the role="img" box: an image's children are hidden from assistive tech. */}
-        {scale !== null && props.output.kind !== "unsupported" && props.overlay}
       </div>
     </div>
   );

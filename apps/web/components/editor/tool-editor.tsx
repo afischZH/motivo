@@ -2,6 +2,7 @@
 
 import { ChevronLeftIcon } from "lucide-react";
 import { EditorShell, EditorStoreProvider } from "@musterli/editor-ui";
+import { openToolSwitcher } from "@musterli/editor-ui/commands";
 import { createBrandKitStore, createDesignStore } from "@musterli/storage";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -53,6 +54,8 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
         brandKit={brandKit}
         brandKitHref={brandKitHref}
         onOpenTool={openTool}
+        // The tool name pill opens the command palette with the tools only.
+        onSwitchTool={openToolSwitcher}
         headerStart={
           <>
             <Link
@@ -60,7 +63,7 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
               className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full border border-border bg-background ps-1.5 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground"
             >
               <ChevronLeftIcon aria-hidden="true" className="size-4" />
-              {t("allTools")}
+              <span className="max-xl:sr-only">{t("allTools")}</span>
             </Link>
             <FavoriteButton
               toolId={toolId}

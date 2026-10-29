@@ -6619,6 +6619,7 @@
     "save": "Speichern",
     "saving": "Speichert …",
     "myDesigns": "Meine Designs",
+    "moreActions": "Weitere Aktionen",
     "saved": "«{name}» gespeichert.",
     "savedCopy": "Kopie «{name}» gespeichert.",
     "saveFailed": "Speichern hat nicht geklappt. Ist der Speicher des Browsers voll oder gesperrt?",
@@ -6668,7 +6669,9 @@
       "scale": "{scale}× ({width} × {height})",
       "scaleTooLarge": "{scale}× (über {max} px, nicht verfügbar)",
       "running": "Exportiert …",
-      "run": "Exportieren"
+      "run": "Exportieren",
+      "title": "Exportieren",
+      "download": "Herunterladen"
     },
     "logos": {
       "title": "Logo aus dem Brand Kit",
@@ -7230,6 +7233,7 @@
     "open": "Suchen",
     "title": "Befehle und Tools durchsuchen",
     "placeholder": "Tool, Seite oder Befehl suchen …",
+    "toolPlaceholder": "Zu welchem Tool möchtest du wechseln?",
     "empty": "Nichts gefunden. Probier ein anderes Wort.",
     "groups": {
       "actions": "Aktionen",
