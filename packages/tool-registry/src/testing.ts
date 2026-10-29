@@ -12,6 +12,7 @@ import { TOOL_ID_PATTERN } from "./registry";
 import { pixelDigest } from "@musterli/effects";
 import { fitSize, isImageEffectTool, renderImageEffect } from "./photo-source";
 import { createRenderContext } from "./render";
+import { hasWebglReference, renderWebglReference } from "./webgl";
 import type {
   AnyToolDefinition,
   CanvasSize,
@@ -40,9 +41,10 @@ export const IMAGE_EFFECT_TEST_EDGE = 96;
 /**
  * Renders svg, css and text tools once with a fresh context (with the
  * animation time `t` of a "time" frame, if given). Image effects run on
- * their sample picture at a small size (`IMAGE_EFFECT_TEST_EDGE`) and
- * return `pixels <digest>`. Returns `undefined` for kinds that need a
- * browser (canvas2d, webgl).
+ * their sample picture, WebGL tools through their CPU reference, both at a
+ * small size (`IMAGE_EFFECT_TEST_EDGE`), and return `pixels <digest>`.
+ * Returns `undefined` for kinds that need a browser (canvas2d, WebGL
+ * without a CPU reference).
  */
 export function renderStatic(
   tool: AnyToolDefinition,
@@ -62,6 +64,18 @@ export function renderStatic(
     case "image-effect": {
       if (!isImageEffectTool(tool)) return undefined;
       const out = renderImageEffect(tool, p, seed, size, fitSize(size, IMAGE_EFFECT_TEST_EDGE));
+      return `pixels ${pixelDigest(out)}`;
+    }
+    case "webgl": {
+      if (!hasWebglReference(tool)) return undefined;
+      const out = renderWebglReference(
+        tool,
+        p,
+        seed,
+        size,
+        fitSize(size, IMAGE_EFFECT_TEST_EDGE),
+        t,
+      );
       return `pixels ${pixelDigest(out)}`;
     }
     default:

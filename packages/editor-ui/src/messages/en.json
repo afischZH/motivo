@@ -151,6 +151,8 @@
       "outputSize": "Result: {width} × {height} px.",
       "recomposed": "Different aspect ratio: the design is recomposed for this format.",
       "clamped": "Scaled down to at most {max} px per side.",
+      "vectorShapes": "The SVG holds about {shapes, number} shapes (at most {max, number}).",
+      "vectorTooMany": "Too many shapes for an SVG: about {shapes, number}, at most {max, number}. Choose a larger cell size or export as PNG.",
       "quality": "Quality",
       "background": "Background",
       "backgroundHint": "JPG has no transparency, so it needs a color.",
@@ -385,6 +387,9 @@
         "failed": "The capture did not work. Upload a screenshot instead.",
         "unsupported": "Your browser cannot capture the view. Upload a screenshot instead."
       }
+    },
+    "shader": {
+      "unavailable": "This browser cannot draw the shader because WebGL2 is missing. Turn on hardware acceleration or use a current browser such as Chrome, Edge, Firefox or Safari."
     }
   },
   "sizes": {

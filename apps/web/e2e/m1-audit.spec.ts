@@ -10,6 +10,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { toolSlug } from "../i18n/slugs";
+import { LONG_TASKS } from "./support/long-tasks";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
@@ -190,50 +191,54 @@ test.describe("keyboard only", () => {
 const REGRESSION_LIMIT_MS = 100;
 
 test.describe("main-thread budget", () => {
-  test("normal edits cause no long main-thread task", async ({ page, browserName }, testInfo) => {
-    test.skip(browserName !== "chromium", "Long Tasks API is Chromium only");
-    // Parallel workers share the CPU and inflate task times (seen: 133 ms with 4 workers).
-    test.skip(
-      testInfo.config.workers > 1,
-      "needs an idle CPU: runs in CI (1 worker) or --workers=1",
-    );
-    test.setTimeout(60_000);
-    await page.addInitScript(() => {
-      const w = window as unknown as { __longTasks: number[] };
-      w.__longTasks = [];
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
-      }).observe({ type: "longtask" });
-    });
-
-    const all: string[] = [];
-    let worst = 0;
-    for (const toolId of TOOL_IDS) {
-      await openEditor(page, `/en/tools/${toolSlug(toolId, "en")}`);
-      // Let hydration and preset thumbnails settle, then measure edits only.
-      await page.waitForTimeout(500);
-      await page.evaluate(() => {
-        (window as unknown as { __longTasks: number[] }).__longTasks = [];
+  test(
+    "normal edits cause no long main-thread task",
+    LONG_TASKS,
+    async ({ page, browserName }, testInfo) => {
+      test.skip(browserName !== "chromium", "Long Tasks API is Chromium only");
+      // Parallel workers share the CPU and inflate task times (seen: 133 ms with 4 workers).
+      test.skip(
+        testInfo.config.workers > 1,
+        "needs an idle CPU: runs in CI (1 worker), pnpm test:e2e:chromium or --workers=1",
+      );
+      test.setTimeout(60_000);
+      await page.addInitScript(() => {
+        const w = window as unknown as { __longTasks: number[] };
+        w.__longTasks = [];
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) w.__longTasks.push(Math.round(entry.duration));
+        }).observe({ type: "longtask" });
       });
 
-      for (let i = 0; i < 5; i++) await page.locator("body").press("Space");
-      await page.getByRole("slider").first().focus();
-      for (let i = 0; i < 10; i++) await page.keyboard.press("ArrowRight");
-      await page.keyboard.press("ControlOrMeta+Z");
-      await page.locator("body").press("1");
-      await page.locator("body").press("0");
-      await page.waitForTimeout(300);
+      const all: string[] = [];
+      let worst = 0;
+      for (const toolId of TOOL_IDS) {
+        await openEditor(page, `/en/tools/${toolSlug(toolId, "en")}`);
+        // Let hydration and preset thumbnails settle, then measure edits only.
+        await page.waitForTimeout(500);
+        await page.evaluate(() => {
+          (window as unknown as { __longTasks: number[] }).__longTasks = [];
+        });
 
-      const longTasks = await page.evaluate(
-        () => (window as unknown as { __longTasks: number[] }).__longTasks,
-      );
-      if (longTasks.length > 0) all.push(`${toolId}: ${longTasks.join(", ")} ms`);
-      worst = Math.max(worst, ...longTasks);
-    }
-    testInfo.annotations.push({
-      type: "long-tasks",
-      description: all.length > 0 ? all.join("; ") : "none over 50 ms",
-    });
-    expect(worst, `long tasks during edits: ${all.join("; ")}`).toBeLessThan(REGRESSION_LIMIT_MS);
-  });
+        for (let i = 0; i < 5; i++) await page.locator("body").press("Space");
+        await page.getByRole("slider").first().focus();
+        for (let i = 0; i < 10; i++) await page.keyboard.press("ArrowRight");
+        await page.keyboard.press("ControlOrMeta+Z");
+        await page.locator("body").press("1");
+        await page.locator("body").press("0");
+        await page.waitForTimeout(300);
+
+        const longTasks = await page.evaluate(
+          () => (window as unknown as { __longTasks: number[] }).__longTasks,
+        );
+        if (longTasks.length > 0) all.push(`${toolId}: ${longTasks.join(", ")} ms`);
+        worst = Math.max(worst, ...longTasks);
+      }
+      testInfo.annotations.push({
+        type: "long-tasks",
+        description: all.length > 0 ? all.join("; ") : "none over 50 ms",
+      });
+      expect(worst, `long tasks during edits: ${all.join("; ")}`).toBeLessThan(REGRESSION_LIMIT_MS);
+    },
+  );
 });

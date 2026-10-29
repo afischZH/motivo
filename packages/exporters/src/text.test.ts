@@ -2,9 +2,12 @@ import {
   blobTool,
   builtInTools,
   createRenderContext,
+  cmykHalftoneTool,
   cssGradientTool,
   defineTool,
+  ditherTool,
   duotoneTool,
+  halftoneTool,
   glassEffectsTool,
   polkaDotsTool,
   svgWavesTool,
@@ -67,6 +70,21 @@ describe("supportsExport", () => {
     expect(supportsExport(duotoneTool, "gif")).toBe(false);
   });
 
+  it("offers SVG for image effects with a vector output only", () => {
+    expect(supportsExport(halftoneTool, "svg")).toBe(true);
+    expect(supportsExport(cmykHalftoneTool, "svg")).toBe(true);
+    expect(supportsExport(ditherTool, "svg")).toBe(false);
+    expect(supportsExport(halftoneTool, "css")).toBe(false);
+    // The SVG is built in the editor's worker, not by the synchronous text exporter.
+    expect(() =>
+      exportSvg(
+        halftoneTool,
+        halftoneTool.defaults,
+        createRenderContext(1, { width: 30, height: 20 }),
+      ),
+    ).toThrow(ExportError);
+  });
+
   it("lets params narrow the formats (exportsFor)", () => {
     const glass = glassEffectsTool.defaults;
     const glow = { ...glass, effect: "glow" as const };
@@ -98,8 +116,9 @@ describe("supportsExport", () => {
 });
 
 describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyToolDefinition) => {
-  // Code-first tools without an SVG export (glass effects) are covered by renderDesignSvg below.
-  it.runIf(supportsExport(tool, "svg"))(
+  // Code-first tools without an SVG export (glass effects) are covered by renderDesignSvg below;
+  // image effects build their SVG in the editor's worker (tool-registry tests cover it).
+  it.runIf(supportsExport(tool, "svg") && tool.render.kind !== "image-effect")(
     "exports well-formed SVG equal to the preview render",
     () => {
       const svg = exportSvg(tool, tool.defaults, ctx());
@@ -126,8 +145,8 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("%s", (_, tool: AnyTo
     }
   });
 
-  // Image effects have no SVG; their determinism is tested in the tool registry.
-  it.runIf(tool.render.kind !== "image-effect")(
+  // Image effects and WebGL tools have no SVG; their determinism is tested in the tool registry.
+  it.runIf(tool.render.kind !== "image-effect" && tool.render.kind !== "webgl")(
     "is unaffected by an rng the caller already consumed",
     () => {
       const used = ctx(5);

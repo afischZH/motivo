@@ -109,16 +109,18 @@ Die restlichen fünf Ideen aus der Ideenliste, rein im Browser, ohne neue Librar
 
 **DoD**: Jedes Tool mit mindestens 6 Presets, Snapshot pro Preset, Vorschau == Export in Chrome; Fotos bleiben lokal und nie im Teilen-Link; Bildeffekte im Worker, UI-Thread nie über 50 ms.
 
-## M5: WebGL, Bildeffekte, Video (Woche 15 bis 18)
+## M5: WebGL, Bildeffekte (Entscheid Andreas 2026-10-28: ohne Video)
 
-- [ ] WebGL2-Wrapper, Shader-Hot-Reload im Dev-Modus
-- [ ] **Shader Gradient Editor** inkl. Presets (Liquid, Silk, Streaked, Grainy), Dithering, Grain, Vignette
-- [ ] **Video-Modus**: Keyframes, Timeline, nahtloser Loop; Export MP4/WebM via WebCodecs + Muxer, Fallback MediaRecorder; Hinweis bei nicht unterstützten Browsern
-- [ ] Hochauflösender Export (4K/8K) via Kachel-Rendering
-- [ ] **3D Perspective Grid** (inkl. Animation)
-- [ ] Bildeffekt-Pipeline im Worker: **Halftone**, **CMYK Halftone**, **Dither**
+- [x] WebGL2-Wrapper (ohne Hot Reload, GLSL als TS-Strings)
+- [x] **Shader Gradient Editor** inkl. Presets (Liquid, Silk, Streaked, Grainy), Dithering, Grain, Vignette
+- [x] Hochauflösender Export (4K/8K) via Kachel-Rendering
+- [x] **3D Perspective Grid** (inkl. Animation als GIF)
+- [x] Bildeffekt-Pipeline im Worker: **Halftone**, **CMYK Halftone**, **Dither**
+- [x] Changelog, QA in Chrome, Code- und Security-Review
 
-**DoD**: 10-Sekunden-Loop in 1080p exportiert in Chrome und Safari (Version mit WebCodecs) ohne sichtbaren Loop-Sprung; Effekt-Vorschau bleibt bei 12-MP-Bildern flüssig (UI-Thread nie > 50 ms blockiert).
+**DoD**: Shader-Vorschau == PNG-Export in Chrome (auch 4K/8K über Kacheln); Effekt-Vorschau bleibt bei 12-MP-Bildern flüssig (UI-Thread nie > 50 ms blockiert); ohne WebGL2 klare Meldung statt leerer Fläche.
+
+**Später (eigener Meilenstein nach Entscheid Andreas)**: **Video-Modus**: Keyframes, Timeline, nahtloser Loop; Export MP4/WebM via WebCodecs + Muxer.
 
 ## M6: Social Media Editor + restliche Effekte (Woche 19 bis 23)
 

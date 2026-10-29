@@ -3697,6 +3697,490 @@
           "a5": "Yes. The export offers plain text for README files, code comments and terminals, plus an HTML snippet with inline styles that brings its colors and the monospace font along."
         }
       }
+    },
+    "perspective-grid": {
+      "name": "3D Perspective Grid",
+      "description": "Retro grid in 3D perspective with sun, stars, mountains and glow, the synthwave and outrun look. Export as SVG, image or animated GIF.",
+      "groups": {
+        "camera": "Camera",
+        "grid": "Grid",
+        "scene": "Scene"
+      },
+      "params": {
+        "horizon": {
+          "label": "Horizon"
+        },
+        "tilt": {
+          "label": "Tilt"
+        },
+        "fov": {
+          "label": "Field of view"
+        },
+        "cameraHeight": {
+          "label": "Camera height",
+          "description": "Height above the floor in grid cells. Close to the floor the cells look large and flat, from high up you see many small cells. This is also the line spacing."
+        },
+        "cellDepth": {
+          "label": "Cell depth"
+        },
+        "distance": {
+          "label": "View distance"
+        },
+        "lineWidth": {
+          "label": "Line width"
+        },
+        "taper": {
+          "label": "Perspective line width"
+        },
+        "lineColor": {
+          "label": "Line color"
+        },
+        "fade": {
+          "label": "Fade to horizon"
+        },
+        "glow": {
+          "label": "Glow"
+        },
+        "haze": {
+          "label": "Horizon haze"
+        },
+        "ceiling": {
+          "label": "Mirrored ceiling"
+        },
+        "sun": {
+          "label": "Sun"
+        },
+        "sunSize": {
+          "label": "Sun size"
+        },
+        "sunRise": {
+          "label": "Sun height"
+        },
+        "sunStripes": {
+          "label": "Sun stripes"
+        },
+        "sunTop": {
+          "label": "Sun top"
+        },
+        "sunBottom": {
+          "label": "Sun bottom"
+        },
+        "stars": {
+          "label": "Stars"
+        },
+        "starColor": {
+          "label": "Star color"
+        },
+        "mountains": {
+          "label": "Mountains"
+        },
+        "mountainColor": {
+          "label": "Mountain color"
+        },
+        "palette": {
+          "label": "Sky"
+        },
+        "background": {
+          "label": "Floor"
+        }
+      },
+      "presets": {
+        "synthwave": "Synthwave",
+        "terminal": "Terminal",
+        "ice": "Glacier",
+        "sunset": "Sunset",
+        "mono": "Mono",
+        "blueprint": "Blueprint",
+        "night-drive": "Night drive",
+        "tunnel": "Tunnel"
+      },
+      "seo": {
+        "whatIs": "A perspective grid is a floor grid that runs into the distance and vanishes at the horizon, familiar from synthwave, outrun and eighties video games. Musterli computes the grid with a real camera projection and can add a striped sun, stars, mountains, haze and glow. Use it as a background for album covers, streams, slides or websites.",
+        "howTo": "Pick a preset or set horizon, tilt, field of view and camera height yourself. Under Grid you adjust view distance, line width, fade and glow, under Scene the sun, stars, mountains and haze. Press the space bar for new colors and a new camera. Export as SVG, PNG, JPG or WebP, or as a GIF in which the grid moves forward in a seamless loop.",
+        "faq": {
+          "q1": {
+            "question": "Do I need 3D software for this?",
+            "answer": "No. Musterli computes the perspective right in your browser and draws every line as a vector. The SVG stays sharp at any size and opens in Figma, Illustrator or Inkscape."
+          },
+          "q2": {
+            "question": "How is the animation made?",
+            "answer": "Choose GIF in the export and the Motion source. The grid moves exactly one cell depth towards you per loop, so the loop is seamless. The first frame matches the preview."
+          },
+          "q3": {
+            "question": "Why does the grid end before the horizon?",
+            "answer": "Far away the lines lie so close together that only flicker remains. Musterli fades the grid out before that and fills the rest with haze. View distance and fade decide how far it reaches."
+          },
+          "q4": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. With a brand palette from your Brand Kit the tool uses your colors for the sky, lines, sun, stars and mountains. The floor color stays so the contrast works."
+          }
+        }
+      }
+    },
+    "halftone": {
+      "name": "Halftone Effect",
+      "description": "Turn photos into halftone dots, lines, squares or diamonds like newspaper print. With screen angle, cell size, two colors and SVG export. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "screen": "Screen",
+        "tone": "Tones"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Dots",
+            "line": "Lines",
+            "square": "Squares",
+            "diamond": "Diamonds"
+          }
+        },
+        "cellSize": {
+          "label": "Cell size"
+        },
+        "angle": {
+          "label": "Screen angle"
+        },
+        "ink": {
+          "label": "Ink"
+        },
+        "background": {
+          "label": "Paper"
+        },
+        "invert": {
+          "label": "Invert (light dots)"
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "newsprint": "Newsprint",
+        "pop-art": "Pop art",
+        "engraving": "Engraving",
+        "mosaic": "Mosaic",
+        "diamonds": "Diamonds",
+        "night": "Night"
+      },
+      "seo": {
+        "whatIs": "Halftone is the technique newspapers and posters use to print photos with a single ink: the picture is split into a grid of cells, and each cell gets a dot that grows the darker the picture is at that spot. Up close you see dots, from a distance a photo. Today the look is popular for posters, merch, social media and websites with a retro or pop art style.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Choose the shape (dots, lines, squares or diamonds), the cell size and the screen angle. Ink and paper are up to you, and the paper can be transparent. Invert turns the light areas into dots, ideal for light ink on a dark background. Brightness, contrast and gamma decide how large the dots get. Space rolls new colors and angles. Export as PNG, JPG, WebP or SVG.",
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "Can I export the halftone as a vector?",
+          "a2": "Yes. The SVG export draws every dot and line as a vector shape, ideal for plotters, screen printing or lasers. To keep the file manageable (about 1 MB), it is limited to 70,000 shapes. For very large photos, choose a larger cell size; PNG, JPG and WebP have no such limit.",
+          "q3": "Which screen angle is right?",
+          "a3": "45 degrees is the classic: at this angle the eye notices the grid least. 0 degrees looks technical and strict, lines at 30 degrees recall copper engravings. Press space to try different angles.",
+          "q4": "Why do the dots turn into a flat area in a small preview?",
+          "a4": "When the cells are smaller than about four screen pixels in the preview, the dots cannot be shown. The preview then shows the tone the screen gives from a distance. Zoom to 100 percent to see the dots; the export always renders at full size.",
+          "q5": "Can I use my brand colors?",
+          "a5": "Yes. Apply a brand palette from your Brand Kit: the darkest color becomes the ink, the lightest the paper. With invert on, it is the other way round."
+        }
+      }
+    },
+    "cmyk-halftone": {
+      "name": "CMYK Halftone",
+      "description": "Separate photos into cyan, magenta, yellow and black with a screen angle per ink, like offset printing. With misregistration and SVG export. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "screen": "Screen",
+        "angles": "Screen angles",
+        "tone": "Tones"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "circle": "Dots",
+            "line": "Lines",
+            "square": "Squares",
+            "diamond": "Diamonds"
+          }
+        },
+        "cellSize": {
+          "label": "Cell size"
+        },
+        "gcr": {
+          "label": "Gray component replacement (GCR)"
+        },
+        "offset": {
+          "label": "Misregistration"
+        },
+        "offsetAngle": {
+          "label": "Direction of the shift"
+        },
+        "angleC": {
+          "label": "Cyan angle"
+        },
+        "angleM": {
+          "label": "Magenta angle"
+        },
+        "angleY": {
+          "label": "Yellow angle"
+        },
+        "angleK": {
+          "label": "Black angle"
+        },
+        "cyan": {
+          "label": "Cyan"
+        },
+        "magenta": {
+          "label": "Magenta"
+        },
+        "yellow": {
+          "label": "Yellow"
+        },
+        "black": {
+          "label": "Black"
+        },
+        "paper": {
+          "label": "Paper"
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "comic": "Comic",
+        "misprint": "Misprint",
+        "fine": "Fine screen",
+        "newsprint": "Newsprint",
+        "pastel": "Pastel",
+        "squares": "Squares"
+      },
+      "seo": {
+        "whatIs": "CMYK halftone printing is the process behind almost every printed color photo: the picture is separated into the four process inks cyan, magenta, yellow and black, and each ink is printed as its own dot screen. So the screens do not interfere into distracting patterns (moiré), each ink has its own angle, classically cyan 15, magenta 75, yellow 0 and black 45 degrees. Up close you see the typical rosettes that comics and pop art made famous.",
+        "howTo": "Upload a photo or start with a preset on the sample picture. Set the cell size and shape; gray component replacement (GCR) decides how much of the gray prints in black instead of the three colored inks. The angle of each ink is adjustable. Misregistration shifts cyan, magenta and yellow against each other like a slipped print. Inks and paper can be changed. Space turns all screens together and picks a new paper. Export as PNG, JPG, WebP or SVG.",
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "Is this a real color separation for the print shop?",
+          "a2": "No, it is a design effect. The conversion from RGB to CMYK is deliberately simple and uses no color profile. To print a photo in its original colors, the print shop still needs a profile such as ISO Coated. The result works well as artwork that looks like halftone print.",
+          "q3": "What does gray component replacement (GCR) do?",
+          "a3": "Where cyan, magenta and yellow together make a gray, GCR replaces that share with black. At 100 percent a neutral gray prints in black only, at 0 percent in the three colored inks only. Values in between give rich shadows with colored rosettes.",
+          "q4": "Can I edit the SVG further?",
+          "a4": "Yes. Each ink is its own group with the multiply blend mode, so browsers and Figma show the same overprints as the preview. Apps without blend modes show the inks stacked. The SVG is limited to 70,000 shapes (about 1 MB); for large photos, choose a larger cell size.",
+          "q5": "Why do I see moiré patterns?",
+          "a5": "Moiré appears when screens with similar angles overlap, or when the cells are only a few pixels wide in the preview. The classic angles are 30 degrees apart and keep moiré small. Zoom to 100 percent or choose a larger cell size."
+        }
+      }
+    },
+    "dither": {
+      "name": "Dither Effect",
+      "description": "Reduce photos to a few colors with Floyd-Steinberg, Atkinson, Stucki or Bayer dithering, in 1-bit, grayscale, retro palettes or your own colors. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "dither": "Dithering",
+        "tone": "Tones"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "algorithm": {
+          "label": "Algorithm",
+          "options": {
+            "floyd-steinberg": "Floyd-Steinberg",
+            "atkinson": "Atkinson",
+            "stucki": "Stucki",
+            "bayer2": "Bayer 2 × 2",
+            "bayer4": "Bayer 4 × 4",
+            "bayer8": "Bayer 8 × 8"
+          }
+        },
+        "palette": {
+          "label": "Palette",
+          "options": {
+            "mono": "1-bit (two colors)",
+            "gray": "4 grays",
+            "handheld": "Handheld (4 greens)",
+            "cga": "Early PC graphics (4 colors)",
+            "custom": "Custom colors"
+          }
+        },
+        "ink": {
+          "label": "Dark color"
+        },
+        "paper": {
+          "label": "Light color"
+        },
+        "colorMode": {
+          "label": "Match colors",
+          "options": {
+            "tone": "By brightness",
+            "color": "By color"
+          }
+        },
+        "pixelSize": {
+          "label": "Pixel size"
+        },
+        "serpentine": {
+          "label": "Serpentine (alternate row direction)"
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "one-bit": "1-bit",
+        "atkinson": "Atkinson",
+        "handheld": "Handheld",
+        "cga": "Early PC graphics",
+        "ordered": "Bayer pattern",
+        "grayscale": "Grayscale",
+        "sunset": "Sunset"
+      },
+      "seo": {
+        "whatIs": "Dithering lets a picture get by with only a few colors and still show gradients and detail: instead of rounding a color, the algorithm spreads the difference to the neighboring pixels (error diffusion such as Floyd-Steinberg, Atkinson or Stucki) or compares each pixel with a fixed threshold pattern (Bayer matrix). The grainy look recalls early computers, game consoles and fax machines and is popular today for retro graphics, posters and websites.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Choose an algorithm and a palette: 1-bit with two colors of your choice, four grays, four greens, the four colors of early PC graphics or your own colors. Pixel size makes the dots coarser; brightness, contrast and gamma decide how much turns light or dark. Space rolls new colors, or a new algorithm for fixed palettes. Export as PNG, JPG or WebP.",
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "Which algorithm should I choose?",
+          "a2": "Floyd-Steinberg is the classic with fine, natural transitions. Atkinson passes on only part of the error: highlights and shadows get bolder, like early Macintosh graphics. Stucki spreads the error further and looks calmer. The Bayer patterns create a regular crosshatch that suits pixel art.",
+          "q3": "Does the export look exactly like the preview?",
+          "a3": "Yes. The dithering is always computed on the same grid, the design size divided by the pixel size, and then scaled to the screen or export size. At the same size, preview and PNG are identical pixel for pixel; at twice the size every dot simply gets larger. In a reduced preview the dots blend into grays; zoom to 100 percent to see them.",
+          "q4": "Can I use my brand colors?",
+          "a4": "Yes. Apply a brand palette from your Brand Kit: the palette switches to custom colors with your brand colors, sorted from dark to light. By color picks the closest color for each pixel, by brightness spreads the photo's brightness over the palette.",
+          "q5": "Why is there no SVG export?",
+          "a5": "In dithering every pixel is a dot of its own. As SVG it would turn into hundreds of thousands of rectangles, a large and slow file. Export as PNG: with a pixel size above 1, every dot stays sharp when enlarged."
+        }
+      }
+    },
+    "shader-gradient": {
+      "name": "Shader Gradient",
+      "description": "Liquid, silky and grainy gradients from a GPU shader. With domain warping, Bayer dithering, grain and vignette. PNG, JPG and WebP up to 8K, plus seamless GIF loops.",
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "liquid": "Liquid",
+            "silk": "Silk",
+            "streaked": "Streaked",
+            "grainy": "Grainy",
+            "marble": "Marble",
+            "ripple": "Ripple",
+            "aurora": "Aurora"
+          }
+        },
+        "frequency": {
+          "label": "Frequency"
+        },
+        "amplitude": {
+          "label": "Contrast"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "detail": {
+          "label": "Detail"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "zoom": {
+          "label": "Zoom"
+        },
+        "time": {
+          "label": "Moment",
+          "description": "Position in the loop. Every export shows exactly this moment, and the GIF loop starts here."
+        },
+        "speed": {
+          "label": "Speed",
+          "description": "How fast the preview moves. 0 stops it. With reduced motion turned on in your system, the preview always stands still."
+        },
+        "dither": {
+          "label": "Dithering",
+          "options": {
+            "off": "Off",
+            "bayer2": "2×2",
+            "bayer4": "4×4",
+            "bayer8": "8×8"
+          }
+        },
+        "levels": {
+          "label": "Color steps"
+        },
+        "ditherScale": {
+          "label": "Dither cell"
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Motion",
+        "texture": "Texture"
+      },
+      "presets": {
+        "liquid": "Liquid violet",
+        "silk": "Grey silk",
+        "streaked": "Morning streaks",
+        "grainy": "Grainy summer",
+        "marble": "Marble",
+        "ripple": "Lagoon",
+        "aurora": "Aurora",
+        "retro-dither": "Retro dither"
+      },
+      "seo": {
+        "whatIs": "A shader gradient is a gradient computed by a small program right on your graphics card. Instead of a few fixed color stops, it builds a living field of noise, bends it with domain warping and then runs it through your colors. The result is liquid, silky or grainy backgrounds that need no image as a starting point. Musterli renders everything in your browser, nothing leaves your device.",
+        "howTo": "Pick a style such as Liquid, Silk or Aurora and choose two to six colors. Shape the field with frequency, warp and angle, then give it a surface with grain, vignette and Bayer dithering. Press Space for new colors and a new shape. The moment slider picks the still frame for exports. Then export a PNG, JPG or WebP up to 8K, or a seamless GIF loop.",
+        "faq": {
+          "q1": {
+            "question": "Do I need a special graphics card?",
+            "answer": "No. Any current browser with WebGL2 will do, and Chrome, Edge, Firefox and Safari have supported it for years. If WebGL2 is missing, for example because hardware acceleration is turned off, Musterli shows a notice instead of an empty area."
+          },
+          "q2": {
+            "question": "Does the export look exactly like the preview?",
+            "answer": "Yes. Preview and export run the same shader with the same values. Musterli renders large exports up to 8K in tiles, and grain and dithering stay exactly where they are in the preview."
+          },
+          "q3": {
+            "question": "What does Bayer dithering do?",
+            "answer": "It reduces the gradient to a few color steps and spreads the transitions in a regular dot pattern. That gives a retro look like old computers and printers, and it prevents visible banding in soft gradients."
+          },
+          "q4": {
+            "question": "Can I use the gradient as an animation?",
+            "answer": "The GIF export draws a seamless loop whose first frame is exactly your still image. The preview moves at the speed you set, unless you have turned on reduced motion in your system."
+          },
+          "q5": {
+            "question": "Does the same gradient always look the same?",
+            "answer": "Yes. The noise depends only on the seed and your settings. A share link or a saved design gives the same picture on every device."
+          }
+        }
+      }
     }
   },
   "Converters": {

@@ -23,6 +23,7 @@ import {
 import {
   CANVAS_EDGE_MAX,
   animationSources,
+  isImageEffectTool,
   type AnimationSource,
   type AnyToolDefinition,
   type CanvasSize,
@@ -47,6 +48,11 @@ export type ExportChoice =
   /** One repeat tile of a seamless design as PNG (tools with `tile`). */
   | { id: "png-tile"; kind: "tile"; format: "png"; category: "image" }
   | { id: "svg"; kind: "svg"; category: "vector" }
+  /**
+   * SVG of an image effect (halftone): built in the raster-effect worker,
+   * so it is downloaded (or copied) like a file, not shown as code.
+   */
+  | { id: "svg"; kind: "effect-svg"; category: "vector" }
   | { id: "css"; kind: "css"; category: "code" }
   | { id: `extra:${string}`; kind: "extra"; extra: ExtraExportInfo; category: "code" }
   /** Animated GIF (tools with `animation`). */
@@ -81,7 +87,13 @@ export function listExportChoices(
   if (supportsTile(tool) && supports("png")) {
     choices.push({ id: "png-tile", kind: "tile", format: "png", category: "image" });
   }
-  if (supports("svg")) choices.push({ id: "svg", kind: "svg", category: "vector" });
+  if (supports("svg")) {
+    choices.push(
+      isImageEffectTool(tool)
+        ? { id: "svg", kind: "effect-svg", category: "vector" }
+        : { id: "svg", kind: "svg", category: "vector" },
+    );
+  }
   if (supports("css")) choices.push({ id: "css", kind: "css", category: "code" });
   for (const extra of listExtraExports(tool)) {
     choices.push({ id: `extra:${extra.id}`, kind: "extra", extra, category: "code" });

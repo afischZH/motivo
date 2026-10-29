@@ -21,6 +21,7 @@ import { toolSlug } from "../i18n/slugs";
 import { enableClipboard } from "./support/clipboard";
 import { comparePngs } from "./support/compare";
 import { decodePng, encodeRgbPng } from "./support/png";
+import { LONG_TASKS } from "./support/long-tasks";
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const TOOL = "screenshot-beautifier";
@@ -297,57 +298,64 @@ test.describe("screenshot beautifier", () => {
     await expect(stage(page)).toHaveCSS("height", "760px");
   });
 
-  test("handles a 4K screenshot without long tasks over 50 ms", async ({ page }, testInfo) => {
-    test.slow();
-    const buffer = screenshot4k();
-    expect(buffer.length).toBeLessThan(5 * 1024 * 1024);
-    // From disk, so Playwright streams the file instead of passing it through the page.
-    const file = testInfo.outputPath("4k.png");
-    await writeFile(file, buffer);
-    await page.addInitScript(() => {
-      const w = window as unknown as { __longTasks: [at: number, ms: number][] };
-      w.__longTasks = [];
-      new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          w.__longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
-        }
-      }).observe({ type: "longtask" });
-    });
-    const longTasksSince = (from: number) =>
-      page.evaluate(
-        (t) =>
-          (window as unknown as { __longTasks: [number, number][] }).__longTasks.filter(
-            ([at]) => at >= t,
-          ),
-        from,
+  test(
+    "handles a 4K screenshot without long tasks over 50 ms",
+    LONG_TASKS,
+    async ({ page }, testInfo) => {
+      test.slow();
+      const buffer = screenshot4k();
+      expect(buffer.length).toBeLessThan(5 * 1024 * 1024);
+      // From disk, so Playwright streams the file instead of passing it through the page.
+      const file = testInfo.outputPath("4k.png");
+      await writeFile(file, buffer);
+      await page.addInitScript(() => {
+        const w = window as unknown as { __longTasks: [at: number, ms: number][] };
+        w.__longTasks = [];
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            w.__longTasks.push([Math.round(entry.startTime), Math.round(entry.duration)]);
+          }
+        }).observe({ type: "longtask" });
+      });
+      const longTasksSince = (from: number) =>
+        page.evaluate(
+          (t) =>
+            (window as unknown as { __longTasks: [number, number][] }).__longTasks.filter(
+              ([at]) => at >= t,
+            ),
+          from,
+        );
+      const now = () => page.evaluate(() => performance.now());
+      await openEditor(page);
+      // Page load (hydration, lazy chunks) is not part of this check: wait for a quiet second.
+      await expect
+        .poll(
+          async () => {
+            const t = await now();
+            return (await longTasksSince(t - 1000)).length;
+          },
+          { timeout: 15_000, intervals: [250] },
+        )
+        .toBe(0);
+      const start = await now();
+      await chooseFile(page, file);
+      // A large picture reaches the preview as a blob: URL (decoded in steps), never as a style string.
+      await expect.poll(() => pictureHref(page), { timeout: 20_000 }).toContain('url("blob:');
+      await expect(page.getByTestId("asset-thumbnail")).toHaveAttribute("src", /^blob:/);
+      // A few edits with the picture in place: each renders the preview again.
+      await page.getByRole("radio", { name: "Window", exact: true }).click();
+      await page.getByRole("radio", { name: "Light", exact: true }).click();
+      await page.waitForTimeout(800);
+      const longTasks = (await longTasksSince(start)).map(([at, ms]) => [
+        Math.round(at - start),
+        ms,
+      ]);
+      console.log(
+        `4K screenshot long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
       );
-    const now = () => page.evaluate(() => performance.now());
-    await openEditor(page);
-    // Page load (hydration, lazy chunks) is not part of this check: wait for a quiet second.
-    await expect
-      .poll(
-        async () => {
-          const t = await now();
-          return (await longTasksSince(t - 1000)).length;
-        },
-        { timeout: 15_000, intervals: [250] },
-      )
-      .toBe(0);
-    const start = await now();
-    await chooseFile(page, file);
-    // A large picture reaches the preview as a blob: URL (decoded in steps), never as a style string.
-    await expect.poll(() => pictureHref(page), { timeout: 20_000 }).toContain('url("blob:');
-    await expect(page.getByTestId("asset-thumbnail")).toHaveAttribute("src", /^blob:/);
-    // A few edits with the picture in place: each renders the preview again.
-    await page.getByRole("radio", { name: "Window", exact: true }).click();
-    await page.getByRole("radio", { name: "Light", exact: true }).click();
-    await page.waitForTimeout(800);
-    const longTasks = (await longTasksSince(start)).map(([at, ms]) => [Math.round(at - start), ms]);
-    console.log(
-      `4K screenshot long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
-    );
-    expect(Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0))).toBeLessThanOrEqual(50);
-  });
+      expect(Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0))).toBeLessThanOrEqual(50);
+    },
+  );
 
   for (const scheme of ["light", "dark"] as const) {
     test(`has no axe violations with a screenshot (${scheme})`, async ({ page }) => {

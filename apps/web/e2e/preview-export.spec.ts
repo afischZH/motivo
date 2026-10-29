@@ -120,6 +120,11 @@ const CASES: Case[] = [
   { toolId: "low-poly", preset: "Mosaic" },
   { toolId: "terrazzo" },
   { toolId: "terrazzo", preset: "Pebbles" },
+  // M5-AP03: hundreds of thin filled quads with a depth-fade gradient, a
+  // blurred <use> copy (glow), clipped sun stripes; the tilted preset rotates
+  // the whole scene.
+  { toolId: "perspective-grid" },
+  { toolId: "perspective-grid", preset: "Night drive" },
   // M4b-AP04: nested backdrop SVG of another tool, layered blurred shadows,
   // clipped placeholder, window bar with text; solid background with border.
   { toolId: "screenshot-beautifier", css: true },

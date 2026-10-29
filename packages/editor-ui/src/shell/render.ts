@@ -64,6 +64,17 @@ export type MotifOutput =
       seed: number;
       size: CanvasSize;
     }
+  | {
+      /**
+       * A WebGL tool (docs/ARCHITECTURE.md 4.15): the pixels come from the
+       * shader worker (`ShaderMotif`), so the output only names the design.
+       */
+      kind: "shader";
+      tool: AnyToolDefinition;
+      params: ParamValues;
+      seed: number;
+      size: CanvasSize;
+    }
   | { kind: "unsupported"; renderKind: RenderKind };
 
 const box = (b: { x: number; y: number; width: number; height: number; css: string }) => ({
@@ -111,6 +122,14 @@ export function renderMotif(
       return isImageEffectTool(tool)
         ? { kind: "raster", tool, params, seed, size: { width: size.width, height: size.height } }
         : { kind: "unsupported", renderKind: renderer.kind };
+    case "webgl":
+      return {
+        kind: "shader",
+        tool,
+        params,
+        seed,
+        size: { width: size.width, height: size.height },
+      };
     default:
       return { kind: "unsupported", renderKind: renderer.kind };
   }

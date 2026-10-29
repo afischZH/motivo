@@ -9,12 +9,21 @@ import {
   useSyncExternalStore,
   type CSSProperties,
 } from "react";
+import { webglLoopSeconds } from "@musterli/tool-registry";
 import { cx } from "../controls/primitives";
+import { useT } from "../i18n";
 import {
   rasterEffectClient,
   retainRasterEffectClient,
   type RasterEffectJob,
 } from "../raster-effect/client";
+import {
+  ShaderRenderError,
+  retainShaderClient,
+  shaderClient,
+  type ShaderJob,
+} from "../shader/client";
+import { SHADER_FRAME_MAX_EDGE } from "../shader/protocol";
 import {
   canUseObjectUrls,
   largeDataUrls,
@@ -183,6 +192,19 @@ export interface MotifProps {
   /** Display scale, 1 = 100 %. */
   scale: number;
   className?: string;
+  /**
+   * Play the design's loop when it has one (WebGL tools with
+   * `loopSeconds`) and the viewer allows motion. Only the main preview.
+   */
+  animate?: boolean;
+  /**
+   * Id for a notice that replaces the picture (a shader motif without
+   * WebGL2), so the preview's `role="img"` box can name it in
+   * `aria-describedby`: an image's children are hidden from assistive tech.
+   */
+  noticeId?: string;
+  /** Called with `true` while such a notice is shown, `false` otherwise. */
+  onNoticeChange?: (shown: boolean) => void;
 }
 
 /**
@@ -192,11 +214,9 @@ export interface MotifProps {
  * size, scaled with a transform so px-based declarations stay exact.
  */
 export function Motif(props: MotifProps) {
-  return props.output.kind === "raster" ? (
-    <RasterMotif {...props} output={props.output} />
-  ) : (
-    <VectorMotif {...props} />
-  );
+  if (props.output.kind === "raster") return <RasterMotif {...props} output={props.output} />;
+  if (props.output.kind === "shader") return <ShaderMotif {...props} output={props.output} />;
+  return <VectorMotif {...props} />;
 }
 
 type RasterOutput = Extract<MotifOutput, { kind: "raster" }>;
@@ -299,6 +319,193 @@ function RasterMotif({
       className={cx("block max-w-none select-none", !shown && "bg-muted", className)}
       style={{ width: width * scale, height: height * scale }}
       data-raster-motif=""
+    />
+  );
+}
+
+type ShaderOutput = Extract<MotifOutput, { kind: "shader" }>;
+
+/** Most pixels of an animated shader frame (about 1280 x 800); stills use the full size. */
+export const SHADER_ANIMATION_MAX_PIXELS = 1_048_576;
+
+/** Animated shader previews draw at most this many frames per second. */
+export const SHADER_ANIMATION_FPS = 30;
+
+/**
+ * Pixels of a shader motif: as `rasterPreviewSize`, at most
+ * `SHADER_FRAME_MAX_EDGE` per edge (one pass on every GPU) and, for
+ * animation frames, `maxPixels`.
+ */
+export function shaderPreviewSize(
+  design: { width: number; height: number },
+  scale: number,
+  devicePixelRatio: number,
+  maxPixels: number = RASTER_PREVIEW_MAX_PIXELS,
+): { width: number; height: number } {
+  const base = rasterPreviewSize(design, scale, devicePixelRatio);
+  const k = Math.min(
+    1,
+    SHADER_FRAME_MAX_EDGE / Math.max(base.width, base.height),
+    Math.sqrt(maxPixels / Math.max(1, base.width * base.height)),
+  );
+  return {
+    width: Math.max(1, Math.round(base.width * k)),
+    height: Math.max(1, Math.round(base.height * k)),
+  };
+}
+
+/** Whether a failed shader frame means this browser cannot draw shaders at all. */
+const isUnavailable = (error: unknown): boolean =>
+  error instanceof ShaderRenderError &&
+  (error.code === "unavailable" || error.code === "unsupported" || error.code === "context-lost");
+
+/**
+ * A WebGL tool (docs/ARCHITECTURE.md 4.15): drawn by the shader worker at
+ * the displayed resolution into a canvas, like `RasterMotif`. With
+ * `animate`, a loop and motion allowed, frames follow the clock (one in
+ * flight, at most `SHADER_ANIMATION_FPS`); time 0 is the still that every
+ * export shows. Without WebGL2 a localized notice replaces the picture.
+ */
+function ShaderMotif({
+  output,
+  width,
+  height,
+  scale,
+  className,
+  animate = false,
+  noticeId,
+  onNoticeChange,
+}: MotifProps & { output: ShaderOutput }) {
+  const t = useT();
+  const ref = useRef<HTMLCanvasElement>(null);
+  const [status, setStatus] = useState<"pending" | "shown" | "unavailable">("pending");
+  const pump = useRef<{ busy: boolean; next: ShaderJob | null }>({ busy: false, next: null });
+  const clock = useRef<number | null>(null);
+  const motionAllowed = useMotionAllowed();
+  const loop = animate && motionAllowed ? webglLoopSeconds(output.tool, output.params) : 0;
+  const dpr = typeof window === "undefined" ? 1 : window.devicePixelRatio;
+  const still = shaderPreviewSize(output.size, scale, dpr);
+  const moving = shaderPreviewSize(output.size, scale, dpr, SHADER_ANIMATION_MAX_PIXELS);
+
+  // Keeps the workers (and their GPU contexts) only while WebGL tools are shown.
+  useEffect(() => retainShaderClient(), []);
+
+  const unavailable = status === "unavailable";
+  useEffect(() => {
+    onNoticeChange?.(unavailable);
+    return () => onNoticeChange?.(false);
+  }, [unavailable, onNoticeChange]);
+
+  const show = useCallback((bitmap: ImageBitmap, job: ShaderJob) => {
+    const canvas = ref.current;
+    if (canvas) {
+      // Resized only now: changing the size clears the canvas.
+      if (canvas.width !== bitmap.width) canvas.width = bitmap.width;
+      if (canvas.height !== bitmap.height) canvas.height = bitmap.height;
+      canvas.getContext("2d")?.drawImage(bitmap, 0, 0);
+      canvas.dataset.rendered = `${bitmap.width}x${bitmap.height}`;
+      canvas.dataset.design = `${job.design.width}x${job.design.height}`;
+      canvas.dataset.time = String(job.t ?? 0);
+      setStatus("shown");
+    }
+    bitmap.close();
+  }, []);
+
+  const fail = useCallback((error: unknown) => {
+    if (isUnavailable(error)) setStatus("unavailable");
+  }, []);
+
+  useEffect(() => {
+    const job = (out: { width: number; height: number }, time?: number): ShaderJob => ({
+      tool: output.tool,
+      params: output.params,
+      seed: output.seed,
+      design: output.size,
+      out,
+      ...(time === undefined ? {} : { t: time }),
+    });
+    if (loop <= 0) {
+      clock.current = null;
+      const queue = pump.current;
+      queue.next = job({ width: still.width, height: still.height });
+      const step = () => {
+        const next = queue.next;
+        if (queue.busy || !next) return;
+        queue.next = null;
+        queue.busy = true;
+        void shaderClient()
+          .preview(next)
+          .then((bitmap) => show(bitmap, next))
+          .catch(fail)
+          .finally(() => {
+            queue.busy = false;
+            step();
+          });
+      };
+      step();
+      return;
+    }
+    // Animation: the clock keeps running across param changes. Frames still
+    // in flight when the effect ends are dropped: a late one would replace
+    // the still (time 0, full size) that a switch to a still picture shows.
+    let frame = 0;
+    let busy = false;
+    let stopped = false;
+    let last = -Infinity;
+    const interval = 1000 / SHADER_ANIMATION_FPS;
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+      if (busy || now - last < interval) return;
+      clock.current ??= now;
+      last = now;
+      busy = true;
+      const time = ((((now - clock.current) / 1000 / loop) % 1) + 1) % 1;
+      const next = job({ width: moving.width, height: moving.height }, time);
+      void shaderClient()
+        .preview(next)
+        .then((bitmap) => {
+          if (stopped) bitmap.close();
+          else show(bitmap, next);
+        })
+        .catch((error: unknown) => {
+          if (!stopped) fail(error);
+        })
+        .finally(() => {
+          busy = false;
+        });
+    };
+    frame = requestAnimationFrame(tick);
+    return () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+    };
+  }, [output, loop, still.width, still.height, moving.width, moving.height, show, fail]);
+
+  const box: CSSProperties = { width: width * scale, height: height * scale };
+  if (status === "unavailable") {
+    return (
+      <div
+        className={cx(
+          "flex items-center justify-center overflow-hidden bg-muted p-4 text-center text-sm text-muted-foreground",
+          className,
+        )}
+        style={box}
+        id={noticeId}
+        data-shader-unavailable=""
+      >
+        {t("Editor.shader.unavailable")}
+      </div>
+    );
+  }
+  return (
+    <canvas
+      ref={ref}
+      aria-hidden="true"
+      width={1}
+      height={1}
+      className={cx("block max-w-none select-none", status !== "shown" && "bg-muted", className)}
+      style={box}
+      data-shader-motif=""
     />
   );
 }

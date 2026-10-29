@@ -42,6 +42,11 @@ import { animatedGradientTool } from "./animated-gradient";
 import { faviconGeneratorTool } from "./favicon-generator";
 import { duotoneTool } from "./duotone";
 import { asciiArtTool } from "./ascii-art";
+import { perspectiveGridTool } from "./perspective-grid";
+import { halftoneTool } from "./halftone";
+import { cmykHalftoneTool } from "./cmyk-halftone";
+import { ditherTool } from "./dither";
+import { shaderGradientTool } from "./shader-gradient";
 
 export {
   blobTool,
@@ -82,6 +87,11 @@ export {
   faviconGeneratorTool,
   duotoneTool,
   asciiArtTool,
+  perspectiveGridTool,
+  halftoneTool,
+  cmykHalftoneTool,
+  ditherTool,
+  shaderGradientTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -143,6 +153,21 @@ export type { DuotoneParams } from "./duotone";
 export { duotoneStops } from "./duotone";
 export type { AsciiArtParams } from "./ascii-art";
 export { asciiStyle, sampleAsciiGrid } from "./ascii-art";
+export type { PerspectiveGridParams } from "./perspective-grid";
+export type { HalftoneParams } from "./halftone";
+export { HALFTONE_SVG_MAX_SHAPES, halftoneOptions } from "./halftone";
+export type { CmykHalftoneParams } from "./cmyk-halftone";
+export { CMYK_SVG_MAX_SHAPES, cmykHalftoneOptions, cmykOffsets } from "./cmyk-halftone";
+export type { DitherParams, DitherPaletteId } from "./dither";
+export {
+  DITHER_FIXED_PALETTES,
+  DITHER_PALETTES,
+  ditherColorMode,
+  ditherGrid,
+  ditherPalette,
+} from "./dither";
+export type { ShaderGradientParams } from "./shader-gradient";
+export { shaderGradientOptions } from "./shader-gradient";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -184,6 +209,11 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   faviconGeneratorTool,
   duotoneTool,
   asciiArtTool,
+  perspectiveGridTool,
+  halftoneTool,
+  cmykHalftoneTool,
+  ditherTool,
+  shaderGradientTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

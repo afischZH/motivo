@@ -47,3 +47,4 @@ export * from "./tools/screenshot-beautifier/mockup";
 export * from "./tools/avatar";
 export * from "./tools/animated-gradient";
 export * from "./tools/favicon";
+export * from "./tools/perspective-grid";

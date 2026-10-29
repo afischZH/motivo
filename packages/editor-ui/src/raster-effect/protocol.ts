@@ -8,8 +8,12 @@
 import {
   CANVAS_EDGE_MAX,
   coverRect,
+  effectInputSize,
+  effectVectorBudget,
+  effectVectorInputSize,
   photoSampleSize,
   renderImageEffect,
+  renderImageEffectSvg,
   type AnyToolDefinition,
   type CanvasSize,
   type PixelBuffer,
@@ -18,9 +22,13 @@ import {
 /** Plain parameter object (type-erased). */
 type Values = Readonly<Record<string, unknown>>;
 
-/** Encoded output of an export. */
+/**
+ * Encoded output of an export. `image/svg+xml` asks for the tool's vector
+ * output (`render.vector`); `out` is then the analysis size
+ * (`effectVectorInputSize` of the design).
+ */
 export interface EffectEncodeOptions {
-  mime: "image/png" | "image/jpeg" | "image/webp";
+  mime: "image/png" | "image/jpeg" | "image/webp" | "image/svg+xml";
   quality?: number;
   /** CSS colour filled under the picture (JPG), absent: none. */
   background?: string;
@@ -88,6 +96,8 @@ export interface EffectWorkerEnv {
  */
 export const IMAGE_EFFECT_MAX_PIXELS = 50_331_648;
 
+const SVG_MIME = "image/svg+xml";
+
 const isEdge = (v: unknown): v is number =>
   typeof v === "number" && Number.isInteger(v) && v >= 1 && v <= CANVAS_EDGE_MAX;
 
@@ -109,13 +119,28 @@ export function isValidEffectRequest(
   tool: AnyToolDefinition,
   request: EffectRenderRequest,
 ): boolean {
-  return (
-    isSize(request.design) &&
-    isSize(request.out) &&
-    request.out.width * request.out.height <= IMAGE_EFFECT_MAX_PIXELS &&
-    Number.isFinite(request.seed) &&
-    tool.schema.safeParse(request.params).success
-  );
+  if (
+    !isSize(request.design) ||
+    !isSize(request.out) ||
+    request.out.width * request.out.height > IMAGE_EFFECT_MAX_PIXELS ||
+    !Number.isFinite(request.seed) ||
+    !tool.schema.safeParse(request.params).success
+  ) {
+    return false;
+  }
+  if (request.encode?.mime === SVG_MIME) {
+    // Vector output: only tools that have one, within their shape budget, at the analysis size.
+    const budget = effectVectorBudget(tool, request.params, request.design);
+    const size = effectVectorInputSize(request.design);
+    return (
+      budget !== null &&
+      budget.shapes <= budget.max &&
+      request.out.width === size.width &&
+      request.out.height === size.height
+    );
+  }
+  const input = effectInputSize(tool, request.params, request.design, request.out);
+  return isSize(input) && input.width * input.height <= IMAGE_EFFECT_MAX_PIXELS;
 }
 
 /** Photos kept decoded (the current one, plus one for a quick undo). */
@@ -238,8 +263,23 @@ export function createEffectHandler(env: EffectWorkerEnv) {
     const decoded = await pending;
     if (!decoded) return { id, ok: false, error: "decode-failed" };
     try {
-      const crop = coverRect(decoded.width, decoded.height, request.out.width, request.out.height);
-      const source = env.readCover(decoded, crop, request.out);
+      const vector = request.encode?.mime === SVG_MIME;
+      // The picture at the effect's input size: the output, the tool's grid or the vector analysis size.
+      const input = vector
+        ? request.out
+        : effectInputSize(tool, request.params, request.design, request.out);
+      const crop = coverRect(decoded.width, decoded.height, input.width, input.height);
+      const source = env.readCover(decoded, crop, input);
+      if (vector) {
+        const svg = renderImageEffectSvg(
+          tool,
+          request.params,
+          request.seed,
+          request.design,
+          source,
+        );
+        return { id, ok: true, blob: new Blob([svg], { type: SVG_MIME }) };
+      }
       const pixels = renderImageEffect(
         tool,
         request.params,

@@ -3,7 +3,7 @@
  * (docs/ARCHITECTURE.md 4.14), shared by the editor worker, static motifs
  * and tests, so every caller feeds an effect the same way.
  */
-import { resizeCover } from "@musterli/effects";
+import { resizeCover, scaleGrid } from "@musterli/effects";
 
 // The editor worker crops photos exactly like `resizeCover` does.
 export { coverRect } from "@musterli/effects";
@@ -115,10 +115,39 @@ function scaledSample(tool: AnyToolDefinition, design: CanvasSize, out: CanvasSi
 }
 
 /**
+ * Largest fixed effect grid (`ImageEffectRenderer.grid`): 4096² pixels.
+ * Tools scale their grid down to fit (the effective pixel size grows).
+ */
+export const IMAGE_EFFECT_GRID_MAX_PIXELS = 4096 * 4096;
+
+/** Longest edge of the picture a vector export analyses (photos reach 4096 px). */
+export const IMAGE_EFFECT_VECTOR_MAX_EDGE = 4096;
+
+/**
+ * Size of the picture fed to the effect's `render` for an output of `out`
+ * pixels: the tool's fixed grid if it has one, else the output itself.
+ */
+export function effectInputSize(
+  tool: AnyToolDefinition,
+  params: Values,
+  design: CanvasSize,
+  out: CanvasSize,
+): CanvasSize {
+  if (!isImageEffectTool(tool) || !tool.render.grid) return out;
+  const grid = tool.render.grid(params, design);
+  return {
+    width: Math.max(1, Math.round(grid.width)),
+    height: Math.max(1, Math.round(grid.height)),
+  };
+}
+
+/**
  * Renders an image-effect tool at `out` pixels for a design of `design`
- * size: `source` is the picture already cropped and scaled to `out` (the
- * editor draws it with a canvas); without it the sample is generated and
- * resampled here (Node, static motifs, tests). Throws for other tools.
+ * size: `source` is the picture already cropped and scaled to the effect's
+ * input size (`effectInputSize`: `out`, or the tool's grid; the editor
+ * draws it with a canvas); without it the sample is generated and
+ * resampled here (Node, static motifs, tests). A grid result is scaled to
+ * `out` with `scaleGrid`. Throws for other tools.
  */
 export function renderImageEffect(
   tool: AnyToolDefinition,
@@ -131,12 +160,57 @@ export function renderImageEffect(
   if (!isImageEffectTool(tool) || !tool.photoSource) {
     throw new TypeError(`Tool "${tool.id}" is not an image effect`);
   }
-  const input = source ?? scaledSample(tool, design, out);
-  if (input.width !== out.width || input.height !== out.height) {
+  const size = effectInputSize(tool, params, design, out);
+  const input = source ?? scaledSample(tool, design, size);
+  if (input.width !== size.width || input.height !== size.height) {
     throw new RangeError(
-      `Source is ${input.width}x${input.height}, expected ${out.width}x${out.height}`,
+      `Source is ${input.width}x${input.height}, expected ${size.width}x${size.height}`,
     );
   }
   // The store and the callers only hold params that passed the schema.
-  return tool.render.render(input, params, createRenderContext(seed, design));
+  const pixels = tool.render.render(input, params, createRenderContext(seed, design));
+  return pixels.width === out.width && pixels.height === out.height
+    ? pixels
+    : scaleGrid(pixels, out.width, out.height);
+}
+
+/** Picture size a vector export analyses for a design (`IMAGE_EFFECT_VECTOR_MAX_EDGE`). */
+export function effectVectorInputSize(design: CanvasSize): CanvasSize {
+  return fitSize(design, IMAGE_EFFECT_VECTOR_MAX_EDGE);
+}
+
+/** Shapes of a vector export and the tool's limit, or `null` without vector output. */
+export function effectVectorBudget(
+  tool: AnyToolDefinition,
+  params: Values,
+  design: CanvasSize,
+): { shapes: number; max: number } | null {
+  if (!isImageEffectTool(tool) || !tool.render.vector) return null;
+  const { vector } = tool.render;
+  return { shapes: Math.ceil(vector.shapes(params, design)), max: vector.maxShapes };
+}
+
+/**
+ * The SVG of an image effect with vector output: `source` is the picture at
+ * `effectVectorInputSize(design)` (the worker draws it); without it the
+ * sample is used (Node, tests). Throws for tools without vector output.
+ */
+export function renderImageEffectSvg(
+  tool: AnyToolDefinition,
+  params: Values,
+  seed: number,
+  design: CanvasSize,
+  source?: PixelBuffer,
+): string {
+  if (!isImageEffectTool(tool) || !tool.render.vector) {
+    throw new TypeError(`Tool "${tool.id}" has no vector output`);
+  }
+  const size = effectVectorInputSize(design);
+  const input = source ?? scaledSample(tool, design, size);
+  if (input.width !== size.width || input.height !== size.height) {
+    throw new RangeError(
+      `Source is ${input.width}x${input.height}, expected ${size.width}x${size.height}`,
+    );
+  }
+  return tool.render.vector.render(input, params, createRenderContext(seed, design));
 }

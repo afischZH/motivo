@@ -632,3 +632,48 @@ describe("ExportDialog bundle", () => {
     );
   });
 });
+
+describe("ExportDialog image-effect SVG (halftone)", () => {
+  function setupHalftone(services: ExportServices, size = { width: 1500, height: 1000 }) {
+    const store = createEditorStore({ toolId: "halftone", size });
+    renderWithIntl(
+      <EditorStoreProvider store={store}>
+        <ExportDialog open onClose={() => undefined} services={services} />
+      </EditorStoreProvider>,
+    );
+    return store;
+  }
+
+  it("shows the shape count, downloads and copies the worker's SVG", async () => {
+    const services = fakeServices();
+    setupHalftone(services);
+    fireEvent.click(formatRadio("SVG"));
+    expect(screen.getByTestId("export-vector-budget").textContent).toMatch(
+      /^Das SVG enthält rund [\d’'.]+ Formen \(höchstens 70[’'.]000\)\.$/,
+    );
+    expect(screen.queryByTestId("export-code")).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "Herunterladen" }));
+    await waitFor(() => expect(status().textContent).toBe("Heruntergeladen."));
+    const [tool, , ctx] = services.exportEffectSvg.mock.calls[0] as Parameters<
+      ExportServices["exportEffectSvg"]
+    >;
+    expect([tool.id, ctx.width, ctx.height]).toEqual(["halftone", 1500, 1000]);
+    expect(services.downloadBlob.mock.calls[0]?.[1]).toBe("musterli-halftone.svg");
+
+    fireEvent.click(screen.getByRole("button", { name: "Kopieren" }));
+    await waitFor(() => expect(status().textContent).toBe("Kopiert! Ab ins Projekt damit."));
+    expect(services.copyText.mock.calls[0]?.[0]).toBe("<svg/>");
+  });
+
+  it("explains the budget and blocks a too large SVG", () => {
+    const services = fakeServices();
+    setupHalftone(services, { width: 8000, height: 6000 });
+    fireEvent.click(formatRadio("SVG"));
+    const note = screen.getByTestId("export-vector-budget");
+    expect(note.getAttribute("role")).toBe("alert");
+    expect(note.textContent).toContain("Zu viele Formen für ein SVG");
+    expect(screen.getByRole("button", { name: "Herunterladen" })).toHaveProperty("disabled", true);
+    expect(screen.getByRole("button", { name: "Kopieren" })).toHaveProperty("disabled", true);
+  });
+});

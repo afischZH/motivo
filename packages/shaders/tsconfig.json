@@ -1,4 +1,9 @@
 {
   "extends": "@musterli/config/tsconfig.base.json",
+  "compilerOptions": {
+    // WebGL types for the runtime (`@musterli/shaders/runtime`); the root
+    // entry stays free of browser APIs so Node and the registry can import it.
+    "lib": ["ES2022", "DOM"]
+  },
   "include": ["src"]
 }

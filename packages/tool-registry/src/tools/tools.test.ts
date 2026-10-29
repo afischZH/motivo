@@ -83,7 +83,12 @@ function digestDataUris(svg: string): string {
  * Tools whose SVG runs to hundreds of KB (thousands of generated lines):
  * snapshotted as length, CRC-32 and the first 600 characters, exact but small.
  */
-const DIGEST_TOOLS: ReadonlySet<string> = new Set(["topo-lines", "flow-field", "ascii-art"]);
+const DIGEST_TOOLS: ReadonlySet<string> = new Set([
+  "topo-lines",
+  "flow-field",
+  "ascii-art",
+  "perspective-grid",
+]);
 
 function digestSvg(svg: string): string {
   // The generated SVG is ASCII, so code units are bytes.
@@ -146,6 +151,11 @@ describe("built-in tool registration", () => {
       "favicon-generator",
       "duotone",
       "ascii-art",
+      "perspective-grid",
+      "halftone",
+      "cmyk-halftone",
+      "dither",
+      "shader-gradient",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
@@ -165,6 +175,7 @@ describe("built-in tool registration", () => {
       "blurry-gradient",
       "striped-gradient",
       "animated-gradient",
+      "shader-gradient",
     ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
@@ -186,6 +197,9 @@ describe("built-in tool registration", () => {
       "noise-grain",
       "duotone",
       "ascii-art",
+      "halftone",
+      "cmyk-halftone",
+      "dither",
     ]);
   });
 

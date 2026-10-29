@@ -151,6 +151,8 @@
       "outputSize": "Ergebnis: {width} × {height} px.",
       "recomposed": "Anderes Seitenverhältnis: Das Motiv wird für dieses Format neu berechnet.",
       "clamped": "Auf höchstens {max} px pro Seite verkleinert.",
+      "vectorShapes": "Das SVG enthält rund {shapes, number} Formen (höchstens {max, number}).",
+      "vectorTooMany": "Zu viele Formen für ein SVG: rund {shapes, number}, höchstens {max, number}. Wähle eine grössere Zellgrösse oder exportiere als PNG.",
       "quality": "Qualität",
       "background": "Hintergrund",
       "backgroundHint": "JPG kennt keine Transparenz, darum braucht es eine Farbe.",
@@ -385,6 +387,9 @@
         "failed": "Die Aufnahme hat nicht geklappt. Lade stattdessen einen Screenshot hoch.",
         "unsupported": "Dein Browser kann die Ansicht nicht aufnehmen. Lade einen Screenshot hoch."
       }
+    },
+    "shader": {
+      "unavailable": "Dieser Browser kann den Shader nicht zeichnen, weil WebGL2 fehlt. Aktiviere die Hardwarebeschleunigung oder nimm einen aktuellen Browser wie Chrome, Edge, Firefox oder Safari."
     }
   },
   "sizes": {
