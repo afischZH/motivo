@@ -11,6 +11,7 @@ import type { MetadataRoute } from "next";
 
 import { ENABLED_LOCALES, type EnabledLocale } from "@/i18n/locales";
 import type { AppRoute } from "@/i18n/paths";
+import { TASK_IDS } from "@/i18n/slugs";
 import { populatedCategories } from "@/lib/catalogue";
 import { curatedGradients } from "@/lib/collections/gradients";
 import { curatedPalettes } from "@/lib/collections/palettes";
@@ -31,6 +32,7 @@ export function sitemapRoutes(): AppRoute[] {
     { page: "tools" },
     { page: "socialEditor" },
     ...populatedCategories().map((category): AppRoute => ({ page: "category", category })),
+    ...TASK_IDS.map((task): AppRoute => ({ page: "task", task })),
     ...registry.list().map((tool): AppRoute => ({ page: "landing", toolId: tool.id })),
     { page: "patterns" },
     ...libraryPatterns().map((spec): AppRoute => ({ page: "pattern", patternId: spec.id })),

@@ -159,10 +159,10 @@ Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10
 - ~~Lighthouse auf musterli.app, Rechtstexte prüfen, Analytics- und Sentry-Variablen (Andreas)~~ übersprungen (Entscheid Andreas 2026-10-29), bleibt als offener Owner-Punkt aus M2
 
 **W1 Profi-Arbeitsfluss**
-- [ ] Befehlspalette ⌘K (Tool wechseln, Vorlage öffnen, Export, Brand-Palette)
-- [ ] "Im Kontext ansehen": Motiv als Hero-Hintergrund mit Überschrift, Text, Knopf, Hell/Dunkel und Kontrastwert
-- [ ] Favoriten und "Zuletzt benutzt" (lokal)
-- [ ] Katalog zusätzlich nach Aufgabe (Hero-Hintergrund, Abschnittstrenner, Karten-Effekt, Icon und Favicon, Social-Bild)
+- [x] Befehlspalette ⌘K (Tool wechseln, Vorlage öffnen, Export, Brand-Palette)
+- [x] "Im Kontext ansehen": Motiv als Hero-Hintergrund mit Überschrift, Text, Knopf, Hell/Dunkel und Kontrastwert
+- [x] Favoriten und "Zuletzt benutzt" (lokal)
+- [x] Katalog zusätzlich nach Aufgabe (Hero-Hintergrund, Abschnittstrenner, Karten-Effekt, Icon und Favicon, Social-Bild)
 
 **W2 Code-Brücke**
 - [ ] React-Komponente für SVG- und CSS-Tools

@@ -237,6 +237,30 @@ export const CATEGORY_SLUGS: Readonly<Record<ToolCategory, LocalizedSlugs>> = {
   icons: { de: "icons", en: "icons" },
 };
 
+/**
+ * Catalogue entries by task (W1-AP04): what a web designer wants to make,
+ * across categories. Slugs for `/[locale]/tools/<TASK_SEGMENT>/<slug>`; the
+ * tools of each task are in `lib/tasks.ts`.
+ */
+export const TASK_SLUGS = {
+  "hero-backgrounds": { de: "hero-hintergruende", en: "hero-backgrounds" },
+  "surface-patterns": { de: "flaechenmuster", en: "surface-patterns" },
+  "ui-effects": { de: "ui-effekte", en: "ui-effects" },
+  "color-systems": { de: "farbsysteme", en: "color-systems" },
+  "icons-avatars": { de: "icons-und-avatare", en: "icons-and-avatars" },
+  "image-polish": { de: "bilder-aufwerten", en: "image-polish" },
+} as const satisfies Readonly<Record<string, LocalizedSlugs>>;
+
+export type TaskId = keyof typeof TASK_SLUGS;
+
+export const TASK_IDS = Object.keys(TASK_SLUGS) as TaskId[];
+
+/** Localized segment between `tools` and a task slug. */
+export const TASK_SEGMENT = {
+  de: "aufgabe",
+  en: "task",
+} as const satisfies LocalizedSlugs;
+
 /** Localized segment between `tools` and a category slug. */
 export const CATEGORY_SEGMENT = {
   de: "kategorie",
@@ -373,6 +397,28 @@ export function categorySegment(locale: AnyLocale): string {
 /** Whether `value` is the category segment in any locale. */
 export function isCategorySegment(value: string): boolean {
   return hasSlug(CATEGORY_SEGMENT, value);
+}
+
+export function taskSlug(task: TaskId, locale: AnyLocale): string {
+  return pick(TASK_SLUGS[task], locale);
+}
+
+export function taskIdFromSlug(slug: string, locale: AnyLocale): TaskId | undefined {
+  return findId(TASK_SLUGS, (entry) => pick(entry, locale) === slug);
+}
+
+export function taskIdFromAnySlug(value: string): TaskId | undefined {
+  if (Object.hasOwn(TASK_SLUGS, value)) return value as TaskId;
+  return findId(TASK_SLUGS, (entry) => hasSlug(entry, value));
+}
+
+export function taskSegment(locale: AnyLocale): string {
+  return pick(TASK_SEGMENT, locale);
+}
+
+/** Whether `value` is the task segment in any locale. */
+export function isTaskSegment(value: string): boolean {
+  return hasSlug(TASK_SEGMENT, value);
 }
 
 /** Slug of a CSS library pattern in a locale. A pattern without an entry falls back to its id. */

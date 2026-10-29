@@ -4,6 +4,7 @@ import { supportsExport } from "@musterli/exporters";
 import type { BrandKitStore, DesignStore } from "@musterli/storage";
 import {
   TRANSPARENT,
+  acceptsBrandPalette,
   createRenderContext,
   hasLocalContent,
   type AnyToolDefinition,
@@ -17,12 +18,13 @@ import {
   useEffect,
   useId,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
 import { AssetServicesContext } from "../asset-input/services-context";
 import { BrandPaletteSection } from "../brand-kit/brand-palette-section";
-import { BrandKitContext, useBrandKitView } from "../brand-kit/context";
+import { BrandKitContext, orderedPalettes, useBrandKitView } from "../brand-kit/context";
 import { EditorControls } from "../controls/control-panel";
 import type { LocalDesignController, LocalDesignView } from "../designs/local-design";
 import { useLocalDesign } from "../designs/use-local-design";
@@ -52,6 +54,14 @@ import {
   UndoIcon,
 } from "./icons";
 import { PreviewStage, ZOOM_LEVELS, type Zoom } from "./preview";
+import {
+  ContextControls,
+  ContextLayer,
+  shownTone,
+  supportsContextView,
+  useContextContrast,
+  type ContextToneChoice,
+} from "./context-view";
 import { LiveCaptureBar, LiveFrameLayer, useLiveView } from "./live-view";
 import { RegionLayer, regionEditorOf } from "./region-editor";
 import { renderMotifCached } from "./render";
@@ -61,6 +71,7 @@ import { SizePicker } from "./size-picker";
 import { BUTTON_CLASS, ICON_BUTTON, PRIMARY_BUTTON_CLASS, TILE_CLASS } from "./styles";
 import { Thumbnail } from "./thumbnail";
 import { useHydrated } from "./use-hydrated";
+import { publishEditorCommands, type EditorCommandHandlers } from "./command-bridge";
 import { useEditorShortcuts } from "./use-shortcuts";
 
 export interface EditorShellProps {
@@ -308,6 +319,42 @@ export function EditorShell({
     ...(copyImage ? { copyImage } : {}),
     ...(save ? { save } : {}),
   });
+
+  // The command palette (⌘K) runs the same actions; the default brand palette in one step.
+  const brandPalette =
+    brandView && acceptsBrandPalette(tool) ? orderedPalettes(brandView)[0] : undefined;
+  const commands: EditorCommandHandlers = {
+    export: actions.export,
+    newVariant: actions.newVariant,
+    ...(save ? { save } : {}),
+    ...(copyImage ? { copyImage } : {}),
+    share: () => void share(),
+    ...(brandPalette
+      ? {
+          applyBrandPalette: () => {
+            if (store.getState().applyBrandPalette(brandPalette.colors)) {
+              confirm(
+                t("Editor.brand.applied", { name: brandPalette.name || t("Editor.brand.unnamed") }),
+              );
+            }
+          },
+        }
+      : {}),
+    undo: actions.undo,
+    redo: actions.redo,
+    help: actions.help,
+  };
+  const commandsRef = useRef(commands);
+  useEffect(() => {
+    commandsRef.current = commands;
+  });
+  const commandKeys = Object.keys(commands).join(",");
+  useEffect(() => {
+    const ids = commandKeys.split(",") as (keyof EditorCommandHandlers)[];
+    return publishEditorCommands(
+      Object.fromEntries(ids.map((id) => [id, () => commandsRef.current[id]?.()])),
+    );
+  }, [commandKeys]);
 
   const shownNotice: ShellNotice | null =
     notice ??
@@ -672,6 +719,14 @@ function PreviewSection(props: {
   );
   const transparent = params.background === TRANSPARENT;
 
+  // "Im Kontext ansehen": the motif behind a mock website hero (W1-AP02).
+  const contextAvailable = supportsContextView(tool);
+  const [contextOn, setContextOn] = useState(false);
+  const [toneChoice, setToneChoice] = useState<ContextToneChoice>("auto");
+  const showContext = contextAvailable && contextOn;
+  const ratios = useContextContrast(showContext, tool, params, seed, size);
+  const tone = shownTone(toneChoice, ratios);
+
   const zoomButtons: { zoom: Zoom; label: string }[] = [
     { zoom: "fit", label: t("Editor.shell.zoomFit") },
     ...ZOOM_LEVELS.map((level) => ({
@@ -697,6 +752,15 @@ function PreviewSection(props: {
           pushed the page 1 px wide in Firefox.
         */}
         <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+          {contextAvailable && (
+            <ContextControls
+              on={contextOn}
+              onToggle={() => setContextOn((on) => !on)}
+              choice={toneChoice}
+              onChoice={setToneChoice}
+              ratio={ratios ? ratios[tone] : null}
+            />
+          )}
           <div
             role="group"
             aria-label={t("Editor.shell.zoom")}
@@ -743,8 +807,9 @@ function PreviewSection(props: {
         transparent={transparent}
         unsupportedText={t("Editor.shell.unsupported")}
         overlay={
-          regionEditor || live.frames.length > 0 ? (
+          regionEditor || live.frames.length > 0 || showContext ? (
             <>
+              {showContext && <ContextLayer tone={tone} />}
               {regionEditor && (
                 <RegionLayer
                   tool={tool}

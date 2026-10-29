@@ -428,6 +428,33 @@
           "failed": "Speichern hat nicht geklappt. Versuche es noch einmal."
         }
       }
+    },
+    "context": {
+      "toggle": "Im Kontext",
+      "tone": "Textfarbe",
+      "tones": {
+        "auto": "Auto",
+        "dark": "Dunkel",
+        "light": "Hell"
+      },
+      "measuring": "Kontrast wird gemessen …",
+      "contrast": "Kontrast {ratio}:1 · {level}",
+      "contrastHint": "Kontrast des Texts zum Motiv nach WCAG 2, gemessen auf 95 % der Fläche unter dem Text (einzelne Punkte zählen nicht).",
+      "levels": {
+        "aaa": "AAA",
+        "aa": "AA",
+        "aa-large": "AA nur grosser Text",
+        "fail": "zu schwach"
+      },
+      "sample": {
+        "brand": "Deine Marke",
+        "nav1": "Produkt",
+        "nav2": "Preise",
+        "nav3": "Kontakt",
+        "title": "Der Titel deiner Landingpage",
+        "text": "Ein kurzer Satz, der erklärt, was du anbietest und warum es sich lohnt.",
+        "cta": "Jetzt starten"
+      }
     }
   },
   "sizes": {

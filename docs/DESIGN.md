@@ -51,7 +51,7 @@ Jedes Control hat ein Schloss für "beim Randomisieren behalten". Auf Geräten m
 | `⌘/Ctrl + S` | Speichern |
 | `⌘/Ctrl + E` | Export-Dialog |
 | `⌘/Ctrl + ⇧ + C` | Als PNG in Zwischenablage |
-| `⌘/Ctrl + K` | Tool-Suche / Befehlspalette |
+| `⌘/Ctrl + K` | Befehlspalette (überall: Tools, Seiten, Aufgaben, Hell/Dunkel; im Editor zusätzlich Export, Variante, Speichern, Kopieren, Teilen, Brand-Palette, Undo/Redo, Kürzel) |
 | `⌘/Ctrl + ⇧ + K` | Light/Dark wechseln |
 | `0` / `1` | Zoom auf Fenster / 100 % |
 | `?` | Kürzel-Übersicht |
@@ -81,6 +81,11 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 7. **Unterstützen** (`/de/unterstuetzen`, `/en/support`, seit M3-AP14): kurzer, ehrlicher Text (gratis, ohne Konto, ohne Tracking, Exporte frei nutzbar), wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung), hervorgehobener Block mit Knopf "Jetzt spenden" zum externen Anbieter. Ohne konfigurierten Link (`NEXT_PUBLIC_DONATION_URL`) neutraler Hinweis "Spenden-Link folgt bald", kein toter Knopf. Dezente Hinweise nur im Footer ("Musterli unterstützen") und als eine leise Zeile im Export-Dialog nach erfolgreichem Export (öffnet in neuem Tab, damit das Design im Editor bleibt). Nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
 8. **Kopfzeile** (alle Seiten): klebt oben, halbtransparent mit Unschärfe. Ab 1024 px eine Pillen-Leiste (aktueller Bereich mit `aria-current="page"` und heller Pille), rechts "Unterstützen" und Theme-Knopf. Darunter ein Seitenmenü (Sheet, Radix Dialog) mit Icons und Link "Musterli unterstützen"; `Esc` schliesst und gibt den Fokus zurück, schliesst auch bei Navigation. Die Desktop-Links bleiben in jeder Breite im HTML (crawlbar).
 9. **Fusszeile**: Logo, Claim und Spendenlink, drei Spalten (Musterli, Sammlungen, Rechtliches), darunter Copyright und Sprachwahl.
+
+10. **Befehlspalette** (seit W1-AP01): Knopf "Suchen ⌘K" in der Kopfzeile (auf Mobile nur Lupe), Dialog oben mittig. Combobox mit Listbox nach WAI-ARIA APG: Fokus bleibt im Eingabefeld, Pfeiltasten bewegen die aktive Option, Enter öffnet, Esc schliesst und gibt den Fokus zurück. Gruppen ohne Suche: Aktionen, Favoriten, Zuletzt benutzt, Seiten, Tools; beim Suchen Aktionen, Tools, Seiten (Tools zuerst nach Treffer im Namen). Die englische Tool-Id ist mit durchsuchbar ("flow field" findet das Tool auch auf Deutsch).
+11. **Favoriten und Zuletzt benutzt** (W1-AP03): Stern-Knopf (`aria-pressed`) auf jeder Tool-Karte und im Editor-Kopf; im Katalog oben "Deine Tools" mit Favoriten und den letzten 6 Tools (ohne Wiederholung), nur wenn etwas gespeichert ist. Nur im Browser (localStorage).
+12. **Im Kontext** (W1-AP02): Umschalter in der Vorschau-Leiste für Tools mit Hintergrund-Kategorie. Legt eine Muster-Website (Marke, Navigation, Titel, Text, Knopf) über das Motiv, Textfarbe Auto/Dunkel/Hell, daneben "Kontrast 8.6:1 · AAA" nach WCAG 2, gemessen auf 95 % der Fläche unter dem Text.
+13. **Aufgabenseiten** (W1-AP04): Chips "Nach Aufgabe" oben im Katalog, je eine Seite mit Seitenkopf, Tool-Karten und Links zu den anderen Aufgaben.
 
 ## 7. Barrierefreiheit (WCAG 2.2 AA)
 

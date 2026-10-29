@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { ENABLED_LOCALES } from "@/i18n/locales";
 import { toolLandingPaths } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
+import { TASK_IDS } from "@/lib/tasks";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { collectionItemSlug } from "@/i18n/slugs";
 import { curatedGradients } from "@/lib/collections/gradients";
@@ -25,6 +26,7 @@ describe("sitemap", () => {
       2 +
       1 + // Social media editor landing page
       populatedCategories().length +
+      TASK_IDS.length +
       registry.list().length +
       1 +
       libraryPatterns().length +

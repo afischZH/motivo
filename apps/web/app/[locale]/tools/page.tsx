@@ -15,14 +15,16 @@ import { buttonVariants } from "@/components/ui/button";
 import { chipClass } from "@/components/ui/chip";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ToolCard } from "@/components/seo/tool-card";
+import { YourTools } from "@/components/tool-history/your-tools";
 import { Link } from "@/i18n/navigation";
-import { routeHref } from "@/i18n/paths";
+import { routeHref, routePath } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { catalogueGroups } from "@/lib/catalogue";
 import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { pageAlternates } from "@/lib/seo/alternates";
 import { pageOpenGraph } from "@/lib/seo/page-meta";
 import { toolKeys } from "@/lib/seo/tool-content";
+import { TASK_IDS } from "@/lib/tasks";
 
 type ToolsPageProps = Readonly<{ params: Promise<{ locale: string }> }>;
 
@@ -144,6 +146,36 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
         title={t("ToolsIndex.title")}
         lead={t("ToolsIndex.lead")}
       />
+
+      <YourTools
+        tools={groups.flatMap(({ tools }) =>
+          tools.map((tool) => ({
+            id: tool.id,
+            label: text(toolKeys(tool.id).name),
+            href: routePath({ page: "tool", toolId: tool.id }, locale),
+          })),
+        )}
+        labels={{
+          title: t("Catalogue.yourTools.title"),
+          favorites: t("Catalogue.yourTools.favorites"),
+          recent: t("Catalogue.yourTools.recent"),
+        }}
+      />
+
+      <nav aria-labelledby="by-task" className="flex flex-col gap-3" data-testid="tasks-nav">
+        <h2 id="by-task" className="text-xl font-semibold tracking-tight">
+          {t("TaskPage.byTask")}
+        </h2>
+        <ul className="flex flex-wrap gap-2">
+          {TASK_IDS.map((task) => (
+            <li key={task}>
+              <Link href={routeHref({ page: "task", task }, locale)} className={chipClass}>
+                {t(`Tasks.${task}.name`)}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <aside
         aria-labelledby="social-teaser"

@@ -138,7 +138,8 @@
     "allTools": "All generators",
     "supportHint": "Enjoying Musterli? <link>Support the project</link>.",
     "newTab": "(opens in a new tab)",
-    "termsHint": "<link>Free to use, commercially too</link>."
+    "termsHint": "<link>Free to use, commercially too</link>.",
+    "favorite": "Favorite: {tool}"
   },
   "tools": {
     "common": {
@@ -5503,7 +5504,13 @@
     "resultsOther": "{count} results",
     "noResults": "Nothing found for “{query}”.",
     "noResultsHint": "Try another word or browse the categories.",
-    "clearSearch": "Clear search"
+    "clearSearch": "Clear search",
+    "favorite": "Favorite: {tool}",
+    "yourTools": {
+      "title": "Your tools",
+      "favorites": "Favorites",
+      "recent": "Recently used"
+    }
   },
   "CategoryPage": {
     "metaTitle": "{category} generators | Musterli",
@@ -7207,5 +7214,87 @@
     "renameLabel": "New name for {name}",
     "renameSave": "Save",
     "cancel": "Cancel"
+  },
+  "CommandPalette": {
+    "open": "Search",
+    "title": "Search commands and tools",
+    "placeholder": "Search a tool, page or command …",
+    "empty": "Nothing found. Try another word.",
+    "groups": {
+      "actions": "Actions",
+      "favorites": "Favorites",
+      "recent": "Recently used",
+      "pages": "Pages",
+      "tools": "Tools"
+    },
+    "editor": {
+      "export": "Export",
+      "newVariant": "New variant",
+      "save": "Save design",
+      "copyImage": "Copy as PNG",
+      "share": "Copy share link",
+      "applyBrandPalette": "Apply brand palette",
+      "undo": "Undo",
+      "redo": "Redo",
+      "help": "Show keyboard shortcuts"
+    },
+    "toggleTheme": "Switch light and dark",
+    "shortcutHint": "Arrow keys to choose, Enter to open, Esc to close. Open with ⌘K or Ctrl+K.",
+    "pages": {
+      "tools": "All tools",
+      "socialEditorApp": "Social media editor",
+      "myDesigns": "My designs",
+      "brandKit": "Brand Kit",
+      "patterns": "CSS pattern library",
+      "gradients": "Gradient collection",
+      "palettes": "Palette collection",
+      "convert": "Converters",
+      "support": "Support Musterli",
+      "home": "Home"
+    },
+    "taskHint": "Task"
+  },
+  "Tasks": {
+    "hero-backgrounds": {
+      "name": "Hero backgrounds",
+      "lead": "Gradients, shaders and generative motifs for the big first impression at the top of your website. Turn on “In context” to see right away whether a title and button stay readable on it.",
+      "metaTitle": "Free hero backgrounds for websites | Musterli",
+      "metaDescription": "Mesh gradients, shaders, blobs and generative motifs as a hero background for your website. Free, in your browser, export as SVG, PNG or CSS."
+    },
+    "surface-patterns": {
+      "name": "Surface patterns",
+      "lead": "Seamless patterns for sections, cards and backgrounds that repeat without a visible edge. Best as a light SVG or as CSS.",
+      "metaTitle": "Free seamless patterns for websites | Musterli",
+      "metaDescription": "Seamless tile patterns, CSS patterns, dots, grids and terrazzo for website sections. Free, in your browser, export as SVG, PNG or CSS."
+    },
+    "ui-effects": {
+      "name": "UI effects",
+      "lead": "Glass, shadows, bento grids and gradients as ready-made code for cards, buttons and layouts. Copy it and paste it into your project.",
+      "metaTitle": "Free CSS effects for UI and cards | Musterli",
+      "metaDescription": "Glass effect, CSS shadows, bento grid and gradients for cards and layouts, as CSS and Tailwind. Free and without an account."
+    },
+    "color-systems": {
+      "name": "Color systems",
+      "lead": "Palettes, shades and contrast checks for a color system that works in light and dark. Export as a Tailwind config or CSS variables.",
+      "metaTitle": "Free color system builder for websites | Musterli",
+      "metaDescription": "Color palettes, Tailwind colors, tints and shades and a contrast checker for your design system. Free, in your browser, export as CSS variables and Tailwind."
+    },
+    "icons-avatars": {
+      "name": "Icons and avatars",
+      "lead": "Favicon packages, avatars and placeholder images for websites, apps and prototypes, in every size you need.",
+      "metaTitle": "Free favicon, avatar and placeholder generator | Musterli",
+      "metaDescription": "Favicon package in every size, initials avatars, placeholder images and charts for prototypes. Free and in your browser."
+    },
+    "image-polish": {
+      "name": "Image polish",
+      "lead": "Present screenshots in style and give photos their own look with duotone, halftone or glass. Your pictures stay on your device.",
+      "metaTitle": "Free screenshot and photo effects | Musterli",
+      "metaDescription": "Screenshot mockups, duotone, halftone, fractal glass and dithering for website images. Free, in your browser, your pictures stay on your device."
+    }
+  },
+  "TaskPage": {
+    "byTask": "By task",
+    "otherTasks": "More tasks",
+    "backToCatalogue": "All tools"
   }
 }

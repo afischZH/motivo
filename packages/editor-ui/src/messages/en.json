@@ -428,6 +428,33 @@
           "failed": "Saving did not work. Please try again."
         }
       }
+    },
+    "context": {
+      "toggle": "In context",
+      "tone": "Text color",
+      "tones": {
+        "auto": "Auto",
+        "dark": "Dark",
+        "light": "Light"
+      },
+      "measuring": "Measuring contrast …",
+      "contrast": "Contrast {ratio}:1 · {level}",
+      "contrastHint": "WCAG 2 contrast of the text on the motif, measured on 95% of the area under the text (single specks do not count).",
+      "levels": {
+        "aaa": "AAA",
+        "aa": "AA",
+        "aa-large": "AA large text only",
+        "fail": "too weak"
+      },
+      "sample": {
+        "brand": "Your brand",
+        "nav1": "Product",
+        "nav2": "Pricing",
+        "nav3": "Contact",
+        "title": "The title of your landing page",
+        "text": "A short sentence that says what you offer and why it is worth it.",
+        "cta": "Get started"
+      }
     }
   },
   "sizes": {
