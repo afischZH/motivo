@@ -138,11 +138,13 @@ Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-
 
 ## M6: Social Media Editor + restliche Effekte (Woche 19 bis 23)
 
+Freigabe Andreas 2026-10-29 05:51: Plan mit 7 Paketen, Konva nur als Kern ohne `react-konva` (rund 44 KB gzip, nur im Editor geladen), neuer lokaler Speicher für Social-Designs (IndexedDB-Upgrade), **40 Templates zum Start** statt 100 (weitere nach Nutzerfeedback), FR/IT mit Rechtstexten "juristisch zu prüfen".
+
 - [ ] Konva-Canvas mit Ebenen, Transform, Snapping, Ausrichtungshilfen, Gruppierung
 - [ ] Text mit Effekten, Font-Auswahl (OFL-Fonts), Brand-Fonts
 - [ ] Hintergründe aus allen Tools (als parametrische Referenz)
 - [ ] Formate + **Magic Resize** (Constraint-System)
-- [ ] 100 eigene Templates, **Brand-Apply** mit einem Klick
+- [ ] 40 eigene Templates zum Start (Ziel später 100), **Brand-Apply** mit einem Klick
 - [ ] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize**
 - [ ] FR- und IT-Übersetzungen live
 
