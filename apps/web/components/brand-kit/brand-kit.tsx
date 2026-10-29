@@ -28,6 +28,7 @@ import {
   type StorageErrorCode,
 } from "@musterli/editor-ui/brand-kit";
 import { formatOklch } from "@musterli/engine";
+import { HardDriveIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
   useCallback,
@@ -39,6 +40,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -313,19 +315,20 @@ export function BrandKit() {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 sm:py-12">
-      <header className="flex flex-col gap-3">
-        <h1
-          ref={headingRef}
-          tabIndex={-1}
-          className="text-3xl font-semibold tracking-tight focus:outline-none"
+      <PageHeader
+        headingRef={headingRef}
+        headingTabIndex={-1}
+        title={t("page.title")}
+        lead={t("page.intro")}
+      >
+        <p
+          className="flex max-w-prose items-start gap-2 text-sm text-muted-foreground"
+          data-testid="brand-storage-hint"
         >
-          {t("page.title")}
-        </h1>
-        <p className="max-w-prose text-lg text-muted-foreground">{t("page.intro")}</p>
-        <p className="max-w-prose text-sm text-muted-foreground" data-testid="brand-storage-hint">
+          <HardDriveIcon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-link" />
           {t("page.storageHint")}
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 pt-1">
           <button
             type="button"
             className={OUTLINE}
@@ -360,7 +363,7 @@ export function BrandKit() {
             data-testid="brand-file"
           />
         </div>
-      </header>
+      </PageHeader>
 
       <div role="status" aria-live="polite" className="empty:hidden" data-testid="brand-message">
         {message && (

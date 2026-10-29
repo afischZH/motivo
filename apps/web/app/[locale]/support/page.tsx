@@ -5,11 +5,13 @@
  * Without it, the page shows a neutral "link follows soon" note instead of a
  * button. No script, no widget, no tracking.
  */
+import { CheckIcon, HeartIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { PageHeader } from "@/components/layout/page-header";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { buttonVariants } from "@/components/ui/button";
 import { routing } from "@/i18n/routing";
@@ -55,19 +57,19 @@ export default async function SupportPage({ params }: SupportPageProps) {
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-12 px-4 py-8 sm:py-12">
-      <div className="flex flex-col gap-4">
-        <Breadcrumbs
-          locale={locale}
-          items={[
-            { name: t("Seo.home"), route: { page: "home" } },
-            { name: t("Support.title"), route: ROUTE },
-          ]}
-        />
-        <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-          {t("Support.title")}
-        </h1>
-        <p className="text-lg text-muted-foreground">{t("Support.lead")}</p>
-      </div>
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { name: t("Seo.home"), route: { page: "home" } },
+              { name: t("Support.title"), route: ROUTE },
+            ]}
+          />
+        }
+        title={t("Support.title")}
+        lead={t("Support.lead")}
+      />
 
       <section aria-labelledby="facts-heading" className={SECTION}>
         <h2 id="facts-heading" className={H2}>
@@ -75,7 +77,11 @@ export default async function SupportPage({ params }: SupportPageProps) {
         </h2>
         <ul className="grid gap-4 sm:grid-cols-3">
           {FACTS.map((fact) => (
-            <li key={fact} className="flex flex-col gap-2 rounded-card border border-border p-5">
+            <li
+              key={fact}
+              className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-5"
+            >
+              <CheckIcon aria-hidden="true" className="mb-1 size-5 text-link" />
               <h3 className="font-semibold">{t(`Support.facts.${fact}.title`)}</h3>
               <p className="text-sm text-muted-foreground">{t(`Support.facts.${fact}.text`)}</p>
             </li>
@@ -97,8 +103,11 @@ export default async function SupportPage({ params }: SupportPageProps) {
       <section
         aria-labelledby="donate-heading"
         data-testid="support-donate"
-        className="flex flex-col items-start gap-4 rounded-card border-2 border-primary bg-highlight p-6"
+        className="relative isolate flex flex-col items-start gap-4 overflow-hidden rounded-3xl border border-primary/40 bg-highlight p-6 sm:p-8"
       >
+        <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+          <HeartIcon aria-hidden="true" className="size-5" />
+        </span>
         <h2 id="donate-heading" className={H2}>
           {t("Support.donate.heading")}
         </h2>
