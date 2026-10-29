@@ -203,6 +203,7 @@ export const paletteGeneratorTool = defineTool({
     },
   },
   exports: ["svg", "png", "jpg", "webp"],
+  paletteOutput: paletteColors,
   extraExports: [
     {
       id: "css-variables",

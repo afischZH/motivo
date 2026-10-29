@@ -390,6 +390,44 @@
     },
     "shader": {
       "unavailable": "This browser cannot draw the shader because WebGL2 is missing. Turn on hardware acceleration or use a current browser such as Chrome, Edge, Firefox or Safari."
+    },
+    "handoff": {
+      "button": "Reuse",
+      "buttonHint": "Open the result as a picture in another tool",
+      "buttonHintPalette": "Use the result in another tool or in your Brand Kit",
+      "imageGroup": "Open as a picture in",
+      "imageInputTarget": "Picture",
+      "brandGroup": "Brand Kit",
+      "savePalette": "Save as brand palette …",
+      "preparing": "Preparing the picture for {tool} …",
+      "received": "Picture from {tool} added. Undo with ⌘/Ctrl+Z.",
+      "receivedAnalysis": "Picture from {tool} added, finding its colours.",
+      "expired": "The picture handed over is gone, for example after a reload. Choose “Reuse” in the first tool again.",
+      "errors": {
+        "too-large": "The picture is too large to hand over. Choose a smaller size and try again.",
+        "unsupported": "This design cannot be handed over as a picture.",
+        "failed": "The picture could not be prepared. Please try again.",
+        "received": "The picture handed over does not fit this tool: {reason}"
+      },
+      "palette": {
+        "title": "Save as brand palette",
+        "intro": "The palette goes into this browser's Brand Kit. Afterwards you can apply it in every tool under “Brand palette”.",
+        "colors": "Colours of the palette: {colors}",
+        "name": "Name",
+        "defaultName": "Palette from {tool}",
+        "save": "Save",
+        "saving": "Saving …",
+        "cancel": "Cancel",
+        "close": "Close",
+        "saved": "Palette “{name}” saved in your Brand Kit.",
+        "openKit": "Open Brand Kit",
+        "errors": {
+          "limit": "Your Brand Kit is full (at most 100 palettes). Delete a palette in the Brand Kit first.",
+          "unavailable": "The Brand Kit is not available in this browser, for example in a private window.",
+          "quota": "The browser's storage is full. Free some space and try again.",
+          "failed": "Saving did not work. Please try again."
+        }
+      }
     }
   },
   "sizes": {

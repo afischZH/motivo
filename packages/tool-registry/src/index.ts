@@ -11,5 +11,6 @@ export * from "./webgl";
 export * from "./svg-asset";
 export * from "./brand-palette";
 export * from "./animation";
+export * from "./handoff";
 export * from "./tools";
 export * from "./shapes";

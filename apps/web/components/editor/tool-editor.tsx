@@ -3,10 +3,13 @@
 import { ChevronLeftIcon } from "lucide-react";
 import { EditorShell, EditorStoreProvider } from "@musterli/editor-ui";
 import { createBrandKitStore, createDesignStore } from "@musterli/storage";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 import { Link } from "@/i18n/client-navigation";
+import { isEnabledLocale } from "@/i18n/locales";
+import { routePath } from "@/i18n/paths";
 
 /**
  * Client entry of the editor page. Tool definitions hold functions and
@@ -16,6 +19,17 @@ import { Link } from "@/i18n/client-navigation";
  */
 export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitHref: string }) {
   const t = useTranslations("ToolPage");
+  const locale = useLocale();
+  const router = useRouter();
+  // "Weiterverwenden in": client-side navigation, so the picture handed over
+  // in this tab's memory reaches the other editor (never a server).
+  const openTool = useCallback(
+    (targetId: string, hash: string) => {
+      if (!isEnabledLocale(locale)) return;
+      router.push(`${routePath({ page: "tool", toolId: targetId }, locale)}${hash}`);
+    },
+    [locale, router],
+  );
   // Saved designs and the brand kit live in this browser only (IndexedDB, opened on first use).
   const [designs] = useState(() => createDesignStore());
   const [brandKit] = useState(() => createBrandKitStore());
@@ -33,6 +47,7 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
         designs={designs}
         brandKit={brandKit}
         brandKitHref={brandKitHref}
+        onOpenTool={openTool}
         headerStart={
           <Link
             href="/tools"
