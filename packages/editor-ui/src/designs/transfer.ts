@@ -141,9 +141,10 @@ export function resanitizeUploads(
   params: Record<string, unknown>,
 ): Record<string, unknown> | null {
   let out: Record<string, unknown> | null = null;
+  const limits = rasterEdgeLimits(tool);
   for (const key of imageParamKeys(tool)) {
     const value = params[key];
-    const clean = resanitizeValue(value, 0);
+    const clean = resanitizeValue(value, 0, limits.get(key) ?? UPLOAD_RASTER_MAX_EDGE);
     if (clean === UNSAFE) return null;
     if (clean !== value) {
       out ??= { ...params };
@@ -157,14 +158,105 @@ const UNSAFE = Symbol("unsafe");
 /** Nesting of uploads inside local params (record of tile -> { graphic, background }). */
 const MAX_ASSET_DEPTH = 3;
 
+/** Schema wrappers whose inner schema describes the value (`def.innerType`). */
+const WRAPPERS: ReadonlySet<string> = new Set([
+  "nullable",
+  "optional",
+  "default",
+  "prefault",
+  "nonoptional",
+  "readonly",
+  "catch",
+]);
+/** Nesting of schemas searched for raster assets (record → object → union → asset). */
+const MAX_SCHEMA_DEPTH = 8;
+
+interface SchemaDef {
+  type?: string;
+  innerType?: z.ZodType;
+  in?: z.ZodType;
+  options?: readonly z.ZodType[];
+  shape?: Record<string, z.ZodType>;
+  valueType?: z.ZodType;
+  element?: z.ZodType;
+}
+
+const defOf = (schema: z.ZodType): SchemaDef =>
+  (schema as { _zod?: { def?: SchemaDef } })._zod?.def ?? {};
+
+/** The `max` of a number schema, or `null` without one. */
+function numberMax(schema: z.ZodType | undefined): number | null {
+  if (!schema || defOf(schema).type !== "number") return null;
+  const max = (schema as z.ZodNumber).maxValue;
+  return typeof max === "number" && Number.isFinite(max) ? max : null;
+}
+
+/**
+ * Largest raster edge the schema of one param accepts: the `max` of
+ * `width`/`height` of every object with `kind: "raster"` in it (through
+ * nullable, unions, records and nested objects, e.g. the Bento tiles).
+ * `null` when the param holds no raster asset. The schema stays the truth:
+ * screenshots 3840 px, effect photos 4096 px, backgrounds 2048 px.
+ */
+export function rasterEdgeLimit(schema: z.ZodType, depth = 0): number | null {
+  if (depth > MAX_SCHEMA_DEPTH) return null;
+  const def = defOf(schema);
+  const next = (s: z.ZodType | undefined) => (s ? rasterEdgeLimit(s, depth + 1) : null);
+  const most = (limits: (number | null)[]) => {
+    const found = limits.filter((l): l is number => l !== null);
+    return found.length > 0 ? Math.max(...found) : null;
+  };
+  if (def.type !== undefined && WRAPPERS.has(def.type)) return next(def.innerType);
+  switch (def.type) {
+    case "pipe":
+      return next(def.in);
+    case "union":
+      return most((def.options ?? []).map(next));
+    case "record":
+      return next(def.valueType);
+    case "array":
+      return next(def.element);
+    case "object": {
+      const shape = def.shape ?? {};
+      const kind = shape.kind ? defOf(shape.kind) : undefined;
+      const values = (kind as { values?: unknown[] } | undefined)?.values;
+      if (kind?.type === "literal" && values?.includes("raster")) {
+        return most([numberMax(shape.width), numberMax(shape.height)]);
+      }
+      return most(Object.values(shape).map(next));
+    }
+    default:
+      return null;
+  }
+}
+
+const edgeLimitCache = new WeakMap<AnyToolDefinition, Map<string, number>>();
+
+/** `rasterEdgeLimit` of every image param of a tool (cached per tool). */
+export function rasterEdgeLimits(tool: AnyToolDefinition): ReadonlyMap<string, number> {
+  let limits = edgeLimitCache.get(tool);
+  if (!limits) {
+    limits = new Map();
+    const shape = tool.schema.shape as Record<string, z.ZodType>;
+    for (const key of imageParamKeys(tool)) {
+      const schema = shape[key];
+      const limit = schema ? rasterEdgeLimit(schema) : null;
+      if (limit !== null) limits.set(key, Math.min(limit, UPLOAD_RASTER_MAX_EDGE));
+    }
+    edgeLimitCache.set(tool, limits);
+  }
+  return limits;
+}
+
 /**
  * One upload, or a plain object or array holding uploads (e.g. the per-tile
  * images of the Bento grid): every SVG sanitised again, every raster checked.
  * Returns the value itself when nothing changed, `UNSAFE` for a bad file.
- * The tool schema has already checked the declared size per param; the
- * picture's own header may not exceed it (nor `UPLOAD_RASTER_MAX_EDGE`).
+ * `maxEdge` is the limit of the param (`rasterEdgeLimits`): neither the
+ * declared size nor the picture's own header may exceed it, and the header
+ * may not exceed the declared size either.
  */
-function resanitizeValue(value: unknown, depth: number): unknown {
+function resanitizeValue(value: unknown, depth: number, maxEdge: number): unknown {
   if (typeof value !== "object" || value === null) return value;
   const asset = value as { kind?: unknown; svg?: unknown; href?: unknown };
   if (asset.kind === "svg") {
@@ -174,13 +266,13 @@ function resanitizeValue(value: unknown, depth: number): unknown {
     return clean.svg === asset.svg ? value : { ...asset, svg: clean.svg };
   }
   if (asset.kind === "raster") {
-    // The picture may not be larger than declared (the schema checked the
-    // declared size per param); uploads are encoded at exactly that size.
+    // The picture may not be larger than declared, nor than the param allows
+    // (the schema checked the declared size too); uploads are encoded at
+    // exactly the declared size.
     const { width, height } = value as { width?: unknown; height?: unknown };
-    const declared =
-      typeof width === "number" && typeof height === "number"
-        ? Math.min(UPLOAD_RASTER_MAX_EDGE, Math.max(width, height))
-        : UPLOAD_RASTER_MAX_EDGE;
+    if (typeof width !== "number" || typeof height !== "number") return UNSAFE;
+    const declared = Math.max(width, height);
+    if (!(declared <= maxEdge)) return UNSAFE;
     return typeof asset.href === "string" && isSafeRasterHref(asset.href, declared)
       ? value
       : UNSAFE;
@@ -189,7 +281,7 @@ function resanitizeValue(value: unknown, depth: number): unknown {
   let out: Record<string, unknown> | unknown[] | null = null;
   const entries = Array.isArray(value) ? value.entries() : Object.entries(value);
   for (const [k, v] of entries) {
-    const clean = resanitizeValue(v, depth + 1);
+    const clean = resanitizeValue(v, depth + 1, maxEdge);
     if (clean === UNSAFE) return UNSAFE;
     if (clean !== v) {
       out ??= Array.isArray(value) ? [...value] : { ...(value as Record<string, unknown>) };
