@@ -15,7 +15,9 @@
     },
     "mainNav": "Hauptnavigation",
     "toolsNav": "Tools",
-    "menu": "Menü"
+    "menu": "Menü",
+    "closeMenu": "Menü schliessen",
+    "supportCta": "Unterstützen"
   },
   "Theme": {
     "toggle": "Dunkles Design",
@@ -4485,7 +4487,10 @@
     "support": "Musterli unterstützen",
     "gradients": "Farbverläufe",
     "palettes": "Farbpaletten",
-    "terms": "Nutzungsbedingungen"
+    "terms": "Nutzungsbedingungen",
+    "cssPatterns": "CSS-Muster",
+    "collectionsHeading": "Sammlungen",
+    "copyright": "© {year} Musterli. Gratis und getragen von Spenden."
   },
   "Support": {
     "metaTitle": "Musterli unterstützen",

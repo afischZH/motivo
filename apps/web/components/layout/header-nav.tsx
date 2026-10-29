@@ -1,16 +1,31 @@
 "use client";
 
+import {
+  ArrowLeftRightIcon,
+  CodeXmlIcon,
+  HeartIcon,
+  LayoutGridIcon,
+  MenuIcon,
+  PaletteIcon,
+  ShapesIcon,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState } from "react";
+import { useState } from "react";
 
+import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { IntentLink } from "@/i18n/intent-link";
 import { cn } from "@/lib/utils";
+
+import { LogoMark } from "./logo-mark";
 
 export interface HeaderNavItem {
   /** Localized href, resolved by the server component around this one. */
   href: string;
   label: string;
-  icon?: "designs" | "brandKit";
+  icon: keyof typeof ICONS;
+  /** Shows the icon in the desktop bar too (the sheet always shows it). */
+  iconInBar?: boolean;
   /** Kept on the desktop link only, so tests find exactly one element. */
   testId?: string;
 }
@@ -19,6 +34,9 @@ export interface HeaderNavItem {
 export interface HeaderNavLabels {
   nav: string;
   menu: string;
+  close: string;
+  brand: string;
+  support: string;
 }
 
 /** The current section: the item's page itself or anything below it. */
@@ -26,16 +44,36 @@ function isCurrent(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+const ICONS = {
+  tools: ShapesIcon,
+  patterns: CodeXmlIcon,
+  convert: ArrowLeftRightIcon,
+  designs: LayoutGridIcon,
+  brandKit: PaletteIcon,
+} as const;
+
+function NavIcon({ icon }: { icon: HeaderNavItem["icon"] }) {
+  const Icon = ICONS[icon];
+  return <Icon aria-hidden="true" className="size-4 shrink-0" />;
+}
+
 /**
- * Main navigation: inline links from `md` up, a disclosure menu below. The
- * link of the current section carries `aria-current` and a visible marker.
+ * Main navigation (after the shadcnspace block navbar-01): a pill bar from
+ * `lg` up, a side sheet below. The desktop links stay in the markup at every
+ * width, so they remain crawlable while the sheet is closed. The link of the
+ * current section carries `aria-current` and a visible marker.
  */
-export function HeaderNav({ items, labels }: { items: HeaderNavItem[]; labels: HeaderNavLabels }) {
+export function HeaderNav({
+  items,
+  labels,
+  supportHref,
+}: {
+  items: HeaderNavItem[];
+  labels: HeaderNavLabels;
+  supportHref: string;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const panelId = useId();
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
 
   // A client-side navigation leaves the header mounted: close the menu.
   const [shownFor, setShownFor] = useState(pathname);
@@ -44,27 +82,12 @@ export function HeaderNav({ items, labels }: { items: HeaderNavItem[]; labels: H
     setOpen(false);
   }
 
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setOpen(false);
-      buttonRef.current?.focus();
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [open]);
-
   return (
-    <div ref={rootRef} className="flex items-center">
-      <nav aria-label={labels.nav} className="hidden items-center gap-1 md:flex">
+    <div className="flex items-center">
+      <nav
+        aria-label={labels.nav}
+        className="hidden items-center gap-0.5 rounded-full border border-border bg-muted/70 p-1 lg:flex"
+      >
         {items.map((item) => {
           const current = isCurrent(pathname, item.href);
           return (
@@ -74,105 +97,62 @@ export function HeaderNav({ items, labels }: { items: HeaderNavItem[]; labels: H
               aria-current={current ? "page" : undefined}
               data-testid={item.testId}
               className={cn(
-                "inline-flex h-8 items-center gap-1.5 rounded-control px-2.5 text-sm transition-colors duration-150 ease-out",
+                "inline-flex h-8 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-[color,background-color,box-shadow] duration-150 ease-out",
                 current
-                  ? "bg-accent font-medium text-foreground"
-                  : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+                  ? "bg-background text-foreground shadow-xs ring-1 ring-border"
+                  : "text-muted-foreground hover:bg-background/70 hover:text-foreground",
               )}
             >
-              {item.icon && <NavIcon icon={item.icon} />}
+              {item.iconInBar && <NavIcon icon={item.icon} />}
               {item.label}
             </IntentLink>
           );
         })}
       </nav>
 
-      <button
-        ref={buttonRef}
-        type="button"
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
-        className="inline-flex size-9 items-center justify-center rounded-md text-foreground hover:bg-accent md:hidden"
-      >
-        <span className="sr-only">{labels.menu}</span>
-        <MenuIcon open={open} />
-      </button>
-
-      {/* Below the header bar, full width; hidden, not unmounted, so links stay crawlable. */}
-      <nav
-        id={panelId}
-        aria-label={labels.nav}
-        hidden={!open}
-        className="absolute inset-x-0 top-full z-40 border-b border-border bg-background shadow-[0_16px_32px_-24px_oklch(0.2_0.02_275/0.4)] md:hidden"
-      >
-        <ul className="mx-auto flex max-w-6xl flex-col px-2 py-2">
-          {items.map((item) => {
-            const current = isCurrent(pathname, item.href);
-            return (
-              <li key={item.href}>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-background text-foreground transition-colors hover:bg-accent lg:hidden">
+          <span className="sr-only">{labels.menu}</span>
+          <MenuIcon aria-hidden="true" className="size-5" />
+        </SheetTrigger>
+        <SheetContent side="right" closeLabel={labels.close} className="w-[min(20rem,85vw)] gap-0">
+          <div className="flex h-14 items-center gap-2.5 border-b border-border px-4">
+            <LogoMark className="size-7" />
+            <SheetTitle className="text-base tracking-tight">{labels.brand}</SheetTitle>
+          </div>
+          <nav aria-label={labels.nav} className="flex flex-col gap-1 p-3">
+            {items.map((item) => {
+              const current = isCurrent(pathname, item.href);
+              return (
                 <IntentLink
+                  key={item.href}
                   href={item.href}
                   aria-current={current ? "page" : undefined}
                   className={cn(
-                    "flex h-12 items-center gap-3 rounded-control px-3 text-base",
-                    current ? "bg-accent font-medium" : "hover:bg-accent/60",
+                    "flex h-11 items-center gap-3 rounded-lg px-3 text-base",
+                    current
+                      ? "bg-accent font-medium [&_svg]:text-link"
+                      : "text-foreground hover:bg-accent/60 [&_svg]:text-muted-foreground",
                   )}
                 >
-                  {item.icon ? (
-                    <NavIcon icon={item.icon} />
-                  ) : (
-                    <span aria-hidden="true" className="size-4" />
-                  )}
+                  <NavIcon icon={item.icon} />
                   {item.label}
                 </IntentLink>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+              );
+            })}
+          </nav>
+          <Separator />
+          <div className="p-3">
+            <IntentLink
+              href={supportHref}
+              className="flex h-11 items-center gap-3 rounded-lg px-3 text-base text-foreground hover:bg-accent/60"
+            >
+              <HeartIcon aria-hidden="true" className="size-4 shrink-0 text-link" />
+              {labels.support}
+            </IntentLink>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
-  );
-}
-
-const ICON_PROPS = {
-  className: "size-4 shrink-0",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 2,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-  "aria-hidden": true,
-  focusable: false,
-} as const;
-
-function NavIcon({ icon }: { icon: NonNullable<HeaderNavItem["icon"]> }) {
-  if (icon === "designs") {
-    return (
-      <svg {...ICON_PROPS}>
-        <rect x="3" y="3" width="7" height="7" rx="1.5" />
-        <rect x="14" y="3" width="7" height="7" rx="1.5" />
-        <rect x="3" y="14" width="7" height="7" rx="1.5" />
-        <rect x="14" y="14" width="7" height="7" rx="1.5" />
-      </svg>
-    );
-  }
-  return (
-    <svg {...ICON_PROPS}>
-      <circle cx="13.5" cy="6.5" r="1.5" />
-      <circle cx="17.5" cy="10.5" r="1.5" />
-      <circle cx="8.5" cy="7.5" r="1.5" />
-      <circle cx="6.5" cy="12.5" r="1.5" />
-      <path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.3A5.7 5.7 0 0 0 22 9.7C22 5.4 17.5 2 12 2Z" />
-    </svg>
-  );
-}
-
-function MenuIcon({ open }: { open: boolean }) {
-  return (
-    <svg {...ICON_PROPS} className="size-5 shrink-0">
-      {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-    </svg>
   );
 }

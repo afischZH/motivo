@@ -15,7 +15,9 @@
     },
     "mainNav": "Main",
     "toolsNav": "Tools",
-    "menu": "Menu"
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "supportCta": "Support"
   },
   "Theme": {
     "toggle": "Dark theme",
@@ -4485,7 +4487,10 @@
     "support": "Support Musterli",
     "gradients": "Gradients",
     "palettes": "Color palettes",
-    "terms": "Terms of use"
+    "terms": "Terms of use",
+    "cssPatterns": "CSS patterns",
+    "collectionsHeading": "Collections",
+    "copyright": "© {year} Musterli. Free and funded by donations."
   },
   "Support": {
     "metaTitle": "Support Musterli",
