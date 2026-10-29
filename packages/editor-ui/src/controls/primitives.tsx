@@ -14,7 +14,7 @@ export const FOCUS_RING =
   "outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:border-ring";
 
 export const INPUT_CLASS = cx(
-  "h-8 rounded-md border border-input bg-background px-2 text-sm tabular-nums text-foreground",
+  "h-8 rounded-md border border-input bg-background px-2 text-sm tabular-nums text-foreground shadow-xs transition-[color,box-shadow] placeholder:text-muted-foreground",
   "disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive",
   FOCUS_RING,
 );
