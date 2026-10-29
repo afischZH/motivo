@@ -137,7 +137,8 @@ function tailwindExample(p: SectionDividerParams, ctx: RenderContext): string {
 export const sectionDividerTool = defineTool({
   id: ID,
   version: 1,
-  category: ["backgrounds", "css-effects"],
+  // Primary css-effects: a page element with code, not a backdrop (no "in context" view).
+  category: ["css-effects", "backgrounds"],
   schema,
   defaults,
   defaultSize: { width: 1440, height: 120 },

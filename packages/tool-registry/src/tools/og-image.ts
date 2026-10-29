@@ -101,7 +101,7 @@ const defaults: OgImageParams = {
   palette: ["#6366f1", "#ec4899", "#f59e0b"],
   background: "#1e1b4b",
   gradientAngle: 135,
-  pattern: "dots",
+  pattern: "polka",
   patternScale: 32,
   patternOpacity: 18,
   backgroundImage: null,
@@ -339,7 +339,7 @@ export const ogImageTool = defineTool({
     }),
     preset("dotted", {
       backdrop: "pattern",
-      pattern: "dots",
+      pattern: "polka",
       palette: ["#fb923c", "#f97316"],
       background: "#fff7ed",
       patternOpacity: 30,
@@ -500,8 +500,8 @@ export const ogImageTool = defineTool({
     };
     return keepLocked(next, current, locks);
   },
-  brandPalette(colors) {
-    return { palette: colors.slice(), accent: colors[0], inkAuto: true };
+  brandPalette(colors, current) {
+    return { palette: colors.slice(), accent: colors[0] ?? current.accent, inkAuto: true };
   },
   advisories(p, ctx) {
     const out: { id: string; messageKey: string; values?: Record<string, string> }[] = [];

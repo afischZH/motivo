@@ -38,6 +38,8 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
     "svg-waves",
   ],
   "ui-effects": [
+    "section-divider",
+    "fluid-type-scale",
     "glass-effects",
     "css-shadow",
     "bento-grid",
@@ -54,6 +56,7 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
   ],
   "icons-avatars": ["favicon-generator", "avatar", "placeholder-image", "svg-charts"],
   "image-polish": [
+    "og-image",
     "screenshot-beautifier",
     "duotone",
     "halftone",

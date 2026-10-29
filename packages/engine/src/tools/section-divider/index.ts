@@ -84,12 +84,12 @@ export function dividerEdge(o: EdgeOptions): string {
   const yOf = (e: number) => h - e * (h - top);
   switch (o.shape) {
     case "wave": {
-      // Sine sampled 8 times per period, through Catmull-Rom (error well below a pixel).
+      // Sine between 20 % and the top, sampled 8 times per period, through Catmull-Rom (error well below a pixel).
       const samples = n * 8;
       const pts: Vec2[] = [];
       for (let i = 0; i <= samples; i++) {
         const u = i / samples;
-        pts.push({ x: u * w, y: yOf(0.5 - 0.5 * Math.cos(2 * Math.PI * (n * u + o.phase))) });
+        pts.push({ x: u * w, y: yOf(0.6 - 0.4 * Math.cos(2 * Math.PI * (n * u + o.phase))) });
       }
       return cubicPathToSvg(catmullRomToBezier(pts));
     }

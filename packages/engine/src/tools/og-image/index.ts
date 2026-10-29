@@ -241,7 +241,7 @@ export function ogImage(o: OgImageOptions): OgImageResult {
   const hasHeader = header.length > 0;
 
   // Main block: kicker pill, title, subtitle.
-  const pillSize = small * 0.95;
+  const pillSize = small * 1.1;
   const pillH = o.eyebrow === "" ? 0 : pillSize * 1.9;
   const pillGap = pillH > 0 ? small * 0.9 : 0;
   const subGap = subtitle.lines.length > 0 ? titleFit.size * 0.35 : 0;

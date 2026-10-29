@@ -29,6 +29,7 @@ const EXPECTED = [
   "god-rays:photo",
   "fractal-glass:photo",
   "pixelate:photo",
+  "og-image:backgroundImage",
   "palette-from-image:<image-input>",
 ];
 

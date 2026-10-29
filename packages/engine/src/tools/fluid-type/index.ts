@@ -199,7 +199,7 @@ export function truncateToWidth(
 export function fluidSpecimenSvg(o: FluidSpecimenOptions): string {
   const { width: w, height: h } = o;
   const pad = Math.max(16, Math.round(Math.min(w, h) * 0.06));
-  const label = Math.max(10, Math.min(15, w / 80));
+  const label = Math.max(11, Math.min(18, w / 64));
   const mono = AVATAR_FONT_STACKS.mono;
   const parts: string[] = [svgBackground(o.background, w, h)];
 

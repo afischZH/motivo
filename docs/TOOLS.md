@@ -555,6 +555,47 @@ Umgesetzt in M4c-AP04 auf derselben Bildeffekt-Grundlage wie L4.
 - **Leertaste**: würfelt Farbschema (Tinte und Hintergrund mit hohem Kontrast, dazu `invert`) und Rampe (ausser `custom`); Foto, Modus, Spalten und Tonkurve bleiben.
 - **Vorlagen** (7): Klassisch, Terminal (grün auf schwarz), Farbig, LED (runde, leuchtende Punkte), Rasterpunkte (Grösse nach Helligkeit), Braille, Blöcke.
 
+## M. Webdesign-Werkzeuge · W3 · G
+
+Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen Hooks, keine Dependency; alle drei sind `svg`-Tools mit Zusatzexporten (`extraExports`), Bildexporte aus demselben SVG.
+
+### M1. Fliessende Schriftskala · W3 · G
+
+**Umgesetzt (Tool-ID `fluid-type-scale`, Slugs `fliessende-schriftskala`/`fluid-type-scale-generator`, Kategorie `css-effects`, Engine `packages/engine/src/tools/fluid-type/`)**:
+- **Zweck**: alle Schriftgrössen einer Website als modulare Skala, die zwischen zwei Bildschirmbreiten stufenlos wächst, als CSS `clamp()`.
+- **Parameter**: `minViewport`, `maxViewport` (240 bis 3840 px), `minBase`, `maxBase` (Grösse von Stufe 0, 8 bis 40 px), `minRatio`, `maxRatio` (benannte Verhältnisse: 1.067, 1.125, 1.2, 1.25, 1.333, 1.414, 1.5, 1.618), `stepsDown` (0 bis 3), `stepsUp` (1 bis 8), `unit` (rem, px; rem bezogen auf 16 px), `naming` (`steps`: `--step-1`, `--step--1`; `tshirt`: `sm`, `base`, `lg`, `xl`, `2xl` wie Tailwind), `prefix` (über `toCssName`, Rückfall `step` bzw. `text`), Vorschau: `previewViewport`, `sample` (Inhalt, `contentParams`), `font` (Systemschriften), `fontWeight`, `background`, `ink`, `accent`.
+- **Algorithmus**: Stufe i hat `min = minBase · minRatio^i` und `max = maxBase · maxRatio^i`; Steigung `(max − min) / (maxViewport − minViewport)`, Achsenabschnitt `min − Steigung · minViewport`. CSS `clamp(<kleinere>, <Achsenabschnitt in rem> + <Steigung · 100>vw, <grössere>)` mit 4 Nachkommastellen (px: 2), bei schrumpfenden Stufen mit vertauschten Grenzen und `−`; ohne Änderung eine feste Länge. Nie `vw` allein: der rem-Anteil hält Zoom und Browser-Schriftgrösse wirksam.
+- **Hinweis** (`advisories`): wächst eine Stufe um mehr als das 2.5-Fache (`FLUID_ZOOM_SAFE_FACTOR`), warnt das Tool vor WCAG 1.4.4 (Faustregel: bis 2.5-fach lässt sich Text immer auf 200 % zoomen).
+- **Vorschau**: Schriftmuster als SVG mit Lineal (Breitenbereich, Vorschaubreite als Punkt) und einer Zeile pro Stufe (Name, Bereich in px, Beispieltext in echter Grösse bei `previewViewport`, mit "…" gekürzt); Zeilen unter dem Rand werden abgeschnitten.
+- **Exporte**: SVG, PNG, JPG, WebP (Schriftmuster); Code: CSS-Variablen (`:root`), CSS-Variablen und Klassen (`.step-1 { font-size: var(--step-1) }`), Tailwind v4 `@theme` (`--text-*` ergibt `text-*`-Klassen). Standardgrösse 1280 × 960.
+- **Leertaste**: würfelt Grundgrössen, Verhältnisse und Stufen darüber; Breiten, Code-Einstellungen und Aussehen bleiben. **Brand-Palette**: nur der Akzent.
+- **Vorlagen** (7): Ausgewogen, Kompakt, Magazin, Grosser Auftritt, App-Oberfläche, Tailwind-Namen, Code.
+
+### M2. Abschnittstrenner · W3 · G
+
+**Umgesetzt (Tool-ID `section-divider`, Slugs `abschnittstrenner-generator`/`section-divider-generator`, Kategorien `css-effects` und `backgrounds`, Engine `packages/engine/src/tools/section-divider/`)**:
+- **Zweck**: die Kante zwischen zwei Website-Abschnitten als gefüllte SVG-Form, die jede Breite füllt (`preserveAspectRatio="none"`); nur die Höhe ist fest.
+- **Formen** (`shape`): Welle (Sinus zwischen 20 % und oben, 8 Stützpunkte pro Periode über Catmull-Rom), Bogen (quadratische Bézier, Kontrollpunkt bei `2 · oben − h`, `count` Bögen), Schräge, Zacken (`count` Dreiecke), Pfeil (V in der Mitte, 10 % der Breite), Wolken (Halbellipsen auf 30 %, abwechselnd volle und 70 % Höhe), Stufen (`count` Stufen von links).
+- **Parameter**: `shape`, `count` (1 bis 24, nur bei Welle, Bogen, Zacken, Wolken, Stufen), `layers` (1 bis 3: hintere Ebenen reichen unter der Kante höher, über der Kante tiefer, Höhenanteil 1 bis 0.7, Phase je Ebene 0.35, Deckkraft `(j + 1) / n · 0.75`, vorne deckend), `position` (unten: die Farbe ist der nächste Abschnitt; oben: senkrecht gespiegelt), `flip` (waagrecht), `invert` (Farbe über der Kante), `color`, `background` (andere Seite, Standard transparent), `minHeight` (kleinste Höhe im Code, 10 bis 100 % der Designhöhe).
+- **Exporte**: SVG, CSS (generisch), PNG, JPG, WebP; Code: HTML-Beispiel (Inline-SVG ohne Pixelgrösse mit `aria-hidden` und `focusable="false"`, CSS mit `position: absolute`, `bottom` bzw. `top: -1px` gegen die Haarlinie beim Runden, `height: clamp(<minHeight>, <h / w · 100>vw, <h>)`), Tailwind-Klassen (`h-[clamp(…)]` ohne Leerzeichen). Standardgrösse 1440 × 120, eigene Grössen 1440 × 64, 1440 × 120, 1440 × 240, 390 × 60.
+- **Leertaste**: würfelt Form, Anzahl, Ebenen und Spiegelung; Farben, Position und Umkehren bleiben. **Brand-Palette**: erste Farbe als Farbe der Form.
+- **Vorlagen** (8): Welle, Wellen in Ebenen, Bogen, Schräge, Pfeil, Berge, Wolken, Treppe.
+- **Hauptkategorie** `css-effects`: ein Seitenelement mit Code, kein Hintergrund (darum keine Ansicht "Im Kontext").
+
+### M3. Open-Graph-Bild · W3 · G
+
+**Umgesetzt (Tool-ID `og-image`, Slugs `og-bild-generator`/`og-image-generator`, Kategorien `social` und `backgrounds`, Engine `packages/engine/src/tools/og-image/`)**:
+- **Zweck**: Vorschaubild geteilter Links (Facebook, LinkedIn, X, Slack, WhatsApp) mit Text auf einem Musterli-Motiv, plus Meta-Tags.
+- **Inhalt** (`contentParams`, im Teilen-Link): `eyebrow` (Kennzeichnung als Pille in der Akzentfarbe, bis 40 Zeichen), `title` (bis 140), `subtitle` (bis 200), `site` (bis 60). Lokal (`localParams`, nie im Teilen-Link): `logo` (Upload, SVG erneut bereinigt über `imageAssetHref`) und `backgroundImage` (Foto bis 2048 px, als JPEG; ersetzt das Motiv; Ziel von "Weiterverwenden", `imageTargets`).
+- **Aufteilung** (`layout`): klassisch (Logo und Seitenname oben, Text unten links), zentriert, geteilt (deckende Fläche links 58 %, Motiv rechts), schlicht (Titel mittig links, Logo und Seitenname unten).
+- **Motiv** (`backdrop`): Farbe, Verlauf (`fillMarkup` in OKLCH), Mesh-Verlauf, weicher Verlauf, Wellen (Engine der jeweiligen Tools mit festen Einstellungen und dem Seed), Muster (CSS-Muster-Bibliothek). Fläche hinter dem Text (`panel`): keine, Verlauf (zum Text hin, zentriert radial) oder Karte (abgerundet um den Textblock), `panelColor`, `panelOpacity`.
+- **Text ohne DOM**: Umbruch nach Wörtern mit `estimateTextWidth`, überlange Wörter nach Zeichen; Titel höchstens 3 Zeilen, wird erst in 5-%-Schritten bis 60 % kleiner, dann mit "…" gekürzt; Untertitel 2 Zeilen. Grössen relativ zur Höhe (`titleSize` 5 bis 16 %, `padding` 3 bis 16 % der kürzeren Kante). Text immer escaped.
+- **Textfarbe** (`inkAuto`): Weiss oder Fast-Schwarz mit dem besseren schlechtesten Kontrast über die Farben hinter dem Text (Fläche ab 50 % Deckkraft oder geteilt: deren Farbe; sonst Hintergrund und Palette); bei eigenem Bild ohne Fläche Weiss.
+- **Hinweise**: Text gekürzt; eigenes Bild ohne Fläche (Kontrast nicht prüfbar); Kontrast unter 4.5:1.
+- **Exporte**: PNG, JPG, WebP, SVG; Code: Meta-Tags (`og:type`, `og:title`, `og:description`, `og:site_name`, `og:image` als Platzhalter-URL, `og:image:width`/`height`, `og:image:alt`, `twitter:card` `summary_large_image`), Werte escaped, leere Felder weggelassen. Standardgrösse 1200 × 630. Der Teilen-Link der Standardwerte ist rund 450 Zeichen lang (Ausnahme im Share-Codec-Test, wie Glas-Effekte).
+- **Leertaste**: würfelt Palette, Motiv (ohne Farbe), Winkel, Muster und Akzent; Text, Aufteilung, Fläche und Bilder bleiben. **Brand-Palette**: Palette, Akzent und automatische Textfarbe.
+- **Vorlagen** (7): Lancierung, Artikel, Zentriert, Geteilt, Schlicht, Gepunktet, Nacht.
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
@@ -563,4 +604,5 @@ Umgesetzt in M4c-AP04 auf derselben Bildeffekt-Grundlage wie L4.
 4. **M4**: Geometric + Seamless Patterns, Packs, GIF; Code-first-Welle: Kontrast-Checker (F6), CSS-Schatten (J1), Glas- und Rahmen-Effekte (J2), Bento-Grid (J3)
 5. **M5**: Shader Gradient (+ Video), Perspective Grid, Halftone, CMYK, Dither
 6. **M6**: God Rays, Fractal Glass, Social Media Editor
-7. **M7**: Composer, Community-Ausbau, API, Plugins, KI
+7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
+8. **M7**: Composer, Community-Ausbau, API, Plugins, KI
