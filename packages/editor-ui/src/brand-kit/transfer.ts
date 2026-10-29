@@ -12,23 +12,36 @@
  *  - SVG images are sanitised again with `@musterli/svg-sanitizer` and
  *    replaced by its output; own shapes must stay SVG;
  *  - raster images must be the PNG or JPEG their data URI claims (magic
- *    bytes), within 1024 px per edge (header dimensions).
+ *    bytes), within 1024 px per edge (header dimensions);
+ *  - fonts (M6-AP03) must be padded base64 of at most 2 MB whose bytes carry
+ *    the signature of the declared format (WOFF2, WOFF, TrueType,
+ *    OpenType); at most 10. The page loads each through `FontFace` before
+ *    saving (the browser's font sanitizer), see `verifyBrandFont`.
  * Entries that fail are skipped with a reason; the rest is imported.
  */
 import {
+  BRAND_FONT_FORMATS,
+  BRAND_FONT_MAX_BYTES,
+  BRAND_FONTS_MAX,
   BRAND_LOGOS_MAX,
   BRAND_PALETTES_MAX,
   BRAND_SHAPES_MAX,
   BRAND_SVG_MAX_LENGTH,
   brandAssetSchema,
+  brandFontSchema,
+  brandIdSchema,
+  brandNameSchema,
   brandPaletteSchema,
   normalizeBrandHex,
+  timestampSchema,
   type BrandAsset,
+  type BrandFont,
   type BrandPalette,
 } from "@musterli/storage";
 import { sanitizeSvg } from "@musterli/svg-sanitizer";
 import * as z from "zod";
 import { DESIGNS_FILE_FORMAT, isSafeRasterHref } from "../designs/transfer";
+import { base64ToBytes } from "../transfer/base64";
 import { ForbiddenKeyError, fileFormatOf, parseUntrustedJson, utf8Length } from "../transfer/json";
 import {
   BRAND_KIT_FILE_FORMAT,
@@ -47,7 +60,33 @@ const headerSchema = z.object({
   defaultPaletteId: z.string().max(64).nullable().optional(),
   palettes: z.array(z.unknown()).max(BRAND_PALETTES_MAX),
   assets: z.array(z.unknown()).max(BRAND_LOGOS_MAX + BRAND_SHAPES_MAX),
+  fonts: z.array(z.unknown()).max(BRAND_FONTS_MAX).optional(),
 });
+
+/** Base64 characters of the largest font. */
+const FONT_BASE64_MAX = Math.ceil(BRAND_FONT_MAX_BYTES / 3) * 4;
+
+const fileFontSchema = z.object({
+  id: brandIdSchema,
+  name: brandNameSchema,
+  format: z.enum(BRAND_FONT_FORMATS),
+  data: z.string().min(16).max(FONT_BASE64_MAX),
+  createdAt: timestampSchema,
+});
+
+/**
+ * A font entry of a file: schema, then base64 decoded and checked like a
+ * stored font (size, signature of the declared format). `invalid` for a
+ * malformed entry, `unsafe-font` for bytes that are not that font.
+ */
+export function readBrandFont(value: unknown): BrandFont | "invalid" | "unsafe-font" {
+  const entry = fileFontSchema.safeParse(value);
+  if (!entry.success) return "invalid";
+  const bytes = base64ToBytes(entry.data.data);
+  if (!bytes) return "invalid";
+  const font = brandFontSchema.safeParse({ ...entry.data, data: bytes.buffer });
+  return font.success ? font.data : "unsafe-font";
+}
 
 function readName(value: unknown): string | undefined {
   if (typeof value !== "object" || value === null) return undefined;
@@ -129,7 +168,9 @@ export function parseBrandKitFile(text: string): BrandKitFileParseResult {
   if (!header.success) {
     // Only the lists count as "too many"; an oversized default id is just malformed.
     const tooMany = header.error.issues.some(
-      (i) => i.code === "too_big" && (i.path[0] === "palettes" || i.path[0] === "assets"),
+      (i) =>
+        i.code === "too_big" &&
+        (i.path[0] === "palettes" || i.path[0] === "assets" || i.path[0] === "fonts"),
     );
     return { ok: false, error: tooMany ? "too-many" : "wrong-format" };
   }
@@ -159,11 +200,19 @@ export function parseBrandKitFile(text: string): BrandKitFileParseResult {
     assets.push(clean.asset);
   });
 
+  const fonts: BrandFont[] = [];
+  (header.data.fonts ?? []).forEach((value, index) => {
+    const font = readBrandFont(value);
+    if (typeof font === "string") skipped.push(skip("font", index, value, font));
+    else fonts.push(font);
+  });
+
   const defaultId = header.data.defaultPaletteId ?? null;
   return {
     ok: true,
     palettes,
     assets,
+    fonts,
     defaultId: palettes.some((p) => p.id === defaultId) ? defaultId : null,
     skipped,
     removed,

@@ -156,6 +156,9 @@ describe("built-in tool registration", () => {
       "cmyk-halftone",
       "dither",
       "shader-gradient",
+      "god-rays",
+      "fractal-glass",
+      "pixelate",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
@@ -200,6 +203,9 @@ describe("built-in tool registration", () => {
       "halftone",
       "cmyk-halftone",
       "dither",
+      "god-rays",
+      "fractal-glass",
+      "pixelate",
     ]);
   });
 

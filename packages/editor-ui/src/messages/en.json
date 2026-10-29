@@ -613,7 +613,8 @@
       "skippedUnnamed": "Entry {index}: {reason}",
       "skipReasons": {
         "invalid": "invalid data",
-        "unsafe-image": "unsafe or damaged image"
+        "unsafe-image": "unsafe or damaged image",
+        "unsafe-font": "not a valid font file"
       },
       "importErrors": {
         "too-large": "The file is too large. At most 30 MB are allowed.",
@@ -628,7 +629,9 @@
         "aborted": "Import cancelled."
       },
       "dismiss": "Dismiss message",
-      "undo": "Undo"
+      "undo": "Undo",
+      "skippedFont": "Font {name}: {reason}",
+      "importedFonts": "{count, plural, one {# font} other {# fonts}} imported."
     },
     "errors": {
       "unavailable": "Musterli cannot save anything in this browser, for example in a private window or when site data is blocked.",
@@ -712,6 +715,22 @@
         "svg-timeout": "Checking the SVG file took too long and was stopped. Simplify the file and try again.",
         "raster-only": "Only a PNG, JPG or WebP picture works here.",
         "shape-not-svg": "Shapes must be SVG files. Logos may also be PNG, JPG or WebP."
+      }
+    },
+    "fonts": {
+      "title": "Fonts",
+      "hint": "WOFF2, WOFF, TTF or OTF up to 2 MB, at most 10 fonts. Check first that your font licence allows graphics for social media. The file stays in this browser.",
+      "empty": "No fonts of your own yet.",
+      "add": "Add font",
+      "added": "Font “{name}” added.",
+      "sample": "Aa Bb Cc Ää Öö Üü 0123",
+      "details": "{format} · {size} KB",
+      "usage": "In the social media editor, your fonts come first in the font picker.",
+      "errors": {
+        "too-large": "The file is larger than 2 MB. Use a smaller font file, for example WOFF2.",
+        "not-a-font": "This is not a font file. Use WOFF2, WOFF, TTF or OTF.",
+        "broken": "The browser cannot load this font. The file may be damaged.",
+        "unavailable": "This browser cannot load fonts of your own."
       }
     }
   }

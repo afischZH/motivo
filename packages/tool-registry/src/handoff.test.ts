@@ -26,6 +26,9 @@ const EXPECTED = [
   "halftone:photo",
   "cmyk-halftone:photo",
   "dither:photo",
+  "god-rays:photo",
+  "fractal-glass:photo",
+  "pixelate:photo",
   "palette-from-image:<image-input>",
 ];
 

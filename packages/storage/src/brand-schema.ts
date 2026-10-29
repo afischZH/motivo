@@ -112,3 +112,60 @@ export function normalizeBrandHex(value: string): string | null {
   if (/^#[0-9a-f]{3}$/.test(v)) return `#${v[1]}${v[1]}${v[2]}${v[2]}${v[3]}${v[3]}`;
   return null;
 }
+
+/** Most own fonts in one browser (M6-AP03). */
+export const BRAND_FONTS_MAX = 10;
+/** Largest font file in bytes. */
+export const BRAND_FONT_MAX_BYTES = 2 * 1024 * 1024;
+/** Smallest plausible font file (a header and a few tables). */
+export const BRAND_FONT_MIN_BYTES = 12;
+/** Font files the brand kit takes (single fonts, no collections). */
+export const BRAND_FONT_FORMATS = ["woff2", "woff", "ttf", "otf"] as const;
+export type BrandFontFormat = (typeof BRAND_FONT_FORMATS)[number];
+
+/**
+ * The format of a font file by its first four bytes (signature of WOFF2,
+ * WOFF, OpenType/CFF, TrueType); `null` for anything else, including font
+ * collections (`ttcf`).
+ */
+export function sniffFontFormat(bytes: Uint8Array): BrandFontFormat | null {
+  if (bytes.length < 4) return null;
+  const tag = String.fromCharCode(bytes[0] ?? 0, bytes[1] ?? 0, bytes[2] ?? 0, bytes[3] ?? 0);
+  if (tag === "wOF2") return "woff2";
+  if (tag === "wOFF") return "woff";
+  if (tag === "OTTO") return "otf";
+  if (tag === "\u0000\u0001\u0000\u0000" || tag === "true") return "ttf";
+  return null;
+}
+
+/** An `ArrayBuffer` of any realm (IndexedDB and workers clone into the page's realm). */
+export function isArrayBuffer(value: unknown): value is ArrayBuffer {
+  return Object.prototype.toString.call(value) === "[object ArrayBuffer]";
+}
+
+/**
+ * An own font: the file's bytes as uploaded (the browser's font sanitizer
+ * checks them again whenever they are loaded), its format by signature and
+ * a display name. Used only in this browser and in brand kit files, never
+ * in a share link.
+ */
+export const brandFontSchema = z
+  .object({
+    id: brandIdSchema,
+    name: brandNameSchema,
+    format: z.enum(BRAND_FONT_FORMATS),
+    data: z.custom<ArrayBuffer>(isArrayBuffer, { message: "Expected an ArrayBuffer" }),
+    createdAt: timestampSchema,
+  })
+  .superRefine((font, ctx) => {
+    const size = font.data.byteLength;
+    if (size < BRAND_FONT_MIN_BYTES || size > BRAND_FONT_MAX_BYTES) {
+      ctx.addIssue({ code: "custom", message: "Font file size out of range", path: ["data"] });
+      return;
+    }
+    if (sniffFontFormat(new Uint8Array(font.data, 0, 4)) !== font.format) {
+      ctx.addIssue({ code: "custom", message: "Not a font of that format", path: ["data"] });
+    }
+  });
+
+export type BrandFont = z.output<typeof brandFontSchema>;

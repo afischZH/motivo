@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 
 import { CatalogueFilter, type CatalogueSection } from "@/components/catalogue/catalogue-filter";
 import { PageHeader } from "@/components/layout/page-header";
+import { buttonVariants } from "@/components/ui/button";
 import { chipClass } from "@/components/ui/chip";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ToolCard } from "@/components/seo/tool-card";
@@ -143,6 +144,25 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
         title={t("ToolsIndex.title")}
         lead={t("ToolsIndex.lead")}
       />
+
+      <aside
+        aria-labelledby="social-teaser"
+        className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-card p-5"
+        data-testid="social-teaser"
+      >
+        <div className="flex max-w-prose flex-col gap-1">
+          <h2 id="social-teaser" className="font-semibold">
+            {t("SocialLanding.teaserTitle")}
+          </h2>
+          <p className="text-sm text-muted-foreground">{t("SocialLanding.teaserText")}</p>
+        </div>
+        <Link
+          href={routeHref({ page: "socialEditor" }, locale)}
+          className={buttonVariants({ size: "sm", className: "rounded-full px-4" })}
+        >
+          {t("SocialLanding.teaserCta")}
+        </Link>
+      </aside>
 
       <CatalogueFilter
         sections={sections}

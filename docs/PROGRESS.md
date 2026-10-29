@@ -4,11 +4,22 @@
 
 ## Aktueller Stand
 
-- **Meilenstein**: M5b (Tiefe statt Breite), freigegeben von Andreas 2026-10-29 03:35 ("starte mit empfehlungen"). Branch `claude/project-thread-693ltv` ab `main` (317e7db, inkl. Redesign PR #17). M5 live seit 2026-10-29 02:55 (PR #16); M4-AP08 (Launch-Vorbereitung) noch offen.
+- **Meilenstein**: M6 (Social Media Editor und restliche Effekte) abgeschlossen, live nach Freigabe Andreas 2026-10-29 09:55 (PR #20). M5b live seit 2026-10-29 05:16 (PR #18, Merge b09677f, Deploy grün). M4-AP08 (Launch-Vorbereitung) noch offen.
 - **Letzte Sitzung**: 2026-10-29 (Cloud-Sitzung)
-- **Nächster Schritt**: CI auf PR #18 grün, dann Abnahme durch Andreas (Ready for review und Merge). Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende über das Ko-fi-Widget, Markenprüfung.
+- **Nächster Schritt**: AP01 (Effekte) und AP02 (Editor-Grundlage inkl. Magic Resize) parallel, danach AP03 (Text, Schriften) und AP05 (Templates, Brand-Apply), zuletzt AP07. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende, Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
+
+### M6: Social Media Editor und restliche Effekte (freigegeben 2026-10-29)
+
+| ID | Titel | Agent | Status | Abhängig von | Notiz |
+|---|---|---|---|---|---|
+| M6-AP01 | Bildeffekte **God Rays** (E5), **Fractal Glass** (E6), **Pixelate/Posterize** (E7) | engine-dev + ui-dev | erledigt | – | Branch `m6/ap01-effects`, gemergt 70a6720; Long-Task-Tests nur gegen Produktions-Build aussagekräftig |
+| M6-AP02 | Editor-Grundlage (H): Szenenmodell (Zod, JSON), Konva-Kern dynamisch, Ebenen (Musterli-Design als parametrische Referenz, Text, Bild, Form, Logo), Transform, Snapping, Ausrichtung, Gruppen, Undo, Export PNG/JPG, lokaler Speicher (IndexedDB-Upgrade), Formate und **Magic Resize** mit Constraint-Test | ui-dev + engine-dev | erledigt | – | Gemergt dd58074; Paket `@musterli/scene`, IndexedDB v3, Konva-Kern 45.8 KB gzip. AP04 aus dem Plan hier enthalten (Szenenmodell und Constraints gehören zusammen) |
+| M6-AP03 | Text-Effekte (Schatten, Kontur, Verlauf, Markierbalken), selbst gehostete OFL-Schriften, Brand-Schriften im Brand Kit | ui-dev | erledigt | AP02 | Gemergt; 12 OFL-Schriften (780 KiB woff2, nur im Editor geladen), Brand-Schriften in IndexedDB v4. Offen: Brand-Schriften nur Gewicht 400, Name aus Dateiname |
+| M6-AP05 | 40 Templates (6 Themen, alle Formate) und **Brand-Apply** | ui-dev | erledigt | AP02, AP03 | DoD-Test: jedes Template in 6 Formate ohne abgeschnittenen Text |
+| M6-AP06 | FR und IT | – | gestrichen | – | Entscheid Andreas 2026-10-29 06:02: aus M6 entfernt; begonnene Arbeit verworfen, nichts gemergt |
+| M6-AP07 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | erledigt | alle | Code-Review (Datenverlust beim Neuladen, Exportgrösse, Speichern ohne Long Tasks, Logo-Slot) und Security-Review bestanden. Offen: Vorlagen-Vorschaubilder erzeugen auf langsamen Rechnern Long Tasks bis 146 ms (Hintergrund-SVG im Hauptthread; Lösung: SVG im Worker), CI-Test `social-templates` @long-tasks rot, Merge trotzdem nach Entscheid Andreas 2026-10-29 10:20. Offen klein: Bilder als Blobs speichern (Speicherformat), maximaler Entwurf zu gross für Re-Import. Worker 3524 ► 3791 KiB gzip über M6 (CLAUDE.md nennt 3 MiB Gratis-Limit, Produktion läuft schon mit 3524) |
 
 ### M5b: Tiefe statt Breite (freigegeben 2026-10-29)
 

@@ -4,10 +4,14 @@
  * device goes through a brand kit file (`@musterli/editor-ui` brand-kit
  * transfer).
  *
- * Layout (database `motivo` version 2, see idb.ts):
+ * Layout (database `motivo`, palettes and assets since version 2, fonts
+ * since version 4, see idb.ts):
  *  - `brand-palettes`: id, name, 2 to 10 colours (`#rrggbb`), timestamps;
  *  - `brand-assets`: id, kind (`logo` | `shape`), name, image (sanitised
  *    SVG or re-encoded raster, like an upload param), `createdAt`;
+ *  - `brand-fonts` (M6-AP03): id, name, format (`woff2`, `woff`, `ttf`,
+ *    `otf`), the file's bytes as an `ArrayBuffer` (at most 2 MB, signature
+ *    checked), `createdAt`; at most 10;
  *  - `meta` key `brand-default-palette`: id of the default palette, which
  *    the editor preselects. The first palette becomes the default; deleting
  *    the default moves the mark to the oldest remaining palette.
@@ -19,14 +23,18 @@
 import { createConnection, randomHexId } from "./connection";
 import { STORE, StorageError, transact } from "./idb";
 import {
+  BRAND_FONTS_MAX,
   BRAND_PALETTES_MAX,
   brandAssetLimit,
+  brandFontSchema,
   brandAssetSchema,
   brandPaletteSchema,
   normalizeBrandHex,
   normalizeBrandName,
   type BrandAsset,
   type BrandAssetKind,
+  type BrandFont,
+  type BrandFontFormat,
   type BrandImage,
   type BrandPalette,
 } from "./brand-schema";
@@ -44,6 +52,12 @@ export interface BrandAssetInput {
   image: BrandImage;
 }
 
+export interface BrandFontInput {
+  name: string;
+  format: BrandFontFormat;
+  data: ArrayBuffer;
+}
+
 export interface BrandPalettes {
   /** Oldest first. */
   palettes: BrandPalette[];
@@ -55,12 +69,16 @@ export interface BrandPalettes {
 export interface BrandKitSnapshot extends BrandPalettes {
   /** Oldest first. */
   assets: BrandAsset[];
+  /** Oldest first (always set by `getAll`; optional for snapshots built by hand). */
+  fonts?: BrandFont[];
 }
 
 /** What a validated brand kit file brings. */
 export interface BrandKitImport {
   palettes: readonly BrandPalette[];
   assets: readonly BrandAsset[];
+  /** Missing in files from before M6-AP03. */
+  fonts?: readonly BrandFont[];
   /** The file's default palette, used only when this browser has none. */
   defaultId: string | null;
 }
@@ -68,6 +86,7 @@ export interface BrandKitImport {
 export interface BrandImportOutcome {
   palettes: number;
   assets: number;
+  fonts: number;
   /** Entries that already exist with the same content. */
   duplicates: number;
   /** Entries left out because a list was full. */
@@ -90,6 +109,14 @@ export interface BrandKitStore {
   renameAsset(id: string, name: string): Promise<void>;
   removeAsset(id: string): Promise<void>;
   restoreAsset(asset: BrandAsset): Promise<void>;
+  /** Own fonts, oldest first. */
+  listFonts(): Promise<BrandFont[]>;
+  getFont(id: string): Promise<BrandFont | null>;
+  /** Adds a font (bytes checked against its format). Throws `limit` with 10 fonts. */
+  addFont(input: BrandFontInput): Promise<BrandFont>;
+  renameFont(id: string, name: string): Promise<void>;
+  removeFont(id: string): Promise<void>;
+  restoreFont(font: BrandFont): Promise<void>;
   getAll(): Promise<BrandKitSnapshot>;
   /** Adds validated entries in one transaction (all or nothing). */
   importBrandKit(data: BrandKitImport): Promise<BrandImportOutcome>;
@@ -111,6 +138,26 @@ function parsePalette(value: unknown): BrandPalette | null {
 function parseAsset(value: unknown): BrandAsset | null {
   const parsed = brandAssetSchema.safeParse(value);
   return parsed.success ? parsed.data : null;
+}
+
+function parseFont(value: unknown): BrandFont | null {
+  const parsed = brandFontSchema.safeParse(value);
+  return parsed.success ? parsed.data : null;
+}
+
+function validFont(row: BrandFont): BrandFont {
+  const parsed = brandFontSchema.safeParse(row);
+  if (!parsed.success) throw new StorageError("failed", `Invalid font: ${parsed.error.message}`);
+  return parsed.data;
+}
+
+/** Same bytes (fonts are few and small, a full compare is cheap). */
+function sameBytes(a: ArrayBuffer, b: ArrayBuffer): boolean {
+  if (a.byteLength !== b.byteLength) return false;
+  const x = new Uint8Array(a);
+  const y = new Uint8Array(b);
+  for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return false;
+  return true;
 }
 
 const byCreated = <T extends { createdAt: number; name: string }>(a: T, b: T) =>
@@ -179,6 +226,15 @@ export function createBrandKitStore(options: BrandKitStoreOptions = {}): BrandKi
       (rows.result as unknown[])
         .map(parseAsset)
         .filter((a): a is BrandAsset => a !== null && (kind === undefined || a.kind === kind))
+        .sort(byCreated);
+  };
+
+  const readFonts = (tx: IDBTransaction) => {
+    const rows = tx.objectStore(STORE.brandFonts).getAll();
+    return (): BrandFont[] =>
+      (rows.result as unknown[])
+        .map(parseFont)
+        .filter((f): f is BrandFont => f !== null)
         .sort(byCreated);
   };
 
@@ -364,16 +420,90 @@ export function createBrandKitStore(options: BrandKitStoreOptions = {}): BrandKi
       });
     },
 
+    async listFonts() {
+      const database = await db();
+      return transact(database, STORE.brandFonts, "readonly", readFonts);
+    },
+
+    async getFont(id) {
+      const database = await db();
+      return transact(database, STORE.brandFonts, "readonly", (tx) => {
+        const request = tx.objectStore(STORE.brandFonts).get(id);
+        return () => parseFont(request.result);
+      });
+    },
+
+    async addFont(input) {
+      const row = validFont({
+        id: randomId(),
+        name: normalizeBrandName(input.name),
+        format: input.format,
+        // A copy: the caller's buffer may be transferred or reused.
+        data: input.data.slice(0),
+        createdAt: now(),
+      });
+      const database = await db();
+      const ok = await transact(database, STORE.brandFonts, "readwrite", (tx) => {
+        const store = tx.objectStore(STORE.brandFonts);
+        const count = store.count();
+        let added = false;
+        count.onsuccess = () => {
+          if (count.result >= BRAND_FONTS_MAX) return;
+          added = true;
+          store.put(row);
+        };
+        return () => added;
+      });
+      if (!ok) throw new StorageError("limit", "Too many fonts");
+      return row;
+    },
+
+    async renameFont(id, name) {
+      const clean = normalizeBrandName(name);
+      const database = await db();
+      const ok = await transact(database, STORE.brandFonts, "readwrite", (tx) => {
+        const store = tx.objectStore(STORE.brandFonts);
+        const request = store.get(id);
+        let found = false;
+        request.onsuccess = () => {
+          const old = parseFont(request.result);
+          if (!old) return;
+          found = true;
+          store.put(validFont({ ...old, name: clean }));
+        };
+        return () => found;
+      });
+      if (!ok) throw new StorageError("not-found", `No font ${id}`);
+    },
+
+    async removeFont(id) {
+      const database = await db();
+      await transact(database, STORE.brandFonts, "readwrite", (tx) => {
+        tx.objectStore(STORE.brandFonts).delete(id);
+        return () => undefined;
+      });
+    },
+
+    async restoreFont(font) {
+      const row = validFont(font);
+      const database = await db();
+      await transact(database, STORE.brandFonts, "readwrite", (tx) => {
+        tx.objectStore(STORE.brandFonts).put(row);
+        return () => undefined;
+      });
+    },
+
     async getAll() {
       const database = await db();
       return transact(
         database,
-        [STORE.brandPalettes, STORE.brandAssets, STORE.meta],
+        [STORE.brandPalettes, STORE.brandAssets, STORE.brandFonts, STORE.meta],
         "readonly",
         (tx) => {
           const palettes = readPalettes(tx);
           const assets = readAssets(tx);
-          return () => ({ ...palettes(), assets: assets() });
+          const fonts = readFonts(tx);
+          return () => ({ ...palettes(), assets: assets(), fonts: fonts() });
         },
       );
     },
@@ -383,19 +513,22 @@ export function createBrandKitStore(options: BrandKitStoreOptions = {}): BrandKi
       const database = await db();
       return transact(
         database,
-        [STORE.brandPalettes, STORE.brandAssets, STORE.meta],
+        [STORE.brandPalettes, STORE.brandAssets, STORE.brandFonts, STORE.meta],
         "readwrite",
         (tx) => {
+          const fontStore = tx.objectStore(STORE.brandFonts);
           const paletteStore = tx.objectStore(STORE.brandPalettes);
           const assetStore = tx.objectStore(STORE.brandAssets);
           const outcome: BrandImportOutcome = {
             palettes: 0,
             assets: 0,
+            fonts: 0,
             duplicates: 0,
             overLimit: 0,
           };
           const palettesReq = paletteStore.getAll();
           const assetsReq = assetStore.getAll();
+          const fontsReq = fontStore.getAll();
           const mark = tx.objectStore(STORE.meta).get(DEFAULT_PALETTE_KEY);
           mark.onsuccess = () => {
             const palettes = (palettesReq.result as unknown[])
@@ -466,6 +599,33 @@ export function createBrandKitStore(options: BrandKitStoreOptions = {}): BrandKi
               assets.push(row);
               assetStore.put(row);
               outcome.assets++;
+            }
+
+            const fonts = (fontsReq.result as unknown[])
+              .map(parseFont)
+              .filter((f): f is BrandFont => f !== null);
+            const fontIds = new Set(fonts.map((f) => f.id));
+            for (const font of data.fonts ?? []) {
+              const candidate = validFont({
+                ...font,
+                name: normalizeBrandName(font.name),
+                createdAt: Math.min(font.createdAt, t),
+              });
+              if (fonts.some((f) => sameBytes(f.data, candidate.data))) {
+                outcome.duplicates++;
+                continue;
+              }
+              if (fonts.length >= BRAND_FONTS_MAX) {
+                outcome.overLimit++;
+                continue;
+              }
+              let id = candidate.id;
+              while (fontIds.has(id)) id = randomId();
+              const row = { ...candidate, id };
+              fontIds.add(id);
+              fonts.push(row);
+              fontStore.put(row);
+              outcome.fonts++;
             }
           };
           return () => outcome;

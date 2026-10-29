@@ -5036,6 +5036,281 @@
           }
         }
       }
+    },
+    "god-rays": {
+      "name": "Lichtstrahlen-Effekt",
+      "description": "Lass Licht durch dein Foto fallen: Strahlen aus einer frei wählbaren Lichtquelle, mit Stärke, Länge, Abklingen und Farbe. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "light": "Lichtquelle",
+        "rays": "Strahlen"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "lightX": {
+          "label": "Licht horizontal"
+        },
+        "lightY": {
+          "label": "Licht vertikal"
+        },
+        "intensity": {
+          "label": "Stärke"
+        },
+        "decay": {
+          "label": "Abklingen"
+        },
+        "length": {
+          "label": "Strahllänge"
+        },
+        "samples": {
+          "label": "Qualität (Abtastpunkte)",
+          "description": "Mehr Abtastpunkte ergeben glattere Strahlen, brauchen aber länger. 64 reichen meistens."
+        },
+        "threshold": {
+          "label": "Schwelle für helle Bereiche",
+          "description": "Nur Stellen, die heller sind als die Schwelle, senden Licht aus. Tiefer gibt mehr Strahlen, höher nur die hellsten Lichter."
+        },
+        "color": {
+          "label": "Strahlenfarbe"
+        },
+        "blend": {
+          "label": "Mischen",
+          "options": {
+            "add": "Addieren",
+            "screen": "Negativ multiplizieren"
+          }
+        },
+        "darken": {
+          "label": "Bild abdunkeln"
+        }
+      },
+      "presets": {
+        "golden-hour": "Goldene Stunde",
+        "morning-mist": "Morgennebel",
+        "spotlight": "Scheinwerfer",
+        "cathedral": "Kathedrale",
+        "neon": "Neon",
+        "subtle": "Dezent",
+        "eclipse": "Finsternis"
+      },
+      "seo": {
+        "heading": "Lichtstrahlen-Effekt (God Rays)",
+        "whatIs": "God Rays, auf Deutsch Lichtstrahlen oder Dämmerungsstrahlen, sind sichtbare Lichtbündel, die durch Lücken in Wolken, Bäumen oder Fenstern fallen. Der Effekt bildet das nach: Helle Stellen deines Fotos werden zur Lichtquelle, und jedes Pixel sammelt entlang der Linie zur Lichtquelle, wie viel Licht bei ihm ankommt. Dunkle Formen wie Berge, Äste oder Fensterrahmen werfen dabei Schattenstreifen. So entsteht eine radiale Unschärfe, die als Strahlen über das Bild gelegt wird.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Setze die Lichtquelle mit Licht horizontal und vertikal, am besten auf die Sonne, eine Lampe oder ein Fenster; sie darf auch ausserhalb des Bildes liegen. Mit der Schwelle bestimmst du, welche Stellen leuchten, mit Stärke, Strahllänge und Abklingen, wie weit die Strahlen reichen. Wähle eine Strahlenfarbe und dunkle das Bild bei Bedarf ab. Die Leertaste würfelt Lichtposition und Farbe. Exportiere als PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Stimmungsvolle Titelbilder",
+            "text": "Lichtstrahlen geben Landschafts- und Reisefotos Tiefe und Wärme. Das passt zu Blog-Titelbildern, Hero-Bereichen und Plakaten."
+          },
+          "u2": {
+            "title": "Bühne und Produkt",
+            "text": "Ein Scheinwerfer von oben stellt ein Produkt oder eine Person ins Rampenlicht. Mit abgedunkeltem Hintergrund wirkt das wie auf einer Bühne."
+          },
+          "u3": {
+            "title": "Beiträge für Social Media",
+            "text": "Ein Foto mit kräftigen Strahlen fällt im Feed auf. Mit deiner Markenfarbe als Lichtfarbe bleibt es im Stil deiner Marke."
+          }
+        },
+        "tips": {
+          "t1": "Leg die Lichtquelle genau auf die hellste Stelle, etwa die Sonne. Dann wirken die Strahlen natürlich.",
+          "t2": "Strahlen brauchen Hindernisse: Fotos mit Bäumen, Wolken, Fenstern oder Bergen vor einem hellen Himmel ergeben die schönsten Streifen.",
+          "t3": "Wird das ganze Bild zu hell, erhöhe die Schwelle. Dann leuchten nur noch die hellsten Lichter."
+        },
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Warum sehe ich kaum Strahlen?",
+          "a2": "Strahlen entstehen nur, wo helle und dunkle Stellen aufeinandertreffen. Senke die Schwelle, damit mehr Bereiche leuchten, erhöhe Stärke oder Strahllänge und prüfe, ob die Lichtquelle auf einer hellen Stelle liegt.",
+          "q3": "Was ist der Unterschied zwischen Addieren und Negativ multiplizieren?",
+          "a3": "Addieren zählt das Licht zu den Farben dazu, helle Stellen werden schnell weiss, das wirkt kräftig. Negativ multiplizieren hellt sanfter auf und überstrahlt kaum, gut für Nebel und Pastelltöne.",
+          "q4": "Sieht der Export aus wie die Vorschau?",
+          "a4": "Ja. Vorschau und Export laufen durch dieselbe Berechnung. In derselben Grösse sind sie pixelgleich, in anderen Grössen sehen die Strahlen gleich aus, weil Lichtquelle und Längen relativ zum Bild angegeben sind.",
+          "q5": "Kann ich meine Markenfarbe als Licht verwenden?",
+          "a5": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an: Die hellste Farbe wird zur Strahlenfarbe. Du kannst die Farbe auch selbst wählen."
+        }
+      }
+    },
+    "fractal-glass": {
+      "name": "Fractal-Glass-Effekt",
+      "description": "Leg dein Foto hinter geriffeltes Glas: Streifen mit Brechung, Spiegelung, Unschärfe und Glanzlicht, in jeder Breite und jedem Winkel. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "strips": "Streifen",
+        "glass": "Glas"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "stripWidth": {
+          "label": "Streifenbreite"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "profile": {
+          "label": "Profil",
+          "options": {
+            "flat": "Flach",
+            "rounded": "Gewölbt",
+            "ridged": "Kantig"
+          }
+        },
+        "distortion": {
+          "label": "Verzerrung"
+        },
+        "mirror": {
+          "label": "Spiegeln"
+        },
+        "jitter": {
+          "label": "Versatz"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "highlight": {
+          "label": "Glanzlicht"
+        },
+        "tint": {
+          "label": "Glasfarbe"
+        },
+        "tintAmount": {
+          "label": "Tönung"
+        }
+      },
+      "presets": {
+        "reeded": "Riffelglas",
+        "frosted": "Milchglas",
+        "mirrored": "Gespiegelt",
+        "diagonal": "Diagonal",
+        "horizontal": "Waagrecht",
+        "fragments": "Fragmente",
+        "fine": "Feine Rillen"
+      },
+      "seo": {
+        "heading": "Fractal-Glass-Effekt (Riffelglas)",
+        "whatIs": "Fractal Glass, auf Deutsch etwa Riffel- oder Rillenglas, ist ein beliebter Look aus Grafikdesign und Fotografie: Ein Bild wirkt, als läge es hinter einer Scheibe aus vielen schmalen Glasstäben. Jeder Streifen bricht das Licht ein wenig anders und zeigt einen verschobenen, gestauchten oder gespiegelten Ausschnitt, an den Kanten entstehen feine Glanzlinien. Der Effekt macht aus Fotos und Verläufen abstrakte, edle Hintergründe.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Bestimme Streifenbreite und Winkel und wähle ein Profil: flach wie ein Prisma, gewölbt wie ein runder Glasstab oder kantig. Die Verzerrung legt fest, wie viel jeder Streifen vom Bild zeigt, Spiegeln dreht jeden Ausschnitt um, Versatz verschiebt die Streifen zufällig. Unschärfe macht Milchglas daraus, Glanzlicht und Glasfarbe geben Tiefe. Die Leertaste würfelt Breite, Winkel und Verzerrung. Exportiere als PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Hintergründe für Websites",
+            "text": "Ein Foto hinter Riffelglas wird zu einem ruhigen, abstrakten Hintergrund, auf dem Text gut lesbar bleibt."
+          },
+          "u2": {
+            "title": "Plakate und Cover",
+            "text": "Der Glas-Look wirkt modern und hochwertig. Er passt zu Album-Covern, Plakaten und Präsentationen."
+          },
+          "u3": {
+            "title": "Bilder dezent verfremden",
+            "text": "Riffelglas macht Personen und Details unkenntlich, die Stimmung des Fotos bleibt. Gut für Platzhalter und Stimmungsbilder."
+          }
+        },
+        "tips": {
+          "t1": "Schmale Streifen mit hoher Verzerrung ergeben einen feinen, fast textilen Look. Breite Streifen zeigen mehr vom Motiv.",
+          "t2": "Fotos mit kräftigen Farben und starken Kontrasten geben die schönsten Brechungen, etwa Lichter in der Nacht oder ein Sonnenuntergang.",
+          "t3": "Mit etwas Unschärfe und einer Glasfarbe aus deinem Brand Kit entsteht ein Hintergrund in Markenfarben."
+        },
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Was bedeuten die Profile?",
+          "a2": "Flach verschiebt und staucht den Ausschnitt gleichmässig wie ein Prisma. Gewölbt vergrössert die Mitte jedes Streifens und staucht die Ränder, wie ein runder Glasstab. Kantig macht es umgekehrt: Die Ränder werden gedehnt, die Mitte gestaucht.",
+          "q3": "Was macht der Versatz?",
+          "a3": "Mit Versatz über 0 wird jeder Streifen um einen zufälligen Betrag verschoben, das Bild zerfällt in Fragmente. Jede Variante hat ihr eigenes Muster, ein Teilen-Link zeigt genau dasselbe.",
+          "q4": "Sieht der Export aus wie die Vorschau?",
+          "a4": "Ja. Streifenbreite und Unschärfe sind in Design-Pixeln angegeben und wachsen mit der Ausgabe mit. In derselben Grösse sind Vorschau und PNG pixelgleich, in doppelter Grösse ist alles doppelt so scharf.",
+          "q5": "Gibt es einen SVG-Export?",
+          "a5": "Nein. Der Effekt berechnet jedes Pixel einzeln aus dem Foto, das lässt sich nicht sinnvoll als Vektorgrafik beschreiben. Exportiere als PNG, JPG oder WebP, auch in doppelter Grösse."
+        }
+      }
+    },
+    "pixelate": {
+      "name": "Bild verpixeln",
+      "description": "Mach aus deinem Foto grosse Pixel und wenige Farben: Pixelgrösse, Farbstufen oder eine eigene Palette, auch als SVG. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "blocks": "Pixel",
+        "tone": "Tonwerte"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "blockSize": {
+          "label": "Pixelgrösse"
+        },
+        "colorMode": {
+          "label": "Farben",
+          "options": {
+            "original": "Original",
+            "levels": "Stufen",
+            "palette": "Palette"
+          }
+        },
+        "levels": {
+          "label": "Stufen pro Kanal",
+          "description": "So viele Helligkeitsstufen haben Rot, Grün und Blau je. 2 Stufen ergeben 8 Farben, 6 Stufen bis zu 216."
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "mosaic": "Mosaik",
+        "retro": "Retro",
+        "chunky": "Grobe Pixel",
+        "poster": "Tontrennung",
+        "sunset": "Abendrot",
+        "muted": "Gedämpft",
+        "fine": "Feine Pixel"
+      },
+      "seo": {
+        "heading": "Bild verpixeln (Pixelate und Posterize)",
+        "whatIs": "Verpixeln fasst ein Bild zu grossen Blöcken zusammen: Jeder Block zeigt den Mittelwert aller Pixel, die er abdeckt. Posterize, auf Deutsch Tontrennung, reduziert danach die Farben, entweder auf wenige gleichmässige Stufen pro Farbkanal oder auf eine feste Palette. Zusammen entsteht der Look von Pixel-Art, alten Spielen und Mosaiken; allein macht Verpixeln Gesichter und Details unkenntlich.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle die Pixelgrösse: 1 behält die Auflösung, grössere Werte ergeben gröbere Blöcke. Unter Farben behältst du die Originalfarben, reduzierst auf Stufen pro Kanal oder gibst jedem Block die ähnlichste Farbe deiner Palette. Helligkeit, Kontrast und Gamma passen die Tonwerte an. Die Leertaste würfelt Farben und Stufen, bei Originalfarben die Pixelgrösse. Exportiere als PNG, JPG, WebP oder SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Pixel-Art und Games",
+            "text": "Grosse Pixel mit wenigen Farben erinnern an alte Spielkonsolen. Ideal für Sprites, Hintergründe und Retro-Projekte."
+          },
+          "u2": {
+            "title": "Unkenntlich machen",
+            "text": "Grosse Pixel machen Gesichter und Details unkenntlich, Farben und Stimmung bleiben. Das Foto verlässt dabei nie deinen Browser."
+          },
+          "u3": {
+            "title": "Vorlagen für Mosaik und Stickerei",
+            "text": "Der SVG-Export liefert jeden Block als Vektorfläche. Daraus entstehen Vorlagen für Mosaike, Bügelperlen oder Kreuzstich."
+          }
+        },
+        "tips": {
+          "t1": "Für Pixel-Art passen 8 bis 24 Pixel und 3 bis 6 Stufen. Mehr Stufen wirken fotografischer.",
+          "t2": "Mit Pixelgrösse 1 und wenigen Stufen erhältst du eine reine Tontrennung wie auf Siebdruck-Plakaten.",
+          "t3": "Wende eine Brand-Palette aus deinem Brand Kit an: Jeder Block bekommt die ähnlichste Markenfarbe."
+        },
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Was ist der Unterschied zwischen Verpixeln und Posterize?",
+          "a2": "Verpixeln verringert die Auflösung: Jeder Block zeigt die Durchschnittsfarbe seiner Fläche. Posterize verringert die Anzahl Farben, ohne die Auflösung zu ändern. Hier kannst du beides einzeln oder zusammen verwenden.",
+          "q3": "Kann ich das Bild als SVG exportieren?",
+          "a3": "Ja. Jeder Block wird ein Rechteck, gleiche Nachbarn in einer Zeile werden zusammengefasst. Bei sehr vielen Blöcken, etwa Pixelgrösse 1 bei einem grossen Foto, würde die Datei zu gross; dann zeigt der Export-Dialog die Anzahl an und du exportierst als PNG.",
+          "q4": "Sieht der Export aus wie die Vorschau?",
+          "a4": "Ja. Die Blöcke werden immer auf demselben Raster berechnet, nämlich Designgrösse geteilt durch Pixelgrösse, und danach auf die Anzeige- oder Exportgrösse vergrössert. In derselben Grösse sind Vorschau und PNG pixelgleich, in doppelter Grösse wird jeder Block einfach grösser.",
+          "q5": "Lässt sich das Verpixeln rückgängig machen?",
+          "a5": "Nicht aus dem exportierten Bild: Die Details sind darin nicht mehr enthalten. In Musterli bleibt dein Original erhalten, solange das Design offen oder gespeichert ist, und du kannst jede Einstellung ändern."
+        }
+      }
     }
   },
   "Converters": {
@@ -6252,5 +6527,702 @@
       "bow": "Schleife",
       "mandala": "Mandala"
     }
+  },
+  "SocialLanding": {
+    "nav": "Social-Editor",
+    "metaTitle": "Social-Media-Editor: Beiträge für Instagram, LinkedIn und YouTube gratis gestalten",
+    "metaDescription": "Gestalte Social-Media-Beiträge mit Hintergründen, Text, Formen und Logo im Browser. Magic Resize passt dein Design an jedes Format an. Gratis, ohne Konto.",
+    "badge": "Neu",
+    "heading": "Social-Media-Editor",
+    "lead": "Beiträge, Storys und Thumbnails mit Hintergrund, Text, Formen und deinem Logo. Wechsle das Format, und Magic Resize ordnet alles neu an.",
+    "cta": "Editor öffnen",
+    "ctaHint": "Gratis, ohne Konto. Alles bleibt in deinem Browser.",
+    "whatIsHeading": "Was ist der Social-Media-Editor?",
+    "whatIs": "Ein Editor für Bilder in Social-Media-Formaten. Der Hintergrund kommt aus einem der Generatoren von Musterli, darüber legst du Text, Formen, Bilder und das Logo aus deinem Brand Kit. Jede Ebene merkt sich, woran sie hängt (Ecke, Mitte oder Rand). So passt Magic Resize dasselbe Design an Quadrat, Hochformat, Story oder Querformat an, ohne dass Text abgeschnitten wird.",
+    "featuresHeading": "Was du damit machen kannst",
+    "useCases": {
+      "u1": {
+        "title": "Ein Design, alle Formate",
+        "text": "Gestalte einmal im Quadrat und wechsle zu Story, Pinterest-Pin oder YouTube-Thumbnail. Text wird kleiner oder bricht um, statt abgeschnitten zu werden."
+      },
+      "u2": {
+        "title": "Hintergründe aus den Generatoren",
+        "text": "Mesh-Verläufe, Muster, Blobs oder Shader-Verläufe als Hintergrund. Mit der Leertaste kommt eine neue Variante, die Regler passt du im Seitenbereich an."
+      },
+      "u3": {
+        "title": "Markengerecht",
+        "text": "Farben laufen über Farbplätze der Szene. Übernimm deine Brand-Palette und dein Logo aus dem Brand Kit mit einem Klick."
+      },
+      "u4": {
+        "title": "Ebenen wie gewohnt",
+        "text": "Verschieben, skalieren, drehen, ausrichten, verteilen und gruppieren. Mit Hilfslinien, Einrasten und Rückgängig."
+      },
+      "u5": {
+        "title": "Export in voller Grösse",
+        "text": "PNG oder JPG in Formatgrösse oder doppelt so gross für scharfe Bilder auf hochauflösenden Bildschirmen."
+      },
+      "u6": {
+        "title": "Gespeichert in deinem Browser",
+        "text": "Designs landen unter Meine Designs, ein Entwurf wird laufend gesichert. Als Datei exportierst du sie für ein anderes Gerät."
+      }
+    },
+    "howToHeading": "So gehts",
+    "steps": {
+      "t1": "Öffne den Editor und wähle ein Format, zum Beispiel Instagram 4:5.",
+      "t2": "Wähle einen Hintergrund und drücke die Leertaste, bis dir die Variante gefällt.",
+      "t3": "Füge Text, Formen, Bilder oder dein Logo hinzu und richte sie aus.",
+      "t4": "Wechsle bei Bedarf das Format. Magic Resize ordnet die Ebenen neu an.",
+      "t5": "Exportiere als PNG oder JPG und speichere das Design unter Meine Designs."
+    },
+    "ctaSecondary": "Jetzt im Social-Media-Editor gestalten",
+    "formatsHeading": "Formate",
+    "formatsLead": "Die gängigen Grössen für Beiträge, Storys, Titelbilder und Thumbnails:",
+    "privacyHeading": "Nichts verlässt dein Gerät",
+    "privacy": "Gerendert und gespeichert wird in deinem Browser. Hochgeladene Bilder werden geprüft, SVG-Dateien bereinigt, und nichts davon wird an einen Server geschickt.",
+    "faqHeading": "Häufige Fragen",
+    "faq": {
+      "q1": "Ist der Social-Media-Editor gratis?",
+      "a1": "Ja. Musterli ist komplett gratis und spendenfinanziert. Es gibt kein Konto, kein Abo und kein Wasserzeichen.",
+      "q2": "Was macht Magic Resize?",
+      "a2": "Jede Ebene hängt an einer Seite, an der Mitte oder spannt sich über die ganze Breite. Beim Formatwechsel bleiben Abstände gleich, Grössen folgen der kurzen Seite, und Text wird kleiner oder bricht um. Abgeschnitten wird nichts.",
+      "q3": "Wo werden meine Designs gespeichert?",
+      "a3": "Im Speicher deines Browsers (IndexedDB) auf diesem Gerät. Unter Meine Designs kannst du sie als Datei exportieren und auf einem anderen Gerät wieder importieren.",
+      "q4": "Kann ich eigene Bilder und mein Logo verwenden?",
+      "a4": "Ja. Bilder lädst du direkt im Editor hoch, Logos kommen aus deinem Brand Kit. Beides bleibt lokal und gehört nie zu einem Teilen-Link.",
+      "q5": "Funktioniert der Editor auf dem Handy?",
+      "a5": "Anschauen und exportieren geht überall. Zum Gestalten ist ein grosser Bildschirm am angenehmsten."
+    },
+    "teaserTitle": "Neu: Social-Media-Editor",
+    "teaserText": "Hintergrund aus einem Generator, dazu Text, Formen und dein Logo. Magic Resize passt das Design an jedes Format an.",
+    "teaserCta": "Zum Social-Media-Editor"
+  },
+  "SocialEditor": {
+    "page": {
+      "metaTitle": "Social-Media-Editor",
+      "metaDescription": "Social-Media-Beiträge mit Hintergrund, Text, Formen und Logo gestalten. Gratis, im Browser."
+    },
+    "title": "Social-Media-Editor",
+    "smallScreen": "Am besten auf grossem Bildschirm. Anschauen und exportieren geht auch hier.",
+    "toolbar": "Design",
+    "back": "Social-Editor",
+    "name": "Name",
+    "untitled": "Unbenanntes Design",
+    "format": "Format",
+    "customFormat": "Eigenes Format ({width} × {height})",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen",
+    "new": "Neu",
+    "newConfirm": "Neues Design beginnen? Nicht gespeicherte Änderungen gehen verloren.",
+    "newDesign": "Neues Design begonnen.",
+    "saveCopy": "Als Kopie speichern",
+    "save": "Speichern",
+    "saving": "Speichert …",
+    "myDesigns": "Meine Designs",
+    "saved": "«{name}» gespeichert.",
+    "savedCopy": "Kopie «{name}» gespeichert.",
+    "saveFailed": "Speichern hat nicht geklappt. Ist der Speicher des Browsers voll oder gesperrt?",
+    "copyName": "{name} (Kopie)",
+    "layersPanel": "Ebenen und Hinzufügen",
+    "propertiesPanel": "Eigenschaften",
+    "canvasRegion": "Arbeitsfläche",
+    "canvasRole": "Arbeitsfläche",
+    "canvasLabel": "Design {width} × {height} Pixel. Ausgewählt: {selection}. Pfeiltasten verschieben um 1 Pixel, mit Umschalt um 10 Pixel.",
+    "nothingSelected": "nichts",
+    "loading": "Editor wird geladen …",
+    "loadFailed": "Der Editor konnte nicht geladen werden. Lade die Seite neu.",
+    "add": {
+      "title": "Hinzufügen",
+      "text": "Text",
+      "rect": "Rechteck",
+      "ellipse": "Ellipse",
+      "line": "Linie",
+      "library": "Form",
+      "image": "Bild",
+      "uploading": "Lädt …",
+      "logo": "Logo"
+    },
+    "added": {
+      "text": "Text hinzugefügt.",
+      "rect": "Rechteck hinzugefügt.",
+      "ellipse": "Ellipse hinzugefügt.",
+      "line": "Linie hinzugefügt.",
+      "library": "Form hinzugefügt.",
+      "image": "Bild hinzugefügt.",
+      "logo": "Logo hinzugefügt."
+    },
+    "limitLayers": "Mehr Ebenen gehen nicht (höchstens 100).",
+    "removed": "{count, plural, one {Eine Ebene} other {# Ebenen}} entfernt.",
+    "duplicated": "{count, plural, one {Eine Ebene} other {# Ebenen}} dupliziert.",
+    "grouped": "Gruppiert.",
+    "ungrouped": "Gruppe aufgelöst.",
+    "starterHeadline": "Dein Titel hier",
+    "newText": "Neuer Text",
+    "formatChanged": "Format {format}, {width} × {height}. Die Ebenen wurden angepasst.",
+    "logoInvalid": "Dieses Logo lässt sich nicht verwenden.",
+    "exported": "{file} exportiert.",
+    "exportFailed": "Export hat nicht geklappt.",
+    "export": {
+      "format": "Dateiformat",
+      "size": "Grösse",
+      "scale": "{scale}× ({width} × {height})",
+      "scaleTooLarge": "{scale}× (über {max} px, nicht verfügbar)",
+      "running": "Exportiert …",
+      "run": "Exportieren"
+    },
+    "logos": {
+      "title": "Logo aus dem Brand Kit",
+      "empty": "Im Brand Kit sind noch keine Logos. <link>Logo im Brand Kit hinzufügen</link>",
+      "close": "Schliessen",
+      "pick": "{name} einfügen",
+      "unnamed": "Logo"
+    },
+    "layers": {
+      "title": "Ebenen",
+      "hint": "Oben liegt vorne. F2 benennt um, Alt und Pfeil hoch oder runter verschiebt die Ebene.",
+      "label": "Ebenen, oberste zuerst",
+      "renameLabel": "Neuer Name für {name}",
+      "rowLabel": "{name}, {kind}, Ebene {position} von {count}",
+      "kinds": {
+        "background": "Hintergrund",
+        "text": "Text",
+        "image": "Bild",
+        "shape": "Form",
+        "logo": "Logo"
+      },
+      "group": "Gruppe",
+      "hide": "{name} ausblenden",
+      "show": "{name} einblenden",
+      "lock": "{name} sperren",
+      "unlock": "{name} entsperren"
+    },
+    "color": {
+      "none": "Keine",
+      "slot": "Farbplatz {n} ({color})",
+      "custom": "Eigene Farbe"
+    },
+    "inspector": {
+      "arrange": "Anordnen",
+      "arrangeMany": "{count} Ebenen anordnen",
+      "align": "Ausrichten",
+      "alignLeft": "Links ausrichten",
+      "alignHCenter": "Horizontal zentrieren",
+      "alignRight": "Rechts ausrichten",
+      "alignTop": "Oben ausrichten",
+      "alignVCenter": "Vertikal zentrieren",
+      "alignBottom": "Unten ausrichten",
+      "distributeX": "Horizontal verteilen",
+      "distributeY": "Vertikal verteilen",
+      "alignHintOne": "Eine Ebene richtet sich an der Arbeitsfläche aus.",
+      "alignHintMany": "Mehrere Ebenen richten sich aneinander aus. Verteilen geht ab drei.",
+      "group": "Gruppieren",
+      "ungroup": "Gruppe auflösen",
+      "forward": "Eine Ebene nach vorne",
+      "backward": "Eine Ebene nach hinten",
+      "duplicate": "Duplizieren",
+      "delete": "Löschen",
+      "frame": "Position und Grösse",
+      "x": "X",
+      "y": "Y",
+      "width": "Breite",
+      "height": "Höhe",
+      "rotation": "Drehung (Grad)",
+      "opacity": "Deckkraft (%)"
+    },
+    "text": {
+      "title": "Text",
+      "content": "Inhalt",
+      "font": "Schrift",
+      "size": "Grösse",
+      "weight": "Stärke",
+      "weights": {
+        "400": "Normal",
+        "500": "Mittel",
+        "700": "Fett",
+        "900": "Extrafett"
+      },
+      "minSize": "Kleinste Grösse",
+      "align": "Ausrichtung",
+      "aligns": {
+        "left": "Links",
+        "center": "Mitte",
+        "right": "Rechts"
+      },
+      "valign": "Vertikal",
+      "valigns": {
+        "top": "Oben",
+        "middle": "Mitte",
+        "bottom": "Unten"
+      },
+      "lineHeight": "Zeilenhöhe",
+      "letterSpacing": "Laufweite (em)",
+      "color": "Farbe",
+      "italic": "Kursiv",
+      "placeholder": "Platzhalter (für Vorlagen)",
+      "fontGroups": {
+        "brand": "Brand-Schriften",
+        "sans": "Ohne Serifen",
+        "serif": "Mit Serifen",
+        "display": "Auffällig",
+        "mono": "Monospace",
+        "handwriting": "Handschrift",
+        "system": "Systemschriften"
+      },
+      "systemFonts": {
+        "sans": "System ohne Serifen",
+        "serif": "System mit Serifen",
+        "mono": "System Monospace"
+      },
+      "fontMissingOption": "{name} (fehlt)",
+      "fontMissing": "Die Brand-Schrift „{name}“ fehlt in diesem Browser, darum siehst du eine Ersatzschrift. Füge die Schrift im Brand Kit hinzu, dann sieht der Text wieder wie geplant aus.",
+      "fontHint": "Eigene Schriften fügst du im Brand Kit hinzu, sie stehen hier zuoberst.",
+      "fontLoadFailed": "Die Schrift „{name}“ liess sich nicht laden.",
+      "effects": {
+        "title": "Effekte",
+        "shadow": "Schatten",
+        "shadowColor": "Schattenfarbe",
+        "shadowBlur": "Unschärfe",
+        "shadowX": "Versatz X",
+        "shadowY": "Versatz Y",
+        "shadowOpacity": "Deckkraft (%)",
+        "stroke": "Kontur",
+        "strokeColor": "Konturfarbe",
+        "strokeWidth": "Konturbreite",
+        "highlight": "Markierbalken",
+        "highlightColor": "Balkenfarbe",
+        "highlightPadding": "Innenabstand",
+        "gradient": "Farbverlauf",
+        "gradientFrom": "Startfarbe",
+        "gradientTo": "Endfarbe",
+        "gradientAngle": "Winkel (Grad)",
+        "gradientHint": "Der Verlauf ersetzt die Textfarbe, solange er an ist."
+      },
+      "fontRole": "Schriftrolle",
+      "fontRoles": {
+        "auto": "Automatisch",
+        "heading": "Titel",
+        "body": "Fliesstext"
+      },
+      "fontRoleHint": "Brand anwenden gibt Titeln die erste und Fliesstext die zweite Brand-Schrift."
+    },
+    "shape": {
+      "title": "Form",
+      "form": "Formenbibliothek",
+      "fill": "Füllung",
+      "lineColor": "Linienfarbe",
+      "stroke": "Kontur",
+      "lineWidth": "Linienstärke",
+      "strokeWidth": "Konturstärke",
+      "radius": "Eckenradius"
+    },
+    "image": {
+      "title": "Bild",
+      "fit": "Einpassen",
+      "fits": {
+        "cover": "Füllen",
+        "contain": "Ganz zeigen"
+      },
+      "radius": "Eckenradius",
+      "placeholder": "Platzhalter (für Vorlagen)"
+    },
+    "constraints": {
+      "title": "Magic Resize",
+      "hint": "Woran die Ebene beim Formatwechsel hängt. Beim Verschieben wird es neu bestimmt.",
+      "h": "Horizontal",
+      "v": "Vertikal",
+      "hAnchors": {
+        "start": "Links",
+        "center": "Mitte",
+        "end": "Rechts",
+        "stretch": "Ganze Breite"
+      },
+      "vAnchors": {
+        "start": "Oben",
+        "center": "Mitte",
+        "end": "Unten",
+        "stretch": "Ganze Höhe"
+      },
+      "size": "Grösse folgt",
+      "sizes": {
+        "short": "der kurzen Seite",
+        "width": "der Breite",
+        "height": "der Höhe"
+      },
+      "bleed": "Darf über den Rand hinausragen (Dekoration)"
+    },
+    "background": {
+      "title": "Hintergrund",
+      "tool": "Generator",
+      "variant": "Neue Variante",
+      "applyPalette": "Szenenfarben anwenden",
+      "variantHint": "Leertaste: neue Variante. Mit dem Schloss behältst du einen Regler.",
+      "newVariant": "Neue Variante des Hintergrunds.",
+      "paletteUnsupported": "Dieser Hintergrund übernimmt keine Farben.",
+      "paletteApplied": "Szenenfarben auf den Hintergrund angewendet."
+    },
+    "palette": {
+      "title": "Farben der Szene",
+      "hint": "Texte und Formen mit einem Farbplatz folgen diesen Farben.",
+      "slot": "Platz {n}",
+      "brand": "Brand-Palette übernehmen",
+      "brandPick": "Palette wählen …",
+      "brandUnnamed": "Palette ohne Namen"
+    },
+    "templates": {
+      "open": "Vorlagen",
+      "title": "Vorlage wählen",
+      "intro": "Alle Vorlagen passen per Magic Resize in jedes Format. Texte und Farben änderst du danach wie gewohnt.",
+      "theme": "Thema",
+      "allThemes": "Alle Themen",
+      "format": "Format",
+      "allFormats": "Alle Formate",
+      "useCurrent": "Im aktuellen Format öffnen: {format}",
+      "pick": "Vorlage öffnen:",
+      "details": "Thema {theme}, {width} × {height} Pixel",
+      "count": "{count, plural, one {# Vorlage} other {# Vorlagen}}",
+      "empty": "Keine Vorlage passt zu diesem Filter.",
+      "close": "Schliessen",
+      "loading": "Vorlagen werden geladen …",
+      "loadFailed": "Die Vorlagen konnten nicht geladen werden. Lade die Seite neu und versuche es noch einmal.",
+      "confirm": "Deine ungespeicherten Änderungen gehen verloren. Vorlage trotzdem öffnen?",
+      "opened": "Vorlage {name} geöffnet ({format}).",
+      "previewFailed": "Keine Vorschau",
+      "themes": {
+        "announcement": "Ankündigung",
+        "quote": "Zitat",
+        "event": "Veranstaltung",
+        "sale": "Angebot und Produkt",
+        "tip": "Tipp und Anleitung",
+        "team": "Team und Jobs"
+      },
+      "names": {
+        "launch-bold": "Produktstart",
+        "big-news": "Grosse Neuigkeit",
+        "coming-soon": "Bald verfügbar",
+        "release-notes": "Neue Version",
+        "milestone": "Meilenstein",
+        "back-open": "Wieder geöffnet",
+        "newsletter": "Newsletter",
+        "quote-classic": "Zitat klassisch",
+        "quote-card": "Zitat auf Karte",
+        "quote-bold": "Zitat gross",
+        "quote-notebook": "Zitat handschriftlich",
+        "quote-split": "Zitat geteilt",
+        "testimonial": "Kundenstimme",
+        "quote-botanical": "Zitat mit Blättern",
+        "event-date": "Termin mit Datum",
+        "webinar": "Webinar",
+        "workshop": "Workshop",
+        "meetup": "Meetup",
+        "save-the-date": "Datum vormerken",
+        "concert": "Konzert",
+        "countdown": "Countdown",
+        "sale-percent": "Rabatt in Prozent",
+        "product-launch": "Neues Produkt",
+        "flash-sale": "Blitzangebot",
+        "discount-code": "Rabattcode",
+        "black-week": "Black Week",
+        "new-arrival": "Neu eingetroffen",
+        "free-shipping": "Gratis Versand",
+        "tips-list": "Drei Tipps",
+        "how-to": "Anleitung in Schritten",
+        "did-you-know": "Wusstest du?",
+        "myth-fact": "Mythos und Fakt",
+        "checklist": "Checkliste",
+        "quick-tip": "Kurzer Tipp",
+        "hiring": "Wir stellen ein",
+        "welcome": "Willkommen im Team",
+        "team-intro": "Unser Team",
+        "job-story": "Stelleninserat",
+        "anniversary": "Firmenjubiläum",
+        "values": "Unsere Werte"
+      },
+      "texts": {
+        "launch-bold": {
+          "eyebrow": "NEU",
+          "headline": "Unser neues Produkt ist da",
+          "body": "Entdecke alle Funktionen und probiere es gleich aus.",
+          "cta": "Jetzt ansehen"
+        },
+        "big-news": {
+          "eyebrow": "GROSSE NEUIGKEIT",
+          "headline": "Wir ziehen in ein neues Atelier",
+          "body": "Mehr Platz für Ideen, Kurse und Kaffee.",
+          "detail": "Ab 1. Juni an der Seestrasse 12"
+        },
+        "coming-soon": {
+          "eyebrow": "BALD VERFÜGBAR",
+          "headline": "Etwas Neues kommt",
+          "date": "Ab 12. März"
+        },
+        "release-notes": {
+          "eyebrow": "UPDATE",
+          "headline": "Schneller, schöner, einfacher",
+          "body": "Alle Neuerungen findest du in den Versionshinweisen.",
+          "version": "v2.0"
+        },
+        "milestone": {
+          "number": "10 000",
+          "headline": "Danke für 10 000 Follower",
+          "body": "Ohne euch wäre das nicht möglich gewesen."
+        },
+        "back-open": {
+          "eyebrow": "GUTE NACHRICHT",
+          "headline": "Wir sind wieder für dich da",
+          "body": "Ab Montag wieder offen: Montag bis Freitag 8 bis 18 Uhr, Samstag 9 bis 16 Uhr."
+        },
+        "newsletter": {
+          "eyebrow": "NEWSLETTER",
+          "headline": "Das ist neu im März",
+          "list": "Drei neue Kurse\nTipps aus dem Team\nTermine im Frühling",
+          "cta": "Jetzt abonnieren"
+        },
+        "quote-classic": {
+          "mark": "«",
+          "quote": "Gute Gestaltung ist so wenig Gestaltung wie möglich.",
+          "author": "Vorname Nachname",
+          "role": "Designerin"
+        },
+        "quote-card": {
+          "quote": "Kreativität ist Mut, Fehler zu machen und weiterzugehen.",
+          "author": "Vorname Nachname",
+          "role": "Gründerin, Firma"
+        },
+        "quote-bold": {
+          "quote": "Fang einfach an",
+          "author": "Vorname Nachname"
+        },
+        "quote-notebook": {
+          "quote": "Jeden Tag ein kleiner Schritt, und plötzlich bist du weit gekommen.",
+          "author": "Vorname Nachname"
+        },
+        "quote-split": {
+          "mark": "«",
+          "quote": "Die beste Idee entsteht oft beim zweiten Kaffee.",
+          "author": "Vorname Nachname"
+        },
+        "testimonial": {
+          "initials": "AM",
+          "quote": "Die Zusammenarbeit war unkompliziert und das Resultat übertrifft unsere Erwartungen.",
+          "author": "Anna Muster",
+          "role": "Leiterin Marketing, Firma"
+        },
+        "quote-botanical": {
+          "quote": "Was du heute säst, erntest du morgen.",
+          "author": "Vorname Nachname"
+        },
+        "event-date": {
+          "day": "14",
+          "month": "MÄRZ",
+          "title": "Tag der offenen Tür",
+          "details": "10 bis 16 Uhr, Werkstatt am Hafen",
+          "cta": "Komm vorbei!"
+        },
+        "webinar": {
+          "eyebrow": "LIVE-WEBINAR",
+          "title": "Farben, die verkaufen",
+          "when": "Donnerstag, 20. März, 18 Uhr",
+          "speaker": "Mit Vorname Nachname"
+        },
+        "workshop": {
+          "eyebrow": "WORKSHOP",
+          "title": "Muster selbst gestalten",
+          "details": "Samstag, 5. April, 9 bis 12 Uhr\nAnmeldung bis 1. April"
+        },
+        "meetup": {
+          "eyebrow": "MEETUP",
+          "title": "Design und Code am Abend",
+          "details": "Mittwoch, 19 Uhr\nKulturhaus, Saal 2\nEintritt frei",
+          "cta": "Platz sichern"
+        },
+        "save-the-date": {
+          "eyebrow": "Save the Date",
+          "date": "21.06.",
+          "details": "Sommerfest im Garten\nab 17 Uhr"
+        },
+        "concert": {
+          "eyebrow": "LIVE IM PARK",
+          "title": "Sommer Sound",
+          "details": "Freitag, 8. August\nTüröffnung 19 Uhr"
+        },
+        "countdown": {
+          "eyebrow": "NUR NOCH",
+          "title": "3 Tage",
+          "details": "bis zum grossen Start"
+        },
+        "sale-percent": {
+          "percent": "-30%",
+          "headline": "Sommer-Sale",
+          "note": "Nur bis Sonntag"
+        },
+        "product-launch": {
+          "eyebrow": "NEU IM SHOP",
+          "headline": "Die Tasche für jeden Tag",
+          "body": "Leicht, robust und in fünf Farben erhältlich.",
+          "price": "CHF 49",
+          "cta": "Jetzt bestellen"
+        },
+        "flash-sale": {
+          "headline": "Flash Sale",
+          "body": "Alles 40 % günstiger, nur heute",
+          "timer": "12:00:00"
+        },
+        "discount-code": {
+          "headline": "20 % auf deine erste Bestellung",
+          "body": "Gib den Code an der Kasse ein.",
+          "code": "MUSTER20"
+        },
+        "black-week": {
+          "headline": "Black Week",
+          "offer": "Bis 40 % auf alles",
+          "note": "Vom 24. bis 30. November, solange der Vorrat reicht."
+        },
+        "new-arrival": {
+          "eyebrow": "NEU EINGETROFFEN",
+          "headline": "Unsere neue Kollektion",
+          "body": "Leichte Stoffe, frische Farben, faire Preise.",
+          "cta": "Zum Shop"
+        },
+        "free-shipping": {
+          "headline": "Gratis Versand ab CHF 50",
+          "body": "Für alle Bestellungen bis Ende Monat.",
+          "cta": "Jetzt shoppen"
+        },
+        "tips-list": {
+          "eyebrow": "TIPPS",
+          "headline": "3 Tipps für bessere Fotos",
+          "step1-n": "1",
+          "step1-text": "Nutze weiches Tageslicht",
+          "step2-n": "2",
+          "step2-text": "Halte den Hintergrund ruhig",
+          "step3-n": "3",
+          "step3-text": "Geh näher ran"
+        },
+        "how-to": {
+          "eyebrow": "SO GEHTS",
+          "headline": "Dein Muster in 3 Schritten",
+          "steps": "1. Tool wählen\n2. Leertaste drücken\n3. Exportieren und teilen"
+        },
+        "did-you-know": {
+          "eyebrow": "Wusstest du?",
+          "fact": "Ein Bild wird viel schneller erfasst als ein Text.",
+          "source": "Quelle: Name der Quelle"
+        },
+        "myth-fact": {
+          "myth-label": "Mythos",
+          "myth": "Gutes Design braucht teure Software.",
+          "fact-label": "Fakt",
+          "fact": "Mit den richtigen Werkzeugen geht es gratis im Browser."
+        },
+        "checklist": {
+          "headline": "Checkliste für deinen Post",
+          "item1": "Klare Botschaft",
+          "item2": "Gut lesbare Schrift",
+          "item3": "Starker Kontrast",
+          "item4": "Logo nicht vergessen"
+        },
+        "quick-tip": {
+          "eyebrow": "TIPP",
+          "tip": "Weniger Text, grössere Schrift: so wird dein Post gelesen.",
+          "body": "Mehr Tipps findest du auf unserem Blog."
+        },
+        "hiring": {
+          "eyebrow": "Wir stellen ein",
+          "role": "UX-Designerin oder UX-Designer",
+          "details": "80 bis 100 %, Zürich oder remote\nStart nach Vereinbarung",
+          "cta": "Jetzt bewerben"
+        },
+        "welcome": {
+          "initials": "LM",
+          "headline": "Willkommen im Team!",
+          "name": "Lea Muster",
+          "role": "Projektleiterin",
+          "body": "Wir freuen uns sehr auf die Zusammenarbeit."
+        },
+        "team-intro": {
+          "headline": "Das sind wir",
+          "body": "Ein kleines Team mit grossen Ideen, seit 2016 in Zürich.",
+          "p1": "AB",
+          "p2": "CD",
+          "p3": "EF"
+        },
+        "job-story": {
+          "eyebrow": "Wir suchen dich",
+          "role": "Social Media Manager:in",
+          "details": "60 bis 80 %\nBüro in Bern, teilweise remote\nKleines, herzliches Team",
+          "cta": "Mehr erfahren"
+        },
+        "anniversary": {
+          "number": "5",
+          "headline": "Jahre bei uns",
+          "name": "Vorname Nachname",
+          "body": "Danke für deinen Einsatz und die vielen guten Ideen."
+        },
+        "values": {
+          "headline": "Unsere Werte",
+          "v1-title": "Offen",
+          "v1": "Wir teilen Wissen und hören zu.",
+          "v2-title": "Mutig",
+          "v2": "Wir probieren Neues aus.",
+          "v3-title": "Fair",
+          "v3": "Wir handeln ehrlich und mit Respekt."
+        }
+      }
+    },
+    "brand": {
+      "apply": "Brand anwenden",
+      "applyHint": "Palette, Schriften und Logo aus deinem Brand Kit übernehmen",
+      "applying": "Wird angewendet …",
+      "applied": "Brand Kit angewendet: {parts}.",
+      "partColors": "Farben",
+      "partFonts": "{count, plural, one {Schrift in # Text} other {Schriften in # Texten}}",
+      "partLogo": "Logo",
+      "nothing": "Dein Brand Kit passt schon: es gab nichts zu ändern.",
+      "failed": "Das Brand Kit konnte nicht angewendet werden.",
+      "emptyTitle": "Dein Brand Kit ist noch leer",
+      "emptyText": "Lege im <link>Brand Kit</link> eine Palette, Schriften oder ein Logo an. Danach übernimmt ein Klick alles in dein Design.",
+      "close": "Schliessen"
+    }
+  },
+  "SocialDesigns": {
+    "title": "Social-Designs",
+    "intro": "Deine Designs aus dem Social-Media-Editor, gespeichert in diesem Browser.",
+    "exportAll": "Alle exportieren",
+    "import": "Importieren",
+    "failed": "Das hat nicht geklappt.",
+    "exported": "{count, plural, one {Ein Design} other {# Designs}} exportiert.",
+    "importErrors": {
+      "too-large": "Die Datei ist zu gross. Höchstens 32 MB sind erlaubt.",
+      "empty": "Die Datei ist leer.",
+      "malformed": "Die Datei ist beschädigt oder kein JSON.",
+      "forbidden-keys": "Die Datei enthält unzulässige Einträge und wurde nicht importiert.",
+      "wrong-format": "Das ist keine Social-Design-Datei von Musterli.",
+      "unsupported-version": "Diese Datei stammt von einer neueren Version von Musterli.",
+      "too-many": "Die Datei enthält zu viele Designs (höchstens 500).",
+      "designs-file": "Das ist eine Datei mit Tool-Designs. Importiere sie oben unter Meine Designs.",
+      "brand-kit-file": "Das ist eine Brand-Kit-Datei. Importiere sie im Brand Kit.",
+      "timeout": "Das Prüfen der Datei hat zu lange gedauert.",
+      "aborted": "Import abgebrochen."
+    },
+    "imported": "{added, plural, =0 {Keine neuen Designs importiert.} one {Ein Design importiert.} other {# Designs importiert.}}",
+    "importDuplicates": "{count, plural, one {Eines war schon da.} other {# waren schon da.}}",
+    "importSkipped": "{count, plural, one {Eines wurde übersprungen, weil es ungültig ist.} other {# wurden übersprungen, weil sie ungültig sind.}}",
+    "undo": "Rückgängig",
+    "dismiss": "Schliessen",
+    "unavailable": "Der Speicher dieses Browsers ist nicht verfügbar (zum Beispiel im privaten Modus).",
+    "empty": "Noch keine Social-Designs.",
+    "emptyCta": "Social-Media-Editor öffnen",
+    "noThumbnail": "Keine Vorschau",
+    "meta": "{width} × {height} · {date}",
+    "actionsLabel": "Aktionen für {name}",
+    "openLabel": "{name} öffnen",
+    "open": "Öffnen",
+    "rename": "Umbenennen",
+    "duplicate": "Duplizieren",
+    "copyName": "{name} (Kopie)",
+    "delete": "Löschen",
+    "deleted": "«{name}» gelöscht.",
+    "renameLabel": "Neuer Name für {name}",
+    "renameSave": "Sichern",
+    "cancel": "Abbrechen"
   }
 }

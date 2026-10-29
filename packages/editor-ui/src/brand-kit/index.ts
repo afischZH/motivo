@@ -7,6 +7,8 @@ export {
   StorageError,
   createBrandKitStore,
   normalizeBrandHex,
+  BRAND_FONT_MAX_BYTES,
+  BRAND_FONTS_MAX,
   BRAND_LOGOS_MAX,
   BRAND_NAME_MAX,
   BRAND_PALETTE_MAX,
@@ -15,6 +17,8 @@ export {
   BRAND_SHAPES_MAX,
   type BrandAsset,
   type BrandAssetKind,
+  type BrandFont,
+  type BrandFontFormat,
   type BrandImage,
   type BrandImportOutcome,
   type BrandKitStore,
@@ -35,5 +39,15 @@ export {
   type SkippedBrandEntry,
 } from "./transfer-format";
 export { readBrandKitFile, type ReadBrandKitFileResult } from "./import-client";
+export {
+  FONT_ACCEPT,
+  browserFontVerifier,
+  checkBrandFontBytes,
+  fontNameFromFile,
+  prepareBrandFont,
+  type BrandFontError,
+  type BrandFontResult,
+  type FontVerifier,
+} from "./font-upload";
 export type { BrandImageError, BrandImageResult } from "./prepare";
 export { svgDataUrl } from "../shell/svg-data-url";

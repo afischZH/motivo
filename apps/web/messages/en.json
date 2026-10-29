@@ -5027,6 +5027,279 @@
           }
         }
       }
+    },
+    "god-rays": {
+      "name": "God Rays Effect",
+      "description": "Let light pour through your photo: rays from a light source you place, with strength, length, decay and color. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "light": "Light source",
+        "rays": "Rays"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "lightX": {
+          "label": "Light horizontal"
+        },
+        "lightY": {
+          "label": "Light vertical"
+        },
+        "intensity": {
+          "label": "Strength"
+        },
+        "decay": {
+          "label": "Decay"
+        },
+        "length": {
+          "label": "Ray length"
+        },
+        "samples": {
+          "label": "Quality (samples)",
+          "description": "More samples give smoother rays but take longer. 64 is usually enough."
+        },
+        "threshold": {
+          "label": "Threshold for bright areas",
+          "description": "Only areas brighter than the threshold emit light. Lower gives more rays, higher only the brightest lights."
+        },
+        "color": {
+          "label": "Ray color"
+        },
+        "blend": {
+          "label": "Blend",
+          "options": {
+            "add": "Add",
+            "screen": "Screen"
+          }
+        },
+        "darken": {
+          "label": "Darken picture"
+        }
+      },
+      "presets": {
+        "golden-hour": "Golden hour",
+        "morning-mist": "Morning mist",
+        "spotlight": "Spotlight",
+        "cathedral": "Cathedral",
+        "neon": "Neon",
+        "subtle": "Subtle",
+        "eclipse": "Eclipse"
+      },
+      "seo": {
+        "whatIs": "God rays, also called crepuscular rays or light shafts, are visible beams of light falling through gaps in clouds, trees or windows. This effect recreates them: the bright parts of your photo become the light, and every pixel gathers how much light reaches it along the line toward the light source. Dark shapes such as mountains, branches or window frames cast streaks of shadow. The result is a radial blur laid over the picture as rays.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Place the light with Light horizontal and vertical, ideally on the sun, a lamp or a window; it may also lie outside the picture. The threshold decides which areas glow; strength, ray length and decay decide how far the rays reach. Choose a ray color and darken the picture if needed. Space rolls the light position and color. Export as PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Atmospheric cover images",
+            "text": "Light rays give landscape and travel photos depth and warmth. They suit blog headers, hero sections and posters."
+          },
+          "u2": {
+            "title": "Stage and product",
+            "text": "A spotlight from above puts a product or a person in the limelight. With a darkened background it looks like a stage."
+          },
+          "u3": {
+            "title": "Social media posts",
+            "text": "A photo with bold rays stands out in the feed. With your brand color as the light, it stays on brand."
+          }
+        },
+        "tips": {
+          "t1": "Put the light right on the brightest spot, such as the sun. The rays then look natural.",
+          "t2": "Rays need obstacles: photos with trees, clouds, windows or mountains against a bright sky give the best streaks.",
+          "t3": "If the whole picture gets too bright, raise the threshold so only the brightest lights glow."
+        },
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "Why do I hardly see any rays?",
+          "a2": "Rays appear only where bright and dark areas meet. Lower the threshold so more areas glow, raise the strength or ray length, and check that the light sits on a bright spot.",
+          "q3": "What is the difference between Add and Screen?",
+          "a3": "Add adds the light to the colors, so bright areas quickly turn white, which looks bold. Screen brightens more gently and hardly blows out, good for mist and pastel tones.",
+          "q4": "Does the export look like the preview?",
+          "a4": "Yes. Preview and export run through the same computation. At the same size they are identical pixel for pixel; at other sizes the rays look the same because the light position and lengths are relative to the picture.",
+          "q5": "Can I use my brand color as light?",
+          "a5": "Yes. Apply a brand palette from your Brand Kit: the lightest color becomes the ray color. You can also pick the color yourself."
+        }
+      }
+    },
+    "fractal-glass": {
+      "name": "Fractal Glass Effect",
+      "description": "Put your photo behind reeded glass: strips with refraction, mirroring, blur and gloss, at any width and angle. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "strips": "Strips",
+        "glass": "Glass"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "stripWidth": {
+          "label": "Strip width"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "profile": {
+          "label": "Profile",
+          "options": {
+            "flat": "Flat",
+            "rounded": "Rounded",
+            "ridged": "Ridged"
+          }
+        },
+        "distortion": {
+          "label": "Distortion"
+        },
+        "mirror": {
+          "label": "Mirror"
+        },
+        "jitter": {
+          "label": "Offset"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "highlight": {
+          "label": "Gloss"
+        },
+        "tint": {
+          "label": "Glass color"
+        },
+        "tintAmount": {
+          "label": "Tint"
+        }
+      },
+      "presets": {
+        "reeded": "Reeded glass",
+        "frosted": "Frosted",
+        "mirrored": "Mirrored",
+        "diagonal": "Diagonal",
+        "horizontal": "Horizontal",
+        "fragments": "Fragments",
+        "fine": "Fine flutes"
+      },
+      "seo": {
+        "whatIs": "Fractal glass, also known as reeded or fluted glass, is a popular look in graphic design and photography: a picture appears to sit behind a pane made of many narrow glass rods. Each strip bends the light a little differently and shows a shifted, squeezed or mirrored slice, with fine gloss lines along the edges. The effect turns photos and gradients into abstract, refined backgrounds.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Set the strip width and angle and choose a profile: flat like a prism, rounded like a glass rod, or ridged. Distortion sets how much of the picture each strip shows, Mirror flips every slice, Offset shifts the strips at random. Blur turns it into frosted glass; gloss and glass color add depth. Space rolls width, angle and distortion. Export as PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Website backgrounds",
+            "text": "A photo behind reeded glass becomes a calm, abstract background that keeps text readable."
+          },
+          "u2": {
+            "title": "Posters and covers",
+            "text": "The glass look feels modern and premium. It suits album covers, posters and presentations."
+          },
+          "u3": {
+            "title": "Subtly abstract images",
+            "text": "Reeded glass hides faces and details while the mood of the photo stays. Good for placeholders and mood images."
+          }
+        },
+        "tips": {
+          "t1": "Narrow strips with high distortion give a fine, almost textile look. Wide strips show more of the subject.",
+          "t2": "Photos with strong colors and contrast give the best refraction, such as city lights at night or a sunset.",
+          "t3": "A little blur and a glass color from your Brand Kit give you a background in your brand colors."
+        },
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "What do the profiles mean?",
+          "a2": "Flat shifts and squeezes the slice evenly, like a prism. Rounded enlarges the middle of each strip and squeezes the edges, like a round glass rod. Ridged does the opposite: the edges stretch and the middle squeezes.",
+          "q3": "What does Offset do?",
+          "a3": "With an offset above 0, every strip moves by a random amount and the picture breaks into fragments. Each variant has its own pattern, and a share link shows exactly the same.",
+          "q4": "Does the export look like the preview?",
+          "a4": "Yes. Strip width and blur are given in design pixels and grow with the output. At the same size, preview and PNG are identical pixel for pixel; at twice the size everything is twice as sharp.",
+          "q5": "Is there an SVG export?",
+          "a5": "No. The effect computes every pixel from the photo, which cannot be described sensibly as vector graphics. Export as PNG, JPG or WebP, also at twice the size."
+        }
+      }
+    },
+    "pixelate": {
+      "name": "Pixelate Image",
+      "description": "Turn your photo into big pixels and few colors: block size, color levels or your own palette, also as SVG. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "blocks": "Pixels",
+        "tone": "Tones"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "blockSize": {
+          "label": "Pixel size"
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "original": "Original",
+            "levels": "Levels",
+            "palette": "Palette"
+          }
+        },
+        "levels": {
+          "label": "Levels per channel",
+          "description": "How many brightness steps red, green and blue each get. 2 levels give 8 colors, 6 levels up to 216."
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "mosaic": "Mosaic",
+        "retro": "Retro",
+        "chunky": "Chunky pixels",
+        "poster": "Posterize",
+        "sunset": "Sunset",
+        "muted": "Muted",
+        "fine": "Fine pixels"
+      },
+      "seo": {
+        "heading": "Pixelate Image (Posterize)",
+        "whatIs": "Pixelating merges a picture into large blocks: each block shows the mean of all the pixels it covers. Posterizing then reduces the colors, either to a few evenly spaced levels per color channel or to a fixed palette. Together they create the look of pixel art, old video games and mosaics; on its own, pixelating hides faces and details.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Choose the pixel size: 1 keeps the resolution, larger values give coarser blocks. Under Colors, keep the original colors, reduce them to levels per channel, or give each block the closest color of your palette. Brightness, contrast and gamma adjust the tones. Space rolls colors and levels, or the pixel size for original colors. Export as PNG, JPG, WebP or SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Pixel art and games",
+            "text": "Big pixels in few colors recall old game consoles. Ideal for sprites, backgrounds and retro projects."
+          },
+          "u2": {
+            "title": "Hide details",
+            "text": "Big pixels hide faces and details while colors and mood stay. The photo never leaves your browser."
+          },
+          "u3": {
+            "title": "Patterns for mosaics and stitching",
+            "text": "The SVG export gives you every block as a vector shape, a starting point for mosaics, fuse beads or cross-stitch."
+          }
+        },
+        "tips": {
+          "t1": "For pixel art, 8 to 24 pixels and 3 to 6 levels work well. More levels look more photographic.",
+          "t2": "Pixel size 1 with few levels gives a pure posterize effect, like a screen-printed poster.",
+          "t3": "Apply a brand palette from your Brand Kit: every block gets the closest brand color."
+        },
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "What is the difference between pixelate and posterize?",
+          "a2": "Pixelating lowers the resolution: each block shows the average color of its area. Posterizing lowers the number of colors without changing the resolution. Here you can use either one or both together.",
+          "q3": "Can I export the picture as SVG?",
+          "a3": "Yes. Every block becomes a rectangle, and equal neighbors in a row are merged. With very many blocks, such as pixel size 1 on a large photo, the file would be too large; the export dialog then shows the count and you export as PNG.",
+          "q4": "Does the export look like the preview?",
+          "a4": "Yes. The blocks are always computed on the same grid, the design size divided by the pixel size, and then enlarged to the screen or export size. At the same size, preview and PNG are identical pixel for pixel; at twice the size every block simply gets larger.",
+          "q5": "Can pixelation be undone?",
+          "a5": "Not from the exported picture: the details are no longer in it. In Musterli your original stays as long as the design is open or saved, and you can change every setting."
+        }
+      }
     }
   },
   "Converters": {
@@ -6243,5 +6516,702 @@
       "bow": "Bow",
       "mandala": "Mandala"
     }
+  },
+  "SocialLanding": {
+    "nav": "Social editor",
+    "metaTitle": "Social media editor: design posts for Instagram, LinkedIn and YouTube for free",
+    "metaDescription": "Design social media posts with backgrounds, text, shapes and your logo in the browser. Magic Resize fits your design to every format. Free, no account.",
+    "badge": "New",
+    "heading": "Social media editor",
+    "lead": "Posts, stories and thumbnails with a background, text, shapes and your logo. Switch the format and Magic Resize rearranges everything.",
+    "cta": "Open the editor",
+    "ctaHint": "Free, no account. Everything stays in your browser.",
+    "whatIsHeading": "What is the social media editor?",
+    "whatIs": "An editor for images in social media formats. The background comes from one of the Musterli generators; on top you place text, shapes, pictures and the logo from your brand kit. Every layer remembers what it is attached to (a corner, the centre or an edge), so Magic Resize fits the same design to square, portrait, story or landscape without cutting off any text.",
+    "featuresHeading": "What you can do with it",
+    "useCases": {
+      "u1": {
+        "title": "One design, every format",
+        "text": "Design once in square and switch to story, Pinterest pin or YouTube thumbnail. Text gets smaller or wraps instead of being cut off."
+      },
+      "u2": {
+        "title": "Backgrounds from the generators",
+        "text": "Mesh gradients, patterns, blobs or shader gradients as the background. Space gives a new variant; fine-tune it with the controls in the side panel."
+      },
+      "u3": {
+        "title": "On brand",
+        "text": "Colours run through the scene's colour slots. Take over your brand palette and your logo from the brand kit with one click."
+      },
+      "u4": {
+        "title": "Layers as you know them",
+        "text": "Move, scale, rotate, align, distribute and group. With guides, snapping and undo."
+      },
+      "u5": {
+        "title": "Full size export",
+        "text": "PNG or JPG at the format size, or twice as large for crisp pictures on high resolution screens."
+      },
+      "u6": {
+        "title": "Saved in your browser",
+        "text": "Designs go to My designs and a draft is saved as you work. Export them as a file to move them to another device."
+      }
+    },
+    "howToHeading": "How it works",
+    "steps": {
+      "t1": "Open the editor and pick a format, for example Instagram 4:5.",
+      "t2": "Choose a background and press Space until you like the variant.",
+      "t3": "Add text, shapes, pictures or your logo and arrange them.",
+      "t4": "Switch the format if you need another one. Magic Resize rearranges the layers.",
+      "t5": "Export as PNG or JPG and save the design to My designs."
+    },
+    "ctaSecondary": "Start designing in the social media editor",
+    "formatsHeading": "Formats",
+    "formatsLead": "The common sizes for posts, stories, cover images and thumbnails:",
+    "privacyHeading": "Nothing leaves your device",
+    "privacy": "Rendering and saving happen in your browser. Uploaded pictures are checked, SVG files are sanitised, and none of it is sent to a server.",
+    "faqHeading": "Frequently asked questions",
+    "faq": {
+      "q1": "Is the social media editor free?",
+      "a1": "Yes. Musterli is completely free and funded by donations. There is no account, no subscription and no watermark.",
+      "q2": "What does Magic Resize do?",
+      "a2": "Every layer is attached to an edge, to the centre, or stretches across. When the format changes, margins stay the same, sizes follow the short side, and text gets smaller or wraps. Nothing is cut off.",
+      "q3": "Where are my designs stored?",
+      "a3": "In your browser's storage (IndexedDB) on this device. In My designs you can export them as a file and import them again on another device.",
+      "q4": "Can I use my own pictures and my logo?",
+      "a4": "Yes. Upload pictures right in the editor; logos come from your brand kit. Both stay local and are never part of a share link.",
+      "q5": "Does the editor work on a phone?",
+      "a5": "Viewing and exporting work everywhere. For designing, a large screen is the most comfortable."
+    },
+    "teaserTitle": "New: social media editor",
+    "teaserText": "A background from a generator plus text, shapes and your logo. Magic Resize fits the design to every format.",
+    "teaserCta": "Go to the social media editor"
+  },
+  "SocialEditor": {
+    "page": {
+      "metaTitle": "Social media editor",
+      "metaDescription": "Design social media posts with a background, text, shapes and your logo. Free, in the browser."
+    },
+    "title": "Social media editor",
+    "smallScreen": "Best on a large screen. Viewing and exporting work here too.",
+    "toolbar": "Design",
+    "back": "Social editor",
+    "name": "Name",
+    "untitled": "Untitled design",
+    "format": "Format",
+    "customFormat": "Custom format ({width} × {height})",
+    "undo": "Undo",
+    "redo": "Redo",
+    "new": "New",
+    "newConfirm": "Start a new design? Unsaved changes will be lost.",
+    "newDesign": "New design started.",
+    "saveCopy": "Save as copy",
+    "save": "Save",
+    "saving": "Saving …",
+    "myDesigns": "My designs",
+    "saved": "“{name}” saved.",
+    "savedCopy": "Copy “{name}” saved.",
+    "saveFailed": "Saving did not work. Is the browser's storage full or blocked?",
+    "copyName": "{name} (copy)",
+    "layersPanel": "Layers and add",
+    "propertiesPanel": "Properties",
+    "canvasRegion": "Canvas",
+    "canvasRole": "canvas",
+    "canvasLabel": "Design {width} × {height} pixels. Selected: {selection}. Arrow keys move by 1 pixel, with Shift by 10 pixels.",
+    "nothingSelected": "nothing",
+    "loading": "Loading the editor …",
+    "loadFailed": "The editor could not be loaded. Reload the page.",
+    "add": {
+      "title": "Add",
+      "text": "Text",
+      "rect": "Rectangle",
+      "ellipse": "Ellipse",
+      "line": "Line",
+      "library": "Shape",
+      "image": "Picture",
+      "uploading": "Loading …",
+      "logo": "Logo"
+    },
+    "added": {
+      "text": "Text added.",
+      "rect": "Rectangle added.",
+      "ellipse": "Ellipse added.",
+      "line": "Line added.",
+      "library": "Shape added.",
+      "image": "Picture added.",
+      "logo": "Logo added."
+    },
+    "limitLayers": "No more layers fit (at most 100).",
+    "removed": "{count, plural, one {One layer} other {# layers}} removed.",
+    "duplicated": "{count, plural, one {One layer} other {# layers}} duplicated.",
+    "grouped": "Grouped.",
+    "ungrouped": "Group dissolved.",
+    "starterHeadline": "Your headline here",
+    "newText": "New text",
+    "formatChanged": "Format {format}, {width} × {height}. The layers were adjusted.",
+    "logoInvalid": "This logo cannot be used.",
+    "exported": "{file} exported.",
+    "exportFailed": "The export did not work.",
+    "export": {
+      "format": "File format",
+      "size": "Size",
+      "scale": "{scale}× ({width} × {height})",
+      "scaleTooLarge": "{scale}× (over {max} px, not available)",
+      "running": "Exporting …",
+      "run": "Export"
+    },
+    "logos": {
+      "title": "Logo from the brand kit",
+      "empty": "There are no logos in the brand kit yet. <link>Add a logo in the brand kit</link>",
+      "close": "Close",
+      "pick": "Insert {name}",
+      "unnamed": "Logo"
+    },
+    "layers": {
+      "title": "Layers",
+      "hint": "The top one is in front. F2 renames, Alt with arrow up or down moves the layer.",
+      "label": "Layers, topmost first",
+      "renameLabel": "New name for {name}",
+      "rowLabel": "{name}, {kind}, layer {position} of {count}",
+      "kinds": {
+        "background": "Background",
+        "text": "Text",
+        "image": "Picture",
+        "shape": "Shape",
+        "logo": "Logo"
+      },
+      "group": "Group",
+      "hide": "Hide {name}",
+      "show": "Show {name}",
+      "lock": "Lock {name}",
+      "unlock": "Unlock {name}"
+    },
+    "color": {
+      "none": "None",
+      "slot": "Colour slot {n} ({color})",
+      "custom": "Custom colour"
+    },
+    "inspector": {
+      "arrange": "Arrange",
+      "arrangeMany": "Arrange {count} layers",
+      "align": "Align",
+      "alignLeft": "Align left",
+      "alignHCenter": "Centre horizontally",
+      "alignRight": "Align right",
+      "alignTop": "Align top",
+      "alignVCenter": "Centre vertically",
+      "alignBottom": "Align bottom",
+      "distributeX": "Distribute horizontally",
+      "distributeY": "Distribute vertically",
+      "alignHintOne": "A single layer aligns to the canvas.",
+      "alignHintMany": "Several layers align to each other. Distributing needs three or more.",
+      "group": "Group",
+      "ungroup": "Ungroup",
+      "forward": "Bring forward",
+      "backward": "Send backward",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "frame": "Position and size",
+      "x": "X",
+      "y": "Y",
+      "width": "Width",
+      "height": "Height",
+      "rotation": "Rotation (degrees)",
+      "opacity": "Opacity (%)"
+    },
+    "text": {
+      "title": "Text",
+      "content": "Content",
+      "font": "Font",
+      "size": "Size",
+      "weight": "Weight",
+      "weights": {
+        "400": "Regular",
+        "500": "Medium",
+        "700": "Bold",
+        "900": "Black"
+      },
+      "minSize": "Smallest size",
+      "align": "Alignment",
+      "aligns": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right"
+      },
+      "valign": "Vertical",
+      "valigns": {
+        "top": "Top",
+        "middle": "Middle",
+        "bottom": "Bottom"
+      },
+      "lineHeight": "Line height",
+      "letterSpacing": "Letter spacing (em)",
+      "color": "Colour",
+      "italic": "Italic",
+      "placeholder": "Placeholder (for templates)",
+      "fontGroups": {
+        "brand": "Brand fonts",
+        "sans": "Sans serif",
+        "serif": "Serif",
+        "display": "Display",
+        "mono": "Monospace",
+        "handwriting": "Handwriting",
+        "system": "System fonts"
+      },
+      "systemFonts": {
+        "sans": "System sans serif",
+        "serif": "System serif",
+        "mono": "System monospace"
+      },
+      "fontMissingOption": "{name} (missing)",
+      "fontMissing": "The brand font “{name}” is missing in this browser, so you see a fallback font. Add the font to your brand kit and the text looks as planned again.",
+      "fontHint": "Add your own fonts in the brand kit; they show up first here.",
+      "fontLoadFailed": "The font “{name}” could not be loaded.",
+      "effects": {
+        "title": "Effects",
+        "shadow": "Shadow",
+        "shadowColor": "Shadow colour",
+        "shadowBlur": "Blur",
+        "shadowX": "Offset X",
+        "shadowY": "Offset Y",
+        "shadowOpacity": "Opacity (%)",
+        "stroke": "Outline",
+        "strokeColor": "Outline colour",
+        "strokeWidth": "Outline width",
+        "highlight": "Highlight bar",
+        "highlightColor": "Bar colour",
+        "highlightPadding": "Padding",
+        "gradient": "Gradient",
+        "gradientFrom": "Start colour",
+        "gradientTo": "End colour",
+        "gradientAngle": "Angle (degrees)",
+        "gradientHint": "While it is on, the gradient replaces the text colour."
+      },
+      "fontRole": "Font role",
+      "fontRoles": {
+        "auto": "Automatic",
+        "heading": "Heading",
+        "body": "Body text"
+      },
+      "fontRoleHint": "Apply brand gives headings the first and body text the second brand font."
+    },
+    "shape": {
+      "title": "Shape",
+      "form": "Shape library",
+      "fill": "Fill",
+      "lineColor": "Line colour",
+      "stroke": "Outline",
+      "lineWidth": "Line width",
+      "strokeWidth": "Outline width",
+      "radius": "Corner radius"
+    },
+    "image": {
+      "title": "Picture",
+      "fit": "Fit",
+      "fits": {
+        "cover": "Fill",
+        "contain": "Show all"
+      },
+      "radius": "Corner radius",
+      "placeholder": "Placeholder (for templates)"
+    },
+    "constraints": {
+      "title": "Magic Resize",
+      "hint": "What the layer is attached to when the format changes. Moving the layer sets it again.",
+      "h": "Horizontal",
+      "v": "Vertical",
+      "hAnchors": {
+        "start": "Left",
+        "center": "Centre",
+        "end": "Right",
+        "stretch": "Full width"
+      },
+      "vAnchors": {
+        "start": "Top",
+        "center": "Middle",
+        "end": "Bottom",
+        "stretch": "Full height"
+      },
+      "size": "Size follows",
+      "sizes": {
+        "short": "the short side",
+        "width": "the width",
+        "height": "the height"
+      },
+      "bleed": "May reach past the edge (decoration)"
+    },
+    "background": {
+      "title": "Background",
+      "tool": "Generator",
+      "variant": "New variant",
+      "applyPalette": "Apply scene colours",
+      "variantHint": "Space: new variant. The lock keeps a control as it is.",
+      "newVariant": "New background variant.",
+      "paletteUnsupported": "This background does not take colours.",
+      "paletteApplied": "Scene colours applied to the background."
+    },
+    "palette": {
+      "title": "Scene colours",
+      "hint": "Texts and shapes with a colour slot follow these colours.",
+      "slot": "Slot {n}",
+      "brand": "Use a brand palette",
+      "brandPick": "Choose a palette …",
+      "brandUnnamed": "Unnamed palette"
+    },
+    "templates": {
+      "open": "Templates",
+      "title": "Choose a template",
+      "intro": "Every template fits every format through Magic Resize. Change texts and colours as usual afterwards.",
+      "theme": "Theme",
+      "allThemes": "All themes",
+      "format": "Format",
+      "allFormats": "All formats",
+      "useCurrent": "Open in the current format: {format}",
+      "pick": "Open template:",
+      "details": "theme {theme}, {width} × {height} pixels",
+      "count": "{count, plural, one {# template} other {# templates}}",
+      "empty": "No template matches this filter.",
+      "close": "Close",
+      "loading": "Loading templates …",
+      "loadFailed": "The templates could not be loaded. Reload the page and try again.",
+      "confirm": "Your unsaved changes will be lost. Open the template anyway?",
+      "opened": "Opened template {name} ({format}).",
+      "previewFailed": "No preview",
+      "themes": {
+        "announcement": "Announcement",
+        "quote": "Quote",
+        "event": "Event",
+        "sale": "Sale and product",
+        "tip": "Tip and how-to",
+        "team": "Team and jobs"
+      },
+      "names": {
+        "launch-bold": "Product launch",
+        "big-news": "Big news",
+        "coming-soon": "Coming soon",
+        "release-notes": "New release",
+        "milestone": "Milestone",
+        "back-open": "Open again",
+        "newsletter": "Newsletter",
+        "quote-classic": "Classic quote",
+        "quote-card": "Quote card",
+        "quote-bold": "Bold quote",
+        "quote-notebook": "Handwritten quote",
+        "quote-split": "Split quote",
+        "testimonial": "Testimonial",
+        "quote-botanical": "Botanical quote",
+        "event-date": "Event date",
+        "webinar": "Webinar",
+        "workshop": "Workshop",
+        "meetup": "Meetup",
+        "save-the-date": "Save the date",
+        "concert": "Concert",
+        "countdown": "Countdown",
+        "sale-percent": "Percent off",
+        "product-launch": "New product",
+        "flash-sale": "Flash sale",
+        "discount-code": "Discount code",
+        "black-week": "Black Week",
+        "new-arrival": "New arrival",
+        "free-shipping": "Free shipping",
+        "tips-list": "Three tips",
+        "how-to": "Step by step",
+        "did-you-know": "Did you know?",
+        "myth-fact": "Myth and fact",
+        "checklist": "Checklist",
+        "quick-tip": "Quick tip",
+        "hiring": "We are hiring",
+        "welcome": "Welcome to the team",
+        "team-intro": "Our team",
+        "job-story": "Job ad",
+        "anniversary": "Work anniversary",
+        "values": "Our values"
+      },
+      "texts": {
+        "launch-bold": {
+          "eyebrow": "NEW",
+          "headline": "Our new product is here",
+          "body": "Discover every feature and try it out today.",
+          "cta": "Take a look"
+        },
+        "big-news": {
+          "eyebrow": "BIG NEWS",
+          "headline": "We are moving to a new studio",
+          "body": "More room for ideas, classes and coffee.",
+          "detail": "From 1 June at 12 Lake Street"
+        },
+        "coming-soon": {
+          "eyebrow": "COMING SOON",
+          "headline": "Something new is coming",
+          "date": "From 12 March"
+        },
+        "release-notes": {
+          "eyebrow": "UPDATE",
+          "headline": "Faster, cleaner, simpler",
+          "body": "Find every change in the release notes.",
+          "version": "v2.0"
+        },
+        "milestone": {
+          "number": "10,000",
+          "headline": "Thank you for 10,000 followers",
+          "body": "We could not have done it without you."
+        },
+        "back-open": {
+          "eyebrow": "GOOD NEWS",
+          "headline": "We are back for you",
+          "body": "Open again from Monday: weekdays 8 am to 6 pm, Saturdays 9 am to 4 pm."
+        },
+        "newsletter": {
+          "eyebrow": "NEWSLETTER",
+          "headline": "New this March",
+          "list": "Three new classes\nTips from the team\nSpring dates",
+          "cta": "Subscribe now"
+        },
+        "quote-classic": {
+          "mark": "“",
+          "quote": "Good design is as little design as possible.",
+          "author": "First Last",
+          "role": "Designer"
+        },
+        "quote-card": {
+          "quote": "Creativity takes the courage to make mistakes and keep going.",
+          "author": "First Last",
+          "role": "Founder, Company"
+        },
+        "quote-bold": {
+          "quote": "Just get started",
+          "author": "First Last"
+        },
+        "quote-notebook": {
+          "quote": "One small step every day, and suddenly you have come a long way.",
+          "author": "First Last"
+        },
+        "quote-split": {
+          "mark": "“",
+          "quote": "The best idea often comes with the second coffee.",
+          "author": "First Last"
+        },
+        "testimonial": {
+          "initials": "AM",
+          "quote": "Working together was easy, and the result went beyond what we hoped for.",
+          "author": "Anna Miller",
+          "role": "Head of Marketing, Company"
+        },
+        "quote-botanical": {
+          "quote": "What you sow today, you will harvest tomorrow.",
+          "author": "First Last"
+        },
+        "event-date": {
+          "day": "14",
+          "month": "MARCH",
+          "title": "Open house day",
+          "details": "10 am to 4 pm, Harbour Workshop",
+          "cta": "Come and visit!"
+        },
+        "webinar": {
+          "eyebrow": "LIVE WEBINAR",
+          "title": "Colours that sell",
+          "when": "Thursday, 20 March, 6 pm",
+          "speaker": "With First Last"
+        },
+        "workshop": {
+          "eyebrow": "WORKSHOP",
+          "title": "Design your own patterns",
+          "details": "Saturday, 5 April, 9 am to noon\nSign up by 1 April"
+        },
+        "meetup": {
+          "eyebrow": "MEETUP",
+          "title": "Design and code after work",
+          "details": "Wednesday, 7 pm\nCulture House, Room 2\nFree entry",
+          "cta": "Save your seat"
+        },
+        "save-the-date": {
+          "eyebrow": "Save the Date",
+          "date": "21.06.",
+          "details": "Summer party in the garden\nfrom 5 pm"
+        },
+        "concert": {
+          "eyebrow": "LIVE IN THE PARK",
+          "title": "Summer Sound",
+          "details": "Friday, 8 August\nDoors open 7 pm"
+        },
+        "countdown": {
+          "eyebrow": "ONLY",
+          "title": "3 days",
+          "details": "until the big launch"
+        },
+        "sale-percent": {
+          "percent": "-30%",
+          "headline": "Summer sale",
+          "note": "Ends Sunday"
+        },
+        "product-launch": {
+          "eyebrow": "NEW IN STORE",
+          "headline": "The bag for every day",
+          "body": "Light, tough and available in five colours.",
+          "price": "$49",
+          "cta": "Order now"
+        },
+        "flash-sale": {
+          "headline": "Flash Sale",
+          "body": "40% off everything, today only",
+          "timer": "12:00:00"
+        },
+        "discount-code": {
+          "headline": "20% off your first order",
+          "body": "Enter the code at checkout.",
+          "code": "MUSTER20"
+        },
+        "black-week": {
+          "headline": "Black Week",
+          "offer": "Up to 40% off everything",
+          "note": "From 24 to 30 November, while stocks last."
+        },
+        "new-arrival": {
+          "eyebrow": "JUST ARRIVED",
+          "headline": "Our new collection",
+          "body": "Light fabrics, fresh colours, fair prices.",
+          "cta": "Shop now"
+        },
+        "free-shipping": {
+          "headline": "Free shipping over $50",
+          "body": "On every order until the end of the month.",
+          "cta": "Shop now"
+        },
+        "tips-list": {
+          "eyebrow": "TIPS",
+          "headline": "3 tips for better photos",
+          "step1-n": "1",
+          "step1-text": "Use soft daylight",
+          "step2-n": "2",
+          "step2-text": "Keep the background calm",
+          "step3-n": "3",
+          "step3-text": "Get closer"
+        },
+        "how-to": {
+          "eyebrow": "HOW TO",
+          "headline": "Your pattern in 3 steps",
+          "steps": "1. Pick a tool\n2. Press the space bar\n3. Export and share"
+        },
+        "did-you-know": {
+          "eyebrow": "Did you know?",
+          "fact": "People take in a picture much faster than text.",
+          "source": "Source: name of the source"
+        },
+        "myth-fact": {
+          "myth-label": "Myth",
+          "myth": "Good design needs expensive software.",
+          "fact-label": "Fact",
+          "fact": "With the right tools it works for free in the browser."
+        },
+        "checklist": {
+          "headline": "Checklist for your post",
+          "item1": "Clear message",
+          "item2": "Easy to read type",
+          "item3": "Strong contrast",
+          "item4": "Do not forget the logo"
+        },
+        "quick-tip": {
+          "eyebrow": "TIP",
+          "tip": "Less text, bigger type: that is how your post gets read.",
+          "body": "Find more tips on our blog."
+        },
+        "hiring": {
+          "eyebrow": "We are hiring",
+          "role": "UX designer",
+          "details": "80 to 100%, Zurich or remote\nStart date flexible",
+          "cta": "Apply now"
+        },
+        "welcome": {
+          "initials": "LM",
+          "headline": "Welcome to the team!",
+          "name": "Lea Miller",
+          "role": "Project lead",
+          "body": "We are excited to work with you."
+        },
+        "team-intro": {
+          "headline": "This is us",
+          "body": "A small team with big ideas, in Zurich since 2016.",
+          "p1": "AB",
+          "p2": "CD",
+          "p3": "EF"
+        },
+        "job-story": {
+          "eyebrow": "We are looking for you",
+          "role": "Social media manager",
+          "details": "60 to 80%\nOffice in Bern, partly remote\nSmall, friendly team",
+          "cta": "Learn more"
+        },
+        "anniversary": {
+          "number": "5",
+          "headline": "years with us",
+          "name": "First Last",
+          "body": "Thank you for your work and all the great ideas."
+        },
+        "values": {
+          "headline": "Our values",
+          "v1-title": "Open",
+          "v1": "We share what we know and we listen.",
+          "v2-title": "Bold",
+          "v2": "We try new things.",
+          "v3-title": "Fair",
+          "v3": "We act honestly and with respect."
+        }
+      }
+    },
+    "brand": {
+      "apply": "Apply brand",
+      "applyHint": "Use the palette, fonts and logo of your brand kit",
+      "applying": "Applying …",
+      "applied": "Brand kit applied: {parts}.",
+      "partColors": "colours",
+      "partFonts": "{count, plural, one {font in # text} other {fonts in # texts}}",
+      "partLogo": "logo",
+      "nothing": "Your brand kit already matches: nothing to change.",
+      "failed": "The brand kit could not be applied.",
+      "emptyTitle": "Your brand kit is still empty",
+      "emptyText": "Add a palette, fonts or a logo in the <link>brand kit</link>. Then one click puts them all into your design.",
+      "close": "Close"
+    }
+  },
+  "SocialDesigns": {
+    "title": "Social designs",
+    "intro": "Your designs from the social media editor, saved in this browser.",
+    "exportAll": "Export all",
+    "import": "Import",
+    "failed": "That did not work.",
+    "exported": "{count, plural, one {One design} other {# designs}} exported.",
+    "importErrors": {
+      "too-large": "The file is too large. At most 32 MB are allowed.",
+      "empty": "The file is empty.",
+      "malformed": "The file is damaged or not JSON.",
+      "forbidden-keys": "The file contains forbidden entries and was not imported.",
+      "wrong-format": "This is not a Musterli social designs file.",
+      "unsupported-version": "This file comes from a newer version of Musterli.",
+      "too-many": "The file contains too many designs (at most 500).",
+      "designs-file": "This is a tool designs file. Import it above in My designs.",
+      "brand-kit-file": "This is a brand kit file. Import it in the brand kit.",
+      "timeout": "Checking the file took too long.",
+      "aborted": "Import cancelled."
+    },
+    "imported": "{added, plural, =0 {No new designs imported.} one {One design imported.} other {# designs imported.}}",
+    "importDuplicates": "{count, plural, one {One was already there.} other {# were already there.}}",
+    "importSkipped": "{count, plural, one {One was skipped because it is invalid.} other {# were skipped because they are invalid.}}",
+    "undo": "Undo",
+    "dismiss": "Close",
+    "unavailable": "This browser's storage is not available (for example in private mode).",
+    "empty": "No social designs yet.",
+    "emptyCta": "Open the social media editor",
+    "noThumbnail": "No preview",
+    "meta": "{width} × {height} · {date}",
+    "actionsLabel": "Actions for {name}",
+    "openLabel": "Open {name}",
+    "open": "Open",
+    "rename": "Rename",
+    "duplicate": "Duplicate",
+    "copyName": "{name} (copy)",
+    "delete": "Delete",
+    "deleted": "“{name}” deleted.",
+    "renameLabel": "New name for {name}",
+    "renameSave": "Save",
+    "cancel": "Cancel"
   }
 }

@@ -613,7 +613,8 @@
       "skippedUnnamed": "Eintrag {index}: {reason}",
       "skipReasons": {
         "invalid": "ungültige Daten",
-        "unsafe-image": "unsichere oder beschädigte Bilddatei"
+        "unsafe-image": "unsichere oder beschädigte Bilddatei",
+        "unsafe-font": "keine gültige Schriftdatei"
       },
       "importErrors": {
         "too-large": "Die Datei ist zu gross. Höchstens 30 MB sind erlaubt.",
@@ -628,7 +629,9 @@
         "aborted": "Import abgebrochen."
       },
       "dismiss": "Meldung schliessen",
-      "undo": "Rückgängig"
+      "undo": "Rückgängig",
+      "skippedFont": "Schrift {name}: {reason}",
+      "importedFonts": "{count, plural, one {# Schrift} other {# Schriften}} importiert."
     },
     "errors": {
       "unavailable": "In diesem Browser kann Musterli nichts speichern, zum Beispiel in einem privaten Fenster oder wenn Websitedaten blockiert sind.",
@@ -712,6 +715,22 @@
         "svg-timeout": "Das Prüfen der SVG-Datei hat zu lange gedauert und wurde abgebrochen. Vereinfache die Datei und versuch es nochmals.",
         "raster-only": "Hier geht nur ein Bild im Format PNG, JPG oder WebP.",
         "shape-not-svg": "Shapes müssen SVG-Dateien sein. Logos dürfen auch PNG, JPG oder WebP sein."
+      }
+    },
+    "fonts": {
+      "title": "Schriften",
+      "hint": "WOFF2, WOFF, TTF oder OTF bis 2 MB, höchstens 10 Schriften. Prüf vorher, ob deine Schriftlizenz Grafiken für Social Media erlaubt. Die Datei bleibt in diesem Browser.",
+      "empty": "Noch keine eigenen Schriften.",
+      "add": "Schrift hinzufügen",
+      "added": "Schrift „{name}“ hinzugefügt.",
+      "sample": "Aa Bb Cc Ää Öö Üü 0123",
+      "details": "{format} · {size} KB",
+      "usage": "Im Social-Media-Editor stehen deine Schriften zuoberst in der Schriftauswahl.",
+      "errors": {
+        "too-large": "Die Datei ist grösser als 2 MB. Nimm eine kleinere Schriftdatei, zum Beispiel WOFF2.",
+        "not-a-font": "Das ist keine Schriftdatei. Nimm WOFF2, WOFF, TTF oder OTF.",
+        "broken": "Der Browser kann diese Schrift nicht laden. Vielleicht ist die Datei beschädigt.",
+        "unavailable": "Dieser Browser kann keine eigenen Schriften laden."
       }
     }
   }

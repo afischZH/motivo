@@ -188,7 +188,7 @@ describe("brand kit import", () => {
       assets: [asset()],
       defaultId: "p2",
     });
-    expect(outcome).toEqual({ palettes: 2, assets: 1, duplicates: 0, overLimit: 0 });
+    expect(outcome).toEqual({ palettes: 2, assets: 1, fonts: 0, duplicates: 0, overLimit: 0 });
     expect((await store.loadPalettes()).defaultId).toBe("p2");
 
     const again = await store.importBrandKit({
@@ -196,7 +196,7 @@ describe("brand kit import", () => {
       assets: [asset(), asset({ image: svg("<circle r='1'/>") })],
       defaultId: "p1",
     });
-    expect(again).toEqual({ palettes: 1, assets: 1, duplicates: 2, overLimit: 0 });
+    expect(again).toEqual({ palettes: 1, assets: 1, fonts: 0, duplicates: 2, overLimit: 0 });
     const { palettes, defaultId } = await store.loadPalettes();
     expect(palettes.map((p) => p.id).sort()).toEqual(["b1", "p1", "p2"]);
     // An existing default is kept.
@@ -265,17 +265,21 @@ describe("database upgrade", () => {
 
   it("keeps version 1 data and adds the brand kit stores", async () => {
     await createVersion1();
-    expect(DB_VERSION).toBe(2);
+    expect(DB_VERSION).toBe(4);
     const db = await openDatabase(factory);
-    expect(db.version).toBe(2);
+    expect(db.version).toBe(4);
     expect([...db.objectStoreNames].sort()).toEqual(
       [
         STORE.brandAssets,
+        STORE.brandFonts,
         STORE.brandPalettes,
         STORE.designParams,
         STORE.designs,
         STORE.drafts,
         STORE.meta,
+        STORE.socialDesigns,
+        STORE.socialDrafts,
+        STORE.socialScenes,
       ].sort(),
     );
     db.close();

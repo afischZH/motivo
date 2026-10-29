@@ -214,7 +214,18 @@ describe("design store", () => {
     await store.list();
     const db = await openDatabase(factory, DB_NAME);
     expect([...db.objectStoreNames].sort()).toEqual(
-      ["brand-assets", "brand-palettes", "design-params", "designs", "drafts", "meta"].sort(),
+      [
+        "brand-assets",
+        "brand-fonts",
+        "brand-palettes",
+        "design-params",
+        "designs",
+        "drafts",
+        "meta",
+        "social-designs",
+        "social-drafts",
+        "social-scenes",
+      ].sort(),
     );
     db.close();
   });

@@ -23,6 +23,7 @@ describe("sitemap", () => {
   it("lists every page once per enabled locale", () => {
     const pages =
       2 +
+      1 + // Social media editor landing page
       populatedCategories().length +
       registry.list().length +
       1 +
@@ -96,6 +97,12 @@ describe("sitemap", () => {
 
   it("never lists the personal designs page", () => {
     expect(urls.filter((url) => /\/(meine-designs|my-designs)/.test(url))).toEqual([]);
+  });
+
+  it("lists the social editor landing page, not the editor itself", () => {
+    expect(urls).toContain(new URL("/de/social-media-editor", base).toString());
+    expect(urls).toContain(new URL("/en/social-media-editor", base).toString());
+    expect(urls.filter((url) => /\/(bearbeiten|edit)$/.test(url))).toEqual([]);
   });
 
   it("never lists the personal brand kit page", () => {

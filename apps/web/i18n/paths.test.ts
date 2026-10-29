@@ -31,6 +31,8 @@ const routes: AppRoute[] = [
   { page: "palettes" },
   { page: "myDesigns" },
   { page: "brandKit" },
+  { page: "socialEditor" },
+  { page: "socialEditorApp" },
   ...Object.keys(GRADIENT_SLUGS).map((gradientId): AppRoute => ({ page: "gradient", gradientId })),
   ...Object.keys(PALETTE_SLUGS).map((paletteId): AppRoute => ({ page: "palette", paletteId })),
 ];
