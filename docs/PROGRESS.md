@@ -6,7 +6,7 @@
 
 - **Meilenstein**: M6 (Social Media Editor und restliche Effekte), freigegeben von Andreas 2026-10-29 05:51 (40 Templates zum Start). M5b live seit 2026-10-29 05:16 (PR #18, Merge b09677f, Deploy grün). M4-AP08 (Launch-Vorbereitung) noch offen.
 - **Letzte Sitzung**: 2026-10-29 (Cloud-Sitzung)
-- **Nächster Schritt**: AP01 (Effekte) und AP06 (FR/IT) parallel, AP02 (Editor-Grundlage inkl. Magic Resize) parallel, danach AP03 (Text, Schriften) und AP05 (Templates, Brand-Apply), zuletzt AP07. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht und FR/IT-Rechtstexte), Analytics-Token, Sentry-DSN, echte Test-Spende, Markenprüfung.
+- **Nächster Schritt**: AP01 (Effekte) und AP02 (Editor-Grundlage inkl. Magic Resize) parallel, danach AP03 (Text, Schriften) und AP05 (Templates, Brand-Apply), zuletzt AP07. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende, Markenprüfung.
 
 ## Arbeitspakete des aktuellen Meilensteins
 
@@ -18,8 +18,8 @@
 | M6-AP02 | Editor-Grundlage (H): Szenenmodell (Zod, JSON), Konva-Kern dynamisch, Ebenen (Musterli-Design als parametrische Referenz, Text, Bild, Form, Logo), Transform, Snapping, Ausrichtung, Gruppen, Undo, Export PNG/JPG, lokaler Speicher (IndexedDB-Upgrade), Formate und **Magic Resize** mit Constraint-Test | ui-dev + engine-dev | offen | – | AP04 aus dem Plan hier enthalten (Szenenmodell und Constraints gehören zusammen) |
 | M6-AP03 | Text-Effekte (Schatten, Kontur, Verlauf, Markierbalken), selbst gehostete OFL-Schriften, Brand-Schriften im Brand Kit | ui-dev | offen | AP02 | Lizenzen in `assets/LICENSES.md` |
 | M6-AP05 | 40 Templates (6 Themen, alle Formate) und **Brand-Apply** | ui-dev | offen | AP02, AP03 | DoD-Test: jedes Template in 6 Formate ohne abgeschnittenen Text |
-| M6-AP06 | FR und IT: Locales, Slugs, alle Texte, Rechtstexte mit Banner "juristisch zu prüfen", Worker-Grösse messen | ui-dev | offen | – | Neue Texte aus AP01 bis AP05 werden in AP07 nachübersetzt |
-| M6-AP07 | Integration, FR/IT-Nachträge, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | alle | |
+| M6-AP06 | FR und IT | – | gestrichen | – | Entscheid Andreas 2026-10-29 06:02: aus M6 entfernt; begonnene Arbeit verworfen, nichts gemergt |
+| M6-AP07 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | alle | |
 
 ### M5b: Tiefe statt Breite (freigegeben 2026-10-29)
 
