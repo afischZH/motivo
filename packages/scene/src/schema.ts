@@ -186,6 +186,12 @@ export const textEffectsSchema = z.object({
 });
 
 export const TEXT_ALIGNS = ["left", "center", "right"] as const;
+/**
+ * Font role of a text layer (M6-AP05): Brand-Apply gives `heading` texts
+ * the first brand font and `body` texts the second (or the first). Layers
+ * without a role get one from their size (`fontRoleOf` in brand.ts).
+ */
+export const FONT_ROLES = ["heading", "body"] as const;
 export const TEXT_VALIGNS = ["top", "middle", "bottom"] as const;
 
 export const textLayerSchema = z.object({
@@ -199,6 +205,8 @@ export const textLayerSchema = z.object({
    * plus name); missing for system stacks and AP02 scenes.
    */
   font: fontRefSchema.optional(),
+  /** Font role for Brand-Apply; optional, so the scene version stays 1. */
+  fontRole: z.enum(FONT_ROLES).optional(),
   fontSize: z.number().min(FONT_SIZE_MIN).max(FONT_SIZE_MAX),
   /** Magic Resize shrinks the text down to this size before it wraps or grows its box. */
   minFontSize: z.number().min(FONT_SIZE_MIN).max(FONT_SIZE_MAX),
@@ -355,6 +363,7 @@ export type SizeMode = (typeof SIZE_MODES)[number];
 export type SceneImage = z.output<typeof sceneImageSchema>;
 export type ColorRef = z.output<typeof colorRefSchema>;
 export type TextEffects = z.output<typeof textEffectsSchema>;
+export type FontRole = (typeof FONT_ROLES)[number];
 
 /**
  * A plain object of any realm (IndexedDB and workers clone into the page's

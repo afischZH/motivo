@@ -10,3 +10,4 @@ export * from "./history";
 export * from "./snap";
 export * from "./ops";
 export * from "./factory";
+export * from "./brand";
