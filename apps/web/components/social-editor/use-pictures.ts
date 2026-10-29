@@ -8,7 +8,7 @@
  * seed and the format; pictures are cached per image object.
  */
 import type { Scene } from "@musterli/scene";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { ScenePictures } from "./konva-scene";
 import { decodePicture, renderBackground, type Picture } from "./resources";
@@ -37,6 +37,18 @@ export function useScenePictures(scene: Scene): PicturesState {
   const [done, setDone] = useState<{ version: Version; ok: boolean } | null>(null);
   // The bitmap on the stage: the last good one, kept while a newer one renders.
   const [shown, setShown] = useState<ImageBitmap | null>(null);
+  // The bitmap is closed once the editor goes away (it holds the pixels of the whole canvas).
+  const shownRef = useRef<ImageBitmap | null>(null);
+  useEffect(() => {
+    shownRef.current = shown;
+  }, [shown]);
+  useEffect(() => {
+    const live = shownRef;
+    return () => {
+      live.current?.close();
+      live.current = null;
+    };
+  }, []);
 
   const toolId = background?.toolId;
   const params = background?.params;

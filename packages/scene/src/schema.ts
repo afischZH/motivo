@@ -257,6 +257,13 @@ export const logoLayerSchema = z.object({
   /** Brand kit asset the logo came from; the snapshot below keeps the design intact without it. */
   assetId: z.string().max(64).nullable(),
   image: sceneImageSchema,
+  /**
+   * The slot Brand-Apply fitted the logo into (the template's box), so the
+   * next logo is fitted into the same slot instead of the previous logo's
+   * box. Optional, so the scene version stays 1; ignored once the layer was
+   * moved or resized (brand.ts `logoSlotOf`).
+   */
+  slot: z.object({ x: coord, y: coord, width: extent, height: extent }).optional(),
 });
 
 export const backgroundLayerSchema = z.object({
@@ -407,4 +414,66 @@ export function parseScene(
   return parsed.success
     ? { success: true, data: parsed.data }
     : { success: false, error: parsed.error.message };
+}
+
+/** Stand-ins for picture data while an edited scene is checked (`parseEditedScene`). */
+const STUB_RASTER_HREF = "data:image/png;base64,AA==";
+const STUB_SVG = "<svg/>";
+const RASTER_PREFIXES = ["data:image/png;base64,", "data:image/jpeg;base64,"] as const;
+
+function pictureDataFits(image: SceneImage): boolean {
+  if (image.kind === "svg") {
+    return image.svg.length > 0 && image.svg.length <= SCENE_IMAGE_MAX_SVG_LENGTH;
+  }
+  return (
+    image.href.length <= SCENE_IMAGE_MAX_RASTER_LENGTH &&
+    RASTER_PREFIXES.some((prefix) => image.href.startsWith(prefix))
+  );
+}
+
+/**
+ * Validates a scene the editor produced from validated scenes (its reducer
+ * only ever holds parsed scenes and pictures from the upload pipeline),
+ * without reading the picture data again: every field, limit and
+ * cross-check of `sceneSchema` applies, but the megabytes of each picture
+ * are only checked by length and prefix, since running the data URI
+ * pattern over 20 MB would block the main thread on every autosave. The
+ * pictures of the result are the very objects of the input. Untrusted
+ * scenes (import files, IndexedDB reads) go through `sceneSchema`.
+ * Never throws.
+ */
+export function parseEditedScene(
+  scene: Scene,
+): { success: true; data: Scene } | { success: false; error: string } {
+  if (!isPlainObject(scene) || !Array.isArray(scene.layers)) {
+    return { success: false, error: "Expected a scene" };
+  }
+  const pictures = new Map<number, SceneImage>();
+  const light = {
+    ...scene,
+    layers: scene.layers.map((layer, index) => {
+      if (layer.kind !== "image" && layer.kind !== "logo") return layer;
+      pictures.set(index, layer.image);
+      const stub: SceneImage =
+        layer.image.kind === "svg"
+          ? { ...layer.image, svg: STUB_SVG }
+          : { ...layer.image, href: STUB_RASTER_HREF };
+      return { ...layer, image: stub };
+    }),
+  };
+  const parsed = sceneSchema.safeParse(light);
+  if (!parsed.success) return { success: false, error: parsed.error.message };
+  let chars = 0;
+  for (const image of pictures.values()) {
+    if (!pictureDataFits(image)) return { success: false, error: "Invalid picture data" };
+    chars += image.kind === "svg" ? image.svg.length : image.href.length;
+  }
+  if (chars > SCENE_IMAGES_MAX_TOTAL_LENGTH) {
+    return { success: false, error: "Pictures too large together" };
+  }
+  const layers = parsed.data.layers.map((layer, index) => {
+    const image = pictures.get(index);
+    return image && (layer.kind === "image" || layer.kind === "logo") ? { ...layer, image } : layer;
+  });
+  return { success: true, data: { ...parsed.data, layers } };
 }

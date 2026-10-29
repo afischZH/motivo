@@ -135,6 +135,7 @@ import {
   randomSeed,
   shouldWriteDraft,
   socialEditorReducer,
+  updateOrCreate,
   type SocialEditorState,
 } from "./state";
 import { TemplatePicker, type TemplateLibrary, type TemplatePickerHandle } from "./template-picker";
@@ -198,12 +199,30 @@ function starterScene(headline: string, palette: readonly string[] | null): Scen
 }
 
 /** Text layers grown to fit their text with the current fonts (never cut, never shrunk). */
-function settleTexts(scene: Scene, measure: TextMeasure): Scene {
+function settleTexts(
+  scene: Scene,
+  measure: TextMeasure,
+  /** Results per layer object and canvas size: history steps share most layers. */
+  cache?: WeakMap<Layer, Map<string, Layer>>,
+): Scene {
   let next = scene;
+  const size = `${scene.format.width}x${scene.format.height}`;
   for (const layer of scene.layers) {
     if (layer.kind !== "text") continue;
-    const settled = settleTextLayer(layer, measure, scene.format);
-    if (settled !== layer) next = updateLayer(next, layer.id, () => settled);
+    let known = cache?.get(layer);
+    let settled = known?.get(size);
+    if (!settled) {
+      settled = settleTextLayer(layer, measure, scene.format);
+      if (cache) {
+        if (!known) {
+          known = new Map();
+          cache.set(layer, known);
+        }
+        known.set(size, settled);
+      }
+    }
+    const result = settled;
+    if (result !== layer) next = updateLayer(next, layer.id, () => result);
   }
   return next;
 }
@@ -402,7 +421,10 @@ export function SocialEditor(props: SocialEditorProps) {
       // Checked when the timer fires: a save in between makes the draft unnecessary.
       if (!shouldWriteDraft(stateRef.current)) return;
       void store
-        .putDraft({ designId: state.designId, name: state.name, scene, updatedAt: Date.now() })
+        .putDraft(
+          { designId: state.designId, name: state.name, scene, updatedAt: Date.now() },
+          { edited: true },
+        )
         .catch(() => undefined);
     }, DRAFT_DELAY_MS);
     return () => window.clearTimeout(timer);
@@ -671,10 +693,14 @@ export function SocialEditor(props: SocialEditorProps) {
       );
       setFontsVersion((v) => v + 1);
       const m = measureRef.current;
-      const current = stateRef.current.history.present;
       if (m) {
-        const settled = settleTexts(current, m);
-        if (settled !== current) dispatch({ type: "amend", scene: settled });
+        // Every step of the history with these fonts (now loaded): undo stays settled.
+        const key = sceneFontKey(stateRef.current.history.present);
+        const cache = new WeakMap<Layer, Map<string, Layer>>();
+        dispatch({
+          type: "settle",
+          fix: (s) => (sceneFontKey(s) === key ? settleTexts(s, m, cache) : s),
+        });
       }
     });
     return () => {
@@ -842,24 +868,35 @@ export function SocialEditor(props: SocialEditorProps) {
       try {
         const current = s.history.present;
         const thumbnail = await sceneThumbnail(kit, current, imagesRef.current);
+        // The reducer holds validated scenes only: `edited` skips re-reading picture data.
+        const createNew = () =>
+          store.create({
+            name: asCopy ? t("copyName", { name }) : name,
+            scene: current,
+            thumbnail,
+            edited: true,
+          });
+        const designId = s.designId;
         const record =
-          s.designId && !asCopy
-            ? await store.update(s.designId, { name, scene: current, thumbnail })
-            : await store.create({
-                name: asCopy ? t("copyName", { name }) : name,
-                scene: current,
-                thumbnail,
-              });
-        dispatch({ type: "saved", designId: record.id, name: record.name });
+          designId && !asCopy
+            ? await updateOrCreate(
+                () => store.update(designId, { name, scene: current, thumbnail, edited: true }),
+                createNew,
+              )
+            : await createNew();
+        dispatch({ type: "saved", designId: record.id, name: record.name, scene: current });
         // The draft follows the saved version, with its time: never newer than the design.
-        void store
-          .putDraft({
-            designId: record.id,
-            name: record.name,
-            scene: record.scene,
-            updatedAt: record.updatedAt,
-          })
-          .catch(() => undefined);
+        // In a task of its own: copying 20 MB of pictures into IndexedDB takes about
+        // 30 ms, which must not add up with the save's own work in one task.
+        const draft = {
+          designId: record.id,
+          name: record.name,
+          scene: record.scene,
+          updatedAt: record.updatedAt,
+        };
+        window.setTimeout(() => {
+          void store.putDraft(draft, { edited: true }).catch(() => undefined);
+        }, 0);
         window.history.replaceState(
           null,
           "",
@@ -1484,6 +1521,7 @@ export function SocialEditor(props: SocialEditorProps) {
                 data-format={`${scene.format.width}x${scene.format.height}`}
                 data-fit-problems={fitProblems}
                 data-fonts={fontsVersion}
+                data-pictures={pictures.images.size}
                 data-background={
                   pictures.rendering ? "rendering" : pictures.failed ? "failed" : "ready"
                 }

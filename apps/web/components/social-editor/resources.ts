@@ -39,10 +39,16 @@ export async function renderBackground(
   return createImageBitmap(blob);
 }
 
-const decoded = new WeakMap<SceneImage, Promise<HTMLImageElement>>();
+const decoded = new WeakMap<SceneImage, Promise<Picture>>();
 
-/** The picture of an image or logo layer, decoded once per picture. */
-export function decodePicture(image: SceneImage): Promise<HTMLImageElement> {
+/**
+ * The picture of an image or logo layer, decoded once per picture. Raster
+ * pictures become an `ImageBitmap` (decoded off the main thread): Konva
+ * reads `src` of an `<img>` on every redraw, and for a data URI of several
+ * megabytes that alone costs about 12 ms per picture and frame. SVG stays
+ * an `<img>` (sharp at any size; its markup is at most 1 MB).
+ */
+export function decodePicture(image: SceneImage): Promise<Picture> {
   let pending = decoded.get(image);
   if (!pending) {
     const img = new Image();
@@ -52,7 +58,14 @@ export function decodePicture(image: SceneImage): Promise<HTMLImageElement> {
       img.width = image.width;
       img.height = image.height;
     }
-    pending = img.decode().then(() => img);
+    pending = img.decode().then(async (): Promise<Picture> => {
+      if (image.kind === "svg" || typeof createImageBitmap === "undefined") return img;
+      try {
+        return await createImageBitmap(img);
+      } catch {
+        return img;
+      }
+    });
     decoded.set(image, pending);
     pending.catch(() => decoded.delete(image));
   }
