@@ -29,6 +29,7 @@ import {
   largeDataUrls,
   loadObjectUrl,
   objectUrlOf,
+  retainObjectUrl,
   withObjectUrls,
 } from "./large-data-urls";
 import {
@@ -62,6 +63,8 @@ function useLargeDataUrls(output: MotifOutput): SwapUrls {
   const [, setDecoded] = useState(0);
   useEffect(() => {
     let live = true;
+    // Held while shown: revoked once no motif or field shows the picture any more.
+    const releases = large.map(retainObjectUrl);
     for (const url of large) {
       if (objectUrlOf(url) !== undefined) continue;
       void loadObjectUrl(url).then(() => {
@@ -70,6 +73,7 @@ function useLargeDataUrls(output: MotifOutput): SwapUrls {
     }
     return () => {
       live = false;
+      for (const release of releases) release();
     };
   }, [large]);
   const missing = large.filter((url) => objectUrlOf(url) === undefined).length;

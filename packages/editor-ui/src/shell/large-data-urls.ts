@@ -7,6 +7,11 @@
  * (pictures over `PREVIEW_MAX_EDGE` as a smaller copy). The tool's output
  * and every export keep the data URI; only the on-screen style changes
  * (M4b-AP04).
+ *
+ * Every user holds its object URL with `retainObjectUrl`; once nobody holds
+ * it any more, it is revoked at the end of the task (so a re-render that
+ * releases and takes it again in one commit keeps it), and its memory is
+ * freed at once instead of with the 24th newer picture (M5b-AP01).
  */
 import { useEffect, useState } from "react";
 import { imageDimensions } from "../image-input/dimensions";
@@ -16,10 +21,11 @@ import type { CssDeclarations } from "./render";
 
 /** Data URIs from this length on are shown through `blob:` URLs. */
 export const LARGE_DATA_URL = 256 * 1024;
-/** Base64 characters decoded per task (a multiple of 4). */
-const CHUNK = 256 * 1024;
-/** Object URLs kept; the oldest is revoked beyond this. */
-const MAX_OBJECT_URLS = 24;
+/**
+ * Base64 characters decoded per task (a multiple of 4): a few milliseconds,
+ * so the steps stay short on a busy or slow machine as well.
+ */
+const CHUNK = 64 * 1024;
 
 const URL_OPEN = 'url("';
 const URL_CLOSE = '")';
@@ -63,6 +69,45 @@ export function largeDataUrls(declarations: CssDeclarations): string[] {
 /** Ready object URLs by data URI, oldest first. */
 const ready = new Map<string, string>();
 const loading = new Map<string, Promise<string | undefined>>();
+/** Users of each data URI's object URL (`retainObjectUrl`). */
+const holders = new Map<string, number>();
+
+/** Revokes the object URL of `dataUrl` at the end of this task, unless it is held again. */
+function revokeUnlessHeld(dataUrl: string): void {
+  setTimeout(() => {
+    if (holders.has(dataUrl)) return;
+    const url = ready.get(dataUrl);
+    if (url === undefined) return;
+    ready.delete(dataUrl);
+    URL.revokeObjectURL(url);
+  }, 0);
+}
+
+/**
+ * Holds the object URL of `dataUrl` (decoded now or later) until the
+ * returned release function is called. Released by every holder, it is
+ * revoked; a picture still decoding is revoked as soon as it is ready.
+ */
+export function retainObjectUrl(dataUrl: string): () => void {
+  holders.set(dataUrl, (holders.get(dataUrl) ?? 0) + 1);
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    const left = (holders.get(dataUrl) ?? 1) - 1;
+    if (left > 0) {
+      holders.set(dataUrl, left);
+      return;
+    }
+    holders.delete(dataUrl);
+    revokeUnlessHeld(dataUrl);
+  };
+}
+
+/** Object URLs currently alive (tests). */
+export function liveObjectUrlCount(): number {
+  return ready.size;
+}
 
 /** Whether this environment can show `blob:` URLs (not on the server or in plain Node). */
 export function canUseObjectUrls(): boolean {
@@ -101,7 +146,12 @@ async function decode(dataUrl: string): Promise<string | undefined> {
   const decoded = await decodeBase64(dataUrl);
   if (!decoded) return undefined;
   const shown = (await previewCopy(decoded.bytes)) ?? decoded;
-  return URL.createObjectURL(new Blob([shown.bytes], { type: shown.mime }));
+  // Copying megabytes into a Blob gets a task of its own, and so does the
+  // render that follows (the caller's `then`).
+  await nextTask();
+  const url = URL.createObjectURL(new Blob([shown.bytes], { type: shown.mime }));
+  await nextTask();
+  return url;
 }
 
 /**
@@ -149,11 +199,8 @@ export function loadObjectUrl(dataUrl: string): Promise<string | undefined> {
       loading.delete(dataUrl);
       if (url === undefined) return undefined;
       ready.set(dataUrl, url);
-      while (ready.size > MAX_OBJECT_URLS) {
-        const [oldest, oldUrl] = ready.entries().next().value as [string, string];
-        ready.delete(oldest);
-        URL.revokeObjectURL(oldUrl);
-      }
+      // Nobody holds it (any more): the caller may still take it in this task.
+      if (!holders.has(dataUrl)) revokeUnlessHeld(dataUrl);
       return url;
     });
   loading.set(dataUrl, job);
@@ -197,13 +244,17 @@ export function useDisplayUrl(dataUrl: string | null): string | undefined {
   const large = dataUrl !== null && dataUrl.length >= LARGE_DATA_URL && canUseObjectUrls();
   const [, setDecoded] = useState(0);
   useEffect(() => {
-    if (!large || objectUrlOf(dataUrl) !== undefined) return;
+    if (!large) return;
+    const release = retainObjectUrl(dataUrl);
     let live = true;
-    void loadObjectUrl(dataUrl).then(() => {
-      if (live) setDecoded((n) => n + 1);
-    });
+    if (objectUrlOf(dataUrl) === undefined) {
+      void loadObjectUrl(dataUrl).then(() => {
+        if (live) setDecoded((n) => n + 1);
+      });
+    }
     return () => {
       live = false;
+      release();
     };
   }, [large, dataUrl]);
   if (dataUrl === null) return undefined;
