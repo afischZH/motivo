@@ -29,9 +29,9 @@ export function RangeField(props: FieldProps<RangeControl, number>) {
   const t = useT();
   const { control: c } = props;
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex w-full min-w-0 items-center gap-2.5">
       <Slider.Root
-        className="relative flex h-5 flex-1 touch-none items-center select-none data-disabled:opacity-50"
+        className="group/slider relative flex h-6 min-w-0 flex-1 touch-none items-center select-none data-disabled:opacity-50"
         min={c.min}
         max={c.max}
         step={c.step}
@@ -43,12 +43,12 @@ export function RangeField(props: FieldProps<RangeControl, number>) {
         onDoubleClick={props.onReset}
         title={props.onReset ? t("Editor.controls.resetHint") : undefined}
       >
-        <Slider.Track className="relative h-1.5 grow overflow-hidden rounded-full bg-muted">
+        <Slider.Track className="relative h-1 grow overflow-hidden rounded-full bg-foreground/12">
           <Slider.Range className="absolute h-full bg-primary" />
         </Slider.Track>
         <Slider.Thumb
           className={cx(
-            "block size-4 rounded-full border-2 border-primary bg-background shadow-sm transition-[box-shadow] hover:ring-4 hover:ring-ring/20",
+            "block size-3.5 rounded-full border border-foreground/15 bg-background shadow-[0_1px_3px_oklch(0_0_0/0.25)] transition-[box-shadow,scale] duration-150 ease-out group-hover/slider:ring-4 group-hover/slider:ring-ring/15 active:scale-110",
             FOCUS_RING,
           )}
           aria-labelledby={props.ids.label}
@@ -65,14 +65,14 @@ export function RangeField(props: FieldProps<RangeControl, number>) {
           max={c.max}
           step={c.step}
           integer={c.integer}
-          className={cx("w-[4.5rem]", c.unit && "pr-6")}
+          className={cx("w-14", c.unit && "pr-5")}
           onChange={props.onChange}
           {...(props.onCommit ? { onCommit: props.onCommit } : {})}
           {...(props.ids.description ? { describedBy: props.ids.description } : {})}
         />
         {c.unit && (
           <span
-            className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-xs text-muted-foreground"
+            className="pointer-events-none absolute top-1/2 right-1.5 -translate-y-1/2 text-[11px] text-muted-foreground"
             aria-hidden="true"
           >
             {c.unit}
@@ -119,7 +119,7 @@ export function SegmentedField(props: FieldProps<ChoiceControl, OptionValue>) {
     <ToggleGroup.Root
       type="single"
       id={props.ids.input}
-      className="flex w-full rounded-md bg-muted p-0.5"
+      className="flex w-full rounded-md bg-foreground/[0.06] p-0.5"
       value={String(props.value)}
       onValueChange={(key) => {
         // Radix allows deselecting; an enum always has a value.
@@ -135,9 +135,9 @@ export function SegmentedField(props: FieldProps<ChoiceControl, OptionValue>) {
           value={String(option.value)}
           className={cx(
             // Long labels wrap onto a second line instead of being cut off.
-            "min-h-7 min-w-0 flex-1 rounded-[calc(var(--radius-md)-2px)] px-2 py-1 text-xs leading-tight font-medium text-balance break-words",
+            "min-h-7 min-w-0 flex-1 rounded-[calc(var(--radius-md)-2px)] px-2 py-1 text-xs leading-tight font-medium text-balance break-words transition-colors duration-150",
             "text-muted-foreground hover:text-foreground",
-            "data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm",
+            "data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-[0_1px_2px_oklch(0_0_0/0.12),0_0_0_1px_oklch(0_0_0/0.04)]",
             FOCUS_RING,
           )}
         >

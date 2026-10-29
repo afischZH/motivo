@@ -33,7 +33,7 @@ import { useHandoffReceiver, type HandoffOutcome } from "../handoff/use-handoff-
 import { SuggestionsSection } from "./suggestions";
 import type { ImageInputServices } from "../image-input/services";
 import { buildShareUrl, useShareHash } from "../share/use-share";
-import { cx } from "../controls/primitives";
+import { FOCUS_RING, cx } from "../controls/primitives";
 import { useT } from "../i18n";
 import { findMatchingPresetId, selectCanRedo, selectCanUndo } from "../store/editor-store";
 import { useEditorStore, useEditorStoreApi } from "../store/react";
@@ -325,7 +325,9 @@ export function EditorShell({
         <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
           <div className="flex min-w-0 flex-[1_1_16rem] items-center gap-3">
             {headerStart}
-            <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
+            <h1 className="min-w-0 truncate text-[15px] font-semibold tracking-tight">
+              {toolName}
+            </h1>
           </div>
           {local && save && (
             <DesignBar
@@ -364,10 +366,12 @@ export function EditorShell({
             className={BUTTON_CLASS}
             onClick={actions.newVariant}
             aria-keyshortcuts="Space"
+            aria-label={t("Editor.shell.newVariant")}
+            title={`${t("Editor.shell.newVariant")} (${t("Editor.shortcuts.keys.space")})`}
             data-testid="new-variant"
           >
             <ShuffleIcon />
-            {t("Editor.shell.newVariant")}
+            <span className="hidden xl:inline">{t("Editor.shell.newVariant")}</span>
           </button>
           <button
             type="button"
@@ -393,10 +397,11 @@ export function EditorShell({
             onClick={() => void share()}
             disabled={!hydrated}
             title={t("Editor.share.hint")}
+            aria-label={t("Editor.share.button")}
             data-testid="share-link"
           >
             <LinkIcon />
-            {t("Editor.share.button")}
+            <span className="hidden xl:inline">{t("Editor.share.button")}</span>
           </button>
           <ReuseMenu
             exportServices={exportServices}
@@ -458,7 +463,7 @@ export function EditorShell({
         <div
           className={cx(
             "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
-            "lg:grid-cols-[13rem_minmax(0,1fr)_20rem] lg:grid-rows-[minmax(0,1fr)_auto]",
+            "lg:grid-cols-[13rem_minmax(0,1fr)_21rem] lg:grid-rows-[minmax(0,1fr)_auto] xl:grid-cols-[14rem_minmax(0,1fr)_22rem]",
           )}
         >
           <PreviewSection
@@ -477,10 +482,10 @@ export function EditorShell({
           {/* WebKit counts a <select>'s clipped label text as page overflow on narrow screens. */}
           <section
             aria-labelledby={`${ids}-controls`}
-            className="overflow-x-clip border-t border-border p-4 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
+            className="overflow-x-clip border-t border-border bg-card px-4 pb-6 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
           >
-            <div className="mb-3 flex items-center justify-between gap-2">
-              <h2 id={`${ids}-controls`} className="text-sm font-semibold">
+            <div className="sticky top-0 z-10 -mx-4 mb-1 flex h-11 items-center justify-between gap-2 border-b border-border bg-card/95 px-4 backdrop-blur-sm">
+              <h2 id={`${ids}-controls`} className="text-[13px] font-semibold">
                 {t("Editor.shell.settings")}
               </h2>
               <ResetAllButton />
@@ -683,7 +688,7 @@ function PreviewSection(props: {
       <h2 id={headingId} className="sr-only">
         {t("Editor.shell.preview")}
       </h2>
-      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-border px-4 py-2">
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-border bg-card px-4 py-2">
         <SizePicker size={liveSize} onChange={setSize} toolPresets={tool.sizePresets} />
         {/*
           Wraps instead of overflowing: at 375 px the zoom buttons plus the
@@ -692,12 +697,20 @@ function PreviewSection(props: {
           pushed the page 1 px wide in Firefox.
         */}
         <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-          <div role="group" aria-label={t("Editor.shell.zoom")} className="flex flex-wrap gap-1">
+          <div
+            role="group"
+            aria-label={t("Editor.shell.zoom")}
+            className="flex flex-wrap gap-0.5 rounded-md bg-foreground/[0.06] p-0.5"
+          >
             {zoomButtons.map((b) => (
               <button
                 key={String(b.zoom)}
                 type="button"
-                className={cx(BUTTON_CLASS, "px-2 aria-pressed:bg-accent")}
+                className={cx(
+                  "inline-flex h-7 items-center rounded-[calc(var(--radius-md)-2px)] px-2 text-xs font-medium text-muted-foreground tabular-nums transition-colors hover:text-foreground",
+                  "aria-pressed:bg-background aria-pressed:text-foreground aria-pressed:shadow-[0_1px_2px_oklch(0_0_0/0.12)]",
+                  FOCUS_RING,
+                )}
                 aria-pressed={props.zoom === b.zoom}
                 aria-keyshortcuts={b.zoom === "fit" ? "0" : b.zoom === 1 ? "1" : undefined}
                 onClick={() => props.onZoomChange(b.zoom)}
@@ -768,9 +781,12 @@ function PresetBar() {
   return (
     <section
       aria-labelledby={headingId}
-      className="min-w-0 border-t border-border p-4 lg:col-start-1 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-r"
+      className="min-w-0 border-t border-border bg-card px-4 pb-4 lg:col-start-1 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-r"
     >
-      <h2 id={headingId} className="mb-3 text-sm font-semibold">
+      <h2
+        id={headingId}
+        className="-mx-4 mb-3 flex h-11 items-center border-b border-border px-4 text-[13px] font-semibold"
+      >
         {t("Editor.shell.presets")}
       </h2>
       <ul className="flex gap-2 overflow-x-auto pb-1 lg:grid lg:grid-cols-2 lg:overflow-visible lg:pb-0">
@@ -784,7 +800,7 @@ function PresetBar() {
               data-preset={preset.id}
               data-editor-tile=""
             >
-              <span className="flex size-18 items-center justify-center overflow-hidden rounded-md bg-canvas">
+              <span className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg bg-canvas shadow-[inset_0_0_0_1px_oklch(0_0_0/0.06)]">
                 <Thumbnail
                   tool={tool}
                   params={preset.params as typeof params}
@@ -793,7 +809,7 @@ function PresetBar() {
                   edge={PRESET_THUMB_EDGE}
                 />
               </span>
-              <span className="max-w-18 truncate">{t(preset.nameKey)}</span>
+              <span className="w-full truncate text-center">{t(preset.nameKey)}</span>
             </button>
           </li>
         ))}
@@ -817,7 +833,7 @@ function Filmstrip(props: { tool: AnyToolDefinition; onPrevious(): void; onNext(
   return (
     <section
       aria-labelledby={headingId}
-      className="flex min-w-0 items-center gap-2 border-t border-border px-4 py-2 lg:col-span-3 lg:row-start-2"
+      className="flex min-w-0 items-center gap-2 border-t border-border bg-card px-4 py-1.5 lg:col-span-3 lg:row-start-2"
     >
       <h2 id={headingId} className="sr-only">
         {t("Editor.shell.variants")}
@@ -845,7 +861,7 @@ function Filmstrip(props: { tool: AnyToolDefinition; onPrevious(): void; onNext(
               onClick={() => selectVariant(variant.id)}
               data-editor-tile=""
             >
-              <span className="flex size-14 items-center justify-center overflow-hidden rounded-md bg-canvas">
+              <span className="flex size-12 items-center justify-center overflow-hidden rounded-md bg-canvas">
                 <Thumbnail
                   tool={props.tool}
                   params={variant.params}

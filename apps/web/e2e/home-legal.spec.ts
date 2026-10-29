@@ -36,7 +36,7 @@ test.describe("home page", () => {
     await expect(frames.first()).toHaveJSProperty("complete", true);
     await expect(preview).toHaveAttribute("href", /\/en\/tools\//);
 
-    await main.getByRole("link", { name: "Explore all tools" }).click();
+    await main.getByRole("link", { name: /^Explore all \d+ tools$/ }).click();
     await expect(page).toHaveURL(/\/en\/tools$/);
   });
 
@@ -145,7 +145,7 @@ test.describe("accessibility of home and legal pages", () => {
 
   test("home page is keyboard navigable to the hero actions", async ({ page }) => {
     await page.goto("/en");
-    const primary = page.getByRole("main").getByRole("link", { name: "Explore all tools" });
+    const primary = page.getByRole("main").getByRole("link", { name: /^Explore all \d+ tools$/ });
     for (let i = 0; i < 15; i++) {
       await page.keyboard.press("Tab");
       if (await primary.evaluate((el) => el === document.activeElement)) break;

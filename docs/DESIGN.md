@@ -66,7 +66,9 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 - **Bausteine** (seit Neuauftritt 2026-10-29): shadcn/ui-Basiselemente in `apps/web/components/ui/` (Button, Badge, Card, Input, Separator, Sheet), Icons aus Lucide, Vorlagen aus freien shadcnspace-Blöcken (navbar-01, footer-01, faq-01, bento-grid-03), stark angepasst und ohne Framer Motion. Gemeinsamer Seitenkopf `components/layout/page-header.tsx` (Fläche mit Akzent-Schimmer und feinem Raster, Breadcrumbs, Badge, H1, Lead), Chips über `components/ui/chip.ts`. Lizenzen in `assets/LICENSES.md`.
 - **Abstände**: 4er-Raster.
 - **Bewegung**: 150 bis 250 ms, `ease-out`; `prefers-reduced-motion` respektieren (keine Animation der Vorschau ohne Interaktion).
-- **Vorschau-Hintergrund**: neutrales Grau, Schachbrett nur wenn Transparenz aktiv.
+- **Vorschau-Hintergrund**: Editor-Bühne `--stage` mit feinem Punktraster (`--stage-dot`), hell ein ruhiges Grau, dunkel fast Schwarz; Schachbrett nur wenn Transparenz aktiv. Thumbnails behalten `--canvas`.
+- **Werkbank-Look (seit 2026-10-29)**: Startseiten-Hero, Seitenköpfe (`PageHeader`) und der Abschluss der Startseite sind in beiden Themes dunkel (Klasse `dark` am Abschnitt, semantische Tokens lösen pro Abschnitt auf), mit Punktraster und einem Akzentschimmer. Keine Etiketten über Überschriften; Zählungen stehen nach dem Lead.
+- **Inspector im Editor**: kompakte Einstellungen als Zeile (Label links, Control rechts) für Slider, Zahl, Auswahl, Farbe und Schalter; breite Controls (Segmente, Paletten, Listen, Kacheln) bleiben gestapelt. Zahlenfelder lassen sich mit der Maus seitwärts ziehen (Shift = 10er-Schritte), ein Klick fokussiert zum Tippen.
 
 ## 6. Wichtige Screens
 

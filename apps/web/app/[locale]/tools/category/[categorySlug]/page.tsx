@@ -87,7 +87,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         lead={t(`Categories.${category}.description`)}
       />
 
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {categoryTools(category).map((tool) => (
           <li key={tool.id}>
             <ToolCard tool={tool} locale={locale} headingLevel={2} />

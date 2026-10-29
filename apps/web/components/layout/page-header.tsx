@@ -4,8 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
-  /** Breadcrumb trail above the eyebrow, if the page has one. */
+  /** Breadcrumb trail above the heading, if the page has one. */
   breadcrumbs?: ReactNode;
+  /** Short meta label (a count, a status), shown after the lead. */
   eyebrow?: ReactNode;
   title: ReactNode;
   lead?: ReactNode;
@@ -18,9 +19,10 @@ interface PageHeaderProps {
 }
 
 /**
- * Shared page intro: a soft panel with the brand wash and a faint grid (the
- * home hero in small), then breadcrumbs, an outline badge, the heading and
- * the lead. Plain markup, usable from server and client components.
+ * Shared page intro on the dark workbench of the home hero (it scopes the
+ * `.dark` tokens, so it reads the same in both themes): breadcrumbs, the
+ * heading, the lead, then a quiet count or label and any actions. The label
+ * follows the heading instead of sitting above it.
  */
 export function PageHeader({
   breadcrumbs,
@@ -35,27 +37,19 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        "relative isolate flex flex-col items-start gap-4 overflow-hidden rounded-3xl border border-border bg-card px-5 py-8 sm:px-8 sm:py-10",
+        "dark relative isolate flex flex-col items-start gap-4 overflow-hidden rounded-3xl border border-border bg-background px-5 py-8 text-foreground sm:px-8 sm:py-10",
         className,
       )}
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[radial-gradient(55%_90%_at_85%_0%,var(--highlight),transparent_70%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(50%_100%_at_90%_0%,oklch(0.55_0.2_275/0.35),transparent_70%)]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_left,black,transparent_70%)] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:32px_32px] opacity-40"
+        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_left,black,transparent_80%)] [background-image:radial-gradient(oklch(1_0_0/0.09)_1px,transparent_1px)] [background-size:20px_20px]"
       />
       {breadcrumbs}
-      {eyebrow && (
-        <Badge
-          variant="outline"
-          className="h-7 rounded-full bg-background px-3 text-sm font-normal"
-        >
-          {eyebrow}
-        </Badge>
-      )}
       <h1
         ref={headingRef}
         tabIndex={headingTabIndex}
@@ -64,6 +58,14 @@ export function PageHeader({
         {title}
       </h1>
       {lead && <p className="max-w-prose text-lg text-pretty text-muted-foreground">{lead}</p>}
+      {eyebrow && (
+        <Badge
+          variant="outline"
+          className="h-7 rounded-full bg-transparent px-3 text-sm font-normal text-muted-foreground"
+        >
+          {eyebrow}
+        </Badge>
+      )}
       {children}
     </header>
   );
