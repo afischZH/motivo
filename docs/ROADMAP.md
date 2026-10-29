@@ -128,7 +128,7 @@ Die restlichen fünf Ideen aus der Ideenliste, rein im Browser, ohne neue Librar
 Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-29). Andreas hat alle vier Empfehlungen freigegeben: Tiefe vor M6, deutsche Tool-Namen auf DE-Seiten, Video später, React-Export später (Paket C).
 
 - [ ] Restpunkte: Vorschaubilder für alle Designs (auch Shader und Bildeffekte), Shader-Worker startet nach Absturz neu, Blob-URLs sofort freigeben, Import-Grenze pro Bild-Param, wackelnder 4K-Screenshot-Test stabil
-- [ ] Einheitlichkeit als Test: Presets, Exporte, verwandte Tools, i18n und SEO-Texte für jedes Tool automatisch geprüft
+- [x] Einheitlichkeit als Test: Presets, Exporte, verwandte Tools, i18n und SEO-Texte für jedes Tool automatisch geprüft
 - [ ] SEO: deutsche Namen in Titel und H1 (Slugs bleiben), Landingpages mit Anwendungsbeispielen und Tipps (rund 800 Wörter), Bilder-Sitemap
 - [ ] "Weiterverwenden in": Ergebnis eines Tools als Bild an ein anderes Tool übergeben (lokal, nie im Teilen-Link)
 - [ ] Palette mit einem Klick aus den Farbtools ins Brand Kit
