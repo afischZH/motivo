@@ -286,7 +286,7 @@ export function EditorShell({
     <BrandKitContext.Provider value={brandView}>
       <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
         <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
-          <div className="flex min-w-0 flex-[1_1_16rem] items-baseline gap-3">
+          <div className="flex min-w-0 flex-[1_1_16rem] items-center gap-3">
             {headerStart}
             <h1 className="min-w-0 truncate text-lg font-semibold tracking-tight">{toolName}</h1>
           </div>
@@ -524,7 +524,7 @@ function DesignBar(props: {
           if (event.key === "Enter") void controller.commitName();
         }}
         disabled={!props.enabled}
-        className="h-8 w-full min-w-0 rounded-md border border-input bg-background px-2 text-sm placeholder:text-muted-foreground sm:w-44"
+        className="h-8 w-full min-w-0 rounded-md border border-input bg-background px-2 text-sm shadow-xs placeholder:text-muted-foreground sm:w-44"
         data-testid="design-name"
       />
       <button

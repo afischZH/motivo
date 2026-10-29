@@ -23,26 +23,30 @@ test.describe("main navigation", () => {
     await expect(nav.getByRole("link", { name: "Konverter" })).not.toHaveAttribute("aria-current");
   });
 
-  test("collapses into a menu on small screens", async ({ page }) => {
+  test("collapses into a side sheet on small screens", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/de");
-    const button = page.getByRole("button", { name: "Menü" });
+    const button = page.getByRole("button", { name: "Menü", exact: true });
+    const sheet = page.getByRole("dialog", { name: "Musterli" });
     await expect(button).toHaveAttribute("aria-expanded", "false");
     await expect(page.getByRole("link", { name: "Brand Kit" })).toBeHidden();
 
     await button.click();
-    await expect(button).toHaveAttribute("aria-expanded", "true");
+    await expect(sheet).toBeVisible();
+    await expect(sheet.getByRole("link", { name: "Brand Kit" })).toBeVisible();
     await expectNoAxeViolations(page);
     await page.keyboard.press("Escape");
+    await expect(sheet).toBeHidden();
     await expect(button).toHaveAttribute("aria-expanded", "false");
     await expect(button).toBeFocused();
 
     await button.click();
-    await page
+    await sheet
       .getByRole("navigation", { name: "Hauptnavigation" })
       .getByRole("link", { name: "Konverter" })
       .click();
     await expect(page).toHaveURL(/\/de\/konverter$/);
+    await expect(sheet).toBeHidden();
     await expect(button).toHaveAttribute("aria-expanded", "false");
   });
 });

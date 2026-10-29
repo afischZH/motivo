@@ -10,6 +10,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { CatalogueFilter, type CatalogueSection } from "@/components/catalogue/catalogue-filter";
+import { PageHeader } from "@/components/layout/page-header";
+import { chipClass } from "@/components/ui/chip";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ToolCard } from "@/components/seo/tool-card";
 import { Link } from "@/i18n/navigation";
@@ -47,8 +49,6 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
 
   // Tool texts are keyed by registry id, which the typed keys cannot know.
   const text = t as unknown as (key: string) => string;
-  const chip =
-    "inline-flex shrink-0 rounded-control border border-border px-3 py-1.5 text-sm whitespace-nowrap hover:bg-accent";
 
   const sections: CatalogueSection[] = [
     ...groups.map(({ category, tools }) => ({
@@ -116,7 +116,7 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
         node: (
           <Link
             href={routeHref({ page: "converter", converterId: id }, locale)}
-            className="inline-flex rounded-control border border-border px-3 py-1.5 text-sm hover:bg-accent"
+            className={chipClass}
           >
             {t(`Converters.items.${id}.name`)}
           </Link>
@@ -127,19 +127,22 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-8 sm:py-12">
-      <div className="flex flex-col gap-4">
-        <Breadcrumbs
-          locale={locale}
-          items={[
-            { name: t("Seo.home"), route: { page: "home" } },
-            { name: t("ToolsIndex.title"), route: { page: "tools" } },
-          ]}
-        />
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t("ToolsIndex.title")}
-        </h1>
-        <p className="max-w-prose text-muted-foreground">{t("ToolsIndex.lead")}</p>
-      </div>
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { name: t("Seo.home"), route: { page: "home" } },
+              { name: t("ToolsIndex.title"), route: { page: "tools" } },
+            ]}
+          />
+        }
+        eyebrow={t("Catalogue.toolCount", {
+          count: groups.reduce((sum, g) => sum + g.tools.length, 0),
+        })}
+        title={t("ToolsIndex.title")}
+        lead={t("ToolsIndex.lead")}
+      />
 
       <CatalogueFilter
         sections={sections}
@@ -158,13 +161,13 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
             <ul className="flex gap-2 sm:flex-wrap">
               {groups.map(({ category }) => (
                 <li key={category}>
-                  <a href={`#${category}`} className={chip}>
+                  <a href={`#${category}`} className={chipClass}>
                     {t(`Categories.${category}.name`)}
                   </a>
                 </li>
               ))}
               <li>
-                <a href="#converters" className={chip}>
+                <a href="#converters" className={chipClass}>
                   {t("Categories.converters.name")}
                 </a>
               </li>

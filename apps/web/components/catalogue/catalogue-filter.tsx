@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchIcon as SearchLucide } from "lucide-react";
 import { type ReactNode, useDeferredValue, useEffect, useId, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -101,7 +102,7 @@ export function CatalogueFilter({
 
   return (
     <>
-      <div className="sticky top-0 z-20 -mx-4 flex flex-col gap-3 border-b border-border bg-background/95 px-4 py-3 backdrop-blur-sm supports-[backdrop-filter]:bg-background/85">
+      <div className="sticky top-14 z-20 -mx-4 flex flex-col gap-3 border-b border-border bg-background/95 px-4 py-3 backdrop-blur-sm supports-[backdrop-filter]:bg-background/85">
         <div className="relative">
           <label htmlFor={inputId} className="sr-only">
             {labels.search}
@@ -125,11 +126,11 @@ export function CatalogueFilter({
             spellCheck={false}
             enterKeyHint="search"
             data-testid="catalogue-search"
-            className="h-11 w-full rounded-md border border-input bg-background pr-12 pl-10 text-base shadow-xs transition-[border-color,box-shadow] duration-150 ease-out outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:text-sm [&::-webkit-search-cancel-button]:hidden"
+            className="h-11 w-full rounded-full border border-input bg-background pr-12 pl-11 text-base shadow-xs transition-[border-color,box-shadow] duration-150 ease-out outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:text-sm [&::-webkit-search-cancel-button]:hidden"
           />
           <kbd
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-3 hidden -translate-y-1/2 rounded border border-border bg-muted px-1.5 font-sans text-xs text-muted-foreground sm:block"
+            className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 rounded border border-border bg-muted px-1.5 font-sans text-xs text-muted-foreground sm:block"
           >
             /
           </kbd>
@@ -152,7 +153,7 @@ export function CatalogueFilter({
       </p>
 
       {filtering && count === 0 && (
-        <div className="flex flex-col items-start gap-3 rounded-card border border-dashed border-border px-6 py-10">
+        <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-border px-6 py-14 text-center">
           <p className="text-lg font-semibold">
             {labels.noResults.replace("{query}", deferred.trim())}
           </p>
@@ -176,7 +177,7 @@ export function CatalogueFilter({
           id={section.id}
           aria-labelledby={`${section.id}-heading`}
           hidden={hits.size === 0}
-          className="flex scroll-mt-36 flex-col gap-4"
+          className="flex scroll-mt-52 flex-col gap-4"
         >
           {section.header}
           <ul className={section.listClassName}>
@@ -194,19 +195,9 @@ export function CatalogueFilter({
 
 function SearchIcon() {
   return (
-    <svg
-      className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    <SearchLucide
       aria-hidden="true"
-      focusable="false"
-    >
-      <circle cx="11" cy="11" r="7" />
-      <path d="m20 20-3.5-3.5" />
-    </svg>
+      className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted-foreground"
+    />
   );
 }

@@ -13,6 +13,7 @@ import {
   type PatternFilterOption,
 } from "@/components/css-patterns/pattern-browser";
 import type { PatternCardData } from "@/components/css-patterns/pattern-card";
+import { PageHeader } from "@/components/layout/page-header";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { buttonVariants } from "@/components/ui/button";
 import type { EnabledLocale } from "@/i18n/locales";
@@ -93,25 +94,27 @@ export default async function PatternLibraryPage({ params }: LibraryPageProps) {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-8 sm:py-12">
-      <div className="flex flex-col gap-4">
-        <Breadcrumbs
-          locale={locale}
-          items={[
-            { name: t("Seo.home"), route: { page: "home" } },
-            { name: t("PatternLibrary.title"), route: { page: "patterns" } },
-          ]}
-        />
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t("PatternLibrary.title")}
-        </h1>
-        <p className="max-w-prose text-muted-foreground">{t("PatternLibrary.lead")}</p>
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { name: t("Seo.home"), route: { page: "home" } },
+              { name: t("PatternLibrary.title"), route: { page: "patterns" } },
+            ]}
+          />
+        }
+        eyebrow={t("Layout.collectionEyebrow")}
+        title={t("PatternLibrary.title")}
+        lead={t("PatternLibrary.lead")}
+      >
         <a
           href={routePath({ page: "tool", toolId: PATTERN_TOOL_ID }, locale)}
-          className={buttonVariants({ variant: "outline", className: "self-start" })}
+          className={buttonVariants({ variant: "outline", className: "rounded-full" })}
         >
           {t("PatternLibrary.openGenerator")}
         </a>
-      </div>
+      </PageHeader>
 
       <PatternBrowser
         patterns={patterns}

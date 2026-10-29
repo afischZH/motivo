@@ -5,26 +5,46 @@
  * call to action. Built from the registry and `lib/home.ts`; the preview is
  * the only client component.
  */
-import { registry, type AnyToolDefinition, type ToolCategory } from "@musterli/tool-registry";
+import {
+  builtInTools,
+  registry,
+  type AnyToolDefinition,
+  type ToolCategory,
+} from "@musterli/tool-registry";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  FileDownIcon,
+  HeartIcon,
+  LaptopIcon,
+  PlusIcon,
+  SparklesIcon,
+} from "lucide-react";
 import type React from "react";
 
 import { HeroPreview } from "@/components/home/hero-preview";
 import { KofiWidget } from "@/components/home/kofi-widget";
-import { CheckIcon, DeviceIcon, HeartIcon, SparkIcon } from "@/components/home/icons";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
 import { ToolCard } from "@/components/seo/tool-card";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
 import { routeHref, routePath } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { categoryTools, populatedCategories } from "@/lib/catalogue";
-import { FEATURED_TOOL_IDS, HERO_START_TOOL_ID, HERO_TOOL_ID, HOME_FAQ_COUNT } from "@/lib/home";
+import {
+  FEATURED_TOOL_IDS,
+  HERO_START_TOOL_ID,
+  HERO_TOOL_ID,
+  HOME_FAQ_COUNT,
+  VALUES_TOOL_ID,
+} from "@/lib/home";
 import { pageAlternates } from "@/lib/seo/alternates";
 import { hasStaticMotif, motifPath, staticDesigns } from "@/lib/seo/motifs";
 import { faqPage } from "@/lib/seo/json-ld";
@@ -97,20 +117,31 @@ const LEAD = "max-w-prose text-lg text-pretty text-muted-foreground";
 const TEXT_LINK =
   "rounded-control text-sm font-medium text-link underline-offset-4 hover:underline";
 
+/** Section intro after the shadcnspace blocks: outline badge, heading, lead. */
 function SectionHeading({
   id,
+  eyebrow,
   title,
   lead,
   action,
+  center = false,
 }: {
   id: string;
+  eyebrow?: string;
   title: string;
   lead?: string;
   action?: React.ReactNode;
+  center?: boolean;
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4">
-      <div className="flex flex-col gap-3">
+    <div
+      className={cn(
+        "flex flex-wrap items-end justify-between gap-4",
+        center && "flex-col items-center text-center",
+      )}
+    >
+      <div className={cn("flex flex-col items-start gap-3", center && "items-center")}>
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h2 id={id} className={H2}>
           {title}
         </h2>
@@ -118,6 +149,14 @@ function SectionHeading({
       </div>
       {action}
     </div>
+  );
+}
+
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <Badge variant="outline" className="h-7 rounded-full bg-background px-3 text-sm font-normal">
+      {children}
+    </Badge>
   );
 }
 
@@ -147,6 +186,19 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
         )}
       >
         <div className="flex flex-col items-start gap-7">
+          <Link
+            href="/tools"
+            className="group inline-flex items-center gap-2 rounded-full border border-border bg-background/80 py-1 ps-1 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:text-foreground"
+          >
+            <span className="flex size-6 items-center justify-center rounded-full bg-highlight text-link">
+              <SparklesIcon aria-hidden="true" className="size-3.5" />
+            </span>
+            {text("Home.hero.badge", { count: builtInTools.length })}
+            <ArrowRightIcon
+              aria-hidden="true"
+              className="size-3.5 transition-transform group-hover:translate-x-0.5"
+            />
+          </Link>
           <h1
             id="hero-heading"
             className="text-5xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-6xl lg:text-7xl"
@@ -159,7 +211,10 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <Link
               href="/tools"
-              className={buttonVariants({ size: "lg", className: "h-11 px-7 text-base" })}
+              className={buttonVariants({
+                size: "lg",
+                className: "h-11 rounded-full px-7 text-base",
+              })}
             >
               {text("Home.hero.ctaPrimary")}
             </Link>
@@ -169,7 +224,7 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
               className={buttonVariants({
                 size: "lg",
                 variant: "outline",
-                className: "h-11 px-7 text-base",
+                className: "h-11 rounded-full px-7 text-base",
               })}
             >
               {text("Home.hero.ctaSecondary", { tool: startName })}
@@ -178,7 +233,7 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
           <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
             {points.map((point) => (
               <li key={point} className="flex items-center gap-1.5">
-                <CheckIcon className="size-4 text-link" />
+                <CheckIcon aria-hidden="true" className="size-4 text-link" />
                 {text(`Home.hero.points.${point}`)}
               </li>
             ))}
@@ -206,36 +261,75 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
   );
 }
 
+/**
+ * "Why Musterli" after the shadcnspace block bento-grid-03: four values in
+ * ruled columns around a tool motif.
+ */
 function Values({ text }: { text: Text }) {
-  const items = [
-    { key: "free", Icon: SparkIcon },
-    { key: "local", Icon: DeviceIcon },
+  const left = [
+    { key: "free", Icon: SparklesIcon },
+    { key: "local", Icon: LaptopIcon },
+  ] as const;
+  const right = [
+    { key: "formats", Icon: FileDownIcon },
     { key: "donations", Icon: HeartIcon },
   ] as const;
+  const showcase = registry.get(VALUES_TOOL_ID);
+
+  const item = ({ key, Icon }: (typeof left)[number] | (typeof right)[number]) => (
+    <li key={key} className="flex flex-1 flex-col justify-between gap-8 p-6 sm:p-8">
+      <span className="flex size-10 items-center justify-center rounded-xl border border-border bg-background text-link shadow-xs">
+        <Icon aria-hidden="true" className="size-5" />
+      </span>
+      <div className="flex flex-col gap-1.5">
+        <h3 className="text-lg font-semibold">{text(`Home.values.${key}.title`)}</h3>
+        <p className="text-pretty text-muted-foreground">{text(`Home.values.${key}.text`)}</p>
+        {key === "donations" && (
+          <Link href="/support" className={cn(TEXT_LINK, "mt-1 self-start")}>
+            {text("Footer.support")}
+          </Link>
+        )}
+      </div>
+    </li>
+  );
+
   return (
     <section aria-labelledby="values-heading" className={cn(SECTION, "pt-16 sm:pt-20")}>
-      <SectionHeading id="values-heading" title={text("Home.values.heading")} />
-      {/* Open columns on a shared rule instead of boxed cards: the motifs below carry the weight. */}
-      <ul className="grid gap-x-10 md:grid-cols-3">
-        {items.map(({ key, Icon }) => (
-          <li key={key} className="flex flex-col gap-3 border-t border-border py-6 md:pb-0">
-            <div className="flex items-center gap-2.5">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-highlight text-link">
-                <Icon className="size-4" />
+      <SectionHeading
+        id="values-heading"
+        eyebrow={text("Home.values.eyebrow")}
+        title={text("Home.values.heading")}
+        lead={text("Home.values.lead")}
+        center
+      />
+      <div className="grid overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-3">
+        <ul className="flex flex-col divide-y divide-border border-b border-border lg:border-r lg:border-b-0">
+          {left.map(item)}
+        </ul>
+        <div
+          aria-hidden="true"
+          className="relative min-h-56 overflow-hidden border-b border-border bg-canvas lg:border-r lg:border-b-0"
+        >
+          {showcase && (
+            <MotifImage
+              tool={showcase}
+              alt=""
+              className="absolute inset-0 size-full object-cover"
+            />
+          )}
+          <div className="absolute inset-x-4 bottom-4 flex flex-wrap justify-center gap-2">
+            {["SVG", "PNG", "CSS", "WebP", "GIF"].map((format) => (
+              <span
+                key={format}
+                className="rounded-full border border-white/40 bg-white/70 px-3 py-1 font-mono text-xs font-medium text-neutral-900 backdrop-blur"
+              >
+                {format}
               </span>
-              <h3 className="text-lg font-semibold">{text(`Home.values.${key}.title`)}</h3>
-            </div>
-            <p className="max-w-[44ch] text-pretty text-muted-foreground">
-              {text(`Home.values.${key}.text`)}
-            </p>
-            {key === "donations" && (
-              <Link href="/support" className={cn(TEXT_LINK, "mt-auto self-start")}>
-                {text("Footer.support")}
-              </Link>
-            )}
-          </li>
-        ))}
-      </ul>
+            ))}
+          </div>
+        </div>
+        <ul className="flex flex-col divide-y divide-border">{right.map(item)}</ul>
+      </div>
     </section>
   );
 }
@@ -260,6 +354,7 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
     <section aria-labelledby="categories-heading" className={cn(SECTION, "pt-0 sm:pt-0")}>
       <SectionHeading
         id="categories-heading"
+        eyebrow={text("Home.categories.eyebrow")}
         title={text("Home.categories.heading")}
         lead={text("Home.categories.lead")}
         action={
@@ -268,7 +363,7 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
           </Link>
         }
       />
-      {/* Eight categories plus the converters: 3 × 3 from sm up, the converters full width below. */}
+      {/* The categories in a 3-column grid from sm up, the converters as a full-width row below. */}
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
         {populatedCategories().map((category) => {
           const cover = categoryCover(category, used);
@@ -294,20 +389,24 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
             </li>
           );
         })}
-        <li className="col-span-2 sm:col-span-1">
-          <Link href="/convert" className={TILE}>
+        <li className="col-span-2 sm:col-span-3">
+          <Link href="/convert" className={cn(TILE, "sm:flex-row")}>
             <span
               aria-hidden="true"
-              className="flex aspect-[3/1] items-center sm:aspect-[16/10] justify-center gap-2 border-b border-border bg-highlight font-mono text-sm font-medium text-link sm:text-base"
+              className="flex aspect-[3/1] items-center justify-center gap-2 border-b border-border bg-highlight font-mono text-sm font-medium text-link sm:aspect-auto sm:w-1/3 sm:border-r sm:border-b-0 sm:py-8 sm:text-base"
             >
               SVG · CSS · PNG
             </span>
-            <span className="flex flex-1 flex-col gap-0.5 p-3 sm:p-4">
+            <span className="flex flex-1 flex-col justify-center gap-0.5 p-3 sm:p-6">
               <span className="font-semibold">{text("Categories.converters.name")}</span>
               <span className="text-sm text-muted-foreground">
                 {text("Home.categories.converters")}
               </span>
             </span>
+            <ArrowRightIcon
+              aria-hidden="true"
+              className="hidden size-5 self-center text-muted-foreground transition-transform group-hover:translate-x-0.5 sm:me-6 sm:block"
+            />
           </Link>
         </li>
       </ul>
@@ -321,6 +420,7 @@ function Featured({ locale, text }: { locale: EnabledLocale; text: Text }) {
       <div className={SECTION}>
         <SectionHeading
           id="featured-heading"
+          eyebrow={text("Home.featured.eyebrow")}
           title={text("Home.featured.heading")}
           lead={text("Home.featured.lead")}
         />
@@ -340,26 +440,25 @@ function HowItWorks({ text }: { text: Text }) {
   const steps = ["step1", "step2", "step3"] as const;
   return (
     <section aria-labelledby="how-heading" className={SECTION}>
-      <SectionHeading id="how-heading" title={text("Home.how.heading")} />
-      <ol className="grid gap-8 md:grid-cols-3 md:gap-6">
+      <SectionHeading
+        id="how-heading"
+        eyebrow={text("Home.how.eyebrow")}
+        title={text("Home.how.heading")}
+      />
+      <ol className="grid gap-4 md:grid-cols-3 md:gap-5">
         {steps.map((step, i) => (
-          <li key={step} className="relative flex flex-col gap-3">
-            <span className="flex items-center gap-4">
-              <span
-                aria-hidden="true"
-                className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground tabular-nums"
-              >
-                {i + 1}
-              </span>
-              {/* Connector to the next step, desktop only. */}
-              {i < steps.length - 1 && (
-                <span aria-hidden="true" className="hidden h-px flex-1 bg-border md:block" />
-              )}
+          <li
+            key={step}
+            className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6 sm:p-7"
+          >
+            <span
+              aria-hidden="true"
+              className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground tabular-nums"
+            >
+              {i + 1}
             </span>
-            <h3 className="text-lg font-semibold">{text(`Home.how.${step}.title`)}</h3>
-            <p className="max-w-[36ch] text-pretty text-muted-foreground">
-              {text(`Home.how.${step}.text`)}
-            </p>
+            <h3 className="mt-2 text-lg font-semibold">{text(`Home.how.${step}.title`)}</h3>
+            <p className="text-pretty text-muted-foreground">{text(`Home.how.${step}.text`)}</p>
           </li>
         ))}
       </ol>
@@ -367,18 +466,39 @@ function HowItWorks({ text }: { text: Text }) {
   );
 }
 
+/**
+ * FAQ after the shadcnspace block faq-01, as native disclosure widgets: the
+ * answers stay in the HTML (search engines, FAQ JSON-LD) and need no script.
+ */
 function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text: Text }) {
   return (
-    <section aria-labelledby="faq-heading" className={cn(SECTION, "pt-0 sm:pt-0")}>
-      <SectionHeading id="faq-heading" title={text("Home.faq.heading")} />
-      <dl className="grid gap-x-12 md:grid-cols-2">
-        {faq.map((entry) => (
-          <div key={entry.question} className="flex flex-col gap-2 border-t border-border py-6">
-            <dt className="font-semibold">{entry.question}</dt>
-            <dd className="max-w-prose text-pretty text-muted-foreground">{entry.answer}</dd>
-          </div>
+    <section aria-labelledby="faq-heading" className={cn(SECTION, "max-w-3xl pt-0 sm:pt-0")}>
+      <SectionHeading
+        id="faq-heading"
+        eyebrow={text("Home.faq.eyebrow")}
+        title={text("Home.faq.heading")}
+        center
+      />
+      <div className="flex flex-col gap-3">
+        {faq.map((entry, i) => (
+          <details
+            key={entry.question}
+            open={i === 0}
+            className="group rounded-2xl border border-border bg-card transition-colors open:bg-muted/60"
+          >
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl p-5 text-lg font-medium sm:p-6 [&::-webkit-details-marker]:hidden">
+              {entry.question}
+              <PlusIcon
+                aria-hidden="true"
+                className="size-5 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-45"
+              />
+            </summary>
+            <p className="-mt-1 max-w-prose px-5 pb-5 text-pretty text-muted-foreground sm:px-6 sm:pb-6">
+              {entry.answer}
+            </p>
+          </details>
         ))}
-      </dl>
+      </div>
     </section>
   );
 }
@@ -386,12 +506,17 @@ function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text:
 function ClosingCta({ locale, text }: { locale: EnabledLocale; text: Text }) {
   return (
     <section aria-labelledby="cta-heading" className={cn(WRAP, "pb-24")}>
-      <div className="relative isolate flex flex-col items-start gap-8 overflow-hidden rounded-3xl bg-primary px-8 py-12 text-primary-foreground sm:px-12 sm:py-16 lg:flex-row lg:items-center lg:justify-between">
+      <div className="relative isolate flex flex-col items-center gap-8 overflow-hidden rounded-3xl bg-primary px-8 py-14 text-center text-primary-foreground sm:px-12 sm:py-20">
         <div
           aria-hidden="true"
           className="absolute inset-0 -z-10 bg-[radial-gradient(50%_80%_at_90%_10%,oklch(1_0_0/0.18),transparent_70%)]"
         />
-        <div className="flex flex-col gap-3">
+        {/* Faint dot grid, the smallest pattern there is. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 [mask-image:radial-gradient(70%_70%_at_50%_50%,black,transparent)] bg-[radial-gradient(currentColor_1px,transparent_1px)] bg-[size:20px_20px] opacity-15"
+        />
+        <div className="flex max-w-2xl flex-col items-center gap-3">
           <h2
             id="cta-heading"
             className="text-3xl font-semibold tracking-[-0.025em] text-balance sm:text-4xl"
@@ -402,9 +527,10 @@ function ClosingCta({ locale, text }: { locale: EnabledLocale; text: Text }) {
         </div>
         <a
           href={routePath({ page: "tool", toolId: HERO_START_TOOL_ID }, locale)}
-          className="inline-flex h-11 shrink-0 items-center justify-center rounded-md bg-background px-7 text-base font-medium text-foreground shadow-sm transition-colors hover:bg-background/90 focus-visible:outline-primary-foreground"
+          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-background px-7 text-base font-medium text-foreground shadow-sm transition-colors hover:bg-background/90 focus-visible:outline-primary-foreground"
         >
           {text("Home.cta.button")}
+          <ArrowRightIcon aria-hidden="true" className="size-4" />
         </a>
       </div>
     </section>

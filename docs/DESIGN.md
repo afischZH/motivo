@@ -62,7 +62,8 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 
 - **Farben**: neutrale Graustufen (z. B. 12-stufige Skala), **eine** Akzentfarbe für primäre Aktionen und Fokus. Alle Tokens als CSS-Variablen mit Light/Dark-Varianten; System-Theme als Default.
 - **Typografie**: eine gut lesbare Sans (z. B. Inter oder Geist, Lizenz prüfen), Grössen 12/14/16/20/24/32/48, Zahlen in Slidern `tabular-nums`.
-- **Radius**: 6 (Controls), 10 (Karten), 16 (Sheets).
+- **Radius**: 6 (Controls im Editor), 14 (Karten, Token `--radius-card`), 16 (Karten mit Vorschau, Sheets), 24 (Seitenköpfe, CTA-Flächen); Navigation, Chips und Marketing-Knöpfe als Pille (`rounded-full`).
+- **Bausteine** (seit Neuauftritt 2026-10-29): shadcn/ui-Basiselemente in `apps/web/components/ui/` (Button, Badge, Card, Input, Separator, Sheet), Icons aus Lucide, Vorlagen aus freien shadcnspace-Blöcken (navbar-01, footer-01, faq-01, bento-grid-03), stark angepasst und ohne Framer Motion. Gemeinsamer Seitenkopf `components/layout/page-header.tsx` (Fläche mit Akzent-Schimmer und feinem Raster, Breadcrumbs, Badge, H1, Lead), Chips über `components/ui/chip.ts`. Lizenzen in `assets/LICENSES.md`.
 - **Abstände**: 4er-Raster.
 - **Bewegung**: 150 bis 250 ms, `ease-out`; `prefers-reduced-motion` respektieren (keine Animation der Vorschau ohne Interaktion).
 - **Vorschau-Hintergrund**: neutrales Grau, Schachbrett nur wenn Transparenz aktiv.
@@ -76,7 +77,8 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 5. **Brand Kit**: Paletten, Logos, eigene Shapes/Packs, Fonts; "Aus Website importieren" (P2).
 6. **Export-Dialog**: Formatwahl als Karten (Bild · Vektor · Code · Animation), Grösse als 1×/2×/4× des Designs oder "Eigene Grösse" plus Auswahlfeld "Gängige Grösse" (derselbe gruppierte Katalog wie der Grössen-Wähler, Tool-Grössen zuoberst; die Wahl setzt "Eigene Grösse" mit Breite und Höhe der Vorlage, bei anderem Seitenverhältnis wird das Motiv in dieser Grösse neu berechnet), Qualität, Transparenz, Dateiname, Vorschau der Dateigrösse; Code-Formate mit Copy-Button und Syntax-Highlighting.
 7. **Unterstützen** (`/de/unterstuetzen`, `/en/support`, seit M3-AP14): kurzer, ehrlicher Text (gratis, ohne Konto, ohne Tracking, Exporte frei nutzbar), wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung), hervorgehobener Block mit Knopf "Jetzt spenden" zum externen Anbieter. Ohne konfigurierten Link (`NEXT_PUBLIC_DONATION_URL`) neutraler Hinweis "Spenden-Link folgt bald", kein toter Knopf. Dezente Hinweise nur im Footer ("Musterli unterstützen") und als eine leise Zeile im Export-Dialog nach erfolgreichem Export (öffnet in neuem Tab, damit das Design im Editor bleibt). Nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
-8. **Kopfzeile** (alle Seiten): Der Menüpunkt des aktuellen Bereichs trägt `aria-current="page"` und eine ruhige Fläche. Unter 768 px liegt die Navigation hinter einem Menüknopf (Disclosure, `Esc` schliesst und gibt den Fokus zurück, schliesst auch bei Navigation und Klick daneben).
+8. **Kopfzeile** (alle Seiten): klebt oben, halbtransparent mit Unschärfe. Ab 1024 px eine Pillen-Leiste (aktueller Bereich mit `aria-current="page"` und heller Pille), rechts "Unterstützen" und Theme-Knopf. Darunter ein Seitenmenü (Sheet, Radix Dialog) mit Icons und Link "Musterli unterstützen"; `Esc` schliesst und gibt den Fokus zurück, schliesst auch bei Navigation. Die Desktop-Links bleiben in jeder Breite im HTML (crawlbar).
+9. **Fusszeile**: Logo, Claim und Spendenlink, drei Spalten (Musterli, Sammlungen, Rechtliches), darunter Copyright und Sprachwahl.
 
 ## 7. Barrierefreiheit (WCAG 2.2 AA)
 

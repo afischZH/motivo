@@ -136,7 +136,10 @@ export default async function PalettePage({ params }: PalettePageProps) {
             <p className="max-w-prose text-lg text-muted-foreground">{t(keys.description)}</p>
             {home && (
               // Full page load: the editor reads the design from the #d= hash on start.
-              <a href={variantEditorHref(home, locale)} className={buttonVariants({ size: "lg" })}>
+              <a
+                href={variantEditorHref(home, locale)}
+                className={buttonVariants({ size: "lg", className: "rounded-full px-6" })}
+              >
                 {t("PalettePage.openEditor")}
               </a>
             )}

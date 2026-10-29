@@ -26,7 +26,7 @@ export async function CollectionTeaser({
   return (
     <section
       aria-labelledby={headingId}
-      className="flex flex-col gap-5 rounded-card border border-border bg-card p-5 text-card-foreground sm:flex-row sm:items-center sm:p-6"
+      className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-5 text-card-foreground sm:flex-row sm:items-center sm:p-6"
     >
       {previews.length > 0 && (
         <ul aria-hidden="true" className="grid shrink-0 grid-cols-4 gap-2 sm:w-64">

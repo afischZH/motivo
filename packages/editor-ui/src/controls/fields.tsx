@@ -48,7 +48,7 @@ export function RangeField(props: FieldProps<RangeControl, number>) {
         </Slider.Track>
         <Slider.Thumb
           className={cx(
-            "block size-4 rounded-full border-2 border-primary bg-background shadow-sm",
+            "block size-4 rounded-full border-2 border-primary bg-background shadow-sm transition-[box-shadow] hover:ring-4 hover:ring-ring/20",
             FOCUS_RING,
           )}
           aria-labelledby={props.ids.label}

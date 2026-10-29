@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getFormatter, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { PageHeader } from "@/components/layout/page-header";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
@@ -36,17 +37,19 @@ export async function LegalPage({ page, locale }: { page: LegalPageId; locale: E
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-8 sm:py-12">
-      <div className="flex flex-col gap-4">
-        <Breadcrumbs
-          locale={locale}
-          items={[
-            { name: t("Seo.home"), route: { page: "home" } },
-            { name: title, route: { page } },
-          ]}
-        />
-        <h1 className="text-3xl font-semibold tracking-tight break-words hyphens-auto sm:text-4xl">
-          {title}
-        </h1>
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumbs
+            locale={locale}
+            items={[
+              { name: t("Seo.home"), route: { page: "home" } },
+              { name: title, route: { page } },
+            ]}
+          />
+        }
+        title={title}
+        lead={intro ?? undefined}
+      >
         <p className="text-sm text-muted-foreground">
           {t("Legal.lastUpdated", {
             date: format.dateTime(new Date(`${lastUpdated}T12:00:00Z`), {
@@ -60,7 +63,7 @@ export async function LegalPage({ page, locale }: { page: LegalPageId; locale: E
             role="note"
             aria-labelledby="draft-title"
             data-testid="legal-draft-banner"
-            className="flex flex-col gap-1 rounded-card border-2 border-primary bg-highlight p-4"
+            className="flex w-full flex-col gap-1 rounded-2xl border border-primary/40 bg-highlight p-4"
           >
             <p id="draft-title" className="font-semibold">
               {t("Legal.draftBanner.title")}
@@ -68,8 +71,7 @@ export async function LegalPage({ page, locale }: { page: LegalPageId; locale: E
             <p className="text-sm">{t("Legal.draftBanner.text")}</p>
           </div>
         )}
-        {intro && <p className="text-lg text-muted-foreground">{intro}</p>}
-      </div>
+      </PageHeader>
 
       {OPERATOR_AFTER[page] === null && <OperatorBlock locale={locale} />}
 

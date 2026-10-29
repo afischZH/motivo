@@ -15,7 +15,10 @@
     },
     "mainNav": "Main",
     "toolsNav": "Tools",
-    "menu": "Menu"
+    "menu": "Menu",
+    "closeMenu": "Close",
+    "supportCta": "Support",
+    "collectionEyebrow": "Collection"
   },
   "Theme": {
     "toggle": "Dark theme",
@@ -38,7 +41,8 @@
         "free": "Free, no limits",
         "local": "Runs in your browser",
         "noAccount": "No account needed"
-      }
+      },
+      "badge": "{count} generators, all free"
     },
     "preview": {
       "default": "Default",
@@ -57,17 +61,25 @@
       "donations": {
         "title": "Funded by donations",
         "text": "Musterli is funded by voluntary donations. There is no paywall, no subscription and no pro version."
+      },
+      "eyebrow": "Overview",
+      "lead": "A graphics toolbox that costs nothing and asks nothing of you.",
+      "formats": {
+        "title": "Every common format",
+        "text": "SVG, PNG, JPG, WebP, CSS and code, GIF for many tools too. Raster images up to 8192 pixels per side."
       }
     },
     "categories": {
       "heading": "Tools by category",
       "lead": "Pick an area or browse the whole catalogue.",
       "converters": "Convert SVG, CSS, Base64 and images.",
-      "all": "Go to the full catalogue"
+      "all": "Go to the full catalogue",
+      "eyebrow": "Catalogue"
     },
     "featured": {
       "heading": "Popular generators",
-      "lead": "A good place to start if you want to dive right in."
+      "lead": "A good place to start if you want to dive right in.",
+      "eyebrow": "Popular"
     },
     "how": {
       "heading": "How it works",
@@ -82,7 +94,8 @@
       "step3": {
         "title": "Export",
         "text": "Download your motif as SVG, PNG, JPG or WebP, or copy the CSS straight into your project."
-      }
+      },
+      "eyebrow": "Three steps"
     },
     "faq": {
       "heading": "Frequently asked questions",
@@ -105,7 +118,8 @@
       "q5": {
         "question": "Which formats can I export?",
         "answer": "Depending on the tool, SVG, PNG, JPG, WebP and CSS. Color tools also give you a Tailwind config and CSS variables."
-      }
+      },
+      "eyebrow": "FAQ"
     },
     "cta": {
       "heading": "Ready for your first motif?",
@@ -4485,7 +4499,10 @@
     "support": "Support Musterli",
     "gradients": "Gradients",
     "palettes": "Color palettes",
-    "terms": "Terms of use"
+    "terms": "Terms of use",
+    "cssPatterns": "CSS patterns",
+    "collectionsHeading": "Collections",
+    "copyright": "© {year} Musterli. Free and funded by donations."
   },
   "Support": {
     "metaTitle": "Support Musterli",

@@ -19,6 +19,7 @@ import {
   type SkippedDesign,
   type StorageErrorCode,
 } from "@musterli/editor-ui/designs";
+import { HardDriveIcon, LayoutGridIcon, SearchIcon } from "lucide-react";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import NextLink from "next/link";
 import {
@@ -32,6 +33,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -321,22 +323,27 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:py-12">
-      <header className="flex flex-col gap-3">
-        <h1
-          ref={headingRef}
-          tabIndex={-1}
-          className="text-3xl font-semibold tracking-tight focus:outline-none"
+      <PageHeader
+        headingRef={headingRef}
+        headingTabIndex={-1}
+        title={tPage("title")}
+        lead={tPage("intro")}
+      >
+        <p
+          className="flex max-w-prose items-start gap-2 text-sm text-muted-foreground"
+          data-testid="storage-hint"
         >
-          {tPage("title")}
-        </h1>
-        <p className="max-w-prose text-lg text-muted-foreground">{tPage("intro")}</p>
-        <p className="max-w-prose text-sm text-muted-foreground" data-testid="storage-hint">
+          <HardDriveIcon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-link" />
           {tPage("storageHint")}
         </p>
-      </header>
+      </PageHeader>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="min-w-0 flex-[1_1_16rem]">
+        <div className="relative min-w-0 flex-[1_1_16rem]">
+          <SearchIcon
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"
+          />
           <label htmlFor={searchId} className="sr-only">
             {tPage("searchLabel")}
           </label>
@@ -347,7 +354,7 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
             onChange={(event) => setQuery(event.currentTarget.value)}
             placeholder={tPage("searchPlaceholder")}
             disabled={state !== "ready"}
-            className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none disabled:opacity-50"
+            className="h-9 w-full rounded-full border border-input bg-background pr-3 pl-10 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none disabled:opacity-50"
             data-testid="designs-search"
           />
         </div>
@@ -442,14 +449,20 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
       {state === "ready" && designs.length === 0 && (
         <section
           aria-labelledby={`${ids}-empty`}
-          className="flex flex-col items-start gap-3 rounded-xl border border-dashed border-border p-6"
+          className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-border px-6 py-14 text-center"
           data-testid="designs-empty"
         >
+          <span className="mb-1 flex size-12 items-center justify-center rounded-2xl border border-border bg-card text-link shadow-xs">
+            <LayoutGridIcon aria-hidden="true" className="size-6" />
+          </span>
           <h2 id={`${ids}-empty`} className="text-lg font-semibold">
             {tPage("emptyTitle")}
           </h2>
           <p className="max-w-prose text-muted-foreground">{tPage("emptyText")}</p>
-          <NextLink href={toolsHref} className={buttonVariants({ size: "sm" })}>
+          <NextLink
+            href={toolsHref}
+            className={buttonVariants({ className: "mt-1 rounded-full px-5" })}
+          >
             {tPage("emptyCta")}
           </NextLink>
         </section>

@@ -4,11 +4,17 @@ import { describe, expect, it } from "vitest";
 import de from "@/messages/de.json";
 import en from "@/messages/en.json";
 
-import { FEATURED_TOOL_IDS, HERO_START_TOOL_ID, HERO_TOOL_ID, HOME_FAQ_COUNT } from "./home";
+import {
+  FEATURED_TOOL_IDS,
+  HERO_START_TOOL_ID,
+  HERO_TOOL_ID,
+  HOME_FAQ_COUNT,
+  VALUES_TOOL_ID,
+} from "./home";
 import { hasStaticMotif } from "./seo/motifs";
 
 describe("home page content", () => {
-  it.each([HERO_TOOL_ID, ...FEATURED_TOOL_IDS, HERO_START_TOOL_ID])(
+  it.each([HERO_TOOL_ID, ...FEATURED_TOOL_IDS, HERO_START_TOOL_ID, VALUES_TOOL_ID])(
     "%s is a registered tool with a static motif",
     (id) => {
       const tool = registry.get(id);

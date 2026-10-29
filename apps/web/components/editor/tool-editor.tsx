@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeftIcon } from "lucide-react";
 import { EditorShell, EditorStoreProvider } from "@musterli/editor-ui";
 import { createBrandKitStore, createDesignStore } from "@musterli/storage";
 import { useTranslations } from "next-intl";
@@ -35,8 +36,9 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
         headerStart={
           <Link
             href="/tools"
-            className="rounded-control text-sm text-link underline-offset-4 hover:underline"
+            className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full border border-border bg-background ps-1.5 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground"
           >
+            <ChevronLeftIcon aria-hidden="true" className="size-4" />
             {t("allTools")}
           </Link>
         }

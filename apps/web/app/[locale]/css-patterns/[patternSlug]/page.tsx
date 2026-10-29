@@ -136,7 +136,10 @@ export default async function PatternPage({ params }: PatternPageProps) {
             </h1>
             <p className="max-w-prose text-lg text-muted-foreground">{t(keys.description)}</p>
             {/* Full page load: the editor reads the design from the #d= hash on start. */}
-            <a href={editorHref} className={buttonVariants({ size: "lg" })}>
+            <a
+              href={editorHref}
+              className={buttonVariants({ size: "lg", className: "rounded-full px-6" })}
+            >
               {t("PatternPage.openEditor")}
             </a>
             <p className="text-sm text-muted-foreground">{t("PatternPage.openEditorHint")}</p>

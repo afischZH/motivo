@@ -1,3 +1,4 @@
+import { ChevronRightIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import type { EnabledLocale } from "@/i18n/locales";
@@ -33,24 +34,24 @@ export async function Breadcrumbs({
 
   return (
     <nav aria-label={t("breadcrumbLabel")}>
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+      <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted-foreground">
         {items.map((item, i) => {
           const last = i === items.length - 1;
           return (
-            <li key={i} className="flex items-center gap-2">
+            <li key={i} className="flex items-center gap-1.5">
               {last ? (
-                <span aria-current="page" className="text-foreground">
+                <span aria-current="page" className="font-medium text-foreground">
                   {item.name}
                 </span>
               ) : (
                 <>
                   <Link
                     href={routeHref(item.route, locale)}
-                    className="rounded-control text-link underline-offset-4 hover:underline"
+                    className="rounded-control transition-colors hover:text-foreground"
                   >
                     {item.name}
                   </Link>
-                  <span aria-hidden="true">/</span>
+                  <ChevronRightIcon aria-hidden="true" className="size-3.5" />
                 </>
               )}
             </li>

@@ -10,6 +10,9 @@ export const HERO_TOOL_ID = "svg-waves";
 /** Tool behind the secondary hero button ("Start with ..."). */
 export const HERO_START_TOOL_ID = "css-gradient";
 
+/** Motif in the middle tile of the "Why Musterli" grid. */
+export const VALUES_TOOL_ID = "mesh-gradient";
+
 /** Featured tools, a mix of categories with light motifs. */
 export const FEATURED_TOOL_IDS = [
   "css-gradient",
