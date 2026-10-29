@@ -5,6 +5,8 @@ import { designToHash } from "@musterli/editor-ui/share";
 import { registry } from "@musterli/tool-registry";
 import { expect, test, type Page, type Request } from "@playwright/test";
 
+import { toolSlug } from "../i18n/slugs";
+
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 const EDITOR = "/en/tools/blob-generator";
 const MY_DESIGNS = "/en/my-designs";
@@ -21,6 +23,36 @@ async function openEditor(page: Page, path = EDITOR) {
 async function previewSrc(page: Page): Promise<string> {
   await expect(preview(page)).toBeVisible();
   return (await preview(page).getAttribute("src")) ?? "";
+}
+
+/**
+ * Spread of the first thumbnail's luminance (standard deviation, 0 to 255):
+ * a real picture, not an empty or single-colour box.
+ */
+async function thumbnailContrast(page: Page): Promise<number> {
+  const thumb = page.getByTestId("design-thumbnail").first();
+  await expect(thumb).toBeVisible();
+  return thumb.evaluate(async (el) => {
+    const img = el as HTMLImageElement;
+    await img.decode();
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return 0;
+    ctx.drawImage(img, 0, 0);
+    const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let sum = 0;
+    let sq = 0;
+    const n = data.length / 4;
+    for (let i = 0; i < data.length; i += 4) {
+      const y = 0.2126 * (data[i] ?? 0) + 0.7152 * (data[i + 1] ?? 0) + 0.0722 * (data[i + 2] ?? 0);
+      sum += y;
+      sq += y * y;
+    }
+    const mean = sum / n;
+    return Math.sqrt(Math.max(0, sq / n - mean * mean));
+  });
 }
 
 /** Rolls a new variant and returns its preview once it is rendered. */
@@ -359,6 +391,39 @@ test.describe("my designs page", () => {
     await page.goto("/de/my-designs");
     await expect(page).toHaveURL(/\/de\/meine-designs$/);
   });
+
+  // M5b-AP01: WebGL and image-effect designs get a thumbnail too, drawn by
+  // their workers: when saving in the editor and again after an import.
+  for (const toolId of ["shader-gradient", "halftone"] as const) {
+    test(`shows a thumbnail of a ${toolId} design`, async ({ page, browser }) => {
+      await page.goto(`/en/tools/${toolSlug(toolId, "en")}`);
+      await expect(page.getByTestId("save-design")).toBeEnabled();
+      // The worker preview is on screen before saving.
+      await expect(page.getByTestId("preview").locator("canvas")).toBeVisible();
+      await saveDesign(page, `Thumb ${toolId}`);
+      await page.goto(MY_DESIGNS);
+      const thumb = page.getByTestId("design-card").getByTestId("design-thumbnail");
+      await expect(thumb).toHaveAttribute("src", /^data:image\/(webp|png);base64,/);
+      expect(await thumbnailContrast(page)).toBeGreaterThan(8);
+
+      // Imported without thumbnails: My Designs draws them again.
+      const downloadPromise = page.waitForEvent("download");
+      await page.getByTestId("designs-export").click();
+      const path = await (await downloadPromise).path();
+      const fresh = await browser.newContext();
+      const other = await fresh.newPage();
+      await other.goto(MY_DESIGNS);
+      await other.getByTestId("designs-file").setInputFiles(path);
+      await expect(other.getByTestId("designs-message")).toContainText("Imported 1 design.");
+      await expect(other.getByTestId("design-thumbnail")).toHaveAttribute(
+        "src",
+        /^data:image\/(webp|png);base64,/,
+        { timeout: 20_000 },
+      );
+      expect(await thumbnailContrast(other)).toBeGreaterThan(8);
+      await fresh.close();
+    });
+  }
 
   for (const width of [375, 768, 1280]) {
     test(`fits ${width} px without horizontal scrolling`, async ({ page }) => {
