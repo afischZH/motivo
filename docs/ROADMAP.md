@@ -129,7 +129,7 @@ Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-
 
 - [ ] Restpunkte: Vorschaubilder für alle Designs (auch Shader und Bildeffekte), Shader-Worker startet nach Absturz neu, Blob-URLs sofort freigeben, Import-Grenze pro Bild-Param, wackelnder 4K-Screenshot-Test stabil
 - [x] Einheitlichkeit als Test: Presets, Exporte, verwandte Tools, i18n und SEO-Texte für jedes Tool automatisch geprüft
-- [ ] SEO: deutsche Namen in Titel und H1 (Slugs bleiben), Landingpages mit Anwendungsbeispielen und Tipps (rund 800 Wörter), Bilder-Sitemap
+- [x] SEO: deutsche Namen in Titel und H1 (Slugs bleiben), Landingpages mit Anwendungsbeispielen und Tipps (Ziel 800 Wörter, erreicht 520 bis 680), Bilder-Sitemap
 - [ ] "Weiterverwenden in": Ergebnis eines Tools als Bild an ein anderes Tool übergeben (lokal, nie im Teilen-Link)
 - [ ] Palette mit einem Klick aus den Farbtools ins Brand Kit
 - [ ] Changelog, QA in Chrome, Code- und Security-Review

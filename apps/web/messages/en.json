@@ -256,6 +256,25 @@
       "seo": {
         "whatIs": "A CSS gradient is a color transition the browser draws itself. It needs no image file, loads instantly and stays sharp at any size. This generator mixes colors in the OKLCH color space, so transitions look even and avoid a muddy gray middle.",
         "howTo": "Choose linear, radial or conic, set your colors and adjust angle, center and easing. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Website hero",
+            "text": "A gradient behind your first screen loads without an image file and stays crisp on every display. Paste the CSS straight into your section and the page gets no heavier."
+          },
+          "u2": {
+            "title": "Buttons and cards",
+            "text": "A subtle gradient makes buttons, badges and pricing cards stand out without shouting. The ready-made Tailwind classes drop in without a single line of custom CSS."
+          },
+          "u3": {
+            "title": "Slides and social posts",
+            "text": "Export the gradient as a PNG in the right format and place it behind slide titles, quotes or announcements. Every graphic in a series then shares the same calm backdrop."
+          }
+        },
+        "tips": {
+          "t1": "If the middle turns gray, keep the OKLCH color space and pick the shorter hue direction. The transition then passes through vivid colors instead of muddy ones.",
+          "t2": "Extra stops combined with an easing curve make soft gradients even calmer. For hard edges, use a few colors without easing instead.",
+          "t3": "Apply a brand palette from your Brand Kit. Your brand colors are locked, so Space only rolls new angles and types."
+        },
         "faq": {
           "q1": {
             "question": "Why OKLCH instead of sRGB?",
@@ -322,6 +341,25 @@
       "seo": {
         "whatIs": "CSS patterns are backgrounds the browser draws itself from gradients. They need no image file, load instantly, stay sharp at any size and can be recolored with a few characters of CSS. The library contains over 30 original patterns in five categories.",
         "howTo": "Pick a pattern, set size, colors and opacity, and rotate stripes or grids to the angle you need. Stack up to five patterns as layers, show or hide them and change their order. Press Space for new variations. When you are happy, copy the CSS or the Tailwind classes, or export as SVG, PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Section backgrounds",
+            "text": "A fine dot or line pattern structures long pages without pulling focus from the content. The CSS needs no image, loads instantly and changes color with one value in your code."
+          },
+          "u2": {
+            "title": "Placeholders in prototypes",
+            "text": "Stripes or checks mark areas for images and ads in drafts. Because the pattern is pure CSS, you can recolor it to match your draft with a few characters."
+          },
+          "u3": {
+            "title": "Packaging and print",
+            "text": "Export the pattern as SVG or a high-resolution PNG for labels, wrapping paper or invitations. The SVG stays sharp at any size."
+          }
+        },
+        "tips": {
+          "t1": "Stack up to five patterns as layers. A coarse pattern at low opacity over a fine one adds depth no single pattern can.",
+          "t2": "Keep the opacity low behind text, around 10 to 20 percent. The text stays readable and the pattern reads as texture rather than a picture.",
+          "t3": "Use the PNG export for pixel-exact graphics. On websites the CSS is almost always the better choice: it is lighter and scales with the element."
+        },
         "faq": {
           "q1": {
             "question": "Do the patterns need an image?",
@@ -524,6 +562,25 @@
       "seo": {
         "whatIs": "Blobs are soft, organic shapes. They loosen up strict layouts and work as backgrounds, photo frames or accents behind text. Each shape starts as a few points on a circle that are nudged at random and joined with smooth curves.",
         "howTo": "Set complexity, randomness and size, then pick a fill: solid, outline or gradient. Press Space until you like the shape. Export as SVG, as an image or as a CSS clip-path to crop photos into a blob.",
+        "useCases": {
+          "u1": {
+            "title": "Accent behind text",
+            "text": "A soft blob behind a heading or product shot loosens up a strict layout. As an SVG it weighs only a few kilobytes and stays sharp on every screen."
+          },
+          "u2": {
+            "title": "Cropping photos",
+            "text": "Export a CSS clip-path to crop portraits and product photos into an organic shape. The shape grows with the element, in responsive layouts too."
+          },
+          "u3": {
+            "title": "Icons and illustrations",
+            "text": "Blobs make a friendly base shape for icons, stickers and spot illustrations in apps and decks. A gradient fill makes them look more three-dimensional."
+          }
+        },
+        "tips": {
+          "t1": "Low complexity and low randomness give calm, almost round shapes. Raise both step by step for playful, irregular ones.",
+          "t2": "Found a shape you like? Lock complexity and randomness, and Space only rolls new colors.",
+          "t3": "The SVG background is transparent, so the blob sits on any surface without visible edges or white borders."
+        },
         "faq": {
           "q1": {
             "question": "How do I get the same shape again?",
@@ -583,6 +640,25 @@
       "seo": {
         "whatIs": "SVG waves are lightweight vector graphics that softly separate the sections of a website. Instead of a hard edge, one surface flows into the next. Several layers in graded colors add depth while the file stays just a few kilobytes.",
         "howTo": "Choose the number of layers and points, set amplitude, smoothness and coverage, and decide whether the waves rise from the bottom or hang from the top. Press Space for new variations. Export as SVG, CSS background or image.",
+        "useCases": {
+          "u1": {
+            "title": "Section dividers",
+            "text": "Place the wave at the bottom of a section and give it the next section's color. The two surfaces flow into each other instead of meeting at a hard line."
+          },
+          "u2": {
+            "title": "Headers and footers",
+            "text": "Several layers in graded colors give headers and footers depth. The file stays a few kilobytes small and barely touches your load time."
+          },
+          "u3": {
+            "title": "Slides and social posts",
+            "text": "Exported as PNG, the waves decorate title slides, banners and story graphics along the bottom edge. In your brand colors they quickly become a consistent template."
+          }
+        },
+        "tips": {
+          "t1": "For website dividers, pick a wide, low format such as 1440 × 200 pixels so the wave fills the full width without stretching.",
+          "t2": "High smoothness gives calm waves, low smoothness mountain ridges. More points make the line busier and livelier.",
+          "t3": "Set the width to 100 percent in CSS and let the height follow. As a vector, the wave stays sharp even on very wide screens."
+        },
         "faq": {
           "q1": {
             "question": "How do I place a wave between two sections?",
@@ -656,6 +732,25 @@
       "seo": {
         "whatIs": "Polka dots are dot patterns, evenly spaced or freely scattered. Depending on size and color they look playful or calm, and they suit backgrounds for websites, packaging, cards and fabrics. Besides circles you can use rings and squares.",
         "howTo": "Pick a layout (grid, offset or scatter), set spacing and dot size, and choose whether dots share one color, alternate or get random colors. Press Space for new variations. Export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Website backgrounds",
+            "text": "A calm dot pattern in two close tones livens up landing pages and newsletters without getting in the way of the text. As a CSS background it needs no extra image file."
+          },
+          "u2": {
+            "title": "Cards and invitations",
+            "text": "Colorful scattered dots suit birthday cards, baby showers and party invitations. Export a PNG to send, or an SVG for print."
+          },
+          "u3": {
+            "title": "Fabric and packaging",
+            "text": "Classic offset dots work for wrapping paper, labels and textile prints. The SVG scales to any size without losing quality."
+          }
+        },
+        "tips": {
+          "t1": "The offset layout looks denser and more classic than the grid. Scatter with some size variation feels more playful and natural.",
+          "t2": "Rings instead of circles make the pattern lighter, which works well on pale backgrounds that still need to carry text.",
+          "t3": "Apply a brand palette from your Brand Kit to color the dots in your brand colors. They stay locked while you keep pressing Space."
+        },
         "faq": {
           "q1": {
             "question": "What is the difference between grid and offset?",
@@ -759,6 +854,25 @@
       "seo": {
         "whatIs": "A geometric pattern is a grid of tiles, each holding one simple shape: circles, quarter circles, triangles, stars or arcs. Rotation and color changes turn a handful of shapes into lively surfaces, familiar from Bauhaus posters, tiles and quilts. Such patterns work well for website backgrounds, slides, packaging and social media graphics.",
         "howTo": "Pick a shape pack or put together your own shapes. Set the number of tiles per row, choose an even or nested grid and how shapes rotate. Color the tiles at random from your palette or per shape layer, with or without tile fills. Press the space bar for new variations. Click a tile to change its shape, color and rotation. Export as SVG, as a CSS background or as an image.",
+        "useCases": {
+          "u1": {
+            "title": "Posters and covers",
+            "text": "Tiles with quarter circles and triangles recall Bauhaus and Swiss graphic design. They suit posters and book or album covers that should feel clear and modern."
+          },
+          "u2": {
+            "title": "Brand identity",
+            "text": "With your brand colors and your own shapes from the Brand Kit you get a recognizable pattern. Use it the same way on stationery, slides and social media."
+          },
+          "u3": {
+            "title": "Tiles and textiles",
+            "text": "Export the pattern as SVG and use it as a template for tiles, quilts or fabric prints. Every tile stays an editable shape of its own."
+          }
+        },
+        "tips": {
+          "t1": "The nested grid splits tiles into smaller ones at the chance you set. The mosaic looks livelier than an even grid.",
+          "t2": "Click a tile, or reach it with Tab and the arrow keys, to change its shape, color and rotation. Edited tiles survive new variations.",
+          "t3": "A few colors and a single shape pack look more coherent than many colors. Outline only gives a light, graphic line-art look."
+        },
         "faq": {
           "q1": {
             "question": "Can I change single tiles?",
@@ -852,6 +966,25 @@
       "seo": {
         "whatIs": "A seamless pattern is a tile that repeats any number of times without visible edges. Motifs that cross the border reappear on the opposite side, so the joins disappear. Seamless patterns work well for website backgrounds, wrapping paper, fabric, wallpaper and packaging.",
         "howTo": "Pick one of the built-in shapes or load your own SVG, PNG, JPG or WebP file and crop it. Choose the tiling (grid, brick, half drop or mirror), size, spacing and rotation, and color the motifs with one color or a palette. Press the space bar for new variations. Export as SVG, as a CSS background, as a single PNG tile or as an image.",
+        "useCases": {
+          "u1": {
+            "title": "Website backgrounds",
+            "text": "The CSS export repeats the tile endlessly while staying small. It is ideal for page backgrounds and large areas with lots of white space."
+          },
+          "u2": {
+            "title": "Wrapping paper and fabric",
+            "text": "Upload your logo or your own graphic and turn it into a repeat for paper, textiles or wallpaper. The joins between tiles stay invisible."
+          },
+          "u3": {
+            "title": "Merch and packaging",
+            "text": "A pattern of your motifs fits tote bags, mugs and boxes. Print shops can take the single PNG tile as is and repeat it as often as needed."
+          }
+        },
+        "tips": {
+          "t1": "Half drop and brick hide the repetition better than a straight grid. Mirror works best for symmetric motifs.",
+          "t2": "Random rotation and size variation make the pattern look more natural. For a strict, orderly pattern, set both to 0.",
+          "t3": "Shapes and logos from your Brand Kit are ready in the upload field. Your files stay in your browser and never go into share links."
+        },
         "faq": {
           "q1": {
             "question": "Is my uploaded file stored or shared?",
@@ -929,6 +1062,25 @@
       "seo": {
         "whatIs": "Grain is fine random noise on top of a surface. It takes the sterile smoothness out of digital colors and gradients, hides banding in gradients and evokes analog film or paper.",
         "howTo": "Pick a color or gradient as the base, adjust amount, grain size and blend mode, and press Space for a new variant. Then export as PNG, JPG, WebP or SVG at the size you need.",
+        "useCases": {
+          "u1": {
+            "title": "Gradients without banding",
+            "text": "Fine grain over a gradient hides visible color steps. It helps most on large backgrounds, in dark areas and in heavily compressed JPG files."
+          },
+          "u2": {
+            "title": "Analog look",
+            "text": "Grain gives digital graphics a film or paper feel. It suits retro-style posters, covers and social posts and makes flat surfaces feel warmer."
+          },
+          "u3": {
+            "title": "Texture for other apps",
+            "text": "Export transparent grain as a PNG and lay it over photos and shapes in Figma, Photoshop or CSS. The tile repeats seamlessly."
+          }
+        },
+        "tips": {
+          "t1": "Soft light gives gentle grain, overlay a punchy one. Multiply only darkens and suits light surfaces and paper.",
+          "t2": "For a transparent texture, set the base to Transparent and export as PNG or WebP. JPG has no transparency.",
+          "t3": "A low amount is enough for subtle grain behind text. For a strong film look push it much higher, then check the result at full size."
+        },
         "faq": {
           "q1": "Which blend mode should I use?",
           "a1": "Overlay brightens light areas and darkens dark ones for a punchy grain. Soft light is gentler. Multiply only darkens and suits paper looks and light surfaces.",
@@ -992,6 +1144,25 @@
       "seo": {
         "whatIs": "Grid patterns are regular grids of lines, dots, crosses or tiles. They evoke graph paper, blueprints or dotted notebooks and make a calm background for websites, slides and product shots.",
         "howTo": "Pick a style, set the cell size and weight, and choose whether every n-th line is highlighted as a major grid. Use the fade to soften the grid towards the center or the edges. Export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Tech and SaaS websites",
+            "text": "A fine line or dot grid is a popular, calm background for product pages, documentation and developer tools. It feels precise without distracting from the content."
+          },
+          "u2": {
+            "title": "Notebook paper and templates",
+            "text": "Print dot grids and checks as bullet journal pages, sketch paper or worksheets. Pick a print size and export as SVG or PNG."
+          },
+          "u3": {
+            "title": "Product shots",
+            "text": "A grid in the background gives product photos and mockups a tidy, technical frame. It recalls a blueprint and keeps the eye on the product."
+          }
+        },
+        "tips": {
+          "t1": "Fade lets the grid soften towards the center or the edges, leaving room for text without a hard cut-off.",
+          "t2": "The major grid highlights every n-th line like graph paper. Set it to 0 for an even grid without emphasis.",
+          "t3": "For seamless tiles, use a size that is a multiple of the cell size and turn the fade off. The edges then line up perfectly."
+        },
         "faq": {
           "q1": {
             "question": "Does the grid keep its look when I resize?",
@@ -1051,6 +1222,25 @@
       "seo": {
         "whatIs": "The confetti generator spreads colorful shapes evenly yet naturally across the canvas. Great for invitations, birthday graphics, social posts and festive backgrounds.",
         "howTo": "Pick a shape or a mix, set spacing, size and rotation, and choose your colors. Press Space for new variations. Export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Invitations and cards",
+            "text": "Confetti is the classic for birthdays, weddings and anniversaries. Use a PNG on printed cards and an SVG on digital invites at any size."
+          },
+          "u2": {
+            "title": "Announcements",
+            "text": "A confetti background celebrates launches, milestones and winners on social media and in newsletters. In brand colors, it still fits your look."
+          },
+          "u3": {
+            "title": "Success screens in apps",
+            "text": "As SVG or GIF, the confetti works on confirmation pages, success messages and thank-you pages. The SVG is small and loads fast."
+          }
+        },
+        "tips": {
+          "t1": "Wider spacing gives an airy, elegant look. Dense confetti feels loud and festive, perfect for parties and giveaways.",
+          "t2": "A single shape, such as only circles or only squiggles, looks calmer and more modern than the full mix.",
+          "t3": "Happy with the settings? Press Space. Positions, shapes and colors are reshuffled, everything else stays as you set it."
+        },
         "faq": {
           "q1": {
             "question": "Why don't the pieces overlap?",
@@ -1109,6 +1299,25 @@
       "seo": {
         "whatIs": "The starry sky generator creates a night sky from a color gradient and many stars of different size and brightness. Perfect for backgrounds, picture book art, event graphics and wallpapers.",
         "howTo": "Set the sky colors from top to bottom, adjust star spacing, size and brightness variation, and add glow and a few sparkles if you like. Export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Wallpapers",
+            "text": "Pick Full HD or 4K and export a PNG. You get your own desktop or phone background in exactly the colors you like."
+          },
+          "u2": {
+            "title": "Picture books and invitations",
+            "text": "A gentle night sky suits bedtime stories, sleepover invites and evening events. As SVG it can go straight into your illustrations."
+          },
+          "u3": {
+            "title": "Events and streams",
+            "text": "Behind concerts, readings or livestreams, the starry sky sets the mood. It never steals the show and keeps text easy to read."
+          }
+        },
+        "tips": {
+          "t1": "A sky from deep blue to violet looks natural, teal to pink more dreamy. Colors run from top to bottom.",
+          "t2": "A few sparkles add highlights. Too many take away the calm, so set them to 0 if needed.",
+          "t3": "Brightness variation makes the sky look more natural, because not every star shines equally bright. A little glow softens the large stars."
+        },
         "faq": {
           "q1": {
             "question": "How are the stars distributed?",
@@ -1172,6 +1381,25 @@
       "seo": {
         "whatIs": "Dieter Dots are dots arranged in concentric rings around the center, inspired by perforated speaker grilles in industrial design. The pattern feels technical and calm and suits posters, covers and product graphics.",
         "howTo": "Set the number of rings, the dots in the first ring and the ring spacing. Twist turns the rings into a spiral, shrink outwards fades the dots towards the edge. Choose one color, alternating rings or a gradient, then export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Posters and covers",
+            "text": "Concentric rings of dots feel technical and calm. They fit minimalist posters and record or book covers, especially in just a few colors."
+          },
+          "u2": {
+            "title": "Product graphics",
+            "text": "The pattern recalls perforated speaker grilles from industrial design. It suits audio, hardware and tech products, on packaging and on websites."
+          },
+          "u3": {
+            "title": "Logos and icons",
+            "text": "A few rings make a clear mark or a round badge. As SVG it scales without loss and stays editable in any design app."
+          }
+        },
+        "tips": {
+          "t1": "Twist turns the rings into a spiral. Even small values change the look a lot, so try it in small steps.",
+          "t2": "Shrink outwards fades the dots towards the edge and draws the eye to the center.",
+          "t3": "Choose Gradient as the color mode and the rings run through your palette. With a brand palette from your Brand Kit, those are your brand colors."
+        },
         "faq": {
           "q1": {
             "question": "Why do outer rings have more dots?",
@@ -1258,6 +1486,25 @@
       "seo": {
         "whatIs": "A blob composition arranges several organic shapes as layers at the corners and edges of a canvas. The result is a calm background for websites, slides and social posts that keeps the center free for text.",
         "howTo": "Pick a preset or press Space for new arrangements. For each blob, set position, offset, size and shape, move layers up or down and hide them. Colors are taken from your palette in order. Export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Hero backgrounds",
+            "text": "Blobs in the corners keep the center free for your headline and button. The composition adapts to any format, from square to wide banner."
+          },
+          "u2": {
+            "title": "Slide templates",
+            "text": "One set of blobs in brand colors gives a whole deck a consistent, friendly background. Export it once at slide size and reuse it on every slide."
+          },
+          "u3": {
+            "title": "Social media series",
+            "text": "Export the same composition square, tall and wide. Positions and sizes follow the format, so the series stays recognizable on every channel."
+          }
+        },
+        "tips": {
+          "t1": "Colors are taken from the palette in order. Move blobs up or down to change which color each one gets.",
+          "t2": "Lock shapes you like. Then Space only rolls new positions or colors.",
+          "t3": "Low opacity on the back blobs adds depth. Gradient fills look softer than solid ones and go well with light backgrounds."
+        },
         "faq": {
           "q1": {
             "question": "What happens when I change the canvas size?",
@@ -1327,6 +1574,25 @@
       "seo": {
         "whatIs": "Doodle backgrounds are made of small shapes that look drawn by hand: squiggles, spirals, stars, crosses and zigzags. They feel playful and personal and work well for invitations, school and kids themes, social posts and packaging.",
         "howTo": "Pick a shape or the mix, set spacing, size and stroke width, and use wobble to decide how hand-drawn the lines look. Press Space for new variations and export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Kids and school themes",
+            "text": "Squiggles, stars and spirals fit learning materials, letters to parents and websites for children. They feel friendly and personal without being childish."
+          },
+          "u2": {
+            "title": "Social posts and stories",
+            "text": "A doodle background makes announcements, quotes and giveaways feel personal and fun. On a light base color, text stays easy to read."
+          },
+          "u3": {
+            "title": "Packaging and stickers",
+            "text": "As SVG, the hand-drawn looking lines work for labels, stickers and wrapping paper. They stay clean even at large sizes."
+          }
+        },
+        "tips": {
+          "t1": "More wobble makes the lines look more hand-drawn. Keep it low for a clean illustration style.",
+          "t2": "A thicker stroke width reads better on small formats such as stories. Posters can take finer lines.",
+          "t3": "A light, calm background with one or two line colors looks tidier than many bright colors. Space then only reshuffles the arrangement."
+        },
         "faq": {
           "q1": {
             "question": "Why do the lines look hand-drawn?",
@@ -1414,6 +1680,25 @@
       "seo": {
         "whatIs": "SVG charts are placeholder charts with random data. Use them in mockups, slides, landing pages and app designs when real numbers are missing or must not be shown.",
         "howTo": "Choose line, area or bars, set the number of series and data points, and adjust trend and volatility. Turn axes and grid lines on or off. Press Space for new data. Export as SVG, CSS or image.",
+        "useCases": {
+          "u1": {
+            "title": "Mockups and app designs",
+            "text": "Placeholder charts fill dashboards and screens in drafts before real data exists. The draft looks real without anyone having to make up numbers."
+          },
+          "u2": {
+            "title": "Landing pages and decks",
+            "text": "A simple line chart illustrates growth or a trend without revealing confidential numbers. As SVG it stays sharp on slides and websites."
+          },
+          "u3": {
+            "title": "Illustrations",
+            "text": "Bars and areas without labels work as decorative elements in reports, blog posts and social posts. In brand colors they fit any layout."
+          }
+        },
+        "tips": {
+          "t1": "Trend decides whether the curve rises or falls, volatility how much it swings.",
+          "t2": "The data depends on the seed. Change chart type, colors and axes and the values stay the same.",
+          "t3": "The SVG has no text. Add labels in Figma or your layout so they look the same everywhere."
+        },
         "faq": {
           "q1": {
             "question": "Can I enter my own data?",
@@ -1497,6 +1782,25 @@
       "seo": {
         "whatIs": "A color palette generator puts together colors that work well with each other. Musterli works in the OKLCH color space, so lightness and hue steps look even to the eye.",
         "howTo": "Press the space bar for a new palette. Lock the colors you like, choose a harmony and export the palette as CSS variables, a HEX list or an image.",
+        "useCases": {
+          "u1": {
+            "title": "Finding brand colors",
+            "text": "Start with your main color, lock it and let the other colors follow in a harmony. You get a palette that belongs together in minutes."
+          },
+          "u2": {
+            "title": "Web design and apps",
+            "text": "Export the palette as CSS variables and use it straight away in your stylesheet. The contrast display tells you up front which colors work for text."
+          },
+          "u3": {
+            "title": "Illustrations and decks",
+            "text": "A coherent five-color palette keeps charts, slides and graphics consistent. Copy the HEX values straight into Figma or your slide app."
+          }
+        },
+        "tips": {
+          "t1": "Analogous feels calm, complementary bold. For interfaces, an analogous palette with one accent is often the easiest to use.",
+          "t2": "Watch the contrast matrix. Text on a color needs at least AA, that is 4.5:1.",
+          "t3": "Copy the HEX list and create a palette in your Brand Kit with it. Then you can apply it in any other generator with one click."
+        },
         "faq": {
           "q1": "What do the harmonies mean?",
           "a1": "Analogous uses neighboring hues, complementary uses opposite ones. Triadic spreads three hues evenly, split complementary pairs a hue with the neighbors of its opposite, and tetradic uses four hues in a square.",
@@ -1550,6 +1854,25 @@
       "seo": {
         "whatIs": "Tints are lighter versions of a color, shades are darker ones. Together they form a scale for hover states, backgrounds and borders.",
         "howTo": "Pick a base color, set the number of tints and shades and copy the values as HEX, RGB, HSL or CSS variables.",
+        "useCases": {
+          "u1": {
+            "title": "Hover and active states",
+            "text": "A slightly darker step for hover and a darker one for active make buttons clear and consistent. Every button then responds the same way."
+          },
+          "u2": {
+            "title": "Backgrounds and borders",
+            "text": "Very light tints of your brand color work for surfaces, notices and table rows. They bring color into the layout without weakening the text."
+          },
+          "u3": {
+            "title": "Charts",
+            "text": "Several steps of one color tell data series apart without making the chart look busy. That suits on-brand reports especially well."
+          }
+        },
+        "tips": {
+          "t1": "The OKLCH method keeps the colorfulness, so steps stay vivid. Mixing in sRGB matches classic tools like Sass.",
+          "t2": "Range sets how light the lightest and how dark the darkest step gets. A smaller range gives finer steps.",
+          "t3": "Paste the CSS variables into your stylesheet and use them with var(). Every step lives in one place and can be changed centrally."
+        },
         "faq": {
           "q1": "What is the difference between a tint and a shade?",
           "a1": "A tint is a color mixed with white, a shade is a color mixed with black.",
@@ -1596,6 +1919,25 @@
       "seo": {
         "whatIs": "Tailwind CSS arranges every color in eleven steps from 50 (very light) to 950 (very dark). This generator builds such a scale from your brand color, with the color itself exactly on 500.",
         "howTo": "Pick your base color, give the palette a name and copy the code for tailwind.config.js or the @theme block for Tailwind v4.",
+        "useCases": {
+          "u1": {
+            "title": "Your brand color in Tailwind",
+            "text": "Build steps 50 to 950 from your brand color and use them like the built-in colors, for example bg-brand-500. Your color fits right into the project."
+          },
+          "u2": {
+            "title": "Design systems",
+            "text": "A complete scale for primary, accent and gray tones is the base for components, states and dark mode. Every step has its fixed role."
+          },
+          "u3": {
+            "title": "Moving to Tailwind v4",
+            "text": "The @theme export writes OKLCH variables, exactly how Tailwind v4 stores its colors. Older projects get an export for tailwind.config.js."
+          }
+        },
+        "tips": {
+          "t1": "Your base color always sits on 500. If it is very light or very dark, check that the ends still have enough room.",
+          "t2": "Reduce saturation at the ends keeps 50 and 950 from looking garish or muddy. It helps most with strong brand colors.",
+          "t3": "A slight hue shift makes dark steps warmer or cooler, as in many well-known UI palettes."
+        },
         "faq": {
           "q1": "Does it work with Tailwind v4?",
           "a1": "Yes. The @theme export creates variables like --color-brand-500 in OKLCH, just like Tailwind v4 uses them. For older versions there is the tailwind.config.js export.",
@@ -1646,6 +1988,25 @@
       "seo": {
         "whatIs": "Palette from Image finds the colors that define a photo or graphic and shows how much of the area each one covers. The analysis runs entirely in your browser: your image is never uploaded and never stored.",
         "howTo": "Drop an image onto the drop zone, paste it with Ctrl+V or choose a file (PNG, JPG, WebP, GIF or SVG up to 5 MB). Set the number of colors, press the space bar for another grouping and export the palette as a HEX list, CSS variables, Tailwind or an image.",
+        "useCases": {
+          "u1": {
+            "title": "Colors from a photo",
+            "text": "Capture the mood of a holiday photo, painting or moodboard as a palette for your next project. The share of each color shows which ones define the picture."
+          },
+          "u2": {
+            "title": "Colors for a product",
+            "text": "Drop in a product shot and find matching colors for the website, packaging or ads. Picture and design then look like they belong together."
+          },
+          "u3": {
+            "title": "Analyzing a logo",
+            "text": "Pull the colors of an existing logo as HEX values when no brand guidelines exist. A PNG or SVG file works best."
+          }
+        },
+        "tips": {
+          "t1": "Few colors show the main mood, many colors also catch small accents. Five or six colors are a good start.",
+          "t2": "Press Space for a different grouping if an important color is missing. Each run starts from different colors.",
+          "t3": "Export the palette as CSS, Tailwind or an image. Your photo stays in your browser and is never stored."
+        },
         "faq": {
           "q1": "Is my image uploaded?",
           "a1": "No. The image is scaled down and analyzed in your browser. It never leaves your device, is not part of shared links and is not stored.",
@@ -1692,6 +2053,25 @@
       "seo": {
         "whatIs": "A mesh gradient blends several colors across a surface instead of along a single line. The result looks like soft, flowing light and suits website heroes, app backgrounds, slides and social media posts.",
         "howTo": "Pick your colors and a background, choose how many color fields to mix and how strongly to warp and blur them, and add some grain if you like. Press Space for a new arrangement. Then export as PNG, JPG, WebP, SVG or CSS in the size you need.",
+        "useCases": {
+          "u1": {
+            "title": "Website heroes and app backgrounds",
+            "text": "Soft, flowing color makes a modern background for home pages, login screens and onboarding. Light tones keep text on top easy to read."
+          },
+          "u2": {
+            "title": "Social media and decks",
+            "text": "A mesh gradient gives quotes, announcements and title slides depth without needing a photo. Every variation is unique and free of licensing questions."
+          },
+          "u3": {
+            "title": "Wallpapers and covers",
+            "text": "Export a 4K or larger PNG for desktop backgrounds and podcast or album covers. The preview matches the export exactly."
+          }
+        },
+        "tips": {
+          "t1": "Little warp gives calm color clouds, a lot of warp lively, almost liquid shapes. Blur decides how softly the colors run into each other.",
+          "t2": "A touch of grain prevents visible banding, especially in large PNG and JPG exports.",
+          "t3": "Apply a brand palette from your Brand Kit for backgrounds in your brand colors. Space then only changes the arrangement."
+        },
         "faq": {
           "q1": {
             "question": "How is a mesh gradient different from a normal gradient?",
@@ -1758,6 +2138,25 @@
       "seo": {
         "whatIs": "A blurry gradient is a background made of a few large color circles, blurred so strongly that only soft clouds of color remain. It works well behind text, as a website hero, in presentations and as a wallpaper.",
         "howTo": "Choose two to five circles and whether they sit in the corners or around the center, then set size, spread, opacity and blur. Press Space for a new variant, add grain if you like, and export as PNG, JPG, WebP, SVG or CSS.",
+        "useCases": {
+          "u1": {
+            "title": "Backgrounds behind text",
+            "text": "Soft clouds of color keep headings and buttons readable while still giving the page color. They suit landing pages, newsletters and login pages."
+          },
+          "u2": {
+            "title": "Presentations",
+            "text": "A calm, blurry gradient is a simple slide template that works with any content. In brand colors, every slide looks part of one series."
+          },
+          "u3": {
+            "title": "Wallpapers",
+            "text": "Export a PNG at screen size for a gentle desktop or phone background. Icons and widgets stay easy to spot on top."
+          }
+        },
+        "tips": {
+          "t1": "If text is hard to read, lower the opacity or pick circles in tones close to the background.",
+          "t2": "Position Corners keeps the center free, Center concentrates the color behind your content.",
+          "t3": "The SVG uses no filters, so it looks the same in every app. For websites, the CSS export is the lightest."
+        },
         "faq": {
           "q1": {
             "question": "Will text stay readable on top?",
@@ -1816,6 +2215,25 @@
       "seo": {
         "whatIs": "A striped gradient splits a color gradient into vertical bands and shifts each band a little. It looks like light through ribbed glass or folded fabric and makes a striking background for covers, posters and websites.",
         "howTo": "Set your colors from top to bottom, then choose the number of stripes, how much their widths vary and how far they are offset. Shading adds light and shadow to every stripe. Press Space for new variants and export as PNG, JPG, WebP, SVG or CSS.",
+        "useCases": {
+          "u1": {
+            "title": "Covers and posters",
+            "text": "Offset stripes look like light through fluted glass. They make album, book and event covers stand out without needing a photo."
+          },
+          "u2": {
+            "title": "Website backgrounds",
+            "text": "As CSS or SVG, a hero section gets texture and color without a heavy image. The gradient stays sharp at any width."
+          },
+          "u3": {
+            "title": "Product and social graphics",
+            "text": "Striped gradients give product shots and social posts an elegant, slightly three-dimensional backdrop. Cut-out products stand out well against it."
+          }
+        },
+        "tips": {
+          "t1": "For a fluted glass look, use many narrow stripes, a small offset and strong shading. The Fluted glass preset is a good start.",
+          "t2": "Alternate direction makes neighboring stripes run opposite ways, which looks like folded fabric.",
+          "t3": "Without grain, the SVG is just rectangles with gradients and stays editable in Figma or Illustrator."
+        },
         "faq": {
           "q1": {
             "question": "What does Offset do?",
@@ -1973,6 +2391,25 @@
       "seo": {
         "whatIs": "Glass and border effects are CSS surfaces for cards, dialogs and hero sections: frosted glass with backdrop-filter, borders with a gradient (rotating if you like) and colored glows. The tool shows the effect as real CSS on a Musterli background and gives you the code.",
         "howTo": "Pick glass, gradient border or glow. For glass, set blur, tint, saturation, inner border and grain; for the border, its colors, width and rotation; for the glow, its color, reach and strength. Switch the background under Stage. Press Space for new variations. Copy CSS, Tailwind classes or an HTML example.",
+        "useCases": {
+          "u1": {
+            "title": "Cards and dialogs",
+            "text": "Frosted glass with backdrop-filter lifts cards, menus and dialogs above colorful backgrounds. The content behind stays visible as a soft hint."
+          },
+          "u2": {
+            "title": "Hero sections",
+            "text": "A gradient border or glow draws the eye to the key element, such as a sign-up form. Copy the code as CSS, Tailwind or HTML."
+          },
+          "u3": {
+            "title": "Pricing and features",
+            "text": "A rotating border marks the recommended plan or a new feature without shouting. The animation runs in pure CSS with no JavaScript."
+          }
+        },
+        "tips": {
+          "t1": "Glass only works when there is something behind it. Test the effect under Stage with the background you use on your site.",
+          "t2": "A light inner border and a little grain make glass more convincing. Too much blur turns it milky.",
+          "t3": "The code includes a reduced-motion rule. People who ask for less motion see a still border."
+        },
         "faq": {
           "q1": {
             "question": "Does the glass effect work in Safari?",
@@ -2078,6 +2515,25 @@
       "seo": {
         "whatIs": "A bento grid arranges content in tiles of different sizes, like the compartments of a bento box. The layout is popular for feature sections, portfolios, dashboards and social media graphics. The generator always fills the whole grid, without gaps.",
         "howTo": "Set columns, rows and the number of tiles you want. The smallest and largest tile control how varied the tiles get. Press Space for a new layout, or lock the layout and roll new colors only. Export as CSS Grid with HTML, Tailwind classes, SVG or an image.",
+        "useCases": {
+          "u1": {
+            "title": "Feature sections",
+            "text": "A bento grid presents several product features at a glance, in tiles of different sizes. The most important feature gets the biggest tile."
+          },
+          "u2": {
+            "title": "Portfolios",
+            "text": "Projects, quotes and key figures each get a tile. The grid stays gap-free however many entries there are, and wraps cleanly on phones."
+          },
+          "u3": {
+            "title": "Social media graphics",
+            "text": "With titles, icons and your own pictures in the tiles you get a compact overview for a post or a year in review. Export it as PNG or SVG."
+          }
+        },
+        "tips": {
+          "t1": "Like a layout? Lock Layout no. and Space only rolls new colors.",
+          "t2": "Smallest and largest tile control how varied the grid gets. A big difference gives one clear hero tile.",
+          "t3": "Columns on narrow screens decides how the grid wraps on phones. The CSS export handles it for you."
+        },
         "faq": {
           "q1": {
             "question": "Can I move single tiles?",
@@ -2174,6 +2630,25 @@
       "seo": {
         "whatIs": "A contrast checker measures how much text and background colors differ in lightness. The Web Content Accessibility Guidelines (WCAG 2) set minimum ratios so text stays readable with low vision, glare or poor screens.",
         "howTo": "Pick the text and background colors with the color picker, a HEX value or the eyedropper and read which WCAG levels pass. If the contrast falls short, apply the nearest color that reaches AA or AAA in one click. The simulation shows how the pair looks with color vision deficiency.",
+        "useCases": {
+          "u1": {
+            "title": "Accessible websites",
+            "text": "Check text and background colors against WCAG 2 before you build or publish a design. You avoid costly fixes right before launch."
+          },
+          "u2": {
+            "title": "Testing brand colors",
+            "text": "Test every pair in your palette at once and see which combinations work for text. The result makes a solid part of your brand guidelines."
+          },
+          "u3": {
+            "title": "Slides and print",
+            "text": "Slides and posters must be readable from a distance too. Good contrast helps everyone, especially in poor light or on a projector."
+          }
+        },
+        "tips": {
+          "t1": "Normal text needs at least 4.5:1, large text 3:1. UI components and graphics need 3:1.",
+          "t2": "If the contrast falls short, apply the suggestion in one click. Musterli finds the nearest color that reaches AA or AAA.",
+          "t3": "Apply a brand palette from your Brand Kit and check every combination at once under All pairs of a palette."
+        },
         "faq": {
           "q1": "What do AA and AAA mean?",
           "a1": "AA is the usual minimum: 4.5:1 for normal text and 3:1 for large text. AAA is stricter and asks for 7:1 and 4.5:1. UI components and graphics need 3:1.",
@@ -2274,6 +2749,25 @@
       "seo": {
         "whatIs": "A CSS shadow generator writes the code for box-shadow. Instead of one hard shadow, Musterli stacks several layers whose distance and blur grow along a curve. Cards and buttons look soft and naturally lit.",
         "howTo": "Set layers, distance, blur and light direction, or press Space for a new variant. The preview is real CSS on a Musterli background. Then copy the box-shadow, the Tailwind class, the @theme variable or the drop-shadow version.",
+        "useCases": {
+          "u1": {
+            "title": "Cards and buttons",
+            "text": "Several soft shadow layers let cards, buttons and inputs float naturally above the page. It looks more refined than a single hard shadow."
+          },
+          "u2": {
+            "title": "Design systems",
+            "text": "Store shadows as variables in Tailwind v4 and use them consistently, from small to large. Every component then looks like part of one system."
+          },
+          "u3": {
+            "title": "Cut-out images",
+            "text": "The drop-shadow version follows the shape of PNG and SVG graphics instead of their rectangle. It suits product shots, icons and logos without a background."
+          }
+        },
+        "tips": {
+          "t1": "Color from background tints the shadow to match. On colored surfaces that looks more natural than pure black.",
+          "t2": "Shadows barely show on dark backgrounds. There, work with a lighter surface or a fine border instead.",
+          "t3": "A system usually needs three levels. Create them with the same light direction and different distances."
+        },
         "faq": {
           "q1": "Why several shadow layers?",
           "a1": "A real shadow is dark and sharp close to the object and gets lighter and softer further away. Several layers recreate that, while a single box-shadow often looks flat or muddy.",
@@ -2392,6 +2886,25 @@
       "seo": {
         "whatIs": "Guilloche is the name for fine, interlaced line patterns as you know them from banknotes, share certificates, diplomas and vouchers. They used to be engraved into metal with rose engine lathes; today they come from simple formulas: lines swinging between two edges, spirographs made of rotating pointers and overlaid sine waves. The generator computes everything right in your browser.",
         "howTo": "Pick a layout: rosette for a seal or watermark, band for a tileable border, or frame for the edge of a certificate. Then set the curve, the number of lines, petals and swings, place the inner and outer edge and choose colors, including an iris print or a blend along the lines. Press the space bar for new variations. Export as SVG, PNG, JPG, WebP or as an animated GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Certificates and diplomas",
+            "text": "A guilloche frame gives diplomas, certificates of attendance and awards an official, high-quality look. The center stays free for the name and text."
+          },
+          "u2": {
+            "title": "Vouchers and tickets",
+            "text": "Rosettes and bands decorate vouchers, tickets and labels. As SVG, the fine lines stay crisp in print."
+          },
+          "u3": {
+            "title": "Packaging and branding",
+            "text": "Fine line work suits premium packaging, wine labels and business cards. In a single ink it looks especially refined."
+          }
+        },
+        "tips": {
+          "t1": "If the pattern looks like a solid area, reduce lines or swings. The lines need some air between them.",
+          "t2": "For an endless border, choose the band layout and a wide, low format. The band joins seamlessly left and right.",
+          "t3": "Export SVG for print. Not every print shop reproduces lines thinner than 0.25 pt cleanly, so ask if in doubt."
+        },
         "faq": {
           "q1": {
             "question": "Can I use the patterns for real banknotes or ID documents?",
@@ -2473,6 +2986,25 @@
       "seo": {
         "whatIs": "Contour lines connect points of equal height, just like on a hiking map. Musterli creates a random terrain from noise and draws its contours at even intervals. The result works as a calm background for websites, slides, posters or packaging and stays sharp as SVG.",
         "howTo": "Shape the terrain with scale, detail levels, roughness and warp, and choose how many lines to draw. Show lines, filled elevation bands or both, and highlight every nth line as an index line. Press the space bar for a new terrain. Export as SVG, PNG, JPG, WebP or as a GIF in which the lines slowly move.",
+        "useCases": {
+          "u1": {
+            "title": "Website backgrounds",
+            "text": "Contour lines are a calm, natural background for outdoor, travel and tech websites. In two close tones, text on top stays readable."
+          },
+          "u2": {
+            "title": "Posters and packaging",
+            "text": "Filled elevation bands in graded colors suit posters, coffee packaging and labels. The terrain is made up, so there are no licensing questions."
+          },
+          "u3": {
+            "title": "Presentations",
+            "text": "Fine contour lines behind slide titles look technical and refined without distracting. Every seed gives you a new landscape."
+          }
+        },
+        "tips": {
+          "t1": "Index line every highlights every n-th line, just like on a hiking map, and brings order to the image.",
+          "t2": "Few detail levels give gentle hills, many give rugged terrain. Warp makes the shapes more organic.",
+          "t3": "Many lines, and bands with lines, make the SVG larger. For websites a PNG or WebP is often enough."
+        },
         "faq": {
           "q1": {
             "question": "Are the contour lines real map data?",
@@ -2575,6 +3107,25 @@
       "seo": {
         "whatIs": "A flow field is a field of directions that gives every point of the canvas an angle. Let many lines follow it and you get images reminiscent of wind, currents, fur or silk. Musterli computes the field from noise or from swirls and can keep a minimum distance, so the lines never clump together.",
         "howTo": "Pick the field, its scale and turbulence, then the start points, line spacing and length. Stroke shape, line width and opacity set the character, and the colors come from the palette, the direction or the position. Press the space bar for a new variation. Export as SVG, PNG, JPG, WebP or as a GIF with travelling strokes.",
+        "useCases": {
+          "u1": {
+            "title": "Generative art",
+            "text": "Thousands of lines following an invisible current make prints and posters that recall wind, water or hair. Every seed gives a new picture."
+          },
+          "u2": {
+            "title": "Backgrounds for tech and music",
+            "text": "Fine, flowing lines suit websites, album covers and event graphics with a digital feel. Light lines on a dark base look especially striking."
+          },
+          "u3": {
+            "title": "Plotters and lasers",
+            "text": "The SVG holds simplified lines, ready for pen plotters and laser engraving. With a minimum distance, the lines never overlap."
+          }
+        },
+        "tips": {
+          "t1": "Minimum distance spreads the lines evenly. At 0 and low opacity you get soft, hair-like textures.",
+          "t2": "Turbulence decides how far lines stray from the main direction. Little turbulence looks like a calm stream.",
+          "t3": "Color by direction or position turns lines into gradients. Random from palette mixes the colors freely."
+        },
         "faq": {
           "q1": {
             "question": "What is the difference between noise and swirl?",
@@ -2671,6 +3222,25 @@
       "seo": {
         "whatIs": "Low poly is a faceted look made of flat triangles, like a cut gem or a paper model. Voronoi cells split the surface into organic regions around scattered points, like dry earth or a mosaic. Both make striking backgrounds for websites, slides, posters and social posts.",
         "howTo": "Pick triangles or Voronoi cells, set the point spacing and choose a gradient through your colors. Add light for a sculpted look, lines for a wireframe, or a gap and rounded corners for mosaic tiles. Press Space for a new arrangement. Export as SVG, PNG, JPG, WebP, CSS or animated GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Website and app backgrounds",
+            "text": "Faceted triangles in a gradient make a striking background for home pages and login screens. With lighting the surface looks almost three-dimensional."
+          },
+          "u2": {
+            "title": "Slides and posters",
+            "text": "Voronoi cells look like mosaic or dry earth and give title slides and posters texture. A gap and rounded corners turn them into tiles."
+          },
+          "u3": {
+            "title": "Gaming and tech",
+            "text": "The low poly look fits game websites, streams and tech events. As a wireframe with lines it looks especially technical."
+          }
+        },
+        "tips": {
+          "t1": "Lighting makes the faces look sculpted like a cut gem. Light direction sets where it gets bright.",
+          "t2": "A gap and rounded corners turn Voronoi cells into mosaic tiles. The background shows through the gaps.",
+          "t3": "Larger point spacing gives fewer, bigger faces and a smaller SVG. Smaller spacing looks finer and more detailed."
+        },
         "faq": {
           "q1": {
             "question": "How are the triangles made?",
@@ -2756,6 +3326,25 @@
       "seo": {
         "whatIs": "Terrazzo is a floor and wall material made of stone and glass chips set in a binder and ground smooth. As a graphic it makes a lively, tactile pattern for packaging, websites, posters and product mockups.",
         "howTo": "Choose angular chips, pebbles or a mix, then set the chip size, the number of size classes and how much of the surface they cover. Pick a base color and chip colors; the first color can dominate. Add speckles and grain for a natural finish. Keep Seamless tile on for patterns and export the tile as CSS or PNG, or the whole canvas as SVG, PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Packaging and labels",
+            "text": "Terrazzo looks premium and handmade, a natural fit for cosmetics, coffee and design products. Muted colors make it especially elegant."
+          },
+          "u2": {
+            "title": "Website backgrounds",
+            "text": "As a seamless CSS tile, the pattern fills whole sections and stays small. Thanks to the random chips, the repetition is hard to spot."
+          },
+          "u3": {
+            "title": "Mockups and product shots",
+            "text": "A terrazzo backdrop stands in for a real stone surface in product mockups and social posts. The product looks like it was shot in a studio."
+          }
+        },
+        "tips": {
+          "t1": "Keep Seamless tile on when you need a pattern. For a single picture you can turn it off.",
+          "t2": "Main color weight lets the first color dominate and turns the rest into accents, which looks more natural than equal amounts.",
+          "t3": "Speckles and grain give the finish of a polished floor. A brand palette from your Brand Kit colors the chips while the base stays."
+        },
         "faq": {
           "q1": {
             "question": "Do the chips overlap?",
@@ -2958,6 +3547,25 @@
       "seo": {
         "whatIs": "A screenshot beautifier turns a plain screen capture into a polished image. The picture sits on a background and gets padding, rounded corners, a soft shadow and, if you like, a window or browser bar with an address. Screenshots in documentation, blog posts, on social media and on Product Hunt look clean and consistent. As a website mockup it shows your page on a laptop, monitor, tablet or phone, and as a responsive mockup on several devices at once.",
         "howTo": "Drop your screenshot into the editor, choose a file or paste it with Ctrl+V. Then pick a frame, padding, corners, shadow and a background: a color, a gradient or a Musterli background such as mesh, blurry or waves. Space rolls a new background and keeps your picture. Export as PNG, JPG, WebP or SVG, or copy the result straight to the clipboard. For a mockup, pick a laptop, monitor, tablet, phone or a responsive set under Device and type the address for the browser bar.",
+        "useCases": {
+          "u1": {
+            "title": "Docs and blog posts",
+            "text": "Consistent padding, corners and shadows make screenshots in guides and articles look tidy. A window bar makes every picture look like part of one set."
+          },
+          "u2": {
+            "title": "Product Hunt and social media",
+            "text": "Show your app on a gradient or Musterli background in the right sizes for Product Hunt, X or LinkedIn. The sizes are ready in the menu."
+          },
+          "u3": {
+            "title": "Website mockups",
+            "text": "Present your site on a laptop, monitor, tablet and phone, or as a responsive set with several devices. It fits right into pitches and client decks."
+          }
+        },
+        "tips": {
+          "t1": "Paste your screenshot with Ctrl+V or Cmd+V. Space rolls a new background and keeps your picture.",
+          "t2": "Pick a ready-made format for your platform from the size menu so nothing gets cropped.",
+          "t3": "Your screenshot stays in your browser. Share links leave out the picture and the address, and saved designs stay local."
+        },
         "faq": {
           "q1": "Is my screenshot uploaded?",
           "a1": "No. The picture is processed in your browser only and never sent to a server. Share links contain neither the picture nor the address in the bar. If you save the design, everything stays local in your browser.",
@@ -3099,6 +3707,25 @@
       "seo": {
         "whatIs": "An avatar generator creates profile pictures without a photo: initials on a colored shape, a symmetric identicon or a small composition of shapes. Use them as default avatars for user accounts, in comments, team pages, chats and prototypes. Color and pattern are derived from the name, so every person always looks the same.",
         "howTo": "Type a name or an email address and choose initials, identicon or shapes. Set the shape, the fill (solid, gradient or pattern), the font and the grid, and pick a palette each name takes its color from. The space bar shuffles palette, fill and font while the name stays. Export as SVG, PNG, JPG or WebP, for example at 128, 256, 512 or 1024 pixels.",
+        "useCases": {
+          "u1": {
+            "title": "Default avatars",
+            "text": "New accounts get a profile picture with initials or an identicon, derived from the name. The same name always gives the same picture."
+          },
+          "u2": {
+            "title": "Team pages and prototypes",
+            "text": "Fill team pages, comment threads and chat mockups with matching avatars instead of empty circles. Drafts instantly feel more alive."
+          },
+          "u3": {
+            "title": "Communities and forums",
+            "text": "Identicons tell accounts apart at a glance, without anyone having to upload a photo. That also protects your members' privacy."
+          }
+        },
+        "tips": {
+          "t1": "Pick a palette with similar lightness, so every avatar on a page looks consistent whatever color a name gets.",
+          "t2": "For a fixed look, export PNG or WebP. The SVG uses system fonts and can look slightly different on other devices.",
+          "t3": "Export at 256 or 512 pixels. That covers high-resolution screens and keeps files small."
+        },
         "faq": {
           "q1": {
             "question": "Does the same name always get the same avatar?",
@@ -3209,6 +3836,25 @@
       "seo": {
         "whatIs": "A placeholder image holds the space for a picture that is still missing from a layout. It shows its size in pixels or your own text, so everyone knows what goes there. You need placeholders in wireframes, mockups, prototypes, presentations and while building websites.",
         "howTo": "Pick a size from the list (social media, screens, ad formats) or enter width and height. The label shows width × height automatically, your own text or nothing. Then choose a solid color, a gradient or a pattern and turn on diagonals or a border. Export as SVG, PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Wireframes and mockups",
+            "text": "Placeholders with a size label show the whole team which picture goes where. No image format gets lost in the handoff."
+          },
+          "u2": {
+            "title": "Building websites",
+            "text": "Download the images as files instead of relying on someone else's placeholder service. Nothing breaks when a service goes down."
+          },
+          "u3": {
+            "title": "Ad formats",
+            "text": "Test layouts for banners such as 300 × 250 or 728 × 90 with placeholders at the right size. The formats are ready in the size list."
+          }
+        },
+        "tips": {
+          "t1": "Use your own text instead of the size label to describe the content, such as Team photo or Product shot. It makes handoffs easier.",
+          "t2": "Diagonals and a border make placeholders instantly recognizable as such in a layout, even on white pages.",
+          "t3": "SVG is tiny and sharp, PNG works everywhere. Use SVG for websites and PNG for slides."
+        },
         "faq": {
           "q1": {
             "question": "Do I need a placeholder URL service?",
@@ -3302,6 +3948,25 @@
       "seo": {
         "whatIs": "An animated gradient is a background that moves slowly: the gradient pans, turns, changes its colors or soft blobs drift across it. Musterli writes it as pure CSS with keyframes, without JavaScript or video, so it stays light and sharp at any size.",
         "howTo": "Pick Pan, Rotate, Shift or Blobs, choose your colors and set duration, easing and direction. Press Space for new colors and a new blob layout. The preview runs the real CSS. Copy the CSS, an HTML example or Tailwind classes, export a still image as PNG, JPG, WebP or SVG, or the whole loop as a GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Hero sections",
+            "text": "A slowly moving gradient brings a home page to life, with no video and no JavaScript. The CSS is only a few lines long and loads instantly."
+          },
+          "u2": {
+            "title": "Buttons and banners",
+            "text": "A subtle color shift draws the eye to calls to action, announcements or sales. The Tailwind classes make it quick to add."
+          },
+          "u3": {
+            "title": "Slides and streams",
+            "text": "Exported as GIF, the loop runs in slides, overlays and social posts. A still frame is available as PNG, JPG, WebP or SVG too."
+          }
+        },
+        "tips": {
+          "t1": "A long duration of 10 seconds or more feels calm and refined. Short loops quickly become distracting.",
+          "t2": "The code includes a reduced-motion rule. People who ask for less motion see the first frame as a still gradient.",
+          "t3": "Blobs only move with transform, which keeps the CPU load low even on older devices."
+        },
         "faq": {
           "q1": {
             "question": "What happens for people who prefer reduced motion?",
@@ -3487,6 +4152,25 @@
       "seo": {
         "whatIs": "A favicon is the small picture in the browser tab, in bookmarks and in the history. Phones show an app icon when someone adds your website to the home screen. Modern websites need several files for this: favicon.ico for older browsers, favicon.svg for every size and dark mode, an Apple touch icon, icons for Android and a manifest. The favicon generator creates all of them from one design.",
         "howTo": "Choose a letter, a shape from the library or your own logo as the content. Set the background (color, gradient, pattern or transparent), the tile shape and the padding. Press Space for new colors. Turn on own colors for dark mode if you like and enter the name and colors under App and manifest. Then export the icon pack as a ZIP, copy the files to the root folder of your website and paste the HTML into the head.",
+        "useCases": {
+          "u1": {
+            "title": "A new website",
+            "text": "Create every file today's browsers and phones need from one letter or your logo, in a single pack. The matching HTML is included."
+          },
+          "u2": {
+            "title": "Web apps",
+            "text": "The pack includes a manifest and a maskable icon, so your app looks clean on the Android home screen whatever shape the system cuts out."
+          },
+          "u3": {
+            "title": "Side projects and docs",
+            "text": "A simple favicon with an initial makes even small projects easy to spot among browser tabs. It takes just a few minutes."
+          }
+        },
+        "tips": {
+          "t1": "Think of the smallest size, 16 pixels in a browser tab. Fine details disappear there, a bold letter or a simple shape stays recognizable.",
+          "t2": "Own colors in dark mode let favicon.svg adapt to dark browser bars.",
+          "t3": "Your logo from the Brand Kit is ready in the Logo field. Then copy the files to your root folder and the HTML into the head."
+        },
         "faq": {
           "q1": {
             "question": "Which files are in the icon pack?",
@@ -3590,6 +4274,25 @@
       "seo": {
         "whatIs": "Duotone is an image effect that reduces a photo to two colors: dark areas take the shadow color, light areas the highlight color, with a smooth blend in between. With three colors it is called tritone, with any number a gradient map. The look is popular for posters, album covers, social media and websites because it tints photos in brand colors.",
         "howTo": "Upload a photo or try the presets on the sample picture. Choose duotone, tritone or gradient and set the shadow and highlight colors. Brightness, contrast and gamma decide how much area each color gets. Grain adds an analog print look, strength blends the original back in. Space rolls new color pairs. Export as PNG, JPG or WebP at full resolution.",
+        "useCases": {
+          "u1": {
+            "title": "Photos in brand colors",
+            "text": "Tint team and product photos consistently, so pictures from different sources belong together and look like a planned series."
+          },
+          "u2": {
+            "title": "Posters and album covers",
+            "text": "Bold color pairs such as pink and blue give photos a graphic, poster-like look. It works with simple phone photos too."
+          },
+          "u3": {
+            "title": "Websites and social media",
+            "text": "Duotone images as backgrounds keep text readable and still stand out. Light highlight colors make the picture calmer."
+          }
+        },
+        "tips": {
+          "t1": "Gamma shifts how much area the shadow and highlight colors get, often to better effect than brightness alone.",
+          "t2": "A brand palette from your Brand Kit is sorted by lightness: the darkest color becomes the shadow, the lightest the highlight.",
+          "t3": "A little grain adds an analog print look. Strength blends the original back in."
+        },
         "faq": {
           "q1": "Is my photo uploaded?",
           "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
@@ -3698,6 +4401,25 @@
       "seo": {
         "whatIs": "ASCII art is a picture made of text characters: dark areas get dense characters such as @ or #, light areas dots or spaces. From a little distance the photo appears again. Musterli also draws colored characters, an LED or dot matrix and braille patterns, for posters, terminal aesthetics, README files and websites.",
         "howTo": "Upload a photo or start with the sample picture. Choose characters, dots or braille, the number of columns and a character set, including your own characters. Brightness, contrast and gamma decide how much detail shows; invert fits the picture to a dark background. Export as SVG, PNG, JPG or WebP, or as text and an HTML snippet.",
+        "useCases": {
+          "u1": {
+            "title": "READMEs and terminals",
+            "text": "A logo or portrait made of text fits README files, command-line tools and startup banners. The text export pastes right in."
+          },
+          "u2": {
+            "title": "Posters and merch",
+            "text": "Colored ASCII art or an LED dot matrix makes posters, T-shirts and covers with retro charm. As SVG it stays sharp at any size."
+          },
+          "u3": {
+            "title": "Websites",
+            "text": "The HTML snippet puts the characters on your page as real text, light and copyable. It suits portfolios and sites with a terminal look."
+          }
+        },
+        "tips": {
+          "t1": "More columns show finer detail but smaller characters. For text in READMEs, 60 to 100 columns read well.",
+          "t2": "For dark backgrounds, turn on Invert so light areas become dense characters.",
+          "t3": "Contrast and gamma decide how much of the picture stays recognizable. Portraits on a calm background work best."
+        },
         "faq": {
           "q1": "Is my photo uploaded?",
           "a1": "No. The photo is processed in your browser only and never sent to a server. Share links contain neither the photo nor the characters computed from it; a shared link shows the sample picture.",
@@ -3811,6 +4533,25 @@
       "seo": {
         "whatIs": "A perspective grid is a floor grid that runs into the distance and vanishes at the horizon, familiar from synthwave, outrun and eighties video games. Musterli computes the grid with a real camera projection and can add a striped sun, stars, mountains, haze and glow. Use it as a background for album covers, streams, slides or websites.",
         "howTo": "Pick a preset or set horizon, tilt, field of view and camera height yourself. Under Grid you adjust view distance, line width, fade and glow, under Scene the sun, stars, mountains and haze. Press the space bar for new colors and a new camera. Export as SVG, PNG, JPG or WebP, or as a GIF in which the grid moves forward in a seamless loop.",
+        "useCases": {
+          "u1": {
+            "title": "Album covers and music",
+            "text": "A glowing grid with a striped sun is the synthwave and outrun look for covers, playlists and flyers. Neon colors on a dark base work best."
+          },
+          "u2": {
+            "title": "Streams and gaming",
+            "text": "Behind overlays, start screens and tournament graphics, it brings back the look of eighties video games. As a GIF the grid moves in a loop."
+          },
+          "u3": {
+            "title": "Events and slides",
+            "text": "A perspective grid on the title slide gives retro parties and tech talks an instant style. The SVG stays editable in Figma or Illustrator."
+          }
+        },
+        "tips": {
+          "t1": "A low horizon leaves room in the sky for the sun and mountains, a high one puts the grid up front.",
+          "t2": "Glow and horizon haze soften the image. For a crisp vector look, turn both off.",
+          "t3": "In the GIF the grid moves exactly one cell per loop, so the animation runs seamlessly."
+        },
         "faq": {
           "q1": {
             "question": "Do I need 3D software for this?",
@@ -3890,6 +4631,25 @@
       "seo": {
         "whatIs": "Halftone is the technique newspapers and posters use to print photos with a single ink: the picture is split into a grid of cells, and each cell gets a dot that grows the darker the picture is at that spot. Up close you see dots, from a distance a photo. Today the look is popular for posters, merch, social media and websites with a retro or pop art style.",
         "howTo": "Upload a photo or try the presets on the sample picture. Choose the shape (dots, lines, squares or diamonds), the cell size and the screen angle. Ink and paper are up to you, and the paper can be transparent. Invert turns the light areas into dots, ideal for light ink on a dark background. Brightness, contrast and gamma decide how large the dots get. Space rolls new colors and angles. Export as PNG, JPG, WebP or SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Posters and merch",
+            "text": "Halftone dots give photos a pop art or newspaper look for posters, T-shirts and tote bags. With a single ink it looks especially graphic."
+          },
+          "u2": {
+            "title": "Screen printing and plotters",
+            "text": "The SVG export draws every dot as a vector, ready for screen printing, lasers or cutting plotters. No image editor needed."
+          },
+          "u3": {
+            "title": "Websites and social media",
+            "text": "A single-ink halftone in your brand color on transparent paper looks graphic and loads fast. It sits on any background of your site."
+          }
+        },
+        "tips": {
+          "t1": "45 degrees is the classic screen angle, where the eye notices the grid least. 0 degrees looks technical and strict.",
+          "t2": "For light ink on a dark background, turn on Invert. The light areas of the photo then become dots.",
+          "t3": "Larger cells look bolder and keep the SVG small. Very large photos need a larger cell size for the SVG."
+        },
         "faq": {
           "q1": "Is my photo uploaded?",
           "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
@@ -3988,6 +4748,25 @@
       "seo": {
         "whatIs": "CMYK halftone printing is the process behind almost every printed color photo: the picture is separated into the four process inks cyan, magenta, yellow and black, and each ink is printed as its own dot screen. So the screens do not interfere into distracting patterns (moiré), each ink has its own angle, classically cyan 15, magenta 75, yellow 0 and black 45 degrees. Up close you see the typical rosettes that comics and pop art made famous.",
         "howTo": "Upload a photo or start with a preset on the sample picture. Set the cell size and shape; gray component replacement (GCR) decides how much of the gray prints in black instead of the three colored inks. The angle of each ink is adjustable. Misregistration shifts cyan, magenta and yellow against each other like a slipped print. Inks and paper can be changed. Space turns all screens together and picks a new paper. Export as PNG, JPG, WebP or SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Pop art and comics",
+            "text": "The typical rosettes of four-color printing give photos the look of vintage comics and posters. Up close you see dots, from a distance the picture."
+          },
+          "u2": {
+            "title": "Posters and record covers",
+            "text": "Misregistration makes the picture look like a slightly slipped print, popular for music and culture posters. You set the direction of the shift yourself."
+          },
+          "u3": {
+            "title": "Riso look",
+            "text": "With your own inks instead of CMYK you get a risograph-style look, ideal for zines and flyers. The paper takes any color you like too."
+          }
+        },
+        "tips": {
+          "t1": "The classic angles of 15, 75, 0 and 45 degrees avoid moiré. If you change them, watch out for distracting patterns.",
+          "t2": "Gray component replacement (GCR) sets how much gray prints in black instead of three inks. More GCR looks cleaner.",
+          "t3": "This is a design effect, not a color separation for the print shop. For true-to-original photos, the printer needs a color profile."
+        },
         "faq": {
           "q1": "Is my photo uploaded?",
           "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
@@ -4077,6 +4856,25 @@
       "seo": {
         "whatIs": "Dithering lets a picture get by with only a few colors and still show gradients and detail: instead of rounding a color, the algorithm spreads the difference to the neighboring pixels (error diffusion such as Floyd-Steinberg, Atkinson or Stucki) or compares each pixel with a fixed threshold pattern (Bayer matrix). The grainy look recalls early computers, game consoles and fax machines and is popular today for retro graphics, posters and websites.",
         "howTo": "Upload a photo or try the presets on the sample picture. Choose an algorithm and a palette: 1-bit with two colors of your choice, four grays, four greens, the four colors of early PC graphics or your own colors. Pixel size makes the dots coarser; brightness, contrast and gamma decide how much turns light or dark. Space rolls new colors, or a new algorithm for fixed palettes. Export as PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Retro and pixel graphics",
+            "text": "Dithering in a few colors recalls early computers and game consoles. It suits games, retro websites and pixel art projects."
+          },
+          "u2": {
+            "title": "Posters and zines",
+            "text": "A 1-bit picture in two bold colors prints cleanly and looks graphic. It stays clear even on simple printers and copiers."
+          },
+          "u3": {
+            "title": "Light images for websites",
+            "text": "Few colors mean small PNG files with a character of their own. That saves load time and gives your site a distinctive look."
+          }
+        },
+        "tips": {
+          "t1": "Floyd-Steinberg gives fine, natural transitions. Atkinson makes highlights and shadows bolder, Bayer a regular crosshatch.",
+          "t2": "Larger pixels keep the effect visible on high-resolution screens. For pixel art, 3 to 6 pixels work well.",
+          "t3": "Choose Custom colors under Palette and apply a brand palette from your Brand Kit for dithering in your brand colors."
+        },
         "faq": {
           "q1": "Is my photo uploaded?",
           "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
@@ -4172,6 +4970,25 @@
       "seo": {
         "whatIs": "A shader gradient is a gradient computed by a small program right on your graphics card. Instead of a few fixed color stops, it builds a living field of noise, bends it with domain warping and then runs it through your colors. The result is liquid, silky or grainy backgrounds that need no image as a starting point. Musterli renders everything in your browser, nothing leaves your device.",
         "howTo": "Pick a style such as Liquid, Silk or Aurora and choose two to six colors. Shape the field with frequency, warp and angle, then give it a surface with grain, vignette and Bayer dithering. Press Space for new colors and a new shape. The moment slider picks the still frame for exports. Then export a PNG, JPG or WebP up to 8K, or a seamless GIF loop.",
+        "useCases": {
+          "u1": {
+            "title": "Hero sections and apps",
+            "text": "Liquid, silky gradients make an eye-catching background for product and AI websites. Every variation is unique and needs no photo to start from."
+          },
+          "u2": {
+            "title": "Wallpapers up to 8K",
+            "text": "Export PNG, JPG or WebP up to 8K for desktops, TVs and large displays. Grain and dithering stay exactly as in the preview."
+          },
+          "u3": {
+            "title": "Animated loops",
+            "text": "As a seamless GIF, the gradient loops in slides, social posts and streams. Speed decides how calm the motion feels."
+          }
+        },
+        "tips": {
+          "t1": "The Moment slider picks the still frame that gets exported, so you can catch the best point of the motion.",
+          "t2": "Dithering and grain prevent banding in soft gradients, especially in JPG and WebP.",
+          "t3": "Apply a brand palette from your Brand Kit and the shader runs through your brand colors. Space then only changes the shape."
+        },
         "faq": {
           "q1": {
             "question": "Do I need a special graphics card?",
@@ -4383,6 +5200,8 @@
     "categoriesLabel": "Categories",
     "whatIsHeading": "What is it?",
     "howToHeading": "How it works",
+    "useCasesHeading": "What you can use it for",
+    "tipsHeading": "Tips",
     "faqHeading": "FAQ",
     "relatedHeading": "Related generators",
     "moreInCategory": "All generators in {category}"

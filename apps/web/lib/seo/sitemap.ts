@@ -9,7 +9,7 @@
  */
 import type { MetadataRoute } from "next";
 
-import { ENABLED_LOCALES } from "@/i18n/locales";
+import { ENABLED_LOCALES, type EnabledLocale } from "@/i18n/locales";
 import type { AppRoute } from "@/i18n/paths";
 import { populatedCategories } from "@/lib/catalogue";
 import { curatedGradients } from "@/lib/collections/gradients";
@@ -20,6 +20,8 @@ import { legalPagesIndexable } from "@/lib/legal/config";
 import { registry } from "@musterli/tool-registry";
 
 import { pageAlternates } from "./alternates";
+import { DEFAULT_MOTIF, hasStaticMotif, motifPath } from "./motifs";
+import { ogImagePath } from "./og";
 import { siteUrl } from "./site-url";
 
 /** Every page that belongs in the sitemap, independent of the language. */
@@ -45,13 +47,30 @@ export function sitemapRoutes(): AppRoute[] {
   ];
 }
 
+/**
+ * Image sitemap entries of a page: for a tool landing page the localized OG
+ * image (PNG with the tool name) and the preview motif shown on the page
+ * (SVG), both only when the tool has a static motif. Other pages have none.
+ */
+export function sitemapImages(route: AppRoute, locale: EnabledLocale, base: URL): string[] {
+  if (route.page !== "landing") return [];
+  const tool = registry.get(route.toolId);
+  if (!tool || !hasStaticMotif(tool)) return [];
+  return [
+    new URL(ogImagePath(tool.id, locale), base).toString(),
+    new URL(motifPath(tool.id, DEFAULT_MOTIF), base).toString(),
+  ];
+}
+
 export function sitemapEntries(base: URL = siteUrl()): MetadataRoute.Sitemap {
   return sitemapRoutes().flatMap((route) =>
     ENABLED_LOCALES.map((locale) => {
       const { canonical, languages } = pageAlternates(route, locale, base);
+      const images = sitemapImages(route, locale, base);
       return {
         url: String(canonical),
         alternates: { languages: languages as Record<string, string> },
+        ...(images.length > 0 ? { images } : {}),
       };
     }),
   );

@@ -212,7 +212,7 @@ test.use({ deviceScaleFactor: 1 });
 
 test.describe("photo effect landing pages", () => {
   const PAGES: { tool: string; locale: Locale; title: string }[] = [
-    { tool: "duotone", locale: "de", title: "Duotone und Gradient Map" },
+    { tool: "duotone", locale: "de", title: "Duotone und Verlaufsumsetzung (Gradient Map)" },
     { tool: "duotone", locale: "en", title: "Duotone and Gradient Map" },
     { tool: "ascii-art", locale: "de", title: "ASCII-Art" },
     { tool: "ascii-art", locale: "en", title: "ASCII Art" },

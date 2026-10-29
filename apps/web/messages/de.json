@@ -256,6 +256,25 @@
       "seo": {
         "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei, lädt sofort und bleibt in jeder Grösse scharf. Der Generator mischt die Farben im Farbraum OKLCH, darum wirken Übergänge gleichmässig und ohne graue Mitte.",
         "howTo": "Wähle linear, radial oder konisch, lege deine Farben fest und stelle Winkel, Mittelpunkt und Übergang ein. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Website-Hero",
+            "text": "Ein Verlauf als Hintergrund des ersten Bildschirms lädt ohne Bilddatei und bleibt auf jedem Display gestochen scharf. Kopier das CSS direkt in deinen Abschnitt, die Seite wird dadurch nicht schwerer."
+          },
+          "u2": {
+            "title": "Buttons und Karten",
+            "text": "Ein dezenter Verlauf hebt Schaltflächen, Badges und Preiskarten hervor, ohne laut zu wirken. Mit den fertigen Tailwind-Klassen setzt du ihn ein, ohne eine Zeile eigenes CSS zu schreiben."
+          },
+          "u3": {
+            "title": "Präsentationen und Social Posts",
+            "text": "Exportiere den Verlauf als PNG im passenden Format und leg ihn hinter Folientitel, Zitate oder Ankündigungen. So bekommen alle Grafiken einer Serie denselben ruhigen Hintergrund."
+          }
+        },
+        "tips": {
+          "t1": "Wirkt die Mitte grau, bleib beim Farbraum OKLCH und wähl bei der Farbton-Richtung den kurzen Weg. So läuft der Übergang durch kräftige statt durch trübe Farben.",
+          "t2": "Zwischenstopps zusammen mit einer Übergangskurve machen weiche Verläufe noch ruhiger. Für harte Kanten nimm stattdessen wenige Farben ohne Kurve.",
+          "t3": "Wende eine Brand-Palette aus deinem Brand Kit an. Die Markenfarben werden gesperrt, die Leertaste würfelt dann nur noch Winkel und Typ neu."
+        },
         "faq": {
           "q1": {
             "question": "Warum OKLCH statt sRGB?",
@@ -322,6 +341,25 @@
       "seo": {
         "whatIs": "CSS-Muster sind Hintergründe, die der Browser selbst aus Verläufen zeichnet. Sie brauchen keine Bilddatei, laden sofort, bleiben in jeder Grösse scharf und lassen sich mit ein paar Zeichen CSS umfärben. Die Bibliothek enthält über 30 eigene Muster in fünf Kategorien.",
         "howTo": "Wähle ein Muster, stelle Grösse, Farben und Deckkraft ein und drehe Streifen oder Raster in den passenden Winkel. Staple bis zu fünf Muster als Ebenen übereinander, blende sie ein und aus oder ändere ihre Reihenfolge. Mit der Leertaste würfelst du neue Varianten. Kopiere am Schluss das CSS oder die Tailwind-Klassen, oder exportiere als SVG, PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Hintergrund für Abschnitte",
+            "text": "Ein feines Punkt- oder Linienmuster gliedert lange Seiten, ohne vom Inhalt abzulenken. Das CSS braucht keine Bilddatei, lädt sofort und lässt sich mit einer Farbe im Code anpassen."
+          },
+          "u2": {
+            "title": "Platzhalter in Prototypen",
+            "text": "Streifen oder Karos markieren Flächen für Bilder und Werbung in Entwürfen. Weil das Muster reines CSS ist, färbst du es mit wenigen Zeichen passend zum Entwurf um."
+          },
+          "u3": {
+            "title": "Verpackung und Druck",
+            "text": "Exportiere das Muster als SVG oder als PNG in hoher Auflösung und verwende es für Etiketten, Geschenkpapier oder Einladungen. Das SVG bleibt in jeder Grösse scharf."
+          }
+        },
+        "tips": {
+          "t1": "Stapel bis zu fünf Muster als Ebenen. Ein grobes Muster mit geringer Deckkraft über einem feinen ergibt Tiefe, die ein einzelnes Muster nicht schafft.",
+          "t2": "Halte die Deckkraft hinter Text niedrig, etwa bei 10 bis 20 Prozent. So bleibt der Text gut lesbar und das Muster wirkt als Struktur statt als Bild.",
+          "t3": "Für pixelgenaue Grafiken nimm den PNG-Export. Für Websites ist das CSS fast immer die bessere Wahl, weil es leichter ist und sich mit dem Element mitskaliert."
+        },
         "faq": {
           "q1": {
             "question": "Brauche ich für die Muster ein Bild?",
@@ -524,6 +562,25 @@
       "seo": {
         "whatIs": "Blobs sind weiche, organische Formen. Sie lockern strenge Layouts auf und eignen sich als Hintergrund, als Rahmen für Fotos oder als Akzent hinter Text. Jede Form entsteht aus wenigen Punkten auf einem Kreis, die zufällig verschoben und mit glatten Kurven verbunden werden.",
         "howTo": "Stelle Komplexität, Zufälligkeit und Grösse ein und wähle eine Füllung: Fläche, Kontur oder Verlauf. Drücke die Leertaste, bis dir eine Form gefällt. Exportiere als SVG, als Bild oder als CSS-clip-path, um Fotos in Blob-Form zuzuschneiden.",
+        "useCases": {
+          "u1": {
+            "title": "Akzent hinter Text",
+            "text": "Ein weicher Blob hinter einer Überschrift oder einem Produktbild lockert strenge Layouts auf. Als SVG bleibt er nur wenige Kilobyte gross und auf jedem Bildschirm scharf."
+          },
+          "u2": {
+            "title": "Fotos zuschneiden",
+            "text": "Mit dem Export als CSS clip-path schneidest du Porträts und Produktbilder in eine organische Form. Die Form wächst mit dem Element mit, auch in responsiven Layouts."
+          },
+          "u3": {
+            "title": "Icons und Illustrationen",
+            "text": "Blobs eignen sich als Grundform für Icons, Sticker oder kleine Illustrationen in Apps und Präsentationen. Mit einem Verlauf als Füllung wirken sie plastischer."
+          }
+        },
+        "tips": {
+          "t1": "Wenig Komplexität und wenig Zufälligkeit ergeben ruhige, fast runde Formen. Für verspielte, unregelmässige Formen erhöhe beide Werte schrittweise.",
+          "t2": "Gefällt dir eine Form, sperr Komplexität und Zufälligkeit mit dem Schloss. Dann würfelst du mit der Leertaste nur noch neue Farben.",
+          "t3": "Der Hintergrund des SVG ist transparent. So legst du den Blob auf jede Fläche, ohne dass Kanten oder weisse Ränder sichtbar werden."
+        },
         "faq": {
           "q1": {
             "question": "Wie bekomme ich die gleiche Form wieder?",
@@ -583,6 +640,25 @@
       "seo": {
         "whatIs": "SVG-Wellen sind leichte Vektorgrafiken, mit denen du Abschnitte einer Website weich voneinander trennst. Statt einer harten Kante läuft eine Fläche in Wellen aus. Mehrere Ebenen in abgestuften Farben erzeugen Tiefe, die Datei bleibt trotzdem nur wenige Kilobyte gross.",
         "howTo": "Wähle die Anzahl Ebenen und Punkte, stelle Höhe, Glätte und Abdeckung ein und lege fest, ob die Wellen von unten oder von oben kommen. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, CSS-Hintergrund oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Übergang zwischen Abschnitten",
+            "text": "Setz die Welle an den unteren Rand eines Abschnitts und gib ihr die Farbe des nächsten. So fliessen die Flächen ineinander, statt an einer harten Kante zu wechseln."
+          },
+          "u2": {
+            "title": "Header und Footer",
+            "text": "Mehrere Wellen in abgestuften Farben geben Kopf- und Fussbereichen Tiefe. Die Datei bleibt dabei wenige Kilobyte klein und belastet die Ladezeit kaum."
+          },
+          "u3": {
+            "title": "Slides und Social Posts",
+            "text": "Als PNG exportiert schmücken die Wellen Titelfolien, Banner und Story-Grafiken am unteren Rand. In deinen Markenfarben entsteht so schnell eine einheitliche Vorlage."
+          }
+        },
+        "tips": {
+          "t1": "Für Website-Übergänge wähl ein breites, flaches Format wie 1440 × 200 Pixel. So passt die Welle ohne Verzerrung in die volle Breite.",
+          "t2": "Eine hohe Rundung ergibt ruhige Wellen, eine tiefe eher Bergketten. Mehr Punkte machen die Linie unruhiger und lebendiger.",
+          "t3": "Setz die Breite im CSS auf 100 Prozent und lass die Höhe folgen. Als Vektorgrafik bleibt die Welle auch auf sehr breiten Bildschirmen scharf."
+        },
         "faq": {
           "q1": {
             "question": "Wie setze ich die Welle zwischen zwei Abschnitte?",
@@ -604,7 +680,7 @@
       }
     },
     "polka-dots": {
-      "name": "Polka Dots",
+      "name": "Punktmuster",
       "description": "Punktmuster im Raster, versetzt oder frei verstreut. Als SVG oder Bild exportieren.",
       "params": {
         "layout": {
@@ -654,8 +730,28 @@
         "speckle": "Sprenkel"
       },
       "seo": {
-        "whatIs": "Polka Dots sind Punktmuster in regelmässigem Abstand oder frei verstreut. Sie wirken verspielt oder ruhig, je nach Grösse und Farbe, und passen als Hintergrund für Websites, Verpackungen, Karten und Stoffe. Neben Kreisen kannst du auch Ringe und Quadrate verwenden.",
+        "heading": "Punktmuster (Polka Dots)",
+        "whatIs": "Punktmuster (auf Englisch Polka Dots) bestehen aus Punkten in regelmässigem Abstand oder frei verstreut. Sie wirken verspielt oder ruhig, je nach Grösse und Farbe, und passen als Hintergrund für Websites, Verpackungen, Karten und Stoffe. Neben Kreisen kannst du auch Ringe und Quadrate verwenden.",
         "howTo": "Wähle die Anordnung (Raster, versetzt oder verstreut), stelle Abstand und Punktgrösse ein und bestimme, ob die Punkte eine Farbe haben, sich abwechseln oder zufällig gefärbt sind. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Hintergrund für Websites",
+            "text": "Ein ruhiges Punktmuster in zwei nahen Farbtönen belebt Landingpages und Newsletter, ohne den Text zu stören. Als CSS-Hintergrund braucht es keine zusätzliche Bilddatei."
+          },
+          "u2": {
+            "title": "Karten und Einladungen",
+            "text": "Bunte, verstreute Punkte passen zu Geburtstagskarten, Babypartys und Einladungen. Exportiere als PNG für den Versand oder als SVG für den Druck."
+          },
+          "u3": {
+            "title": "Stoffe und Verpackungen",
+            "text": "Klassische versetzte Punkte eignen sich für Geschenkpapier, Etiketten und Textildrucke. Das SVG lässt sich ohne Qualitätsverlust auf jede Grösse bringen."
+          }
+        },
+        "tips": {
+          "t1": "Die Anordnung versetzt wirkt dichter und klassischer als das Raster. Verstreut mit etwas Grössenvariation sieht verspielter und natürlicher aus.",
+          "t2": "Ringe statt Kreise machen das Muster leichter. Das eignet sich gut für helle Hintergründe, auf denen noch Text stehen soll.",
+          "t3": "Mit einer Brand-Palette aus deinem Brand Kit färbst du die Punkte in Markenfarben. Die Farben bleiben gesperrt, wenn du mit der Leertaste weiterwürfelst."
+        },
         "faq": {
           "q1": {
             "question": "Was ist der Unterschied zwischen Raster und versetzt?",
@@ -759,6 +855,25 @@
       "seo": {
         "whatIs": "Ein geometrisches Muster besteht aus einem Raster von Kacheln, in denen je eine einfache Form sitzt: Kreise, Viertelkreise, Dreiecke, Sterne oder Bögen. Durch Drehung und Farbwechsel entstehen aus wenigen Formen lebendige Flächen, wie man sie von Bauhaus-Plakaten, Fliesen oder Quilts kennt. Solche Muster eignen sich für Website-Hintergründe, Präsentationen, Verpackungen und Social-Media-Grafiken.",
         "howTo": "Wähl ein Formen-Pack oder stell dir eigene Formen zusammen. Bestimme, wie viele Kacheln pro Zeile es gibt, ob das Raster gleichmässig oder verschachtelt ist und wie die Formen gedreht werden. Färbe die Kacheln zufällig aus deiner Palette oder pro Formebene, mit oder ohne Kachelflächen. Mit der Leertaste würfelst du neue Varianten. Klick auf eine Kachel, um Form, Farbe und Drehung einzeln anzupassen. Exportiere als SVG, als CSS-Hintergrund oder als Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Poster und Cover",
+            "text": "Kacheln mit Viertelkreisen und Dreiecken erinnern an Bauhaus und Schweizer Grafik. Sie eignen sich für Plakate sowie Buch- und Albumcover mit klarer, moderner Wirkung."
+          },
+          "u2": {
+            "title": "Markenauftritt",
+            "text": "Mit deinen Markenfarben und eigenen Formen aus dem Brand Kit entsteht ein wiedererkennbares Muster. Du setzt es auf Briefpapier, Folien und in Social Media gleich ein."
+          },
+          "u3": {
+            "title": "Fliesen und Textilien",
+            "text": "Exportiere das Muster als SVG und verwende es als Vorlage für Fliesen, Quilts oder Stoffdrucke. Jede Kachel bleibt als einzelne Form bearbeitbar."
+          }
+        },
+        "tips": {
+          "t1": "Das verschachtelte Raster teilt Kacheln mit der gewählten Wahrscheinlichkeit in kleinere. So entsteht ein Mosaik, das lebendiger wirkt als ein gleichmässiges Raster.",
+          "t2": "Klick eine Kachel an oder erreiche sie mit Tab und Pfeiltasten, um Form, Farbe und Drehung zu ändern. Bearbeitete Kacheln bleiben beim Würfeln erhalten.",
+          "t3": "Wenige Farben und ein einziges Formen-Pack wirken stimmiger als viele Farben. Mit Nur Kontur entsteht ein leichter, grafischer Linien-Look."
+        },
         "faq": {
           "q1": {
             "question": "Kann ich einzelne Kacheln ändern?",
@@ -852,6 +967,25 @@
       "seo": {
         "whatIs": "Ein nahtloses Muster ist eine Kachel, die sich ohne sichtbare Kanten beliebig oft wiederholen lässt. Motive, die über den Rand ragen, erscheinen auf der gegenüberliegenden Seite wieder, darum fällt der Übergang nicht auf. Solche Muster eignen sich für Website-Hintergründe, Geschenkpapier, Stoffe, Tapeten und Verpackungen.",
         "howTo": "Wähl eine der eingebauten Formen oder lade eine eigene SVG-, PNG-, JPG- oder WebP-Datei und schneide sie zu. Bestimme die Kachelung (Raster, Ziegel, halb versetzt oder gespiegelt), Grösse, Abstände und Drehung und färbe die Motive mit einer Farbe oder einer Palette. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, als CSS-Hintergrund, als einzelne PNG-Kachel oder als Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Website-Hintergrund",
+            "text": "Der CSS-Export wiederholt die Kachel endlos und bleibt dabei klein. Das ist ideal für Seitenhintergründe und grosse Bereiche mit viel Weissraum."
+          },
+          "u2": {
+            "title": "Geschenkpapier und Stoff",
+            "text": "Lade dein Logo oder eine eigene Grafik hoch und erstelle daraus einen Rapport für Papier, Textilien oder Tapeten. Die Übergänge zwischen den Kacheln sind nicht zu sehen."
+          },
+          "u3": {
+            "title": "Merch und Verpackung",
+            "text": "Ein Muster aus deinen Motiven passt auf Taschen, Tassen und Schachteln. Die einzelne PNG-Kachel kann die Druckerei direkt übernehmen und beliebig oft wiederholen."
+          }
+        },
+        "tips": {
+          "t1": "Halb versetzt und Ziegel verbergen die Wiederholung besser als das gerade Raster. Gespiegelt eignet sich besonders für symmetrische Motive.",
+          "t2": "Zufällige Drehung und Grössenvariation lassen das Muster natürlicher wirken. Für ein strenges, ordentliches Muster stell beide auf 0.",
+          "t3": "Formen und Logos aus deinem Brand Kit stehen direkt im Upload-Feld bereit. Deine Dateien bleiben im Browser und gelangen nie in den Teilen-Link."
+        },
         "faq": {
           "q1": {
             "question": "Wird meine hochgeladene Datei gespeichert oder geteilt?",
@@ -877,7 +1011,7 @@
       }
     },
     "noise-grain": {
-      "name": "Noise und Grain",
+      "name": "Körnung und Rauschen",
       "description": "Körnige Texturen und Hintergründe mit feinem Rauschen über Farbe oder Verlauf. Als PNG, JPG, WebP oder SVG exportieren.",
       "groups": {
         "grain": "Körnung",
@@ -927,8 +1061,28 @@
         "overlay": "Overlay"
       },
       "seo": {
-        "whatIs": "Grain ist feines, zufälliges Rauschen über einer Fläche. Es nimmt digitalen Farben und Verläufen die sterile Glätte, verhindert Banding in Verläufen und erinnert an analogen Film oder Papier.",
+        "heading": "Körnung und Rauschen (Noise und Grain)",
+        "whatIs": "Körnung (Grain) ist feines, zufälliges Rauschen über einer Fläche. Es nimmt digitalen Farben und Verläufen die sterile Glätte, verhindert Banding in Verläufen und erinnert an analogen Film oder Papier.",
         "howTo": "Wähle eine Farbe oder einen Verlauf als Grundfläche, stelle Stärke, Korngrösse und Mischmodus ein und drücke die Leertaste für eine neue Variante. Exportiere danach als PNG, JPG, WebP oder SVG in der gewünschten Grösse.",
+        "useCases": {
+          "u1": {
+            "title": "Verläufe ohne Banding",
+            "text": "Feines Korn über einem Verlauf verdeckt sichtbare Farbstufen. Das hilft besonders auf grossen Hintergründen, in dunklen Bereichen und bei stark komprimierten JPG-Dateien."
+          },
+          "u2": {
+            "title": "Analoger Look",
+            "text": "Korn gibt digitalen Grafiken eine Film- oder Papieranmutung. Das passt zu Postern, Covern und Social Posts im Retro-Stil und lässt glatte Flächen wärmer wirken."
+          },
+          "u3": {
+            "title": "Textur für andere Programme",
+            "text": "Exportiere das Korn transparent als PNG und leg es in Figma, Photoshop oder per CSS über Fotos und Flächen. Die Kachel wiederholt sich nahtlos."
+          }
+        },
+        "tips": {
+          "t1": "Weiches Licht ergibt ein sanftes Korn, Ineinanderkopieren ein kräftiges. Multiplizieren dunkelt nur ab und passt zu hellen Flächen und Papier.",
+          "t2": "Für eine transparente Textur wähl als Grundfläche Transparent und exportiere als PNG oder WebP. JPG kennt keine Transparenz.",
+          "t3": "Für dezentes Korn hinter Text reicht eine geringe Stärke. Für einen kräftigen Film-Look darf sie deutlich höher sein, prüf das Ergebnis dann in voller Grösse."
+        },
         "faq": {
           "q1": "Welcher Mischmodus passt wofür?",
           "a1": "Ineinanderkopieren hellt helle Stellen auf und dunkelt dunkle ab, das ergibt kräftiges Korn. Weiches Licht wirkt sanfter. Multiplizieren dunkelt nur ab und passt zu Papier und hellen Flächen.",
@@ -942,7 +1096,7 @@
       }
     },
     "grid-patterns": {
-      "name": "Grid Patterns",
+      "name": "Rastermuster",
       "description": "Rasterlinien, Punktraster, Kreuze oder Kacheln mit Haupt- und Nebenraster. Als SVG oder Bild exportieren.",
       "params": {
         "style": {
@@ -990,8 +1144,28 @@
         "terminal": "Terminal"
       },
       "seo": {
-        "whatIs": "Grid Patterns sind regelmässige Raster aus Linien, Punkten, Kreuzen oder Kacheln. Sie wirken wie Millimeterpapier, Bauplan oder Notizheft und eignen sich als ruhiger Hintergrund für Websites, Präsentationen und Produktbilder.",
+        "heading": "Rastermuster (Grid Patterns)",
+        "whatIs": "Rastermuster (Grid Patterns) sind regelmässige Raster aus Linien, Punkten, Kreuzen oder Kacheln. Sie wirken wie Millimeterpapier, Bauplan oder Notizheft und eignen sich als ruhiger Hintergrund für Websites, Präsentationen und Produktbilder.",
         "howTo": "Wähle einen Stil, stelle Zellgrösse und Strichstärke ein und lege fest, ob jede n-te Linie als Hauptraster hervorgehoben wird. Mit der Ausblendung läuft das Raster zur Mitte oder zu den Rändern weich aus. Exportiere das Ergebnis als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Tech- und SaaS-Websites",
+            "text": "Ein feines Linien- oder Punktraster ist ein beliebter, ruhiger Hintergrund für Produktseiten, Dokumentationen und Entwickler-Tools. Es wirkt präzise, ohne vom Inhalt abzulenken."
+          },
+          "u2": {
+            "title": "Notizpapier und Vorlagen",
+            "text": "Punktraster und Karos eignen sich zum Ausdrucken als Bullet-Journal, Skizzenpapier oder Arbeitsblatt. Wähl dafür ein Druckformat und exportiere als SVG oder PNG."
+          },
+          "u3": {
+            "title": "Produktbilder",
+            "text": "Ein Raster im Hintergrund gibt Produktfotos und Mockups einen technischen, aufgeräumten Rahmen. Das erinnert an einen Bauplan und lenkt den Blick auf das Produkt."
+          }
+        },
+        "tips": {
+          "t1": "Mit Ausblenden läuft das Raster zur Mitte oder zu den Rändern weich aus. So bleibt Platz für Text, ohne dass das Raster hart endet.",
+          "t2": "Das Hauptraster hebt jede n-te Linie hervor wie bei Millimeterpapier. Stell es auf 0, wenn du ein gleichmässiges Raster ohne Betonung willst.",
+          "t3": "Für nahtlose Kacheln wähl eine Grösse, die ein Vielfaches der Zellgrösse ist, und schalte das Ausblenden aus. Dann passen die Ränder lückenlos aneinander."
+        },
         "faq": {
           "q1": {
             "question": "Bleibt das Raster beim Ändern der Grösse gleich?",
@@ -1013,7 +1187,7 @@
       }
     },
     "confetti": {
-      "name": "Confetti",
+      "name": "Konfetti",
       "description": "Konfetti aus Rechtecken, Kreisen, Dreiecken und Kringeln, gleichmässig verteilt. Als SVG oder Bild exportieren.",
       "params": {
         "shape": {
@@ -1049,8 +1223,27 @@
         "parade": "Umzug"
       },
       "seo": {
-        "whatIs": "Der Confetti Generator verteilt bunte Formen gleichmässig, aber natürlich über die Fläche. Ideal für Einladungen, Geburtstagsgrafiken, Social-Media-Posts und festliche Hintergründe.",
+        "whatIs": "Der Konfetti-Generator verteilt bunte Formen gleichmässig, aber natürlich über die Fläche. Ideal für Einladungen, Geburtstagsgrafiken, Social-Media-Posts und festliche Hintergründe.",
         "howTo": "Wähle eine Form oder eine Mischung, stelle Abstand, Grösse und Drehung ein und gib deine Farben vor. Mit der Leertaste erzeugst du neue Varianten. Exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Einladungen und Karten",
+            "text": "Konfetti ist der Klassiker für Geburtstage, Hochzeiten und Jubiläen. Als PNG passt es auf gedruckte Karten, als SVG auf digitale Einladungen in jeder Grösse."
+          },
+          "u2": {
+            "title": "Ankündigungen",
+            "text": "Ein Konfetti-Hintergrund feiert Produktlaunches, Meilensteine oder Gewinner auf Social Media und im Newsletter. In Markenfarben bleibt der Auftritt trotzdem stimmig."
+          },
+          "u3": {
+            "title": "Erfolgsmeldungen in Apps",
+            "text": "Als SVG oder GIF eignet sich das Konfetti für Bestätigungsseiten, Erfolgsmeldungen und Dankesseiten. Das SVG ist klein und lädt schnell."
+          }
+        },
+        "tips": {
+          "t1": "Grösserer Abstand ergibt ein luftiges, elegantes Bild. Dichtes Konfetti wirkt laut und festlich, passend für Partys und Gewinnspiele.",
+          "t2": "Mit nur einer Form, etwa Kreisen oder Kringeln, wirkt das Ergebnis ruhiger und moderner als mit der Mischung aller Formen.",
+          "t3": "Gefallen dir die Einstellungen, drück die Leertaste. Positionen, Formen und Farben werden neu gewürfelt, alles andere bleibt, wie du es eingestellt hast."
+        },
         "faq": {
           "q1": {
             "question": "Warum überlappen sich die Konfetti nicht?",
@@ -1072,7 +1265,7 @@
       }
     },
     "starry-sky": {
-      "name": "Starry Sky",
+      "name": "Sternenhimmel",
       "description": "Sternenhimmel mit Farbverlauf, funkelnden Sternen und Glanzlichtern. Als SVG oder Bild exportieren.",
       "params": {
         "palette": {
@@ -1107,8 +1300,27 @@
         "cosmic": "Kosmos"
       },
       "seo": {
-        "whatIs": "Der Starry Sky Generator erzeugt einen Nachthimmel aus einem Farbverlauf und vielen Sternen in unterschiedlicher Grösse und Helligkeit. Passend für Hintergründe, Kinderbuch-Illustrationen, Event-Grafiken und Wallpapers.",
+        "whatIs": "Der Sternenhimmel-Generator erzeugt einen Nachthimmel aus einem Farbverlauf und vielen Sternen in unterschiedlicher Grösse und Helligkeit. Passend für Hintergründe, Kinderbuch-Illustrationen, Event-Grafiken und Wallpapers.",
         "howTo": "Lege die Farben des Himmels von oben nach unten fest, stelle Sternabstand, Grösse und Helligkeitsvariation ein und füge bei Bedarf Leuchten und einige Glanzsterne hinzu. Exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Wallpaper",
+            "text": "Wähl Full HD oder 4K und exportiere als PNG. So bekommst du einen eigenen Desktop- oder Handy-Hintergrund, der genau zu deinen Lieblingsfarben passt."
+          },
+          "u2": {
+            "title": "Kinderbücher und Einladungen",
+            "text": "Ein sanfter Nachthimmel passt zu Gutenacht-Geschichten, Pyjamapartys und Einladungen für Abendveranstaltungen. Als SVG lässt er sich in Illustrationen weiterverwenden."
+          },
+          "u3": {
+            "title": "Events und Streams",
+            "text": "Als Hintergrund für Konzerte, Lesungen oder Livestreams schafft der Sternenhimmel Atmosphäre. Er lenkt nicht vom Inhalt ab und lässt Text gut lesbar."
+          }
+        },
+        "tips": {
+          "t1": "Ein Himmel von Dunkelblau zu Violett wirkt natürlich, Türkis zu Rosa eher verträumt. Die Farben laufen von oben nach unten.",
+          "t2": "Wenige Glanzsterne setzen Akzente. Zu viele nehmen dem Bild die Ruhe, stell sie bei Bedarf auf 0.",
+          "t3": "Mit der Helligkeitsvariation wirken die Sterne natürlicher, weil nicht alle gleich hell leuchten. Etwas Leuchten macht grosse Sterne weicher."
+        },
         "faq": {
           "q1": {
             "question": "Wie werden die Sterne verteilt?",
@@ -1130,7 +1342,7 @@
       }
     },
     "dieter-dots": {
-      "name": "Dieter Dots",
+      "name": "Punktringe",
       "description": "Konzentrische Punktringe wie bei einem gelochten Lautsprechergitter. Als SVG oder Bild exportieren.",
       "params": {
         "rings": {
@@ -1170,8 +1382,28 @@
         "mono": "Mono"
       },
       "seo": {
-        "whatIs": "Dieter Dots sind Punkte, die in konzentrischen Ringen um die Bildmitte angeordnet sind, inspiriert von gelochten Lautsprechergittern im Industriedesign. Das Muster wirkt technisch, ruhig und eignet sich für Poster, Cover und Produktgrafiken.",
+        "heading": "Punktringe (Dieter Dots)",
+        "whatIs": "Punktringe (auch Dieter Dots genannt) sind Punkte, die in konzentrischen Ringen um die Bildmitte angeordnet sind, inspiriert von gelochten Lautsprechergittern im Industriedesign. Das Muster wirkt technisch, ruhig und eignet sich für Poster, Cover und Produktgrafiken.",
         "howTo": "Bestimme Anzahl Ringe, Punkte im ersten Ring und Ringabstand. Mit Verdrehung entsteht eine Spirale, mit der Verkleinerung laufen die Punkte nach aussen aus. Wähle eine Farbe, abwechselnde Ringe oder einen Verlauf und exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Poster und Cover",
+            "text": "Konzentrische Punktringe wirken technisch und ruhig. Sie passen zu Plakaten sowie Platten- und Buchcovern mit minimalistischem Stil, vor allem in wenigen Farben."
+          },
+          "u2": {
+            "title": "Produktgrafiken",
+            "text": "Das Muster erinnert an gelochte Lautsprechergitter aus dem Industriedesign. Es eignet sich für Audio-, Hardware- und Tech-Produkte, auf Verpackungen wie auf Websites."
+          },
+          "u3": {
+            "title": "Logos und Icons",
+            "text": "Wenige Ringe ergeben eine klare Bildmarke oder einen runden Button. Als SVG lässt sich die Form verlustfrei vergrössern und in jedem Grafikprogramm bearbeiten."
+          }
+        },
+        "tips": {
+          "t1": "Mit Verdrehung entsteht aus den Ringen eine Spirale. Schon kleine Werte verändern die Wirkung deutlich, probier es in kleinen Schritten.",
+          "t2": "Verkleinerung nach aussen lässt das Muster zum Rand hin auslaufen. So rückt die Mitte stärker in den Blick.",
+          "t3": "Wählst du bei der Farbwahl Verlauf, laufen die Ringe durch deine Palette. Mit einer Brand-Palette aus dem Brand Kit sind es deine Markenfarben."
+        },
         "faq": {
           "q1": {
             "question": "Warum haben äussere Ringe mehr Punkte?",
@@ -1258,6 +1490,25 @@
       "seo": {
         "whatIs": "Eine Blob-Komposition ordnet mehrere organische Formen als Ebenen an den Ecken und Rändern einer Fläche an. So entstehen ruhige Hintergründe für Websites, Präsentationen und Social-Media-Beiträge, bei denen die Mitte frei für Text bleibt.",
         "howTo": "Wähle eine Vorlage oder drücke die Leertaste für neue Anordnungen. Pro Blob legst du Position, Verschiebung, Grösse und Form fest, ziehst Ebenen nach oben oder unten und blendest sie aus. Die Farben kommen der Reihe nach aus deiner Palette. Exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Hero-Hintergrund",
+            "text": "Blobs in den Ecken lassen die Mitte frei für Überschrift und Button. Die Komposition passt sich jedem Format an, vom Quadrat bis zum breiten Banner."
+          },
+          "u2": {
+            "title": "Folienvorlage",
+            "text": "Ein Satz Blobs in Markenfarben gibt Präsentationen einen einheitlichen, freundlichen Hintergrund. Exportiere ihn einmal im Folienformat und verwende ihn für alle Folien."
+          },
+          "u3": {
+            "title": "Social-Media-Serien",
+            "text": "Exportiere dieselbe Komposition quadratisch, hoch und breit. Positionen und Grössen folgen dem Format, die Serie bleibt auf jedem Kanal erkennbar."
+          }
+        },
+        "tips": {
+          "t1": "Die Farben werden der Reihe nach aus der Palette genommen. Verschieb Blobs nach oben oder unten, um die Farbreihenfolge zu ändern.",
+          "t2": "Sperr gelungene Formen mit dem Schloss. Dann würfelst du mit der Leertaste nur noch Positionen oder Farben neu.",
+          "t3": "Eine geringe Deckkraft für hintere Blobs schafft Tiefe. Verläufe als Füllung wirken weicher als Vollflächen und passen gut zu hellen Hintergründen."
+        },
         "faq": {
           "q1": {
             "question": "Was passiert, wenn ich die Bildgrösse ändere?",
@@ -1327,6 +1578,25 @@
       "seo": {
         "whatIs": "Doodle-Hintergründe bestehen aus kleinen, wie von Hand gezeichneten Formen: Kringel, Spiralen, Sterne, Kreuze und Zickzacklinien. Sie wirken verspielt und persönlich und eignen sich für Einladungen, Schul- und Kinderthemen, Social-Media-Beiträge und Verpackungen.",
         "howTo": "Wähle eine Form oder die Mischung, stelle Abstand, Grösse und Linienstärke ein und bestimme mit Zittern, wie handgezeichnet die Linien wirken. Drücke die Leertaste für neue Varianten und exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Kinder- und Schulthemen",
+            "text": "Kringel, Sterne und Spiralen passen zu Lernmaterial, Elternbriefen und Websites für Kinder. Sie wirken freundlich und persönlich, ohne kindisch zu sein."
+          },
+          "u2": {
+            "title": "Social Posts und Stories",
+            "text": "Ein Doodle-Hintergrund macht Ankündigungen, Zitate und Gewinnspiele persönlich und verspielt. Mit einer hellen Grundfarbe bleibt Text darauf gut lesbar."
+          },
+          "u3": {
+            "title": "Verpackung und Sticker",
+            "text": "Als SVG lassen sich die handgezeichnet wirkenden Linien für Etiketten, Sticker und Geschenkpapier verwenden. Die Linien bleiben auch im Grossformat sauber."
+          }
+        },
+        "tips": {
+          "t1": "Mit mehr Zittern wirken die Linien handgezeichneter. Für einen sauberen Illustrationsstil stell es tief ein.",
+          "t2": "Eine dickere Linienstärke ist auf kleinen Formaten wie Stories besser erkennbar. Für Poster darf sie feiner sein.",
+          "t3": "Ein heller, ruhiger Hintergrund und eine bis zwei Linienfarben wirken aufgeräumter als viele bunte Farben. Die Leertaste würfelt dann nur die Anordnung neu."
+        },
         "faq": {
           "q1": {
             "question": "Warum wirken die Linien handgezeichnet?",
@@ -1414,6 +1684,25 @@
       "seo": {
         "whatIs": "SVG-Diagramme sind Platzhalter-Charts mit Zufallsdaten. Du brauchst sie für Mockups, Präsentationen, Landingpages und App-Entwürfe, wenn echte Zahlen fehlen oder nicht gezeigt werden sollen.",
         "howTo": "Wähle Linie, Fläche oder Balken, lege Anzahl Datenreihen und Datenpunkte fest und stelle Trend und Schwankung ein. Achsen und Hilfslinien schaltest du ein oder aus. Mit der Leertaste entstehen neue Daten. Exportiere als SVG, CSS oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Mockups und App-Designs",
+            "text": "Platzhalter-Diagramme füllen Dashboards und Screens in Entwürfen, bevor echte Daten vorliegen. So wirkt der Entwurf echt, ohne dass jemand Zahlen erfinden muss."
+          },
+          "u2": {
+            "title": "Landingpages und Präsentationen",
+            "text": "Ein schlichtes Liniendiagramm illustriert Wachstum oder Trends, ohne vertrauliche Zahlen zu zeigen. Als SVG bleibt es auf Folien und Websites scharf."
+          },
+          "u3": {
+            "title": "Illustrationen",
+            "text": "Balken und Flächen ohne Beschriftung eignen sich als dekoratives Element in Berichten, Blogbeiträgen und Social Posts. In Markenfarben passen sie zu jedem Layout."
+          }
+        },
+        "tips": {
+          "t1": "Mit Trend legst du fest, ob die Kurve steigt oder fällt. Schwankung bestimmt, wie unruhig sie verläuft.",
+          "t2": "Die Daten hängen am Seed. Du kannst Diagrammtyp, Farben und Achsen ändern, ohne dass sich die Werte ändern.",
+          "t3": "Das SVG enthält keine Texte. Ergänze Beschriftungen in Figma oder in deinem Layout, dann sehen sie überall gleich aus."
+        },
         "faq": {
           "q1": {
             "question": "Kann ich eigene Daten eingeben?",
@@ -1497,6 +1786,25 @@
       "seo": {
         "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Musterli rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
         "howTo": "Drück die Leertaste für eine neue Palette. Sperr Farben, die dir gefallen, mit dem Schloss, wähl eine Harmonie und exportier die Palette als CSS-Variablen, HEX-Liste oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Markenfarben finden",
+            "text": "Starte mit deiner Hauptfarbe, sperr sie und lass die übrigen Farben in einer Harmonie dazu erzeugen. So entsteht in Minuten eine Palette, die zusammenpasst."
+          },
+          "u2": {
+            "title": "Webdesign und Apps",
+            "text": "Exportiere die Palette als CSS-Variablen und setz sie direkt in deinem Stylesheet ein. Die Kontrastanzeige zeigt dir vorher, welche Farben sich für Text eignen."
+          },
+          "u3": {
+            "title": "Illustrationen und Präsentationen",
+            "text": "Eine stimmige Palette mit fünf Farben hält Diagramme, Folien und Grafiken einheitlich. Kopier die HEX-Werte direkt in Figma oder dein Präsentationsprogramm."
+          }
+        },
+        "tips": {
+          "t1": "Analog wirkt ruhig, komplementär kräftig. Für Benutzeroberflächen ist eine analoge Palette mit einer Akzentfarbe oft am leichtesten einzusetzen.",
+          "t2": "Achte auf die Kontrastmatrix. Für Text auf Farbe brauchst du mindestens AA, also 4.5:1.",
+          "t3": "Kopier die HEX-Liste und leg damit im Brand Kit eine Palette an. Dann wendest du sie in jedem anderen Generator mit einem Klick an."
+        },
         "faq": {
           "q1": "Was bedeuten die Harmonien?",
           "a1": "Analog nutzt benachbarte Farbtöne, komplementär gegenüberliegende. Triadisch verteilt drei Töne gleichmässig, split-komplementär kombiniert einen Ton mit den Nachbarn seines Gegenstücks, tetradisch nutzt vier Töne im Quadrat.",
@@ -1510,7 +1818,7 @@
       }
     },
     "tints-shades": {
-      "name": "Tints & Shades",
+      "name": "Farbabstufungen",
       "description": "Hellere und dunklere Abstufungen einer Farbe. Export als HEX, RGB, HSL oder CSS-Variablen.",
       "params": {
         "base": {
@@ -1548,8 +1856,28 @@
         "sunflower": "Sonnenblume"
       },
       "seo": {
-        "whatIs": "Tints sind Aufhellungen einer Farbe, Shades sind Abdunklungen. Zusammen ergeben sie eine Abstufung für Hover-Zustände, Hintergründe und Rahmen.",
+        "heading": "Farbabstufungen (Tints und Shades)",
+        "whatIs": "Farbabstufungen bestehen aus Aufhellungen einer Farbe (Tints) und Abdunklungen (Shades). Zusammen ergeben sie eine Abstufung für Hover-Zustände, Hintergründe und Rahmen.",
         "howTo": "Wähl eine Grundfarbe, leg die Anzahl Aufhellungen und Abdunklungen fest und kopier die Werte als HEX, RGB, HSL oder CSS-Variablen.",
+        "useCases": {
+          "u1": {
+            "title": "Hover- und Aktiv-Zustände",
+            "text": "Eine etwas dunklere Abstufung für Hover und eine noch dunklere für Aktiv macht Buttons verständlich und einheitlich. So reagiert jede Schaltfläche gleich."
+          },
+          "u2": {
+            "title": "Hintergründe und Rahmen",
+            "text": "Sehr helle Aufhellungen deiner Markenfarbe eignen sich für Flächen, Hinweise und Tabellenzeilen. Sie bringen Farbe ins Layout, ohne den Text zu schwächen."
+          },
+          "u3": {
+            "title": "Diagramme",
+            "text": "Mehrere Abstufungen einer Farbe unterscheiden Datenreihen, ohne dass das Diagramm bunt wirkt. Das passt besonders zu Berichten im Markenauftritt."
+          }
+        },
+        "tips": {
+          "t1": "Die Methode OKLCH behält die Farbigkeit und hält die Stufen lebendig. Mischen in sRGB entspricht klassischen Werkzeugen wie Sass.",
+          "t2": "Mit der Spannweite legst du fest, wie hell die hellste und wie dunkel die dunkelste Stufe wird. Eine kleinere Spannweite ergibt feinere Schritte.",
+          "t3": "Kopier die CSS-Variablen in dein Stylesheet und nutz sie mit var(). So bleiben alle Abstufungen an einer Stelle und lassen sich zentral ändern."
+        },
         "faq": {
           "q1": "Was ist der Unterschied zwischen Tint und Shade?",
           "a1": "Ein Tint entsteht, wenn du eine Farbe mit Weiss mischst, ein Shade, wenn du sie mit Schwarz mischst.",
@@ -1596,6 +1924,25 @@
       "seo": {
         "whatIs": "Tailwind CSS ordnet jede Farbe in elf Stufen von 50 (sehr hell) bis 950 (sehr dunkel). Dieser Generator berechnet eine solche Skala aus deiner Markenfarbe, die Farbe selbst liegt genau auf 500.",
         "howTo": "Wähl deine Grundfarbe, gib der Palette einen Namen und kopier den Code für tailwind.config.js oder den @theme-Block für Tailwind v4.",
+        "useCases": {
+          "u1": {
+            "title": "Eigene Markenfarbe in Tailwind",
+            "text": "Erzeuge aus deiner Markenfarbe die Stufen 50 bis 950 und nutze sie wie die eingebauten Farben, etwa mit bg-brand-500. So fügt sich deine Farbe nahtlos ins Projekt ein."
+          },
+          "u2": {
+            "title": "Designsysteme",
+            "text": "Eine vollständige Skala für Primär-, Akzent- und Grautöne ist die Grundlage für Komponenten, Zustände und Dunkelmodus. Jede Stufe hat ihren festen Platz."
+          },
+          "u3": {
+            "title": "Migration auf Tailwind v4",
+            "text": "Der @theme-Export liefert Variablen in OKLCH, genau wie Tailwind v4 seine Farben speichert. Für ältere Projekte gibt es den Export für tailwind.config.js."
+          }
+        },
+        "tips": {
+          "t1": "Deine Grundfarbe liegt immer auf 500. Ist sie sehr hell oder sehr dunkel, prüf, ob die Enden noch genug Abstand haben.",
+          "t2": "Mit Sättigung an den Enden reduzieren wirken 50 und 950 weniger grell oder schmutzig. Das ist vor allem bei kräftigen Markenfarben hilfreich.",
+          "t3": "Eine leichte Farbtonverschiebung lässt dunkle Stufen wärmer oder kühler wirken, wie bei vielen bekannten UI-Paletten."
+        },
         "faq": {
           "q1": "Funktioniert das mit Tailwind v4?",
           "a1": "Ja. Der @theme-Export erzeugt Variablen wie --color-brand-500 in OKLCH, so wie Tailwind v4 sie verwendet. Für ältere Versionen gibt es den Export für tailwind.config.js.",
@@ -1646,6 +1993,25 @@
       "seo": {
         "whatIs": "Palette aus Bild findet die Farben, die ein Foto oder eine Grafik prägen, und zeigt, wie viel Fläche jede davon einnimmt. Die Analyse läuft komplett in deinem Browser: Dein Bild wird nicht hochgeladen und nirgends gespeichert.",
         "howTo": "Zieh ein Bild auf die Ablage, füg es mit Ctrl+V ein oder wähl eine Datei aus (PNG, JPG, WebP, GIF oder SVG bis 5 MB). Stell die Anzahl Farben ein, drück die Leertaste für eine andere Gruppierung und exportier die Palette als HEX-Liste, CSS-Variablen, Tailwind oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Farben aus einem Foto",
+            "text": "Hol dir die Stimmung eines Urlaubsfotos, Gemäldes oder Moodboards als Palette für dein nächstes Projekt. Der Anteil jeder Farbe zeigt, welche das Bild prägt."
+          },
+          "u2": {
+            "title": "Farben zum Produkt",
+            "text": "Lade ein Produktbild hoch und finde passende Farben für Website, Verpackung oder Werbemittel. So wirken Bild und Gestaltung wie aus einem Guss."
+          },
+          "u3": {
+            "title": "Logo analysieren",
+            "text": "Ermittle die Farben eines bestehenden Logos als HEX-Werte, wenn keine Markenrichtlinien vorhanden sind. Das klappt am besten mit einer PNG- oder SVG-Datei."
+          }
+        },
+        "tips": {
+          "t1": "Wenige Farben zeigen die Hauptstimmung, viele Farben auch kleine Akzente. Fünf bis sechs Farben sind ein guter Start.",
+          "t2": "Drück die Leertaste für eine andere Gruppierung, wenn dir eine wichtige Farbe fehlt. Jeder Durchgang startet mit anderen Farben.",
+          "t3": "Exportiere die Palette als CSS, Tailwind oder Bild. Dein Foto bleibt dabei in deinem Browser und wird nicht gespeichert."
+        },
         "faq": {
           "q1": "Wird mein Bild hochgeladen?",
           "a1": "Nein. Das Bild wird in deinem Browser verkleinert und ausgewertet. Es verlässt dein Gerät nicht, landet nicht in geteilten Links und wird nicht gespeichert.",
@@ -1692,6 +2058,25 @@
       "seo": {
         "whatIs": "Ein Mesh-Verlauf mischt mehrere Farben über die ganze Fläche statt entlang einer Linie. Das Ergebnis wirkt wie weiches, fliessendes Licht und passt zu Website-Headern, App-Hintergründen, Präsentationen und Social-Media-Posts.",
         "howTo": "Wähle deine Farben und einen Hintergrund, lege fest, wie viele Farbflächen sich mischen und wie stark sie verzerrt und weichgezeichnet werden, und füge bei Bedarf Körnung hinzu. Mit der Leertaste würfelst du eine neue Anordnung. Exportiere dann als PNG, JPG, WebP, SVG oder CSS in der Grösse, die du brauchst.",
+        "useCases": {
+          "u1": {
+            "title": "Website-Hero und App-Hintergrund",
+            "text": "Weiche, fliessende Farben sind ein moderner Hintergrund für Startseiten, Login-Screens und Onboarding. Mit hellen Tönen bleibt Text darauf gut lesbar."
+          },
+          "u2": {
+            "title": "Social Media und Präsentationen",
+            "text": "Ein Mesh-Verlauf gibt Zitaten, Ankündigungen und Titelfolien Tiefe, ohne ein Foto zu brauchen. Jede Variante ist einzigartig und frei von Lizenzfragen."
+          },
+          "u3": {
+            "title": "Wallpaper und Cover",
+            "text": "Exportiere in 4K oder grösser als PNG für Desktop-Hintergründe sowie Podcast- oder Albumcover. Die Vorschau entspricht dabei genau dem Export."
+          }
+        },
+        "tips": {
+          "t1": "Wenig Verzerrung ergibt ruhige Farbwolken, viel Verzerrung lebendige, fast flüssige Formen. Die Unschärfe bestimmt, wie weich die Farben ineinander laufen.",
+          "t2": "Etwas Körnung verhindert sichtbare Farbstufen, vor allem in grossen PNG- und JPG-Exporten.",
+          "t3": "Mit einer Brand-Palette aus deinem Brand Kit entstehen Hintergründe in Markenfarben. Die Leertaste ändert dann nur noch die Anordnung."
+        },
         "faq": {
           "q1": {
             "question": "Was unterscheidet einen Mesh-Verlauf von einem normalen Verlauf?",
@@ -1758,6 +2143,25 @@
       "seo": {
         "whatIs": "Ein verschwommener Verlauf ist ein Hintergrund aus wenigen grossen Farbkreisen, die so stark weichgezeichnet sind, dass nur noch weiche Farbwolken bleiben. Er eignet sich hinter Text, als Website-Header, in Präsentationen und als Wallpaper.",
         "howTo": "Wähle zwei bis fünf Kreise und ob sie in den Ecken oder um die Mitte liegen. Stelle dann Grösse, Streuung, Deckkraft und Unschärfe ein. Mit der Leertaste würfelst du eine neue Variante. Füge bei Bedarf Körnung hinzu und exportiere als PNG, JPG, WebP, SVG oder CSS.",
+        "useCases": {
+          "u1": {
+            "title": "Hintergrund hinter Text",
+            "text": "Weiche Farbwolken lassen Überschriften und Buttons gut lesbar und geben der Seite trotzdem Farbe. Das passt zu Landingpages, Newslettern und Login-Seiten."
+          },
+          "u2": {
+            "title": "Präsentationen",
+            "text": "Ein ruhiger, unscharfer Verlauf ist eine schlichte Folienvorlage, die mit jedem Inhalt funktioniert. In Markenfarben wirkt jede Folie wie aus einer Serie."
+          },
+          "u3": {
+            "title": "Wallpaper",
+            "text": "Exportiere als PNG in Bildschirmgrösse für einen sanften Desktop- oder Handy-Hintergrund. Icons und Widgets bleiben darauf gut erkennbar."
+          }
+        },
+        "tips": {
+          "t1": "Ist der Text schlecht lesbar, senk die Deckkraft oder wähl Kreise in Tönen nahe am Hintergrund.",
+          "t2": "Position Ecken lässt die Mitte frei, Position Mitte konzentriert die Farbe hinter dem Inhalt.",
+          "t3": "Das SVG kommt ohne Filter aus und sieht deshalb in jedem Programm gleich aus. Für Websites ist der CSS-Export am leichtesten."
+        },
         "faq": {
           "q1": {
             "question": "Bleibt Text darauf gut lesbar?",
@@ -1816,6 +2220,25 @@
       "seo": {
         "whatIs": "Ein Streifenverlauf teilt einen Farbverlauf in senkrechte Bänder und verschiebt jedes Band ein wenig. Das wirkt wie Licht hinter Riffelglas oder wie Stoff mit Falten und gibt Covern, Plakaten und Websites einen markanten Hintergrund.",
         "howTo": "Lege deine Farben von oben nach unten fest und wähle dann die Anzahl Streifen, wie stark ihre Breite variiert und wie weit sie versetzt sind. Die Schattierung gibt jedem Streifen Licht und Schatten. Mit der Leertaste würfelst du neue Varianten. Exportiere als PNG, JPG, WebP, SVG oder CSS.",
+        "useCases": {
+          "u1": {
+            "title": "Cover und Poster",
+            "text": "Versetzte Streifen wirken wie Licht durch geriffeltes Glas. Das passt zu Album-, Buch- und Eventcovern, die auffallen sollen, ohne ein Foto zu brauchen."
+          },
+          "u2": {
+            "title": "Website-Hintergründe",
+            "text": "Als CSS oder SVG bekommt ein Hero-Bereich Struktur und Farbe ohne schwere Bilddatei. Der Verlauf bleibt in jeder Breite scharf."
+          },
+          "u3": {
+            "title": "Produkt- und Social-Grafiken",
+            "text": "Streifenverläufe geben Produktfotos und Social Posts einen edlen, leicht dreidimensionalen Hintergrund. Freigestellte Produkte heben sich davon gut ab."
+          }
+        },
+        "tips": {
+          "t1": "Für einen Riffelglas-Look nimm viele schmale Streifen, wenig Versatz und kräftige Schattierung. Das Preset Riffelglas ist ein guter Start.",
+          "t2": "Mit Richtung abwechseln laufen benachbarte Streifen gegenläufig. Das wirkt wie gefalteter Stoff.",
+          "t3": "Ohne Körnung besteht das SVG nur aus Rechtecken mit Verläufen und lässt sich in Figma oder Illustrator bearbeiten."
+        },
         "faq": {
           "q1": {
             "question": "Was bewirkt der Versatz?",
@@ -1971,8 +2394,28 @@
         "imageContrast": "Bei einem eigenen Bild kann Musterli den Kontrast des Texts nicht prüfen. Kontrolliere ihn selbst, zum Beispiel mit einer kräftigeren Tönung."
       },
       "seo": {
+        "heading": "Glas- und Rahmen-Effekte (Glassmorphism)",
         "whatIs": "Glas- und Rahmen-Effekte sind CSS-Oberflächen für Karten, Dialoge und Hero-Bereiche: Milchglas mit backdrop-filter, Rahmen mit Farbverlauf (auf Wunsch drehend) und farbiges Leuchten. Das Tool zeigt den Effekt als echtes CSS auf einem Musterli-Hintergrund und liefert den Code dazu.",
         "howTo": "Wähle Glas, Verlaufsrahmen oder Leuchten. Beim Glas stellst du Unschärfe, Tönung, Sättigung, Innenrand und Körnung ein, beim Rahmen Farben, Breite und Drehung, beim Leuchten Farbe, Reichweite und Stärke. Unter Bühne wechselst du den Hintergrund. Mit der Leertaste entstehen neue Varianten. Kopiere CSS, Tailwind-Klassen oder ein HTML-Beispiel.",
+        "useCases": {
+          "u1": {
+            "title": "Karten und Dialoge",
+            "text": "Milchglas mit backdrop-filter hebt Karten, Menüs und Dialoge über bunten Hintergründen hervor. Der Inhalt dahinter bleibt als weiche Ahnung sichtbar."
+          },
+          "u2": {
+            "title": "Hero-Bereiche",
+            "text": "Ein Verlaufsrahmen oder ein Leuchten lenkt den Blick auf das wichtigste Element, etwa ein Anmeldeformular. Den Code kopierst du als CSS, Tailwind oder HTML."
+          },
+          "u3": {
+            "title": "Preise und Features",
+            "text": "Ein drehender Rahmen markiert das empfohlene Angebot oder eine neue Funktion, ohne laut zu wirken. Die Animation läuft in reinem CSS ohne JavaScript."
+          }
+        },
+        "tips": {
+          "t1": "Glas wirkt nur, wenn dahinter etwas zu sehen ist. Teste den Effekt unter Bühne mit dem Hintergrund, den du auch auf deiner Seite verwendest.",
+          "t2": "Ein heller Innenrand und etwas Körnung machen Glas glaubwürdiger. Zu viel Unschärfe lässt es milchig werden.",
+          "t3": "Der Code enthält eine Regel für reduzierte Bewegung. Wer weniger Animation wünscht, sieht einen stehenden Rahmen."
+        },
         "faq": {
           "q1": {
             "question": "Funktioniert der Glas-Effekt in Safari?",
@@ -2078,6 +2521,25 @@
       "seo": {
         "whatIs": "Ein Bento-Grid ordnet Inhalte in Kacheln unterschiedlicher Grösse an, wie die Fächer einer Bento-Box. Das Layout ist beliebt für Feature-Sektionen, Portfolios, Dashboards und Social-Media-Grafiken. Der Generator füllt das Raster immer vollständig, ohne Lücken.",
         "howTo": "Lege Spalten, Zeilen und die gewünschte Anzahl Kacheln fest. Mit kleinster und grösster Kachel steuerst du, wie unterschiedlich die Kacheln werden. Drücke die Leertaste für eine neue Aufteilung oder sperre die Aufteilung und würfle nur die Farben neu. Exportiere als CSS Grid mit HTML, als Tailwind-Klassen, als SVG oder Bild.",
+        "useCases": {
+          "u1": {
+            "title": "Feature-Abschnitte",
+            "text": "Ein Bento-Grid zeigt mehrere Funktionen eines Produkts übersichtlich in Kacheln verschiedener Grösse. Die wichtigste Funktion bekommt die grösste Kachel."
+          },
+          "u2": {
+            "title": "Portfolios",
+            "text": "Projekte, Zitate und Kennzahlen bekommen je eine Kachel. Das Raster bleibt lückenlos, egal wie viele Einträge es sind, und bricht auf dem Handy sauber um."
+          },
+          "u3": {
+            "title": "Social-Media-Grafiken",
+            "text": "Mit Titeln, Symbolen und eigenen Bildern in den Kacheln entsteht eine kompakte Übersicht für einen Post oder einen Jahresrückblick. Exportiere sie als PNG oder SVG."
+          }
+        },
+        "tips": {
+          "t1": "Gefällt dir eine Aufteilung, sperr Aufteilung Nr. mit dem Schloss. Die Leertaste würfelt dann nur noch die Farben.",
+          "t2": "Kleinste und grösste Kachel bestimmen, wie abwechslungsreich das Raster wird. Ein grosser Unterschied ergibt eine klare Hauptkachel.",
+          "t3": "Unter Spalten auf schmalen Bildschirmen legst du fest, wie das Raster auf dem Handy umbricht. Der CSS-Export übernimmt das automatisch."
+        },
         "faq": {
           "q1": {
             "question": "Kann ich einzelne Kacheln verschieben?",
@@ -2174,6 +2636,25 @@
       "seo": {
         "whatIs": "Ein Kontrast-Checker misst, wie stark sich Text- und Hintergrundfarbe in der Helligkeit unterscheiden. Die Richtlinien für barrierefreie Webinhalte (WCAG 2) verlangen dafür Mindestwerte, damit Texte auch bei schwacher Sehkraft, Blendung oder auf schlechten Bildschirmen lesbar bleiben.",
         "howTo": "Wähl Text- und Hintergrundfarbe per Farbwähler, HEX-Wert oder Pipette und lies ab, welche WCAG-Stufen erfüllt sind. Reicht der Kontrast nicht, übernimmst du mit einem Klick die nächstgelegene Farbe, die AA oder AAA schafft. Die Simulation zeigt, wie die Kombination bei Farbsehschwäche wirkt.",
+        "useCases": {
+          "u1": {
+            "title": "Barrierefreie Websites",
+            "text": "Prüf Text- und Hintergrundfarben gegen WCAG 2, bevor du ein Design umsetzt oder veröffentlichst. So vermeidest du teure Korrekturen kurz vor dem Start."
+          },
+          "u2": {
+            "title": "Markenfarben prüfen",
+            "text": "Teste alle Paare deiner Palette auf einmal und finde heraus, welche Kombinationen für Text taugen. Das Ergebnis eignet sich gut für deine Markenrichtlinien."
+          },
+          "u3": {
+            "title": "Präsentationen und Druck",
+            "text": "Auch Folien und Plakate müssen aus der Distanz lesbar sein. Ein guter Kontrast hilft allen, besonders bei schlechtem Licht oder auf einem Beamer."
+          }
+        },
+        "tips": {
+          "t1": "Für normalen Text brauchst du mindestens 4.5:1, für grossen Text 3:1. Bedienelemente und Grafiken brauchen 3:1.",
+          "t2": "Reicht der Kontrast nicht, übernimm den Vorschlag mit einem Klick. Musterli sucht die nächste Farbe, die AA oder AAA erreicht.",
+          "t3": "Wende eine Brand-Palette aus deinem Brand Kit an und prüf unter Alle Paare einer Palette jede Kombination auf einmal."
+        },
         "faq": {
           "q1": "Was bedeuten AA und AAA?",
           "a1": "AA ist die übliche Mindestanforderung: 4.5:1 für normalen Text und 3:1 für grossen Text. AAA ist strenger und verlangt 7:1 bzw. 4.5:1. Für Bedienelemente und Grafiken gilt 3:1.",
@@ -2274,6 +2755,25 @@
       "seo": {
         "whatIs": "Ein CSS-Schatten-Generator erzeugt den Code für box-shadow. Statt eines einzelnen harten Schattens legt Musterli mehrere Ebenen übereinander, deren Abstand und Unschärfe nach einer Kurve wachsen. So wirken Karten und Buttons weich und natürlich beleuchtet.",
         "howTo": "Stell Ebenen, Abstand, Unschärfe und Lichtrichtung ein oder drück die Leertaste für eine neue Variante. Die Vorschau ist echtes CSS auf einem Musterli-Hintergrund. Kopier danach box-shadow, die Tailwind-Klasse, die @theme-Variable oder die drop-shadow-Variante.",
+        "useCases": {
+          "u1": {
+            "title": "Karten und Buttons",
+            "text": "Mehrere weiche Schattenebenen lassen Karten, Buttons und Eingabefelder natürlich über der Seite schweben. Das wirkt hochwertiger als ein einzelner harter Schatten."
+          },
+          "u2": {
+            "title": "Designsysteme",
+            "text": "Speichere Schatten als Variablen in Tailwind v4 und nutze sie überall gleich, von klein bis gross. So sehen alle Komponenten wie aus einem Guss aus."
+          },
+          "u3": {
+            "title": "Freigestellte Bilder",
+            "text": "Die drop-shadow-Variante folgt der Form von PNG- und SVG-Grafiken statt dem Rechteck. Das passt zu Produktbildern, Icons und Logos ohne Hintergrund."
+          }
+        },
+        "tips": {
+          "t1": "Farbe aus dem Hintergrund färbt den Schatten passend ein. Das wirkt auf farbigen Flächen natürlicher als reines Schwarz.",
+          "t2": "Auf dunklen Hintergründen sind Schatten kaum sichtbar. Arbeite dort lieber mit einer helleren Fläche oder einem feinen Rand.",
+          "t3": "Für ein System brauchst du meist drei Stufen. Erzeuge sie mit gleicher Lichtrichtung und verschiedenem Abstand."
+        },
         "faq": {
           "q1": "Warum mehrere Schattenebenen?",
           "a1": "Ein echter Schatten ist nahe am Gegenstand dunkel und scharf und wird mit Abstand heller und weicher. Mehrere Ebenen bilden das nach, ein einzelner box-shadow wirkt dagegen oft flach oder schmutzig.",
@@ -2392,6 +2892,25 @@
       "seo": {
         "whatIs": "Guilloche nennt man feine, ineinander verschlungene Linienmuster, wie du sie von Banknoten, Wertpapieren, Urkunden und Gutscheinen kennst. Früher wurden sie mit Guillochiermaschinen in Metall graviert, heute entstehen sie aus einfachen Formeln: Linien, die zwischen zwei Kanten schwingen, Spirographen aus kreisenden Zeigern und überlagerte Sinuswellen. Der Generator rechnet alles direkt in deinem Browser.",
         "howTo": "Wähle eine Anordnung: Rosette für ein Siegel oder Wasserzeichen, Band für eine kachelbare Bordüre oder Rahmen für den Rand einer Urkunde. Stelle dann Kurve, Anzahl Linien, Blätter und Schwingungen ein, setze Innen- und Aussenkante und wähle die Farben, auch als Irisdruck oder Verlauf entlang der Linien. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, PNG, JPG, WebP oder als animiertes GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Urkunden und Zertifikate",
+            "text": "Ein Guilloche-Rahmen gibt Diplomen, Teilnahmebestätigungen und Ehrungen einen offiziellen, wertigen Auftritt. Die Mitte bleibt frei für Name und Text."
+          },
+          "u2": {
+            "title": "Gutscheine und Tickets",
+            "text": "Rosetten und Bänder schmücken Gutscheine, Eintrittskarten und Etiketten. Als SVG bleiben die feinen Linien auch im Druck gestochen scharf."
+          },
+          "u3": {
+            "title": "Verpackung und Branding",
+            "text": "Feine Linienmuster passen zu Premium-Verpackungen, Weinetiketten und Visitenkarten. In einer einzigen Druckfarbe wirken sie besonders edel."
+          }
+        },
+        "tips": {
+          "t1": "Wirkt das Muster wie eine Fläche, reduziere Linien oder Schwingungen. Die Linien brauchen etwas Luft dazwischen.",
+          "t2": "Für einen endlosen Rand wähl die Anordnung Band und ein breites, flaches Format. Das Band schliesst links und rechts nahtlos an.",
+          "t3": "Für den Druck exportiere als SVG. Sehr dünne Linien unter 0,25 Punkt druckt nicht jede Druckerei sauber, frag im Zweifel nach."
+        },
         "faq": {
           "q1": {
             "question": "Kann ich die Muster für echte Banknoten oder Ausweise verwenden?",
@@ -2473,6 +2992,25 @@
       "seo": {
         "whatIs": "Höhenlinien verbinden Punkte gleicher Höhe, so wie auf einer Wanderkarte. Musterli erzeugt dafür ein zufälliges Gelände aus Rauschen und zeichnet seine Konturen in gleichmässigen Abständen. Das Ergebnis passt als ruhiger Hintergrund für Websites, Präsentationen, Poster oder Verpackungen und bleibt als SVG gestochen scharf.",
         "howTo": "Wähle mit Massstab, Detailstufen, Rauheit und Verzerrung die Form des Geländes und lege fest, wie viele Linien es geben soll. Zeig nur Linien, gefüllte Höhenstufen oder beides, und hebe jede n-te Linie als Hauptlinie hervor. Mit der Leertaste würfelst du ein neues Gelände. Exportiere als SVG, PNG, JPG, WebP oder als GIF, in dem die Linien langsam wandern.",
+        "useCases": {
+          "u1": {
+            "title": "Website-Hintergründe",
+            "text": "Höhenlinien sind ein ruhiger, natürlicher Hintergrund für Outdoor-, Reise- und Tech-Websites. In zwei nahen Farbtönen bleibt Text darauf gut lesbar."
+          },
+          "u2": {
+            "title": "Poster und Verpackung",
+            "text": "Gefüllte Höhenstufen in abgestuften Farben eignen sich für Plakate, Kaffeeverpackungen und Etiketten. Das Gelände ist erfunden und frei von Lizenzfragen."
+          },
+          "u3": {
+            "title": "Präsentationen",
+            "text": "Ein feines Linienmuster hinter Folientiteln wirkt technisch und hochwertig, ohne abzulenken. Mit jedem Seed entsteht eine neue Landschaft."
+          }
+        },
+        "tips": {
+          "t1": "Mit Hauptlinie alle hebst du jede n-te Linie hervor wie auf einer Wanderkarte. Das gibt dem Bild Ordnung.",
+          "t2": "Wenig Detailstufen ergeben sanfte Hügel, viele Detailstufen zerklüftetes Gelände. Verzerrung macht die Formen organischer.",
+          "t3": "Viele Linien und Höhenstufen mit Linien vergrössern das SVG. Für Websites reicht oft ein PNG oder WebP."
+        },
         "faq": {
           "q1": {
             "question": "Sind die Höhenlinien echte Kartendaten?",
@@ -2575,6 +3113,25 @@
       "seo": {
         "whatIs": "Ein Flow Field ist ein Feld aus Richtungen, das jedem Punkt der Fläche einen Winkel zuordnet. Lässt man viele Linien diesem Feld folgen, entstehen Bilder, die an Wind, Strömungen, Fell oder Seide erinnern. Musterli berechnet das Feld aus Rauschen oder aus Wirbeln und hält auf Wunsch einen Mindestabstand ein, damit sich die Linien nicht verklumpen.",
         "howTo": "Wähle das Feld, den Massstab und die Unruhe, dann Startpunkte, Linienabstand und Länge. Strichform, Linienbreite und Deckkraft bestimmen den Charakter, die Farben kommen aus der Palette, aus der Richtung oder aus der Position. Mit der Leertaste würfelst du eine neue Variante. Exportiere als SVG, PNG, JPG, WebP oder als GIF mit wandernden Strichen.",
+        "useCases": {
+          "u1": {
+            "title": "Generative Kunst",
+            "text": "Tausende Linien, die einer unsichtbaren Strömung folgen, ergeben Drucke und Poster, die an Wind, Wasser oder Haar erinnern. Jeder Seed ergibt ein neues Bild."
+          },
+          "u2": {
+            "title": "Hintergründe für Tech und Musik",
+            "text": "Feine, fliessende Linien passen zu Websites, Albumcovern und Event-Grafiken mit digitalem Charakter. Auf dunklem Grund wirken helle Linien besonders stark."
+          },
+          "u3": {
+            "title": "Plotter und Laser",
+            "text": "Das SVG besteht aus vereinfachten Linien und eignet sich für Stiftplotter und Lasergravur. Mit Mindestabstand überlagern sich die Linien nicht."
+          }
+        },
+        "tips": {
+          "t1": "Mit Mindestabstand verteilen sich die Linien gleichmässig. Bei 0 und geringer Deckkraft entstehen weiche, haarige Texturen.",
+          "t2": "Unruhe bestimmt, wie stark die Linien von der Hauptrichtung abweichen. Wenig Unruhe wirkt wie ein ruhiger Strom.",
+          "t3": "Mit Farbe nach Richtung oder Position entstehen Verläufe aus Linien. Zufällig aus Palette mischt die Farben frei."
+        },
         "faq": {
           "q1": {
             "question": "Was ist der Unterschied zwischen Rauschen und Wirbel?",
@@ -2671,6 +3228,25 @@
       "seo": {
         "whatIs": "Low Poly ist ein facettierter Look aus flachen Dreiecken, wie bei einem geschliffenen Edelstein oder einem Papiermodell. Voronoi-Zellen teilen die Fläche in organische Felder um verstreute Punkte, ähnlich wie trockene Erde oder ein Mosaik. Beides ergibt markante Hintergründe für Websites, Präsentationen, Plakate und Social Posts.",
         "howTo": "Wähle Dreiecke oder Voronoi-Zellen, stelle den Punktabstand ein und bestimme einen Verlauf aus deinen Farben. Licht gibt eine plastische Wirkung, Linien ergeben ein Drahtgitter, Fuge und Eckenrundung machen Mosaiksteine daraus. Mit der Leertaste würfelst du eine neue Anordnung. Exportiere als SVG, PNG, JPG, WebP, CSS oder animiertes GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Website- und App-Hintergründe",
+            "text": "Facettierte Dreiecke in einem Verlauf ergeben einen markanten Hintergrund für Startseiten und Login-Screens. Mit Licht wirkt die Fläche fast dreidimensional."
+          },
+          "u2": {
+            "title": "Präsentationen und Poster",
+            "text": "Voronoi-Zellen wirken wie Mosaik oder trockene Erde und geben Titelfolien und Plakaten Struktur. Mit Fuge und runden Ecken entstehen Fliesen."
+          },
+          "u3": {
+            "title": "Gaming und Tech",
+            "text": "Der Low-Poly-Look passt zu Spiele-Websites, Streams und Tech-Events. Als Drahtgitter mit Linien wirkt er besonders technisch."
+          }
+        },
+        "tips": {
+          "t1": "Mit Licht wirken die Flächen plastisch wie ein geschliffener Edelstein. Die Lichtrichtung bestimmt, wo es hell wird.",
+          "t2": "Eine Fuge und gerundete Ecken machen aus Voronoi-Zellen Mosaikfliesen. In der Fuge scheint der Hintergrund durch.",
+          "t3": "Grösserer Punktabstand ergibt weniger, grössere Flächen und ein kleineres SVG. Kleiner Abstand wirkt feiner und detailreicher."
+        },
         "faq": {
           "q1": {
             "question": "Wie entstehen die Dreiecke?",
@@ -2756,6 +3332,25 @@
       "seo": {
         "whatIs": "Terrazzo ist ein Boden- und Wandbelag aus Stein- und Glassplittern in einem Bindemittel, glatt geschliffen. Als Grafik ergibt er ein lebendiges, haptisches Muster für Verpackungen, Websites, Plakate und Produktmockups.",
         "howTo": "Wähle kantige Steine, Kiesel oder eine Mischung und stelle Steingrösse, Anzahl Grössenklassen und Bedeckung ein. Bestimme Grundfarbe und Steinfarben; die erste Farbe kann überwiegen. Sprenkel und Körnung geben eine natürliche Oberfläche. Lass die nahtlose Kachel für Muster eingeschaltet und exportiere die Kachel als CSS oder PNG, oder die ganze Fläche als SVG, PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Verpackung und Etiketten",
+            "text": "Terrazzo wirkt hochwertig und handgemacht und passt zu Kosmetik, Kaffee und Design-Produkten. In gedämpften Farben wirkt es besonders edel."
+          },
+          "u2": {
+            "title": "Website-Hintergründe",
+            "text": "Als nahtlose Kachel im CSS füllt das Muster ganze Bereiche und bleibt dabei klein. Die Wiederholung fällt dank der zufälligen Steine kaum auf."
+          },
+          "u3": {
+            "title": "Mockups und Produktfotos",
+            "text": "Ein Terrazzo-Hintergrund ersetzt eine echte Steinoberfläche in Produkt-Mockups und Social Posts. So wirkt das Produkt wie im Fotostudio aufgenommen."
+          }
+        },
+        "tips": {
+          "t1": "Lass Nahtlose Kachel eingeschaltet, wenn du ein Muster brauchst. Für ein einzelnes Bild kannst du sie ausschalten.",
+          "t2": "Mit Anteil Hauptfarbe dominiert die erste Farbe, die übrigen werden zu Akzenten. Das wirkt natürlicher als gleich viele Steine pro Farbe.",
+          "t3": "Sprenkel und Körnung geben die Oberfläche eines geschliffenen Bodens. Eine Brand-Palette aus deinem Brand Kit färbt die Steine, die Grundfarbe bleibt."
+        },
         "faq": {
           "q1": {
             "question": "Überlappen sich die Steine?",
@@ -2958,6 +3553,25 @@
       "seo": {
         "whatIs": "Ein Screenshot-Verschönerer setzt ein nacktes Bildschirmfoto in Szene. Das Bild liegt auf einem Hintergrund und bekommt Abstand, runde Ecken, einen weichen Schatten und auf Wunsch eine Fenster- oder Browserleiste mit Adresse. So wirken Screenshots in Dokumentationen, Blogbeiträgen, auf Social Media und auf Product Hunt sauber und einheitlich. Als Website-Mockup zeigt es deine Seite auf einem Laptop, Monitor, Tablet oder Smartphone, als responsives Mockup auch auf mehreren Geräten zugleich.",
         "howTo": "Zieh deinen Screenshot in den Editor, wähl eine Datei oder füg ihn mit Ctrl+V ein. Wähl dann Rahmen, Abstand, Ecken, Schatten und einen Hintergrund: eine Farbe, einen Verlauf oder einen Musterli-Hintergrund wie Mesh, Blurry oder Wellen. Die Leertaste würfelt einen neuen Hintergrund, dein Bild bleibt. Exportiere als PNG, JPG, WebP oder SVG oder kopier das Ergebnis direkt in die Zwischenablage. Für ein Mockup wählst du unter Gerät einen Laptop, Monitor, Tablet, ein Smartphone oder ein Responsive-Set und tippst die Adresse für die Browserleiste ein.",
+        "useCases": {
+          "u1": {
+            "title": "Dokumentation und Blog",
+            "text": "Einheitliche Abstände, Ecken und Schatten lassen Screenshots in Anleitungen und Blogbeiträgen ordentlich aussehen. Mit einer Fensterleiste wirkt jedes Bild wie aus einem Guss."
+          },
+          "u2": {
+            "title": "Product Hunt und Social Media",
+            "text": "Zeig deine App vor einem Verlauf oder Musterli-Hintergrund in den passenden Formaten für Product Hunt, X oder LinkedIn. Die Grössen stehen im Menü bereit."
+          },
+          "u3": {
+            "title": "Website-Mockups",
+            "text": "Präsentiere deine Seite auf Laptop, Monitor, Tablet und Smartphone, auch als responsives Set mit mehreren Geräten. Das passt in Pitches und Kundenpräsentationen."
+          }
+        },
+        "tips": {
+          "t1": "Füg den Screenshot mit Strg+V oder Cmd+V ein. Die Leertaste würfelt einen neuen Hintergrund und behält dein Bild.",
+          "t2": "Wähl im Grössenmenü ein fertiges Format für die Plattform, dann wird nichts beschnitten.",
+          "t3": "Dein Screenshot bleibt im Browser. Im Teilen-Link fehlen Bild und Adresse, gespeicherte Designs bleiben lokal."
+        },
         "faq": {
           "q1": "Wird mein Screenshot hochgeladen?",
           "a1": "Nein. Das Bild wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten weder das Bild noch die Adresse in der Leiste. Speicherst du das Design, bleibt alles lokal in deinem Browser.",
@@ -3099,6 +3713,25 @@
       "seo": {
         "whatIs": "Ein Avatar-Generator erstellt Profilbilder ohne Foto: Initialen auf einer Farbfläche, ein symmetrisches Identicon oder eine kleine Komposition aus Formen. Solche Avatare brauchst du als Platzhalter für Nutzerkonten, in Kommentaren, Teamseiten, Chats und Prototypen. Farbe und Muster leiten sich aus dem Namen ab, darum sieht jede Person immer gleich aus.",
         "howTo": "Tipp einen Namen oder eine E-Mail-Adresse ein und wähl Initialen, Identicon oder Formen. Stell Form, Füllung (Farbe, Verlauf oder Muster), Schrift und Raster ein und wähl eine Palette, aus der jeder Name seine Farbe bekommt. Die Leertaste würfelt Palette, Füllung und Schrift, der Name bleibt. Exportiere als SVG, PNG, JPG oder WebP, zum Beispiel in 128, 256, 512 oder 1024 Pixel.",
+        "useCases": {
+          "u1": {
+            "title": "Standard-Avatare",
+            "text": "Neue Konten bekommen ein Profilbild mit Initialen oder Identicon, das sich aus dem Namen ableitet. Derselbe Name ergibt immer dasselbe Bild."
+          },
+          "u2": {
+            "title": "Teamseiten und Prototypen",
+            "text": "Fülle Teamseiten, Kommentare und Chat-Entwürfe mit stimmigen Avataren statt mit leeren Kreisen. So wirken Entwürfe sofort lebendiger."
+          },
+          "u3": {
+            "title": "Community und Foren",
+            "text": "Identicons unterscheiden Konten auf einen Blick, ohne dass jemand ein Foto hochladen muss. Das schont auch die Privatsphäre deiner Mitglieder."
+          }
+        },
+        "tips": {
+          "t1": "Wähl eine Palette mit ähnlicher Helligkeit. So wirken alle Avatare einer Seite einheitlich, egal welche Farbe ein Name bekommt.",
+          "t2": "Für eine feste Darstellung exportiere PNG oder WebP. Das SVG nutzt Systemschriften und sieht auf anderen Geräten leicht anders aus.",
+          "t3": "Exportiere in 256 oder 512 Pixeln. Das reicht für hochauflösende Bildschirme und hält die Dateien klein."
+        },
         "faq": {
           "q1": {
             "question": "Bekommt derselbe Name immer denselben Avatar?",
@@ -3209,6 +3842,25 @@
       "seo": {
         "whatIs": "Ein Platzhalterbild hält in einem Layout den Platz für ein Bild frei, das noch fehlt. Es zeigt seine Grösse in Pixeln oder einen eigenen Text, damit alle sehen, was dort hinkommt. Platzhalter brauchst du in Wireframes, Mockups, Prototypen, Präsentationen und beim Entwickeln von Websites.",
         "howTo": "Wähl eine Grösse aus der Liste (Social Media, Bildschirme, Werbeformate) oder gib Breite und Höhe ein. Die Beschriftung zeigt automatisch Breite × Höhe, einen eigenen Text oder nichts. Wähl dann Farbe, Verlauf oder ein Muster und schalte Diagonalen oder einen Rahmen ein. Exportiere als SVG, PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Wireframes und Mockups",
+            "text": "Platzhalter mit Grössenangabe zeigen allen im Team, welches Bild an welche Stelle kommt. So fehlen bei der Übergabe keine Bildformate."
+          },
+          "u2": {
+            "title": "Website-Entwicklung",
+            "text": "Lade die Bilder als Dateien herunter, statt dich auf einen fremden Platzhalter-Dienst zu verlassen. Nichts bricht, wenn ein Dienst ausfällt."
+          },
+          "u3": {
+            "title": "Werbeformate",
+            "text": "Teste Layouts für Banner wie 300 × 250 oder 728 × 90 mit Platzhaltern in der richtigen Grösse. Die Formate stehen in der Grössenliste bereit."
+          }
+        },
+        "tips": {
+          "t1": "Mit eigenem Text statt Grössenangabe beschreibst du den Inhalt, etwa Teamfoto oder Produktbild. Das hilft beim Übergeben an andere.",
+          "t2": "Diagonalen und Rahmen machen Platzhalter im Layout sofort als solche erkennbar, auch auf weissen Seiten.",
+          "t3": "SVG ist winzig und scharf, PNG funktioniert überall. Nimm SVG für Websites und PNG für Präsentationen."
+        },
         "faq": {
           "q1": {
             "question": "Brauche ich einen Dienst wie eine Platzhalter-URL?",
@@ -3302,6 +3954,25 @@
       "seo": {
         "whatIs": "Ein animierter Farbverlauf ist ein Hintergrund, der sich langsam bewegt: Der Verlauf wandert, dreht sich, wechselt seine Farben, oder weiche Flecken schweben darüber. Musterli schreibt ihn als reines CSS mit Keyframes, ohne JavaScript und ohne Video. So bleibt er leicht und in jeder Grösse scharf.",
         "howTo": "Wähl Wandern, Drehen, Farbwechsel oder Flecken, such deine Farben aus und stell Dauer, Beschleunigung und Richtung ein. Die Leertaste würfelt neue Farben und eine neue Anordnung der Flecken. Die Vorschau zeigt das echte CSS. Kopier danach das CSS, ein HTML-Beispiel oder Tailwind-Klassen, exportier ein Standbild als PNG, JPG, WebP oder SVG oder die ganze Schleife als GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Hero-Bereiche",
+            "text": "Ein langsam wandernder Verlauf belebt die Startseite, ganz ohne Video oder JavaScript. Das CSS ist nur wenige Zeilen lang und lädt sofort."
+          },
+          "u2": {
+            "title": "Buttons und Banner",
+            "text": "Eine dezente Farbverschiebung lenkt den Blick auf Aktionen, Ankündigungen oder Rabatte. Mit den Tailwind-Klassen ist sie schnell eingebaut."
+          },
+          "u3": {
+            "title": "Präsentationen und Streams",
+            "text": "Als GIF exportiert läuft die Schleife in Folien, Overlays und Social Posts. Ein Standbild gibt es zusätzlich als PNG, JPG, WebP oder SVG."
+          }
+        },
+        "tips": {
+          "t1": "Eine lange Dauer von 10 Sekunden oder mehr wirkt ruhig und hochwertig. Kurze Animationen lenken schnell ab.",
+          "t2": "Der Code enthält eine Regel für reduzierte Bewegung. Wer weniger Animation wünscht, sieht das erste Bild als stehenden Verlauf.",
+          "t3": "Die Flecken bewegen sich nur per transform. Das schont den Prozessor, auch auf älteren Geräten."
+        },
         "faq": {
           "q1": {
             "question": "Was passiert bei Menschen, die weniger Bewegung wünschen?",
@@ -3487,6 +4158,25 @@
       "seo": {
         "whatIs": "Ein Favicon ist das kleine Bild im Browser-Tab, in Lesezeichen und im Verlauf. Smartphones zeigen dazu ein App-Icon, wenn jemand deine Website auf dem Startbildschirm ablegt. Moderne Websites brauchen dafür mehrere Dateien: favicon.ico für ältere Browser, favicon.svg in jeder Grösse und für den Dunkelmodus, ein Apple Touch Icon, Icons für Android und ein Manifest. Der Favicon-Generator erstellt alles aus einem einzigen Entwurf.",
         "howTo": "Wähle als Inhalt einen Buchstaben, eine Form aus der Bibliothek oder dein eigenes Logo. Lege Hintergrund (Farbe, Verlauf, Muster oder transparent), Kachelform und Innenabstand fest. Mit der Leertaste würfelst du neue Farben. Schalte bei Bedarf eigene Farben für den Dunkelmodus ein und trage unter App und Manifest Name und Farben ein. Exportiere dann das Icon-Paket als ZIP, kopiere die Dateien in den Stammordner deiner Website und füge den HTML-Code in den head ein.",
+        "useCases": {
+          "u1": {
+            "title": "Neue Website",
+            "text": "Erstelle aus einem Buchstaben oder deinem Logo alle Dateien, die Browser und Smartphones heute brauchen, in einem Paket. Dazu gehört auch der passende HTML-Code."
+          },
+          "u2": {
+            "title": "Web-App",
+            "text": "Das Paket enthält Manifest und maskierbares Icon. So sieht deine App auf dem Android-Homescreen sauber aus, egal welche Form das System ausschneidet."
+          },
+          "u3": {
+            "title": "Nebenprojekte und Dokumentation",
+            "text": "Ein einfaches Favicon mit Initiale macht auch kleine Projekte im Tab sofort erkennbar. In wenigen Minuten ist es fertig."
+          }
+        },
+        "tips": {
+          "t1": "Denk an die kleinste Grösse von 16 Pixeln im Browser-Tab. Feine Details verschwinden dort, ein kräftiger Buchstabe oder eine einfache Form bleibt erkennbar.",
+          "t2": "Mit eigenen Farben im Dunkelmodus passt sich favicon.svg dunklen Browserleisten an.",
+          "t3": "Dein Logo aus dem Brand Kit steht im Feld Logo direkt bereit. Kopier danach die Dateien in den Hauptordner und das HTML in den head."
+        },
         "faq": {
           "q1": {
             "question": "Welche Dateien sind im Icon-Paket?",
@@ -3512,8 +4202,8 @@
       }
     },
     "duotone": {
-      "name": "Duotone und Gradient Map",
-      "description": "Färbe Fotos in zwei, drei oder mehr Farben ein: Duotone, Tritone und Gradient Map mit Tonkurve und Körnung. Dein Bild bleibt auf deinem Gerät.",
+      "name": "Duotone und Verlaufsumsetzung",
+      "description": "Färbe Fotos in zwei, drei oder mehr Farben ein: Duotone, Tritone und Verlaufsumsetzung mit Tonkurve und Körnung. Dein Bild bleibt auf deinem Gerät.",
       "groups": {
         "photo": "Foto",
         "tone": "Tonwerte",
@@ -3588,15 +4278,35 @@
         "aurora": "Polarlicht"
       },
       "seo": {
-        "whatIs": "Duotone ist ein Bildeffekt, bei dem ein Foto nur noch aus zwei Farben besteht: Die dunklen Stellen nehmen die Schattenfarbe an, die hellen die Lichterfarbe, dazwischen entsteht ein weicher Verlauf. Mit drei Farben heisst das Tritone, mit beliebig vielen Gradient Map. Der Look ist beliebt für Plakate, Albumcover, Social Media und Websites, weil er Fotos in Markenfarben einfärbt.",
+        "heading": "Duotone und Verlaufsumsetzung (Gradient Map)",
+        "whatIs": "Duotone ist ein Bildeffekt, bei dem ein Foto nur noch aus zwei Farben besteht: Die dunklen Stellen nehmen die Schattenfarbe an, die hellen die Lichterfarbe, dazwischen entsteht ein weicher Verlauf. Mit drei Farben heisst das Tritone, mit beliebig vielen Verlaufsumsetzung (Gradient Map). Der Look ist beliebt für Plakate, Albumcover, Social Media und Websites, weil er Fotos in Markenfarben einfärbt.",
         "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle Duotone, Tritone oder Verlauf und stelle Schatten- und Lichterfarbe ein. Mit Helligkeit, Kontrast und Gamma steuerst du, wie viel Fläche jede Farbe bekommt. Körnung gibt einen analogen Druck-Look, Stärke mischt das Original wieder hinzu. Die Leertaste würfelt neue Farbpaare. Exportiere als PNG, JPG oder WebP in voller Auflösung.",
+        "useCases": {
+          "u1": {
+            "title": "Fotos in Markenfarben",
+            "text": "Färbe Team- und Produktfotos einheitlich ein. So passen Bilder aus verschiedenen Quellen zusammen und wirken wie eine geplante Serie."
+          },
+          "u2": {
+            "title": "Plakate und Albumcover",
+            "text": "Kräftige Farbpaare wie Pink und Blau geben Fotos einen grafischen, plakativen Look. Das funktioniert auch mit einfachen Handyfotos."
+          },
+          "u3": {
+            "title": "Websites und Social Media",
+            "text": "Duotone-Bilder als Hintergrund lassen Text gut lesbar und bleiben trotzdem auffällig. Mit hellen Lichterfarben wirkt das Bild ruhiger."
+          }
+        },
+        "tips": {
+          "t1": "Mit Gamma verschiebst du, wie viel Fläche Schatten- und Lichterfarbe bekommen. Das wirkt oft besser als Helligkeit allein.",
+          "t2": "Eine Brand-Palette aus dem Brand Kit wird nach Helligkeit sortiert: Die dunkelste Farbe wird Schatten, die hellste Lichter.",
+          "t3": "Etwas Körnung gibt einen analogen Druck-Look. Mit Stärke mischst du das Original wieder hinzu."
+        },
         "faq": {
           "q1": "Wird mein Foto hochgeladen?",
           "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
           "q2": "Wie gross darf das Foto sein?",
           "a2": "Dateien bis 5 MB im Format PNG, JPG oder WebP. Fotos bis 4096 Pixel an der langen Seite behalten ihre volle Auflösung, also auch Bilder mit 12 Megapixeln. Die Grösse des Designs passt sich dem Foto an, und der Export rechnet den Effekt in dieser Grösse.",
-          "q3": "Was ist der Unterschied zwischen Duotone, Tritone und Gradient Map?",
-          "a3": "Duotone ordnet jeder Helligkeit eine Farbe zwischen zwei Farben zu, Tritone fügt eine Farbe für die Mitteltöne hinzu. Die Gradient Map nimmt beliebig viele Farben, gleichmässig von dunkel nach hell verteilt. Gemischt wird im Farbraum OKLab, darum bleiben die Übergänge sauber.",
+          "q3": "Was ist der Unterschied zwischen Duotone, Tritone und Verlaufsumsetzung?",
+          "a3": "Duotone ordnet jeder Helligkeit eine Farbe zwischen zwei Farben zu, Tritone fügt eine Farbe für die Mitteltöne hinzu. Die Verlaufsumsetzung nimmt beliebig viele Farben, gleichmässig von dunkel nach hell verteilt. Gemischt wird im Farbraum OKLab, darum bleiben die Übergänge sauber.",
           "q4": "Kann ich meine Markenfarben verwenden?",
           "a4": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an: Musterli sortiert die Farben nach Helligkeit, die dunkelste wird zur Schattenfarbe, die hellste zur Lichterfarbe.",
           "q5": "Warum gibt es keinen SVG-Export?",
@@ -3698,6 +4408,25 @@
       "seo": {
         "whatIs": "ASCII-Art ist ein Bild aus Schriftzeichen: Dunkle Stellen bekommen dichte Zeichen wie @ oder #, helle Stellen Punkte oder Leerzeichen. Aus etwas Abstand entsteht wieder das Foto. Musterli zeichnet daraus auch farbige Zeichen, eine LED- oder Punktmatrix und Braille-Muster, für Plakate, Terminal-Ästhetik, README-Dateien und Websites.",
         "howTo": "Lade ein Foto hoch oder starte mit dem Beispielbild. Wähle Zeichen, Punkte oder Braille, die Anzahl Spalten und einen Zeichensatz, auch mit eigenen Zeichen. Helligkeit, Kontrast und Gamma bestimmen, wie viel Zeichnung sichtbar ist; mit Umkehren passt das Bild auf einen dunklen Grund. Exportiere als SVG, PNG, JPG oder WebP, oder als Text und HTML-Snippet.",
+        "useCases": {
+          "u1": {
+            "title": "README und Terminal",
+            "text": "Ein Logo oder Porträt als Text passt in README-Dateien, Kommandozeilen-Tools und Startmeldungen. Der Text-Export lässt sich direkt einfügen."
+          },
+          "u2": {
+            "title": "Poster und Merch",
+            "text": "ASCII-Art in Farbe oder als LED-Punktmatrix ergibt Plakate, T-Shirts und Cover mit Retro-Charme. Als SVG bleibt sie in jeder Grösse scharf."
+          },
+          "u3": {
+            "title": "Websites",
+            "text": "Das HTML-Snippet bringt die Zeichen als echten Text auf deine Seite, schlank und kopierbar. Das passt zu Portfolios und Seiten mit Terminal-Ästhetik."
+          }
+        },
+        "tips": {
+          "t1": "Mehr Spalten zeigen feinere Details, aber kleinere Zeichen. Für Text in README-Dateien sind 60 bis 100 Spalten gut lesbar.",
+          "t2": "Für dunkle Hintergründe schalte Umkehren ein. Dann werden helle Stellen zu dichten Zeichen.",
+          "t3": "Kontrast und Gamma bestimmen, wie viel vom Bild erkennbar bleibt. Porträts vor ruhigem Hintergrund funktionieren am besten."
+        },
         "faq": {
           "q1": "Wird mein Foto hochgeladen?",
           "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten weder das Foto noch die daraus berechneten Zeichen; ein geteilter Link zeigt das Beispielbild.",
@@ -3809,8 +4538,28 @@
         "tunnel": "Tunnel"
       },
       "seo": {
+        "heading": "3D-Perspektivgitter (Synthwave)",
         "whatIs": "Ein Perspektivgitter ist ein Bodenraster, das in die Tiefe läuft und am Horizont verschwindet. Bekannt ist es aus Synthwave, Outrun und Videospielen der Achtzigerjahre. Musterli berechnet das Gitter mit einer echten Kameraprojektion und ergänzt auf Wunsch eine gestreifte Sonne, Sterne, Berge, Dunst und ein Leuchten. Das Ergebnis passt als Hintergrund für Albumcover, Streams, Präsentationen oder Websites.",
         "howTo": "Wähle eine Vorlage oder lege Horizont, Neigung, Blickwinkel und Kamerahöhe selbst fest. Unter Gitter stellst du Sichtweite, Linienbreite, Ausblenden und Leuchten ein, unter Szene Sonne, Sterne, Berge und Dunst. Mit der Leertaste würfelst du neue Farben und eine neue Kamera. Exportiere als SVG, PNG, JPG oder WebP oder als GIF, in dem das Gitter nahtlos nach vorne fährt.",
+        "useCases": {
+          "u1": {
+            "title": "Albumcover und Musik",
+            "text": "Das leuchtende Gitter mit gestreifter Sonne ist der Synthwave- und Outrun-Look für Cover, Playlists und Flyer. Neonfarben auf dunklem Grund wirken am stärksten."
+          },
+          "u2": {
+            "title": "Streams und Gaming",
+            "text": "Als Hintergrund für Overlays, Startbildschirme und Turnier-Grafiken weckt es die Ästhetik der Videospiele aus den Achtzigern. Als GIF bewegt sich das Gitter in einer Schleife."
+          },
+          "u3": {
+            "title": "Events und Präsentationen",
+            "text": "Ein Perspektivgitter auf der Titelfolie gibt Retro-Partys und Tech-Talks sofort einen Stil. Das SVG lässt sich in Figma oder Illustrator weiterbearbeiten."
+          }
+        },
+        "tips": {
+          "t1": "Ein tiefer Horizont gibt dem Himmel Platz für Sonne und Berge, ein hoher rückt das Gitter in den Vordergrund.",
+          "t2": "Mit Leuchten und Dunst am Horizont wirkt das Bild weicher. Für einen klaren Vektor-Look schalte beides aus.",
+          "t3": "Im GIF bewegt sich das Gitter genau eine Zelle pro Schleife. So läuft die Animation nahtlos."
+        },
         "faq": {
           "q1": {
             "question": "Brauche ich dafür ein 3D-Programm?",
@@ -3888,8 +4637,28 @@
         "night": "Nacht"
       },
       "seo": {
+        "heading": "Halftone-Effekt (Rasterpunkte)",
         "whatIs": "Halftone (auf Deutsch Rasterdruck oder Autotypie) ist die Technik, mit der Zeitungen und Plakate Fotos mit nur einer Druckfarbe zeigen: Das Bild wird in ein Raster aus Zellen zerlegt, und jede Zelle bekommt einen Punkt, der umso grösser ist, je dunkler das Bild an dieser Stelle ist. Aus der Nähe siehst du Punkte, aus der Distanz ein Foto. Heute ist der Look beliebt für Plakate, Merch, Social Media und Webseiten mit Retro- oder Pop-Art-Stil.",
         "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle die Form (Punkte, Linien, Quadrate oder Rauten), die Zellgrösse und den Rasterwinkel. Druckfarbe und Papier sind frei wählbar, das Papier auch transparent. Mit Umkehren werden die hellen Stellen zu Punkten, ideal für helle Farbe auf dunklem Grund. Helligkeit, Kontrast und Gamma steuern, wie gross die Punkte werden. Die Leertaste würfelt neue Farben und Winkel. Exportiere als PNG, JPG, WebP oder SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Poster und Merch",
+            "text": "Rasterpunkte geben Fotos einen Pop-Art- oder Zeitungs-Look für Plakate, T-Shirts und Tragetaschen. Mit einer einzigen Druckfarbe wirkt das besonders grafisch."
+          },
+          "u2": {
+            "title": "Siebdruck und Plotter",
+            "text": "Der SVG-Export zeichnet jeden Punkt als Vektor, bereit für Siebdruck, Laser oder Schneideplotter. So brauchst du kein Bildbearbeitungsprogramm."
+          },
+          "u3": {
+            "title": "Websites und Social Media",
+            "text": "Ein einfarbiges Rasterbild in Markenfarbe auf transparentem Papier wirkt grafisch und lädt schnell. Es passt auf jeden Hintergrund deiner Seite."
+          }
+        },
+        "tips": {
+          "t1": "45 Grad ist der klassische Rasterwinkel, bei dem das Auge das Raster am wenigsten wahrnimmt. 0 Grad wirkt technisch und streng.",
+          "t2": "Für helle Druckfarbe auf dunklem Grund schalte Umkehren ein. Dann werden die hellen Stellen des Fotos zu Punkten.",
+          "t3": "Grössere Zellen wirken grafischer und halten das SVG klein. Für sehr grosse Fotos ist eine grössere Zellgrösse nötig."
+        },
         "faq": {
           "q1": "Wird mein Foto hochgeladen?",
           "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
@@ -3988,6 +4757,25 @@
       "seo": {
         "whatIs": "Der CMYK-Rasterdruck ist das Verfahren hinter fast jedem gedruckten Farbfoto: Das Bild wird in die vier Druckfarben Cyan, Magenta, Gelb und Schwarz zerlegt, und jede Farbe wird als eigenes Punktraster gedruckt. Damit sich die Raster nicht zu störenden Mustern (Moiré) überlagern, hat jede Farbe ihren eigenen Winkel, klassisch Cyan 15, Magenta 75, Gelb 0 und Schwarz 45 Grad. Aus der Nähe entstehen die typischen Rosetten, die Comics und Pop-Art berühmt gemacht haben.",
         "howTo": "Lade ein Foto hoch oder starte mit einer Vorlage am Beispielbild. Stelle Zellgrösse und Form ein; der Unbuntaufbau (GCR) bestimmt, wie viel vom Grau in Schwarz statt in den drei Buntfarben gedruckt wird. Die Winkel pro Farbe sind frei einstellbar. Mit dem Passerversatz verschiebst du Cyan, Magenta und Gelb gegeneinander wie bei einem verrutschten Druck. Druckfarben und Papier lassen sich anpassen. Die Leertaste dreht alle Raster gemeinsam und wählt ein neues Papier. Exportiere als PNG, JPG, WebP oder SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Pop-Art und Comics",
+            "text": "Die typischen Rosetten des Vierfarbdrucks geben Fotos den Look alter Comics und Plakate. Aus der Nähe siehst du Punkte, aus der Distanz das Bild."
+          },
+          "u2": {
+            "title": "Poster und Plattencover",
+            "text": "Mit Passerversatz wirkt das Bild wie ein leicht verrutschter Druck, beliebt für Musik- und Kulturplakate. Die Richtung des Versatzes stellst du selbst ein."
+          },
+          "u3": {
+            "title": "Risografie-Optik",
+            "text": "Mit eigenen Druckfarben statt CMYK entsteht ein Look wie aus dem Risographen, ideal für Zines und Flyer. Auch das Papier bekommt deine Wunschfarbe."
+          }
+        },
+        "tips": {
+          "t1": "Die klassischen Winkel 15, 75, 0 und 45 Grad vermeiden Moiré. Änderst du sie, achte auf störende Muster.",
+          "t2": "Der Unbuntaufbau (GCR) legt fest, wie viel Grau in Schwarz statt in drei Farben gedruckt wird. Mehr GCR wirkt klarer.",
+          "t3": "Das ist ein Design-Effekt, keine Farbseparation für die Druckerei. Für originalgetreue Fotos braucht die Druckerei ein Farbprofil."
+        },
         "faq": {
           "q1": "Wird mein Foto hochgeladen?",
           "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
@@ -4077,6 +4865,25 @@
       "seo": {
         "whatIs": "Dithering ist ein Verfahren, mit dem ein Bild mit nur wenigen Farben auskommt und trotzdem Verläufe und Details zeigt: Statt eine Farbe zu runden, verteilt der Algorithmus die Abweichung auf die Nachbarpixel (Fehlerdiffusion wie Floyd-Steinberg, Atkinson oder Stucki) oder vergleicht jedes Pixel mit einem festen Schwellenmuster (Bayer-Raster). Der körnige Look erinnert an frühe Computer, Spielkonsolen und Faxgeräte und ist heute beliebt für Retro-Grafiken, Poster und Webseiten.",
         "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle ein Verfahren und eine Palette: 1 Bit mit zwei eigenen Farben, vier Graustufen, vier Grüntöne, die vier Farben früher PC-Grafik oder deine eigenen Farben. Die Pixelgrösse macht die Punkte gröber, Helligkeit, Kontrast und Gamma bestimmen, wie viel hell und dunkel wird. Die Leertaste würfelt neue Farben, bei festen Paletten ein neues Verfahren. Exportiere als PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Retro- und Pixel-Grafik",
+            "text": "Dithering in wenigen Farben erinnert an frühe Computer und Spielkonsolen. Das passt zu Games, Retro-Websites und Pixel-Art-Projekten."
+          },
+          "u2": {
+            "title": "Poster und Zines",
+            "text": "Ein 1-Bit-Bild in zwei kräftigen Farben druckt sich sauber und wirkt grafisch. Auch auf einfachen Druckern und Kopierern bleibt es klar."
+          },
+          "u3": {
+            "title": "Leichte Bilder für Websites",
+            "text": "Wenige Farben ergeben kleine PNG-Dateien mit eigenem Charakter. Das spart Ladezeit und gibt deiner Seite einen unverwechselbaren Look."
+          }
+        },
+        "tips": {
+          "t1": "Floyd-Steinberg ergibt feine, natürliche Übergänge. Atkinson macht Lichter und Schatten kräftiger, Bayer ein regelmässiges Kreuzmuster.",
+          "t2": "Mit grösseren Pixeln wird der Effekt auch auf hochauflösenden Bildschirmen sichtbar. Für Pixel-Art passen 3 bis 6 Pixel.",
+          "t3": "Wähl unter Palette Eigene Farben und wende eine Brand-Palette aus deinem Brand Kit an. So entsteht Dithering in Markenfarben."
+        },
         "faq": {
           "q1": "Wird mein Foto hochgeladen?",
           "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
@@ -4172,6 +4979,25 @@
       "seo": {
         "whatIs": "Ein Shader-Farbverlauf ist ein Verlauf, den ein kleines Programm direkt auf der Grafikkarte berechnet. Statt weniger fester Farbstopps entsteht ein lebendiges Feld aus Rauschen, das sich mit Domain Warping verbiegt und dann deine Farben durchläuft. So entstehen flüssige, seidige oder körnige Hintergründe, die keine Bilddatei als Vorlage brauchen. Musterli rechnet alles in deinem Browser, nichts verlässt dein Gerät.",
         "howTo": "Wähl einen Stil wie Flüssig, Seide oder Polarlicht und such zwei bis sechs Farben aus. Mit Frequenz, Verzerrung und Winkel formst du das Feld, mit Körnung, Vignette und Bayer-Dithering gibst du ihm eine Oberfläche. Die Leertaste würfelt neue Farben und eine neue Form. Mit dem Zeitpunkt wählst du das Standbild für den Export. Exportier danach als PNG, JPG oder WebP bis 8K oder als nahtlose GIF-Schleife.",
+        "useCases": {
+          "u1": {
+            "title": "Hero-Bereiche und Apps",
+            "text": "Flüssige, seidige Verläufe sind ein auffälliger Hintergrund für Produkt- und KI-Websites. Jede Variante ist einzigartig und braucht kein Foto als Vorlage."
+          },
+          "u2": {
+            "title": "Wallpaper in 8K",
+            "text": "Exportiere PNG, JPG oder WebP bis 8K für Desktop, Fernseher und grosse Bildschirme. Körnung und Dithering bleiben dabei genau wie in der Vorschau."
+          },
+          "u3": {
+            "title": "Animierte Loops",
+            "text": "Als nahtloses GIF läuft der Verlauf in Präsentationen, Social Posts und Streams. Mit dem Tempo bestimmst du, wie ruhig die Bewegung wirkt."
+          }
+        },
+        "tips": {
+          "t1": "Mit dem Regler Zeitpunkt wählst du das Standbild, das exportiert wird. So findest du die schönste Stelle der Bewegung.",
+          "t2": "Dithering und Körnung verhindern Farbstufen in sanften Verläufen, besonders bei JPG und WebP.",
+          "t3": "Mit einer Brand-Palette aus deinem Brand Kit läuft der Shader durch deine Markenfarben. Die Leertaste ändert dann nur noch die Form."
+        },
         "faq": {
           "q1": {
             "question": "Brauche ich eine besondere Grafikkarte?",
@@ -4383,6 +5209,8 @@
     "categoriesLabel": "Kategorien",
     "whatIsHeading": "Worum geht’s?",
     "howToHeading": "So geht’s",
+    "useCasesHeading": "Wofür du es brauchst",
+    "tipsHeading": "Tipps",
     "faqHeading": "Häufige Fragen",
     "relatedHeading": "Passende Generatoren",
     "moreInCategory": "Alle Generatoren in {category}"
