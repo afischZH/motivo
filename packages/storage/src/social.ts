@@ -6,7 +6,9 @@
  *  - `social-scenes`: the scene of each design (uploads make it large);
  *  - `social-drafts`: one autosave draft (`id: "current"`).
  * Every record is validated with Zod on read (`@musterli/scene` for scenes);
- * broken records are left out instead of breaking the page.
+ * broken records are left out instead of breaking the page. Large picture
+ * data in stored scenes are Blobs (`scene-pictures.ts`), so writing 20 MB
+ * of pictures does not block the main thread.
  */
 import { parseEditedScene, sceneSchema, type Scene } from "@musterli/scene";
 // Namespace import keeps zod tree-shakable (see tool-registry/common.ts).
@@ -14,6 +16,7 @@ import * as z from "zod";
 import { createConnection, randomHexId } from "./connection";
 import { normalizeDesignName, toStoredThumbnail } from "./designs";
 import { STORE, StorageError, transact } from "./idb";
+import { packScene, unpackScene } from "./scene-pictures";
 import { designIdSchema, designNameSchema, storedThumbnailSchema, timestampSchema } from "./schema";
 
 const formatSchema = z.object({
@@ -135,8 +138,14 @@ function parseRow(value: unknown): StoredSocialDesign | null {
   return parsed.success ? parsed.data : null;
 }
 
-function parseScene(value: unknown): Scene | null {
-  const parsed = storedSocialSceneSchema.safeParse(value);
+/** Reads picture Blobs back into the scene of a stored record (see `unpackScene`). */
+async function unpackRecord(value: unknown): Promise<unknown> {
+  if (typeof value !== "object" || value === null || !("scene" in value)) return value;
+  return { ...value, scene: await unpackScene(value.scene) };
+}
+
+async function parseScene(value: unknown): Promise<Scene | null> {
+  const parsed = storedSocialSceneSchema.safeParse(await unpackRecord(value));
   return parsed.success ? parsed.data.scene : null;
 }
 
@@ -170,15 +179,14 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
 
   const getRecord = async (id: string): Promise<SocialDesignRecord | null> => {
     const database = await db();
-    return transact(database, both, "readonly", (tx) => {
+    const found = await transact(database, both, "readonly", (tx) => {
       const row = tx.objectStore(STORE.socialDesigns).get(id);
       const scene = tx.objectStore(STORE.socialScenes).get(id);
-      return () => {
-        const r = parseRow(row.result);
-        const s = parseScene(scene.result);
-        return r && s ? { ...toSummary(r), scene: s } : null;
-      };
+      return () => ({ row: parseRow(row.result), scene: scene.result as unknown });
     });
+    if (!found.row) return null;
+    const scene = await parseScene(found.scene);
+    return scene ? { ...toSummary(found.row), scene } : null;
   };
 
   const getRow = async (id: string): Promise<StoredSocialDesign | null> => {
@@ -190,10 +198,11 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
   };
 
   const write = async (row: StoredSocialDesign, scene: Scene): Promise<void> => {
+    const stored = await packScene(scene);
     const database = await db();
     await transact(database, both, "readwrite", (tx) => {
       tx.objectStore(STORE.socialDesigns).put(row);
-      tx.objectStore(STORE.socialScenes).put({ id: row.id, scene });
+      tx.objectStore(STORE.socialScenes).put({ id: row.id, scene: stored });
       return () => undefined;
     });
   };
@@ -248,24 +257,23 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
 
     async getAll() {
       const database = await db();
-      return transact(database, both, "readonly", (tx) => {
+      const raw = await transact(database, both, "readonly", (tx) => {
         const rows = tx.objectStore(STORE.socialDesigns).getAll();
         const scenes = tx.objectStore(STORE.socialScenes).getAll();
-        return () => {
-          const byId = new Map<string, Scene>();
-          for (const value of scenes.result as unknown[]) {
-            const parsed = storedSocialSceneSchema.safeParse(value);
-            if (parsed.success) byId.set(parsed.data.id, parsed.data.scene);
-          }
-          const out: SocialDesignRecord[] = [];
-          for (const value of rows.result as unknown[]) {
-            const row = parseRow(value);
-            const scene = row ? byId.get(row.id) : undefined;
-            if (row && scene) out.push({ ...toSummary(row), scene });
-          }
-          return out.sort((a, b) => b.updatedAt - a.updatedAt);
-        };
+        return () => ({ rows: rows.result as unknown[], scenes: scenes.result as unknown[] });
       });
+      const byId = new Map<string, Scene>();
+      for (const value of await Promise.all(raw.scenes.map(unpackRecord))) {
+        const parsed = storedSocialSceneSchema.safeParse(value);
+        if (parsed.success) byId.set(parsed.data.id, parsed.data.scene);
+      }
+      const out: SocialDesignRecord[] = [];
+      for (const value of raw.rows) {
+        const row = parseRow(value);
+        const scene = row ? byId.get(row.id) : undefined;
+        if (row && scene) out.push({ ...toSummary(row), scene });
+      }
+      return out.sort((a, b) => b.updatedAt - a.updatedAt);
     },
 
     create,
@@ -331,7 +339,12 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
     },
 
     async importDesigns(designs) {
-      const checked = designs.map((d) => ({ ...d, scene: validScene(d.scene) }));
+      const checked = await Promise.all(
+        designs.map(async (d) => {
+          const scene = validScene(d.scene);
+          return { ...d, scene, stored: await packScene(scene) };
+        }),
+      );
       const database = await db();
       const t = now();
       return transact(database, both, "readwrite", (tx) => {
@@ -368,7 +381,7 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
             });
             existing.set(id, row);
             rows.put(row);
-            scenes.put({ id, scene: design.scene });
+            scenes.put({ id, scene: design.stored });
             added.push(id);
           }
         };
@@ -378,15 +391,14 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
 
     async getDraft() {
       const database = await db();
-      return transact(database, STORE.socialDrafts, "readonly", (tx) => {
+      const raw = await transact(database, STORE.socialDrafts, "readonly", (tx) => {
         const request = tx.objectStore(STORE.socialDrafts).get(SOCIAL_DRAFT_ID);
-        return () => {
-          const parsed = storedSocialDraftSchema.safeParse(request.result);
-          if (!parsed.success) return null;
-          const { designId, name, scene, updatedAt } = parsed.data;
-          return { designId, name, scene, updatedAt };
-        };
+        return () => request.result as unknown;
       });
+      const parsed = storedSocialDraftSchema.safeParse(await unpackRecord(raw));
+      if (!parsed.success) return null;
+      const { designId, name, scene, updatedAt } = parsed.data;
+      return { designId, name, scene, updatedAt };
     },
 
     async putDraft(draft, options = {}) {
@@ -402,7 +414,11 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
       });
       if (!parsed.success)
         throw new StorageError("failed", `Invalid draft: ${parsed.error.message}`);
-      const record = options.edited ? { ...parsed.data, scene } : parsed.data;
+      const checked = options.edited ? { ...parsed.data, scene } : parsed.data;
+      const record = {
+        ...checked,
+        scene: await packScene("scene" in checked ? checked.scene : scene),
+      };
       const database = await db();
       await transact(database, STORE.socialDrafts, "readwrite", (tx) => {
         tx.objectStore(STORE.socialDrafts).put(record);
