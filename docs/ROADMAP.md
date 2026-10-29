@@ -17,6 +17,7 @@ Gesamtüberblick:
 | **M5** | WebGL & Bildeffekte & Video | 15 bis 18 | Trend-Tools |
 | **M5b** | Tiefe statt Breite: Restpunkte, Einheitlichkeit, SEO, Workflows zwischen Tools | 19 bis 20 | Rundere Tools |
 | **M6** | Social Media Editor + restliche Effekte | 19 bis 23 | Marketing-Zielgruppe |
+| **W0 bis W3** | Webdesigner-Toolbox: Hausaufgaben, Arbeitsfluss, Code-Brücke, Webdesign-Tools | 24 bis 29 | Profi-Werkzeug für Webdesigner |
 | **M7** | Differenzierung: Composer, Code-Exporte, Plugins | 24+ | Wachstum |
 
 ---
@@ -148,6 +149,33 @@ Freigabe Andreas 2026-10-29 05:51: Plan mit 7 Paketen, Konva nur als Kern ohne `
 - [x] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize** (M6-AP01)
 
 **DoD**: Ein Template in 6 Formate per Magic Resize, ohne dass Text abgeschnitten wird (automatischer Test für alle Templates).
+
+## Webdesigner-Toolbox W0 bis W3 (Entscheid Andreas 2026-10-29, vor M7)
+
+Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10-29). Andreas hat die Reihenfolge W0 bis W3 vor dem Composer gewählt. Jede Etappe braucht vor dem Start einen AP-Plan mit Freigabe.
+
+**W0 Hausaufgaben**
+- [ ] Vorschaubilder der Social-Vorlagen im Worker zeichnen (UI-Thread nie über 50 ms), roter `@long-tasks`-Test grün
+- [ ] Lighthouse auf musterli.app, Rechtstexte prüfen, Analytics- und Sentry-Variablen (Andreas)
+
+**W1 Profi-Arbeitsfluss**
+- [ ] Befehlspalette ⌘K (Tool wechseln, Vorlage öffnen, Export, Brand-Palette)
+- [ ] "Im Kontext ansehen": Motiv als Hero-Hintergrund mit Überschrift, Text, Knopf, Hell/Dunkel und Kontrastwert
+- [ ] Favoriten und "Zuletzt benutzt" (lokal)
+- [ ] Katalog zusätzlich nach Aufgabe (Hero-Hintergrund, Abschnittstrenner, Karten-Effekt, Icon und Favicon, Social-Bild)
+
+**W2 Code-Brücke**
+- [ ] React-Komponente für SVG- und CSS-Tools
+- [ ] Tailwind und CSS-Variablen in allen passenden Tools, einheitlicher Abschnitt "Code" im Export
+- [ ] Brand Kit als Design-Tokens (CSS-Variablen, Tailwind-Theme, JSON im W3C-Format)
+- [ ] Responsive Exporte (SVG füllt jede Breite, CSS mit Kachelgrösse, Hinweis auf Dateigrösse)
+
+**W3 Webdesign-Werkzeuge** (Auswahl vor dem Start bestätigen)
+- [ ] Hoch: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
+- [ ] Mittel: Easing und CSS-Animation, Abstandsskala, Verlaufstext
+- [ ] Niedrig: CSS-Loader, SVG-Aufräumer (ohne SVGO)
+
+**DoD je Etappe**: wie CLAUDE.md (Chrome, Light/Dark, Tastatur, Tests, DE/EN, Docs); neue Exporte mit Snapshot-Test pro Preset.
 
 ## M7: Differenzierung & Wachstum (ab Woche 24)
 
