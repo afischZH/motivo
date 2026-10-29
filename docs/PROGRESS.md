@@ -157,12 +157,15 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 | Cloudflare | wrangler lokal ja | Cloudflare-API aus der Cloud-Sitzung blockiert; Deploy über Workers Builds |
 | Stripe CLI | nein | nicht mehr benötigt (keine Zahlungen) |
 | Playwright | ja (Cloud-Container) | Chromium vorinstalliert |
-| shadcnspace MCP | nein | Fallback: shadcn/ui + Tailwind |
+| shadcnspace | ja (Registry `@shadcn-space`, seit 2026-10-29 erreichbar) | nur freie Blöcke ohne `motion` |
 | Impeccable | nein | Fallback: DESIGN.md manuell prüfen |
 | GitHub-Repo | ja | `afischZH/motivo` (privat), seit 2026-10-27 Quelle der Wahrheit |
 | pnpm | nein (auf dem verbundenen Rechner nicht gefunden) | wird in M0 installiert |
 
 ## Sitzungsprotokoll
+
+### 2026-10-29
+- Neuauftritt mit shadcnspace (Entscheid Andreas, Branch `claude/project-thread-kccrv1`): Grundlage (Registry, shadcn-Basiselemente, Lucide, Lizenzen), Kopf mit Pillen-Leiste und Seitenmenü, Fuss, Startseite (Badges, Bento-Raster, Schritt-Karten, FAQ, CTA), Katalog/Kategorien/Sammlungen/Konverter mit gemeinsamem Seitenkopf und Karten, Editor-Feinschliff (gleiche Funktion und Kürzel), Meine Designs, Brand Kit, Unterstützen, Rechtliches. Tests: Lint, Typecheck, Unit (Web 768, Editor-UI 1111), E2E Chromium der betroffenen Specs grün; Navigation-Spec auf das Seitenmenü angepasst.
 
 ### 2026-10-28
 - M3 abgeschlossen: Safari-Fehler (Editor mit Brand Kit bei 375 px 96 px zu breit) behoben; WebKit zählte den abgeschnittenen Text der Paletten-Auswahl als Seitenbreite, jetzt `truncate` und `overflow-x-clip` in der Einstellungsspalte. Ko-fi-Link fehlte auf der Vorschau, weil Cloudflare Workers Builds die Vorschau ohne Variablen überschrieb; Andreas hat Workers Builds getrennt, Deploy nur noch über GitHub Actions.
