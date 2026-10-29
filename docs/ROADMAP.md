@@ -164,14 +164,14 @@ Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10
 - [x] Favoriten und "Zuletzt benutzt" (lokal)
 - [x] Katalog zusätzlich nach Aufgabe (Hero-Hintergrund, Abschnittstrenner, Karten-Effekt, Icon und Favicon, Social-Bild)
 
-**W2 Code-Brücke**
-- [ ] React-Komponente für SVG- und CSS-Tools
-- [ ] Tailwind und CSS-Variablen in allen passenden Tools, einheitlicher Abschnitt "Code" im Export
-- [ ] Brand Kit als Design-Tokens (CSS-Variablen, Tailwind-Theme, JSON im W3C-Format)
-- [ ] Responsive Exporte (SVG füllt jede Breite, CSS mit Kachelgrösse, Hinweis auf Dateigrösse)
+**W2 Code-Brücke** (übersprungen, Entscheid Andreas 2026-10-29)
+- [ ] ~~React-Komponente für SVG- und CSS-Tools~~
+- [ ] ~~Tailwind und CSS-Variablen in allen passenden Tools, einheitlicher Abschnitt "Code" im Export~~
+- [ ] ~~Brand Kit als Design-Tokens (CSS-Variablen, Tailwind-Theme, JSON im W3C-Format)~~
+- [ ] ~~Responsive Exporte (SVG füllt jede Breite, CSS mit Kachelgrösse, Hinweis auf Dateigrösse)~~
 
-**W3 Webdesign-Werkzeuge** (Auswahl vor dem Start bestätigen)
-- [ ] Hoch: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
+**W3 Webdesign-Werkzeuge** (Auswahl Andreas 2026-10-29: nur Hoch)
+- [x] Hoch: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild (Specs `docs/TOOLS.md` M1 bis M3)
 - [ ] Mittel: Easing und CSS-Animation, Abstandsskala, Verlaufstext
 - [ ] Niedrig: CSS-Loader, SVG-Aufräumer (ohne SVGO)
 

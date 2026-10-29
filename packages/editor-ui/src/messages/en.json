@@ -210,7 +210,9 @@
         "report": "Text report",
         "dropShadow": "CSS drop-shadow()",
         "plainText": "Plain text (.txt)",
-        "htmlPre": "HTML (pre)"
+        "htmlPre": "HTML (pre)",
+        "utilityClasses": "CSS variables and classes",
+        "metaTags": "Meta tags (HTML)"
       },
       "gif": {
         "title": "GIF settings",

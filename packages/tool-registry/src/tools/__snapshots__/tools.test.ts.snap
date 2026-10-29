@@ -3352,6 +3352,529 @@ exports[`preset snapshots: flow-field > silk 1`] = `"svg:253530:4ee05c52:<svg xm
 
 exports[`preset snapshots: flow-field > whirlpool 1`] = `"svg:140611:a3e25787:<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="#101418"/><g stroke="none"><path d="M1177.7 1085.8 1173.5 1080.8 1171.1 1078.5 1165.8 1074.6 1160 1071.4 1153.8 1068.9 1147.4 1067.2 1140.8 1066.1 1131 1065.5 1124.3 1065.6 1114.5 1066.6 1104.8 1068.3 1095.3 1070.8 1086 1073.8 1076.9 1077.5 1068.1 1081.8 1059.8 1086.9 1059.9 1087.2 1068.8 1083.4 1077.8 1079.9 1087 1076.8 1096.2 1074.2 1105.6 1072.1 1115.1 1070.5 1124.6 1069.6 1130.9 1069.4 1140.5 1069.8 1146.7 1070.6 1152.9 1071.9 1158.9 1073.9 1164.7 1076.5 1170.1 "`;
 
+exports[`preset snapshots: fluid-type-scale > app-ui 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#ffffff"/><path d="M58 76H1222" stroke="#717681" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#717681" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#4f46e5"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">320px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">1024px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#4f46e5">1024px</text><text x="58" y="159.67" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-3xl</text><text x="58" y="183.07" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">22.4 → 25.6</text><text x="292" y="169.57" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="25.63" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 184H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="205.47" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-2xl</text><text x="58" y="228.87" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">19.9 → 22.8</text><text x="292" y="215.37" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22.78" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 230.8H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="251.39" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-xl</text><text x="58" y="274.79" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">17.7 → 20.3</text><text x="292" y="261.29" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="20.25" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 277.6H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="297.4" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-lg</text><text x="58" y="320.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">15.8 → 18</text><text x="292" y="307.3" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 324.4H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="343.5" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#4f46e5">--text-base</text><text x="58" y="366.9" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">14 → 16</text><text x="292" y="353.4" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 371.2H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="389.68" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-sm</text><text x="58" y="413.08" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">12.4 → 14.2</text><text x="292" y="399.58" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="14.22" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 418H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
+exports[`preset snapshots: fluid-type-scale > balanced 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#ffffff"/><path d="M58 76H1222" stroke="#717681" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#717681" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#4f46e5"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">360px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">1280px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#4f46e5">1280px</text><text x="58" y="180.86" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-5</text><text x="58" y="204.26" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">39.8 → 54.9</text><text x="292" y="190.76" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="54.93" font-weight="600" fill="#111827">The quick brown fox jumps ov…</text><path d="M58 205.86H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="238.81" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-4</text><text x="58" y="262.21" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">33.2 → 43.9</text><text x="292" y="248.71" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="43.95" font-weight="600" fill="#111827">The quick brown fox jumps over the l…</text><path d="M58 260.8H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="286.6" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-3</text><text x="58" y="310" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">27.6 → 35.2</text><text x="292" y="296.5" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="35.16" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 307.6H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="330.94" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-2</text><text x="58" y="354.34" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">23 → 28.1</text><text x="292" y="340.84" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28.13" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 354.4H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="375.77" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-1</text><text x="58" y="399.17" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">19.2 → 22.5</text><text x="292" y="385.67" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22.5" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 401.2H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="421" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#4f46e5">--step-0</text><text x="58" y="444.4" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">16 → 18</text><text x="292" y="430.9" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 448H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="466.54" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step--1</text><text x="58" y="489.94" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">13.3 → 14.4</text><text x="292" y="476.44" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="14.4" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 494.8H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="512.33" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step--2</text><text x="58" y="535.73" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">11.1 → 11.5</text><text x="292" y="522.23" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="11.52" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 541.6H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
+exports[`preset snapshots: fluid-type-scale > bold-hero 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#0f172a"/><path d="M58 76H1222" stroke="#848b97" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#848b97" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#38bdf8"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">360px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">1280px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#38bdf8">1280px</text><text x="58" y="273.13" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-7</text><text x="58" y="296.53" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">57.3 → 149.6</text><text x="292" y="283.03" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="149.57" font-weight="800" fill="#f8fafc">The quick…</text><path d="M58 324.16H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="423.66" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-6</text><text x="58" y="447.06" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">47.8 → 112.2</text><text x="292" y="433.56" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="112.2" font-weight="800" fill="#f8fafc">The quick bro…</text><path d="M58 464.42H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="536.59" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-5</text><text x="58" y="559.99" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">39.8 → 84.2</text><text x="292" y="546.49" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="84.17" font-weight="800" fill="#f8fafc">The quick brown fo…</text><path d="M58 569.64H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="621.3" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-4</text><text x="58" y="644.7" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">33.2 → 63.1</text><text x="292" y="631.2" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="63.15" font-weight="800" fill="#f8fafc">The quick brown fox jump…</text><path d="M58 648.57H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="684.86" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-3</text><text x="58" y="708.26" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">27.6 → 47.4</text><text x="292" y="694.76" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="47.37" font-weight="800" fill="#f8fafc">The quick brown fox jumps over th…</text><path d="M58 707.78H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="733.72" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-2</text><text x="58" y="757.12" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">23 → 35.5</text><text x="292" y="743.62" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="35.54" font-weight="800" fill="#f8fafc">The quick brown fox jumps over the lazy dog</text><path d="M58 754.58H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="777.41" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step-1</text><text x="58" y="800.81" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">19.2 → 26.7</text><text x="292" y="787.31" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="26.66" font-weight="800" fill="#f8fafc">The quick brown fox jumps over the lazy dog</text><path d="M58 801.38H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="821.88" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#38bdf8">--step-0</text><text x="58" y="845.28" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">16 → 20</text><text x="292" y="831.78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="800" fill="#f8fafc">The quick brown fox jumps over the lazy dog</text><path d="M58 848.18H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="866.93" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step--1</text><text x="58" y="890.33" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">13.3 → 15</text><text x="292" y="876.83" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="800" fill="#f8fafc">The quick brown fox jumps over the lazy dog</text><path d="M58 894.98H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="912.42" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#848b97">--step--2</text><text x="58" y="935.82" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#848b97">11.1 → 11.3</text><text x="292" y="922.32" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="11.26" font-weight="800" fill="#f8fafc">The quick brown fox jumps over the lazy dog</text><path d="M58 941.78H1222" stroke="#848b97" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
+exports[`preset snapshots: fluid-type-scale > code 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#111111"/><path d="M58 76H1222" stroke="#7c7c7c" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#7c7c7c" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#a3e635"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">360px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">1280px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#a3e635">1280px</text><text x="58" y="163.76" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">--step-4</text><text x="58" y="187.16" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">25.6 → 37.3</text><text x="292" y="173.66" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="37.32" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy…</text><path d="M58 184H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="208.39" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">--step-3</text><text x="58" y="231.79" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">22.8 → 31.1</text><text x="292" y="218.29" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="31.1" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy dog</text><path d="M58 230.8H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="253.37" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">--step-2</text><text x="58" y="276.77" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">20.3 → 25.9</text><text x="292" y="263.27" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="25.92" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy dog</text><path d="M58 277.6H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="298.66" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">--step-1</text><text x="58" y="322.06" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">18 → 21.6</text><text x="292" y="308.56" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="21.6" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy dog</text><path d="M58 324.4H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="344.2" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#a3e635">--step-0</text><text x="58" y="367.6" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">16 → 18</text><text x="292" y="354.1" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy dog</text><path d="M58 371.2H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="389.95" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">--step--1</text><text x="58" y="413.35" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">14.2 → 15</text><text x="292" y="399.85" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy dog</text><path d="M58 418H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="435.88" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#7c7c7c">--step--2</text><text x="58" y="459.28" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#7c7c7c">12.6 → 12.5</text><text x="292" y="445.78" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="12.5" font-weight="500" fill="#e5e5e5">The quick brown fox jumps over the lazy dog</text><path d="M58 464.8H1222" stroke="#7c7c7c" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
+exports[`preset snapshots: fluid-type-scale > compact 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#ffffff"/><path d="M58 76H1222" stroke="#717681" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#717681" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#4f46e5"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">360px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">1280px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#4f46e5">1280px</text><text x="58" y="162.31" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-4</text><text x="58" y="185.71" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">24 → 33.2</text><text x="292" y="172.21" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="33.18" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 184H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="207.18" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-3</text><text x="58" y="230.58" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">21.4 → 27.6</text><text x="292" y="217.08" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="27.65" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 230.8H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="252.36" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-2</text><text x="58" y="275.76" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">19 → 23</text><text x="292" y="262.26" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="23.04" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 277.6H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="297.82" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step-1</text><text x="58" y="321.22" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">16.9 → 19.2</text><text x="292" y="307.72" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="19.2" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 324.4H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="343.5" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#4f46e5">--step-0</text><text x="58" y="366.9" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">15 → 16</text><text x="292" y="353.4" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 371.2H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="389.37" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step--1</text><text x="58" y="412.77" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">13.3 → 13.3</text><text x="292" y="399.27" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="13.33" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 418H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="435.39" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--step--2</text><text x="58" y="458.79" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">11.9 → 11.1</text><text x="292" y="445.29" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="11.11" font-weight="500" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 464.8H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
+exports[`preset snapshots: fluid-type-scale > editorial 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#fffbf5"/><path d="M58 76H1222" stroke="#837b73" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#837b73" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#b45309"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">360px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">1280px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#b45309">1280px</text><text x="58" y="213.47" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step-5</text><text x="58" y="236.87" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">54.9 → 88.4</text><text x="292" y="223.37" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="88.38" font-weight="600" fill="#2b211a">The quick brown f…</text><path d="M58 247.68H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="302.43" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step-4</text><text x="58" y="325.83" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">43.9 → 66.3</text><text x="292" y="312.33" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="66.3" font-weight="600" fill="#2b211a">The quick brown fox jum…</text><path d="M58 330.56H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="369.16" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step-3</text><text x="58" y="392.56" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">35.2 → 49.7</text><text x="292" y="379.06" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="49.74" font-weight="600" fill="#2b211a">The quick brown fox jumps over t…</text><path d="M58 392.73H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="419.29" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step-2</text><text x="58" y="442.69" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">28.1 → 37.3</text><text x="292" y="429.19" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="37.31" font-weight="600" fill="#2b211a">The quick brown fox jumps over the lazy dog</text><path d="M58 439.53H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="462.83" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step-1</text><text x="58" y="486.23" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">22.5 → 28</text><text x="292" y="472.73" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="27.99" font-weight="600" fill="#2b211a">The quick brown fox jumps over the lazy dog</text><path d="M58 486.33H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="507.18" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#b45309">--step-0</text><text x="58" y="530.58" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">18 → 21</text><text x="292" y="517.08" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="21" font-weight="600" fill="#2b211a">The quick brown fox jumps over the lazy dog</text><path d="M58 533.13H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="552.15" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step--1</text><text x="58" y="575.55" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">14.4 → 15.8</text><text x="292" y="562.05" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="15.75" font-weight="600" fill="#2b211a">The quick brown fox jumps over the lazy dog</text><path d="M58 579.93H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="597.57" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#837b73">--step--2</text><text x="58" y="620.97" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#837b73">11.5 → 11.8</text><text x="292" y="607.47" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="11.82" font-weight="600" fill="#2b211a">The quick brown fox jumps over the lazy dog</text><path d="M58 626.73H1222" stroke="#837b73" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
+exports[`preset snapshots: fluid-type-scale > extra exports of every preset 1`] = `
+{
+  "app-ui": {
+    "css-variables": "/* Fluid type scale: 320px to 1024px, 14px × 1.125 to 16px × 1.125 */
+:root {
+  --text-sm: clamp(12.44px, 11.64px + 0.2525vw, 14.22px);
+  --text-base: clamp(14px, 13.09px + 0.2841vw, 16px);
+  --text-lg: clamp(15.75px, 14.73px + 0.3196vw, 18px);
+  --text-xl: clamp(17.72px, 16.57px + 0.3596vw, 20.25px);
+  --text-2xl: clamp(19.93px, 18.64px + 0.4045vw, 22.78px);
+  --text-3xl: clamp(22.43px, 20.97px + 0.4551vw, 25.63px);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 320px to 1024px, 14px × 1.125 to 16px × 1.125 */
+@theme {
+  --text-sm: clamp(12.44px, 11.64px + 0.2525vw, 14.22px);
+  --text-base: clamp(14px, 13.09px + 0.2841vw, 16px);
+  --text-lg: clamp(15.75px, 14.73px + 0.3196vw, 18px);
+  --text-xl: clamp(17.72px, 16.57px + 0.3596vw, 20.25px);
+  --text-2xl: clamp(19.93px, 18.64px + 0.4045vw, 22.78px);
+  --text-3xl: clamp(22.43px, 20.97px + 0.4551vw, 25.63px);
+}
+
+/* Usage: class="text-3xl" */
+",
+    "utility-classes": "/* Fluid type scale: 320px to 1024px, 14px × 1.125 to 16px × 1.125 */
+:root {
+  --text-sm: clamp(12.44px, 11.64px + 0.2525vw, 14.22px);
+  --text-base: clamp(14px, 13.09px + 0.2841vw, 16px);
+  --text-lg: clamp(15.75px, 14.73px + 0.3196vw, 18px);
+  --text-xl: clamp(17.72px, 16.57px + 0.3596vw, 20.25px);
+  --text-2xl: clamp(19.93px, 18.64px + 0.4045vw, 22.78px);
+  --text-3xl: clamp(22.43px, 20.97px + 0.4551vw, 25.63px);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-base {
+  font-size: var(--text-base);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+}
+
+.text-3xl {
+  font-size: var(--text-3xl);
+}
+",
+  },
+  "balanced": {
+    "css-variables": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 18px × 1.25 */
+:root {
+  --step--2: clamp(0.6944rem, 0.6844rem + 0.0444vw, 0.72rem);
+  --step--1: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --step-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --step-2: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --step-3: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --step-4: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --step-5: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 18px × 1.25 */
+@theme {
+  --text--2: clamp(0.6944rem, 0.6844rem + 0.0444vw, 0.72rem);
+  --text--1: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --text-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --text-1: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --text-2: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --text-3: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --text-4: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --text-5: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+}
+
+/* Usage: class="text-5" */
+",
+    "utility-classes": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 18px × 1.25 */
+:root {
+  --step--2: clamp(0.6944rem, 0.6844rem + 0.0444vw, 0.72rem);
+  --step--1: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --step-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --step-2: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --step-3: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --step-4: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --step-5: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+}
+
+.step--2 {
+  font-size: var(--step--2);
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}
+
+.step-0 {
+  font-size: var(--step-0);
+}
+
+.step-1 {
+  font-size: var(--step-1);
+}
+
+.step-2 {
+  font-size: var(--step-2);
+}
+
+.step-3 {
+  font-size: var(--step-3);
+}
+
+.step-4 {
+  font-size: var(--step-4);
+}
+
+.step-5 {
+  font-size: var(--step-5);
+}
+",
+  },
+  "bold-hero": {
+    "css-variables": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 20px × 1.333 */
+:root {
+  --step--2: clamp(0.6944rem, 0.6909rem + 0.0157vw, 0.7035rem);
+  --step--1: clamp(0.8333rem, 0.7925rem + 0.1816vw, 0.9377rem);
+  --step-0: clamp(1rem, 0.9022rem + 0.4348vw, 1.25rem);
+  --step-1: clamp(1.2rem, 1.0176rem + 0.8109vw, 1.6663rem);
+  --step-2: clamp(1.44rem, 1.1343rem + 1.3585vw, 2.2211rem);
+  --step-3: clamp(1.728rem, 1.2456rem + 2.1439vw, 2.9607rem);
+  --step-4: clamp(2.0736rem, 1.3407rem + 3.2575vw, 3.9467rem);
+  --step-5: clamp(2.4883rem, 1.4034rem + 4.8219vw, 5.2609rem);
+  --step-6: clamp(2.986rem, 1.4103rem + 7.0031vw, 7.0128rem);
+  --step-7: clamp(3.5832rem, 1.3274rem + 10.0259vw, 9.3481rem);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 20px × 1.333 */
+@theme {
+  --text--2: clamp(0.6944rem, 0.6909rem + 0.0157vw, 0.7035rem);
+  --text--1: clamp(0.8333rem, 0.7925rem + 0.1816vw, 0.9377rem);
+  --text-0: clamp(1rem, 0.9022rem + 0.4348vw, 1.25rem);
+  --text-1: clamp(1.2rem, 1.0176rem + 0.8109vw, 1.6663rem);
+  --text-2: clamp(1.44rem, 1.1343rem + 1.3585vw, 2.2211rem);
+  --text-3: clamp(1.728rem, 1.2456rem + 2.1439vw, 2.9607rem);
+  --text-4: clamp(2.0736rem, 1.3407rem + 3.2575vw, 3.9467rem);
+  --text-5: clamp(2.4883rem, 1.4034rem + 4.8219vw, 5.2609rem);
+  --text-6: clamp(2.986rem, 1.4103rem + 7.0031vw, 7.0128rem);
+  --text-7: clamp(3.5832rem, 1.3274rem + 10.0259vw, 9.3481rem);
+}
+
+/* Usage: class="text-7" */
+",
+    "utility-classes": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 20px × 1.333 */
+:root {
+  --step--2: clamp(0.6944rem, 0.6909rem + 0.0157vw, 0.7035rem);
+  --step--1: clamp(0.8333rem, 0.7925rem + 0.1816vw, 0.9377rem);
+  --step-0: clamp(1rem, 0.9022rem + 0.4348vw, 1.25rem);
+  --step-1: clamp(1.2rem, 1.0176rem + 0.8109vw, 1.6663rem);
+  --step-2: clamp(1.44rem, 1.1343rem + 1.3585vw, 2.2211rem);
+  --step-3: clamp(1.728rem, 1.2456rem + 2.1439vw, 2.9607rem);
+  --step-4: clamp(2.0736rem, 1.3407rem + 3.2575vw, 3.9467rem);
+  --step-5: clamp(2.4883rem, 1.4034rem + 4.8219vw, 5.2609rem);
+  --step-6: clamp(2.986rem, 1.4103rem + 7.0031vw, 7.0128rem);
+  --step-7: clamp(3.5832rem, 1.3274rem + 10.0259vw, 9.3481rem);
+}
+
+.step--2 {
+  font-size: var(--step--2);
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}
+
+.step-0 {
+  font-size: var(--step-0);
+}
+
+.step-1 {
+  font-size: var(--step-1);
+}
+
+.step-2 {
+  font-size: var(--step-2);
+}
+
+.step-3 {
+  font-size: var(--step-3);
+}
+
+.step-4 {
+  font-size: var(--step-4);
+}
+
+.step-5 {
+  font-size: var(--step-5);
+}
+
+.step-6 {
+  font-size: var(--step-6);
+}
+
+.step-7 {
+  font-size: var(--step-7);
+}
+",
+  },
+  "code": {
+    "css-variables": "/* Fluid type scale: 360px to 1280px, 16px × 1.125 to 18px × 1.2 */
+:root {
+  --step--2: clamp(0.7813rem, 0.7936rem - 0.0154vw, 0.7901rem);
+  --step--1: clamp(0.8889rem, 0.8699rem + 0.0845vw, 0.9375rem);
+  --step-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --step-1: clamp(1.125rem, 1.037rem + 0.3913vw, 1.35rem);
+  --step-2: clamp(1.2656rem, 1.127rem + 0.6163vw, 1.62rem);
+  --step-3: clamp(1.4238rem, 1.2203rem + 0.9046vw, 1.944rem);
+  --step-4: clamp(1.6018rem, 1.3158rem + 1.2713vw, 2.3328rem);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 360px to 1280px, 16px × 1.125 to 18px × 1.2 */
+@theme {
+  --text--2: clamp(0.7813rem, 0.7936rem - 0.0154vw, 0.7901rem);
+  --text--1: clamp(0.8889rem, 0.8699rem + 0.0845vw, 0.9375rem);
+  --text-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --text-1: clamp(1.125rem, 1.037rem + 0.3913vw, 1.35rem);
+  --text-2: clamp(1.2656rem, 1.127rem + 0.6163vw, 1.62rem);
+  --text-3: clamp(1.4238rem, 1.2203rem + 0.9046vw, 1.944rem);
+  --text-4: clamp(1.6018rem, 1.3158rem + 1.2713vw, 2.3328rem);
+}
+
+/* Usage: class="text-4" */
+",
+    "utility-classes": "/* Fluid type scale: 360px to 1280px, 16px × 1.125 to 18px × 1.2 */
+:root {
+  --step--2: clamp(0.7813rem, 0.7936rem - 0.0154vw, 0.7901rem);
+  --step--1: clamp(0.8889rem, 0.8699rem + 0.0845vw, 0.9375rem);
+  --step-0: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --step-1: clamp(1.125rem, 1.037rem + 0.3913vw, 1.35rem);
+  --step-2: clamp(1.2656rem, 1.127rem + 0.6163vw, 1.62rem);
+  --step-3: clamp(1.4238rem, 1.2203rem + 0.9046vw, 1.944rem);
+  --step-4: clamp(1.6018rem, 1.3158rem + 1.2713vw, 2.3328rem);
+}
+
+.step--2 {
+  font-size: var(--step--2);
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}
+
+.step-0 {
+  font-size: var(--step-0);
+}
+
+.step-1 {
+  font-size: var(--step-1);
+}
+
+.step-2 {
+  font-size: var(--step-2);
+}
+
+.step-3 {
+  font-size: var(--step-3);
+}
+
+.step-4 {
+  font-size: var(--step-4);
+}
+",
+  },
+  "compact": {
+    "css-variables": "/* Fluid type scale: 360px to 1280px, 15px × 1.125 to 16px × 1.2 */
+:root {
+  --step--2: clamp(0.6944rem, 0.7589rem - 0.0805vw, 0.7407rem);
+  --step--1: 0.8333rem;
+  --step-0: clamp(0.9375rem, 0.913rem + 0.1087vw, 1rem);
+  --step-1: clamp(1.0547rem, 0.9978rem + 0.2527vw, 1.2rem);
+  --step-2: clamp(1.1865rem, 1.0873rem + 0.4408vw, 1.44rem);
+  --step-3: clamp(1.3348rem, 1.181rem + 0.6838vw, 1.728rem);
+  --step-4: clamp(1.5017rem, 1.2779rem + 0.9946vw, 2.0736rem);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 360px to 1280px, 15px × 1.125 to 16px × 1.2 */
+@theme {
+  --text--2: clamp(0.6944rem, 0.7589rem - 0.0805vw, 0.7407rem);
+  --text--1: 0.8333rem;
+  --text-0: clamp(0.9375rem, 0.913rem + 0.1087vw, 1rem);
+  --text-1: clamp(1.0547rem, 0.9978rem + 0.2527vw, 1.2rem);
+  --text-2: clamp(1.1865rem, 1.0873rem + 0.4408vw, 1.44rem);
+  --text-3: clamp(1.3348rem, 1.181rem + 0.6838vw, 1.728rem);
+  --text-4: clamp(1.5017rem, 1.2779rem + 0.9946vw, 2.0736rem);
+}
+
+/* Usage: class="text-4" */
+",
+    "utility-classes": "/* Fluid type scale: 360px to 1280px, 15px × 1.125 to 16px × 1.2 */
+:root {
+  --step--2: clamp(0.6944rem, 0.7589rem - 0.0805vw, 0.7407rem);
+  --step--1: 0.8333rem;
+  --step-0: clamp(0.9375rem, 0.913rem + 0.1087vw, 1rem);
+  --step-1: clamp(1.0547rem, 0.9978rem + 0.2527vw, 1.2rem);
+  --step-2: clamp(1.1865rem, 1.0873rem + 0.4408vw, 1.44rem);
+  --step-3: clamp(1.3348rem, 1.181rem + 0.6838vw, 1.728rem);
+  --step-4: clamp(1.5017rem, 1.2779rem + 0.9946vw, 2.0736rem);
+}
+
+.step--2 {
+  font-size: var(--step--2);
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}
+
+.step-0 {
+  font-size: var(--step-0);
+}
+
+.step-1 {
+  font-size: var(--step-1);
+}
+
+.step-2 {
+  font-size: var(--step-2);
+}
+
+.step-3 {
+  font-size: var(--step-3);
+}
+
+.step-4 {
+  font-size: var(--step-4);
+}
+",
+  },
+  "editorial": {
+    "css-variables": "/* Fluid type scale: 360px to 1280px, 18px × 1.25 to 21px × 1.333 */
+:root {
+  --step--2: clamp(0.72rem, 0.7127rem + 0.0324vw, 0.7387rem);
+  --step--1: clamp(0.9rem, 0.8669rem + 0.1472vw, 0.9846rem);
+  --step-0: clamp(1.125rem, 1.0516rem + 0.3261vw, 1.3125rem);
+  --step-1: clamp(1.4063rem, 1.2719rem + 0.5971vw, 1.7496rem);
+  --step-2: clamp(1.7578rem, 1.5331rem + 0.9989vw, 2.3322rem);
+  --step-3: clamp(2.1973rem, 1.8406rem + 1.5852vw, 3.1088rem);
+  --step-4: clamp(2.7466rem, 2.1998rem + 2.4303vw, 4.144rem);
+  --step-5: clamp(3.4332rem, 2.6151rem + 3.636vw, 5.524rem);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 360px to 1280px, 18px × 1.25 to 21px × 1.333 */
+@theme {
+  --text--2: clamp(0.72rem, 0.7127rem + 0.0324vw, 0.7387rem);
+  --text--1: clamp(0.9rem, 0.8669rem + 0.1472vw, 0.9846rem);
+  --text-0: clamp(1.125rem, 1.0516rem + 0.3261vw, 1.3125rem);
+  --text-1: clamp(1.4063rem, 1.2719rem + 0.5971vw, 1.7496rem);
+  --text-2: clamp(1.7578rem, 1.5331rem + 0.9989vw, 2.3322rem);
+  --text-3: clamp(2.1973rem, 1.8406rem + 1.5852vw, 3.1088rem);
+  --text-4: clamp(2.7466rem, 2.1998rem + 2.4303vw, 4.144rem);
+  --text-5: clamp(3.4332rem, 2.6151rem + 3.636vw, 5.524rem);
+}
+
+/* Usage: class="text-5" */
+",
+    "utility-classes": "/* Fluid type scale: 360px to 1280px, 18px × 1.25 to 21px × 1.333 */
+:root {
+  --step--2: clamp(0.72rem, 0.7127rem + 0.0324vw, 0.7387rem);
+  --step--1: clamp(0.9rem, 0.8669rem + 0.1472vw, 0.9846rem);
+  --step-0: clamp(1.125rem, 1.0516rem + 0.3261vw, 1.3125rem);
+  --step-1: clamp(1.4063rem, 1.2719rem + 0.5971vw, 1.7496rem);
+  --step-2: clamp(1.7578rem, 1.5331rem + 0.9989vw, 2.3322rem);
+  --step-3: clamp(2.1973rem, 1.8406rem + 1.5852vw, 3.1088rem);
+  --step-4: clamp(2.7466rem, 2.1998rem + 2.4303vw, 4.144rem);
+  --step-5: clamp(3.4332rem, 2.6151rem + 3.636vw, 5.524rem);
+}
+
+.step--2 {
+  font-size: var(--step--2);
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}
+
+.step-0 {
+  font-size: var(--step-0);
+}
+
+.step-1 {
+  font-size: var(--step-1);
+}
+
+.step-2 {
+  font-size: var(--step-2);
+}
+
+.step-3 {
+  font-size: var(--step-3);
+}
+
+.step-4 {
+  font-size: var(--step-4);
+}
+
+.step-5 {
+  font-size: var(--step-5);
+}
+",
+  },
+  "tailwind": {
+    "css-variables": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 18px × 1.25 */
+:root {
+  --text-xs: clamp(0.6944rem, 0.6844rem + 0.0444vw, 0.72rem);
+  --text-sm: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --text-base: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --text-xl: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --text-2xl: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --text-3xl: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --text-4xl: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+  --text-5xl: clamp(2.986rem, 2.4751rem + 2.2705vw, 4.2915rem);
+  --text-6xl: clamp(3.5832rem, 2.8862rem + 3.0978vw, 5.3644rem);
+}
+",
+    "tailwind-theme": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 18px × 1.25 */
+@theme {
+  --text-xs: clamp(0.6944rem, 0.6844rem + 0.0444vw, 0.72rem);
+  --text-sm: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --text-base: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --text-xl: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --text-2xl: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --text-3xl: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --text-4xl: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+  --text-5xl: clamp(2.986rem, 2.4751rem + 2.2705vw, 4.2915rem);
+  --text-6xl: clamp(3.5832rem, 2.8862rem + 3.0978vw, 5.3644rem);
+}
+
+/* Usage: class="text-6xl" */
+",
+    "utility-classes": "/* Fluid type scale: 360px to 1280px, 16px × 1.2 to 18px × 1.25 */
+:root {
+  --text-xs: clamp(0.6944rem, 0.6844rem + 0.0444vw, 0.72rem);
+  --text-sm: clamp(0.8333rem, 0.8072rem + 0.1159vw, 0.9rem);
+  --text-base: clamp(1rem, 0.9511rem + 0.2174vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1193rem + 0.3587vw, 1.4063rem);
+  --text-xl: clamp(1.44rem, 1.3156rem + 0.5527vw, 1.7578rem);
+  --text-2xl: clamp(1.728rem, 1.5444rem + 0.8161vw, 2.1973rem);
+  --text-3xl: clamp(2.0736rem, 1.8103rem + 1.1704vw, 2.7466rem);
+  --text-4xl: clamp(2.4883rem, 2.1186rem + 1.6433vw, 3.4332rem);
+  --text-5xl: clamp(2.986rem, 2.4751rem + 2.2705vw, 4.2915rem);
+  --text-6xl: clamp(3.5832rem, 2.8862rem + 3.0978vw, 5.3644rem);
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+}
+
+.text-base {
+  font-size: var(--text-base);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+}
+
+.text-xl {
+  font-size: var(--text-xl);
+}
+
+.text-2xl {
+  font-size: var(--text-2xl);
+}
+
+.text-3xl {
+  font-size: var(--text-3xl);
+}
+
+.text-4xl {
+  font-size: var(--text-4xl);
+}
+
+.text-5xl {
+  font-size: var(--text-5xl);
+}
+
+.text-6xl {
+  font-size: var(--text-6xl);
+}
+",
+  },
+}
+`;
+
+exports[`preset snapshots: fluid-type-scale > tailwind 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960"><rect width="1280" height="960" fill="#ffffff"/><path d="M58 76H1222" stroke="#717681" stroke-opacity="0.5" stroke-width="1"/><path d="M58 72V80M1222 72V80" stroke="#717681" stroke-width="1"/><circle cx="1222" cy="76" r="7.2" fill="#0ea5e9"/><text x="58" y="104.8" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">360px</text><text x="1222" y="104.8" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">1280px</text><text x="1222" y="61.6" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#0ea5e9">1280px</text><text x="58" y="210.98" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-6xl</text><text x="58" y="234.38" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">57.3 → 85.8</text><text x="292" y="220.88" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="85.83" font-weight="600" fill="#111827">The quick brown fo…</text><path d="M58 244.49H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="301.54" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-5xl</text><text x="58" y="324.94" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">47.8 → 68.7</text><text x="292" y="311.44" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="68.66" font-weight="600" fill="#111827">The quick brown fox ju…</text><path d="M58 330.32H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="373.98" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-4xl</text><text x="58" y="397.38" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">39.8 → 54.9</text><text x="292" y="383.88" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="54.93" font-weight="600" fill="#111827">The quick brown fox jumps ov…</text><path d="M58 398.98H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="431.93" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-3xl</text><text x="58" y="455.33" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">33.2 → 43.9</text><text x="292" y="441.83" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="43.95" font-weight="600" fill="#111827">The quick brown fox jumps over the l…</text><path d="M58 453.92H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="479.72" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-2xl</text><text x="58" y="503.12" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">27.6 → 35.2</text><text x="292" y="489.62" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="35.16" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 500.72H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="524.06" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-xl</text><text x="58" y="547.46" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">23 → 28.1</text><text x="292" y="533.96" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28.13" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 547.52H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="568.89" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-lg</text><text x="58" y="592.29" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">19.2 → 22.5</text><text x="292" y="578.79" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="22.5" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 594.32H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="614.12" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#0ea5e9">--text-base</text><text x="58" y="637.52" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">16 → 18</text><text x="292" y="624.02" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 641.12H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="659.66" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-sm</text><text x="58" y="683.06" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">13.3 → 14.4</text><text x="292" y="669.56" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="14.4" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 687.92H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/><text x="58" y="705.45" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="18" fill="#717681">--text-xs</text><text x="58" y="728.85" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="15.3" fill="#717681">11.1 → 11.5</text><text x="292" y="715.35" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="11.52" font-weight="600" fill="#111827">The quick brown fox jumps over the lazy dog</text><path d="M58 734.72H1222" stroke="#717681" stroke-opacity="0.18" stroke-width="1"/></svg>"`;
+
 exports[`preset snapshots: fractal-glass > diagonal 1`] = `"pixels 96x64:7800766e"`;
 
 exports[`preset snapshots: fractal-glass > fine 1`] = `"pixels 96x64:896b7c13"`;
@@ -4358,6 +4881,116 @@ exports[`preset snapshots: noise-grain > riso 1`] = `"<svg xmlns="http://www.w3.
 
 exports[`preset snapshots: noise-grain > sand 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><defs><pattern id="g1f7s4o0" width="256" height="256" patternUnits="userSpaceOnUse"><image width="256" height="256" style="image-rendering:pixelated" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="png-base64:87820:3731a022"/></pattern></defs><rect width="1080" height="1080" fill="#e9c46a"/><rect width="1080" height="1080" fill="url(#g1f7s4o0)" opacity="0.4" style="mix-blend-mode:multiply"/></svg>"`;
 
+exports[`preset snapshots: og-image > article 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><linearGradient id="agw8osv4" gradientUnits="userSpaceOnUse" x1="13.6" y1="-23.56" x2="1186.4" y2="653.56"><stop offset="0" stop-color="#e0f2fe"/><stop offset="0.13" stop-color="#e3f1ff"/><stop offset="0.25" stop-color="#e7efff"/><stop offset="0.38" stop-color="#eaeeff"/><stop offset="0.5" stop-color="#edecff"/><stop offset="0.63" stop-color="#f2eafe"/><stop offset="0.75" stop-color="#f5e9fb"/><stop offset="0.88" stop-color="#f9e8f7"/><stop offset="1" stop-color="#fce7f3"/></linearGradient></defs><rect x="0" y="0" width="1200" height="630" fill="url(#agw8osv4)"/></svg><rect x="25.45" y="280.65" width="1052.73" height="313.92" rx="20.41" fill="#ffffff" fill-opacity="0.85"/><text x="50.4" y="85.51" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="23.81" font-weight="600" fill="#111827" fill-opacity="0.85">example.com</text><rect x="50.4" y="305.6" width="86.32" height="47.4" rx="23.7" fill="#2563eb"/><text x="93.56" y="338.03" text-anchor="middle" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="24.95" font-weight="700" fill="#ffffff">New</text><text x="50.4" y="434.27" text-anchor="start" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="66.15" font-weight="700" fill="#111827">Ship beautiful websites in</text><text x="50.4" y="507.03" text-anchor="start" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="66.15" font-weight="700" fill="#111827">half the time</text><text x="50.4" y="568.49" text-anchor="start" font-family="ui-serif, Georgia, Cambria, Times New Roman, Times, serif" font-size="27.78" font-weight="400" fill="#111827" fill-opacity="0.82">Patterns, gradients and code for your next launch</text></svg>"`;
+
+exports[`preset snapshots: og-image > centered 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><radialGradient id="bahd8jc" cx="74.2" cy="556.8" r="724.5" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee" offset="0" stop-opacity="0.879"/><stop stop-color="#22d3ee" offset="0.0073" stop-opacity="0.879"/><stop stop-color="#22d3ee" offset="0.028" stop-opacity="0.878"/><stop stop-color="#22d3ee" offset="0.0607" stop-opacity="0.875"/><stop stop-color="#22d3ee" offset="0.104" stop-opacity="0.865"/><stop stop-color="#22d3ee" offset="0.1563" stop-opacity="0.843"/><stop stop-color="#22d3ee" offset="0.216" stop-opacity="0.802"/><stop stop-color="#22d3ee" offset="0.2817" stop-opacity="0.731"/><stop stop-color="#22d3ee" offset="0.352" stop-opacity="0.625"/><stop stop-color="#22d3ee" offset="0.4253" stop-opacity="0.488"/><stop stop-color="#22d3ee" offset="0.5" stop-opacity="0.342"/><stop stop-color="#22d3ee" offset="0.5748" stop-opacity="0.211"/><stop stop-color="#22d3ee" offset="0.648" stop-opacity="0.115"/><stop stop-color="#22d3ee" offset="0.7183" stop-opacity="0.057"/><stop stop-color="#22d3ee" offset="0.784" stop-opacity="0.026"/><stop stop-color="#22d3ee" offset="0.8438" stop-opacity="0.011"/><stop stop-color="#22d3ee" offset="0.896" stop-opacity="0.005"/><stop stop-color="#22d3ee" offset="0.9392" stop-opacity="0.002"/><stop stop-color="#22d3ee" offset="0.972" stop-opacity="0.001"/><stop stop-color="#22d3ee" offset="0.9928" stop-opacity="0.001"/><stop stop-color="#22d3ee" offset="1" stop-opacity="0"/></radialGradient><radialGradient id="b4nie7o" cx="1178.7" cy="583.7" r="724.5" gradientUnits="userSpaceOnUse"><stop stop-color="#a78bfa" offset="0" stop-opacity="0.879"/><stop stop-color="#a78bfa" offset="0.0073" stop-opacity="0.879"/><stop stop-color="#a78bfa" offset="0.028" stop-opacity="0.878"/><stop stop-color="#a78bfa" offset="0.0607" stop-opacity="0.875"/><stop stop-color="#a78bfa" offset="0.104" stop-opacity="0.865"/><stop stop-color="#a78bfa" offset="0.1563" stop-opacity="0.843"/><stop stop-color="#a78bfa" offset="0.216" stop-opacity="0.802"/><stop stop-color="#a78bfa" offset="0.2817" stop-opacity="0.731"/><stop stop-color="#a78bfa" offset="0.352" stop-opacity="0.625"/><stop stop-color="#a78bfa" offset="0.4253" stop-opacity="0.488"/><stop stop-color="#a78bfa" offset="0.5" stop-opacity="0.342"/><stop stop-color="#a78bfa" offset="0.5748" stop-opacity="0.211"/><stop stop-color="#a78bfa" offset="0.648" stop-opacity="0.115"/><stop stop-color="#a78bfa" offset="0.7183" stop-opacity="0.057"/><stop stop-color="#a78bfa" offset="0.784" stop-opacity="0.026"/><stop stop-color="#a78bfa" offset="0.8438" stop-opacity="0.011"/><stop stop-color="#a78bfa" offset="0.896" stop-opacity="0.005"/><stop stop-color="#a78bfa" offset="0.9392" stop-opacity="0.002"/><stop stop-color="#a78bfa" offset="0.972" stop-opacity="0.001"/><stop stop-color="#a78bfa" offset="0.9928" stop-opacity="0.001"/><stop stop-color="#a78bfa" offset="1" stop-opacity="0"/></radialGradient><radialGradient id="b1ncam60" cx="54.5" cy="32.2" r="724.5" gradientUnits="userSpaceOnUse"><stop stop-color="#f472b6" offset="0" stop-opacity="0.879"/><stop stop-color="#f472b6" offset="0.0073" stop-opacity="0.879"/><stop stop-color="#f472b6" offset="0.028" stop-opacity="0.878"/><stop stop-color="#f472b6" offset="0.0607" stop-opacity="0.875"/><stop stop-color="#f472b6" offset="0.104" stop-opacity="0.865"/><stop stop-color="#f472b6" offset="0.1563" stop-opacity="0.843"/><stop stop-color="#f472b6" offset="0.216" stop-opacity="0.802"/><stop stop-color="#f472b6" offset="0.2817" stop-opacity="0.731"/><stop stop-color="#f472b6" offset="0.352" stop-opacity="0.625"/><stop stop-color="#f472b6" offset="0.4253" stop-opacity="0.488"/><stop stop-color="#f472b6" offset="0.5" stop-opacity="0.342"/><stop stop-color="#f472b6" offset="0.5748" stop-opacity="0.211"/><stop stop-color="#f472b6" offset="0.648" stop-opacity="0.115"/><stop stop-color="#f472b6" offset="0.7183" stop-opacity="0.057"/><stop stop-color="#f472b6" offset="0.784" stop-opacity="0.026"/><stop stop-color="#f472b6" offset="0.8438" stop-opacity="0.011"/><stop stop-color="#f472b6" offset="0.896" stop-opacity="0.005"/><stop stop-color="#f472b6" offset="0.9392" stop-opacity="0.002"/><stop stop-color="#f472b6" offset="0.972" stop-opacity="0.001"/><stop stop-color="#f472b6" offset="0.9928" stop-opacity="0.001"/><stop stop-color="#f472b6" offset="1" stop-opacity="0"/></radialGradient><radialGradient id="byhte4y" cx="1124.8" cy="34.4" r="724.5" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee" offset="0" stop-opacity="0.879"/><stop stop-color="#22d3ee" offset="0.0073" stop-opacity="0.879"/><stop stop-color="#22d3ee" offset="0.028" stop-opacity="0.878"/><stop stop-color="#22d3ee" offset="0.0607" stop-opacity="0.875"/><stop stop-color="#22d3ee" offset="0.104" stop-opacity="0.865"/><stop stop-color="#22d3ee" offset="0.1563" stop-opacity="0.843"/><stop stop-color="#22d3ee" offset="0.216" stop-opacity="0.802"/><stop stop-color="#22d3ee" offset="0.2817" stop-opacity="0.731"/><stop stop-color="#22d3ee" offset="0.352" stop-opacity="0.625"/><stop stop-color="#22d3ee" offset="0.4253" stop-opacity="0.488"/><stop stop-color="#22d3ee" offset="0.5" stop-opacity="0.342"/><stop stop-color="#22d3ee" offset="0.5748" stop-opacity="0.211"/><stop stop-color="#22d3ee" offset="0.648" stop-opacity="0.115"/><stop stop-color="#22d3ee" offset="0.7183" stop-opacity="0.057"/><stop stop-color="#22d3ee" offset="0.784" stop-opacity="0.026"/><stop stop-color="#22d3ee" offset="0.8438" stop-opacity="0.011"/><stop stop-color="#22d3ee" offset="0.896" stop-opacity="0.005"/><stop stop-color="#22d3ee" offset="0.9392" stop-opacity="0.002"/><stop stop-color="#22d3ee" offset="0.972" stop-opacity="0.001"/><stop stop-color="#22d3ee" offset="0.9928" stop-opacity="0.001"/><stop stop-color="#22d3ee" offset="1" stop-opacity="0"/></radialGradient></defs><rect width="1200" height="630" fill="#0b1120"/><circle cx="74.2" cy="556.8" r="724.5" fill="url(#bahd8jc)"/><circle cx="1178.7" cy="583.7" r="724.5" fill="url(#b4nie7o)"/><circle cx="54.5" cy="32.2" r="724.5" fill="url(#b1ncam60)"/><circle cx="1124.8" cy="34.4" r="724.5" fill="url(#byhte4y)"/></svg><text x="518.79" y="85.51" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="23.81" font-weight="600" fill="#ffffff" fill-opacity="0.85">example.com</text><rect x="556.84" y="216.11" width="86.32" height="47.4" rx="23.7" fill="#22d3ee"/><text x="600" y="248.55" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="24.95" font-weight="700" fill="#111827">New</text><text x="600" y="344.78" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">Ship beautiful websites in</text><text x="600" y="417.55" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">half the time</text><text x="600" y="479" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="27.78" font-weight="400" fill="#ffffff" fill-opacity="0.82">Patterns, gradients and code for your next launch</text></svg>"`;
+
+exports[`preset snapshots: og-image > dotted 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><radialGradient id="g13th06t" gradientUnits="userSpaceOnUse" cx="16" cy="16" r="6.5"><stop offset="0" stop-color="#fb923c" stop-opacity="0.302"/><stop offset="0.84615" stop-color="#fb923c" stop-opacity="0.302"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></radialGradient><pattern id="p13th06t" patternUnits="userSpaceOnUse" x="0" y="0" width="32" height="32"><rect width="32" height="32" fill="url(#g13th06t)"/></pattern></defs><rect width="1200" height="630" fill="#fff7ed"/><rect width="1200" height="630" fill="url(#p13th06t)"/></svg></svg><rect x="25.45" y="280.65" width="1052.73" height="313.92" rx="20.41" fill="#fff7ed" fill-opacity="0.92"/><text x="50.4" y="85.51" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="23.81" font-weight="600" fill="#111827" fill-opacity="0.85">example.com</text><rect x="50.4" y="305.6" width="86.32" height="47.4" rx="23.7" fill="#ea580c"/><text x="93.56" y="338.03" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="24.95" font-weight="700" fill="#111827">New</text><text x="50.4" y="434.27" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#111827">Ship beautiful websites in</text><text x="50.4" y="507.03" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#111827">half the time</text><text x="50.4" y="568.49" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="27.78" font-weight="400" fill="#111827" fill-opacity="0.82">Patterns, gradients and code for your next launch</text></svg>"`;
+
+exports[`preset snapshots: og-image > extra exports of every preset 1`] = `
+{
+  "article": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+  "centered": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+  "dotted": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+  "launch": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+  "minimal": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+  "night": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+  "split": {
+    "meta-tags": "<!-- Upload the image to your site and use its absolute URL -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ship beautiful websites in half the time">
+<meta property="og:description" content="Patterns, gradients and code for your next launch">
+<meta property="og:site_name" content="example.com">
+<meta property="og:image" content="https://example.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ship beautiful websites in half the time">
+<meta name="twitter:card" content="summary_large_image">
+",
+  },
+}
+`;
+
+exports[`preset snapshots: og-image > launch 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><linearGradient id="og9qptls" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0f0a2e" stop-opacity="0.6"/><stop offset="1" stop-color="#0f0a2e" stop-opacity="0"/></linearGradient></defs><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#1e1b4b"/><image x="-26.775" y="-26.775" width="1258.425" height="696.15" preserveAspectRatio="none" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="png-base64:6644:ccdae757"/></svg><rect width="1200" height="630" fill="url(#og9qptls)"/><text x="50.4" y="85.51" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="23.81" font-weight="600" fill="#ffffff" fill-opacity="0.85">example.com</text><rect x="50.4" y="305.6" width="86.32" height="47.4" rx="23.7" fill="#facc15"/><text x="93.56" y="338.03" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="24.95" font-weight="700" fill="#111827">New</text><text x="50.4" y="434.27" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">Ship beautiful websites in</text><text x="50.4" y="507.03" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">half the time</text><text x="50.4" y="568.49" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="27.78" font-weight="400" fill="#ffffff" fill-opacity="0.82">Patterns, gradients and code for your next launch</text></svg>"`;
+
+exports[`preset snapshots: og-image > minimal 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#fafaf9"/></svg><text x="50.4" y="561.16" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="23.81" font-weight="600" fill="#111827" fill-opacity="0.85">example.com</text><text x="50.4" y="228.61" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="75.6" font-weight="700" fill="#111827">Ship beautiful websites</text><text x="50.4" y="311.77" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="75.6" font-weight="700" fill="#111827">in half the time</text><text x="50.4" y="382.01" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="31.75" font-weight="400" fill="#111827" fill-opacity="0.82">Patterns, gradients and code for your next launch</text></svg>"`;
+
+exports[`preset snapshots: og-image > night 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#020617"/><image x="-26.775" y="-26.775" width="1258.425" height="696.15" preserveAspectRatio="none" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="png-base64:6644:535c88c4"/></svg><text x="521.41" y="85.51" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="23.81" font-weight="600" fill="#ffffff" fill-opacity="0.85">example.com</text><rect x="557.59" y="216.11" width="84.82" height="47.4" rx="23.7" fill="#38bdf8"/><text x="600" y="248.55" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="24.95" font-weight="700" fill="#111827">New</text><text x="600" y="344.78" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="66.15" font-weight="700" fill="#ffffff">Ship beautiful websites in</text><text x="600" y="417.55" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="66.15" font-weight="700" fill="#ffffff">half the time</text><text x="600" y="479" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="27.78" font-weight="400" fill="#ffffff" fill-opacity="0.82">Patterns, gradients and code for your next launch</text></svg>"`;
+
+exports[`preset snapshots: og-image > split 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><svg x="0" y="0" xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#f0fdfa"/><path d="M0 383.33 C40 372.52 160 320.16 240 318.43 C320 316.71 400 356.03 480 372.98 C560 389.93 640 412.49 720 420.13 C800 427.77 880 430.94 960 418.81 C1040 406.69 1160 359.28 1200 347.37 L1200 630 L0 630Z" fill="#99f6e4"/><path d="M0 468.48 C40 470.35 160 482.94 240 479.7 C320 476.46 400 444.29 480 449.04 C560 453.79 640 507.68 720 508.19 C800 508.7 880 460.87 960 452.1 C1040 443.33 1160 455 1200 455.58 L1200 630 L0 630Z" fill="#14b8a6"/><path d="M0 505.84 C40 510.43 160 531.49 240 533.37 C320 535.25 400 521.45 480 517.13 C560 512.81 640 503.27 720 507.46 C800 511.65 880 543.76 960 542.25 C1040 540.74 1160 505.71 1200 498.4 L1200 630 L0 630Z" fill="#0f766e"/></svg><rect width="696" height="630" fill="#042f2e"/><text x="50.4" y="85.51" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="23.81" font-weight="600" fill="#ffffff" fill-opacity="0.85">example.com</text><rect x="50.4" y="160.98" width="86.32" height="47.4" rx="23.7" fill="#5eead4"/><text x="93.56" y="193.41" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="24.95" font-weight="700" fill="#111827">New</text><text x="50.4" y="289.65" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">Ship beautiful</text><text x="50.4" y="362.41" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">websites in</text><text x="50.4" y="435.18" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="66.15" font-weight="800" fill="#ffffff">half the time</text><text x="50.4" y="496.63" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="27.78" font-weight="400" fill="#ffffff" fill-opacity="0.82">Patterns, gradients and code for your</text><text x="50.4" y="534.14" text-anchor="start" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="27.78" font-weight="400" fill="#ffffff" fill-opacity="0.82">next launch</text></svg>"`;
+
 exports[`preset snapshots: palette-from-image > color-wheel 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="240" height="1080" fill="#e89282"/><rect x="240" y="0" width="240" height="1080" fill="#fcc088"/><rect x="480" y="0" width="240" height="1080" fill="#36674d"/><rect x="720" y="0" width="240" height="1080" fill="#244c3c"/><rect x="960" y="0" width="240" height="1080" fill="#233a5b"/><rect x="1200" y="0" width="240" height="1080" fill="#4c4c7d"/><rect x="1440" y="0" width="240" height="1080" fill="#7e5b92"/><rect x="1680" y="0" width="240" height="1080" fill="#ba718f"/></g><g fill="#000000"><text x="19.2" y="1004.64" font-size="49.68" font-weight="700">9%</text><text x="19.2" y="1060.8" font-size="43.2">#e89282</text></g><g fill="#000000"><text x="259.2" y="1004.64" font-size="49.68" font-weight="700">5%</text><text x="259.2" y="1060.8" font-size="43.2">#fcc088</text></g><g fill="#ffffff"><text x="499.2" y="1004.64" font-size="49.68" font-weight="700">10%</text><text x="499.2" y="1060.8" font-size="43.2">#36674d</text></g><g fill="#ffffff"><text x="739.2" y="1004.64" font-size="49.68" font-weight="700">7%</text><text x="739.2" y="1060.8" font-size="43.2">#244c3c</text></g><g fill="#ffffff"><text x="979.2" y="1004.64" font-size="49.68" font-weight="700">25%</text><text x="979.2" y="1060.8" font-size="43.2">#233a5b</text></g><g fill="#ffffff"><text x="1219.2" y="1004.64" font-size="49.68" font-weight="700">18%</text><text x="1219.2" y="1060.8" font-size="43.2">#4c4c7d</text></g><g fill="#ffffff"><text x="1459.2" y="1004.64" font-size="49.68" font-weight="700">19%</text><text x="1459.2" y="1060.8" font-size="43.2">#7e5b92</text></g><g fill="#000000"><text x="1699.2" y="1004.64" font-size="49.68" font-weight="700">7%</text><text x="1699.2" y="1060.8" font-size="43.2">#ba718f</text></g></g></svg>"`;
 
 exports[`preset snapshots: palette-from-image > contrast-check 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080"><g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"><g shape-rendering="crispEdges"><rect x="0" y="0" width="384" height="1080" fill="#e99b86"/><rect x="384" y="0" width="384" height="1080" fill="#865e92"/><rect x="768" y="0" width="384" height="1080" fill="#33634a"/><rect x="1152" y="0" width="384" height="1080" fill="#484b7a"/><rect x="1536" y="0" width="384" height="1080" fill="#203b53"/></g><g fill="#000000"><text x="30.72" y="936.96" font-size="49.68" font-weight="700">17%</text><text x="30.72" y="993.12" font-size="43.2">#e99b86</text><text x="30.72" y="1049.28" font-size="38.88">9.4:1 AAA</text></g><g fill="#ffffff"><text x="414.72" y="936.96" font-size="49.68" font-weight="700">23%</text><text x="414.72" y="993.12" font-size="43.2">#865e92</text><text x="414.72" y="1049.28" font-size="38.88">5.2:1 AA</text></g><g fill="#ffffff"><text x="798.72" y="936.96" font-size="49.68" font-weight="700">13%</text><text x="798.72" y="993.12" font-size="43.2">#33634a</text><text x="798.72" y="1049.28" font-size="38.88">6.9:1 AA</text></g><g fill="#ffffff"><text x="1182.72" y="936.96" font-size="49.68" font-weight="700">21%</text><text x="1182.72" y="993.12" font-size="43.2">#484b7a</text><text x="1182.72" y="1049.28" font-size="38.88">8.1:1 AAA</text></g><g fill="#ffffff"><text x="1566.72" y="936.96" font-size="49.68" font-weight="700">26%</text><text x="1566.72" y="993.12" font-size="43.2">#203b53</text><text x="1566.72" y="1049.28" font-size="38.88">11.5:1 AAA</text></g></g></svg>"`;
@@ -5005,6 +5638,251 @@ exports[`preset snapshots: seamless-patterns > sweethearts 1`] = `"<svg xmlns="h
 exports[`preset snapshots: seamless-patterns > terrazzo 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><defs><path id="smorvmq1" d="M-6 -44C22 -48 46 -32 46 -6C46 22 28 44 0 44C-30 44 -48 26 -46 2C-44 -24 -30 -40 -6 -44Z"/><pattern id="sp1r83951" width="240" height="240" patternUnits="userSpaceOnUse"><g fill="#e07a5f"><use href="#smorvmq1" transform="translate(118.28 23.57)rotate(230.02)scale(0.23)"/><use href="#smorvmq1" transform="translate(29.82 201.29)rotate(2.94)scale(0.2672)"/><use href="#smorvmq1" transform="translate(227.34 227.21)rotate(259.49)scale(0.134)"/></g><g fill="#3d405b"><use href="#smorvmq1" transform="translate(138.99 61.99)rotate(92.52)scale(0.1518)"/><use href="#smorvmq1" transform="translate(13.96 138.79)rotate(78.59)scale(0.2295)"/><use href="#smorvmq1" transform="translate(253.96 138.79)rotate(78.59)scale(0.2295)"/><use href="#smorvmq1" transform="translate(11.06 163.71)rotate(222.34)scale(0.2292)"/><use href="#smorvmq1" transform="translate(251.06 163.71)rotate(222.34)scale(0.2292)"/><use href="#smorvmq1" transform="translate(159.93 154.32)rotate(55.65)scale(0.2753)"/><use href="#smorvmq1" transform="translate(100.94 203.83)rotate(190.21)scale(0.4111)"/></g><g fill="#81b29a"><use href="#smorvmq1" transform="translate(207.78 12.13)rotate(195.38)scale(0.2373)"/><use href="#smorvmq1" transform="translate(207.78 252.13)rotate(195.38)scale(0.2373)"/><use href="#smorvmq1" transform="translate(35.47 64.12)rotate(253.97)scale(0.3093)"/><use href="#smorvmq1" transform="translate(164.67 62.37)rotate(234.75)scale(0.3305)"/><use href="#smorvmq1" transform="translate(160.11 134.64)rotate(3.62)scale(0.396)"/><use href="#smorvmq1" transform="translate(201.41 154.23)rotate(204.27)scale(0.1979)"/></g><g fill="#f2cc8f"><use href="#smorvmq1" transform="translate(28.88 4.91)rotate(9.88)scale(0.4101)"/><use href="#smorvmq1" transform="translate(268.88 4.91)rotate(9.88)scale(0.4101)"/><use href="#smorvmq1" transform="translate(28.88 244.91)rotate(9.88)scale(0.4101)"/><use href="#smorvmq1" transform="translate(268.88 244.91)rotate(9.88)scale(0.4101)"/><use href="#smorvmq1" transform="translate(63.59 28.33)rotate(79.47)scale(0.2368)"/><use href="#smorvmq1" transform="translate(154.73 23.58)rotate(204.25)scale(0.2271)"/><use href="#smorvmq1" transform="translate(81.92 60.2)rotate(79.54)scale(0.2457)"/><use href="#smorvmq1" transform="translate(201.68 62.96)rotate(197.54)scale(0.2981)"/><use href="#smorvmq1" transform="translate(78.81 137.38)rotate(152.4)scale(0.3201)"/><use href="#smorvmq1" transform="translate(132.84 136.66)rotate(221.33)scale(0.1163)"/><use href="#smorvmq1" transform="translate(203.18 126.79)rotate(161.6)scale(0.1452)"/><use href="#smorvmq1" transform="translate(78.05 168.35)rotate(11.36)scale(0.1277)"/><use href="#smorvmq1" transform="translate(133.6 159.28)rotate(239.14)scale(0.1986)"/><use href="#smorvmq1" transform="translate(83.22 206.49)rotate(177)scale(0.4017)"/><use href="#smorvmq1" transform="translate(176.47 -9.97)rotate(213.79)scale(0.1822)"/><use href="#smorvmq1" transform="translate(176.47 230.03)rotate(213.79)scale(0.1822)"/></g></pattern></defs><rect width="1080" height="1080" fill="#f2ede4"/><rect width="1080" height="1080" fill="url(#sp1r83951)"/></svg>"`;
 
 exports[`preset snapshots: seamless-patterns > waves 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><defs><path id="sm1vz24or" d="M-50 -12C-30 -42 -20 -42 0 -12C20 18 30 18 50 -12L50 12C30 42 20 42 0 12C-20 -18 -30 -18 -50 12Z"/><pattern id="sp8kr3js" width="68" height="152" patternUnits="userSpaceOnUse"><g fill="#0077b6"><use href="#sm1vz24or" transform="translate(-34 38)scale(0.56)"/><use href="#sm1vz24or" transform="translate(34 38)scale(0.56)"/><use href="#sm1vz24or" transform="translate(102 38)scale(0.56)"/><use href="#sm1vz24or" transform="translate(-34 190)scale(0.56)"/><use href="#sm1vz24or" transform="translate(34 190)scale(0.56)"/><use href="#sm1vz24or" transform="translate(102 190)scale(0.56)"/><use href="#sm1vz24or" transform="translate(0 -38)scale(0.56)"/><use href="#sm1vz24or" transform="translate(68 -38)scale(0.56)"/><use href="#sm1vz24or" transform="translate(0 114)scale(0.56)"/><use href="#sm1vz24or" transform="translate(68 114)scale(0.56)"/></g></pattern></defs><rect width="1080" height="1080" fill="#caf0f8"/><rect width="1080" height="1080" fill="url(#sp8kr3js)"/></svg>"`;
+
+exports[`preset snapshots: section-divider > arc 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 120Q720 -120 1440 120L1440 120L0 120Z" fill="#111827"/></svg>"`;
+
+exports[`preset snapshots: section-divider > arrow 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><rect width="1440" height="120" fill="#f8fafc"/><path d="M0 0L648 0L720 120L792 0L1440 0L1440 0L0 0Z" fill="#0f172a"/></svg>"`;
+
+exports[`preset snapshots: section-divider > clouds 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><rect width="1440" height="120" fill="#93c5fd"/><path d="M0 84A80 84 0 0 1 160 84A80 58.8 0 0 1 320 84A80 84 0 0 1 480 84A80 58.8 0 0 1 640 84A80 84 0 0 1 800 84A80 58.8 0 0 1 960 84A80 84 0 0 1 1120 84A80 58.8 0 0 1 1280 84A80 84 0 0 1 1440 84L1440 120L0 120Z" fill="#ffffff"/></svg>"`;
+
+exports[`preset snapshots: section-divider > extra exports of every preset 1`] = `
+{
+  "arc": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 120Q720 -120 1440 120L1440 120L0 120Z" fill="#111827"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 120Q720 -120 1440 120L1440 120L0 120Z" fill="#111827"/></svg>
+</section>
+",
+  },
+  "arrow": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect width="1440" height="120" fill="#f8fafc"/><path d="M0 0L648 0L720 120L792 0L1440 0L1440 0L0 0Z" fill="#0f172a"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect width="1440" height="120" fill="#f8fafc"/><path d="M0 0L648 0L720 120L792 0L1440 0L1440 0L0 0Z" fill="#0f172a"/></svg>
+</section>
+",
+  },
+  "clouds": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect width="1440" height="120" fill="#93c5fd"/><path d="M0 84A80 84 0 0 1 160 84A80 58.8 0 0 1 320 84A80 84 0 0 1 480 84A80 58.8 0 0 1 640 84A80 84 0 0 1 800 84A80 58.8 0 0 1 960 84A80 84 0 0 1 1120 84A80 58.8 0 0 1 1280 84A80 84 0 0 1 1440 84L1440 120L0 120Z" fill="#ffffff"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect width="1440" height="120" fill="#93c5fd"/><path d="M0 84A80 84 0 0 1 160 84A80 58.8 0 0 1 320 84A80 84 0 0 1 480 84A80 58.8 0 0 1 640 84A80 84 0 0 1 800 84A80 58.8 0 0 1 960 84A80 84 0 0 1 1120 84A80 58.8 0 0 1 1280 84A80 84 0 0 1 1440 84L1440 120L0 120Z" fill="#ffffff"/></svg>
+</section>
+",
+  },
+  "layered-waves": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 96 C10 93.66 40 89.94 60 81.94 C80 73.94 100 59.31 120 48 C140 36.69 160 22.06 180 14.06 C200 6.06 220 0 240 0 C260 0 280 6.06 300 14.06 C320 22.06 340 36.69 360 48 C380 59.31 400 73.94 420 81.94 C440 89.94 460 96 480 96 C500 96 520 89.94 540 81.94 C560 73.94 580 59.31 600 48 C620 36.69 640 22.06 660 14.06 C680 6.06 700 0 720 0 C740 0 760 6.06 780 14.06 C800 22.06 820 36.69 840 48 C860 59.31 880 73.94 900 81.94 C920 89.94 940 96 960 96 C980 96 1000 89.94 1020 81.94 C1040 73.94 1060 59.31 1080 48 C1100 36.69 1120 22.06 1140 14.06 C1160 6.06 1180 0 1200 0 C1220 0 1240 6.06 1260 14.06 C1280 22.06 1300 36.69 1320 48 C1340 59.31 1360 73.94 1380 81.94 C1400 89.94 1430 93.66 1440 96L1440 120L0 120Z" fill="#0ea5e9" fill-opacity="0.25"/><path d="M0 34.82 C10 32.1 40 20.01 60 18.5 C80 17 100 20.14 120 25.79 C140 31.44 160 42.92 180 52.42 C200 61.92 220 75 240 82.78 C260 90.56 280 97.59 300 99.1 C320 100.6 340 97.46 360 91.81 C380 86.16 400 74.68 420 65.18 C440 55.68 460 42.6 480 34.82 C500 27.04 520 20.01 540 18.5 C560 17 580 20.14 600 25.79 C620 31.44 640 42.92 660 52.42 C680 61.92 700 75 720 82.78 C740 90.56 760 97.59 780 99.1 C800 100.6 820 97.46 840 91.81 C860 86.16 880 74.68 900 65.18 C920 55.68 940 42.6 960 34.82 C980 27.04 1000 20.01 1020 18.5 C1040 17 1060 20.14 1080 25.79 C1100 31.44 1120 42.92 1140 52.42 C1160 61.92 1180 75 1200 82.78 C1220 90.56 1240 97.59 1260 99.1 C1280 100.6 1300 97.46 1320 91.81 C1340 86.16 1360 74.68 1380 65.18 C1400 55.68 1430 39.88 1440 34.82L1440 120L0 120Z" fill="#0ea5e9" fill-opacity="0.5"/><path d="M0 59.22 C10 63.49 40 77.8 60 84.85 C80 91.91 100 99.11 120 101.56 C140 104 160 103.13 180 99.54 C200 95.94 220 87.51 240 79.98 C260 72.45 280 61.4 300 54.35 C320 47.29 340 40.09 360 37.64 C380 35.2 400 36.07 420 39.66 C440 43.26 460 51.69 480 59.22 C500 66.75 520 77.8 540 84.85 C560 91.91 580 99.11 600 101.56 C620 104 640 103.13 660 99.54 C680 95.94 700 87.51 720 79.98 C740 72.45 760 61.4 780 54.35 C800 47.29 820 40.09 840 37.64 C860 35.2 880 36.07 900 39.66 C920 43.26 940 51.69 960 59.22 C980 66.75 1000 77.8 1020 84.85 C1040 91.91 1060 99.11 1080 101.56 C1100 104 1120 103.13 1140 99.54 C1160 95.94 1180 87.51 1200 79.98 C1220 72.45 1240 61.4 1260 54.35 C1280 47.29 1300 40.09 1320 37.64 C1340 35.2 1360 36.07 1380 39.66 C1400 43.26 1430 55.96 1440 59.22L1440 120L0 120Z" fill="#0ea5e9"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 96 C10 93.66 40 89.94 60 81.94 C80 73.94 100 59.31 120 48 C140 36.69 160 22.06 180 14.06 C200 6.06 220 0 240 0 C260 0 280 6.06 300 14.06 C320 22.06 340 36.69 360 48 C380 59.31 400 73.94 420 81.94 C440 89.94 460 96 480 96 C500 96 520 89.94 540 81.94 C560 73.94 580 59.31 600 48 C620 36.69 640 22.06 660 14.06 C680 6.06 700 0 720 0 C740 0 760 6.06 780 14.06 C800 22.06 820 36.69 840 48 C860 59.31 880 73.94 900 81.94 C920 89.94 940 96 960 96 C980 96 1000 89.94 1020 81.94 C1040 73.94 1060 59.31 1080 48 C1100 36.69 1120 22.06 1140 14.06 C1160 6.06 1180 0 1200 0 C1220 0 1240 6.06 1260 14.06 C1280 22.06 1300 36.69 1320 48 C1340 59.31 1360 73.94 1380 81.94 C1400 89.94 1430 93.66 1440 96L1440 120L0 120Z" fill="#0ea5e9" fill-opacity="0.25"/><path d="M0 34.82 C10 32.1 40 20.01 60 18.5 C80 17 100 20.14 120 25.79 C140 31.44 160 42.92 180 52.42 C200 61.92 220 75 240 82.78 C260 90.56 280 97.59 300 99.1 C320 100.6 340 97.46 360 91.81 C380 86.16 400 74.68 420 65.18 C440 55.68 460 42.6 480 34.82 C500 27.04 520 20.01 540 18.5 C560 17 580 20.14 600 25.79 C620 31.44 640 42.92 660 52.42 C680 61.92 700 75 720 82.78 C740 90.56 760 97.59 780 99.1 C800 100.6 820 97.46 840 91.81 C860 86.16 880 74.68 900 65.18 C920 55.68 940 42.6 960 34.82 C980 27.04 1000 20.01 1020 18.5 C1040 17 1060 20.14 1080 25.79 C1100 31.44 1120 42.92 1140 52.42 C1160 61.92 1180 75 1200 82.78 C1220 90.56 1240 97.59 1260 99.1 C1280 100.6 1300 97.46 1320 91.81 C1340 86.16 1360 74.68 1380 65.18 C1400 55.68 1430 39.88 1440 34.82L1440 120L0 120Z" fill="#0ea5e9" fill-opacity="0.5"/><path d="M0 59.22 C10 63.49 40 77.8 60 84.85 C80 91.91 100 99.11 120 101.56 C140 104 160 103.13 180 99.54 C200 95.94 220 87.51 240 79.98 C260 72.45 280 61.4 300 54.35 C320 47.29 340 40.09 360 37.64 C380 35.2 400 36.07 420 39.66 C440 43.26 460 51.69 480 59.22 C500 66.75 520 77.8 540 84.85 C560 91.91 580 99.11 600 101.56 C620 104 640 103.13 660 99.54 C680 95.94 700 87.51 720 79.98 C740 72.45 760 61.4 780 54.35 C800 47.29 820 40.09 840 37.64 C860 35.2 880 36.07 900 39.66 C920 43.26 940 51.69 960 59.22 C980 66.75 1000 77.8 1020 84.85 C1040 91.91 1060 99.11 1080 101.56 C1100 104 1120 103.13 1140 99.54 C1160 95.94 1180 87.51 1200 79.98 C1220 72.45 1240 61.4 1260 54.35 C1280 47.29 1300 40.09 1320 37.64 C1340 35.2 1360 36.07 1380 39.66 C1400 43.26 1430 55.96 1440 59.22L1440 120L0 120Z" fill="#0ea5e9"/></svg>
+</section>
+",
+  },
+  "mountains": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 120L144 0L288 120L432 0L576 120L720 0L864 120L1008 0L1152 120L1296 0L1440 120L1440 120L0 120Z" fill="#166534" fill-opacity="0.38"/><path d="M0 120L144 36L288 120L432 36L576 120L720 36L864 120L1008 36L1152 120L1296 36L1440 120L1440 120L0 120Z" fill="#166534"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 120L144 0L288 120L432 0L576 120L720 0L864 120L1008 0L1152 120L1296 0L1440 120L1440 120L0 120Z" fill="#166534" fill-opacity="0.38"/><path d="M0 120L144 36L288 120L432 36L576 120L720 36L864 120L1008 36L1152 120L1296 36L1440 120L1440 120L0 120Z" fill="#166534"/></svg>
+</section>
+",
+  },
+  "slant": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 120L1440 0L1440 120L0 120Z" fill="#f97316"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 120L1440 0L1440 120L0 120Z" fill="#f97316"/></svg>
+</section>
+",
+  },
+  "stairs": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g transform="matrix(-1 0 0 1 1440 0)"><path d="M0 100H240V80H480V60H720V40H960V20H1200V0H1440L1440 120L0 120Z" fill="#7c3aed"/></g></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g transform="matrix(-1 0 0 1 1440 0)"><path d="M0 100H240V80H480V60H720V40H960V20H1200V0H1440L1440 120L0 120Z" fill="#7c3aed"/></g></svg>
+</section>
+",
+  },
+  "wave": {
+    "html-example": "<section class="hero">
+  <!-- your content -->
+  <svg class="section-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 96 C15 93.66 60 89.94 90 81.94 C120 73.94 150 59.31 180 48 C210 36.69 240 22.06 270 14.06 C300 6.06 330 0 360 0 C390 0 420 6.06 450 14.06 C480 22.06 510 36.69 540 48 C570 59.31 600 73.94 630 81.94 C660 89.94 690 96 720 96 C750 96 780 89.94 810 81.94 C840 73.94 870 59.31 900 48 C930 36.69 960 22.06 990 14.06 C1020 6.06 1050 0 1080 0 C1110 0 1140 6.06 1170 14.06 C1200 22.06 1230 36.69 1260 48 C1290 59.31 1320 73.94 1350 81.94 C1380 89.94 1425 93.66 1440 96L1440 120L0 120Z" fill="#4f46e5"/></svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+  }
+  .section-divider {
+    position: absolute;
+    left: 0;
+    /* -1px hides the hairline gap that subpixel rounding can leave */
+    bottom: -1px;
+    display: block;
+    width: 100%;
+    height: clamp(48px, 8.333vw, 120px);
+    pointer-events: none;
+  }
+</style>
+",
+    "tailwind": "<section class="relative">
+  <!-- your content -->
+  <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] block h-[clamp(48px,8.333vw,120px)] w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 96 C15 93.66 60 89.94 90 81.94 C120 73.94 150 59.31 180 48 C210 36.69 240 22.06 270 14.06 C300 6.06 330 0 360 0 C390 0 420 6.06 450 14.06 C480 22.06 510 36.69 540 48 C570 59.31 600 73.94 630 81.94 C660 89.94 690 96 720 96 C750 96 780 89.94 810 81.94 C840 73.94 870 59.31 900 48 C930 36.69 960 22.06 990 14.06 C1020 6.06 1050 0 1080 0 C1110 0 1140 6.06 1170 14.06 C1200 22.06 1230 36.69 1260 48 C1290 59.31 1320 73.94 1350 81.94 C1380 89.94 1425 93.66 1440 96L1440 120L0 120Z" fill="#4f46e5"/></svg>
+</section>
+",
+  },
+}
+`;
+
+exports[`preset snapshots: section-divider > layered-waves 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 96 C10 93.66 40 89.94 60 81.94 C80 73.94 100 59.31 120 48 C140 36.69 160 22.06 180 14.06 C200 6.06 220 0 240 0 C260 0 280 6.06 300 14.06 C320 22.06 340 36.69 360 48 C380 59.31 400 73.94 420 81.94 C440 89.94 460 96 480 96 C500 96 520 89.94 540 81.94 C560 73.94 580 59.31 600 48 C620 36.69 640 22.06 660 14.06 C680 6.06 700 0 720 0 C740 0 760 6.06 780 14.06 C800 22.06 820 36.69 840 48 C860 59.31 880 73.94 900 81.94 C920 89.94 940 96 960 96 C980 96 1000 89.94 1020 81.94 C1040 73.94 1060 59.31 1080 48 C1100 36.69 1120 22.06 1140 14.06 C1160 6.06 1180 0 1200 0 C1220 0 1240 6.06 1260 14.06 C1280 22.06 1300 36.69 1320 48 C1340 59.31 1360 73.94 1380 81.94 C1400 89.94 1430 93.66 1440 96L1440 120L0 120Z" fill="#0ea5e9" fill-opacity="0.25"/><path d="M0 34.82 C10 32.1 40 20.01 60 18.5 C80 17 100 20.14 120 25.79 C140 31.44 160 42.92 180 52.42 C200 61.92 220 75 240 82.78 C260 90.56 280 97.59 300 99.1 C320 100.6 340 97.46 360 91.81 C380 86.16 400 74.68 420 65.18 C440 55.68 460 42.6 480 34.82 C500 27.04 520 20.01 540 18.5 C560 17 580 20.14 600 25.79 C620 31.44 640 42.92 660 52.42 C680 61.92 700 75 720 82.78 C740 90.56 760 97.59 780 99.1 C800 100.6 820 97.46 840 91.81 C860 86.16 880 74.68 900 65.18 C920 55.68 940 42.6 960 34.82 C980 27.04 1000 20.01 1020 18.5 C1040 17 1060 20.14 1080 25.79 C1100 31.44 1120 42.92 1140 52.42 C1160 61.92 1180 75 1200 82.78 C1220 90.56 1240 97.59 1260 99.1 C1280 100.6 1300 97.46 1320 91.81 C1340 86.16 1360 74.68 1380 65.18 C1400 55.68 1430 39.88 1440 34.82L1440 120L0 120Z" fill="#0ea5e9" fill-opacity="0.5"/><path d="M0 59.22 C10 63.49 40 77.8 60 84.85 C80 91.91 100 99.11 120 101.56 C140 104 160 103.13 180 99.54 C200 95.94 220 87.51 240 79.98 C260 72.45 280 61.4 300 54.35 C320 47.29 340 40.09 360 37.64 C380 35.2 400 36.07 420 39.66 C440 43.26 460 51.69 480 59.22 C500 66.75 520 77.8 540 84.85 C560 91.91 580 99.11 600 101.56 C620 104 640 103.13 660 99.54 C680 95.94 700 87.51 720 79.98 C740 72.45 760 61.4 780 54.35 C800 47.29 820 40.09 840 37.64 C860 35.2 880 36.07 900 39.66 C920 43.26 940 51.69 960 59.22 C980 66.75 1000 77.8 1020 84.85 C1040 91.91 1060 99.11 1080 101.56 C1100 104 1120 103.13 1140 99.54 C1160 95.94 1180 87.51 1200 79.98 C1220 72.45 1240 61.4 1260 54.35 C1280 47.29 1300 40.09 1320 37.64 C1340 35.2 1360 36.07 1380 39.66 C1400 43.26 1430 55.96 1440 59.22L1440 120L0 120Z" fill="#0ea5e9"/></svg>"`;
+
+exports[`preset snapshots: section-divider > mountains 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 120L144 0L288 120L432 0L576 120L720 0L864 120L1008 0L1152 120L1296 0L1440 120L1440 120L0 120Z" fill="#166534" fill-opacity="0.38"/><path d="M0 120L144 36L288 120L432 36L576 120L720 36L864 120L1008 36L1152 120L1296 36L1440 120L1440 120L0 120Z" fill="#166534"/></svg>"`;
+
+exports[`preset snapshots: section-divider > slant 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 120L1440 0L1440 120L0 120Z" fill="#f97316"/></svg>"`;
+
+exports[`preset snapshots: section-divider > stairs 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><g transform="matrix(-1 0 0 1 1440 0)"><path d="M0 100H240V80H480V60H720V40H960V20H1200V0H1440L1440 120L0 120Z" fill="#7c3aed"/></g></svg>"`;
+
+exports[`preset snapshots: section-divider > wave 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="120" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 96 C15 93.66 60 89.94 90 81.94 C120 73.94 150 59.31 180 48 C210 36.69 240 22.06 270 14.06 C300 6.06 330 0 360 0 C390 0 420 6.06 450 14.06 C480 22.06 510 36.69 540 48 C570 59.31 600 73.94 630 81.94 C660 89.94 690 96 720 96 C750 96 780 89.94 810 81.94 C840 73.94 870 59.31 900 48 C930 36.69 960 22.06 990 14.06 C1020 6.06 1050 0 1080 0 C1110 0 1140 6.06 1170 14.06 C1200 22.06 1230 36.69 1260 48 C1290 59.31 1320 73.94 1350 81.94 C1380 89.94 1425 93.66 1440 96L1440 120L0 120Z" fill="#4f46e5"/></svg>"`;
 
 exports[`preset snapshots: shader-gradient > aurora 1`] = `"pixels 96x60:9d4f2e9d"`;
 
