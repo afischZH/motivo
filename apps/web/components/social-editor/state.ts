@@ -5,6 +5,7 @@
  * operations of `@musterli/scene`, so every step is a plain value that the
  * history, the draft and the saved design share.
  */
+import { StorageError } from "@musterli/storage";
 import {
   commitHistory,
   createHistory,
@@ -28,20 +29,35 @@ export interface SocialEditorState {
 export type SocialEditorAction =
   | { type: "change"; scene: Scene; key?: string | null; selection?: readonly string[] }
   /**
-   * Corrects the present scene without an undo step: text boxes grown once
-   * a font finished loading (the text would be cut otherwise).
+   * Corrects scenes without an undo step: text boxes grown once a font
+   * finished loading (the text would be cut otherwise). `fix` runs over
+   * the whole history (past, present and future), so undo and redo never
+   * bring back a box that was too small; it returns the same scene when
+   * nothing needs fixing.
    */
-  | { type: "amend"; scene: Scene }
+  | { type: "settle"; fix: (scene: Scene) => Scene }
   | { type: "commit" }
   | { type: "undo" }
   | { type: "redo" }
   | { type: "select"; selection: readonly string[] }
   | { type: "rename"; name: string }
   | { type: "load"; scene: Scene; name: string; designId: string | null; dirty?: boolean }
-  | { type: "saved"; designId: string; name: string };
+  /** `scene`: the scene that was saved; changes made while saving keep the editor dirty. */
+  | { type: "saved"; designId: string; name: string; scene: Scene };
 
 export function initialEditorState(scene: Scene, name: string): SocialEditorState {
   return { history: createHistory(scene), selection: [], name, designId: null, dirty: false };
+}
+
+/** `list` with `fn` applied, or `list` itself when `fn` changed nothing. */
+function mapKeepingSame<T>(list: readonly T[], fn: (item: T) => T): readonly T[] {
+  let changed = false;
+  const out = list.map((item) => {
+    const next = fn(item);
+    if (next !== item) changed = true;
+    return next;
+  });
+  return changed ? out : list;
 }
 
 /** The selection without ids the scene no longer has. */
@@ -66,10 +82,14 @@ export function socialEditorReducer(
         dirty: state.dirty || history !== state.history,
       };
     }
-    case "amend":
-      return action.scene === state.history.present
-        ? state
-        : { ...state, history: { ...state.history, present: action.scene } };
+    case "settle": {
+      const h = state.history;
+      const present = action.fix(h.present);
+      const past = mapKeepingSame(h.past, action.fix);
+      const future = mapKeepingSame(h.future, action.fix);
+      if (present === h.present && past === h.past && future === h.future) return state;
+      return { ...state, history: { ...h, past, present, future } };
+    }
     case "commit": {
       const history = commitHistory(state.history);
       return history === state.history ? state : { ...state, history };
@@ -99,7 +119,12 @@ export function socialEditorReducer(
         dirty: action.dirty ?? false,
       };
     case "saved":
-      return { ...state, designId: action.designId, name: action.name, dirty: false };
+      return {
+        ...state,
+        designId: action.designId,
+        name: action.name,
+        dirty: state.history.present !== action.scene,
+      };
   }
 }
 
@@ -138,4 +163,21 @@ export function draftWins(
   record: { id: string; updatedAt: number },
 ): boolean {
   return draft !== null && draft.designId === record.id && draft.updatedAt > record.updatedAt;
+}
+
+/**
+ * Saves over the design, or as a new one when it no longer exists (deleted
+ * in another tab or on "My designs" meanwhile): a save never gets stuck on
+ * a design that is gone.
+ */
+export async function updateOrCreate<T>(
+  update: () => Promise<T>,
+  create: () => Promise<T>,
+): Promise<T> {
+  try {
+    return await update();
+  } catch (error) {
+    if (error instanceof StorageError && error.code === "not-found") return create();
+    throw error;
+  }
 }

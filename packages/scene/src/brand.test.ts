@@ -248,6 +248,53 @@ describe("applyBrandKit", () => {
     expect(sceneSchema.safeParse(out.scene).success).toBe(true);
   });
 
+  it("fits every new logo into the original slot, so repeated applies never shrink it", () => {
+    const scene = createScene("square");
+    const slot: Layer = {
+      id: "logo",
+      name: "",
+      visible: false,
+      locked: false,
+      opacity: 1,
+      rotation: 0,
+      x: 800,
+      y: 900,
+      width: 200,
+      height: 100,
+      groupId: null,
+      constraints: { h: "end", v: "end", size: "short", bleed: false },
+      kind: "logo",
+      assetId: null,
+      image: { kind: "svg", svg: LOGO_PLACEHOLDER_SVG, width: 240, height: 96, name: "" },
+    };
+    const logoOf = (width: number, height: number): BrandLogo => ({
+      image: { ...TEST_PNG, width, height },
+      assetId: null,
+      name: "",
+    });
+    let current: Scene = { ...scene, layers: [slot] };
+    const apply = (width: number, height: number) => {
+      current = applyBrandKit(current, { logo: logoOf(width, height) }).scene;
+      return current.layers[0];
+    };
+    const wide = apply(400, 100);
+    expect(wide).toMatchObject({ x: 800, y: 950, width: 200, height: 50 });
+    // Tall after wide: fitted into the 200 x 100 slot, not into the 200 x 50 box.
+    expect(apply(100, 400)).toMatchObject({ x: 975, y: 900, width: 25, height: 100 });
+    expect(apply(400, 100)).toMatchObject({ x: 800, y: 950, width: 200, height: 50 });
+    expect(apply(100, 100)).toMatchObject({ x: 900, y: 900, width: 100, height: 100 });
+    expect(sceneSchema.safeParse(current).success).toBe(true);
+
+    // Moved by the user: its new box is the slot from now on.
+    const moved = { ...current, layers: [{ ...current.layers[0], x: 100, y: 100 } as Layer] };
+    expect(applyBrandKit(moved, { logo: logoOf(200, 100) }).scene.layers[0]).toMatchObject({
+      x: 100,
+      y: 150,
+      width: 100,
+      height: 50,
+    });
+  });
+
   it("adds a logo layer only when asked and the scene has none", () => {
     const scene = sampleScene();
     const logo: BrandLogo = { image: TEST_PNG, assetId: null, name: "Logo" };

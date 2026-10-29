@@ -8,7 +8,7 @@
  * Every record is validated with Zod on read (`@musterli/scene` for scenes);
  * broken records are left out instead of breaking the page.
  */
-import { sceneSchema, type Scene } from "@musterli/scene";
+import { parseEditedScene, sceneSchema, type Scene } from "@musterli/scene";
 // Namespace import keeps zod tree-shakable (see tool-registry/common.ts).
 import * as z from "zod";
 import { createConnection, randomHexId } from "./connection";
@@ -69,6 +69,17 @@ export interface SocialDesignInput {
   scene: Scene;
   /** `undefined` keeps the stored thumbnail on update. */
   thumbnail?: Blob | null;
+  /**
+   * The scene comes from the editor, which only holds validated scenes:
+   * checked with `parseEditedScene` (picture data by length only), so a
+   * save never runs the picture patterns over megabytes on the main thread.
+   */
+  edited?: boolean;
+}
+
+export interface SocialDraftOptions {
+  /** As `SocialDesignInput.edited`. */
+  edited?: boolean;
 }
 
 /** A design from an import file: own id and timestamps, no thumbnail. */
@@ -98,7 +109,7 @@ export interface SocialDesignStore {
   setThumbnail(id: string, thumbnail: Blob | null): Promise<void>;
   importDesigns(designs: readonly ImportedSocialDesign[]): Promise<SocialImportOutcome>;
   getDraft(): Promise<SocialDraft | null>;
-  putDraft(draft: SocialDraft): Promise<void>;
+  putDraft(draft: SocialDraft, options?: SocialDraftOptions): Promise<void>;
   deleteDraft(): Promise<void>;
   close(): void;
 }
@@ -129,9 +140,12 @@ function parseScene(value: unknown): Scene | null {
   return parsed.success ? parsed.data.scene : null;
 }
 
-function validScene(scene: Scene): Scene {
-  const parsed = sceneSchema.safeParse(scene);
-  if (!parsed.success) throw new StorageError("failed", `Invalid scene: ${parsed.error.message}`);
+function validScene(scene: Scene, edited = false): Scene {
+  const parsed = edited ? parseEditedScene(scene) : sceneSchema.safeParse(scene);
+  if (!parsed.success) {
+    const message = typeof parsed.error === "string" ? parsed.error : parsed.error.message;
+    throw new StorageError("failed", `Invalid scene: ${message}`);
+  }
   return parsed.data;
 }
 
@@ -167,6 +181,14 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
     });
   };
 
+  const getRow = async (id: string): Promise<StoredSocialDesign | null> => {
+    const database = await db();
+    return transact(database, STORE.socialDesigns, "readonly", (tx) => {
+      const request = tx.objectStore(STORE.socialDesigns).get(id);
+      return () => parseRow(request.result);
+    });
+  };
+
   const write = async (row: StoredSocialDesign, scene: Scene): Promise<void> => {
     const database = await db();
     await transact(database, both, "readwrite", (tx) => {
@@ -194,7 +216,7 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
   };
 
   const create = async (input: SocialDesignInput): Promise<SocialDesignRecord> => {
-    const scene = validScene(input.scene);
+    const scene = validScene(input.scene, input.edited);
     const t = now();
     const row = validRow({
       id: randomId(),
@@ -249,9 +271,10 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
     create,
 
     async update(id, input) {
-      const existing = await getRecord(id);
+      // Only the overview row: the stored scene is replaced, never read (or parsed) again.
+      const existing = await getRow(id);
       if (!existing) throw new StorageError("not-found", `No social design ${id}`);
-      const scene = validScene(input.scene);
+      const scene = validScene(input.scene, input.edited);
       const row = validRow({
         id,
         name: normalizeDesignName(input.name),
@@ -260,7 +283,7 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
         updatedAt: Math.max(now(), existing.updatedAt),
         thumbnail:
           input.thumbnail === undefined
-            ? await toStoredThumbnail(existing.thumbnail)
+            ? existing.thumbnail
             : await toStoredThumbnail(input.thumbnail),
       });
       await write(row, scene);
@@ -279,7 +302,8 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
     async duplicate(id, name) {
       const source = await getRecord(id);
       if (!source) throw new StorageError("not-found", `No social design ${id}`);
-      return create({ name, scene: source.scene, thumbnail: source.thumbnail });
+      // The scene was just read and validated.
+      return create({ name, scene: source.scene, thumbnail: source.thumbnail, edited: true });
     },
 
     async remove(id) {
@@ -365,17 +389,23 @@ export function createSocialDesignStore(options: SocialDesignStoreOptions = {}):
       });
     },
 
-    async putDraft(draft) {
-      const parsed = storedSocialDraftSchema.safeParse({
+    async putDraft(draft, options = {}) {
+      // An edited scene is checked on its own (picture data by length only, see `validScene`).
+      const scene = options.edited ? validScene(draft.scene, true) : draft.scene;
+      const schema = options.edited
+        ? storedSocialDraftSchema.omit({ scene: true })
+        : storedSocialDraftSchema;
+      const parsed = schema.safeParse({
         ...draft,
         id: SOCIAL_DRAFT_ID,
         name: normalizeDesignName(draft.name),
       });
       if (!parsed.success)
         throw new StorageError("failed", `Invalid draft: ${parsed.error.message}`);
+      const record = options.edited ? { ...parsed.data, scene } : parsed.data;
       const database = await db();
       await transact(database, STORE.socialDrafts, "readwrite", (tx) => {
-        tx.objectStore(STORE.socialDrafts).put(parsed.data);
+        tx.objectStore(STORE.socialDrafts).put(record);
         return () => undefined;
       });
     },

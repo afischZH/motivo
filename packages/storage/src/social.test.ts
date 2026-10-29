@@ -80,6 +80,36 @@ describe("social designs", () => {
     expect(await store.list()).toEqual([]);
   });
 
+  it("checks edited scenes too (without the picture patterns)", async () => {
+    const bad = { ...scene(), version: 9 } as unknown as Scene;
+    await expect(store.create({ name: "x", scene: bad, edited: true })).rejects.toMatchObject({
+      code: "failed",
+    });
+    await expect(
+      store.putDraft({ designId: null, name: "x", scene: bad, updatedAt: 1 }, { edited: true }),
+    ).rejects.toMatchObject({ code: "failed" });
+    const a = await store.create({ name: "A", scene: scene(), edited: true });
+    await store.putDraft(
+      { designId: a.id, name: " A\n", scene: scene("B"), updatedAt: 2 },
+      { edited: true },
+    );
+    expect(await store.getDraft()).toMatchObject({ designId: a.id, name: "A", updatedAt: 2 });
+  });
+
+  it("updates a design without reading its old scene", async () => {
+    const a = await store.create({ name: "A", scene: scene() });
+    // A stored scene that no longer parses: the update replaces it all the same.
+    const database = await openDatabase(factory);
+    await transact(database, STORE.socialScenes, "readwrite", (tx) => {
+      tx.objectStore(STORE.socialScenes).put({ id: a.id, scene: { broken: true } });
+      return () => undefined;
+    });
+    database.close();
+    const changed = await store.update(a.id, { name: "A2", scene: scene("Neu"), edited: true });
+    expect(changed.name).toBe("A2");
+    expect((await store.get(a.id))?.scene.layers[1]).toMatchObject({ text: "Neu" });
+  });
+
   it("keeps one draft", async () => {
     expect(await store.getDraft()).toBeNull();
     await store.putDraft({ designId: null, name: "Entwurf", scene: scene(), updatedAt: 5 });

@@ -23,7 +23,7 @@
 import { contrastRatio, hexToOklch } from "@musterli/engine";
 import { createLogoLayer } from "./factory";
 import { fontFamilyFor, type FontRef } from "./fonts";
-import { boundsOf, frameOf } from "./geometry";
+import { boundsOf, frameOf, type Box } from "./geometry";
 import { settleTextLayer } from "./resize";
 import {
   isColorSlot,
@@ -253,9 +253,13 @@ function keepContrast(before: Scene, after: Scene): Scene {
   return layers ? { ...after, layers } : after;
 }
 
-/** A box of the picture's aspect ratio inside `box`, placed by the layer's anchors. */
-function fitLogoBox(layer: LogoLayer, image: SceneImage) {
-  const k = Math.min(layer.width / image.width, layer.height / image.height);
+/** A box of the picture's aspect ratio inside `slot`, placed by the layer's anchors. */
+export function fitLogoBox(
+  slot: Box,
+  constraints: LogoLayer["constraints"],
+  image: Pick<SceneImage, "width" | "height">,
+): Box {
+  const k = Math.min(slot.width / image.width, slot.height / image.height);
   const width = image.width * k;
   const height = image.height * k;
   const place = (start: number, size: number, inner: number, anchor: string) =>
@@ -265,11 +269,30 @@ function fitLogoBox(layer: LogoLayer, image: SceneImage) {
         ? start + size - inner
         : start + (size - inner) / 2;
   return {
-    x: place(layer.x, layer.width, width, layer.constraints.h),
-    y: place(layer.y, layer.height, height, layer.constraints.v),
+    x: place(slot.x, slot.width, width, constraints.h),
+    y: place(slot.y, slot.height, height, constraints.v),
     width,
     height,
   };
+}
+
+/**
+ * The slot a new logo is fitted into: the slot of the last Brand-Apply
+ * while the layer still sits where that apply put it, else the layer's own
+ * box (moved, resized or never applied). Repeated applies with logos of
+ * other aspect ratios therefore never shrink the logo step by step.
+ */
+export function logoSlotOf(layer: LogoLayer): Box {
+  const own: Box = { x: layer.x, y: layer.y, width: layer.width, height: layer.height };
+  if (!layer.slot) return own;
+  const fitted = fitLogoBox(layer.slot, layer.constraints, layer.image);
+  const near = (a: number, b: number) => Math.abs(a - b) <= 0.5;
+  return near(fitted.x, own.x) &&
+    near(fitted.y, own.y) &&
+    near(fitted.width, own.width) &&
+    near(fitted.height, own.height)
+    ? { ...layer.slot }
+    : own;
 }
 
 export interface BrandLogo {
@@ -349,9 +372,11 @@ export function applyBrandKit(
       const layers = next.layers.map((l) => {
         if (l.kind !== "logo" || l.locked) return l;
         logos++;
+        const slot = logoSlotOf(l);
         return {
           ...l,
-          ...fitLogoBox(l, logo.image),
+          ...fitLogoBox(slot, l.constraints, logo.image),
+          slot,
           image: logo.image,
           assetId: logo.assetId,
           name: logo.name,
