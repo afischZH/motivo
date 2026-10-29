@@ -156,7 +156,7 @@ Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10
 
 **W0 Hausaufgaben**
 - [x] Vorschaubilder der Social-Vorlagen im Worker zeichnen (UI-Thread nie über 50 ms), roter `@long-tasks`-Test grün
-- [ ] Lighthouse auf musterli.app, Rechtstexte prüfen, Analytics- und Sentry-Variablen (Andreas)
+- ~~Lighthouse auf musterli.app, Rechtstexte prüfen, Analytics- und Sentry-Variablen (Andreas)~~ übersprungen (Entscheid Andreas 2026-10-29), bleibt als offener Owner-Punkt aus M2
 
 **W1 Profi-Arbeitsfluss**
 - [ ] Befehlspalette ⌘K (Tool wechseln, Vorlage öffnen, Export, Brand-Palette)
