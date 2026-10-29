@@ -303,8 +303,10 @@ test.describe("social media editor", () => {
    * is planted in IndexedDB and opened by a reload, so the
    * measuring starts with the pictures in place.
    *
-   * What is left per autosave and save is copying the scene into IndexedDB
-   * (about 30 to 40 ms for 20 MB in headless Chromium). As in the 4K
+   * Stored scenes keep the pictures as Blobs (`scene-pictures.ts` in
+   * `@musterli/storage`): copying 20 MB of strings into IndexedDB took 50 ms
+   * and more per autosave on CI. Each Blob is made once, in 1 MB chunks
+   * (the first autosave after the reload makes them). As in the 4K
    * screenshot test, the best of up to three runs counts: other processes
    * on the machine stretch such tasks over 50 ms, a real regression fails
    * all three.
