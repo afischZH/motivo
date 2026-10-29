@@ -195,7 +195,7 @@ test.describe("palette page", () => {
 
     for (const [name, slug] of [
       ["Mesh-Verlauf öffnen", "mesh-verlauf-generator"],
-      ["Tints & Shades öffnen", "farbabstufungen-generator"],
+      ["Farbabstufungen öffnen", "farbabstufungen-generator"],
       ["Tailwind-Farbpalette öffnen", "tailwind-farbpalette-generator"],
     ] as const) {
       await expect(page.getByRole("link", { name, exact: true })).toHaveAttribute(

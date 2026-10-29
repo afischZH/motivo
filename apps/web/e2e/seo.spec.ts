@@ -30,14 +30,25 @@ test.describe("tool landing page", () => {
   test("has the content frame, CTA, presets and structured data", async ({ page }) => {
     const response = await page.goto("/de/punktmuster-generator");
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Polka Dots");
+    // German name on German pages, the English search term as an alias.
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Punktmuster (Polka Dots)");
+    await expect(page).toHaveTitle("Punktmuster (Polka Dots) online | Musterli");
     await expect(page.getByRole("link", { name: "Generator öffnen" })).toHaveAttribute(
       "href",
       "/de/tools/punktmuster-generator",
     );
-    for (const heading of ["Worum geht’s?", "So geht’s", "Häufige Fragen"]) {
+    for (const heading of [
+      "Worum geht’s?",
+      "Wofür du es brauchst",
+      "So geht’s",
+      "Tipps",
+      "Häufige Fragen",
+    ]) {
       await expect(page.getByRole("heading", { level: 2, name: heading })).toBeVisible();
     }
+    const useCases = page.getByRole("region", { name: "Wofür du es brauchst" });
+    await expect(useCases.getByRole("heading", { level: 3 })).toHaveCount(3);
+    await expect(page.getByRole("region", { name: "Tipps" }).getByRole("listitem")).toHaveCount(3);
     // Preview image is served as a static SVG and has an alt text.
     const preview = page.getByRole("img", { name: /Beispielmotiv/ });
     await expect(preview).toHaveAttribute("src", "/motifs/polka-dots/default.svg");
@@ -87,6 +98,12 @@ test.describe("tool landing page", () => {
 
   test("has no axe violations", async ({ page }) => {
     await page.goto("/en/css-gradient-generator");
+    await expectNoAxeViolations(page);
+  });
+
+  test("has no axe violations in German with the new sections", async ({ page }) => {
+    await page.goto("/de/punktmuster-generator");
+    await expect(page.getByRole("heading", { level: 2, name: "Tipps" })).toBeVisible();
     await expectNoAxeViolations(page);
   });
 });
@@ -141,6 +158,15 @@ test.describe("sitemap and robots", () => {
     expect(xml).toContain(`<loc>${de}</loc>`);
     expect(xml).toContain(`hreflang="x-default" href="${en}"`);
     expect(xml).toContain(new URL("/en/tools/category/colors", SITE).toString());
+    // Image sitemap: OG image and preview motif of the landing page.
+    expect(xml).toContain('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
+    expect(xml).toContain(
+      `<image:loc>${new URL("/og/de/polka-dots.png", SITE).toString()}</image:loc>`,
+    );
+    expect(xml).toContain(
+      `<image:loc>${new URL("/motifs/polka-dots/default.svg", SITE).toString()}</image:loc>`,
+    );
+    expect((await request.get("/og/de/polka-dots.png")).status()).toBe(200);
   });
 
   test("robots.txt allows crawling and links the sitemap", async ({ request }) => {
