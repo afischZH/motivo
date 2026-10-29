@@ -144,7 +144,7 @@ Freigabe Andreas 2026-10-29 05:51: Plan mit 7 Paketen, Konva nur als Kern ohne `
 - [x] Text mit Effekten, Font-Auswahl (OFL-Fonts), Brand-Fonts (M6-AP03)
 - [x] Hintergründe aus allen Tools (als parametrische Referenz) (M6-AP02)
 - [x] Formate + **Magic Resize** (Constraint-System) (M6-AP02)
-- [ ] 40 eigene Templates zum Start (Ziel später 100), **Brand-Apply** mit einem Klick
+- [x] 40 eigene Templates zum Start (Ziel später 100), **Brand-Apply** mit einem Klick (M6-AP05)
 - [x] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize** (M6-AP01)
 
 **DoD**: Ein Template in 6 Formate per Magic Resize, ohne dass Text abgeschnitten wird (automatischer Test für alle Templates).
