@@ -54,7 +54,7 @@ export const paramsObjectSchema = z.custom<Record<string, unknown>>(isPlainObjec
   message: "Expected a plain object",
 });
 
-const storedThumbnailSchema = z.object({
+export const storedThumbnailSchema = z.object({
   type: z.enum(THUMBNAIL_TYPES),
   bytes: z.custom<ArrayBuffer>(
     (value) =>

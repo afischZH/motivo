@@ -12,3 +12,4 @@ export {
 export * from "./designs";
 export * from "./brand-schema";
 export * from "./brand-kit";
+export * from "./social";

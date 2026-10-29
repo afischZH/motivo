@@ -143,7 +143,8 @@ type ThumbnailType = (typeof THUMBNAIL_TYPES)[number];
 const isThumbnailType = (type: string): type is ThumbnailType =>
   (THUMBNAIL_TYPES as readonly string[]).includes(type);
 
-async function toStoredThumbnail(blob: Blob | null | undefined): Promise<StoredThumbnail> {
+/** A thumbnail blob as stored (`null` when missing, too large or of another type). */
+export async function toStoredThumbnail(blob: Blob | null | undefined): Promise<StoredThumbnail> {
   if (!blob || blob.size === 0 || blob.size > THUMBNAIL_MAX_BYTES) return null;
   if (!isThumbnailType(blob.type)) return null;
   return { type: blob.type, bytes: await blob.arrayBuffer() };

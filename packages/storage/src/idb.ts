@@ -7,7 +7,7 @@
 
 export const DB_NAME = "motivo";
 /** Bump with a new `upgrade` step; never change an existing step. */
-export const DB_VERSION = 2;
+export const DB_VERSION = 3;
 
 export const STORE = {
   designs: "designs",
@@ -18,6 +18,12 @@ export const STORE = {
   brandPalettes: "brand-palettes",
   /** Version 2: brand kit logos and own shapes (sanitised SVG or re-encoded raster). */
   brandAssets: "brand-assets",
+  /** Version 3 (M6-AP02): overview rows of social editor designs (with thumbnail). */
+  socialDesigns: "social-designs",
+  /** Version 3: the scene of each social design, apart from the overview (uploads can be large). */
+  socialScenes: "social-scenes",
+  /** Version 3: the social editor's autosave draft. */
+  socialDrafts: "social-drafts",
 } as const;
 
 export type StoreName = (typeof STORE)[keyof typeof STORE];
@@ -72,6 +78,11 @@ function upgrade(db: IDBDatabase, oldVersion: number): void {
   if (oldVersion < 2) {
     db.createObjectStore(STORE.brandPalettes, { keyPath: "id" });
     db.createObjectStore(STORE.brandAssets, { keyPath: "id" });
+  }
+  if (oldVersion < 3) {
+    db.createObjectStore(STORE.socialDesigns, { keyPath: "id" });
+    db.createObjectStore(STORE.socialScenes, { keyPath: "id" });
+    db.createObjectStore(STORE.socialDrafts, { keyPath: "id" });
   }
 }
 
