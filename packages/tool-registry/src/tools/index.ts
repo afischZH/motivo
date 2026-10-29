@@ -47,6 +47,9 @@ import { halftoneTool } from "./halftone";
 import { cmykHalftoneTool } from "./cmyk-halftone";
 import { ditherTool } from "./dither";
 import { shaderGradientTool } from "./shader-gradient";
+import { godRaysTool } from "./god-rays";
+import { fractalGlassTool } from "./fractal-glass";
+import { pixelateTool } from "./pixelate";
 
 export {
   blobTool,
@@ -92,6 +95,9 @@ export {
   cmykHalftoneTool,
   ditherTool,
   shaderGradientTool,
+  godRaysTool,
+  fractalGlassTool,
+  pixelateTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -168,6 +174,12 @@ export {
 } from "./dither";
 export type { ShaderGradientParams } from "./shader-gradient";
 export { shaderGradientOptions } from "./shader-gradient";
+export type { GodRaysParams } from "./god-rays";
+export { godRaysOptions } from "./god-rays";
+export type { FractalGlassParams } from "./fractal-glass";
+export { fractalGlassOptions } from "./fractal-glass";
+export type { PixelateParams } from "./pixelate";
+export { PIXELATE_SVG_MAX_SHAPES, pixelateGrid, posterizeOptions } from "./pixelate";
 
 /** All built-in tools in registration order. */
 export const builtInTools: readonly AnyToolDefinition[] = [
@@ -214,6 +226,9 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   cmykHalftoneTool,
   ditherTool,
   shaderGradientTool,
+  godRaysTool,
+  fractalGlassTool,
+  pixelateTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

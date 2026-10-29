@@ -260,6 +260,13 @@ Menü "Weiterverwenden" neben Export (`packages/editor-ui/src/handoff/`). Die Sh
 - **Ins Brand Kit**: optionaler Hook `ToolDefinition.paletteOutput(params)` bei den Farb-Tools (Paletten-Generator, Abstufungen, Tailwind-Palette, Palette aus Bild, Kontrast-Checker). `brandPaletteOutput` normalisiert auf `#rrggbb`, entfernt Doppelte, mindestens 2, höchstens 10 Farben (gleichmässig gewählt). Der Dialog speichert über `BrandKitStore.createPalette` (bestehende Limits, `StorageError` mit Meldung), bestätigt und verlinkt das Brand Kit; die Brand-Palette der offenen Seite lädt neu.
 - **Offen**: Der Screenshot-Verschönerer hat kein Hintergrundbild; Ziel ist das Feld `screenshot`. Ein Hintergrundbild wäre ein eigener Param mit eigener Vorschau-Ebene.
 
+### 4.19 Weitere Bildeffekte ohne neue Hooks (ab M6-AP01)
+God Rays, Fractal Glass und Verpixeln (`docs/TOOLS.md` E5 bis E7) nutzen nur die bestehende Raster-Stufe (4.14) und die Hooks aus 4.16; die Shell bleibt unverändert, keine neue Dependency.
+- **Neue reine Helfer** in `packages/effects` (je mit Unit-Tests): `filters.ts` (bilineares Abtasten mit geklemmten Rändern für ein Graustufenraster und RGBA, `boxBlur` als zwei Box-Durchgänge pro Richtung mit laufender Summe, Aufwand unabhängig vom Radius), `god-rays.ts`, `fractal-glass.ts`, `pixelate.ts` (Quantisierung, nächste Palettenfarbe, `pixelateSvg`).
+- **Aufwand begrenzen statt `grid`**: God Rays rechnen das Strahlenfeld intern auf höchstens 640 px Kante und vergrössern bilinear; damit kostet ein 12-MP-Export kaum mehr als die Vorschau, und gleiche Ausgabegrösse ergibt dieselben Pixel. `samples` ist im Schema auf 128 gedeckelt.
+- **Verpixeln mit `grid`** wie Dither: Der Blockmittelwert entsteht beim Zeichnen des Fotos in Rastergrösse im Worker, das Ergebnis wird mit `scaleGrid` vergrössert. Das SVG (`vector`) mittelt die Analysegrösse selbst per Box-Filter aufs Raster.
+- **Zufall**: Fractal Glass verschiebt Streifen mit `hashSigned(k, 0, ctx.seed)`; God Rays nutzt einen festen Hash pro Rasterzelle (kein Seed), damit die Leertaste nur die Params ändert.
+
 ## 5. Render- und Export-Pipeline
 
 ```

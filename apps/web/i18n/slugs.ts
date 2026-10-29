@@ -73,6 +73,9 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "cmyk-halftone": { de: "cmyk-raster-generator", en: "cmyk-halftone-generator" },
   dither: { de: "dithering-generator", en: "dither-generator" },
   "shader-gradient": { de: "shader-farbverlauf-generator", en: "shader-gradient-generator" },
+  "god-rays": { de: "lichtstrahlen-generator", en: "god-rays-generator" },
+  "fractal-glass": { de: "fractal-glass-generator", en: "fractal-glass-generator" },
+  pixelate: { de: "bild-verpixeln", en: "pixelate-image" },
 };
 
 /**
