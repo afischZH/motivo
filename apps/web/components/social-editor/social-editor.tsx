@@ -128,9 +128,11 @@ import { LayerList, useLayerName } from "./layer-list";
 import { createKonvaMeasure } from "./measure";
 import { SocialStage, type FrameChange } from "./stage";
 import {
+  draftWins,
   initialEditorState,
   newSceneId,
   randomSeed,
+  shouldWriteDraft,
   socialEditorReducer,
   type SocialEditorState,
 } from "./state";
@@ -341,19 +343,25 @@ export function SocialEditor(props: SocialEditorProps) {
       };
       const id = designIdFromHash(window.location.hash);
       try {
+        const draft = await store.getDraft().catch(() => null);
         if (id) {
           const record = await store.get(id);
           if (record && active) {
-            await open({
-              type: "load",
-              scene: record.scene,
-              name: record.name,
-              designId: record.id,
-            });
+            // Unsaved changes of this design (reload, crash) win over the saved version.
+            await open(
+              draftWins(draft, record) && draft
+                ? {
+                    type: "load",
+                    scene: draft.scene,
+                    name: draft.name,
+                    designId: record.id,
+                    dirty: true,
+                  }
+                : { type: "load", scene: record.scene, name: record.name, designId: record.id },
+            );
             return;
           }
         }
-        const draft = await store.getDraft();
         if (draft && active && !id) {
           await open({
             type: "load",
@@ -382,10 +390,16 @@ export function SocialEditor(props: SocialEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Autosave draft.
+  // Latest values for event handlers that outlive a render (stage, keyboard).
+  const stateRef = useRef(state);
+  const measureRef = useRef(measure);
+
+  // Autosave draft (not for a saved design without changes, see `shouldWriteDraft`).
   useEffect(() => {
     if (load !== "ready") return;
     const timer = window.setTimeout(() => {
+      // Checked when the timer fires: a save in between makes the draft unnecessary.
+      if (!shouldWriteDraft(stateRef.current)) return;
       void store
         .putDraft({ designId: state.designId, name: state.name, scene, updatedAt: Date.now() })
         .catch(() => undefined);
@@ -394,10 +408,6 @@ export function SocialEditor(props: SocialEditorProps) {
   }, [load, store, scene, state.name, state.designId]);
 
   // ---- scene changes ------------------------------------------------------
-
-  // Latest values for event handlers that outlive a render (stage, keyboard).
-  const stateRef = useRef(state);
-  const measureRef = useRef(measure);
 
   const change = useCallback(
     (next: Scene, key: string | null = null, selection?: readonly string[]) =>
@@ -840,6 +850,15 @@ export function SocialEditor(props: SocialEditorProps) {
                 thumbnail,
               });
         dispatch({ type: "saved", designId: record.id, name: record.name });
+        // The draft follows the saved version, with its time: never newer than the design.
+        void store
+          .putDraft({
+            designId: record.id,
+            name: record.name,
+            scene: record.scene,
+            updatedAt: record.updatedAt,
+          })
+          .catch(() => undefined);
         window.history.replaceState(
           null,
           "",
