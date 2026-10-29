@@ -48,3 +48,6 @@ export * from "./tools/avatar";
 export * from "./tools/animated-gradient";
 export * from "./tools/favicon";
 export * from "./tools/perspective-grid";
+export * from "./tools/fluid-type";
+export * from "./tools/section-divider";
+export * from "./tools/og-image";

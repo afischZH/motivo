@@ -5306,6 +5306,413 @@
           "a5": "Nicht aus dem exportierten Bild: Die Details sind darin nicht mehr enthalten. In Musterli bleibt dein Original erhalten, solange das Design offen oder gespeichert ist, und du kannst jede Einstellung ändern."
         }
       }
+    },
+    "fluid-type-scale": {
+      "name": "Fliessende Schriftskala",
+      "description": "Schriftgrössen, die mit der Bildschirmbreite wachsen: eine typografische Skala als CSS clamp(), mit CSS-Variablen und Tailwind-Theme zum Kopieren.",
+      "groups": {
+        "viewport": "Bildschirmbreite",
+        "scale": "Skala",
+        "code": "Code",
+        "preview": "Vorschau"
+      },
+      "params": {
+        "minViewport": {
+          "label": "Kleinste Breite"
+        },
+        "maxViewport": {
+          "label": "Grösste Breite"
+        },
+        "minBase": {
+          "label": "Grundgrösse klein"
+        },
+        "maxBase": {
+          "label": "Grundgrösse gross"
+        },
+        "minRatio": {
+          "label": "Verhältnis klein"
+        },
+        "maxRatio": {
+          "label": "Verhältnis gross"
+        },
+        "ratio": {
+          "options": {
+            "minor-second": "1.067 (kleine Sekunde)",
+            "major-second": "1.125 (grosse Sekunde)",
+            "minor-third": "1.2 (kleine Terz)",
+            "major-third": "1.25 (grosse Terz)",
+            "perfect-fourth": "1.333 (reine Quarte)",
+            "augmented-fourth": "1.414 (übermässige Quarte)",
+            "perfect-fifth": "1.5 (reine Quinte)",
+            "golden-ratio": "1.618 (Goldener Schnitt)"
+          }
+        },
+        "stepsDown": {
+          "label": "Stufen darunter"
+        },
+        "stepsUp": {
+          "label": "Stufen darüber"
+        },
+        "unit": {
+          "label": "Einheit",
+          "options": {
+            "rem": "rem",
+            "px": "px"
+          }
+        },
+        "naming": {
+          "label": "Namen",
+          "options": {
+            "steps": "Stufen (step-1)",
+            "tshirt": "Grössen (lg, xl)"
+          }
+        },
+        "prefix": {
+          "label": "Präfix im Code"
+        },
+        "previewViewport": {
+          "label": "Vorschau bei Breite"
+        },
+        "sample": {
+          "label": "Beispieltext"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "background": {
+          "label": "Hintergrund"
+        },
+        "ink": {
+          "label": "Textfarbe"
+        },
+        "accent": {
+          "label": "Akzent"
+        }
+      },
+      "presets": {
+        "balanced": "Ausgewogen",
+        "compact": "Kompakt",
+        "editorial": "Magazin",
+        "bold-hero": "Grosser Auftritt",
+        "app-ui": "App-Oberfläche",
+        "tailwind": "Tailwind-Namen",
+        "code": "Code"
+      },
+      "advisories": {
+        "zoom": "Die grösste Stufe wächst um das {factor}-Fache. Über {limit}-fach kann Text beim Zoomen auf 200 % zu klein bleiben (WCAG 1.4.4). Nähere die Grössen an oder verkleinere das Verhältnis."
+      },
+      "seo": {
+        "heading": "Fliessende Schriftskala (Fluid Typography mit clamp)",
+        "whatIs": "Eine fliessende Schriftskala legt alle Schriftgrössen einer Website fest, vom Kleingedruckten bis zur grossen Überschrift. Jede Stufe ist um ein festes Verhältnis grösser als die vorherige, und alle Stufen wachsen stufenlos mit der Bildschirmbreite. So passt die Typografie auf dem Handy und auf dem grossen Monitor, ohne Breakpoints.",
+        "howTo": "Gib die kleinste und die grösste Bildschirmbreite an, dazu die Grundgrösse und das Verhältnis für beide Enden. Die Vorschau zeigt alle Stufen bei einer wählbaren Breite. Kopiere dann die CSS-Variablen, die fertigen Klassen oder das Tailwind-Theme in dein Projekt.",
+        "useCases": {
+          "u1": {
+            "title": "Neue Website",
+            "text": "Lege die Typografie einmal fest und verwende überall dieselben Stufen. Überschriften, Text und Beschriftungen bleiben auf jedem Gerät im Verhältnis."
+          },
+          "u2": {
+            "title": "Designsystem",
+            "text": "Die Stufen werden zu Variablen wie --step-2 oder zu Tailwind-Klassen wie text-xl. Design und Code sprechen dieselbe Sprache."
+          },
+          "u3": {
+            "title": "Weniger Breakpoints",
+            "text": "Statt Schriftgrössen in drei Media Queries zu überschreiben, rechnet der Browser die passende Grösse selbst aus."
+          }
+        },
+        "tips": {
+          "t1": "Ein kleineres Verhältnis auf dem Handy und ein grösseres auf dem Desktop gibt grossen Überschriften Wirkung, ohne dass sie auf kleinen Bildschirmen umbrechen.",
+          "t2": "Bleib bei rem als Einheit. Dann wächst der Text mit, wenn jemand im Browser eine grössere Schrift einstellt.",
+          "t3": "Wähle bei Namen die Grössen, wenn du mit Tailwind arbeitest. Dann ersetzt das Theme die Standardgrössen wie text-lg direkt."
+        },
+        "faq": {
+          "q1": {
+            "question": "Wie funktioniert clamp() für Schriftgrössen?",
+            "answer": "clamp() nimmt eine kleinste Grösse, einen bevorzugten Wert und eine grösste Grösse. Der bevorzugte Wert besteht aus rem plus vw und wächst mit der Bildschirmbreite. Unter der kleinsten Breite bleibt die Schrift klein, über der grössten bleibt sie gross."
+          },
+          "q2": {
+            "question": "Warum rem plus vw und nicht nur vw?",
+            "answer": "Text in reinen vw-Einheiten wächst beim Zoomen nicht mit. Der rem-Anteil sorgt dafür, dass Zoom und die Schriftgrösse im Browser weiter wirken. Als Faustregel gilt: Ist die grösste Grösse einer Stufe höchstens 2.5-mal so gross wie die kleinste, lässt sich Text immer auf 200 % zoomen."
+          },
+          "q3": {
+            "question": "Welche Browser unterstützen clamp()?",
+            "answer": "Alle aktuellen Browser seit 2020, also Chrome, Edge, Firefox und Safari. Für sehr alte Browser kannst du vor die Variable eine feste Grösse setzen."
+          },
+          "q4": {
+            "question": "Wie nutze ich die Skala mit Tailwind?",
+            "answer": "Kopiere das Tailwind-v4-Theme in deine CSS-Datei. Tailwind macht aus jeder Variable --text-* eine Klasse, zum Beispiel text-xl. Mit den Namen als Grössen ersetzt die Skala die Standardgrössen von Tailwind."
+          }
+        }
+      }
+    },
+    "section-divider": {
+      "name": "Abschnittstrenner-Generator",
+      "description": "Wellen, Bögen, Schrägen, Zacken und mehr als Übergang zwischen zwei Website-Abschnitten. Ein SVG, das sich jeder Breite anpasst, mit HTML und CSS zum Kopieren.",
+      "params": {
+        "shape": {
+          "label": "Form",
+          "options": {
+            "wave": "Welle",
+            "curve": "Bogen",
+            "tilt": "Schräge",
+            "peaks": "Zacken",
+            "arrow": "Pfeil",
+            "clouds": "Wolken",
+            "steps": "Stufen"
+          }
+        },
+        "position": {
+          "label": "Position",
+          "options": {
+            "bottom": "Unten",
+            "top": "Oben"
+          }
+        },
+        "count": {
+          "label": "Anzahl"
+        },
+        "layers": {
+          "label": "Ebenen"
+        },
+        "flip": {
+          "label": "Spiegeln"
+        },
+        "invert": {
+          "label": "Umkehren"
+        },
+        "color": {
+          "label": "Farbe der Form"
+        },
+        "minHeight": {
+          "label": "Kleinste Höhe"
+        }
+      },
+      "presets": {
+        "wave": "Welle",
+        "layered-waves": "Wellen in Ebenen",
+        "arc": "Bogen",
+        "slant": "Schräge",
+        "arrow": "Pfeil",
+        "mountains": "Berge",
+        "clouds": "Wolken",
+        "stairs": "Treppe"
+      },
+      "sizes": {
+        "slim": "Schmal",
+        "regular": "Normal",
+        "tall": "Hoch",
+        "mobile": "Handy"
+      },
+      "seo": {
+        "heading": "Abschnittstrenner-Generator (SVG Section Divider)",
+        "whatIs": "Ein Abschnittstrenner ist die Kante zwischen zwei Bereichen einer Website, zum Beispiel eine Welle zwischen dem Kopfbereich und dem Inhalt. Statt einer geraden Linie entsteht ein weicher oder markanter Übergang. Der Trenner ist ein kleines SVG, das sich jeder Bildschirmbreite anpasst.",
+        "howTo": "Wähl eine Form wie Welle, Bogen, Schräge oder Zacken und stelle Anzahl und Ebenen ein. Die Farbe der Form ist die Farbe des nächsten Abschnitts. Mit Position, Spiegeln und Umkehren passt du an, wo der Trenner sitzt. Kopiere dann das HTML-Beispiel oder die Tailwind-Klassen, oder lade SVG und PNG herunter.",
+        "useCases": {
+          "u1": {
+            "title": "Kopfbereich und Hero",
+            "text": "Eine Welle oder ein Bogen am unteren Rand des Hero-Bereichs führt den Blick weich in den Inhalt."
+          },
+          "u2": {
+            "title": "Landingpages",
+            "text": "Wechselnde Farben pro Abschnitt wirken mit Schrägen oder Zacken lebendiger als mit geraden Kanten."
+          },
+          "u3": {
+            "title": "Baukästen und CMS",
+            "text": "Das SVG passt in jeden HTML-Block, etwa in WordPress, Webflow oder Framer, und braucht kein Script."
+          }
+        },
+        "tips": {
+          "t1": "Nimm als Farbe der Form genau die Hintergrundfarbe des nächsten Abschnitts. Dann wirkt der Übergang nahtlos.",
+          "t2": "Zwei oder drei Ebenen geben Tiefe. Die hinteren Ebenen sind heller und schauen hinter der vorderen hervor.",
+          "t3": "Der Code setzt den Trenner einen Pixel über die Kante. Das verhindert eine feine Lücke, die beim Runden im Browser entstehen kann."
+        },
+        "faq": {
+          "q1": {
+            "question": "Wie passt sich der Trenner an die Breite an?",
+            "answer": "Das SVG hat preserveAspectRatio=\"none\". Es dehnt sich auf jede Breite, die Höhe legst du in CSS fest. Im Code wächst die Höhe mit clamp() mit der Breite mit, zwischen einer kleinsten Höhe und der Höhe deines Designs."
+          },
+          "q2": {
+            "question": "Brauche ich JavaScript?",
+            "answer": "Nein. Der Trenner ist reines SVG mit ein paar Zeilen CSS. Er lädt sofort und funktioniert in jedem Browser."
+          },
+          "q3": {
+            "question": "Ist der Trenner barrierefrei?",
+            "answer": "Ja. Er ist reine Dekoration und darum mit aria-hidden für Screenreader ausgeblendet. Er lässt sich nicht fokussieren und blockiert keine Klicks."
+          },
+          "q4": {
+            "question": "Wie setze ich den Trenner oben an einen Abschnitt?",
+            "answer": "Stell die Position auf Oben. Die Form zeigt dann nach unten und der Code setzt den Trenner an die obere Kante. Mit Umkehren füllt die Farbe die andere Seite der Kante."
+          }
+        }
+      }
+    },
+    "og-image": {
+      "name": "Open-Graph-Bild-Generator",
+      "description": "Vorschaubilder für Links auf Facebook, LinkedIn, X, Slack und WhatsApp: Titel, Logo und Seitenname auf einem Musterli-Motiv, mit den passenden Meta-Tags.",
+      "groups": {
+        "content": "Inhalt",
+        "type": "Schrift",
+        "backdrop": "Hintergrund",
+        "panel": "Fläche hinter dem Text"
+      },
+      "params": {
+        "layout": {
+          "label": "Aufteilung",
+          "options": {
+            "classic": "Klassisch",
+            "centered": "Zentriert",
+            "split": "Geteilt",
+            "minimal": "Schlicht"
+          }
+        },
+        "eyebrow": {
+          "label": "Kennzeichnung"
+        },
+        "title": {
+          "label": "Titel"
+        },
+        "subtitle": {
+          "label": "Untertitel"
+        },
+        "site": {
+          "label": "Seitenname"
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
+        },
+        "titleWeight": {
+          "label": "Schriftstärke des Titels"
+        },
+        "titleSize": {
+          "label": "Titelgrösse"
+        },
+        "backdrop": {
+          "label": "Motiv",
+          "options": {
+            "solid": "Farbe",
+            "gradient": "Verlauf",
+            "mesh": "Mesh-Verlauf",
+            "blurry": "Weicher Verlauf",
+            "waves": "Wellen",
+            "pattern": "Muster"
+          }
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "pattern": {
+          "label": "Muster"
+        },
+        "patternScale": {
+          "label": "Mustergrösse"
+        },
+        "patternOpacity": {
+          "label": "Deckkraft des Musters"
+        },
+        "backgroundImage": {
+          "label": "Eigenes Bild",
+          "description": "Ersetzt das Motiv durch dein Bild (PNG, JPG, WebP oder SVG). Es bleibt in deinem Browser und fehlt im Teilen-Link."
+        },
+        "panel": {
+          "label": "Fläche",
+          "options": {
+            "none": "Keine",
+            "scrim": "Verlauf",
+            "card": "Karte"
+          }
+        },
+        "panelColor": {
+          "label": "Farbe der Fläche"
+        },
+        "panelOpacity": {
+          "label": "Deckkraft der Fläche"
+        },
+        "inkAuto": {
+          "label": "Textfarbe automatisch"
+        },
+        "ink": {
+          "label": "Textfarbe"
+        },
+        "accent": {
+          "label": "Akzent"
+        },
+        "padding": {
+          "label": "Rand"
+        }
+      },
+      "presets": {
+        "launch": "Lancierung",
+        "article": "Artikel",
+        "centered": "Zentriert",
+        "split": "Geteilt",
+        "minimal": "Schlicht",
+        "dotted": "Gepunktet",
+        "night": "Nacht"
+      },
+      "advisories": {
+        "truncated": "Der Text ist zu lang und wurde gekürzt. Kürze Titel oder Untertitel oder wähle eine kleinere Titelgrösse.",
+        "pictureContrast": "Bei einem eigenen Bild kann Musterli den Kontrast nicht prüfen. Eine Fläche hinter dem Text (Verlauf oder Karte) macht ihn sicher lesbar.",
+        "textContrast": "Der Text erreicht nur {ratio}:1 Kontrast, für WCAG AA brauchst du {required}:1. Wähle eine andere Textfarbe oder eine Fläche hinter dem Text."
+      },
+      "seo": {
+        "heading": "Open-Graph-Bild-Generator (OG Image)",
+        "whatIs": "Ein Open-Graph-Bild ist das Vorschaubild, das erscheint, wenn jemand einen Link teilt, etwa auf Facebook, LinkedIn, X, Slack oder WhatsApp. Ohne eigenes Bild wählt die Plattform irgendein Bild der Seite oder zeigt gar keines. Mit einem gestalteten Bild fällt dein Link auf und wird öfter angeklickt.",
+        "howTo": "Gib Titel, Kennzeichnung, Untertitel und Seitenname ein und lade bei Bedarf dein Logo hoch. Wähl eine Aufteilung und als Hintergrund ein Motiv oder ein eigenes Bild. Lade das Bild als PNG oder JPG herunter, leg es auf deine Website und kopiere die Meta-Tags in den Kopf der Seite.",
+        "useCases": {
+          "u1": {
+            "title": "Blogartikel",
+            "text": "Jeder Artikel bekommt ein eigenes Vorschaubild mit seinem Titel. Im Feed erkennt man sofort, worum es geht."
+          },
+          "u2": {
+            "title": "Produkt und Lancierung",
+            "text": "Teile die Startseite oder eine neue Funktion mit Logo, Kennzeichnung und einem auffälligen Verlauf."
+          },
+          "u3": {
+            "title": "Dokumentation und Projekte",
+            "text": "Auch Dokumentationen, Open-Source-Projekte und Portfolios wirken in Slack und auf GitHub professioneller."
+          }
+        },
+        "tips": {
+          "t1": "Halte den Titel kurz, etwa sechs bis zehn Wörter. Auf dem Handy wird das Bild klein angezeigt.",
+          "t2": "Lass wichtige Inhalte nicht bis an den Rand laufen. Manche Plattformen schneiden das Bild leicht zu.",
+          "t3": "Ein Bild aus einem anderen Musterli-Tool übernimmst du mit «Weiterverwenden» direkt als Hintergrund."
+        },
+        "faq": {
+          "q1": {
+            "question": "Welche Grösse braucht ein Open-Graph-Bild?",
+            "answer": "Üblich sind 1200 × 630 Pixel, also etwa 1.91:1. Diese Grösse ist voreingestellt und wird von Facebook, LinkedIn, X und den meisten Chat-Apps gut dargestellt."
+          },
+          "q2": {
+            "question": "Wie baue ich das Bild in meine Website ein?",
+            "answer": "Lade das Bild auf deinen Server und kopiere die Meta-Tags in den head-Bereich der Seite. Ersetze dabei die Beispieladresse durch die vollständige Adresse deines Bildes, mit https und Domain."
+          },
+          "q3": {
+            "question": "Warum zeigt eine Plattform noch das alte Bild?",
+            "answer": "Plattformen speichern Vorschauen zwischen. Mit dem Sharing Debugger von Facebook oder dem Post Inspector von LinkedIn lädst du die Vorschau neu. Ein neuer Dateiname hilft ebenfalls."
+          },
+          "q4": {
+            "question": "Werden mein Logo und mein Bild hochgeladen?",
+            "answer": "Nein. Alles entsteht in deinem Browser. Logo und eigenes Bild bleiben auf deinem Gerät und fehlen im Teilen-Link."
+          }
+        }
+      }
     }
   },
   "Converters": {
@@ -7280,9 +7687,9 @@
     },
     "ui-effects": {
       "name": "UI-Effekte",
-      "lead": "Glas, Schatten, Bento-Raster und Verläufe als fertiger Code für Karten, Knöpfe und Layouts. Kopieren und direkt im Projekt einfügen.",
+      "lead": "Abschnittstrenner, fliessende Schriftgrössen, Glas, Schatten, Bento-Raster und Verläufe als fertiger Code für Karten, Knöpfe und Layouts. Kopieren und direkt im Projekt einfügen.",
       "metaTitle": "CSS-Effekte für UI und Karten gratis erstellen | Musterli",
-      "metaDescription": "Glaseffekt, CSS-Schatten, Bento-Grid und Verläufe für Karten und Layouts, als CSS und Tailwind. Gratis und ohne Konto."
+      "metaDescription": "Abschnittstrenner, fliessende Schriftskala, Glaseffekt, CSS-Schatten, Bento-Grid und Verläufe als CSS und Tailwind. Gratis und ohne Konto."
     },
     "color-systems": {
       "name": "Farbsysteme",
@@ -7298,7 +7705,7 @@
     },
     "image-polish": {
       "name": "Bilder aufwerten",
-      "lead": "Screenshots in Szene setzen und Fotos mit Duotone, Halftone oder Glaseffekt einen eigenen Look geben. Deine Bilder bleiben auf deinem Gerät.",
+      "lead": "Open-Graph-Bilder für geteilte Links gestalten, Screenshots in Szene setzen und Fotos mit Duotone, Halftone oder Glaseffekt einen eigenen Look geben. Deine Bilder bleiben auf deinem Gerät.",
       "metaTitle": "Screenshots und Fotos gratis aufwerten | Musterli",
       "metaDescription": "Screenshot-Mockups, Duotone, Halftone, Fractal Glass und Dithering für Website-Bilder. Gratis, im Browser, deine Bilder bleiben auf deinem Gerät."
     }

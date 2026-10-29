@@ -159,11 +159,15 @@ describe("built-in tool registration", () => {
       "god-rays",
       "fractal-glass",
       "pixelate",
+      "fluid-type-scale",
+      "section-divider",
+      "og-image",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
       "screenshot-beautifier",
       "avatar",
+      "og-image",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -499,6 +503,9 @@ describe("extra exports", () => {
       "css-shadow",
       "animated-gradient",
       "ascii-art",
+      "fluid-type-scale",
+      "section-divider",
+      "og-image",
     ]);
   });
 });
