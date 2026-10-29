@@ -14,9 +14,9 @@
 
 | ID | Titel | Agent | Status | Abhängig von | Notiz |
 |---|---|---|---|---|---|
-| M6-AP01 | Bildeffekte **God Rays** (E5), **Fractal Glass** (E6), **Pixelate/Posterize** (E7) | engine-dev + ui-dev | in Arbeit | – | Branch `m6/ap01-effects` |
-| M6-AP02 | Editor-Grundlage (H): Szenenmodell (Zod, JSON), Konva-Kern dynamisch, Ebenen (Musterli-Design als parametrische Referenz, Text, Bild, Form, Logo), Transform, Snapping, Ausrichtung, Gruppen, Undo, Export PNG/JPG, lokaler Speicher (IndexedDB-Upgrade), Formate und **Magic Resize** mit Constraint-Test | ui-dev + engine-dev | offen | – | AP04 aus dem Plan hier enthalten (Szenenmodell und Constraints gehören zusammen) |
-| M6-AP03 | Text-Effekte (Schatten, Kontur, Verlauf, Markierbalken), selbst gehostete OFL-Schriften, Brand-Schriften im Brand Kit | ui-dev | offen | AP02 | Lizenzen in `assets/LICENSES.md` |
+| M6-AP01 | Bildeffekte **God Rays** (E5), **Fractal Glass** (E6), **Pixelate/Posterize** (E7) | engine-dev + ui-dev | erledigt | – | Branch `m6/ap01-effects`, gemergt 70a6720; Long-Task-Tests nur gegen Produktions-Build aussagekräftig |
+| M6-AP02 | Editor-Grundlage (H): Szenenmodell (Zod, JSON), Konva-Kern dynamisch, Ebenen (Musterli-Design als parametrische Referenz, Text, Bild, Form, Logo), Transform, Snapping, Ausrichtung, Gruppen, Undo, Export PNG/JPG, lokaler Speicher (IndexedDB-Upgrade), Formate und **Magic Resize** mit Constraint-Test | ui-dev + engine-dev | erledigt | – | Gemergt dd58074; Paket `@musterli/scene`, IndexedDB v3, Konva-Kern 45.8 KB gzip. AP04 aus dem Plan hier enthalten (Szenenmodell und Constraints gehören zusammen) |
+| M6-AP03 | Text-Effekte (Schatten, Kontur, Verlauf, Markierbalken), selbst gehostete OFL-Schriften, Brand-Schriften im Brand Kit | ui-dev | in Arbeit | AP02 | Lizenzen in `assets/LICENSES.md` |
 | M6-AP05 | 40 Templates (6 Themen, alle Formate) und **Brand-Apply** | ui-dev | offen | AP02, AP03 | DoD-Test: jedes Template in 6 Formate ohne abgeschnittenen Text |
 | M6-AP06 | FR und IT | – | gestrichen | – | Entscheid Andreas 2026-10-29 06:02: aus M6 entfernt; begonnene Arbeit verworfen, nichts gemergt |
 | M6-AP07 | Integration, Changelog, QA in Chrome, Code- und Security-Review | Orchestrator + reviewer | offen | alle | |
