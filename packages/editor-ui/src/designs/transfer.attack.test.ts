@@ -3,8 +3,9 @@
  * files must neither break the app nor smuggle anything past validation, and
  * must stay cheap enough for the import worker.
  */
-import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
+import { UPLOAD_RASTER_MAX_EDGE, registry, type AnyToolDefinition } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
+import * as z from "zod";
 import {
   DESIGNS_FILE_FORMAT,
   DESIGNS_FILE_MAX_BYTES,
@@ -13,6 +14,8 @@ import {
   designsFileTexts,
   isSafeRasterHref,
   parseDesignsFile,
+  rasterEdgeLimit,
+  rasterEdgeLimits,
   type DesignsFileEntry,
 } from "./transfer";
 
@@ -227,5 +230,119 @@ describe("designs import under attack", { timeout: 60_000 }, () => {
     ]) {
       expect(isSafeRasterHref(href), href).toBe(false);
     }
+  });
+});
+
+/** A PNG data URI whose header claims `width` × `height` (the pixels are the 1x1 image's). */
+function pngClaiming(width: number, height: number): string {
+  const bytes = Uint8Array.from(atob(PNG_1X1), (c) => c.charCodeAt(0));
+  new DataView(bytes.buffer).setUint32(16, width);
+  new DataView(bytes.buffer).setUint32(20, height);
+  return `data:image/png;base64,${btoa(String.fromCharCode(...bytes))}`;
+}
+
+const raster = (width: number, height: number, header = { width, height }) => ({
+  kind: "raster",
+  href: pngClaiming(header.width, header.height),
+  width,
+  height,
+  name: "x.png",
+});
+
+/** Imports one design of `toolId` with `params` over its defaults; the skip reason or "ok". */
+function importOne(toolId: string, params: Record<string, unknown>): string {
+  const t = tool(toolId);
+  const parsed = parseDesignsFile(
+    fileText([
+      entry({
+        toolId,
+        toolVersion: t.version,
+        params: { ...(t.defaults as Record<string, unknown>), ...params },
+      }),
+    ]),
+    registry,
+  );
+  if (!parsed.ok) return parsed.error;
+  return parsed.skipped[0]?.reason ?? (parsed.designs.length === 1 ? "ok" : "none");
+}
+
+describe("pixel limits per image param", () => {
+  it("reads each param's limit from the tool's own schema", () => {
+    expect(Object.fromEntries(rasterEdgeLimits(tool("screenshot-beautifier")))).toMatchObject({
+      screenshot: 3840,
+      screenshotTablet: 3840,
+      screenshotPhone: 3840,
+    });
+    for (const id of ["duotone", "halftone", "cmyk-halftone", "dither"]) {
+      expect(rasterEdgeLimits(tool(id)).get("photo"), id).toBe(4096);
+    }
+    expect(rasterEdgeLimits(tool("ascii-art")).get("photo")).toBe(1024);
+    expect(rasterEdgeLimits(tool("glass-effects")).get("backgroundImage")).toBe(2048);
+    expect(rasterEdgeLimits(tool("bento-grid")).get("backgroundImage")).toBe(2048);
+    // Nested in a record of tiles: the per-tile uploads (1024 px).
+    expect(rasterEdgeLimits(tool("bento-grid")).get("tileImages")).toBe(1024);
+    expect(rasterEdgeLimits(tool("seamless-patterns")).get("upload")).toBe(1024);
+    // Every image param of every tool has a limit, at most the largest upload.
+    for (const t of registry.list()) {
+      for (const [key, limit] of rasterEdgeLimits(t)) {
+        expect(limit, `${t.id}.${key}`).toBeGreaterThan(0);
+        expect(limit, `${t.id}.${key}`).toBeLessThanOrEqual(UPLOAD_RASTER_MAX_EDGE);
+      }
+    }
+    expect(rasterEdgeLimit(z.string())).toBeNull();
+  });
+
+  it("accepts pictures up to the limit of their param", () => {
+    expect(importOne("screenshot-beautifier", { screenshot: raster(3840, 2160) })).toBe("ok");
+    expect(importOne("duotone", { photo: raster(4096, 3072) })).toBe("ok");
+    expect(importOne("halftone", { photo: raster(3072, 4096) })).toBe("ok");
+    expect(importOne("glass-effects", { backgroundImage: raster(2048, 1365) })).toBe("ok");
+  });
+
+  it("refuses a picture whose header is larger than its param allows", () => {
+    // Declared within the limit, the picture itself larger: 4096 px is fine
+    // for a photo effect, but not for a screenshot.
+    expect(
+      importOne("screenshot-beautifier", {
+        screenshot: raster(3840, 2160, { width: 4096, height: 2160 }),
+      }),
+    ).toBe("unsafe-upload");
+    expect(
+      importOne("screenshot-beautifier", {
+        screenshotPhone: raster(1170, 2532, { width: 1170, height: 3841 }),
+      }),
+    ).toBe("unsafe-upload");
+    expect(importOne("duotone", { photo: raster(4096, 3072, { width: 4097, height: 3072 }) })).toBe(
+      "unsafe-upload",
+    );
+    expect(
+      importOne("ascii-art", { photo: raster(1024, 768, { width: 2048, height: 1536 }) }),
+    ).toBe("unsafe-upload");
+    expect(
+      importOne("glass-effects", {
+        backgroundImage: raster(2048, 1024, { width: 3840, height: 1024 }),
+      }),
+    ).toBe("unsafe-upload");
+    expect(
+      importOne("bento-grid", {
+        tileImages: {
+          t1: { graphic: raster(512, 512, { width: 2048, height: 512 }), background: null },
+        },
+      }),
+    ).toBe("unsafe-upload");
+  });
+
+  it("refuses a picture declared larger than its param allows", () => {
+    expect(importOne("screenshot-beautifier", { screenshot: raster(4096, 2160) })).toBe(
+      "invalid-params",
+    );
+    expect(importOne("duotone", { photo: raster(4097, 100) })).toBe("invalid-params");
+    expect(importOne("ascii-art", { photo: raster(1025, 100) })).toBe("invalid-params");
+  });
+
+  it("refuses a picture larger than declared, even within the param's limit", () => {
+    expect(importOne("duotone", { photo: raster(800, 600, { width: 4000, height: 3000 }) })).toBe(
+      "unsafe-upload",
+    );
   });
 });
