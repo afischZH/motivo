@@ -24,6 +24,7 @@
 // Namespace import keeps zod tree-shakable (see tool-registry/common.ts).
 import * as z from "zod";
 import { isShapeId } from "@musterli/engine";
+import { fontRefSchema } from "./fonts";
 
 /** Scene format version; bump with a migration in `parseScene`. */
 export const SCENE_VERSION = 1;
@@ -158,15 +159,30 @@ const strokeSchema = z.object({
   width: z.number().min(0).max(200),
 });
 
+/** Marker bar behind each line (text-effects.ts `highlightRects`). */
+const highlightSchema = z.object({
+  color: colorRefSchema,
+  /** Left and right of the text; half of it above and below the em box. */
+  padding: z.number().min(0).max(200),
+});
+
+/** Gradient fill of the text over its box, angle as in CSS (0 = upwards, 90 = to the right). */
+const gradientSchema = z.object({
+  from: colorRefSchema,
+  to: colorRefSchema,
+  angle: z.number().min(-360).max(360),
+});
+
 /**
- * Text effects. AP02 renders shadow and outline; highlight bar and gradient
- * fill are reserved for AP03 (schema only, ignored by the renderer).
+ * Text effects, all drawn by the one render path (`drawScene` in the
+ * editor): shadow, outline, highlight bar behind the lines and gradient
+ * fill (which replaces the text colour while it is set).
  */
 export const textEffectsSchema = z.object({
   shadow: shadowSchema.optional(),
   stroke: strokeSchema.optional(),
-  highlight: z.object({ color: colorRefSchema, padding: z.number().min(0).max(200) }).optional(),
-  gradient: z.object({ from: colorRefSchema, to: colorRefSchema, angle: z.number() }).optional(),
+  highlight: highlightSchema.optional(),
+  gradient: gradientSchema.optional(),
 });
 
 export const TEXT_ALIGNS = ["left", "center", "right"] as const;
@@ -176,8 +192,13 @@ export const textLayerSchema = z.object({
   ...baseShape,
   kind: z.literal("text"),
   text: z.string().max(TEXT_MAX_LENGTH),
-  /** CSS font family list; AP03 adds self-hosted OFL fonts and brand fonts. */
+  /** CSS font family list the text is drawn with (fonts.ts `fontFamilyFor`). */
   fontFamily: z.string().min(1).max(200),
+  /**
+   * Where the font comes from (self-hosted library font or brand font, id
+   * plus name); missing for system stacks and AP02 scenes.
+   */
+  font: fontRefSchema.optional(),
   fontSize: z.number().min(FONT_SIZE_MIN).max(FONT_SIZE_MAX),
   /** Magic Resize shrinks the text down to this size before it wraps or grows its box. */
   minFontSize: z.number().min(FONT_SIZE_MIN).max(FONT_SIZE_MAX),

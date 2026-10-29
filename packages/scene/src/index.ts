@@ -2,6 +2,8 @@ export * from "./schema";
 export * from "./formats";
 export * from "./geometry";
 export * from "./text";
+export * from "./text-effects";
+export * from "./fonts";
 export * from "./resize";
 export * from "./constraints";
 export * from "./history";

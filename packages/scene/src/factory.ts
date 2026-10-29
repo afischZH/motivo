@@ -17,10 +17,15 @@ import type {
   TextLayer,
 } from "./schema";
 import { SCENE_VERSION } from "./schema";
+import {
+  DEFAULT_LIBRARY_FONT_ID,
+  SYSTEM_FONT_STACKS,
+  fontFamilyFor,
+  libraryFontRef,
+} from "./fonts";
 
-/** System font stack until AP03 brings self-hosted fonts. */
-export const DEFAULT_FONT_FAMILY =
-  'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+/** The system sans stack (AP02 text layers, fallback of every font). */
+export const DEFAULT_FONT_FAMILY = SYSTEM_FONT_STACKS.sans;
 
 /** Neutral starting palette for colour slots (brand-1 ... brand-5). */
 export const DEFAULT_SCENE_PALETTE = ["#1f2937", "#f97316", "#fef3c7", "#0ea5e9", "#ffffff"];
@@ -79,11 +84,13 @@ export function createTextLayer(
   const s = Math.min(format.width, format.height);
   const fontSize = options.fontSize ?? Math.round(s * 0.08);
   const box = centredBox(format, 0.8, (fontSize * 1.2 * 2) / s);
+  const font = libraryFontRef(DEFAULT_LIBRARY_FONT_ID);
   return {
     ...base(id, options.name ?? "", format, box),
     kind: "text",
     text,
-    fontFamily: DEFAULT_FONT_FAMILY,
+    fontFamily: fontFamilyFor(font),
+    font,
     fontSize,
     minFontSize: Math.max(8, Math.round(fontSize * 0.4)),
     fontWeight: options.fontWeight ?? 700,
