@@ -194,4 +194,52 @@ describe("social designs file", () => {
     expect(logo.image.svg).not.toMatch(/script|onload|onclick|foreignObject|evil\.example/i);
     expect(logo.image.svg).toContain("<rect");
   });
+
+  it("sanitises uploads inside the background's tool params again", () => {
+    const tool = registry.get("seamless-patterns");
+    if (!tool) throw new Error("seamless-patterns missing");
+    const withUpload = (svg: string): Scene => {
+      const s = scene();
+      const params = {
+        ...(tool.defaults as Record<string, unknown>),
+        upload: { kind: "svg", svg, width: 10, height: 10, name: "logo.svg" },
+      };
+      const bg = createBackgroundLayer("bg", s.format, {
+        id: tool.id,
+        version: tool.version,
+        params,
+      });
+      return { ...s, layers: [bg, ...s.layers.slice(1)] };
+    };
+    const hostile =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" onload="alert(1)"><script>alert(2)</script><foreignObject><div/></foreignObject><image href="https://evil.example/x.png"/><rect width="10" height="10" fill="red"/></svg>';
+    const result = parseSocialFile(
+      file([
+        entry(withUpload(hostile)),
+        entry(withUpload("<html><body>x</body></html>"), { id: "d2" }),
+      ]),
+      registry,
+    );
+    if (!result.ok) throw new Error(result.error);
+    expect(result.skipped.map((s) => s.reason)).toEqual(["unsafe-upload"]);
+    const bg = result.designs[0]?.scene.layers[0];
+    if (bg?.kind !== "background") throw new Error("missing background");
+    const upload = bg.params.upload as { svg: string };
+    expect(upload.svg).toContain("<rect");
+    expect(upload.svg).not.toMatch(/script|onload|foreignObject|evil\.example/i);
+  });
+
+  it("refuses raster pictures whose real size exceeds the declared one", () => {
+    // A PNG header claiming 4096 x 1 px, declared as 1 x 1.
+    const bytes = Uint8Array.from(atob(PNG_1PX_DATA), (c) => c.charCodeAt(0));
+    bytes.set([0, 0, 0x10, 0x00], 16);
+    const big: SceneImage = {
+      ...PNG,
+      href: `data:image/png;base64,${btoa(String.fromCharCode(...bytes))}`,
+    };
+    const result = parseSocialFile(file([entry(scene([big]))]), registry);
+    if (!result.ok) throw new Error(result.error);
+    expect(result.designs).toEqual([]);
+    expect(result.skipped.map((s) => s.reason)).toEqual(["unsafe-upload"]);
+  });
 });
