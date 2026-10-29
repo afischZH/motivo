@@ -33,7 +33,7 @@
     "hero": {
       "title": "Motifs in one click",
       "lead": "Patterns, gradients, backgrounds and color palettes for websites, slides and social media. Press the space bar for a new variant, then export as SVG, PNG or CSS.",
-      "ctaPrimary": "Explore all tools",
+      "ctaPrimary": "Explore all {count} tools",
       "ctaSecondary": "Start with {tool}",
       "showcaseLink": "Open {tool}",
       "spaceHint": "Space",
@@ -41,8 +41,7 @@
         "free": "Free, no limits",
         "local": "Runs in your browser",
         "noAccount": "No account needed"
-      },
-      "badge": "{count} generators, all free"
+      }
     },
     "preview": {
       "default": "Default",
@@ -62,7 +61,6 @@
         "title": "Funded by donations",
         "text": "Musterli is funded by voluntary donations. There is no paywall, no subscription and no pro version."
       },
-      "eyebrow": "Overview",
       "lead": "A graphics toolbox that costs nothing and asks nothing of you.",
       "formats": {
         "title": "Every common format",
@@ -73,13 +71,11 @@
       "heading": "Tools by category",
       "lead": "Pick an area or browse the whole catalogue.",
       "converters": "Convert SVG, CSS, Base64 and images.",
-      "all": "Go to the full catalogue",
-      "eyebrow": "Catalogue"
+      "all": "Go to the full catalogue"
     },
     "featured": {
       "heading": "Popular generators",
-      "lead": "A good place to start if you want to dive right in.",
-      "eyebrow": "Popular"
+      "lead": "A good place to start if you want to dive right in."
     },
     "how": {
       "heading": "How it works",
@@ -94,8 +90,7 @@
       "step3": {
         "title": "Export",
         "text": "Download your motif as SVG, PNG, JPG or WebP, or copy the CSS straight into your project."
-      },
-      "eyebrow": "Three steps"
+      }
     },
     "faq": {
       "heading": "Frequently asked questions",
@@ -118,8 +113,7 @@
       "q5": {
         "question": "Which formats can I export?",
         "answer": "Depending on the tool, SVG, PNG, JPG, WebP and CSS. Color tools also give you a Tailwind config and CSS variables."
-      },
-      "eyebrow": "FAQ"
+      }
     },
     "cta": {
       "heading": "Ready for your first motif?",

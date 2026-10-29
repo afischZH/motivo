@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type KeyboardEvent, type ReactNode } from "react";
+import { useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { useT } from "../i18n";
 import { InfoIcon, ResetIcon } from "../shell/icons";
 
@@ -14,7 +14,7 @@ export const FOCUS_RING =
   "outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:border-ring";
 
 export const INPUT_CLASS = cx(
-  "h-8 rounded-md border border-input bg-background px-2 text-sm tabular-nums text-foreground shadow-xs transition-[color,box-shadow] placeholder:text-muted-foreground",
+  "h-8 rounded-md border border-input bg-background px-2 text-[13px] tabular-nums text-foreground transition-[color,box-shadow,border-color] placeholder:text-muted-foreground hover:border-foreground/40",
   "disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive",
   FOCUS_RING,
 );
@@ -47,6 +47,12 @@ export interface ControlRowProps {
   onReset?: () => void;
   /** Shown next to the label, e.g. the current value. */
   aside?: ReactNode;
+  /**
+   * Inspector row: label on the left, the control on the right, like the
+   * property panels of design tools. For compact controls (slider, number,
+   * select, colour, switch); wide ones (palettes, lists, tiles) stack.
+   */
+  inline?: boolean;
   children: ReactNode;
   controlKey: string;
 }
@@ -69,9 +75,90 @@ const QUIET_UNTIL_ROW_HOVER =
 export function ControlRow(props: ControlRowProps) {
   const t = useT();
   const [helpOpen, setHelpOpen] = useState(false);
-  const labelClass = "min-w-0 truncate text-sm font-medium text-foreground";
   const folded =
     props.description !== undefined && props.description.length > INLINE_DESCRIPTION_MAX;
+  const labelClass = props.inline
+    ? "min-w-0 text-[13px] leading-tight text-pretty text-muted-foreground group-hover/row:text-foreground group-focus-within/row:text-foreground transition-colors"
+    : "min-w-0 truncate text-[13px] font-medium text-foreground";
+  const labelEl = props.labelFor ? (
+    <label id={props.ids.label} htmlFor={props.ids.input} className={labelClass}>
+      {props.label}
+    </label>
+  ) : (
+    <span id={props.ids.label} className={labelClass}>
+      {props.label}
+    </span>
+  );
+  const helpButton = folded && (
+    <button
+      type="button"
+      className={cx(ICON_BUTTON_CLASS, "size-6 [&_svg]:size-3.5")}
+      aria-expanded={helpOpen}
+      aria-controls={props.ids.description}
+      aria-label={t("Editor.controls.showHelp", { label: props.label })}
+      onClick={() => setHelpOpen((open) => !open)}
+    >
+      <InfoIcon />
+    </button>
+  );
+  const actions = (
+    <>
+      {props.onReset && (
+        <button
+          type="button"
+          className={cx(ICON_BUTTON_CLASS, props.inline && "size-6 [&_svg]:size-3.5")}
+          aria-label={t("Editor.controls.reset", { label: props.label })}
+          title={t("Editor.controls.resetShort")}
+          onClick={props.onReset}
+          data-reset=""
+        >
+          <ResetIcon />
+        </button>
+      )}
+      {props.lock && (
+        <LockButton
+          label={props.label}
+          locked={props.lock.locked}
+          onToggle={props.lock.onToggle}
+          compact={props.inline}
+        />
+      )}
+    </>
+  );
+  const help = props.description !== undefined && props.ids.description && (
+    <p
+      id={props.ids.description}
+      hidden={folded && !helpOpen}
+      className={cx("text-xs text-pretty text-muted-foreground", props.inline && "col-span-2")}
+    >
+      {props.description}
+    </p>
+  );
+
+  if (props.inline) {
+    return (
+      <div
+        className="group/row grid grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] items-center gap-x-3 gap-y-1"
+        data-control={props.controlKey}
+        data-inline=""
+      >
+        {/* Reset and lock sit at the end of the label cell, so values line up. */}
+        <div className="flex min-h-8 min-w-0 items-center justify-between gap-1">
+          <div className="flex min-w-0 items-center gap-0.5">
+            {labelEl}
+            {helpButton}
+          </div>
+          <div className="-mr-1 flex shrink-0 items-center">{actions}</div>
+        </div>
+        <div className="flex min-w-0 items-center justify-end gap-2">
+          {props.children}
+          {props.aside}
+        </div>
+        {help}
+      </div>
+    );
+  }
+
   return (
     <div
       className="group/row grid grid-cols-[minmax(0,1fr)] gap-1.5"
@@ -79,61 +166,16 @@ export function ControlRow(props: ControlRowProps) {
     >
       <div className="flex min-h-7 items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-0.5">
-          {props.labelFor ? (
-            <label id={props.ids.label} htmlFor={props.ids.input} className={labelClass}>
-              {props.label}
-            </label>
-          ) : (
-            <span id={props.ids.label} className={labelClass}>
-              {props.label}
-            </span>
-          )}
-          {folded && (
-            <button
-              type="button"
-              className={cx(ICON_BUTTON_CLASS, "size-6 [&_svg]:size-3.5")}
-              aria-expanded={helpOpen}
-              aria-controls={props.ids.description}
-              aria-label={t("Editor.controls.showHelp", { label: props.label })}
-              onClick={() => setHelpOpen((open) => !open)}
-            >
-              <InfoIcon />
-            </button>
-          )}
+          {labelEl}
+          {helpButton}
         </div>
         <div className="flex items-center gap-1">
           {props.aside}
-          {props.onReset && (
-            <button
-              type="button"
-              className={ICON_BUTTON_CLASS}
-              aria-label={t("Editor.controls.reset", { label: props.label })}
-              title={t("Editor.controls.resetShort")}
-              onClick={props.onReset}
-              data-reset=""
-            >
-              <ResetIcon />
-            </button>
-          )}
-          {props.lock && (
-            <LockButton
-              label={props.label}
-              locked={props.lock.locked}
-              onToggle={props.lock.onToggle}
-            />
-          )}
+          {actions}
         </div>
       </div>
       {props.children}
-      {props.description !== undefined && props.ids.description && (
-        <p
-          id={props.ids.description}
-          hidden={folded && !helpOpen}
-          className="text-xs text-pretty text-muted-foreground"
-        >
-          {props.description}
-        </p>
-      )}
+      {help}
     </div>
   );
 }
@@ -143,13 +185,20 @@ export function ControlRow(props: ControlRowProps) {
  * `aria-pressed` carries the state. Unlocked it stays quiet until its row
  * is hovered or focused; locked it shows in the accent colour.
  */
-export function LockButton(props: { label: string; locked: boolean; onToggle(): void }) {
+export function LockButton(props: {
+  label: string;
+  locked: boolean;
+  onToggle(): void;
+  /** Smaller hit area for inspector rows. */
+  compact?: boolean | undefined;
+}) {
   const t = useT();
   return (
     <button
       type="button"
       className={cx(
         ICON_BUTTON_CLASS,
+        props.compact && "size-6 [&_svg]:size-3.5",
         props.locked ? "text-link aria-pressed:text-link" : QUIET_UNTIL_ROW_HOVER,
       )}
       aria-pressed={props.locked}
@@ -195,13 +244,21 @@ export interface NumberInputProps {
   onCommit?(): void;
 }
 
+/** Pointer travel (px) before a press on a number field becomes a scrub. */
+const SCRUB_THRESHOLD = 3;
+/** Pointer travel (px) per step while scrubbing; Shift scrubs 10 steps. */
+const SCRUB_PX_PER_STEP = 2;
+
 /**
  * Number field that accepts free typing and only reports valid values.
  * Arrow keys step by `step`, Shift+Arrow by 10 steps; blur or Enter
- * normalises the text and commits.
+ * normalises the text and commits. With a mouse, dragging sideways on the
+ * unfocused field scrubs the value (as in design tools); a plain click
+ * focuses it for typing.
  */
 export function NumberInput(props: NumberInputProps) {
   const [draft, setDraft] = useState<string | null>(null);
+  const scrub = useRef<{ x: number; start: number; active: boolean } | null>(null);
   // Up to 4 decimals hides float noise (0.30000000000000004) without hiding typed values.
   const decimals = props.integer ? 0 : Math.max(stepDecimals(props.step), 4);
   const shown = draft ?? String(Number(props.value.toFixed(decimals)));
@@ -230,6 +287,40 @@ export function NumberInput(props: NumberInputProps) {
     if (next !== props.value) props.onChange(next);
   };
 
+  const onPointerDown = (event: PointerEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    if (document.activeElement === input) return;
+    // Hold focus back until we know whether this is a click or a scrub.
+    event.preventDefault();
+    scrub.current = { x: event.clientX, start: props.value, active: false };
+    input.setPointerCapture(event.pointerId);
+  };
+  const onPointerMove = (event: PointerEvent<HTMLInputElement>) => {
+    const s = scrub.current;
+    if (!s) return;
+    const dx = event.clientX - s.x;
+    if (!s.active && Math.abs(dx) < SCRUB_THRESHOLD) return;
+    s.active = true;
+    const steps = Math.round(dx / SCRUB_PX_PER_STEP) * (event.shiftKey ? 10 : 1);
+    const next = normalise(s.start + steps * props.step);
+    setDraft(null);
+    if (next !== props.value) props.onChange(next);
+  };
+  const onPointerUp = (event: PointerEvent<HTMLInputElement>) => {
+    const s = scrub.current;
+    scrub.current = null;
+    if (!s) return;
+    const input = event.currentTarget;
+    if (input.hasPointerCapture(event.pointerId)) input.releasePointerCapture(event.pointerId);
+    if (s.active) {
+      props.onCommit?.();
+    } else {
+      input.focus();
+      input.select();
+    }
+  };
+
   return (
     <input
       id={props.id}
@@ -237,7 +328,11 @@ export function NumberInput(props: NumberInputProps) {
       inputMode={props.integer ? "numeric" : "decimal"}
       autoComplete="off"
       spellCheck={false}
-      className={cx(INPUT_CLASS, "w-16 text-right", props.className)}
+      className={cx(
+        INPUT_CLASS,
+        "text-right [@media(pointer:fine)]:not-focus:cursor-ew-resize",
+        props.className ?? "w-16",
+      )}
       value={shown}
       aria-label={props.ariaLabel}
       aria-describedby={props.describedBy}
@@ -261,6 +356,12 @@ export function NumberInput(props: NumberInputProps) {
         finish();
       }}
       onKeyDown={onKeyDown}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => {
+        scrub.current = null;
+      }}
     />
   );
 }

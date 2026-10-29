@@ -87,8 +87,9 @@ export function ColorPicker(props: ColorPickerProps) {
       <Popover.Trigger
         id={props.id}
         className={cx(
-          "inline-flex h-8 items-center gap-2 rounded-md border border-input bg-background px-1.5 text-sm",
-          "hover:bg-accent",
+          "inline-flex h-8 items-center gap-2 rounded-md border border-input bg-background px-1.5 text-sm transition-colors",
+          "hover:border-foreground/40",
+          props.showValue && "w-full min-w-0 justify-start",
           FOCUS_RING,
         )}
         aria-label={props.ariaLabel}
@@ -96,13 +97,13 @@ export function ColorPicker(props: ColorPickerProps) {
         aria-describedby={props.describedBy}
       >
         <span
-          className="size-5 rounded-sm border border-border"
+          className="size-5 shrink-0 rounded-[5px] shadow-[inset_0_0_0_1px_oklch(0_0_0/0.12)]"
           // The swatch shows user content, not a UI token.
           style={{ backgroundColor: props.value }}
           aria-hidden="true"
         />
         {props.showValue && (
-          <span id={valueId} className="pr-1 font-mono text-xs text-muted-foreground">
+          <span id={valueId} className="truncate pr-1 font-mono text-xs text-foreground uppercase">
             {props.value}
           </span>
         )}

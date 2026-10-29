@@ -24,7 +24,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
+/*
+ * Semantic tokens resolve against the grays of the nearest scope, so a
+ * `.dark` section inside a light page (the home hero) gets dark surfaces.
+ */
+:root,
+.dark {
   color-scheme: light;
 
   /* Neutral gray, light */
@@ -76,6 +81,9 @@
   --highlight: var(--brand-3);
   /* Neutral stage behind generated motifs (preview area). */
   --canvas: var(--gray-5);
+  /* Editor stage: the workbench around the motif, with a faint dot grid. */
+  --stage: var(--gray-3);
+  --stage-dot: oklch(0 0 0 / 0.13);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -126,6 +134,8 @@
   --card: var(--gray-2);
   --popover: var(--gray-2);
   --canvas: var(--gray-3);
+  --stage: oklch(0.13 0 0);
+  --stage-dot: oklch(1 0 0 / 0.07);
   --sidebar: var(--gray-2);
 
   --chart-1: oklch(0.488 0.243 264.376);
@@ -159,6 +169,8 @@
   --color-link: var(--link);
   --color-highlight: var(--highlight);
   --color-canvas: var(--canvas);
+  --color-stage: var(--stage);
+  --color-stage-dot: var(--stage-dot);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -209,6 +221,13 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --default-transition-duration: var(--duration-fast);
   --default-transition-timing-function: var(--ease-out);
+}
+
+/* Home hero motif wall: each row holds its tiles twice, so -50% loops seamlessly. */
+@keyframes motif-drift {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @layer base {

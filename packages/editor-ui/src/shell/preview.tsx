@@ -121,7 +121,10 @@ export function PreviewStage(props: PreviewStageProps) {
   return (
     <div
       ref={stageRef}
-      className={cx("relative flex overflow-auto bg-canvas", props.className)}
+      className={cx(
+        "relative flex overflow-auto bg-stage [background-image:radial-gradient(var(--stage-dot)_1px,transparent_1px)] [background-size:16px_16px]",
+        props.className,
+      )}
       data-testid="preview-stage"
     >
       <div className="relative m-auto shrink-0">
@@ -134,7 +137,7 @@ export function PreviewStage(props: PreviewStageProps) {
               ? noticeId
               : undefined
           }
-          className="shadow-sm"
+          className="shadow-[0_1px_2px_oklch(0_0_0/0.12),0_12px_40px_-12px_oklch(0_0_0/0.35)]"
           style={props.transparent ? CHECKERBOARD_STYLE : undefined}
           data-testid="preview"
         >

@@ -54,7 +54,7 @@ export default async function ToolsPage({ params }: ToolsPageProps) {
   const sections: CatalogueSection[] = [
     ...groups.map(({ category, tools }) => ({
       id: category,
-      listClassName: "grid gap-4 sm:grid-cols-2 lg:grid-cols-3",
+      listClassName: "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
       header: (
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">

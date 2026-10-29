@@ -19,7 +19,7 @@ interface ToolCardProps {
 /**
  * Catalogue card: the motif and name link to the tool's landing page, a
  * second link opens the editor directly. Server component, no client JS.
- * Styled after the shadcnspace product cards: soft stage, lift on hover.
+ * The motif fills the top of the card; the card lifts on hover.
  */
 export async function ToolCard({ tool, locale, headingLevel }: ToolCardProps) {
   const t = await getTranslations({ locale });
@@ -31,15 +31,12 @@ export async function ToolCard({ tool, locale, headingLevel }: ToolCardProps) {
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card text-card-foreground transition-[border-color,box-shadow,translate] duration-200 ease-out hover:-translate-y-0.5 hover:border-ring hover:shadow-[0_12px_32px_-16px_oklch(0.3_0.12_275/0.35)]">
-      <div className="relative flex h-44 items-center justify-center overflow-hidden border-b border-border bg-canvas p-4">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(var(--border)_1px,transparent_1px)] bg-[size:14px_14px] opacity-70"
-        />
+      {/* The motif fills the card's stage edge to edge: the output is the pitch. */}
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-canvas">
         <MotifImage
           tool={tool}
           alt=""
-          className="relative max-h-full w-auto rounded-lg shadow-md ring-1 ring-black/5 transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+          className="size-full max-w-none object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
       </div>
       <div className="flex flex-1 flex-col gap-1.5 p-5">

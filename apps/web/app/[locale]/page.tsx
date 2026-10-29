@@ -31,7 +31,6 @@ import { KofiWidget } from "@/components/home/kofi-widget";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { MotifImage } from "@/components/seo/motif-image";
 import { ToolCard } from "@/components/seo/tool-card";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
@@ -117,17 +116,15 @@ const LEAD = "max-w-prose text-lg text-pretty text-muted-foreground";
 const TEXT_LINK =
   "rounded-control text-sm font-medium text-link underline-offset-4 hover:underline";
 
-/** Section intro after the shadcnspace blocks: outline badge, heading, lead. */
+/** Section intro: heading, lead and an optional action. The heading carries itself. */
 function SectionHeading({
   id,
-  eyebrow,
   title,
   lead,
   action,
   center = false,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   lead?: string;
   action?: React.ReactNode;
@@ -141,7 +138,6 @@ function SectionHeading({
       )}
     >
       <div className={cn("flex flex-col items-start gap-3", center && "items-center")}>
-        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h2 id={id} className={H2}>
           {title}
         </h2>
@@ -152,53 +148,49 @@ function SectionHeading({
   );
 }
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <Badge variant="outline" className="h-7 rounded-full bg-background px-3 text-sm font-normal">
-      {children}
-    </Badge>
-  );
+/** Motifs on the hero's wall: the first preset of every server-renderable tool. */
+function wallMotifs(text: Text): { src: string; name: string }[] {
+  return builtInTools.filter(hasStaticMotif).flatMap((tool) => {
+    const design = staticDesigns(tool)[1] ?? staticDesigns(tool)[0];
+    return design
+      ? [{ src: motifPath(tool.id, design.id), name: text(toolKeys(tool.id).name) }]
+      : [];
+  });
 }
 
+/**
+ * The hero is a dark workbench in both themes (it scopes the `.dark` tokens):
+ * the offer and the live tool window on a dot grid, then a slowly drifting
+ * wall of motifs the tools render themselves.
+ */
 function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
   const startName = text(toolKeys(HERO_START_TOOL_ID).name);
   const stage = registry.get(HERO_TOOL_ID);
   const points = ["free", "local", "noAccount"] as const;
+  const wall = wallMotifs(text);
+  const rows = [wall.filter((_, i) => i % 2 === 0), wall.filter((_, i) => i % 2 === 1)];
 
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate overflow-hidden border-b border-border"
+      className="dark relative isolate overflow-hidden border-b border-border bg-background text-foreground"
     >
-      {/* Soft brand wash plus a faint grid, both purely decorative. */}
+      {/* Workbench dot grid and a soft accent glow behind the tool window. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[radial-gradient(60%_70%_at_75%_20%,var(--highlight),transparent_70%)]"
+        className="absolute inset-0 -z-10 [background-image:radial-gradient(oklch(1_0_0/0.08)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:linear-gradient(to_bottom,black_40%,transparent)]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,black,transparent_85%)] bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:48px_48px] opacity-50"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(45%_55%_at_78%_35%,oklch(0.55_0.2_275/0.35),transparent_70%)]"
       />
       <div
         className={cn(
           WRAP,
-          "grid items-center gap-14 py-16 sm:py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:pt-28 lg:pb-24",
+          "grid items-center gap-14 pt-16 pb-14 sm:pt-24 lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:pt-28 lg:pb-20",
         )}
       >
         <div className="flex flex-col items-start gap-7">
-          <Link
-            href="/tools"
-            className="group inline-flex items-center gap-2 rounded-full border border-border bg-background/80 py-1 ps-1 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:text-foreground"
-          >
-            <span className="flex size-6 items-center justify-center rounded-full bg-highlight text-link">
-              <SparklesIcon aria-hidden="true" className="size-3.5" />
-            </span>
-            {text("Home.hero.badge", { count: builtInTools.length })}
-            <ArrowRightIcon
-              aria-hidden="true"
-              className="size-3.5 transition-transform group-hover:translate-x-0.5"
-            />
-          </Link>
           <h1
             id="hero-heading"
             className="text-5xl leading-[1.02] font-semibold tracking-[-0.04em] text-balance sm:text-6xl lg:text-7xl"
@@ -216,7 +208,7 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
                 className: "h-11 rounded-full px-7 text-base",
               })}
             >
-              {text("Home.hero.ctaPrimary")}
+              {text("Home.hero.ctaPrimary", { count: builtInTools.length })}
             </Link>
             {/* Full page load, like every other editor link. */}
             <a
@@ -256,6 +248,40 @@ function Hero({ locale, text }: { locale: EnabledLocale; text: Text }) {
             }}
           />
         )}
+      </div>
+
+      {/*
+        Decorative: every tile is a real motif, but the tools are linked
+        properly further down. Each row is doubled so the drift loops; with
+        reduced motion the rows stand still.
+      */}
+      <div
+        aria-hidden="true"
+        className="flex flex-col gap-3 pb-12 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)] sm:pb-16"
+      >
+        {rows.map((row, r) => (
+          <div
+            key={r}
+            className="flex w-max gap-3 motion-safe:animate-[motif-drift_90s_linear_infinite] hover:[animation-play-state:paused]"
+            style={r === 1 ? { animationDirection: "reverse" } : undefined}
+          >
+            {[...row, ...row].map((motif, i) => (
+              // Static SVG files; next/image would add nothing but a loader.
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={`${motif.src}-${i}`}
+                src={motif.src}
+                alt=""
+                width={176}
+                height={120}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+                className="h-[120px] w-[176px] shrink-0 rounded-xl object-cover shadow-[0_0_0_1px_oklch(1_0_0/0.08),0_8px_24px_-12px_oklch(0_0_0/0.6)]"
+              />
+            ))}
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -297,7 +323,6 @@ function Values({ text }: { text: Text }) {
     <section aria-labelledby="values-heading" className={cn(SECTION, "pt-16 sm:pt-20")}>
       <SectionHeading
         id="values-heading"
-        eyebrow={text("Home.values.eyebrow")}
         title={text("Home.values.heading")}
         lead={text("Home.values.lead")}
         center
@@ -354,7 +379,6 @@ function Categories({ locale, text }: { locale: EnabledLocale; text: Text }) {
     <section aria-labelledby="categories-heading" className={cn(SECTION, "pt-0 sm:pt-0")}>
       <SectionHeading
         id="categories-heading"
-        eyebrow={text("Home.categories.eyebrow")}
         title={text("Home.categories.heading")}
         lead={text("Home.categories.lead")}
         action={
@@ -420,7 +444,6 @@ function Featured({ locale, text }: { locale: EnabledLocale; text: Text }) {
       <div className={SECTION}>
         <SectionHeading
           id="featured-heading"
-          eyebrow={text("Home.featured.eyebrow")}
           title={text("Home.featured.heading")}
           lead={text("Home.featured.lead")}
         />
@@ -440,11 +463,7 @@ function HowItWorks({ text }: { text: Text }) {
   const steps = ["step1", "step2", "step3"] as const;
   return (
     <section aria-labelledby="how-heading" className={SECTION}>
-      <SectionHeading
-        id="how-heading"
-        eyebrow={text("Home.how.eyebrow")}
-        title={text("Home.how.heading")}
-      />
+      <SectionHeading id="how-heading" title={text("Home.how.heading")} />
       <ol className="grid gap-4 md:grid-cols-3 md:gap-5">
         {steps.map((step, i) => (
           <li
@@ -473,12 +492,7 @@ function HowItWorks({ text }: { text: Text }) {
 function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text: Text }) {
   return (
     <section aria-labelledby="faq-heading" className={cn(SECTION, "max-w-3xl pt-0 sm:pt-0")}>
-      <SectionHeading
-        id="faq-heading"
-        eyebrow={text("Home.faq.eyebrow")}
-        title={text("Home.faq.heading")}
-        center
-      />
+      <SectionHeading id="faq-heading" title={text("Home.faq.heading")} center />
       <div className="flex flex-col gap-3">
         {faq.map((entry, i) => (
           <details
@@ -506,15 +520,15 @@ function Faq({ faq, text }: { faq: { question: string; answer: string }[]; text:
 function ClosingCta({ locale, text }: { locale: EnabledLocale; text: Text }) {
   return (
     <section aria-labelledby="cta-heading" className={cn(WRAP, "pb-24")}>
-      <div className="relative isolate flex flex-col items-center gap-8 overflow-hidden rounded-3xl bg-primary px-8 py-14 text-center text-primary-foreground sm:px-12 sm:py-20">
+      {/* The same dark workbench as the hero, so the page opens and closes on it. */}
+      <div className="dark relative isolate flex flex-col items-center gap-8 overflow-hidden rounded-3xl border border-border bg-background px-8 py-14 text-center text-foreground sm:px-12 sm:py-20">
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[radial-gradient(50%_80%_at_90%_10%,oklch(1_0_0/0.18),transparent_70%)]"
+          className="absolute inset-0 -z-10 bg-[radial-gradient(55%_90%_at_50%_0%,oklch(0.55_0.2_275/0.4),transparent_70%)]"
         />
-        {/* Faint dot grid, the smallest pattern there is. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 [mask-image:radial-gradient(70%_70%_at_50%_50%,black,transparent)] bg-[radial-gradient(currentColor_1px,transparent_1px)] bg-[size:20px_20px] opacity-15"
+          className="absolute inset-0 -z-10 [mask-image:radial-gradient(70%_70%_at_50%_50%,black,transparent)] [background-image:radial-gradient(oklch(1_0_0/0.1)_1px,transparent_1px)] [background-size:20px_20px]"
         />
         <div className="flex max-w-2xl flex-col items-center gap-3">
           <h2
@@ -523,11 +537,14 @@ function ClosingCta({ locale, text }: { locale: EnabledLocale; text: Text }) {
           >
             {text("Home.cta.heading")}
           </h2>
-          <p className="text-lg opacity-85">{text("Home.cta.text")}</p>
+          <p className="text-lg text-muted-foreground">{text("Home.cta.text")}</p>
         </div>
         <a
           href={routePath({ page: "tool", toolId: HERO_START_TOOL_ID }, locale)}
-          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-background px-7 text-base font-medium text-foreground shadow-sm transition-colors hover:bg-background/90 focus-visible:outline-primary-foreground"
+          className={buttonVariants({
+            size: "lg",
+            className: "h-11 shrink-0 gap-2 rounded-full px-7 text-base",
+          })}
         >
           {text("Home.cta.button")}
           <ArrowRightIcon aria-hidden="true" className="size-4" />

@@ -154,7 +154,7 @@ function ControlLevel(level: Level) {
 
   return groups.map((group) => {
     const body = (
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-3">
         {renderControls(group.controls)}
         {group.advanced.length > 0 && (
           <details className="group/advanced grid grid-cols-[minmax(0,1fr)] gap-4">
@@ -177,16 +177,16 @@ function ControlLevel(level: Level) {
       <details
         key={group.id ?? "__ungrouped"}
         open={!group.collapsed}
-        className="group/section border-b border-border pb-4 last:border-b-0"
+        className="group/section -mx-4 border-b border-border px-4 pb-4 last:border-b-0"
         data-group={group.id ?? undefined}
       >
-        <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm font-semibold text-foreground select-none hover:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
+        <summary className="-mx-2 flex cursor-pointer list-none items-center justify-between gap-2 rounded-md px-2 py-2 text-[13px] font-semibold text-foreground select-none hover:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
           {title}
-          <span className="text-muted-foreground transition-transform duration-200 ease-out group-open/section:rotate-180">
+          <span className="text-muted-foreground transition-transform duration-200 ease-out group-open/section:rotate-180 [&_svg]:size-4">
             <ChevronDownIcon />
           </span>
         </summary>
-        <div className="mt-3">{body}</div>
+        <div className="mt-2">{body}</div>
       </details>
     );
   });
@@ -232,9 +232,10 @@ function ControlField({ control, value, level }: ControlFieldProps) {
     Object.prototype.hasOwnProperty.call(defaults, control.key) &&
     !valuesEqual(value, defaults[control.key]);
 
-  const row = (labelFor: boolean, children: ReactNode, aside?: ReactNode) => (
+  const row = (labelFor: boolean, children: ReactNode, aside?: ReactNode, inline = false) => (
     <ControlRow
       controlKey={control.key}
+      inline={inline}
       ids={ids}
       label={label}
       labelFor={labelFor}
@@ -250,16 +251,31 @@ function ControlField({ control, value, level }: ControlFieldProps) {
   switch (control.kind) {
     case "slider":
     case "angle":
-      return row(true, <RangeField {...field} control={control} value={value as number} />);
+      return row(
+        true,
+        <RangeField {...field} control={control} value={value as number} />,
+        undefined,
+        true,
+      );
     case "number":
-      return row(true, <NumberField {...field} control={control} value={value as number} />);
+      return row(
+        true,
+        <NumberField {...field} control={control} value={value as number} />,
+        undefined,
+        true,
+      );
     case "segmented":
       return row(
         false,
         <SegmentedField {...field} control={control} value={value as OptionValue} />,
       );
     case "select":
-      return row(true, <SelectField {...field} control={control} value={value as OptionValue} />);
+      return row(
+        true,
+        <SelectField {...field} control={control} value={value as OptionValue} />,
+        undefined,
+        true,
+      );
     case "thumbnails":
       return row(
         false,
@@ -272,11 +288,21 @@ function ControlField({ control, value, level }: ControlFieldProps) {
         <ThumbnailValue control={control} value={value} />,
       );
     case "switch":
-      return row(true, null, <SwitchField {...field} control={control} value={value === true} />);
+      return row(
+        true,
+        null,
+        <SwitchField {...field} control={control} value={value === true} />,
+        true,
+      );
     case "text":
       return row(true, <TextField {...field} control={control} value={String(value ?? "")} />);
     case "color":
-      return row(false, <ColorField {...field} control={control} value={String(value)} />);
+      return row(
+        false,
+        <ColorField {...field} control={control} value={String(value)} />,
+        undefined,
+        true,
+      );
     case "background":
       return row(false, <BackgroundField {...field} control={control} value={String(value)} />);
     case "palette":
