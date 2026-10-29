@@ -53,4 +53,6 @@ export const EXTRA_EXPORT_LABELS = {
   dropShadow: "Editor.export.extras.dropShadow",
   plainText: "Editor.export.extras.plainText",
   htmlPre: "Editor.export.extras.htmlPre",
+  utilityClasses: "Editor.export.extras.utilityClasses",
+  metaTags: "Editor.export.extras.metaTags",
 } as const;
