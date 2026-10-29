@@ -7,9 +7,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+import { FavoriteButton } from "@/components/tool-history/favorite-button";
 import { Link } from "@/i18n/client-navigation";
 import { isEnabledLocale } from "@/i18n/locales";
 import { routePath } from "@/i18n/paths";
+import { recordToolVisit } from "@/lib/tool-history";
 
 /**
  * Client entry of the editor page. Tool definitions hold functions and
@@ -21,6 +23,9 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
   const t = useTranslations("ToolPage");
   const locale = useLocale();
   const router = useRouter();
+  const tTools = useTranslations("tools") as unknown as (key: string) => string;
+  // "Zuletzt benutzt" in the command palette and the catalogue (this browser only).
+  useEffect(() => recordToolVisit(toolId), [toolId]);
   // "Weiterverwenden in": client-side navigation, so the picture handed over
   // in this tab's memory reaches the other editor (never a server).
   const openTool = useCallback(
@@ -49,13 +54,19 @@ export function ToolEditor({ toolId, brandKitHref }: { toolId: string; brandKitH
         brandKitHref={brandKitHref}
         onOpenTool={openTool}
         headerStart={
-          <Link
-            href="/tools"
-            className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full border border-border bg-background ps-1.5 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground"
-          >
-            <ChevronLeftIcon aria-hidden="true" className="size-4" />
-            {t("allTools")}
-          </Link>
+          <>
+            <Link
+              href="/tools"
+              className="inline-flex h-7 shrink-0 items-center gap-1 rounded-full border border-border bg-background ps-1.5 pe-3 text-sm text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <ChevronLeftIcon aria-hidden="true" className="size-4" />
+              {t("allTools")}
+            </Link>
+            <FavoriteButton
+              toolId={toolId}
+              label={t("favorite", { tool: tTools(`${toolId}.name`) })}
+            />
+          </>
         }
         // Quiet hints after a successful export: free use of the export
         // (M4-AP07) and donations (M3-AP14). New tabs, so the design in the

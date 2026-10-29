@@ -2,6 +2,7 @@ import type { AnyToolDefinition } from "@musterli/tool-registry";
 import { ArrowRightIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { FavoriteButton } from "@/components/tool-history/favorite-button";
 import type { EnabledLocale } from "@/i18n/locales";
 import { Link } from "@/i18n/navigation";
 import { routeHref } from "@/i18n/paths";
@@ -18,7 +19,7 @@ interface ToolCardProps {
 
 /**
  * Catalogue card: the motif and name link to the tool's landing page, a
- * second link opens the editor directly. Server component, no client JS.
+ * second link opens the editor directly. Server component; only the favourite star is client JS.
  * The motif fills the top of the card; the card lifts on hover.
  */
 export async function ToolCard({ tool, locale, headingLevel }: ToolCardProps) {
@@ -37,6 +38,12 @@ export async function ToolCard({ tool, locale, headingLevel }: ToolCardProps) {
           tool={tool}
           alt=""
           className="size-full max-w-none object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+        />
+        {/* Above the stretched link, so it toggles instead of opening the page. */}
+        <FavoriteButton
+          toolId={tool.id}
+          label={text("Catalogue.favorite", { tool: name })}
+          className="absolute top-2.5 right-2.5 z-10"
         />
       </div>
       <div className="flex flex-1 flex-col gap-1.5 p-5">

@@ -617,6 +617,11 @@ export interface RasterExportOptions extends Omit<RasterizeOptions, "width" | "h
   size?: RasterSizeRequest;
   /** Largest edge in pixels (technical limit). Default `CANVAS_EDGE_MAX`. */
   maxEdge?: number;
+  /**
+   * The design's SVG, already rendered by the tool for these params and
+   * `ctx` (e.g. in a worker); default: rendered here.
+   */
+  svg?: string;
 }
 
 export interface RasterExportResult {
@@ -648,9 +653,10 @@ export async function exportRaster<S extends ParamsSchema>(
       `Tool "${tool.id}" cannot export ${options.format}`,
     );
   }
-  const svg = renderDesignSvg(tool, params, ctx);
+  const { svg: rendered, ...rest } = options;
+  const svg = rendered ?? renderDesignSvg(tool, params, ctx);
   const size = resolveRasterSize(ctx, options.size, options.maxEdge);
-  const raster: RasterizeOptions = { ...options, width: size.width, height: size.height };
+  const raster: RasterizeOptions = { ...rest, width: size.width, height: size.height };
   const blob = await rasterizeSvg(svg, raster, env);
   return {
     blob,

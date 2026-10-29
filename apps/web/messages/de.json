@@ -138,7 +138,8 @@
     "allTools": "Alle Generatoren",
     "supportHint": "Gefällt dir Musterli? <link>Unterstütze das Projekt</link>.",
     "newTab": "(öffnet in neuem Tab)",
-    "termsHint": "<link>Frei nutzbar, auch kommerziell</link>."
+    "termsHint": "<link>Frei nutzbar, auch kommerziell</link>.",
+    "favorite": "Favorit: {tool}"
   },
   "tools": {
     "common": {
@@ -5514,7 +5515,13 @@
     "resultsOther": "{count} Treffer",
     "noResults": "Nichts gefunden für «{query}».",
     "noResultsHint": "Versuch es mit einem anderen Wort oder stöbere in den Kategorien.",
-    "clearSearch": "Suche zurücksetzen"
+    "clearSearch": "Suche zurücksetzen",
+    "favorite": "Favorit: {tool}",
+    "yourTools": {
+      "title": "Deine Tools",
+      "favorites": "Favoriten",
+      "recent": "Zuletzt benutzt"
+    }
   },
   "CategoryPage": {
     "metaTitle": "{category}: Generatoren | Musterli",
@@ -7218,5 +7225,87 @@
     "renameLabel": "Neuer Name für {name}",
     "renameSave": "Sichern",
     "cancel": "Abbrechen"
+  },
+  "CommandPalette": {
+    "open": "Suchen",
+    "title": "Befehle und Tools durchsuchen",
+    "placeholder": "Tool, Seite oder Befehl suchen …",
+    "empty": "Nichts gefunden. Probier ein anderes Wort.",
+    "groups": {
+      "actions": "Aktionen",
+      "favorites": "Favoriten",
+      "recent": "Zuletzt benutzt",
+      "pages": "Seiten",
+      "tools": "Tools"
+    },
+    "editor": {
+      "export": "Exportieren",
+      "newVariant": "Neue Variante",
+      "save": "Design speichern",
+      "copyImage": "Als PNG kopieren",
+      "share": "Teilen-Link kopieren",
+      "applyBrandPalette": "Brand-Palette anwenden",
+      "undo": "Rückgängig",
+      "redo": "Wiederholen",
+      "help": "Tastaturkürzel anzeigen"
+    },
+    "toggleTheme": "Hell und Dunkel wechseln",
+    "shortcutHint": "Pfeiltasten zum Auswählen, Enter zum Öffnen, Esc zum Schliessen. Öffnen mit ⌘K oder Ctrl+K.",
+    "pages": {
+      "tools": "Alle Tools",
+      "socialEditorApp": "Social-Media-Editor",
+      "myDesigns": "Meine Designs",
+      "brandKit": "Brand Kit",
+      "patterns": "CSS-Muster-Bibliothek",
+      "gradients": "Verlaufs-Sammlung",
+      "palettes": "Paletten-Sammlung",
+      "convert": "Konverter",
+      "support": "Musterli unterstützen",
+      "home": "Startseite"
+    },
+    "taskHint": "Aufgabe"
+  },
+  "Tasks": {
+    "hero-backgrounds": {
+      "name": "Hero-Hintergründe",
+      "lead": "Verläufe, Shader und generative Motive für den grossen ersten Eindruck oben auf deiner Website. Mit «Im Kontext» siehst du gleich, ob Titel und Knopf darauf lesbar bleiben.",
+      "metaTitle": "Hero-Hintergründe für Websites gratis erstellen | Musterli",
+      "metaDescription": "Mesh-Verläufe, Shader, Blobs und generative Motive als Hero-Hintergrund für deine Website. Gratis, im Browser, Export als SVG, PNG oder CSS."
+    },
+    "surface-patterns": {
+      "name": "Flächenmuster",
+      "lead": "Nahtlose Muster für Abschnitte, Karten und Hintergründe, die sich ohne sichtbare Kante wiederholen. Ideal als leichtes SVG oder als CSS.",
+      "metaTitle": "Nahtlose Muster für Websites gratis erstellen | Musterli",
+      "metaDescription": "Nahtlose Kachelmuster, CSS-Muster, Punkte, Raster und Terrazzo für Website-Abschnitte. Gratis, im Browser, Export als SVG, PNG oder CSS."
+    },
+    "ui-effects": {
+      "name": "UI-Effekte",
+      "lead": "Glas, Schatten, Bento-Raster und Verläufe als fertiger Code für Karten, Knöpfe und Layouts. Kopieren und direkt im Projekt einfügen.",
+      "metaTitle": "CSS-Effekte für UI und Karten gratis erstellen | Musterli",
+      "metaDescription": "Glaseffekt, CSS-Schatten, Bento-Grid und Verläufe für Karten und Layouts, als CSS und Tailwind. Gratis und ohne Konto."
+    },
+    "color-systems": {
+      "name": "Farbsysteme",
+      "lead": "Paletten, Abstufungen und Kontrastprüfung für ein Farbsystem, das in hell und dunkel funktioniert. Export als Tailwind-Konfiguration oder CSS-Variablen.",
+      "metaTitle": "Farbsystem für Websites gratis erstellen | Musterli",
+      "metaDescription": "Farbpaletten, Tailwind-Farben, Abstufungen und Kontrast-Checker für dein Designsystem. Gratis, im Browser, Export als CSS-Variablen und Tailwind."
+    },
+    "icons-avatars": {
+      "name": "Icons und Avatare",
+      "lead": "Favicon-Pakete, Avatare und Platzhalterbilder für Website, App und Prototyp, in allen nötigen Grössen.",
+      "metaTitle": "Favicon, Avatare und Platzhalter gratis erstellen | Musterli",
+      "metaDescription": "Favicon-Paket mit allen Grössen, Initialen-Avatare, Platzhalterbilder und Diagramme für Prototypen. Gratis und im Browser."
+    },
+    "image-polish": {
+      "name": "Bilder aufwerten",
+      "lead": "Screenshots in Szene setzen und Fotos mit Duotone, Halftone oder Glaseffekt einen eigenen Look geben. Deine Bilder bleiben auf deinem Gerät.",
+      "metaTitle": "Screenshots und Fotos gratis aufwerten | Musterli",
+      "metaDescription": "Screenshot-Mockups, Duotone, Halftone, Fractal Glass und Dithering für Website-Bilder. Gratis, im Browser, deine Bilder bleiben auf deinem Gerät."
+    }
+  },
+  "TaskPage": {
+    "byTask": "Nach Aufgabe",
+    "otherTasks": "Weitere Aufgaben",
+    "backToCatalogue": "Alle Tools"
   }
 }

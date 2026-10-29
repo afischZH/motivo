@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useLayoutEffect, useSyncExternalStore } from "react";
+import { useLayoutEffect, useSyncExternalStore } from "react";
 
 import { DARK_MEDIA_QUERY, THEME_STORAGE_KEY, resolveTheme, type Theme } from "@/lib/theme";
 
@@ -31,6 +31,17 @@ function getServerSnapshot(): Theme | null {
   return null;
 }
 
+/** Switches light and dark and persists the explicit choice (also used by the command palette). */
+export function toggleTheme(): void {
+  const next: Theme = getSnapshot() === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, next);
+  } catch {
+    // Storage can be blocked (private mode); the switch still works for this page.
+  }
+}
+
 /**
  * Current theme plus a toggle that persists the explicit choice. Without a
  * stored choice the theme follows system changes and other tabs live.
@@ -53,16 +64,6 @@ export function useTheme(): { theme: Theme | null; toggleTheme: () => void } {
       media.removeEventListener("change", sync);
       window.removeEventListener("storage", onStorage);
     };
-  }, []);
-
-  const toggleTheme = useCallback(() => {
-    const next: Theme = getSnapshot() === "dark" ? "light" : "dark";
-    applyTheme(next);
-    try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, next);
-    } catch {
-      // Storage can be blocked (private mode); the switch still works for this page.
-    }
   }, []);
 
   return { theme, toggleTheme };

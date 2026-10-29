@@ -1,6 +1,7 @@
 /**
  * Thumbnails of the template picker, made in the browser with the export
- * path (`exportScene`: the background in the tool's worker, the layers
+ * path (`exportScene`: the background's SVG made in the SVG render worker
+ * and rasterised by the browser, the layers
  * with `drawScene` at a small scale, encoded asynchronously). They are
  * made one at a time, in the order the picker asks for them (visible cards
  * first), with a pause between two so the page stays responsive, and kept

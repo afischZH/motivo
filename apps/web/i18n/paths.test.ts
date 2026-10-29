@@ -6,7 +6,14 @@ import { CONVERTER_IDS } from "@/lib/convert/ids";
 import { ENABLED_LOCALES } from "./locales";
 import { getPathname } from "./navigation-base";
 import { routeFromPathname, routeHref, routePath, type AppRoute } from "./paths";
-import { CATEGORY_SLUGS, GRADIENT_SLUGS, PALETTE_SLUGS, PATTERN_SLUGS, TOOL_SLUGS } from "./slugs";
+import {
+  CATEGORY_SLUGS,
+  GRADIENT_SLUGS,
+  PALETTE_SLUGS,
+  PATTERN_SLUGS,
+  TASK_IDS,
+  TOOL_SLUGS,
+} from "./slugs";
 
 const routes: AppRoute[] = [
   { page: "home" },
@@ -25,6 +32,7 @@ const routes: AppRoute[] = [
     page: "category",
     category,
   })),
+  ...TASK_IDS.map((task): AppRoute => ({ page: "task", task })),
   ...CONVERTER_IDS.map((converterId): AppRoute => ({ page: "converter", converterId })),
   ...Object.keys(PATTERN_SLUGS).map((patternId): AppRoute => ({ page: "pattern", patternId })),
   { page: "gradients" },

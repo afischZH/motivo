@@ -1,13 +1,20 @@
 /**
  * A design as a picture through the tool's own render path, at any output
  * size: SVG tools render their SVG and rasterise it (decoded on the main
- * thread, encoded in the raster worker), WebGL tools draw in the shader
+ * thread, encoded in the raster worker; the SVG itself is made in the SVG
+ * render worker where there is one), WebGL tools draw in the shader
  * worker, image effects in the raster-effect worker (with the demo picture
  * when the design has no photo). Exactly what the export dialog produces,
  * for app pages that show designs as pictures, such as the backgrounds of
  * the social editor. The worker exports are loaded on first use.
  */
-import { exportRaster, type RasterEnv, type RasterFormat } from "@musterli/exporters";
+import {
+  exportRaster,
+  supportsExport,
+  throwIfAborted,
+  type RasterEnv,
+  type RasterFormat,
+} from "@musterli/exporters";
 import {
   createRenderContext,
   isImageEffectTool,
@@ -19,6 +26,7 @@ import {
 } from "@musterli/tool-registry";
 import type { RasterEffectClient } from "../raster-effect/client";
 import type { ShaderClient } from "../shader/client";
+import { browserSvgRenderClient, type SvgRenderClient } from "./svg-render-client";
 
 export interface RenderDesignImageOptions {
   /** Output size in pixels; default the design size. The design keeps its own composition. */
@@ -30,6 +38,8 @@ export interface RenderDesignImageOptions {
   env?: RasterEnv;
   shaderClient?: ShaderClient;
   effectClient?: RasterEffectClient;
+  /** Default: the page's SVG render worker when `env` is not given, else the main thread. */
+  svgClient?: SvgRenderClient | null;
 }
 
 /**
@@ -60,6 +70,22 @@ export async function renderDesignImage(
     const { exportShader } = await import("../shader/export");
     return (await exportShader(tool, params, ctx, base, options.shaderClient)).blob;
   }
-  const result = await exportRaster(tool, params as Params<ParamsSchema>, ctx, base, options.env);
+  const svgClient =
+    options.svgClient === undefined
+      ? options.env
+        ? null
+        : browserSvgRenderClient()
+      : options.svgClient;
+  const svg = supportsExport(tool, base.format)
+    ? await svgClient?.render({ toolId: tool.id, params, seed, size })
+    : null;
+  throwIfAborted(options.signal);
+  const result = await exportRaster(
+    tool,
+    params as Params<ParamsSchema>,
+    ctx,
+    svg ? { ...base, svg } : base,
+    options.env,
+  );
   return result.blob;
 }

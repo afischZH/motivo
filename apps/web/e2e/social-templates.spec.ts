@@ -289,10 +289,10 @@ test.describe("social editor templates", () => {
   /**
    * Each thumbnail runs in its own tasks (fonts, Magic Resize, drawing, one
    * thumbnail at a time with a pause), so no task holds more than one step.
-   * The longest step is the background, the same path as the tool editor
-   * preview: the tool renders its SVG on the main thread and the browser
-   * rasterises it, which headless Chromium does in software (50 to 75 ms for
-   * the busiest motifs such as Flow Field or Topo Lines). As in the main-thread
+   * The longest step is the background: the tool renders its SVG in the SVG
+   * render worker, and the browser rasterises it on the main thread, which
+   * headless Chromium does in software (up to about 70 ms for the busiest
+   * motif, Starry Sky). As in the main-thread
    * budget of m1-audit.spec.ts, the test guards against regressions at
    * 100 ms and records every long task as an annotation.
    */

@@ -9,6 +9,7 @@ import { libraryPatterns } from "@/lib/css-patterns";
 import { canonicalRedirect } from "./legacy";
 import { ENABLED_LOCALES } from "./locales";
 import { localizedPaths, type AppRoute } from "./paths";
+import { TASK_IDS } from "./slugs";
 
 describe("canonicalRedirect", () => {
   it("redirects M1 tool ids to the localized slug", () => {
@@ -31,6 +32,14 @@ describe("canonicalRedirect", () => {
     expect(canonicalRedirect("/en/blob")).toBe("/en/blob-generator");
     expect(canonicalRedirect("/en/blob-generator")).toBeNull();
     expect(canonicalRedirect("/en/pricing")).toBeNull();
+  });
+
+  it("redirects task pages to this locale's segment and slug", () => {
+    expect(canonicalRedirect("/en/tools/aufgabe/hero-hintergruende")).toBe(
+      "/en/tools/task/hero-backgrounds",
+    );
+    expect(canonicalRedirect("/de/tools/task/ui-effects")).toBe("/de/tools/aufgabe/ui-effekte");
+    expect(canonicalRedirect("/de/tools/aufgabe/unbekannt")).toBeNull();
   });
 
   it("redirects category pages to this locale's segment and slug", () => {
@@ -107,6 +116,7 @@ describe("canonicalRedirect", () => {
       ...registry.list().map((t): AppRoute => ({ page: "tool", toolId: t.id })),
       ...registry.list().map((t): AppRoute => ({ page: "landing", toolId: t.id })),
       ...TOOL_CATEGORIES.map((category): AppRoute => ({ page: "category", category })),
+      ...TASK_IDS.map((task): AppRoute => ({ page: "task", task })),
       ...CONVERTER_IDS.map((id): AppRoute => ({ page: "converter", converterId: id })),
       { page: "patterns" },
       ...libraryPatterns().map((p): AppRoute => ({ page: "pattern", patternId: p.id })),

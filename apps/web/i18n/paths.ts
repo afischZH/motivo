@@ -19,17 +19,22 @@ import {
   converterSlug,
   isCategorySegment,
   isSocialEditorSegment,
+  isTaskSegment,
   patternIdFromSlug,
   patternSlug,
   sectionFromAnySlug,
+  taskIdFromSlug,
+  taskSlug,
   toolIdFromSlug,
   toolSlug,
+  type TaskId,
 } from "./slugs";
 
 export type AppRoute =
   | { page: "home" }
   | { page: "tools" }
   | { page: "category"; category: ToolCategory }
+  | { page: "task"; task: TaskId }
   | { page: "landing"; toolId: string }
   | { page: "tool"; toolId: string }
   | { page: "convert" }
@@ -70,6 +75,11 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return {
         pathname: "/tools/category/[categorySlug]" as const,
         params: { categorySlug: categorySlug(route.category, locale) },
+      };
+    case "task":
+      return {
+        pathname: "/tools/task/[taskSlug]" as const,
+        params: { taskSlug: taskSlug(route.task, locale) },
       };
     case "landing":
       return {
@@ -191,6 +201,11 @@ export function routeFromPathname(
     typeof value === "string" ? value : segments[segments.length - 1];
 
   if (segments.length === 3) {
+    if (section === "tools" && isTaskSegment(segments[1] ?? "")) {
+      const slug = param(params.taskSlug);
+      const task = slug ? taskIdFromSlug(slug, locale) : undefined;
+      return task ? { page: "task", task } : undefined;
+    }
     if (section !== "tools" || !isCategorySegment(segments[1] ?? "")) return undefined;
     const slug = param(params.categorySlug);
     const category = slug ? categoryIdFromSlug(slug, locale) : undefined;

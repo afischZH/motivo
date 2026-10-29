@@ -17,7 +17,8 @@
     "./brand-kit/upload": "./src/brand-kit/upload.ts",
     "./transfer": "./src/transfer/index.ts",
     "./asset-input": "./src/asset-input/index.ts",
-    "./render-image": "./src/designs/render-image.ts"
+    "./render-image": "./src/designs/render-image.ts",
+    "./commands": "./src/shell/command-bridge.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

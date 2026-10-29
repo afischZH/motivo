@@ -18,6 +18,10 @@ import {
   sectionFromAnySlug,
   isCategorySegment,
   isSocialEditorSegment,
+  isTaskSegment,
+  taskIdFromAnySlug,
+  taskSegment,
+  taskSlug,
   SOCIAL_EDITOR_SEGMENT,
   patternIdFromAnySlug,
   patternSlug,
@@ -48,6 +52,11 @@ export function canonicalRedirect(pathname: string): string | null {
     const toolId = toolIdFromAnySlug(sectionSegment);
     if (!toolId) return null;
     canonical = `/${locale}/${toolSlug(toolId, locale)}`;
+  } else if (segments.length === 4 && section === "tools" && isTaskSegment(slug ?? "")) {
+    // Task page: `/de/tools/aufgabe/<task slug>`.
+    const id = taskIdFromAnySlug(segments[3] ?? "");
+    if (!id) return null;
+    canonical = `/${locale}/${sectionSlug(section, locale)}/${taskSegment(locale)}/${taskSlug(id, locale)}`;
   } else if (segments.length === 4) {
     // Category page: `/de/tools/kategorie/<category slug>`.
     const category = section === "tools" && isCategorySegment(slug ?? "") ? segments[3] : undefined;
