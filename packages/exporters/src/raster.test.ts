@@ -412,6 +412,14 @@ describe("exportRaster", () => {
     );
   });
 
+  it("rasterises a given SVG instead of rendering again", async () => {
+    const env = fakeEnv();
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect id="given"/></svg>';
+    await exportRaster(polkaDotsTool, polkaDotsTool.defaults, ctx, { format: "png", svg }, env);
+    expect(env.loadedSvgs[0]).toContain('<rect id="given"/>');
+  });
+
   it("clamps to the maximum edge and rasterises CSS tools via their preview", async () => {
     const env = fakeEnv();
     const out = await exportRaster(

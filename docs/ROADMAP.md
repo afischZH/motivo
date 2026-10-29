@@ -155,7 +155,7 @@ Freigabe Andreas 2026-10-29 05:51: Plan mit 7 Paketen, Konva nur als Kern ohne `
 Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10-29). Andreas hat die Reihenfolge W0 bis W3 vor dem Composer gewählt. Jede Etappe braucht vor dem Start einen AP-Plan mit Freigabe.
 
 **W0 Hausaufgaben**
-- [ ] Vorschaubilder der Social-Vorlagen im Worker zeichnen (UI-Thread nie über 50 ms), roter `@long-tasks`-Test grün
+- [x] Vorschaubilder der Social-Vorlagen im Worker zeichnen (UI-Thread nie über 50 ms), roter `@long-tasks`-Test grün
 - [ ] Lighthouse auf musterli.app, Rechtstexte prüfen, Analytics- und Sentry-Variablen (Andreas)
 
 **W1 Profi-Arbeitsfluss**

@@ -187,6 +187,7 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 ## Sitzungsprotokoll
 
 ### 2026-10-29
+- W0-AP01 (Webdesigner-Toolbox, Freigabe Andreas 11:18): SVG der Hintergründe für Vorlagen-Vorschaubilder und Social-Bühne im neuen SVG-Render-Worker (`packages/editor-ui/src/designs/svg-render-*`), Fallback im Hauptthread; `exportRaster` nimmt ein fertiges `svg`. Gemessen (Node): Starry Sky 59 ms, Flow Field 41 ms, Höhenlinien 34 ms nur für das SVG. E2E `social-templates` @long-tasks lokal im Produktions-Build 3 von 3 grün, längster Task 69 ms (Rasterung Sternenhimmel), sonst keiner über 50 ms. Tests: Unit Editor-UI (neu 5), Exporters (neu 1).
 - Neuauftritt mit shadcnspace (Entscheid Andreas, Branch `claude/project-thread-kccrv1`): Grundlage (Registry, shadcn-Basiselemente, Lucide, Lizenzen), Kopf mit Pillen-Leiste und Seitenmenü, Fuss, Startseite (Badges, Bento-Raster, Schritt-Karten, FAQ, CTA), Katalog/Kategorien/Sammlungen/Konverter mit gemeinsamem Seitenkopf und Karten, Editor-Feinschliff (gleiche Funktion und Kürzel), Meine Designs, Brand Kit, Unterstützen, Rechtliches. Tests: Lint, Typecheck, Unit (Web 768, Editor-UI 1111), E2E Chromium der betroffenen Specs grün; Navigation-Spec auf das Seitenmenü angepasst.
 
 ### 2026-10-28
