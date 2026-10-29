@@ -145,7 +145,7 @@ Freigabe Andreas 2026-10-29 05:51: Plan mit 7 Paketen, Konva nur als Kern ohne `
 - [ ] Hintergründe aus allen Tools (als parametrische Referenz)
 - [ ] Formate + **Magic Resize** (Constraint-System)
 - [ ] 40 eigene Templates zum Start (Ziel später 100), **Brand-Apply** mit einem Klick
-- [ ] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize**
+- [x] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize** (M6-AP01)
 
 **DoD**: Ein Template in 6 Formate per Magic Resize, ohne dass Text abgeschnitten wird (automatischer Test für alle Templates).
 

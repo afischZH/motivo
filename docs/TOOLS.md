@@ -160,9 +160,9 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 | **E2 Halftone** | Bild in Zellen (rotiert um Winkel), Luminanz pro Zelle ► Punktgrösse; Formen: Kreis, Linie, Quadrat, Raute; zweifarbig (umgesetzt M5-AP02, siehe unten) | cellSize, angle, shape, colors, contrast | M5 |
 | **E3 CMYK Halftone** | RGB ► CMYK, pro Kanal Halftone mit klassischen Rasterwinkeln (C 15°, M 75°, Y 0°, K 45°), multiplikativ überlagern (umgesetzt M5-AP02) | cellSize, Winkel pro Kanal, Registerversatz | M5 |
 | **E4 Dither** | Floyd-Steinberg, Atkinson, Bayer (2/4/8), Stucki; Paletten (1-bit, Handheld-Grün, CGA-artig, Brand, eigene) (umgesetzt M5-AP02) | algorithm, palette, scale (Pixelgrösse), contrast | M5 |
-| **E5 God Rays** | Radiale Unschärfe von Lichtquelle aus (Sample entlang Strahl Richtung Quelle, Decay), additiv mischen | position, intensity, decay, samples, color | M6 |
-| **E6 Fractal Glass** | Bild in vertikale Streifen, pro Streifen horizontale Verschiebung + Spiegelung/Skalierung (Refraktion simulieren), optional Blur und Glanzlicht | stripWidth, distortion, angle, highlight | M6 |
-| **E7 Pixelate/Posterize** (Bonus) | Blockmittelwert, Farbquantisierung | size, levels | M6 |
+| **E5 God Rays** | Radiale Unschärfe von Lichtquelle aus (Sample entlang Strahl Richtung Quelle, Decay), additiv mischen (umgesetzt M6-AP01, siehe unten) | position, intensity, decay, samples, color | M6 |
+| **E6 Fractal Glass** | Bild in vertikale Streifen, pro Streifen horizontale Verschiebung + Spiegelung/Skalierung (Refraktion simulieren), optional Blur und Glanzlicht (umgesetzt M6-AP01) | stripWidth, distortion, angle, highlight | M6 |
+| **E7 Pixelate/Posterize** (Bonus) | Blockmittelwert, Farbquantisierung (umgesetzt M6-AP01) | size, levels | M6 |
 
 - Upload: max. 20 MB, wird clientseitig auf Arbeitsauflösung skaliert; Original nur lokal, nicht hochgeladen (Datenschutz-Pluspunkt, kommunizieren!).
 
@@ -214,6 +214,43 @@ Umgesetzt in M5-AP02.
 - **Exporte**: PNG, JPG, WebP. Kein SVG: jedes Pixel wäre ein Rechteck (Hunderttausende), PNG bleibt mit `pixelSize` über 1 beim Vergrössern scharf.
 
 **Leistung (E2 bis E4)**: alles im Raster-Effekt-Worker, Hauptthread wie L4 (E2E mit 12-MP-Foto für alle drei Tools ohne Long Task über 50 ms). Gemessen in Node bei 1500 × 1000: Halftone rund 140 ms (SVG 70 ms, 125 KB), CMYK rund 480 ms (SVG 200 ms, 690 KB), Floyd-Steinberg rund 80 ms nach Helligkeit und 130 ms nach Farbe (CGA), Stucki mit 10 Farben rund 230 ms, Bayer 8 rund 55 ms. Ein 12-MP-Foto mit `pixelSize` 1 rechnet also rund 1 bis 2 s pro Änderung im Worker, die Vorschau bleibt bedienbar.
+
+### E5. God Rays · M6 · G
+
+Umgesetzt in M6-AP01 auf der Bildeffekt-Grundlage (`ARCHITECTURE.md` 4.14 und 4.19).
+- **Zweck**: Lichtstrahlen durch ein Foto (Sonne hinter Bergen, Licht durch Fenster und Bäume, Bühnenlicht). Tool-ID `god-rays`, Slugs `lichtstrahlen-generator` (DE) und `god-rays-generator` (EN), DE-Name "Lichtstrahlen-Effekt" mit `seo.heading` "Lichtstrahlen-Effekt (God Rays)", Kategorie Bildeffekte, Render-Art `image-effect`, Standardgrösse 1500 × 1000.
+- **Parameter**: `lightX`, `lightY` (Lichtquelle in Prozent der Breite und Höhe, −25 bis 125, also auch ausserhalb des Bildes; Standard auf der Sonne des Beispielbilds), `threshold` (Schwelle für helle Bereiche, 0 bis 100 %), `intensity` (0 bis 200 %), `length` (Anteil des Wegs zur Quelle, 10 bis 100 %), `decay` (Abklingen, 0 bis 100 %), `samples` (8 bis 128, gedeckelt, erweitert), `color` (Strahlenfarbe), `blend` (`add` | `screen`), `darken` (Bild abdunkeln, 0 bis 80 %).
+- **Algorithmus** (`packages/effects/src/god-rays.ts`): Maske = `smoothstep(t, t + max(0.02, (1 − t)/2), L) · L` (Rec.-709-Luminanz, als LUT pro Byte) mal Alpha, als Mittelwert pro Zelle eines Strahlenrasters von höchstens `GOD_RAYS_GRID_EDGE` = 640 px Kante (kleinere Ausgaben rechnen in Ausgabegrösse). Pro Rasterzelle `n` Abtastpunkte auf dem Weg zur Lichtquelle (Länge `length`), Maske bilinear mit geklemmten Rändern, Gewicht `exp(−6 · decay · s/n)`, normiert auf die Summe der Gewichte (Ergebnis 0 bis 1, unabhängig von `n`). Ein fester Versatz pro Zelle aus dem Ganzzahl-Hash (16 Stufen, kein Seed) macht aus Bänderung feines Rauschen. Das Strahlenfeld wird bilinear auf die Ausgabe vergrössert; `add`: `Bild · (1 − darken) + Farbe · Strahl · intensity`, `screen`: `1 − (1 − Bild)(1 − Farbe · min(1, Strahl · intensity))`. Alpha bleibt.
+- **Vorschau und Export**: gleiche Ausgabegrösse ergibt dieselben Pixel (E2E); Lichtquelle und Längen sind relativ zum Bild, darum sieht eine verkleinerte Vorschau gleich aus (Unit-Test: Mittelwerte innerhalb von 6/255).
+- **Brand-Palette**: hellste Farbe als Strahlenfarbe.
+- **Leertaste**: würfelt Lichtposition (15 bis 85 %, 5 bis 55 %) und eine helle Lichtfarbe; Schwelle, Stärke, Länge und Mischart bleiben.
+- **Vorlagen** (7): Goldene Stunde, Morgennebel, Scheinwerfer, Kathedrale, Neon, Dezent, Finsternis.
+- **Exporte**: PNG, JPG, WebP. Kein SVG (Pixel-Effekt).
+
+### E6. Fractal Glass · M6 · G
+
+Umgesetzt in M6-AP01.
+- **Zweck**: Foto hinter Riffelglas, für Hintergründe, Cover und dezent verfremdete Bilder. Tool-ID `fractal-glass`, Slugs `fractal-glass-generator` (DE und EN), DE-Name "Fractal-Glass-Effekt" mit `seo.heading` "Fractal-Glass-Effekt (Riffelglas)", Kategorie Bildeffekte, Render-Art `image-effect`, Standardgrösse 1500 × 1000.
+- **Parameter**: `stripWidth` (6 bis 400 Design-px), `angle` (0 bis 180°, 0 = senkrechte Streifen), `profile` (`flat` Prisma | `rounded` Glasstab | `ridged`), `distortion` (0 bis 100 %: Ausschnitt 1 bis 3 Streifenbreiten), `mirror`, `jitter` (zufälliger Versatz pro Streifen aus dem Seed, bis eine Streifenbreite), `blur` (Milchglas, 0 bis 40 Design-px), `highlight` (Glanzlinie und Schatten pro Streifen), `tint` und `tintAmount` (Glasfarbe, multiplikativ).
+- **Algorithmus** (`packages/effects/src/fractal-glass.ts`): Streifen ab der Bildmitte, gedreht um `angle`; pro Pixel Streifen `k` und Lage `t` in [−0.5, 0.5]. Quellpunkt quer zum Streifen `u = (k + 0.5 + jitter · h(k) + zoom · g(t)) · Breite` mit `zoom = ±(1 + 2 · distortion)` (negativ bei `mirror`) und Profil `g`: `t`, `sin(πt)/2` oder `2t|t|` (alle mit `g(±0.5) = ±0.5`); längs des Streifens unverändert. Bilinear aus dem Bild (bei `blur` zuerst zwei Box-Durchgänge pro Richtung, `boxBlur`), Ränder geklemmt. Kantenglättung: innerhalb eines halben Pixels an der Streifenkante wird der Nachbarstreifen anteilig gemischt. Glanz `0.55 · highlight · exp(−((t + 0.22)/0.1)²)` weiss dazu, Schatten bis 40 % zur rechten Kante. Längen in Design-Pixeln mal Massstab der Vorschau: in gleicher Grösse pixelgleich, in 2× doppelt so scharf.
+- **Brand-Palette**: bunteste Farbe (höchstes OKLCH-Chroma) als Glasfarbe, Tönung mindestens 30 %.
+- **Leertaste**: würfelt Streifenbreite, Winkel (meist senkrecht), Verzerrung und manchmal Versatz; über den Seed das Versatzmuster. Profil, Blur, Glanz und Farbe bleiben.
+- **Vorlagen** (7): Riffelglas, Milchglas, Gespiegelt, Diagonal, Waagrecht, Fragmente, Feine Rillen.
+- **Exporte**: PNG, JPG, WebP. Kein SVG.
+
+### E7. Pixelate/Posterize · M6 · G
+
+Umgesetzt in M6-AP01.
+- **Zweck**: grosse Pixel und wenige Farben (Pixel-Art, Retro, Unkenntlichmachen, Vorlagen für Mosaik und Kreuzstich). Tool-ID `pixelate`, Slugs `bild-verpixeln` (DE) und `pixelate-image` (EN), Namen "Bild verpixeln" und "Pixelate Image", Überschriften "Bild verpixeln (Pixelate und Posterize)" und "Pixelate Image (Posterize)", Kategorie Bildeffekte, Render-Art `image-effect` mit fester Effektgrösse (`render.grid`) und Vektorausgabe (`render.vector`).
+- **Parameter**: `blockSize` (1 bis 128 Design-px, 1 = nur Tontrennung), `colorMode` (`original` | `levels` | `palette`), `levels` (2 bis 16 Stufen pro Kanal), `colors` (Palette, 2 bis 10), Tonkurve (Helligkeit, Kontrast, Gamma pro Kanal wie CMYK).
+- **Algorithmus** (`packages/effects/src/pixelate.ts`): Raster = Designgrösse / `blockSize` (gerundet, höchstens 4096², `pixelateGrid`), wie beim Dither: Der Worker zeichnet das Foto direkt in Rastergrösse (Canvas-Glättung = Blockmittelwert), `applyPosterize` quantisiert pro Rasterpixel (`round(v · (n − 1)) / (n − 1)` oder nächste Palettenfarbe nach gewichtetem RGB-Abstand 2, 4, 3), `scaleGrid` vergrössert mit Nächstem Nachbarn. In gleicher Grösse pixelgleich, in 2× jeder Block verdoppelt (E2E).
+- **SVG** (`pixelateSvg`): dieselben Blöcke aus dem Bild in Analysegrösse, per Box-Filter (`resizeCover`) aufs Raster gemittelt (in Node exakt, im Browser zeichnet das Raster die Canvas; Abweichungen von einer Stufe sind möglich). `viewBox` in Rastereinheiten mit `preserveAspectRatio="none"` und `shape-rendering="crispEdges"`, ein `<path>` pro Farbe, gleiche Nachbarn einer Zeile als ein Rechteck (`M x yhNv1h-Nz`). Budget `PIXELATE_SVG_MAX_SHAPES` = 40 000 Blöcke (rund 1 MB); Standard (16 px) hat rund 5 900, ein 12-MP-Foto braucht Blöcke ab rund 18 px. Darüber sperrt der Export-Dialog SVG wie bei Halftone.
+- **Brand-Palette**: `colorMode: palette` mit den Markenfarben (von dunkel nach hell).
+- **Leertaste**: würfelt eine harmonische Palette und bei `levels` die Stufen (3 bis 8); bei Originalfarben stattdessen die Blockgrösse.
+- **Vorlagen** (7): Mosaik, Retro, Grobe Pixel, Tontrennung (Blockgrösse 1), Abendrot (Palette), Gedämpft (Palette), Feine Pixel.
+- **Exporte**: PNG, JPG, WebP, SVG.
+
+**Leistung (E5 bis E7)**: alles im Raster-Effekt-Worker, Hauptthread wie L4 (E2E mit 12-MP-Foto für alle drei Tools ohne Long Task über 50 ms, gemessen gegen den Produktions-Build wie in CI: keine Long Tasks; mit `next dev` zeigen alle Bildeffekte, auch Halftone und Dither, 50 bis 80 ms Dev-Overhead von React). Gemessen in Node bei 1500 × 1000 (Standard): God Rays rund 280 ms (64 Abtastpunkte auf 640 × 427), Fractal Glass rund 280 ms ohne Blur, Verpixeln rund 60 ms, SVG des Standards rund 7 ms (20 KB). Die Kosten der Strahlen hängen vor allem am gedeckelten Raster: ein Export mit 12 MP (4000 × 3000) rund 630 ms. Fractal Glass wächst linear mit den Ausgabepixeln, 12 MP rund 1.4 s im Worker.
 
 ## F. Colors
 

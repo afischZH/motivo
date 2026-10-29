@@ -14,3 +14,7 @@ export * from "./ascii";
 export * from "./halftone";
 export * from "./halftone-effect";
 export * from "./cmyk";
+export * from "./filters";
+export * from "./god-rays";
+export * from "./fractal-glass";
+export * from "./pixelate";

@@ -5027,6 +5027,279 @@
           }
         }
       }
+    },
+    "god-rays": {
+      "name": "God Rays Effect",
+      "description": "Let light pour through your photo: rays from a light source you place, with strength, length, decay and color. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "light": "Light source",
+        "rays": "Rays"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "lightX": {
+          "label": "Light horizontal"
+        },
+        "lightY": {
+          "label": "Light vertical"
+        },
+        "intensity": {
+          "label": "Strength"
+        },
+        "decay": {
+          "label": "Decay"
+        },
+        "length": {
+          "label": "Ray length"
+        },
+        "samples": {
+          "label": "Quality (samples)",
+          "description": "More samples give smoother rays but take longer. 64 is usually enough."
+        },
+        "threshold": {
+          "label": "Threshold for bright areas",
+          "description": "Only areas brighter than the threshold emit light. Lower gives more rays, higher only the brightest lights."
+        },
+        "color": {
+          "label": "Ray color"
+        },
+        "blend": {
+          "label": "Blend",
+          "options": {
+            "add": "Add",
+            "screen": "Screen"
+          }
+        },
+        "darken": {
+          "label": "Darken picture"
+        }
+      },
+      "presets": {
+        "golden-hour": "Golden hour",
+        "morning-mist": "Morning mist",
+        "spotlight": "Spotlight",
+        "cathedral": "Cathedral",
+        "neon": "Neon",
+        "subtle": "Subtle",
+        "eclipse": "Eclipse"
+      },
+      "seo": {
+        "whatIs": "God rays, also called crepuscular rays or light shafts, are visible beams of light falling through gaps in clouds, trees or windows. This effect recreates them: the bright parts of your photo become the light, and every pixel gathers how much light reaches it along the line toward the light source. Dark shapes such as mountains, branches or window frames cast streaks of shadow. The result is a radial blur laid over the picture as rays.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Place the light with Light horizontal and vertical, ideally on the sun, a lamp or a window; it may also lie outside the picture. The threshold decides which areas glow; strength, ray length and decay decide how far the rays reach. Choose a ray color and darken the picture if needed. Space rolls the light position and color. Export as PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Atmospheric cover images",
+            "text": "Light rays give landscape and travel photos depth and warmth. They suit blog headers, hero sections and posters."
+          },
+          "u2": {
+            "title": "Stage and product",
+            "text": "A spotlight from above puts a product or a person in the limelight. With a darkened background it looks like a stage."
+          },
+          "u3": {
+            "title": "Social media posts",
+            "text": "A photo with bold rays stands out in the feed. With your brand color as the light, it stays on brand."
+          }
+        },
+        "tips": {
+          "t1": "Put the light right on the brightest spot, such as the sun. The rays then look natural.",
+          "t2": "Rays need obstacles: photos with trees, clouds, windows or mountains against a bright sky give the best streaks.",
+          "t3": "If the whole picture gets too bright, raise the threshold so only the brightest lights glow."
+        },
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "Why do I hardly see any rays?",
+          "a2": "Rays appear only where bright and dark areas meet. Lower the threshold so more areas glow, raise the strength or ray length, and check that the light sits on a bright spot.",
+          "q3": "What is the difference between Add and Screen?",
+          "a3": "Add adds the light to the colors, so bright areas quickly turn white, which looks bold. Screen brightens more gently and hardly blows out, good for mist and pastel tones.",
+          "q4": "Does the export look like the preview?",
+          "a4": "Yes. Preview and export run through the same computation. At the same size they are identical pixel for pixel; at other sizes the rays look the same because the light position and lengths are relative to the picture.",
+          "q5": "Can I use my brand color as light?",
+          "a5": "Yes. Apply a brand palette from your Brand Kit: the lightest color becomes the ray color. You can also pick the color yourself."
+        }
+      }
+    },
+    "fractal-glass": {
+      "name": "Fractal Glass Effect",
+      "description": "Put your photo behind reeded glass: strips with refraction, mirroring, blur and gloss, at any width and angle. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "strips": "Strips",
+        "glass": "Glass"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "stripWidth": {
+          "label": "Strip width"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "profile": {
+          "label": "Profile",
+          "options": {
+            "flat": "Flat",
+            "rounded": "Rounded",
+            "ridged": "Ridged"
+          }
+        },
+        "distortion": {
+          "label": "Distortion"
+        },
+        "mirror": {
+          "label": "Mirror"
+        },
+        "jitter": {
+          "label": "Offset"
+        },
+        "blur": {
+          "label": "Blur"
+        },
+        "highlight": {
+          "label": "Gloss"
+        },
+        "tint": {
+          "label": "Glass color"
+        },
+        "tintAmount": {
+          "label": "Tint"
+        }
+      },
+      "presets": {
+        "reeded": "Reeded glass",
+        "frosted": "Frosted",
+        "mirrored": "Mirrored",
+        "diagonal": "Diagonal",
+        "horizontal": "Horizontal",
+        "fragments": "Fragments",
+        "fine": "Fine flutes"
+      },
+      "seo": {
+        "whatIs": "Fractal glass, also known as reeded or fluted glass, is a popular look in graphic design and photography: a picture appears to sit behind a pane made of many narrow glass rods. Each strip bends the light a little differently and shows a shifted, squeezed or mirrored slice, with fine gloss lines along the edges. The effect turns photos and gradients into abstract, refined backgrounds.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Set the strip width and angle and choose a profile: flat like a prism, rounded like a glass rod, or ridged. Distortion sets how much of the picture each strip shows, Mirror flips every slice, Offset shifts the strips at random. Blur turns it into frosted glass; gloss and glass color add depth. Space rolls width, angle and distortion. Export as PNG, JPG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Website backgrounds",
+            "text": "A photo behind reeded glass becomes a calm, abstract background that keeps text readable."
+          },
+          "u2": {
+            "title": "Posters and covers",
+            "text": "The glass look feels modern and premium. It suits album covers, posters and presentations."
+          },
+          "u3": {
+            "title": "Subtly abstract images",
+            "text": "Reeded glass hides faces and details while the mood of the photo stays. Good for placeholders and mood images."
+          }
+        },
+        "tips": {
+          "t1": "Narrow strips with high distortion give a fine, almost textile look. Wide strips show more of the subject.",
+          "t2": "Photos with strong colors and contrast give the best refraction, such as city lights at night or a sunset.",
+          "t3": "A little blur and a glass color from your Brand Kit give you a background in your brand colors."
+        },
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "What do the profiles mean?",
+          "a2": "Flat shifts and squeezes the slice evenly, like a prism. Rounded enlarges the middle of each strip and squeezes the edges, like a round glass rod. Ridged does the opposite: the edges stretch and the middle squeezes.",
+          "q3": "What does Offset do?",
+          "a3": "With an offset above 0, every strip moves by a random amount and the picture breaks into fragments. Each variant has its own pattern, and a share link shows exactly the same.",
+          "q4": "Does the export look like the preview?",
+          "a4": "Yes. Strip width and blur are given in design pixels and grow with the output. At the same size, preview and PNG are identical pixel for pixel; at twice the size everything is twice as sharp.",
+          "q5": "Is there an SVG export?",
+          "a5": "No. The effect computes every pixel from the photo, which cannot be described sensibly as vector graphics. Export as PNG, JPG or WebP, also at twice the size."
+        }
+      }
+    },
+    "pixelate": {
+      "name": "Pixelate Image",
+      "description": "Turn your photo into big pixels and few colors: block size, color levels or your own palette, also as SVG. Your picture stays on your device.",
+      "groups": {
+        "photo": "Photo",
+        "blocks": "Pixels",
+        "tone": "Tones"
+      },
+      "params": {
+        "photo": {
+          "label": "Your photo",
+          "description": "PNG, JPG or WebP up to 5 MB. Drop the picture here, choose a file or paste it with Ctrl+V (Mac: Cmd+V). It stays in your browser; share links leave it out. Without a photo Musterli shows a sample picture."
+        },
+        "blockSize": {
+          "label": "Pixel size"
+        },
+        "colorMode": {
+          "label": "Colors",
+          "options": {
+            "original": "Original",
+            "levels": "Levels",
+            "palette": "Palette"
+          }
+        },
+        "levels": {
+          "label": "Levels per channel",
+          "description": "How many brightness steps red, green and blue each get. 2 levels give 8 colors, 6 levels up to 216."
+        },
+        "brightness": {
+          "label": "Brightness"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "mosaic": "Mosaic",
+        "retro": "Retro",
+        "chunky": "Chunky pixels",
+        "poster": "Posterize",
+        "sunset": "Sunset",
+        "muted": "Muted",
+        "fine": "Fine pixels"
+      },
+      "seo": {
+        "heading": "Pixelate Image (Posterize)",
+        "whatIs": "Pixelating merges a picture into large blocks: each block shows the mean of all the pixels it covers. Posterizing then reduces the colors, either to a few evenly spaced levels per color channel or to a fixed palette. Together they create the look of pixel art, old video games and mosaics; on its own, pixelating hides faces and details.",
+        "howTo": "Upload a photo or try the presets on the sample picture. Choose the pixel size: 1 keeps the resolution, larger values give coarser blocks. Under Colors, keep the original colors, reduce them to levels per channel, or give each block the closest color of your palette. Brightness, contrast and gamma adjust the tones. Space rolls colors and levels, or the pixel size for original colors. Export as PNG, JPG, WebP or SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Pixel art and games",
+            "text": "Big pixels in few colors recall old game consoles. Ideal for sprites, backgrounds and retro projects."
+          },
+          "u2": {
+            "title": "Hide details",
+            "text": "Big pixels hide faces and details while colors and mood stay. The photo never leaves your browser."
+          },
+          "u3": {
+            "title": "Patterns for mosaics and stitching",
+            "text": "The SVG export gives you every block as a vector shape, a starting point for mosaics, fuse beads or cross-stitch."
+          }
+        },
+        "tips": {
+          "t1": "For pixel art, 8 to 24 pixels and 3 to 6 levels work well. More levels look more photographic.",
+          "t2": "Pixel size 1 with few levels gives a pure posterize effect, like a screen-printed poster.",
+          "t3": "Apply a brand palette from your Brand Kit: every block gets the closest brand color."
+        },
+        "faq": {
+          "q1": "Is my photo uploaded?",
+          "a1": "No. The photo is processed in your browser only and never sent to a server. Share links leave the photo out; if you save the design, everything stays local in your browser.",
+          "q2": "What is the difference between pixelate and posterize?",
+          "a2": "Pixelating lowers the resolution: each block shows the average color of its area. Posterizing lowers the number of colors without changing the resolution. Here you can use either one or both together.",
+          "q3": "Can I export the picture as SVG?",
+          "a3": "Yes. Every block becomes a rectangle, and equal neighbors in a row are merged. With very many blocks, such as pixel size 1 on a large photo, the file would be too large; the export dialog then shows the count and you export as PNG.",
+          "q4": "Does the export look like the preview?",
+          "a4": "Yes. The blocks are always computed on the same grid, the design size divided by the pixel size, and then enlarged to the screen or export size. At the same size, preview and PNG are identical pixel for pixel; at twice the size every block simply gets larger.",
+          "q5": "Can pixelation be undone?",
+          "a5": "Not from the exported picture: the details are no longer in it. In Musterli your original stays as long as the design is open or saved, and you can change every setting."
+        }
+      }
     }
   },
   "Converters": {

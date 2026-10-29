@@ -5036,6 +5036,281 @@
           }
         }
       }
+    },
+    "god-rays": {
+      "name": "Lichtstrahlen-Effekt",
+      "description": "Lass Licht durch dein Foto fallen: Strahlen aus einer frei wählbaren Lichtquelle, mit Stärke, Länge, Abklingen und Farbe. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "light": "Lichtquelle",
+        "rays": "Strahlen"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "lightX": {
+          "label": "Licht horizontal"
+        },
+        "lightY": {
+          "label": "Licht vertikal"
+        },
+        "intensity": {
+          "label": "Stärke"
+        },
+        "decay": {
+          "label": "Abklingen"
+        },
+        "length": {
+          "label": "Strahllänge"
+        },
+        "samples": {
+          "label": "Qualität (Abtastpunkte)",
+          "description": "Mehr Abtastpunkte ergeben glattere Strahlen, brauchen aber länger. 64 reichen meistens."
+        },
+        "threshold": {
+          "label": "Schwelle für helle Bereiche",
+          "description": "Nur Stellen, die heller sind als die Schwelle, senden Licht aus. Tiefer gibt mehr Strahlen, höher nur die hellsten Lichter."
+        },
+        "color": {
+          "label": "Strahlenfarbe"
+        },
+        "blend": {
+          "label": "Mischen",
+          "options": {
+            "add": "Addieren",
+            "screen": "Negativ multiplizieren"
+          }
+        },
+        "darken": {
+          "label": "Bild abdunkeln"
+        }
+      },
+      "presets": {
+        "golden-hour": "Goldene Stunde",
+        "morning-mist": "Morgennebel",
+        "spotlight": "Scheinwerfer",
+        "cathedral": "Kathedrale",
+        "neon": "Neon",
+        "subtle": "Dezent",
+        "eclipse": "Finsternis"
+      },
+      "seo": {
+        "heading": "Lichtstrahlen-Effekt (God Rays)",
+        "whatIs": "God Rays, auf Deutsch Lichtstrahlen oder Dämmerungsstrahlen, sind sichtbare Lichtbündel, die durch Lücken in Wolken, Bäumen oder Fenstern fallen. Der Effekt bildet das nach: Helle Stellen deines Fotos werden zur Lichtquelle, und jedes Pixel sammelt entlang der Linie zur Lichtquelle, wie viel Licht bei ihm ankommt. Dunkle Formen wie Berge, Äste oder Fensterrahmen werfen dabei Schattenstreifen. So entsteht eine radiale Unschärfe, die als Strahlen über das Bild gelegt wird.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Setze die Lichtquelle mit Licht horizontal und vertikal, am besten auf die Sonne, eine Lampe oder ein Fenster; sie darf auch ausserhalb des Bildes liegen. Mit der Schwelle bestimmst du, welche Stellen leuchten, mit Stärke, Strahllänge und Abklingen, wie weit die Strahlen reichen. Wähle eine Strahlenfarbe und dunkle das Bild bei Bedarf ab. Die Leertaste würfelt Lichtposition und Farbe. Exportiere als PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Stimmungsvolle Titelbilder",
+            "text": "Lichtstrahlen geben Landschafts- und Reisefotos Tiefe und Wärme. Das passt zu Blog-Titelbildern, Hero-Bereichen und Plakaten."
+          },
+          "u2": {
+            "title": "Bühne und Produkt",
+            "text": "Ein Scheinwerfer von oben stellt ein Produkt oder eine Person ins Rampenlicht. Mit abgedunkeltem Hintergrund wirkt das wie auf einer Bühne."
+          },
+          "u3": {
+            "title": "Beiträge für Social Media",
+            "text": "Ein Foto mit kräftigen Strahlen fällt im Feed auf. Mit deiner Markenfarbe als Lichtfarbe bleibt es im Stil deiner Marke."
+          }
+        },
+        "tips": {
+          "t1": "Leg die Lichtquelle genau auf die hellste Stelle, etwa die Sonne. Dann wirken die Strahlen natürlich.",
+          "t2": "Strahlen brauchen Hindernisse: Fotos mit Bäumen, Wolken, Fenstern oder Bergen vor einem hellen Himmel ergeben die schönsten Streifen.",
+          "t3": "Wird das ganze Bild zu hell, erhöhe die Schwelle. Dann leuchten nur noch die hellsten Lichter."
+        },
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Warum sehe ich kaum Strahlen?",
+          "a2": "Strahlen entstehen nur, wo helle und dunkle Stellen aufeinandertreffen. Senke die Schwelle, damit mehr Bereiche leuchten, erhöhe Stärke oder Strahllänge und prüfe, ob die Lichtquelle auf einer hellen Stelle liegt.",
+          "q3": "Was ist der Unterschied zwischen Addieren und Negativ multiplizieren?",
+          "a3": "Addieren zählt das Licht zu den Farben dazu, helle Stellen werden schnell weiss, das wirkt kräftig. Negativ multiplizieren hellt sanfter auf und überstrahlt kaum, gut für Nebel und Pastelltöne.",
+          "q4": "Sieht der Export aus wie die Vorschau?",
+          "a4": "Ja. Vorschau und Export laufen durch dieselbe Berechnung. In derselben Grösse sind sie pixelgleich, in anderen Grössen sehen die Strahlen gleich aus, weil Lichtquelle und Längen relativ zum Bild angegeben sind.",
+          "q5": "Kann ich meine Markenfarbe als Licht verwenden?",
+          "a5": "Ja. Wende eine Brand-Palette aus deinem Brand Kit an: Die hellste Farbe wird zur Strahlenfarbe. Du kannst die Farbe auch selbst wählen."
+        }
+      }
+    },
+    "fractal-glass": {
+      "name": "Fractal-Glass-Effekt",
+      "description": "Leg dein Foto hinter geriffeltes Glas: Streifen mit Brechung, Spiegelung, Unschärfe und Glanzlicht, in jeder Breite und jedem Winkel. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "strips": "Streifen",
+        "glass": "Glas"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "stripWidth": {
+          "label": "Streifenbreite"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "profile": {
+          "label": "Profil",
+          "options": {
+            "flat": "Flach",
+            "rounded": "Gewölbt",
+            "ridged": "Kantig"
+          }
+        },
+        "distortion": {
+          "label": "Verzerrung"
+        },
+        "mirror": {
+          "label": "Spiegeln"
+        },
+        "jitter": {
+          "label": "Versatz"
+        },
+        "blur": {
+          "label": "Unschärfe"
+        },
+        "highlight": {
+          "label": "Glanzlicht"
+        },
+        "tint": {
+          "label": "Glasfarbe"
+        },
+        "tintAmount": {
+          "label": "Tönung"
+        }
+      },
+      "presets": {
+        "reeded": "Riffelglas",
+        "frosted": "Milchglas",
+        "mirrored": "Gespiegelt",
+        "diagonal": "Diagonal",
+        "horizontal": "Waagrecht",
+        "fragments": "Fragmente",
+        "fine": "Feine Rillen"
+      },
+      "seo": {
+        "heading": "Fractal-Glass-Effekt (Riffelglas)",
+        "whatIs": "Fractal Glass, auf Deutsch etwa Riffel- oder Rillenglas, ist ein beliebter Look aus Grafikdesign und Fotografie: Ein Bild wirkt, als läge es hinter einer Scheibe aus vielen schmalen Glasstäben. Jeder Streifen bricht das Licht ein wenig anders und zeigt einen verschobenen, gestauchten oder gespiegelten Ausschnitt, an den Kanten entstehen feine Glanzlinien. Der Effekt macht aus Fotos und Verläufen abstrakte, edle Hintergründe.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Bestimme Streifenbreite und Winkel und wähle ein Profil: flach wie ein Prisma, gewölbt wie ein runder Glasstab oder kantig. Die Verzerrung legt fest, wie viel jeder Streifen vom Bild zeigt, Spiegeln dreht jeden Ausschnitt um, Versatz verschiebt die Streifen zufällig. Unschärfe macht Milchglas daraus, Glanzlicht und Glasfarbe geben Tiefe. Die Leertaste würfelt Breite, Winkel und Verzerrung. Exportiere als PNG, JPG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Hintergründe für Websites",
+            "text": "Ein Foto hinter Riffelglas wird zu einem ruhigen, abstrakten Hintergrund, auf dem Text gut lesbar bleibt."
+          },
+          "u2": {
+            "title": "Plakate und Cover",
+            "text": "Der Glas-Look wirkt modern und hochwertig. Er passt zu Album-Covern, Plakaten und Präsentationen."
+          },
+          "u3": {
+            "title": "Bilder dezent verfremden",
+            "text": "Riffelglas macht Personen und Details unkenntlich, die Stimmung des Fotos bleibt. Gut für Platzhalter und Stimmungsbilder."
+          }
+        },
+        "tips": {
+          "t1": "Schmale Streifen mit hoher Verzerrung ergeben einen feinen, fast textilen Look. Breite Streifen zeigen mehr vom Motiv.",
+          "t2": "Fotos mit kräftigen Farben und starken Kontrasten geben die schönsten Brechungen, etwa Lichter in der Nacht oder ein Sonnenuntergang.",
+          "t3": "Mit etwas Unschärfe und einer Glasfarbe aus deinem Brand Kit entsteht ein Hintergrund in Markenfarben."
+        },
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Was bedeuten die Profile?",
+          "a2": "Flach verschiebt und staucht den Ausschnitt gleichmässig wie ein Prisma. Gewölbt vergrössert die Mitte jedes Streifens und staucht die Ränder, wie ein runder Glasstab. Kantig macht es umgekehrt: Die Ränder werden gedehnt, die Mitte gestaucht.",
+          "q3": "Was macht der Versatz?",
+          "a3": "Mit Versatz über 0 wird jeder Streifen um einen zufälligen Betrag verschoben, das Bild zerfällt in Fragmente. Jede Variante hat ihr eigenes Muster, ein Teilen-Link zeigt genau dasselbe.",
+          "q4": "Sieht der Export aus wie die Vorschau?",
+          "a4": "Ja. Streifenbreite und Unschärfe sind in Design-Pixeln angegeben und wachsen mit der Ausgabe mit. In derselben Grösse sind Vorschau und PNG pixelgleich, in doppelter Grösse ist alles doppelt so scharf.",
+          "q5": "Gibt es einen SVG-Export?",
+          "a5": "Nein. Der Effekt berechnet jedes Pixel einzeln aus dem Foto, das lässt sich nicht sinnvoll als Vektorgrafik beschreiben. Exportiere als PNG, JPG oder WebP, auch in doppelter Grösse."
+        }
+      }
+    },
+    "pixelate": {
+      "name": "Bild verpixeln",
+      "description": "Mach aus deinem Foto grosse Pixel und wenige Farben: Pixelgrösse, Farbstufen oder eine eigene Palette, auch als SVG. Dein Bild bleibt auf deinem Gerät.",
+      "groups": {
+        "photo": "Foto",
+        "blocks": "Pixel",
+        "tone": "Tonwerte"
+      },
+      "params": {
+        "photo": {
+          "label": "Dein Foto",
+          "description": "PNG, JPG oder WebP bis 5 MB. Zieh das Bild hierher, wähl eine Datei oder füg es mit Ctrl+V ein (Mac: Cmd+V). Es bleibt in deinem Browser und fehlt in Teilen-Links. Ohne Foto zeigt Musterli ein Beispielbild."
+        },
+        "blockSize": {
+          "label": "Pixelgrösse"
+        },
+        "colorMode": {
+          "label": "Farben",
+          "options": {
+            "original": "Original",
+            "levels": "Stufen",
+            "palette": "Palette"
+          }
+        },
+        "levels": {
+          "label": "Stufen pro Kanal",
+          "description": "So viele Helligkeitsstufen haben Rot, Grün und Blau je. 2 Stufen ergeben 8 Farben, 6 Stufen bis zu 216."
+        },
+        "brightness": {
+          "label": "Helligkeit"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "gamma": {
+          "label": "Gamma"
+        }
+      },
+      "presets": {
+        "mosaic": "Mosaik",
+        "retro": "Retro",
+        "chunky": "Grobe Pixel",
+        "poster": "Tontrennung",
+        "sunset": "Abendrot",
+        "muted": "Gedämpft",
+        "fine": "Feine Pixel"
+      },
+      "seo": {
+        "heading": "Bild verpixeln (Pixelate und Posterize)",
+        "whatIs": "Verpixeln fasst ein Bild zu grossen Blöcken zusammen: Jeder Block zeigt den Mittelwert aller Pixel, die er abdeckt. Posterize, auf Deutsch Tontrennung, reduziert danach die Farben, entweder auf wenige gleichmässige Stufen pro Farbkanal oder auf eine feste Palette. Zusammen entsteht der Look von Pixel-Art, alten Spielen und Mosaiken; allein macht Verpixeln Gesichter und Details unkenntlich.",
+        "howTo": "Lade ein Foto hoch oder probiere die Vorlagen am Beispielbild aus. Wähle die Pixelgrösse: 1 behält die Auflösung, grössere Werte ergeben gröbere Blöcke. Unter Farben behältst du die Originalfarben, reduzierst auf Stufen pro Kanal oder gibst jedem Block die ähnlichste Farbe deiner Palette. Helligkeit, Kontrast und Gamma passen die Tonwerte an. Die Leertaste würfelt Farben und Stufen, bei Originalfarben die Pixelgrösse. Exportiere als PNG, JPG, WebP oder SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Pixel-Art und Games",
+            "text": "Grosse Pixel mit wenigen Farben erinnern an alte Spielkonsolen. Ideal für Sprites, Hintergründe und Retro-Projekte."
+          },
+          "u2": {
+            "title": "Unkenntlich machen",
+            "text": "Grosse Pixel machen Gesichter und Details unkenntlich, Farben und Stimmung bleiben. Das Foto verlässt dabei nie deinen Browser."
+          },
+          "u3": {
+            "title": "Vorlagen für Mosaik und Stickerei",
+            "text": "Der SVG-Export liefert jeden Block als Vektorfläche. Daraus entstehen Vorlagen für Mosaike, Bügelperlen oder Kreuzstich."
+          }
+        },
+        "tips": {
+          "t1": "Für Pixel-Art passen 8 bis 24 Pixel und 3 bis 6 Stufen. Mehr Stufen wirken fotografischer.",
+          "t2": "Mit Pixelgrösse 1 und wenigen Stufen erhältst du eine reine Tontrennung wie auf Siebdruck-Plakaten.",
+          "t3": "Wende eine Brand-Palette aus deinem Brand Kit an: Jeder Block bekommt die ähnlichste Markenfarbe."
+        },
+        "faq": {
+          "q1": "Wird mein Foto hochgeladen?",
+          "a1": "Nein. Das Foto wird nur in deinem Browser verarbeitet und nie an einen Server geschickt. Teilen-Links enthalten das Foto nicht; speicherst du das Design, bleibt alles lokal in deinem Browser.",
+          "q2": "Was ist der Unterschied zwischen Verpixeln und Posterize?",
+          "a2": "Verpixeln verringert die Auflösung: Jeder Block zeigt die Durchschnittsfarbe seiner Fläche. Posterize verringert die Anzahl Farben, ohne die Auflösung zu ändern. Hier kannst du beides einzeln oder zusammen verwenden.",
+          "q3": "Kann ich das Bild als SVG exportieren?",
+          "a3": "Ja. Jeder Block wird ein Rechteck, gleiche Nachbarn in einer Zeile werden zusammengefasst. Bei sehr vielen Blöcken, etwa Pixelgrösse 1 bei einem grossen Foto, würde die Datei zu gross; dann zeigt der Export-Dialog die Anzahl an und du exportierst als PNG.",
+          "q4": "Sieht der Export aus wie die Vorschau?",
+          "a4": "Ja. Die Blöcke werden immer auf demselben Raster berechnet, nämlich Designgrösse geteilt durch Pixelgrösse, und danach auf die Anzeige- oder Exportgrösse vergrössert. In derselben Grösse sind Vorschau und PNG pixelgleich, in doppelter Grösse wird jeder Block einfach grösser.",
+          "q5": "Lässt sich das Verpixeln rückgängig machen?",
+          "a5": "Nicht aus dem exportierten Bild: Die Details sind darin nicht mehr enthalten. In Musterli bleibt dein Original erhalten, solange das Design offen oder gespeichert ist, und du kannst jede Einstellung ändern."
+        }
+      }
     }
   },
   "Converters": {
