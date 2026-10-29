@@ -34,6 +34,8 @@ export interface MotifBox {
 /** A content box; `motion` is applied only when the viewer allows motion. */
 export interface MotifContentBox extends MotifBox {
   motion?: CssDeclarations;
+  /** Plain text content (`CssBox.text`). */
+  text?: string;
 }
 
 /** `CssElement` of a CSS output with parsed declarations. */
@@ -110,9 +112,12 @@ export function renderMotif(
         motif.element = {
           ...box(out.element),
           motion: parseCssDeclarations(out.element.motionCss ?? ""),
-          content: (out.element.content ?? []).map((b) =>
-            b.motionCss ? { ...box(b), motion: parseCssDeclarations(b.motionCss) } : box(b),
-          ),
+          content: (out.element.content ?? []).map((b) => {
+            const c: MotifContentBox = box(b);
+            if (b.motionCss) c.motion = parseCssDeclarations(b.motionCss);
+            if (b.text !== undefined) c.text = b.text;
+            return c;
+          }),
         };
       }
       if (out.rules) motif.rules = out.rules;

@@ -8,7 +8,10 @@
 import {
   GLASS_BACKDROPS,
   GLASS_EFFECTS,
+  GLASS_BODY_MAX,
   GLASS_IMAGE_FITS,
+  GLASS_TEXT_ALIGNS,
+  GLASS_TITLE_MAX,
   IMAGE_POSITIONS,
   bestTextColor,
   createRng,
@@ -21,6 +24,7 @@ import {
   glassStageColors,
   glassTailwind,
   glassTextContrast,
+  hasGlassText,
   pngDataUri,
   randomPalette,
   type Declaration,
@@ -63,6 +67,10 @@ const schema = z.object({
   radius: z.int().min(0).max(96),
   shadow: z.int().min(0).max(100),
   textColor: colorSchema,
+  /** The user's text on the card; both empty = language-neutral bars. */
+  title: z.string().max(GLASS_TITLE_MAX),
+  body: z.string().max(GLASS_BODY_MAX),
+  textAlign: z.enum(GLASS_TEXT_ALIGNS),
   blur: z.int().min(0).max(64),
   tint: colorSchema,
   tintOpacity: z.int().min(0).max(100),
@@ -95,6 +103,9 @@ const defaults: GlassEffectsParams = {
   radius: 24,
   shadow: 40,
   textColor: "#ffffff",
+  title: "",
+  body: "",
+  textAlign: "left",
   blur: 16,
   tint: "#0f172a",
   tintOpacity: 20,
@@ -185,7 +196,16 @@ const isGlass = (p: GlassEffectsParams) => p.effect === "glass";
 const hasImage = (p: GlassEffectsParams) => p.backgroundImage !== null;
 
 /** Params added after the first release (share links and designs from before lack them). */
-const ADDED_IN_AP06B = ["backgroundImage", "imageFit", "imagePosition", "embedImage"] as const;
+const ADDED_LATER = [
+  "backgroundImage",
+  "imageFit",
+  "imagePosition",
+  "embedImage",
+  // Own card text (2026-10-29).
+  "title",
+  "body",
+  "textAlign",
+] as const;
 const isBorder = (p: GlassEffectsParams) => p.effect === "gradient-border";
 const isGlow = (p: GlassEffectsParams) => p.effect === "glow";
 
@@ -199,12 +219,14 @@ export const glassEffectsTool = defineTool({
   // The picture never leaves the device; its fit, position and embed choice
   // mean nothing without it, so they stay local too (short share links).
   localParams: ["backgroundImage", "imageFit", "imagePosition", "embedImage"],
+  // Presets restyle the user's text instead of wiping it.
+  contentParams: ["title", "body", "textAlign"],
   // "Weiterverwenden in": a design of another tool becomes the backdrop.
   imageTargets: [{ param: "backgroundImage" }],
   migrateParams(raw) {
-    if (ADDED_IN_AP06B.every((key) => key in raw)) return raw;
+    if (ADDED_LATER.every((key) => key in raw)) return raw;
     const out: Record<string, unknown> = { ...raw };
-    for (const key of ADDED_IN_AP06B) if (!(key in out)) out[key] = defaults[key];
+    for (const key of ADDED_LATER) if (!(key in out)) out[key] = defaults[key];
     return out;
   },
   presets: [
@@ -295,6 +317,7 @@ export const glassEffectsTool = defineTool({
       { id: "border", labelKey: `tools.${ID}.groups.border` },
       { id: "glow", labelKey: `tools.${ID}.groups.glow` },
       { id: "card", labelKey: `tools.${ID}.groups.card` },
+      { id: "text", labelKey: `tools.${ID}.groups.text` },
       { id: "stage", labelKey: `tools.${ID}.groups.stage` },
     ],
     order: [
@@ -314,11 +337,14 @@ export const glassEffectsTool = defineTool({
       "glowSize",
       "glowIntensity",
       "surface",
-      "textColor",
       "radius",
       "shadow",
       "cardWidth",
       "cardHeight",
+      "title",
+      "body",
+      "textAlign",
+      "textColor",
       "backgroundImage",
       "imageFit",
       "imagePosition",
@@ -353,7 +379,20 @@ export const glassEffectsTool = defineTool({
       glowSize: { group: "glow", unit: "px", visibleWhen: isGlow },
       glowIntensity: { group: "glow", unit: "%", visibleWhen: isGlow },
       surface: { group: "card", visibleWhen: (p) => !isGlass(p) },
-      textColor: { group: "card" },
+      title: {
+        group: "text",
+        lockable: false,
+        descriptionKey: `tools.${ID}.params.title.description`,
+      },
+      body: { group: "text", lockable: false },
+      textAlign: {
+        group: "text",
+        kind: "segmented",
+        optionLabelKeys: optionLabels(ID, "textAlign", GLASS_TEXT_ALIGNS),
+        lockable: false,
+        visibleWhen: hasGlassText,
+      },
+      textColor: { group: "text" },
       radius: { group: "card", unit: "px" },
       shadow: { group: "card", unit: "%" },
       cardWidth: { group: "card", unit: "%", advanced: true },

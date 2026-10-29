@@ -19,6 +19,7 @@ import type { Rng } from "../../rng";
 import { escapeXml, stableId, svgDocument } from "../../svg";
 import { cssGradient, cssGradientLayers, type CssGradientOptions } from "../css-gradient";
 import { cssPattern } from "../css-patterns";
+import { BENTO_FONT_STACK, normalizeText, wrapText } from "../bento-grid/content";
 import { grainTile } from "../noise-grain/tile";
 
 export const GLASS_EFFECTS = ["glass", "gradient-border", "glow"] as const;
@@ -35,6 +36,14 @@ export type GlassImageFit = (typeof GLASS_IMAGE_FITS)[number];
 /** Anchor of the stage picture (CSS `background-position`, SVG `preserveAspectRatio`). */
 export const IMAGE_POSITIONS = ["center", "top", "bottom", "left", "right"] as const;
 export type ImagePosition = (typeof IMAGE_POSITIONS)[number];
+
+/** Alignment of the user's text on the card. */
+export const GLASS_TEXT_ALIGNS = ["left", "center"] as const;
+export type GlassTextAlign = (typeof GLASS_TEXT_ALIGNS)[number];
+
+/** Longest title and body text, in characters (they travel in share links). */
+export const GLASS_TITLE_MAX = 80;
+export const GLASS_BODY_MAX = 240;
 
 /** `preserveAspectRatio` alignment of a position. */
 export const IMAGE_POSITION_ALIGN: Readonly<Record<ImagePosition, string>> = {
@@ -83,6 +92,14 @@ export interface GlassOptions {
   readonly shadow: number;
   /** Colour of the sample text on the card. */
   readonly textColor: string;
+  /**
+   * The user's text on the card. When both are empty (or missing) the card
+   * shows language-neutral bars instead.
+   */
+  readonly title?: string;
+  readonly body?: string;
+  /** Left: from the top left corner; center: centred both ways. Default left. */
+  readonly textAlign?: GlassTextAlign;
   // Glass
   /** `backdrop-filter: blur()` radius in px. */
   readonly blur: number;
@@ -117,13 +134,25 @@ export interface GlassOptions {
 /** One CSS declaration. Repeated properties are allowed (fallback first). */
 export type Declaration = readonly [property: string, value: string];
 
-/** A box inside the card, relative to it (sample text bars). */
+/** One line of the user's text, for the SVG twin. */
+export interface CardTextLine {
+  readonly size: number;
+  readonly bold: boolean;
+  readonly align: GlassTextAlign;
+  /** Opacity of the text colour. */
+  readonly alpha: number;
+}
+
+/** A box inside the card, relative to it (sample text bars or one line of text). */
 export interface CardBox {
   readonly x: number;
   readonly y: number;
   readonly width: number;
   readonly height: number;
   readonly css: string;
+  /** The line shown in the box (already broken to fit); bars have none. */
+  readonly text?: string;
+  readonly line?: CardTextLine;
 }
 
 export interface GlassResult {
@@ -475,10 +504,69 @@ export function borderRules(): string {
   ].join("\n");
 }
 
-/** Sample text as bars: a heading and three lines, in `textColor`. */
+/** Line box height relative to the font size. */
+const TEXT_LINE_HEIGHT = 1.25;
+const TITLE_LINES = 2;
+
+/**
+ * The user's title and body as one box per line, broken here so the CSS
+ * preview and the SVG twin show the same lines. The title is a bit larger
+ * than the bar heading; the body takes the lines that fit below it.
+ */
+function textBoxes(o: GlassOptions, w: number, h: number, pad: number, unit: number): CardBox[] {
+  const align = o.textAlign ?? "left";
+  const innerW = Math.max(0, w - 2 * pad);
+  const innerH = Math.max(0, h - 2 * pad);
+  const titleSize = Math.round(Math.max(10, unit * 1.5));
+  const bodySize = Math.round(Math.max(8, unit * 0.9));
+  const titleLh = titleSize * TEXT_LINE_HEIGHT;
+  const bodyLh = bodySize * TEXT_LINE_HEIGHT;
+  const titleMax = Math.min(TITLE_LINES, Math.floor(innerH / titleLh));
+  const title = wrapText(o.title ?? "", innerW, titleSize, Math.max(0, titleMax));
+  const gap = title.length > 0 ? bodySize * 0.6 : 0;
+  const bodyMax = Math.floor((innerH - title.length * titleLh - gap) / bodyLh);
+  const body = wrapText(o.body ?? "", innerW, bodySize, Math.max(0, bodyMax));
+  const used = title.length * titleLh + (body.length > 0 ? gap + body.length * bodyLh : 0);
+  let y = align === "center" ? pad + Math.max(0, (innerH - used) / 2) : pad;
+  const boxes: CardBox[] = [];
+  const push = (text: string, size: number, bold: boolean, alpha: number) => {
+    const lh = size * TEXT_LINE_HEIGHT;
+    boxes.push({
+      x: pad,
+      y,
+      width: innerW,
+      height: lh,
+      css: [
+        `color: ${hexAlpha(o.textColor, alpha)};`,
+        `font-family: ${BENTO_FONT_STACK};`,
+        `font-size: ${px(size)};`,
+        `font-weight: ${bold ? 600 : 400};`,
+        `line-height: ${px(lh)};`,
+        `text-align: ${align};`,
+        "white-space: pre;",
+        "overflow: hidden;",
+      ].join("\n"),
+      text,
+      line: { size, bold, align, alpha },
+    });
+    y += lh;
+  };
+  for (const line of title) push(line, titleSize, true, 1);
+  if (body.length > 0) y += gap;
+  for (const line of body) push(line, bodySize, false, 0.85);
+  return boxes;
+}
+
+/** Whether the card shows the user's text instead of the bars. */
+export function hasGlassText(o: Pick<GlassOptions, "title" | "body">): boolean {
+  return normalizeText(o.title) !== "" || normalizeText(o.body) !== "";
+}
+
+/** Sample content: the user's text, or bars (a heading and three lines) in `textColor`. */
 function contentBoxes(o: GlassOptions, w: number, h: number): CardBox[] {
   const pad = Math.max(8, Math.min(w, h) * 0.12);
   const unit = Math.max(4, Math.min(h * 0.08, w * 0.06, 28));
+  if (hasGlassText(o)) return textBoxes(o, w, h, pad, unit);
   const innerW = Math.max(0, w - 2 * pad);
   const boxes: CardBox[] = [];
   const bar = (y: number, bw: number, bh: number, alpha: number) =>
@@ -628,6 +716,16 @@ function sceneSvg(
 
   const ink = content
     .map((b) => {
+      if (b.text !== undefined && b.line) {
+        const l = b.line;
+        // Baseline: glyphs sit about 0.95 em below the top of the half-leading.
+        const base = card.y + b.y + l.size * ((TEXT_LINE_HEIGHT - 1) / 2 + 0.95);
+        const x = card.x + b.x + (l.align === "center" ? b.width / 2 : 0);
+        const anchor = l.align === "center" ? ' text-anchor="middle"' : "";
+        const weight = l.bold ? ' font-weight="600"' : "";
+        const opacity = l.alpha < 1 ? ` fill-opacity="${f(l.alpha, 3)}"` : "";
+        return `<text x="${f(x)}" y="${f(base)}" font-size="${f(l.size)}"${weight}${anchor}${opacity} xml:space="preserve">${escapeXml(b.text)}</text>`;
+      }
       const alpha = /#[0-9a-f]{6}([0-9a-f]{2})/i.exec(b.css)?.[1];
       const opacity = alpha ? ` fill-opacity="${f(parseInt(alpha, 16) / 255, 3)}"` : "";
       return roundedRect(
@@ -640,7 +738,13 @@ function sceneSvg(
       );
     })
     .join("");
-  body.push(ink);
+  const hasText = content.some((b) => b.text !== undefined);
+  // Text is clipped to the card like the preview's `overflow: hidden` lines.
+  body.push(
+    hasText
+      ? `<g clip-path="url(#${clipId})" font-family="${BENTO_FONT_STACK}" fill="${o.textColor}">${ink}</g>`
+      : ink,
+  );
   const d = defs.join("");
   return svgDocument(w, h, `${d ? `<defs>${d}</defs>` : ""}${body.join("")}`);
 }
@@ -788,7 +892,28 @@ export function glassTailwind(result: GlassResult, o: GlassOptions): string {
       "<!-- Add the @property and @keyframes rules from the CSS export to your stylesheet. -->",
     );
   }
-  return `${notes.join("\n")}${notes.length > 0 ? "\n" : ""}<div class="${classes.join(" ")}">\n  …\n</div>\n`;
+  if (o.textAlign === "center") classes.push("text-center");
+  const inner = hasGlassText(o) ? cardMarkup(o, "  ").join("\n") : "  …";
+  return `${notes.join("\n")}${notes.length > 0 ? "\n" : ""}<div class="${classes.join(" ")}">\n${inner}\n</div>\n`;
+}
+
+/**
+ * The card's text as HTML lines: the user's title and body (escaped), or a
+ * sample heading and paragraph when both are empty.
+ */
+function cardMarkup(o: Pick<GlassOptions, "title" | "body">, indent: string): string[] {
+  if (!hasGlassText(o)) {
+    return [
+      `${indent}<h2>Card title</h2>`,
+      `${indent}<p>Some text on the card, to check that it stays readable.</p>`,
+    ];
+  }
+  const out: string[] = [];
+  const title = normalizeText(o.title);
+  const body = normalizeText(o.body);
+  if (title) out.push(`${indent}<h2>${escapeXml(title)}</h2>`);
+  if (body) out.push(`${indent}<p>${escapeXml(body)}</p>`);
+  return out;
 }
 
 /**
@@ -818,6 +943,7 @@ export function glassHtml(result: GlassResult, o: GlassOptions): string {
     ["box-sizing", "border-box"],
     ["width", `min(${px(result.card.width)}, 90vw)`],
     ["padding", "2rem"],
+    ...(o.textAlign === "center" ? ([["text-align", "center"]] as const) : []),
   ]);
   const picture = o.image;
   const note =
@@ -834,8 +960,7 @@ export function glassHtml(result: GlassResult, o: GlassOptions): string {
     "</style>",
     '<div class="stage">',
     `  <div class="${cls}">`,
-    "    <h2>Card title</h2>",
-    "    <p>Some text on the card, to check that it stays readable.</p>",
+    ...cardMarkup(o, "    "),
     "  </div>",
     "</div>",
     "",

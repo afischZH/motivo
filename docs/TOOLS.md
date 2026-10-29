@@ -295,6 +295,11 @@ Kleine Tools für die Entwickler-Persona: Ergebnis ist in erster Linie Code zum 
 - Code-Exporte (CSS, Tailwind, HTML) verwenden einen Platzhalter `your-image.jpg` bzw. `.svg` mit Kommentar "Replace … with the path to your own picture."; nur mit `embedImage` steht das Bild als data-URI im Code.
 - Hinweis `image-contrast` (Glas mit Bild): der Kontrast lässt sich über einem Foto nicht schätzen, also selbst prüfen.
 
+**J2 erweitert (eigener Kartentext, Wunsch Andreas 2026-10-29)**:
+- Params `title` (höchstens 80 Zeichen), `body` (höchstens 240) und `textAlign` (`left` oben links, `center` in beiden Richtungen zentriert; sichtbar, sobald Text da ist), Gruppe "Text" mit der Textfarbe. Sind Titel und Text leer, bleiben die sprachneutralen Balken (Standard, Vorlagen und Snapshots unverändert).
+- Umbruch in der Engine mit `wrapText` aus dem Bento-Grid (Systemschrift, vorsichtige Zeichenbreite): Titel höchstens 2 Zeilen, Text so viele Zeilen wie in die Karte passen, Überlauf endet mit "…". Je Zeile ein `CssBox` mit `text` (Vorschau) und ein `<text>` im SVG-Zwilling (escaped, auf die Karte zugeschnitten), Titel 1.5 × und Text 0.9 × der Balken-Einheit, Text mit 85 % Deckkraft.
+- Text und Ausrichtung gehen in den Teilen-Link (Standardlink der Glas-Effekte darum bis 430 statt 400 Zeichen) und bleiben über `contentParams` beim Wechsel der Vorlage und bei der Leertaste stehen. HTML-Beispiel und Tailwind zeigen den Text als `<h2>` und `<p>` (escaped), zentriert mit `text-align: center` bzw. `text-center`; ohne eigenen Text bleibt das Beispiel "Card title".
+
 ### J3. Bento-Grid-Generator · M4 · G
 - **Zweck**: Layouts im "Bento"-Stil (ungleich grosse, abgerundete Kacheln in einem Raster) für Feature-Sektionen, Portfolios und Social-Grafiken. Leertaste = neue Aufteilung.
 - **Parameter**: `columns` (2 bis 8), `rows` (2 bis 8), `tiles` (Zielanzahl Kacheln), `minSpan`/`maxSpan` (kleinste und grösste Kachel in Zellen), `gap`, `radius`, `padding`, `fill` (eine Farbe, Palette zufällig, Palette der Reihe nach, Musterli-Design pro Kachel als Referenz in P2), Kachelinhalt als Platzhalter (leer, Titel-Balken, Icon-Kreis, Linien als Textersatz).

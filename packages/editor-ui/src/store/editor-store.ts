@@ -538,7 +538,7 @@ export function createEditorStore(options: EditorStoreOptions): EditorStoreApi {
         const s = get();
         const preset = s.tool.presets.find((p) => p.id === presetId);
         if (!preset) return;
-        // The user's own files (uploads) stay: a preset restyles them.
+        // The user's own files (uploads) and content stay: a preset restyles them.
         pushVariant(
           withLocalParams(s.tool, preset.params, s.params),
           preset.seed === undefined ? s.seed : toUint32(preset.seed),
@@ -616,13 +616,19 @@ export const selectDesign = (s: EditorState): Design => ({
   size: s.size,
 });
 
-/** `params` with the tool's local params (uploads) taken from `from`. */
+/** Params a preset leaves alone: the user's uploads and own content. */
+const presetKeptKeys = (tool: AnyToolDefinition): readonly string[] => [
+  ...(tool.localParams ?? []),
+  ...(tool.contentParams ?? []),
+];
+
+/** `params` with the tool's kept params (uploads, own content) taken from `from`. */
 function withLocalParams(
   tool: AnyToolDefinition,
   params: ParamValues,
   from: ParamValues,
 ): ParamValues {
-  const keys = tool.localParams ?? [];
+  const keys = presetKeptKeys(tool);
   if (keys.length === 0) return params;
   const out: Record<string, unknown> = { ...params };
   for (const key of keys) out[key] = from[key];
@@ -630,14 +636,14 @@ function withLocalParams(
 }
 
 /**
- * Id of the preset whose params equal the current params, if any. Local
- * params (uploads) are ignored: a preset applied to an upload still matches.
+ * Id of the preset whose params equal the current params, if any. Local and
+ * content params are ignored: a preset applied to an upload still matches.
  */
 export function findMatchingPresetId(
   tool: AnyToolDefinition,
   params: ParamValues,
 ): string | undefined {
-  const keys = tool.localParams ?? [];
+  const keys = presetKeptKeys(tool);
   const current = keys.length === 0 ? params : withLocalParams(tool, params, tool.defaults);
   return tool.presets.find((p) =>
     valuesEqual(withLocalParams(tool, p.params, tool.defaults), current),

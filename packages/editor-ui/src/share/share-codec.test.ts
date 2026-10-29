@@ -62,6 +62,12 @@ const design = (tool: AnyToolDefinition, over: Partial<Design> = {}): Design => 
   ...over,
 });
 
+/**
+ * Tools whose default link may be a bit longer, with the reason.
+ * glass-effects: 26 params plus the own card text (title, body, alignment).
+ */
+const SHORT_LINK_EXCEPTIONS: Readonly<Record<string, number>> = { "glass-effects": 430 };
+
 describe.each(builtInTools.map((t) => [t.id, t] as const))("round trip: %s", (_, tool) => {
   const cases: Design[] = [
     design(tool),
@@ -82,7 +88,7 @@ describe.each(builtInTools.map((t) => [t.id, t] as const))("round trip: %s", (_,
   });
 
   it("stays short (defaults under 400 characters)", () => {
-    expect(encodeOk(design(tool)).length).toBeLessThan(400);
+    expect(encodeOk(design(tool)).length).toBeLessThan(SHORT_LINK_EXCEPTIONS[tool.id] ?? 400);
   });
 
   it("round-trips randomised variants", () => {

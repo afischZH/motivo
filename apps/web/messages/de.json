@@ -2268,7 +2268,8 @@
         "border": "Verlaufsrahmen",
         "glow": "Leuchten",
         "card": "Karte",
-        "stage": "Bühne"
+        "stage": "Bühne",
+        "text": "Text"
       },
       "params": {
         "effect": {
@@ -2377,6 +2378,20 @@
         "embedImage": {
           "label": "Bild in den Code einbetten",
           "description": "Schreibt das Bild als data-URI in den Code statt eines Platzhalters. Der Code wird dadurch viel länger."
+        },
+        "title": {
+          "label": "Titel",
+          "description": "Eigener Text auf der Karte. Sind Titel und Text leer, zeigt die Karte neutrale Platzhalterbalken."
+        },
+        "body": {
+          "label": "Text"
+        },
+        "textAlign": {
+          "label": "Ausrichtung",
+          "options": {
+            "left": "Links",
+            "center": "Mitte"
+          }
         }
       },
       "presets": {
