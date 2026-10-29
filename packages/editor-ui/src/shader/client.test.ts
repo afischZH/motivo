@@ -2,6 +2,7 @@ import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 import { describe, expect, it } from "vitest";
 import {
   SHADER_EXPORT_IDLE_TIMEOUT_MS,
+  SHADER_MAX_CRASHES,
   ShaderRenderError,
   createShaderClient,
   type ShaderClientEnv,
@@ -135,6 +136,59 @@ describe("shader client", () => {
     fireTimers();
     await expect(stuck).rejects.toMatchObject({ code: "timeout" });
     expect(workers[1]?.terminated).toBe(true);
+  });
+
+  it("starts a new worker on the next call after a crash", async () => {
+    const closed = { n: 0 };
+    let crashNext = true;
+    const { env, workers } = fakeEnv((r, w) => {
+      if (crashNext) {
+        crashNext = false;
+        w.onerror?.({ preventDefault() {} } as ErrorEvent);
+        return;
+      }
+      w.send({ id: r.id, ok: true, bitmap: bitmap(closed) });
+    });
+    const client = createShaderClient(env);
+    await expect(client.preview(job)).rejects.toMatchObject({ code: "unavailable" });
+    expect(workers[0]?.terminated).toBe(true);
+    const result = await client.preview(job);
+    expect(result.width).toBe(80);
+    expect(workers).toHaveLength(2);
+    expect(workers[1]?.terminated).toBe(false);
+  });
+
+  it("gives up after repeated crashes without a good reply", async () => {
+    const { env, workers } = fakeEnv((_r, w) => {
+      w.onmessageerror?.({ preventDefault() {} } as MessageEvent);
+    });
+    const client = createShaderClient(env);
+    for (let i = 0; i < SHADER_MAX_CRASHES; i++) {
+      await expect(client.preview(job)).rejects.toMatchObject({ code: "unavailable" });
+    }
+    expect(workers).toHaveLength(SHADER_MAX_CRASHES);
+    await expect(client.preview(job)).rejects.toMatchObject({ code: "unavailable" });
+    // No further worker: the browser kills every one.
+    expect(workers).toHaveLength(SHADER_MAX_CRASHES);
+  });
+
+  it("replaces a worker that lost its GPU context", async () => {
+    const closed = { n: 0 };
+    let lost = true;
+    const { env, workers } = fakeEnv((r, w) => {
+      if (lost) {
+        lost = false;
+        w.send({ id: r.id, ok: false, error: "context-lost" });
+        return;
+      }
+      w.send({ id: r.id, ok: true, bitmap: bitmap(closed) });
+    });
+    const client = createShaderClient(env);
+    await expect(client.preview(job)).rejects.toMatchObject({ code: "context-lost" });
+    await client.preview(job);
+    expect(workers).toHaveLength(2);
+    expect(workers[0]?.terminated).toBe(true);
+    expect(workers[1]?.requests).toHaveLength(1);
   });
 
   it("frees bitmaps that arrive after a timeout", async () => {

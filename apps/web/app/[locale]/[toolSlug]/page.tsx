@@ -32,7 +32,13 @@ import { faqPage, webApplication } from "@/lib/seo/json-ld";
 import { designEditorHash, hasStaticMotif, landingPresets } from "@/lib/seo/motifs";
 import { ogImageUrl, pageOpenGraph, SCHEMA_CURRENCY } from "@/lib/seo/page-meta";
 import { siteUrl } from "@/lib/seo/site-url";
-import { faqEntries, toolKeys } from "@/lib/seo/tool-content";
+import {
+  faqEntries,
+  landingHeading,
+  tipEntries,
+  toolKeys,
+  landingUseCases,
+} from "@/lib/seo/tool-content";
 
 type LandingPageProps = Readonly<{ params: Promise<{ locale: string; toolSlug: string }> }>;
 
@@ -65,9 +71,11 @@ export async function generateMetadata({ params }: LandingPageProps): Promise<Me
   const resolved = await resolve(params);
   if (!resolved) return {};
   const { locale, tool } = resolved;
-  const { text } = await toolText(locale);
+  const { text, raw } = await toolText(locale);
   const keys = toolKeys(tool.id);
-  const title = text("Landing.metaTitle", { tool: text(keys.name) });
+  const title = text("Landing.metaTitle", {
+    tool: landingHeading(raw(keys.seo), text(keys.name)),
+  });
   const description = text(keys.description);
   const route = { page: "landing", toolId: tool.id } as const;
 
@@ -104,6 +112,9 @@ export default async function LandingPage({ params }: LandingPageProps) {
   const keys = toolKeys(tool.id);
   const name = text(keys.name);
   const description = text(keys.description);
+  const heading = landingHeading(raw(keys.seo), name);
+  const useCases = landingUseCases(raw(keys.useCases));
+  const tips = tipEntries(raw(keys.tips));
   const faq = faqEntries(raw(keys.faq));
   const category = primaryCategory(tool);
   const editorPath = routePath({ page: "tool", toolId: tool.id }, locale);
@@ -145,8 +156,8 @@ export default async function LandingPage({ params }: LandingPageProps) {
             >
               {text(`Categories.${category}.name`)}
             </Badge>
-            <h1 className="text-4xl font-semibold tracking-[-0.03em] text-balance sm:text-5xl">
-              {name}
+            <h1 className="text-4xl font-semibold tracking-[-0.03em] text-balance break-words hyphens-auto sm:text-5xl">
+              {heading}
             </h1>
             <p className="max-w-prose text-lg text-muted-foreground">{description}</p>
             <a
@@ -209,44 +220,81 @@ export default async function LandingPage({ params }: LandingPageProps) {
         </section>
       )}
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        <div className="flex flex-col gap-8">
-          <section aria-labelledby="what-heading" className="flex flex-col gap-3">
-            <h2 id="what-heading" className="text-xl font-semibold tracking-tight">
-              {text("Landing.whatIsHeading", { tool: name })}
-            </h2>
-            <p className="max-w-prose text-muted-foreground">{text(keys.whatIs)}</p>
-          </section>
-          <section aria-labelledby="how-heading" className="flex flex-col gap-3">
-            <h2 id="how-heading" className="text-xl font-semibold tracking-tight">
-              {text("Landing.howToHeading")}
-            </h2>
-            <p className="max-w-prose text-muted-foreground">{text(keys.howTo)}</p>
-            <a
-              href={editorPath}
-              className="self-start rounded-control text-sm font-medium text-link underline-offset-4 hover:underline"
-            >
-              {text("Landing.ctaSecondary", { tool: name })}
-            </a>
-          </section>
-        </div>
+      <section aria-labelledby="what-heading" className="flex flex-col gap-3">
+        <h2 id="what-heading" className="text-xl font-semibold tracking-tight">
+          {text("Landing.whatIsHeading", { tool: name })}
+        </h2>
+        <p className="max-w-prose text-muted-foreground">{text(keys.whatIs)}</p>
+      </section>
 
-        {faq.length > 0 && (
-          <section aria-labelledby="faq-heading" className="flex flex-col gap-3">
-            <h2 id="faq-heading" className="text-xl font-semibold tracking-tight">
-              {text("Landing.faqHeading")}
+      {useCases.length > 0 && (
+        <section aria-labelledby="use-cases-heading" className="flex flex-col gap-4">
+          <h2 id="use-cases-heading" className="text-xl font-semibold tracking-tight">
+            {text("Landing.useCasesHeading")}
+          </h2>
+          <ul className="grid gap-4 md:grid-cols-3">
+            {useCases.map((useCase) => (
+              <li
+                key={useCase.title}
+                className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-5"
+              >
+                <h3 className="font-medium">{useCase.title}</h3>
+                <p className="text-sm text-muted-foreground">{useCase.text}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section aria-labelledby="how-heading" className="flex flex-col gap-3">
+          <h2 id="how-heading" className="text-xl font-semibold tracking-tight">
+            {text("Landing.howToHeading")}
+          </h2>
+          <p className="max-w-prose text-muted-foreground">{text(keys.howTo)}</p>
+          <a
+            href={editorPath}
+            className="self-start rounded-control text-sm font-medium text-link underline-offset-4 hover:underline"
+          >
+            {text("Landing.ctaSecondary", { tool: name })}
+          </a>
+        </section>
+
+        {tips.length > 0 && (
+          <section aria-labelledby="tips-heading" className="flex flex-col gap-3">
+            <h2 id="tips-heading" className="text-xl font-semibold tracking-tight">
+              {text("Landing.tipsHeading")}
             </h2>
-            <dl className="flex flex-col gap-5">
-              {faq.map((entry) => (
-                <div key={entry.question} className="flex flex-col gap-1">
-                  <dt className="font-medium">{entry.question}</dt>
-                  <dd className="text-muted-foreground">{entry.answer}</dd>
-                </div>
+            <ul className="flex flex-col gap-3">
+              {tips.map((tip) => (
+                <li key={tip} className="flex gap-3 text-muted-foreground">
+                  <span
+                    aria-hidden="true"
+                    className="mt-2 size-1.5 shrink-0 rounded-full bg-primary"
+                  />
+                  <span>{tip}</span>
+                </li>
               ))}
-            </dl>
+            </ul>
           </section>
         )}
       </div>
+
+      {faq.length > 0 && (
+        <section aria-labelledby="faq-heading" className="flex flex-col gap-4">
+          <h2 id="faq-heading" className="text-xl font-semibold tracking-tight">
+            {text("Landing.faqHeading")}
+          </h2>
+          <dl className="grid gap-x-10 gap-y-5 lg:grid-cols-2">
+            {faq.map((entry) => (
+              <div key={entry.question} className="flex flex-col gap-1">
+                <dt className="font-medium">{entry.question}</dt>
+                <dd className="text-muted-foreground">{entry.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
       {collectionsFor(tool.category).map((kind) => (
         <CollectionTeaser key={kind} kind={kind} locale={locale} previews={teaserPreviews(kind)} />

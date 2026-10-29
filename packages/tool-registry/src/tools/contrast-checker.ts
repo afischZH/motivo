@@ -202,6 +202,8 @@ export const contrastCheckerTool = defineTool({
     },
   },
   exports: ["svg", "png", "jpg", "webp"],
+  // Text and background, plus the pair palette when it is shown.
+  paletteOutput: (p) => [p.foreground, p.background, ...(p.pairs ? p.palette : [])],
   extraExports: [
     {
       id: "css-variables",

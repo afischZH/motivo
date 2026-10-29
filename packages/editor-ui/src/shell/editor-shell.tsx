@@ -28,6 +28,8 @@ import type { LocalDesignController, LocalDesignView } from "../designs/local-de
 import { useLocalDesign } from "../designs/use-local-design";
 import { ExportDialog, browserExportServices, type ExportServices } from "../export/export-dialog";
 import { ImageInputSection } from "../image-input/image-input-section";
+import { ReuseMenu } from "../handoff/reuse-menu";
+import { useHandoffReceiver, type HandoffOutcome } from "../handoff/use-handoff-receiver";
 import { SuggestionsSection } from "./suggestions";
 import type { ImageInputServices } from "../image-input/services";
 import { buildShareUrl, useShareHash } from "../share/use-share";
@@ -83,6 +85,13 @@ export interface EditorShellProps {
   brandKit?: BrandKitStore;
   /** The Brand Kit page in the current locale, linked when it is empty. */
   brandKitHref?: string;
+  /**
+   * Opens another tool's editor with `hash` appended ("Weiterverwenden in",
+   * docs/ARCHITECTURE.md 4.18). Must navigate client side, so the picture
+   * handed over in this tab's memory is still there. Without it the editor
+   * offers no hand-over (tests, embeds).
+   */
+  onOpenTool?: (toolId: string, hash: string) => void;
   className?: string;
 }
 
@@ -117,6 +126,7 @@ export function EditorShell({
   designs,
   brandKit,
   brandKitHref,
+  onOpenTool,
   className,
 }: EditorShellProps) {
   const t = useT();
@@ -161,6 +171,33 @@ export function EditorShell({
   );
   const local = useLocalDesign(store, designs, defaultName);
   const brandView = useBrandKitView(brandKit, brandKitHref);
+  // A picture handed over from another tool lands once a saved design or draft has loaded.
+  const incomingImage = useHandoffReceiver({
+    store,
+    ready: local ? local.view.ready : true,
+    services: imageInputServices,
+    onOutcome: (outcome: HandoffOutcome) => {
+      const source = (id: string) => t(`tools.${id}.name`);
+      switch (outcome.kind) {
+        case "applied":
+          confirm(t("Editor.handoff.received", { tool: source(outcome.sourceToolId) }));
+          return;
+        case "analysing":
+          confirm(t("Editor.handoff.receivedAnalysis", { tool: source(outcome.sourceToolId) }));
+          return;
+        case "expired":
+          setNotice({ tone: "info", message: t("Editor.handoff.expired") });
+          return;
+        case "rejected":
+          setNotice({
+            tone: "error",
+            message: t("Editor.handoff.errors.received", {
+              reason: t(`Editor.asset.errors.${outcome.error}`),
+            }),
+          });
+      }
+    },
+  });
 
   // Announce the variant position whenever the active variant or the variant
   // count changes. Not on array identity: edits replace `variants` without
@@ -361,6 +398,13 @@ export function EditorShell({
             <LinkIcon />
             {t("Editor.share.button")}
           </button>
+          <ReuseMenu
+            exportServices={exportServices}
+            onOpenTool={onOpenTool}
+            onStatus={confirm}
+            onError={(message) => setNotice({ tone: "error", message })}
+            enabled={hydrated}
+          />
           <button
             type="button"
             className={PRIMARY_BUTTON_CLASS}
@@ -444,7 +488,7 @@ export function EditorShell({
             <ToolAdvisories />
             <BrandPaletteSection onApplied={confirm} />
             <SuggestionsSection onApplied={confirm} />
-            <ImageInputSection services={imageInputServices} />
+            <ImageInputSection services={imageInputServices} incoming={incomingImage} />
             <AssetServicesContext.Provider value={imageInputServices}>
               <EditorControls />
             </AssetServicesContext.Provider>

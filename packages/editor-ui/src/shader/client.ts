@@ -83,13 +83,26 @@ export const SHADER_PREVIEW_TIMEOUT_MS = 30_000;
  */
 export const SHADER_EXPORT_IDLE_TIMEOUT_MS = 60_000;
 
+/**
+ * A worker that crashes (worker error, unreadable message) is started again
+ * on the next call. After this many crashes in a row without one good reply
+ * the channel gives up until it is disposed, so a browser that kills every
+ * new worker does not get a new one per preview frame.
+ */
+export const SHADER_MAX_CRASHES = 3;
+
 type Settle = (reply: Extract<ShaderRenderResponse, { ok: boolean }> | ShaderFailure) => void;
 
 /** One worker with its pending calls. */
 function createChannel(env: ShaderClientEnv, timeoutMs: number) {
   let worker: ShaderWorkerLike | null = null;
   let starting: Promise<ShaderWorkerLike | null> | null = null;
+  /** No workers here at all (`createWorker` gave none), or too many crashes in a row. */
   let broken = false;
+  /** Crashes since the last good reply. */
+  let crashes = 0;
+  /** The worker gave up on a lost GPU context: replace it once it is idle. */
+  let stale = false;
   let nextId = 1;
   const pending = new Map<
     number,
@@ -112,6 +125,11 @@ function createChannel(env: ShaderClientEnv, timeoutMs: number) {
 
   const getWorker = (): Promise<ShaderWorkerLike | null> => {
     if (broken) return Promise.resolve(null);
+    // A new worker gets a new GPU context; calls in flight finish on the old one.
+    if (stale && worker && pending.size === 0) {
+      stale = false;
+      stop();
+    }
     if (worker) return Promise.resolve(worker);
     starting ??= env
       .createWorker()
@@ -138,11 +156,16 @@ function createChannel(env: ShaderClientEnv, timeoutMs: number) {
           }
           pending.delete(data.id);
           env.clearTimeout(entry.timer);
+          if (data.ok) crashes = 0;
+          else if (data.error === "context-lost") stale = true;
           entry.resolve(data);
         };
+        // Ends the calls in flight; the next call starts a new worker.
         const crash = (event?: Event) => {
           event?.preventDefault();
-          broken = true;
+          if (worker !== w) return;
+          crashes++;
+          if (crashes >= SHADER_MAX_CRASHES) broken = true;
           stop();
           settleAll("unavailable");
         };

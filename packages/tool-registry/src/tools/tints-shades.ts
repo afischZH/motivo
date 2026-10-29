@@ -154,6 +154,7 @@ export const tintsShadesTool = defineTool({
     },
   },
   exports: ["svg", "png", "jpg", "webp"],
+  paletteOutput: (p) => scale(p).map((s) => s.color),
   extraExports: [
     {
       id: "css-variables",

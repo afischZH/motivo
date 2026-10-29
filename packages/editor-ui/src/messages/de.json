@@ -390,6 +390,44 @@
     },
     "shader": {
       "unavailable": "Dieser Browser kann den Shader nicht zeichnen, weil WebGL2 fehlt. Aktiviere die Hardwarebeschleunigung oder nimm einen aktuellen Browser wie Chrome, Edge, Firefox oder Safari."
+    },
+    "handoff": {
+      "button": "Weiterverwenden",
+      "buttonHint": "Ergebnis als Bild in einem anderen Tool öffnen",
+      "buttonHintPalette": "Ergebnis in einem anderen Tool oder im Brand Kit weiterverwenden",
+      "imageGroup": "Als Bild öffnen in",
+      "imageInputTarget": "Bild",
+      "brandGroup": "Brand Kit",
+      "savePalette": "Als Brand-Palette speichern …",
+      "preparing": "Bild für {tool} wird vorbereitet …",
+      "received": "Bild aus {tool} übernommen. Rückgängig mit ⌘/Ctrl+Z.",
+      "receivedAnalysis": "Bild aus {tool} wird geladen, die Farben werden ermittelt.",
+      "expired": "Das übergebene Bild ist nicht mehr da, etwa nach einem Neuladen. Wähle „Weiterverwenden“ im ersten Tool noch einmal.",
+      "errors": {
+        "too-large": "Das Bild ist zu gross für die Übergabe. Exportiere es als Datei und lade es im anderen Tool hoch.",
+        "unsupported": "Dieses Motiv lässt sich nicht als Bild weitergeben.",
+        "failed": "Das Bild konnte nicht vorbereitet werden. Versuche es noch einmal.",
+        "received": "Das übergebene Bild passt nicht in dieses Tool: {reason}"
+      },
+      "palette": {
+        "title": "Als Brand-Palette speichern",
+        "intro": "Die Palette landet im Brand Kit dieses Browsers. Danach kannst du sie in jedem Tool unter „Brand-Palette“ anwenden.",
+        "colors": "Farben der Palette: {colors}",
+        "name": "Name",
+        "defaultName": "Palette aus {tool}",
+        "save": "Speichern",
+        "saving": "Wird gespeichert …",
+        "cancel": "Abbrechen",
+        "close": "Schliessen",
+        "saved": "Palette „{name}“ ist im Brand Kit gespeichert.",
+        "openKit": "Brand Kit öffnen",
+        "errors": {
+          "limit": "Das Brand Kit ist voll (höchstens 100 Paletten). Lösche zuerst eine Palette im Brand Kit.",
+          "unavailable": "Das Brand Kit ist in diesem Browser nicht verfügbar, etwa in einem privaten Fenster.",
+          "quota": "Der Speicher des Browsers ist voll. Gib Platz frei und versuche es noch einmal.",
+          "failed": "Speichern hat nicht geklappt. Versuche es noch einmal."
+        }
+      }
     }
   },
   "sizes": {

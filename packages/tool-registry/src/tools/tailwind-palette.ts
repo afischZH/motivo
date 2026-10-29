@@ -140,6 +140,7 @@ export const tailwindPaletteTool = defineTool({
     },
   },
   exports: ["svg", "png", "jpg", "webp"],
+  paletteOutput: (p) => steps(p).map((s) => s.color),
   extraExports: [
     {
       id: "tailwind-config",

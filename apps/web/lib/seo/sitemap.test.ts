@@ -11,6 +11,7 @@ import { curatedPalettes } from "@/lib/collections/palettes";
 import { libraryPatterns } from "@/lib/css-patterns";
 import { LEGAL_CONFIG } from "@/lib/legal/config";
 
+import { hasStaticMotif } from "./motifs";
 import { sitemapEntries } from "./sitemap";
 
 const base = new URL("https://example.test");
@@ -50,6 +51,40 @@ describe("sitemap", () => {
           "x-default": `https://example.test${paths.en}`,
         });
       }
+    }
+  });
+
+  it("lists the OG image and the preview motif of every landing page as images", () => {
+    for (const tool of registry.list()) {
+      const paths = toolLandingPaths(tool.id);
+      for (const locale of ENABLED_LOCALES) {
+        const entry = entries.find((e) => e.url === `https://example.test${paths[locale]}`);
+        expect(entry?.images, `${tool.id} (${locale})`).toEqual(
+          hasStaticMotif(tool)
+            ? [
+                `https://example.test/og/${locale}/${tool.id}.png`,
+                `https://example.test/motifs/${tool.id}/default.svg`,
+              ]
+            : undefined,
+        );
+      }
+    }
+    // Every tool has a static motif today; a new one without must be a deliberate choice.
+    expect(entries.filter((e) => e.images).length).toBe(
+      registry.list().length * ENABLED_LOCALES.length,
+    );
+  });
+
+  it("adds images to landing pages only", () => {
+    const landing = new Set(
+      registry
+        .list()
+        .flatMap((tool) =>
+          Object.values(toolLandingPaths(tool.id)).map((path) => `https://example.test${path}`),
+        ),
+    );
+    for (const entry of entries.filter((e) => !landing.has(e.url))) {
+      expect(entry.images, entry.url).toBeUndefined();
     }
   });
 

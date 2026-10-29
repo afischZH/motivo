@@ -16,6 +16,12 @@ export interface BrandKitView {
   defaultId: string | null;
   /** Logos and shapes (read on demand: images can be large). */
   listAssets(): Promise<BrandAsset[]>;
+  /**
+   * Adds a palette (M5b-AP04, "Als Brand-Palette speichern") and reloads
+   * the palettes, so it shows in the brand palette section at once. Throws
+   * the `StorageError` of the store (e.g. `limit` at 100 palettes).
+   */
+  savePalette(name: string, colors: readonly string[]): Promise<BrandPalette>;
   /** The Brand Kit page in the current locale, for "create one" links. */
   href?: string;
 }
@@ -35,6 +41,8 @@ export function useBrandKitView(
   href: string | undefined,
 ): BrandKitView | null {
   const [data, setData] = useState<BrandPalettes>(EMPTY);
+  // Bumped after a save, so the palettes are read again.
+  const [version, setVersion] = useState(0);
 
   useEffect(() => {
     if (!store) return;
@@ -59,7 +67,7 @@ export function useBrandKitView(
       window.removeEventListener("focus", load);
       document.removeEventListener("visibilitychange", onVisible);
     };
-  }, [store]);
+  }, [store, version]);
 
   return useMemo(() => {
     if (!store) return null;
@@ -67,6 +75,11 @@ export function useBrandKitView(
       palettes: data.palettes,
       defaultId: data.defaultId,
       listAssets: () => store.listAssets(),
+      savePalette: async (name, colors) => {
+        const palette = await store.createPalette({ name, colors });
+        setVersion((v) => v + 1);
+        return palette;
+      },
     };
     if (href !== undefined) view.href = href;
     return view;
