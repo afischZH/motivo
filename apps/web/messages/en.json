@@ -6783,7 +6783,14 @@
         "gradientTo": "End colour",
         "gradientAngle": "Angle (degrees)",
         "gradientHint": "While it is on, the gradient replaces the text colour."
-      }
+      },
+      "fontRole": "Font role",
+      "fontRoles": {
+        "auto": "Automatic",
+        "heading": "Heading",
+        "body": "Body text"
+      },
+      "fontRoleHint": "Apply brand gives headings the first and body text the second brand font."
     },
     "shape": {
       "title": "Shape",
@@ -6847,6 +6854,321 @@
       "brand": "Use a brand palette",
       "brandPick": "Choose a palette …",
       "brandUnnamed": "Unnamed palette"
+    },
+    "templates": {
+      "open": "Templates",
+      "title": "Choose a template",
+      "intro": "Every template fits every format through Magic Resize. Change texts and colours as usual afterwards.",
+      "theme": "Theme",
+      "allThemes": "All themes",
+      "format": "Format",
+      "allFormats": "All formats",
+      "useCurrent": "Open in the current format: {format}",
+      "pick": "Open template:",
+      "details": "theme {theme}, {width} × {height} pixels",
+      "count": "{count, plural, one {# template} other {# templates}}",
+      "empty": "No template matches this filter.",
+      "close": "Close",
+      "loading": "Loading templates …",
+      "loadFailed": "The templates could not be loaded. Reload the page and try again.",
+      "confirm": "Your unsaved changes will be lost. Open the template anyway?",
+      "opened": "Opened template {name} ({format}).",
+      "previewFailed": "No preview",
+      "themes": {
+        "announcement": "Announcement",
+        "quote": "Quote",
+        "event": "Event",
+        "sale": "Sale and product",
+        "tip": "Tip and how-to",
+        "team": "Team and jobs"
+      },
+      "names": {
+        "launch-bold": "Product launch",
+        "big-news": "Big news",
+        "coming-soon": "Coming soon",
+        "release-notes": "New release",
+        "milestone": "Milestone",
+        "back-open": "Open again",
+        "newsletter": "Newsletter",
+        "quote-classic": "Classic quote",
+        "quote-card": "Quote card",
+        "quote-bold": "Bold quote",
+        "quote-notebook": "Handwritten quote",
+        "quote-split": "Split quote",
+        "testimonial": "Testimonial",
+        "quote-botanical": "Botanical quote",
+        "event-date": "Event date",
+        "webinar": "Webinar",
+        "workshop": "Workshop",
+        "meetup": "Meetup",
+        "save-the-date": "Save the date",
+        "concert": "Concert",
+        "countdown": "Countdown",
+        "sale-percent": "Percent off",
+        "product-launch": "New product",
+        "flash-sale": "Flash sale",
+        "discount-code": "Discount code",
+        "black-week": "Black Week",
+        "new-arrival": "New arrival",
+        "free-shipping": "Free shipping",
+        "tips-list": "Three tips",
+        "how-to": "Step by step",
+        "did-you-know": "Did you know?",
+        "myth-fact": "Myth and fact",
+        "checklist": "Checklist",
+        "quick-tip": "Quick tip",
+        "hiring": "We are hiring",
+        "welcome": "Welcome to the team",
+        "team-intro": "Our team",
+        "job-story": "Job ad",
+        "anniversary": "Work anniversary",
+        "values": "Our values"
+      },
+      "texts": {
+        "launch-bold": {
+          "eyebrow": "NEW",
+          "headline": "Our new product is here",
+          "body": "Discover every feature and try it out today.",
+          "cta": "Take a look"
+        },
+        "big-news": {
+          "eyebrow": "BIG NEWS",
+          "headline": "We are moving to a new studio",
+          "body": "More room for ideas, classes and coffee.",
+          "detail": "From 1 June at 12 Lake Street"
+        },
+        "coming-soon": {
+          "eyebrow": "COMING SOON",
+          "headline": "Something new is coming",
+          "date": "From 12 March"
+        },
+        "release-notes": {
+          "eyebrow": "UPDATE",
+          "headline": "Faster, cleaner, simpler",
+          "body": "Find every change in the release notes.",
+          "version": "v2.0"
+        },
+        "milestone": {
+          "number": "10,000",
+          "headline": "Thank you for 10,000 followers",
+          "body": "We could not have done it without you."
+        },
+        "back-open": {
+          "eyebrow": "GOOD NEWS",
+          "headline": "We are back for you",
+          "body": "Open again from Monday: weekdays 8 am to 6 pm, Saturdays 9 am to 4 pm."
+        },
+        "newsletter": {
+          "eyebrow": "NEWSLETTER",
+          "headline": "New this March",
+          "list": "Three new classes\nTips from the team\nSpring dates",
+          "cta": "Subscribe now"
+        },
+        "quote-classic": {
+          "mark": "“",
+          "quote": "Good design is as little design as possible.",
+          "author": "First Last",
+          "role": "Designer"
+        },
+        "quote-card": {
+          "quote": "Creativity takes the courage to make mistakes and keep going.",
+          "author": "First Last",
+          "role": "Founder, Company"
+        },
+        "quote-bold": {
+          "quote": "Just get started",
+          "author": "First Last"
+        },
+        "quote-notebook": {
+          "quote": "One small step every day, and suddenly you have come a long way.",
+          "author": "First Last"
+        },
+        "quote-split": {
+          "mark": "“",
+          "quote": "The best idea often comes with the second coffee.",
+          "author": "First Last"
+        },
+        "testimonial": {
+          "initials": "AM",
+          "quote": "Working together was easy, and the result went beyond what we hoped for.",
+          "author": "Anna Miller",
+          "role": "Head of Marketing, Company"
+        },
+        "quote-botanical": {
+          "quote": "What you sow today, you will harvest tomorrow.",
+          "author": "First Last"
+        },
+        "event-date": {
+          "day": "14",
+          "month": "MARCH",
+          "title": "Open house day",
+          "details": "10 am to 4 pm, Harbour Workshop",
+          "cta": "Come and visit!"
+        },
+        "webinar": {
+          "eyebrow": "LIVE WEBINAR",
+          "title": "Colours that sell",
+          "when": "Thursday, 20 March, 6 pm",
+          "speaker": "With First Last"
+        },
+        "workshop": {
+          "eyebrow": "WORKSHOP",
+          "title": "Design your own patterns",
+          "details": "Saturday, 5 April, 9 am to noon\nSign up by 1 April"
+        },
+        "meetup": {
+          "eyebrow": "MEETUP",
+          "title": "Design and code after work",
+          "details": "Wednesday, 7 pm\nCulture House, Room 2\nFree entry",
+          "cta": "Save your seat"
+        },
+        "save-the-date": {
+          "eyebrow": "Save the Date",
+          "date": "21.06.",
+          "details": "Summer party in the garden\nfrom 5 pm"
+        },
+        "concert": {
+          "eyebrow": "LIVE IN THE PARK",
+          "title": "Summer Sound",
+          "details": "Friday, 8 August\nDoors open 7 pm"
+        },
+        "countdown": {
+          "eyebrow": "ONLY",
+          "title": "3 days",
+          "details": "until the big launch"
+        },
+        "sale-percent": {
+          "percent": "-30%",
+          "headline": "Summer sale",
+          "note": "Ends Sunday"
+        },
+        "product-launch": {
+          "eyebrow": "NEW IN STORE",
+          "headline": "The bag for every day",
+          "body": "Light, tough and available in five colours.",
+          "price": "$49",
+          "cta": "Order now"
+        },
+        "flash-sale": {
+          "headline": "Flash Sale",
+          "body": "40% off everything, today only",
+          "timer": "12:00:00"
+        },
+        "discount-code": {
+          "headline": "20% off your first order",
+          "body": "Enter the code at checkout.",
+          "code": "MUSTER20"
+        },
+        "black-week": {
+          "headline": "Black Week",
+          "offer": "Up to 40% off everything",
+          "note": "From 24 to 30 November, while stocks last."
+        },
+        "new-arrival": {
+          "eyebrow": "JUST ARRIVED",
+          "headline": "Our new collection",
+          "body": "Light fabrics, fresh colours, fair prices.",
+          "cta": "Shop now"
+        },
+        "free-shipping": {
+          "headline": "Free shipping over $50",
+          "body": "On every order until the end of the month.",
+          "cta": "Shop now"
+        },
+        "tips-list": {
+          "eyebrow": "TIPS",
+          "headline": "3 tips for better photos",
+          "step1-n": "1",
+          "step1-text": "Use soft daylight",
+          "step2-n": "2",
+          "step2-text": "Keep the background calm",
+          "step3-n": "3",
+          "step3-text": "Get closer"
+        },
+        "how-to": {
+          "eyebrow": "HOW TO",
+          "headline": "Your pattern in 3 steps",
+          "steps": "1. Pick a tool\n2. Press the space bar\n3. Export and share"
+        },
+        "did-you-know": {
+          "eyebrow": "Did you know?",
+          "fact": "People take in a picture much faster than text.",
+          "source": "Source: name of the source"
+        },
+        "myth-fact": {
+          "myth-label": "Myth",
+          "myth": "Good design needs expensive software.",
+          "fact-label": "Fact",
+          "fact": "With the right tools it works for free in the browser."
+        },
+        "checklist": {
+          "headline": "Checklist for your post",
+          "item1": "Clear message",
+          "item2": "Easy to read type",
+          "item3": "Strong contrast",
+          "item4": "Do not forget the logo"
+        },
+        "quick-tip": {
+          "eyebrow": "TIP",
+          "tip": "Less text, bigger type: that is how your post gets read.",
+          "body": "Find more tips on our blog."
+        },
+        "hiring": {
+          "eyebrow": "We are hiring",
+          "role": "UX designer",
+          "details": "80 to 100%, Zurich or remote\nStart date flexible",
+          "cta": "Apply now"
+        },
+        "welcome": {
+          "initials": "LM",
+          "headline": "Welcome to the team!",
+          "name": "Lea Miller",
+          "role": "Project lead",
+          "body": "We are excited to work with you."
+        },
+        "team-intro": {
+          "headline": "This is us",
+          "body": "A small team with big ideas, in Zurich since 2016.",
+          "p1": "AB",
+          "p2": "CD",
+          "p3": "EF"
+        },
+        "job-story": {
+          "eyebrow": "We are looking for you",
+          "role": "Social media manager",
+          "details": "60 to 80%\nOffice in Bern, partly remote\nSmall, friendly team",
+          "cta": "Learn more"
+        },
+        "anniversary": {
+          "number": "5",
+          "headline": "years with us",
+          "name": "First Last",
+          "body": "Thank you for your work and all the great ideas."
+        },
+        "values": {
+          "headline": "Our values",
+          "v1-title": "Open",
+          "v1": "We share what we know and we listen.",
+          "v2-title": "Bold",
+          "v2": "We try new things.",
+          "v3-title": "Fair",
+          "v3": "We act honestly and with respect."
+        }
+      }
+    },
+    "brand": {
+      "apply": "Apply brand",
+      "applyHint": "Use the palette, fonts and logo of your brand kit",
+      "applying": "Applying …",
+      "applied": "Brand kit applied: {parts}.",
+      "partColors": "colours",
+      "partFonts": "{count, plural, one {font in # text} other {fonts in # texts}}",
+      "partLogo": "logo",
+      "nothing": "Your brand kit already matches: nothing to change.",
+      "failed": "The brand kit could not be applied.",
+      "emptyTitle": "Your brand kit is still empty",
+      "emptyText": "Add a palette, fonts or a logo in the <link>brand kit</link>. Then one click puts them all into your design.",
+      "close": "Close"
     }
   },
   "SocialDesigns": {

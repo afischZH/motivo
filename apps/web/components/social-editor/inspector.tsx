@@ -11,6 +11,7 @@ import { listShapePacks } from "@musterli/engine";
 import {
   ANCHORS,
   FONT_CATEGORIES,
+  FONT_ROLES,
   FONT_SIZE_MAX,
   FONT_SIZE_MIN,
   LIBRARY_FONTS,
@@ -443,6 +444,30 @@ function TextFields(props: LayerProps<TextLayer>) {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <FontField {...props} />
+        <SelectField
+          label={t("fontRole")}
+          value={layer.fontRole ?? "auto"}
+          options={(["auto", ...FONT_ROLES] as const).map((r) => ({
+            value: r,
+            label: t(`fontRoles.${r}`),
+          }))}
+          className="col-span-2"
+          testId="text-font-role"
+          onChange={(role) =>
+            onUpdate(
+              layer.id,
+              (l) => {
+                if (l.kind !== "text") return l;
+                const next: TextLayer = { ...l };
+                if (role === "auto") delete next.fontRole;
+                else next.fontRole = role;
+                return next;
+              },
+              "text-font-role",
+            )
+          }
+        />
+        <p className="col-span-2 -mt-1 text-xs text-muted-foreground">{t("fontRoleHint")}</p>
         <NumberField
           label={t("size")}
           value={layer.fontSize}

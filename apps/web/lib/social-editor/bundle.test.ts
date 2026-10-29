@@ -48,3 +48,28 @@ describe("Konva stays on the social editor page", () => {
     expect(pages.map(rel)).toEqual(["app/[locale]/social-editor/edit/page.tsx"]);
   });
 });
+
+/**
+ * The 40 templates (scene data and background references) load when the
+ * template picker opens, never with the editor or any other page.
+ */
+describe("templates stay out of the page bundles", () => {
+  it("are imported statically only as types", () => {
+    const offenders = files.filter((path) =>
+      /^import\s+(?!type\b)[^;]*from\s+["']@musterli\/scene\/templates["']/m.test(
+        readFileSync(path, "utf8"),
+      ),
+    );
+    expect(offenders.map(rel)).toEqual([]);
+  });
+
+  it("are loaded with import() only by the template picker", () => {
+    const loaders = files.filter((path) =>
+      // Type queries (`typeof import(...)`) and code in comments do not count.
+      /(?<!typeof |`)import\(\s*["']@musterli\/scene\/templates["']/.test(
+        readFileSync(path, "utf8"),
+      ),
+    );
+    expect(loaders.map(rel)).toEqual(["components/social-editor/template-picker.tsx"]);
+  });
+});

@@ -29,6 +29,8 @@ import {
   SOCIAL_FORMATS,
   addLayer,
   alignLayers,
+  applyBrandKit,
+  backgroundBrandColors,
   boundsOf,
   checkSceneFit,
   createBackgroundLayer,
@@ -78,6 +80,7 @@ import {
   type BrandAsset,
   type BrandPalette,
 } from "@musterli/storage";
+import type { SceneTemplate } from "@musterli/scene/templates";
 import { applyBrandPalette, registry } from "@musterli/tool-registry";
 import {
   ChevronLeftIcon,
@@ -85,8 +88,10 @@ import {
   DownloadIcon,
   FilePlusIcon,
   ImagePlusIcon,
+  LayoutTemplateIcon,
   MinusIcon,
   MonitorSmartphoneIcon,
+  PaletteIcon,
   Redo2Icon,
   SaveIcon,
   SquareIcon,
@@ -109,6 +114,7 @@ import {
 } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { templateScene, templateTextMessageKey } from "@/lib/social-editor/templates";
 import { cn } from "@/lib/utils";
 
 import { BackgroundPanel } from "./background-panel";
@@ -128,6 +134,7 @@ import {
   socialEditorReducer,
   type SocialEditorState,
 } from "./state";
+import { TemplatePicker, type TemplateLibrary, type TemplatePickerHandle } from "./template-picker";
 import { useScenePictures } from "./use-pictures";
 
 export interface SocialEditorProps {
@@ -274,7 +281,9 @@ export function SocialEditor(props: SocialEditorProps) {
   const [kit, setKit] = useState<KonvaKit | null>(null);
   const [kitFailed, setKitFailed] = useState(false);
   const [announcement, setAnnouncement] = useState("");
-  const [busy, setBusy] = useState<"save" | "export" | "upload" | null>(null);
+  const [busy, setBusy] = useState<"save" | "export" | "upload" | "brand" | "template" | null>(
+    null,
+  );
   const [exportFormat, setExportFormat] = useState<"png" | "jpg">("png");
   const [exportScale, setExportScale] = useState<1 | 2>(1);
   const [brandPalettes, setBrandPalettes] = useState<readonly BrandPalette[]>([]);
@@ -886,6 +895,123 @@ export function SocialEditor(props: SocialEditorProps) {
     announce(t("newDesign"));
   };
 
+  // ---- templates and brand ------------------------------------------------
+
+  const tTemplates = useTranslations("SocialEditor.templates");
+  /** Sample text of a template text (`<template>.<layer>`) in the user's language. */
+  const templateText = useCallback(
+    // Keys are built from the template data; the template tests check every one exists.
+    (key: string) => tTemplates(templateTextMessageKey(key) as "intro"),
+    [tTemplates],
+  );
+  const pickerRef = useRef<TemplatePickerHandle>(null);
+
+  /** A template as a new design: fonts first, then fitted by Magic Resize. */
+  const openTemplate = async (
+    template: SceneTemplate,
+    library: TemplateLibrary,
+    formatId: string | null,
+  ) => {
+    const m = measureRef.current;
+    if (!m || busy) return;
+    if (stateRef.current.dirty && !window.confirm(tTemplates("confirm"))) return;
+    setBusy("template");
+    try {
+      const raw = library.instantiateTemplate(template, {
+        text: templateText,
+        background: () => null,
+      });
+      const fonts = await loadSceneFonts(raw);
+      const scene = templateScene(library.instantiateTemplate, template, templateText, m, formatId);
+      resizeChain.current = null;
+      setBgLocks(new Set());
+      setMissingFonts(fonts.missing);
+      const name = tTemplates(`names.${template.id}` as "names.launch-bold");
+      dispatch({ type: "load", scene, name, designId: null });
+      window.history.replaceState(null, "", window.location.pathname);
+      announce(
+        tTemplates("opened", {
+          name,
+          format: tRoot(`sizes.${scene.format.id ?? template.format}`),
+        }),
+      );
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const brandEmptyDialog = useRef<HTMLDialogElement>(null);
+  const applyBrandButton = useRef<HTMLButtonElement>(null);
+  const tBrand = useTranslations("SocialEditor.brand");
+
+  /** Palette, fonts and logo of the brand kit on the scene, as one undo step. */
+  const applyBrand = async () => {
+    const m = measureRef.current;
+    if (!m || busy) return;
+    setBusy("brand");
+    try {
+      const [palettes, fonts, logos] = await Promise.all([
+        brandKit.loadPalettes(),
+        brandKit.listFonts(),
+        brandKit.listAssets("logo"),
+      ]);
+      setBrandPalettes(palettes.palettes);
+      setBrandFontSources(fonts);
+      setBrandFonts(fonts.map((f) => ({ id: f.id, name: f.name })));
+      const palette =
+        palettes.palettes.find((p) => p.id === palettes.defaultId) ?? palettes.palettes[0];
+      const first = logos[0];
+      const logoImage = first ? sceneImageSchema.safeParse(first.image) : null;
+      const logo =
+        first && logoImage?.success
+          ? { image: logoImage.data, assetId: first.id, name: first.name }
+          : null;
+      const refs: FontRef[] = fonts
+        .slice(0, 2)
+        .map((f) => ({ kind: "brand", id: f.id, name: f.name }));
+      if (!palette && refs.length === 0 && !logo) {
+        brandEmptyDialog.current?.showModal();
+        return;
+      }
+      // Brand fonts load before anything is measured with them.
+      const loaded = await Promise.all(refs.map((ref) => loadFont(ref, 700, "normal")));
+      const usable = refs.filter((_, i) => loaded[i]);
+      const current = stateRef.current.history.present;
+      const result = applyBrandKit(
+        current,
+        { colors: palette?.colors ?? null, fonts: usable, logo },
+        { measure: m, newLogoId: newSceneId("o") },
+      );
+      let next = result.scene;
+      // The background tool takes the brand colours the texts do not use.
+      const bg = next.layers[0];
+      const tool = bg?.kind === "background" && !bg.locked ? registry.get(bg.toolId) : undefined;
+      if (result.colors && bg?.kind === "background" && tool) {
+        const recolored = applyBrandPalette(tool, bg.params, backgroundBrandColors(next), bgLocks);
+        if (recolored) {
+          next = updateLayer(next, bg.id, () => ({ ...bg, params: recolored.params }));
+          setBgLocks((locks) => new Set([...locks, ...recolored.applied]));
+        }
+      }
+      if (next === current) {
+        announce(tBrand("nothing"));
+        return;
+      }
+      change(next);
+      setFontsVersion((v) => v + 1);
+      const parts = [
+        result.colors ? tBrand("partColors") : null,
+        result.fonts > 0 ? tBrand("partFonts", { count: result.fonts }) : null,
+        result.logos > 0 ? tBrand("partLogo") : null,
+      ].filter((p): p is string => p !== null);
+      announce(tBrand("applied", { parts: parts.join(", ") }));
+    } catch {
+      announce(tBrand("failed"));
+    } finally {
+      setBusy(null);
+    }
+  };
+
   // ---- keyboard -----------------------------------------------------------
 
   const handlers = {
@@ -1159,6 +1285,32 @@ export function SocialEditor(props: SocialEditorProps) {
             <FilePlusIcon aria-hidden="true" />
             {t("new")}
           </button>
+          <button
+            type="button"
+            className={OUTLINE}
+            onClick={() => pickerRef.current?.open()}
+            disabled={!kit || busy !== null}
+            aria-haspopup="dialog"
+            data-testid="open-templates"
+          >
+            <LayoutTemplateIcon aria-hidden="true" />
+            {busy === "template" ? t("loading") : tTemplates("open")}
+          </button>
+          <button
+            ref={applyBrandButton}
+            type="button"
+            className={OUTLINE}
+            onClick={() => void applyBrand()}
+            disabled={!kit || busy !== null || load !== "ready"}
+            aria-describedby={`${fileId}-brand-hint`}
+            data-testid="apply-brand"
+          >
+            <PaletteIcon aria-hidden="true" />
+            {busy === "brand" ? tBrand("applying") : tBrand("apply")}
+          </button>
+          <span id={`${fileId}-brand-hint`} hidden>
+            {tBrand("applyHint")}
+          </span>
           <button
             type="button"
             className={OUTLINE}
@@ -1443,6 +1595,48 @@ export function SocialEditor(props: SocialEditorProps) {
       <p role="status" aria-live="polite" className="sr-only" data-testid="announcer">
         {announcement}
       </p>
+
+      <TemplatePicker
+        ref={pickerRef}
+        kit={kit}
+        measure={measure}
+        currentFormat={scene.format}
+        text={templateText}
+        onPick={(template, library, formatId) => void openTemplate(template, library, formatId)}
+      />
+
+      <dialog
+        ref={brandEmptyDialog}
+        aria-labelledby={`${fileId}-brand-empty`}
+        // The button was disabled while the brand kit loaded: focus goes back explicitly.
+        onClose={() => applyBrandButton.current?.focus()}
+        className="m-auto w-[min(28rem,calc(100vw-2rem))] rounded-2xl border border-border bg-popover p-0 text-popover-foreground shadow-lg backdrop:bg-background/70 backdrop:backdrop-blur-sm"
+        data-testid="brand-empty-dialog"
+      >
+        <div className="grid gap-4 p-5">
+          <h2 id={`${fileId}-brand-empty`} className="text-base font-semibold">
+            {tBrand("emptyTitle")}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {tBrand.rich("emptyText", {
+              link: (chunks) => (
+                <a href={props.brandKitHref} className="text-link underline underline-offset-4">
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className={OUTLINE}
+              onClick={() => brandEmptyDialog.current?.close()}
+            >
+              {tBrand("close")}
+            </button>
+          </div>
+        </div>
+      </dialog>
 
       <dialog
         ref={logoDialog}
