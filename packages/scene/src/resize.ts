@@ -189,6 +189,35 @@ export function fitTextLayer(
   };
 }
 
+/**
+ * A text layer after the user edited it (typed, picked a size, dragged a
+ * side): the font stays as chosen and the box grows to the text's height
+ * (keeping its vertical anchor, then moved inside the canvas). Only when a
+ * word is wider than the box or the text is taller than the canvas does it
+ * fall back to `fitTextLayer`, which shrinks the font. Never cuts text.
+ */
+export function settleTextLayer(
+  layer: TextLayer,
+  measure: TextMeasure,
+  canvas: Pick<SceneFormat, "width" | "height">,
+): TextLayer {
+  const layout = measure.layout(layer.text, textStyleOf(layer), layer.width);
+  if (layout.overflow || layout.height > canvas.height) {
+    return fitTextLayer(layer, measure, canvas.height);
+  }
+  if (layout.height <= layer.height) return layer;
+  const height = layout.height;
+  const anchor = layer.constraints.v;
+  let y =
+    anchor === "start"
+      ? layer.y
+      : anchor === "end"
+        ? layer.y + layer.height - height
+        : layer.y + layer.height / 2 - height / 2;
+  y = Math.min(Math.max(y, 0), canvas.height - height);
+  return { ...layer, y, height };
+}
+
 /** Scales a unit (frames around `center`, details by `f`). */
 function scaleUnit(layers: Layer[], f: number, cx: number, cy: number): Layer[] {
   return layers.map((l) =>

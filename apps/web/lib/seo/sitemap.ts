@@ -29,6 +29,7 @@ export function sitemapRoutes(): AppRoute[] {
   return [
     { page: "home" },
     { page: "tools" },
+    { page: "socialEditor" },
     ...populatedCategories().map((category): AppRoute => ({ page: "category", category })),
     ...registry.list().map((tool): AppRoute => ({ page: "landing", toolId: tool.id })),
     { page: "patterns" },

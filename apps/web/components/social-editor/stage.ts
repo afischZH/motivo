@@ -61,6 +61,8 @@ export class SocialStage {
   private selection: readonly string[] = [];
   private zoom = 1;
   private drag: { start: Box; abs: { x: number; y: number } } | null = null;
+  /** An update that came in while the pointer drags or transforms (applied after). */
+  private pending: Parameters<SocialStage["update"]> | null = null;
 
   constructor(kit: KonvaKit, container: HTMLDivElement, callbacks: StageCallbacks) {
     this.kit = kit;
@@ -121,6 +123,12 @@ export class SocialStage {
   }
 
   update(scene: Scene, pictures: ScenePictures, selection: readonly string[], zoom: number): void {
+    // Redrawing replaces the nodes: never under the pointer's hands.
+    if (this.drag || this.transformer.isTransforming()) {
+      this.pending = [scene, pictures, selection, zoom];
+      return;
+    }
+    this.pending = null;
     const formatChanged =
       !this.scene ||
       this.scene.format.width !== scene.format.width ||
@@ -260,7 +268,19 @@ export class SocialStage {
     const changes = this.movingIds(id)
       .map((i) => this.frameOfNode(i))
       .filter((c): c is FrameChange => c !== null);
-    if (changes.length > 0) this.callbacks.onFrames(changes, "move");
+    this.settle(changes, "move");
+  }
+
+  /** Reports the frames; React then calls `update` with the new scene. */
+  private settle(changes: FrameChange[], key: "move" | "transform"): void {
+    const pending = this.pending;
+    this.pending = null;
+    if (changes.length > 0) {
+      // React answers with the new scene and the latest pictures.
+      this.callbacks.onFrames(changes, key);
+    } else if (pending) {
+      this.update(...pending);
+    }
   }
 
   private reportTransform(): void {
@@ -276,7 +296,7 @@ export class SocialStage {
       }
       changes.push(change);
     }
-    if (changes.length > 0) this.callbacks.onFrames(changes, "transform");
+    this.settle(changes, "transform");
   }
 
   /** The selection's box on screen, relative to the container (for screen readers and tests). */

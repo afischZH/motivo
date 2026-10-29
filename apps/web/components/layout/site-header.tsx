@@ -19,9 +19,16 @@ export function SiteHeader() {
   const tTheme = useTranslations("Theme");
   const tDesigns = useTranslations("Designs");
   const tBrand = useTranslations("BrandKit");
+  const tSocial = useTranslations("SocialLanding");
 
   const items: HeaderNavItem[] = [
     { href: compilePath("/tools", locale), label: t("toolsNav"), icon: "tools" },
+    {
+      href: compilePath("/social-editor", locale),
+      label: tSocial("nav"),
+      icon: "social",
+      testId: "social-editor-nav",
+    },
     { href: compilePath("/css-patterns", locale), label: tPatterns("nav"), icon: "patterns" },
     { href: compilePath("/convert", locale), label: tConvert("nav"), icon: "convert" },
     {

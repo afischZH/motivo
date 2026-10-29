@@ -9,7 +9,7 @@ import {
 } from "./factory";
 import { MAGIC_RESIZE_TEST_FORMATS, SOCIAL_FORMATS, sceneFormat } from "./formats";
 import { ANCHORS, SIZE_MODES, sceneSchema, type Layer, type Scene } from "./schema";
-import { checkSceneFit, fitTextLayer, resizeScene } from "./resize";
+import { checkSceneFit, fitTextLayer, settleTextLayer, resizeScene } from "./resize";
 import { EXAMPLE_SCENES, TEST_PNG } from "./test-scenes";
 import { createStubMeasure, fitText } from "./text";
 
@@ -76,6 +76,38 @@ describe("fitTextLayer", () => {
       "end",
     );
     expect(bottom.y + bottom.height).toBeCloseTo(200, 5);
+  });
+});
+
+describe("settleTextLayer", () => {
+  const f = sceneFormat("square");
+  const base = createTextLayer("t", f, "Kurz", { fontSize: 60 });
+
+  it("keeps a text that fits as it is", () => {
+    const layer = { ...base, width: 600, height: 200 };
+    expect(settleTextLayer(layer, measure, f)).toBe(layer);
+  });
+
+  it("keeps the font and grows the box inside the canvas for longer text", () => {
+    const layer = {
+      ...base,
+      text: "Ein ziemlich langer Titel fuer eine schmale Box",
+      x: 100,
+      y: 1000,
+      width: 400,
+      height: 72,
+    };
+    const out = settleTextLayer(layer, measure, f);
+    expect(out.fontSize).toBe(60);
+    expect(out.height).toBeGreaterThan(72);
+    expect(out.y + out.height).toBeLessThanOrEqual(1080);
+    expect(out.y).toBeGreaterThanOrEqual(0);
+  });
+
+  it("shrinks the font when a word is wider than the box", () => {
+    const layer = { ...base, text: "Donaudampfschifffahrt", width: 200, height: 72 };
+    const out = settleTextLayer(layer, measure, f);
+    expect(out.fontSize).toBeLessThan(60);
   });
 });
 

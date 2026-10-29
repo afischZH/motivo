@@ -5,6 +5,7 @@ import {
   CodeXmlIcon,
   HeartIcon,
   LayoutGridIcon,
+  MegaphoneIcon,
   MenuIcon,
   PaletteIcon,
   ShapesIcon,
@@ -46,6 +47,7 @@ function isCurrent(pathname: string, href: string): boolean {
 
 const ICONS = {
   tools: ShapesIcon,
+  social: MegaphoneIcon,
   patterns: CodeXmlIcon,
   convert: ArrowLeftRightIcon,
   designs: LayoutGridIcon,

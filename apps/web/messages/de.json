@@ -6252,5 +6252,347 @@
       "bow": "Schleife",
       "mandala": "Mandala"
     }
+  },
+  "SocialLanding": {
+    "nav": "Social-Editor",
+    "metaTitle": "Social-Media-Editor: Beiträge für Instagram, LinkedIn und YouTube gratis gestalten",
+    "metaDescription": "Gestalte Social-Media-Beiträge mit Hintergründen, Text, Formen und Logo im Browser. Magic Resize passt dein Design an jedes Format an. Gratis, ohne Konto.",
+    "badge": "Neu",
+    "heading": "Social-Media-Editor",
+    "lead": "Beiträge, Storys und Thumbnails mit Hintergrund, Text, Formen und deinem Logo. Wechsle das Format, und Magic Resize ordnet alles neu an.",
+    "cta": "Editor öffnen",
+    "ctaHint": "Gratis, ohne Konto. Alles bleibt in deinem Browser.",
+    "whatIsHeading": "Was ist der Social-Media-Editor?",
+    "whatIs": "Ein Editor für Bilder in Social-Media-Formaten. Der Hintergrund kommt aus einem der Generatoren von Musterli, darüber legst du Text, Formen, Bilder und das Logo aus deinem Brand Kit. Jede Ebene merkt sich, woran sie hängt (Ecke, Mitte oder Rand). So passt Magic Resize dasselbe Design an Quadrat, Hochformat, Story oder Querformat an, ohne dass Text abgeschnitten wird.",
+    "featuresHeading": "Was du damit machen kannst",
+    "useCases": {
+      "u1": {
+        "title": "Ein Design, alle Formate",
+        "text": "Gestalte einmal im Quadrat und wechsle zu Story, Pinterest-Pin oder YouTube-Thumbnail. Text wird kleiner oder bricht um, statt abgeschnitten zu werden."
+      },
+      "u2": {
+        "title": "Hintergründe aus den Generatoren",
+        "text": "Mesh-Verläufe, Muster, Blobs oder Shader-Verläufe als Hintergrund. Mit der Leertaste kommt eine neue Variante, die Regler passt du im Seitenbereich an."
+      },
+      "u3": {
+        "title": "Markengerecht",
+        "text": "Farben laufen über Farbplätze der Szene. Übernimm deine Brand-Palette und dein Logo aus dem Brand Kit mit einem Klick."
+      },
+      "u4": {
+        "title": "Ebenen wie gewohnt",
+        "text": "Verschieben, skalieren, drehen, ausrichten, verteilen und gruppieren. Mit Hilfslinien, Einrasten und Rückgängig."
+      },
+      "u5": {
+        "title": "Export in voller Grösse",
+        "text": "PNG oder JPG in Formatgrösse oder doppelt so gross für scharfe Bilder auf hochauflösenden Bildschirmen."
+      },
+      "u6": {
+        "title": "Gespeichert in deinem Browser",
+        "text": "Designs landen unter Meine Designs, ein Entwurf wird laufend gesichert. Als Datei exportierst du sie für ein anderes Gerät."
+      }
+    },
+    "howToHeading": "So gehts",
+    "steps": {
+      "t1": "Öffne den Editor und wähle ein Format, zum Beispiel Instagram 4:5.",
+      "t2": "Wähle einen Hintergrund und drücke die Leertaste, bis dir die Variante gefällt.",
+      "t3": "Füge Text, Formen, Bilder oder dein Logo hinzu und richte sie aus.",
+      "t4": "Wechsle bei Bedarf das Format. Magic Resize ordnet die Ebenen neu an.",
+      "t5": "Exportiere als PNG oder JPG und speichere das Design unter Meine Designs."
+    },
+    "ctaSecondary": "Jetzt im Social-Media-Editor gestalten",
+    "formatsHeading": "Formate",
+    "formatsLead": "Die gängigen Grössen für Beiträge, Storys, Titelbilder und Thumbnails:",
+    "privacyHeading": "Nichts verlässt dein Gerät",
+    "privacy": "Gerendert und gespeichert wird in deinem Browser. Hochgeladene Bilder werden geprüft, SVG-Dateien bereinigt, und nichts davon wird an einen Server geschickt.",
+    "faqHeading": "Häufige Fragen",
+    "faq": {
+      "q1": "Ist der Social-Media-Editor gratis?",
+      "a1": "Ja. Musterli ist komplett gratis und spendenfinanziert. Es gibt kein Konto, kein Abo und kein Wasserzeichen.",
+      "q2": "Was macht Magic Resize?",
+      "a2": "Jede Ebene hängt an einer Seite, an der Mitte oder spannt sich über die ganze Breite. Beim Formatwechsel bleiben Abstände gleich, Grössen folgen der kurzen Seite, und Text wird kleiner oder bricht um. Abgeschnitten wird nichts.",
+      "q3": "Wo werden meine Designs gespeichert?",
+      "a3": "Im Speicher deines Browsers (IndexedDB) auf diesem Gerät. Unter Meine Designs kannst du sie als Datei exportieren und auf einem anderen Gerät wieder importieren.",
+      "q4": "Kann ich eigene Bilder und mein Logo verwenden?",
+      "a4": "Ja. Bilder lädst du direkt im Editor hoch, Logos kommen aus deinem Brand Kit. Beides bleibt lokal und gehört nie zu einem Teilen-Link.",
+      "q5": "Funktioniert der Editor auf dem Handy?",
+      "a5": "Anschauen und exportieren geht überall. Zum Gestalten ist ein grosser Bildschirm am angenehmsten."
+    },
+    "teaserTitle": "Neu: Social-Media-Editor",
+    "teaserText": "Hintergrund aus einem Generator, dazu Text, Formen und dein Logo. Magic Resize passt das Design an jedes Format an.",
+    "teaserCta": "Zum Social-Media-Editor"
+  },
+  "SocialEditor": {
+    "page": {
+      "metaTitle": "Social-Media-Editor",
+      "metaDescription": "Social-Media-Beiträge mit Hintergrund, Text, Formen und Logo gestalten. Gratis, im Browser."
+    },
+    "title": "Social-Media-Editor",
+    "smallScreen": "Am besten auf grossem Bildschirm. Anschauen und exportieren geht auch hier.",
+    "toolbar": "Design",
+    "back": "Social-Editor",
+    "name": "Name",
+    "untitled": "Unbenanntes Design",
+    "format": "Format",
+    "customFormat": "Eigenes Format ({width} × {height})",
+    "undo": "Rückgängig",
+    "redo": "Wiederholen",
+    "new": "Neu",
+    "newConfirm": "Neues Design beginnen? Nicht gespeicherte Änderungen gehen verloren.",
+    "newDesign": "Neues Design begonnen.",
+    "saveCopy": "Als Kopie speichern",
+    "save": "Speichern",
+    "saving": "Speichert …",
+    "myDesigns": "Meine Designs",
+    "saved": "«{name}» gespeichert.",
+    "savedCopy": "Kopie «{name}» gespeichert.",
+    "saveFailed": "Speichern hat nicht geklappt. Ist der Speicher des Browsers voll oder gesperrt?",
+    "copyName": "{name} (Kopie)",
+    "layersPanel": "Ebenen und Hinzufügen",
+    "propertiesPanel": "Eigenschaften",
+    "canvasRegion": "Arbeitsfläche",
+    "canvasRole": "Arbeitsfläche",
+    "canvasLabel": "Design {width} × {height} Pixel. Ausgewählt: {selection}. Pfeiltasten verschieben um 1 Pixel, mit Umschalt um 10 Pixel.",
+    "nothingSelected": "nichts",
+    "loading": "Editor wird geladen …",
+    "loadFailed": "Der Editor konnte nicht geladen werden. Lade die Seite neu.",
+    "add": {
+      "title": "Hinzufügen",
+      "text": "Text",
+      "rect": "Rechteck",
+      "ellipse": "Ellipse",
+      "line": "Linie",
+      "library": "Form",
+      "image": "Bild",
+      "uploading": "Lädt …",
+      "logo": "Logo"
+    },
+    "added": {
+      "text": "Text hinzugefügt.",
+      "rect": "Rechteck hinzugefügt.",
+      "ellipse": "Ellipse hinzugefügt.",
+      "line": "Linie hinzugefügt.",
+      "library": "Form hinzugefügt.",
+      "image": "Bild hinzugefügt.",
+      "logo": "Logo hinzugefügt."
+    },
+    "limitLayers": "Mehr Ebenen gehen nicht (höchstens 100).",
+    "removed": "{count, plural, one {Eine Ebene} other {# Ebenen}} entfernt.",
+    "duplicated": "{count, plural, one {Eine Ebene} other {# Ebenen}} dupliziert.",
+    "grouped": "Gruppiert.",
+    "ungrouped": "Gruppe aufgelöst.",
+    "starterHeadline": "Dein Titel hier",
+    "newText": "Neuer Text",
+    "formatChanged": "Format {format}, {width} × {height}. Die Ebenen wurden angepasst.",
+    "logoInvalid": "Dieses Logo lässt sich nicht verwenden.",
+    "exported": "{file} exportiert.",
+    "exportFailed": "Export hat nicht geklappt.",
+    "export": {
+      "format": "Dateiformat",
+      "size": "Grösse",
+      "scale": "{scale}× ({width} × {height})",
+      "running": "Exportiert …",
+      "run": "Exportieren"
+    },
+    "logos": {
+      "title": "Logo aus dem Brand Kit",
+      "empty": "Im Brand Kit sind noch keine Logos. <link>Logo im Brand Kit hinzufügen</link>",
+      "close": "Schliessen",
+      "pick": "{name} einfügen",
+      "unnamed": "Logo"
+    },
+    "layers": {
+      "title": "Ebenen",
+      "hint": "Oben liegt vorne. F2 benennt um, Alt und Pfeil hoch oder runter verschiebt die Ebene.",
+      "label": "Ebenen, oberste zuerst",
+      "renameLabel": "Neuer Name für {name}",
+      "rowLabel": "{name}, {kind}, Ebene {position} von {count}",
+      "kinds": {
+        "background": "Hintergrund",
+        "text": "Text",
+        "image": "Bild",
+        "shape": "Form",
+        "logo": "Logo"
+      },
+      "group": "Gruppe",
+      "hide": "{name} ausblenden",
+      "show": "{name} einblenden",
+      "lock": "{name} sperren",
+      "unlock": "{name} entsperren"
+    },
+    "color": {
+      "none": "Keine",
+      "slot": "Farbplatz {n} ({color})",
+      "custom": "Eigene Farbe"
+    },
+    "inspector": {
+      "arrange": "Anordnen",
+      "arrangeMany": "{count} Ebenen anordnen",
+      "align": "Ausrichten",
+      "alignLeft": "Links ausrichten",
+      "alignHCenter": "Horizontal zentrieren",
+      "alignRight": "Rechts ausrichten",
+      "alignTop": "Oben ausrichten",
+      "alignVCenter": "Vertikal zentrieren",
+      "alignBottom": "Unten ausrichten",
+      "distributeX": "Horizontal verteilen",
+      "distributeY": "Vertikal verteilen",
+      "alignHintOne": "Eine Ebene richtet sich an der Arbeitsfläche aus.",
+      "alignHintMany": "Mehrere Ebenen richten sich aneinander aus. Verteilen geht ab drei.",
+      "group": "Gruppieren",
+      "ungroup": "Gruppe auflösen",
+      "forward": "Eine Ebene nach vorne",
+      "backward": "Eine Ebene nach hinten",
+      "duplicate": "Duplizieren",
+      "delete": "Löschen",
+      "frame": "Position und Grösse",
+      "x": "X",
+      "y": "Y",
+      "width": "Breite",
+      "height": "Höhe",
+      "rotation": "Drehung (Grad)",
+      "opacity": "Deckkraft (%)"
+    },
+    "text": {
+      "title": "Text",
+      "content": "Inhalt",
+      "font": "Schrift",
+      "fonts": {
+        "sans": "Ohne Serifen",
+        "serif": "Mit Serifen",
+        "mono": "Monospace"
+      },
+      "size": "Grösse",
+      "weight": "Stärke",
+      "weights": {
+        "400": "Normal",
+        "500": "Mittel",
+        "700": "Fett",
+        "900": "Extrafett"
+      },
+      "minSize": "Kleinste Grösse",
+      "align": "Ausrichtung",
+      "aligns": {
+        "left": "Links",
+        "center": "Mitte",
+        "right": "Rechts"
+      },
+      "valign": "Vertikal",
+      "valigns": {
+        "top": "Oben",
+        "middle": "Mitte",
+        "bottom": "Unten"
+      },
+      "lineHeight": "Zeilenhöhe",
+      "letterSpacing": "Laufweite (em)",
+      "color": "Farbe",
+      "italic": "Kursiv",
+      "shadow": "Schatten",
+      "placeholder": "Platzhalter (für Vorlagen)"
+    },
+    "shape": {
+      "title": "Form",
+      "form": "Formenbibliothek",
+      "fill": "Füllung",
+      "lineColor": "Linienfarbe",
+      "stroke": "Kontur",
+      "lineWidth": "Linienstärke",
+      "strokeWidth": "Konturstärke",
+      "radius": "Eckenradius"
+    },
+    "image": {
+      "title": "Bild",
+      "fit": "Einpassen",
+      "fits": {
+        "cover": "Füllen",
+        "contain": "Ganz zeigen"
+      },
+      "radius": "Eckenradius",
+      "placeholder": "Platzhalter (für Vorlagen)"
+    },
+    "constraints": {
+      "title": "Magic Resize",
+      "hint": "Woran die Ebene beim Formatwechsel hängt. Beim Verschieben wird es neu bestimmt.",
+      "h": "Horizontal",
+      "v": "Vertikal",
+      "hAnchors": {
+        "start": "Links",
+        "center": "Mitte",
+        "end": "Rechts",
+        "stretch": "Ganze Breite"
+      },
+      "vAnchors": {
+        "start": "Oben",
+        "center": "Mitte",
+        "end": "Unten",
+        "stretch": "Ganze Höhe"
+      },
+      "size": "Grösse folgt",
+      "sizes": {
+        "short": "der kurzen Seite",
+        "width": "der Breite",
+        "height": "der Höhe"
+      },
+      "bleed": "Darf über den Rand hinausragen (Dekoration)"
+    },
+    "background": {
+      "title": "Hintergrund",
+      "tool": "Generator",
+      "variant": "Neue Variante",
+      "applyPalette": "Szenenfarben anwenden",
+      "variantHint": "Leertaste: neue Variante. Mit dem Schloss behältst du einen Regler.",
+      "newVariant": "Neue Variante des Hintergrunds.",
+      "paletteUnsupported": "Dieser Hintergrund übernimmt keine Farben.",
+      "paletteApplied": "Szenenfarben auf den Hintergrund angewendet."
+    },
+    "palette": {
+      "title": "Farben der Szene",
+      "hint": "Texte und Formen mit einem Farbplatz folgen diesen Farben.",
+      "slot": "Platz {n}",
+      "brand": "Brand-Palette übernehmen",
+      "brandPick": "Palette wählen …",
+      "brandUnnamed": "Palette ohne Namen"
+    }
+  },
+  "SocialDesigns": {
+    "title": "Social-Designs",
+    "intro": "Deine Designs aus dem Social-Media-Editor, gespeichert in diesem Browser.",
+    "exportAll": "Alle exportieren",
+    "import": "Importieren",
+    "failed": "Das hat nicht geklappt.",
+    "exported": "{count, plural, one {Ein Design} other {# Designs}} exportiert.",
+    "importErrors": {
+      "too-large": "Die Datei ist zu gross. Höchstens 32 MB sind erlaubt.",
+      "empty": "Die Datei ist leer.",
+      "malformed": "Die Datei ist beschädigt oder kein JSON.",
+      "forbidden-keys": "Die Datei enthält unzulässige Einträge und wurde nicht importiert.",
+      "wrong-format": "Das ist keine Social-Design-Datei von Musterli.",
+      "unsupported-version": "Diese Datei stammt von einer neueren Version von Musterli.",
+      "too-many": "Die Datei enthält zu viele Designs (höchstens 500).",
+      "designs-file": "Das ist eine Datei mit Tool-Designs. Importiere sie oben unter Meine Designs.",
+      "brand-kit-file": "Das ist eine Brand-Kit-Datei. Importiere sie im Brand Kit.",
+      "timeout": "Das Prüfen der Datei hat zu lange gedauert.",
+      "aborted": "Import abgebrochen."
+    },
+    "imported": "{added, plural, =0 {Keine neuen Designs importiert.} one {Ein Design importiert.} other {# Designs importiert.}}",
+    "importDuplicates": "{count, plural, one {Eines war schon da.} other {# waren schon da.}}",
+    "importSkipped": "{count, plural, one {Eines wurde übersprungen, weil es ungültig ist.} other {# wurden übersprungen, weil sie ungültig sind.}}",
+    "undo": "Rückgängig",
+    "dismiss": "Schliessen",
+    "unavailable": "Der Speicher dieses Browsers ist nicht verfügbar (zum Beispiel im privaten Modus).",
+    "empty": "Noch keine Social-Designs.",
+    "emptyCta": "Social-Media-Editor öffnen",
+    "noThumbnail": "Keine Vorschau",
+    "meta": "{width} × {height} · {date}",
+    "actionsLabel": "Aktionen für {name}",
+    "openLabel": "{name} öffnen",
+    "open": "Öffnen",
+    "rename": "Umbenennen",
+    "duplicate": "Duplizieren",
+    "copyName": "{name} (Kopie)",
+    "delete": "Löschen",
+    "deleted": "«{name}» gelöscht.",
+    "renameLabel": "Neuer Name für {name}",
+    "renameSave": "Sichern",
+    "cancel": "Abbrechen"
   }
 }

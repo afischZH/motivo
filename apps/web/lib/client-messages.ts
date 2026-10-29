@@ -27,8 +27,8 @@ export const EDITOR_CLIENT_NAMESPACES = [
   "Shapes",
 ] as const;
 
-/** "Meine Designs": only its own texts (tool names come as props). */
-export const MY_DESIGNS_CLIENT_NAMESPACES = ["Designs"] as const;
+/** "Meine Designs": its own texts and the social designs section (tool names come as props). */
+export const MY_DESIGNS_CLIENT_NAMESPACES = ["Designs", "SocialDesigns"] as const;
 
 /** Brand Kit page: only its own texts. */
 export const BRAND_KIT_CLIENT_NAMESPACES = ["BrandKit"] as const;
@@ -59,4 +59,12 @@ export function editorMessages(messages: Messages): Messages {
       }),
     ),
   };
+}
+
+/**
+ * Social media editor: the editor messages (generic controls of the
+ * background tools, upload errors, size names) plus its own texts.
+ */
+export function socialEditorMessages(messages: Messages): Messages {
+  return { ...editorMessages(messages), ...pickMessages(messages, ["SocialEditor"]) };
 }
