@@ -19,6 +19,7 @@ const DETERMINISTIC_PACKAGES = [
   "packages/shaders/**",
   "packages/tool-registry/src/**",
   "packages/svg-sanitizer/**",
+  "packages/scene/src/**",
 ];
 
 const NON_DETERMINISTIC_MESSAGE =

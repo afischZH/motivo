@@ -247,6 +247,22 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
 
+  packages/scene:
+    dependencies:
+      '@musterli/engine':
+        specifier: workspace:*
+        version: link:../engine
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@musterli/config':
+        specifier: workspace:*
+        version: link:../config
+      '@musterli/tool-registry':
+        specifier: workspace:*
+        version: link:../tool-registry
+
   packages/shaders:
     dependencies:
       '@musterli/effects':
