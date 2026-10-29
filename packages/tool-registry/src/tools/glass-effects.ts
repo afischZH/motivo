@@ -199,6 +199,8 @@ export const glassEffectsTool = defineTool({
   // The picture never leaves the device; its fit, position and embed choice
   // mean nothing without it, so they stay local too (short share links).
   localParams: ["backgroundImage", "imageFit", "imagePosition", "embedImage"],
+  // "Weiterverwenden in": a design of another tool becomes the backdrop.
+  imageTargets: [{ param: "backgroundImage" }],
   migrateParams(raw) {
     if (ADDED_IN_AP06B.every((key) => key in raw)) return raw;
     const out: Record<string, unknown> = { ...raw };

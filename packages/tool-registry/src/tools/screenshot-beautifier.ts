@@ -663,6 +663,8 @@ export const screenshotBeautifierTool = defineTool({
   sizePresets: SIZE_PRESETS,
   // The pictures, the address typed for them and the live view never leave the device.
   localParams: ["screenshot", "url", "screenshotTablet", "screenshotPhone", "live"],
+  // "Weiterverwenden in": a design of another tool shows in the window or on the devices.
+  imageTargets: [{ param: "screenshot" }],
   migrateParams,
   presets: [
     preset("aurora", {}),

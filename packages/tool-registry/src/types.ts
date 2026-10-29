@@ -866,6 +866,29 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
    * that turns what they show into image params. See `LiveView`.
    */
   liveView?: LiveView<Params<S>>;
+  /**
+   * Upload params that take a picture handed over from another tool
+   * ("Weiterverwenden in", M5b-AP04; docs/ARCHITECTURE.md 4.18). Each must
+   * be an image param (`kind: "image"`) listed in `localParams`. The photo
+   * param of `photoSource` and the picker of `imageInput` are targets
+   * without a line here; see `imageTargetsOf`.
+   */
+  // Spelled out like `photoSource`: the generic interface would be contravariant in `P`.
+  imageTargets?: readonly { param: ParamKey<Params<S>>; labelKey?: string }[];
+  /**
+   * The colours of a colour tool for "save as brand palette" (M5b-AP04):
+   * what the design shows, in display order, as `#rrggbb`. Pure and cheap.
+   * The editor keeps at most the brand palette maximum (10, picked evenly
+   * across longer scales) and offers nothing below two distinct colours.
+   */
+  paletteOutput?(params: Params<S>): readonly string[];
+}
+
+/** A param that takes a picture from another tool; see `ToolDefinition.imageTargets`. */
+export interface ImageTarget<P> {
+  param: ParamKey<P>;
+  /** i18n key of the target's name in the menu. Default: the param label. */
+  labelKey?: string;
 }
 
 /**

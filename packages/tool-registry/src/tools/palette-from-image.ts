@@ -195,6 +195,7 @@ export const paletteFromImageTool = defineTool({
     },
   },
   exports: ["svg", "png", "jpg", "webp"],
+  paletteOutput: (p) => shownColors(p).map((c) => c.color),
   extraExports: [
     {
       id: "css-variables",

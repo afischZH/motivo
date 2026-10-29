@@ -419,6 +419,8 @@ export const bentoGridTool = defineTool({
   defaults,
   defaultSize: { width: 1200, height: 800 },
   localParams: ["tileImages", "backgroundImage"],
+  // "Weiterverwenden in": a design of another tool becomes the grid background.
+  imageTargets: [{ param: "backgroundImage" }],
   migrateParams(raw) {
     if (ADDED_IN_AP06B.every((key) => key in raw)) return raw;
     const out: Record<string, unknown> = { ...raw };
