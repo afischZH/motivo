@@ -132,7 +132,7 @@ Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-
 - [x] SEO: deutsche Namen in Titel und H1 (Slugs bleiben), Landingpages mit Anwendungsbeispielen und Tipps (Ziel 800 Wörter, erreicht 520 bis 680), Bilder-Sitemap
 - [x] "Weiterverwenden in": Ergebnis eines Tools als Bild an ein anderes Tool übergeben (lokal, nie im Teilen-Link)
 - [x] Palette mit einem Klick aus den Farbtools ins Brand Kit
-- [ ] Changelog, QA in Chrome, Code- und Security-Review
+- [x] Changelog, QA in Chrome, Code- und Security-Review
 
 **DoD**: Jedes Design in "Meine Designs" hat ein Vorschaubild; der Einheitlichkeitstest ist grün und läuft in CI; eine Übergabe Verlauf ► Screenshot-Verschönerer und Muster ► Halftone funktioniert mit Tastatur; kein Nutzerbild landet im Teilen-Link.
 

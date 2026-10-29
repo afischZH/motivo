@@ -884,13 +884,6 @@ export interface ToolDefinition<S extends ParamsSchema = ParamsSchema> {
   paletteOutput?(params: Params<S>): readonly string[];
 }
 
-/** A param that takes a picture from another tool; see `ToolDefinition.imageTargets`. */
-export interface ImageTarget<P> {
-  param: ParamKey<P>;
-  /** i18n key of the target's name in the menu. Default: the param label. */
-  labelKey?: string;
-}
-
 /**
  * One live frame: a web page shown in a sandboxed `<iframe>` over a part of
  * the preview, at its own CSS viewport and scaled down to fit.

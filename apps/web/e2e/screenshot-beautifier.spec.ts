@@ -381,6 +381,12 @@ test.describe("screenshot beautifier", () => {
         const longTasks = await longTasksOf4kUpload(browser, file);
         const worst = Math.max(0, ...longTasks.map(([, ms]) => ms ?? 0));
         best = Math.min(best, worst);
+        // Every run stays visible in the report, so a regression that shows
+        // up only in some runs is noticed even when the best one passes.
+        testInfo.annotations.push({
+          type: "long-tasks",
+          description: `run ${run}: worst ${worst} ms`,
+        });
         console.log(
           `4K screenshot run ${run}, long tasks ([ms after start, duration]): ${JSON.stringify(longTasks)}`,
         );

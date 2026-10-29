@@ -401,10 +401,10 @@
       "savePalette": "Als Brand-Palette speichern …",
       "preparing": "Bild für {tool} wird vorbereitet …",
       "received": "Bild aus {tool} übernommen. Rückgängig mit ⌘/Ctrl+Z.",
-      "receivedAnalysis": "Bild aus {tool} übernommen, die Farben werden ermittelt.",
+      "receivedAnalysis": "Bild aus {tool} wird geladen, die Farben werden ermittelt.",
       "expired": "Das übergebene Bild ist nicht mehr da, etwa nach einem Neuladen. Wähle „Weiterverwenden“ im ersten Tool noch einmal.",
       "errors": {
-        "too-large": "Das Bild ist zu gross für die Übergabe. Wähle eine kleinere Grösse und versuche es noch einmal.",
+        "too-large": "Das Bild ist zu gross für die Übergabe. Exportiere es als Datei und lade es im anderen Tool hoch.",
         "unsupported": "Dieses Motiv lässt sich nicht als Bild weitergeben.",
         "failed": "Das Bild konnte nicht vorbereitet werden. Versuche es noch einmal.",
         "received": "Das übergebene Bild passt nicht in dieses Tool: {reason}"

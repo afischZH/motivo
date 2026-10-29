@@ -401,10 +401,10 @@
       "savePalette": "Save as brand palette …",
       "preparing": "Preparing the picture for {tool} …",
       "received": "Picture from {tool} added. Undo with ⌘/Ctrl+Z.",
-      "receivedAnalysis": "Picture from {tool} added, finding its colours.",
+      "receivedAnalysis": "Loading the picture from {tool} and finding its colours.",
       "expired": "The picture handed over is gone, for example after a reload. Choose “Reuse” in the first tool again.",
       "errors": {
-        "too-large": "The picture is too large to hand over. Choose a smaller size and try again.",
+        "too-large": "The picture is too large to hand over. Export it as a file and upload it in the other tool.",
         "unsupported": "This design cannot be handed over as a picture.",
         "failed": "The picture could not be prepared. Please try again.",
         "received": "The picture handed over does not fit this tool: {reason}"
