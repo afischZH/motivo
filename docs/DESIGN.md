@@ -12,18 +12,23 @@
 
 ```
 ┌───────────────────────────────────────────────────────────────────────┐
-│ Logo · Tool-Wechsler (⌘K)        Titel (editierbar)   Speichern  Export│
+│ ‹ Alle  ☆  Name des Designs   (TOOL Name ⇅)   ↶ ↷ ⌨ │ 🎲 🔗 ↗ Speichern Export│
 ├──────────────┬──────────────────────────────────────────┬─────────────┤
-│ Presets      │                                          │ Parameter   │
-│ (Thumbnails) │            Vorschau / Canvas             │ (gruppiert, │
-│              │      (Zoom, Fit, 1:1, Transparenz-       │  Akkordeon) │
-│ Paletten     │       Schachbrett, Kachel-Vorschau)      │             │
-│ (Brand oben) │                                          │ Locks 🔒    │
+│ ▤ VORLAGEN ˄ │  «                                    »  │ ⚙ Einstel-  │
+│ (Thumbnails) │      ┌──────────────────────┐            │   lungen    │
+│              │      │  Motiv auf Blatt     │            │ ▣ FARBEN ˄  │
+│ ⌗ LEINWAND-  │      │  (Punktraster)       │            │ ▦ FORM ˅    │
+│   GRÖSSE ˄   │      └──────────────────────┘            │ ...         │
+│              │ (− 65 % + │ ⤢ 100 %)        (Im Kontext) │             │
 ├──────────────┴──────────────────────────────────────────┴─────────────┤
 │ Varianten-Filmstreifen ◀ ▢ ▢ ▢ ▣ ▶     [Leertaste] Neue Variante      │
 └───────────────────────────────────────────────────────────────────────┘
 ```
 
+- **Kopfzeile** in drei Zonen: links Zurück, Favorit und der Design-Name als randloses Titelfeld mit Speicherstatus; Mitte die Tool-Pille («Tool: Name ⇅», öffnet die Befehlspalette nur mit Tools, `openToolSwitcher` in `@musterli/editor-ui/commands`); rechts leise Icon-Knöpfe (Undo, Redo, Kürzel), Neu würfeln, Teilen, Weiterverwenden, Speichern und als einzige gefüllte Aktion Exportieren. Texte von Neben-Aktionen erscheinen erst auf breiten Bildschirmen, der Name bleibt für Screenreader.
+- **Seitenleisten** bestehen aus einklappbaren Abschnitten (`PanelSection`, natives `<details>`): Symbol, kleine Grossbuchstaben-Überschrift, Chevron, Trennlinie über die volle Breite. Symbole der Einstellungsgruppen kommen generisch aus der Gruppen-Id (`group-icons.tsx`, sonst Regler-Symbol). Links Vorlagen und Leinwandgrösse, rechts Einstellungen.
+- **Arbeitsfläche**: Motiv auf einem Blatt (Karte mit 10 px Rand und weichem Schatten) über dem Punktraster. Schwebende Zoom-Leiste unten links (−, Anzeige, +, Einpassen, 100 %), «Im Kontext» unten rechts. Runde «/»-Knöpfe an den Rändern blenden die Seitenleisten aus (gemerkt in `localStorage` `musterli.editor.panels`).
+- **Social-Editor** folgt demselben Muster: links Format, Hinzufügen, Ebenen; rechts Eigenschaften bzw. Hintergrund als Abschnitte; Exportieren öffnet ein Popover mit Dateiformat, Grösse und Herunterladen; Neu, Als Kopie speichern und Meine Designs liegen im Menü «Weitere Aktionen».
 - **Tablet (768 bis 1023 px)**: Presets als einklappbare Leiste oben, Parameter als rechtes Sheet.
 - **Mobile (< 768 px)**: Vorschau oben (Seitenverhältnis), Parameter als Bottom-Sheet mit Tabs (Presets · Farben · Form · Export), grosser "Neu würfeln"-Button statt Leertaste. Video-Export und Social-Editor auf Mobile nur lesend bzw. "auf Desktop fortsetzen".
 

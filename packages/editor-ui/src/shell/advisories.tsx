@@ -27,7 +27,12 @@ export function ToolAdvisories() {
 
   if (!tool.advisories) return null;
   return (
-    <div role="status" aria-live="polite" aria-labelledby={`${id}-title`} className="mb-3">
+    <div
+      role="status"
+      aria-live="polite"
+      aria-labelledby={`${id}-title`}
+      className={advisories.length > 0 ? "my-3" : undefined}
+    >
       <span id={`${id}-title`} className="sr-only">
         {t("Editor.controls.advisories")}
       </span>

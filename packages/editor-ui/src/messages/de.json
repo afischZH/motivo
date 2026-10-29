@@ -72,7 +72,18 @@
       "variantLabel": "Variante {index}",
       "variantAnnouncement": "Variante {index} von {count}",
       "previousVariant": "Vorherige Variante",
-      "nextVariant": "Nächste Variante"
+      "nextVariant": "Nächste Variante",
+      "zoomIn": "Vergrössern",
+      "zoomOut": "Verkleinern",
+      "toolLabel": "Tool",
+      "switchTool": "Tool wechseln",
+      "canvasSize": "Leinwandgrösse",
+      "panels": {
+        "leftHide": "Linke Leiste ausblenden",
+        "leftShow": "Linke Leiste einblenden",
+        "rightHide": "Einstellungen ausblenden",
+        "rightShow": "Einstellungen einblenden"
+      }
     },
     "size": {
       "label": "Grösse",

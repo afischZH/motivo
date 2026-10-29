@@ -11,6 +11,7 @@ import { cx } from "../controls/primitives";
 import { useT } from "../i18n";
 import { useEditorStore } from "../store/react";
 import { BUTTON_CLASS } from "./styles";
+import { SECTION_TITLE_CLASS } from "./panel-section";
 
 export interface SuggestionsSectionProps {
   /** Confirms the change (visible and announced by the shell). */
@@ -34,10 +35,10 @@ export function SuggestionsSection(props: SuggestionsSectionProps) {
     <section
       aria-labelledby={`${ids}-title`}
       aria-describedby={`${ids}-hint`}
-      className="mb-4 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 border-b border-border pb-4"
+      className="-mx-4 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2 border-b border-border px-4 py-4"
       data-testid="suggestions"
     >
-      <h3 id={`${ids}-title`} className="text-sm font-semibold">
+      <h3 id={`${ids}-title`} className={SECTION_TITLE_CLASS}>
         {t("Editor.suggestions.title")}
       </h3>
       <ul className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-2">

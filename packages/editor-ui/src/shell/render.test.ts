@@ -163,7 +163,7 @@ describe("cssToStyle", () => {
 
 describe("fitScale", () => {
   it("fits the design inside the stage with padding and never upscales", () => {
-    expect(fitScale({ width: 1000, height: 500 }, { width: 548, height: 1000 })).toBeCloseTo(0.5);
+    expect(fitScale({ width: 1000, height: 500 }, { width: 584, height: 1000 })).toBeCloseTo(0.5);
     expect(fitScale({ width: 100, height: 100 }, { width: 2000, height: 2000 })).toBe(1);
   });
 });

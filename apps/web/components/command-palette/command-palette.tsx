@@ -10,6 +10,7 @@
  */
 import {
   availableEditorCommands,
+  onToolSwitcherRequest,
   runEditorCommand,
   subscribeEditorCommands,
   type EditorCommandId,
@@ -60,6 +61,8 @@ export interface CommandPaletteLabels {
   open: string;
   title: string;
   placeholder: string;
+  /** Placeholder when opened as a tool switcher. */
+  toolPlaceholder: string;
   empty: string;
   groups: Record<"actions" | "favorites" | "recent" | "pages" | "tools", string>;
   editorCommands: Record<EditorCommandId, string>;
@@ -109,6 +112,8 @@ export function CommandPalette({
   const router = useRouter();
   const ids = useId();
   const [open, setOpen] = useState(false);
+  // "tools": opened from an editor's tool name pill, lists only tools.
+  const [scope, setScope] = useState<"all" | "tools">("all");
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const commands = useSyncExternalStore(subscribeEditorCommands, commandSnapshot, () => noCommands);
@@ -124,9 +129,18 @@ export function CommandPalette({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(
+    () =>
+      onToolSwitcherRequest(() => {
+        setScope("tools");
+        setOpen(true);
+      }),
+    [],
+  );
+
   const entries = useMemo(() => {
     const tools = new Map(links.filter((l) => l.kind === "tool").map((l) => [l.id, l]));
-    const all: Entry[] = [
+    let all: Entry[] = [
       ...commands.map((command) => ({
         id: `editor:${command}`,
         group: "actions" as const,
@@ -148,6 +162,9 @@ export function CommandPalette({
         group: link.kind === "tool" ? ("tools" as const) : ("pages" as const),
       })),
     ];
+    if (scope === "tools") {
+      all = all.filter((e) => e.kind === "tool");
+    }
     const words = normalizeSearch(query);
     // Listed in display order, so the arrow keys follow what the eye sees.
     const inOrder = (list: Entry[], order: readonly Entry["group"][]) =>
@@ -160,7 +177,7 @@ export function CommandPalette({
       words,
     );
     return inOrder(ranked, SEARCH_GROUP_ORDER);
-  }, [links, labels, commands, history, query]);
+  }, [links, labels, commands, history, query, scope]);
 
   // Keep the active option in range and visible.
   const activeIndex = Math.min(active, Math.max(0, entries.length - 1));
@@ -172,6 +189,7 @@ export function CommandPalette({
 
   const close = useCallback(() => {
     setOpen(false);
+    setScope("all");
     setQuery("");
     setActive(0);
   }, []);
@@ -251,7 +269,7 @@ export function CommandPalette({
               autoComplete="off"
               spellCheck={false}
               value={query}
-              placeholder={labels.placeholder}
+              placeholder={scope === "tools" ? labels.toolPlaceholder : labels.placeholder}
               onChange={(event) => {
                 setQuery(event.target.value);
                 setActive(0);

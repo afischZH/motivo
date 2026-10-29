@@ -164,7 +164,8 @@ export function ReuseMenu(props: ReuseMenuProps) {
           data-testid="reuse-menu"
         >
           <ForwardIcon />
-          {t("Editor.handoff.button")}
+          {/* Icon only on narrow headers; the text stays the button's name. */}
+          <span className="max-2xl:sr-only">{t("Editor.handoff.button")}</span>
           <ChevronDownIcon />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content

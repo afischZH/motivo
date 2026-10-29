@@ -43,11 +43,19 @@ import {
   ArrowUpIcon,
   CopyIcon,
   GroupIcon,
+  ImageIcon,
+  MoveIcon,
+  PinIcon,
+  RulerIcon,
+  ShapesIcon,
+  SparklesIcon,
   Trash2Icon,
+  TypeIcon,
   UngroupIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useId, type ReactNode } from "react";
+import { PanelSection } from "@musterli/editor-ui";
+import { useId, type ComponentType, type ReactNode } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -131,8 +139,9 @@ export function Inspector(props: InspectorProps) {
   const units = new Set(layers.map((l) => l.groupId ?? l.id)).size;
 
   return (
-    <div className="flex flex-col gap-5" data-testid="inspector">
+    <div className="flex flex-col" data-testid="inspector">
       <Section
+        icon={MoveIcon}
         title={layers.length > 1 ? t("arrangeMany", { count: layers.length }) : t("arrange")}
       >
         <div role="group" aria-label={t("align")} className="flex flex-wrap gap-1">
@@ -243,15 +252,20 @@ export function Inspector(props: InspectorProps) {
   );
 }
 
-export function Section(props: { title: string; children: ReactNode; testId?: string }) {
+/** A collapsible panel section, like the settings of the generators. */
+export function Section(props: {
+  title: string;
+  children: ReactNode;
+  testId?: string;
+  icon?: ComponentType;
+}) {
   const id = useId();
   return (
-    <section aria-labelledby={id} className="flex flex-col gap-3" data-testid={props.testId}>
-      <h3 id={id} className="text-sm font-semibold">
-        {props.title}
-      </h3>
-      {props.children}
-    </section>
+    <PanelSection title={props.title} titleId={id} icon={props.icon}>
+      <section aria-labelledby={id} className="flex flex-col gap-3" data-testid={props.testId}>
+        {props.children}
+      </section>
+    </PanelSection>
   );
 }
 
@@ -283,7 +297,7 @@ function FrameFields({ layer, onUpdate, onCommit }: LayerProps<Layer>) {
     onUpdate(layer.id, (l) => ({ ...l, [key]: value }) as Layer, `frame-${key}`);
   const locked = layer.locked;
   return (
-    <Section title={t("frame")}>
+    <Section icon={RulerIcon} title={t("frame")}>
       <div className="grid grid-cols-2 gap-2">
         <NumberField
           label={t("x")}
@@ -426,7 +440,7 @@ function TextFields(props: LayerProps<TextLayer>) {
   const set = (patch: Partial<TextLayer>, key: string) =>
     onUpdate(layer.id, (l) => ({ ...l, ...patch }) as Layer, `text-${key}`);
   return (
-    <Section title={t("title")}>
+    <Section icon={TypeIcon} title={t("title")}>
       <div className="flex flex-col gap-1">
         <label htmlFor={textFieldId} className={LABEL}>
           {t("content")}
@@ -612,7 +626,7 @@ function TextEffectFields({ layer, scene, onUpdate, onCommit }: LayerProps<TextL
   };
   const box = "flex flex-col gap-2 border-s-2 border-border ps-3";
   return (
-    <Section title={t("title")} testId="text-effects">
+    <Section icon={SparklesIcon} title={t("title")} testId="text-effects">
       <CheckField
         label={t("shadow")}
         checked={e.shadow !== undefined}
@@ -767,7 +781,7 @@ function ShapeFields({
     onUpdate(layer.id, (l) => ({ ...l, ...patch }) as Layer, `shape-${key}`);
   const shapeName = tShapes as unknown as (key: string) => string;
   return (
-    <Section title={t("title")}>
+    <Section icon={ShapesIcon} title={t("title")}>
       {layer.shape === "library" && (
         <div className="flex flex-col gap-1">
           <label htmlFor={shapeSelectId} className={LABEL}>
@@ -840,7 +854,7 @@ function ImageFields({ layer, onUpdate, onCommit }: LayerProps<Extract<Layer, { 
   const set = (patch: Partial<typeof layer>, key: string) =>
     onUpdate(layer.id, (l) => ({ ...l, ...patch }) as Layer, `image-${key}`);
   return (
-    <Section title={t("title")}>
+    <Section icon={ImageIcon} title={t("title")}>
       <div className="grid grid-cols-2 gap-2">
         <SelectField
           label={t("fit")}
@@ -880,7 +894,7 @@ function ConstraintFields({ layer, onUpdate }: LayerProps<Layer>) {
       "constraints",
     );
   return (
-    <Section title={t("title")}>
+    <Section icon={PinIcon} title={t("title")}>
       <p className="text-xs text-muted-foreground">{t("hint")}</p>
       <div className="grid grid-cols-2 gap-2">
         <SelectField

@@ -20,6 +20,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { AssetServicesContext } from "../asset-input/services-context";
@@ -43,7 +44,11 @@ import { valuesEqual } from "../store/values";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  ChevronsUpDownIcon,
   DownloadIcon,
+  FrameIcon,
   KeyboardIcon,
   CloseIcon,
   LinkIcon,
@@ -51,9 +56,13 @@ import {
   ResetIcon,
   SaveIcon,
   ShuffleIcon,
+  SlidersIcon,
+  TemplateIcon,
   UndoIcon,
 } from "./icons";
-import { PreviewStage, ZOOM_LEVELS, type Zoom } from "./preview";
+import { PanelSection } from "./panel-section";
+import { PreviewStage, type Zoom } from "./preview";
+import { FLOATING_BAR_CLASS, ZoomDock } from "./zoom-dock";
 import {
   ContextControls,
   ContextLayer,
@@ -68,7 +77,13 @@ import { renderMotifCached } from "./render";
 import { ToolAdvisories } from "./advisories";
 import { ShortcutHelp } from "./shortcut-help";
 import { SizePicker } from "./size-picker";
-import { BUTTON_CLASS, ICON_BUTTON, PRIMARY_BUTTON_CLASS, TILE_CLASS } from "./styles";
+import {
+  BUTTON_CLASS,
+  GHOST_ICON_BUTTON,
+  ICON_BUTTON,
+  PRIMARY_BUTTON_CLASS,
+  TILE_CLASS,
+} from "./styles";
 import { Thumbnail } from "./thumbnail";
 import { useHydrated } from "./use-hydrated";
 import { publishEditorCommands, type EditorCommandHandlers } from "./command-bridge";
@@ -103,6 +118,11 @@ export interface EditorShellProps {
    * offers no hand-over (tests, embeds).
    */
   onOpenTool?: (toolId: string, hash: string) => void;
+  /**
+   * Opens the app's tool switcher (the pill with the tool name in the
+   * header). Without it the pill only shows the name.
+   */
+  onSwitchTool?: () => void;
   className?: string;
 }
 
@@ -120,9 +140,6 @@ const FLASH_MS = 4000;
 const PRESET_THUMB_EDGE = 72;
 const VARIANT_THUMB_EDGE = 56;
 
-/** Formats a scale as a percentage, e.g. 0.5 -> 50. */
-const percent = (scale: number) => Math.round(scale * 100);
-
 /**
  * The tool-agnostic editor (docs/DESIGN.md 2): header with history and
  * actions, preview with zoom and size, presets, controls and the variant
@@ -138,6 +155,7 @@ export function EditorShell({
   brandKit,
   brandKitHref,
   onOpenTool,
+  onSwitchTool,
   className,
 }: EditorShellProps) {
   const t = useT();
@@ -149,6 +167,7 @@ export function EditorShell({
   const canRedo = useEditorStore(selectCanRedo);
 
   const [zoom, setZoom] = useState<Zoom>("fit");
+  const [panels, togglePanel] = usePanels();
   const [shownScale, setShownScale] = useState<number | null>(null);
   const [helpOpen, setHelpOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
@@ -369,105 +388,101 @@ export function EditorShell({
   return (
     <BrandKitContext.Provider value={brandView}>
       <div className={cx("flex min-h-0 flex-1 flex-col", className)}>
-        <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
-          <div className="flex min-w-0 flex-[1_1_16rem] items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 border-b border-border bg-background px-4 py-2 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(max-content,1fr)] lg:gap-4">
+          <div className="flex min-w-0 flex-[1_1_14rem] items-center gap-2">
             {headerStart}
-            <h1 className="min-w-0 truncate text-[15px] font-semibold tracking-tight">
-              {toolName}
-            </h1>
+            {local && save && (
+              <DesignName controller={local.controller} view={local.view} enabled={hydrated} />
+            )}
+            <span
+              role="status"
+              aria-live="polite"
+              className="min-w-0 truncate text-xs text-muted-foreground"
+              data-testid="shell-flash"
+            >
+              {flash?.message}
+            </span>
           </div>
-          {local && save && (
-            <DesignBar
-              controller={local.controller}
-              view={local.view}
-              onSave={save}
+          <ToolSwitcher toolName={toolName} onSwitch={onSwitchTool} />
+          <div className="flex flex-wrap items-center justify-end gap-1.5 lg:flex-nowrap">
+            <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-0.5">
+              <button
+                type="button"
+                className={GHOST_ICON_BUTTON}
+                onClick={actions.undo}
+                disabled={!canUndo}
+                aria-label={t("Editor.shell.undo")}
+                title={`${t("Editor.shell.undo")} (⌘/Ctrl+Z)`}
+                aria-keyshortcuts="Control+Z Meta+Z"
+              >
+                <UndoIcon />
+              </button>
+              <button
+                type="button"
+                className={GHOST_ICON_BUTTON}
+                onClick={actions.redo}
+                disabled={!canRedo}
+                aria-label={t("Editor.shell.redo")}
+                title={`${t("Editor.shell.redo")} (⇧+⌘/Ctrl+Z)`}
+                aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
+              >
+                <RedoIcon />
+              </button>
+              <button
+                type="button"
+                className={GHOST_ICON_BUTTON}
+                onClick={actions.help}
+                aria-label={t("Editor.shortcuts.title")}
+                aria-keyshortcuts="Shift+?"
+                title={`${t("Editor.shortcuts.title")} (?)`}
+              >
+                <KeyboardIcon />
+              </button>
+            </div>
+            <span aria-hidden="true" className="mx-0.5 hidden h-5 w-px bg-border sm:block" />
+            <button
+              type="button"
+              className={BUTTON_CLASS}
+              onClick={actions.newVariant}
+              aria-keyshortcuts="Space"
+              aria-label={t("Editor.shell.newVariant")}
+              title={`${t("Editor.shell.newVariant")} (${t("Editor.shortcuts.keys.space")})`}
+              data-testid="new-variant"
+            >
+              <ShuffleIcon />
+              <span className="hidden min-[1760px]:inline">{t("Editor.shell.newVariant")}</span>
+            </button>
+            <button
+              type="button"
+              className={ICON_BUTTON}
+              onClick={() => void share()}
+              disabled={!hydrated}
+              title={t("Editor.share.hint")}
+              aria-label={t("Editor.share.button")}
+              data-testid="share-link"
+            >
+              <LinkIcon />
+            </button>
+            <ReuseMenu
+              exportServices={exportServices}
+              onOpenTool={onOpenTool}
+              onStatus={confirm}
+              onError={(message) => setNotice({ tone: "error", message })}
               enabled={hydrated}
             />
-          )}
-          <div role="group" aria-label={t("Editor.shell.history")} className="flex gap-1">
+            {local && save && <SaveButton view={local.view} onSave={save} enabled={hydrated} />}
             <button
               type="button"
-              className={ICON_BUTTON}
-              onClick={actions.undo}
-              disabled={!canUndo}
-              aria-label={t("Editor.shell.undo")}
-              title={`${t("Editor.shell.undo")} (⌘/Ctrl+Z)`}
-              aria-keyshortcuts="Control+Z Meta+Z"
+              className={PRIMARY_BUTTON_CLASS}
+              onClick={actions.export}
+              aria-haspopup="dialog"
+              aria-keyshortcuts="Control+E Meta+E"
+              title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
             >
-              <UndoIcon />
-            </button>
-            <button
-              type="button"
-              className={ICON_BUTTON}
-              onClick={actions.redo}
-              disabled={!canRedo}
-              aria-label={t("Editor.shell.redo")}
-              title={`${t("Editor.shell.redo")} (⇧+⌘/Ctrl+Z)`}
-              aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y"
-            >
-              <RedoIcon />
+              <DownloadIcon />
+              {t("Editor.shell.export")}
             </button>
           </div>
-          <button
-            type="button"
-            className={BUTTON_CLASS}
-            onClick={actions.newVariant}
-            aria-keyshortcuts="Space"
-            aria-label={t("Editor.shell.newVariant")}
-            title={`${t("Editor.shell.newVariant")} (${t("Editor.shortcuts.keys.space")})`}
-            data-testid="new-variant"
-          >
-            <ShuffleIcon />
-            <span className="hidden xl:inline">{t("Editor.shell.newVariant")}</span>
-          </button>
-          <button
-            type="button"
-            className={ICON_BUTTON}
-            onClick={actions.help}
-            aria-label={t("Editor.shortcuts.title")}
-            aria-keyshortcuts="Shift+?"
-            title={`${t("Editor.shortcuts.title")} (?)`}
-          >
-            <KeyboardIcon />
-          </button>
-          <span
-            role="status"
-            aria-live="polite"
-            className="text-xs text-muted-foreground"
-            data-testid="shell-flash"
-          >
-            {flash?.message}
-          </span>
-          <button
-            type="button"
-            className={BUTTON_CLASS}
-            onClick={() => void share()}
-            disabled={!hydrated}
-            title={t("Editor.share.hint")}
-            aria-label={t("Editor.share.button")}
-            data-testid="share-link"
-          >
-            <LinkIcon />
-            <span className="hidden xl:inline">{t("Editor.share.button")}</span>
-          </button>
-          <ReuseMenu
-            exportServices={exportServices}
-            onOpenTool={onOpenTool}
-            onStatus={confirm}
-            onError={(message) => setNotice({ tone: "error", message })}
-            enabled={hydrated}
-          />
-          <button
-            type="button"
-            className={PRIMARY_BUTTON_CLASS}
-            onClick={actions.export}
-            aria-haspopup="dialog"
-            aria-keyshortcuts="Control+E Meta+E"
-            title={`${t("Editor.shell.export")} (⌘/Ctrl+E)`}
-          >
-            <DownloadIcon />
-            {t("Editor.shell.export")}
-          </button>
         </div>
 
         {shownNotice && (
@@ -509,8 +524,8 @@ export function EditorShell({
 
         <div
           className={cx(
-            "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)]",
-            "lg:grid-cols-[13rem_minmax(0,1fr)_21rem] lg:grid-rows-[minmax(0,1fr)_auto] xl:grid-cols-[14rem_minmax(0,1fr)_22rem]",
+            "grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)_auto]",
+            PANEL_COLUMNS[`${panels.left ? 1 : 0}${panels.right ? 1 : 0}`],
           )}
         >
           <PreviewSection
@@ -519,20 +534,44 @@ export function EditorShell({
             shownScale={shownScale}
             onScaleChange={setShownScale}
             toolName={toolName}
+            panels={panels}
+            onTogglePanel={togglePanel}
+            leftPanelId={`${ids}-left`}
+            rightPanelId={`${ids}-right`}
           />
           <Filmstrip
             tool={tool}
             onPrevious={actions.previousVariant}
             onNext={actions.nextVariant}
           />
-          <PresetBar />
+          <div
+            id={`${ids}-left`}
+            className={cx(
+              "min-w-0 border-t border-border bg-card lg:col-start-1 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-r",
+              !panels.left && "lg:hidden",
+            )}
+            data-testid="left-panel"
+          >
+            <PresetBar />
+            <CanvasSizeSection />
+          </div>
           {/* WebKit counts a <select>'s clipped label text as page overflow on narrow screens. */}
           <section
+            id={`${ids}-right`}
             aria-labelledby={`${ids}-controls`}
-            className="overflow-x-clip border-t border-border bg-card px-4 pb-6 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l"
+            className={cx(
+              "overflow-x-clip border-t border-border bg-card px-4 pb-6 lg:col-start-3 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-l",
+              !panels.right && "lg:hidden",
+            )}
           >
-            <div className="sticky top-0 z-10 -mx-4 mb-1 flex h-11 items-center justify-between gap-2 border-b border-border bg-card/95 px-4 backdrop-blur-sm">
-              <h2 id={`${ids}-controls`} className="text-[13px] font-semibold">
+            <div className="sticky top-0 z-10 -mx-4 flex h-12 items-center justify-between gap-2 border-b border-border bg-card/95 px-4 backdrop-blur-sm">
+              <h2
+                id={`${ids}-controls`}
+                className="flex items-center gap-2.5 text-[13px] font-semibold"
+              >
+                <span className="text-muted-foreground [&_svg]:size-4">
+                  <SlidersIcon />
+                </span>
                 {t("Editor.shell.settings")}
               </h2>
               <ResetAllButton />
@@ -562,6 +601,131 @@ export function EditorShell({
   );
 }
 
+/** Grid columns on large screens by panel state ("left right", 1 = shown). */
+const PANEL_COLUMNS: Record<string, string> = {
+  "11": "lg:grid-cols-[16rem_minmax(0,1fr)_21rem] xl:grid-cols-[17rem_minmax(0,1fr)_22rem]",
+  "10": "lg:grid-cols-[16rem_minmax(0,1fr)_0px] xl:grid-cols-[17rem_minmax(0,1fr)_0px]",
+  "01": "lg:grid-cols-[0px_minmax(0,1fr)_21rem] xl:grid-cols-[0px_minmax(0,1fr)_22rem]",
+  "00": "lg:grid-cols-[0px_minmax(0,1fr)_0px]",
+};
+
+interface Panels {
+  left: boolean;
+  right: boolean;
+}
+
+/** Remembered in this browser only (no personal data, DESIGN.md 5). */
+const PANELS_KEY = "musterli.editor.panels";
+const BOTH_PANELS: Panels = { left: true, right: true };
+
+let panelsCache: { raw: string | null; value: Panels } | null = null;
+/** Used when storage is blocked, so the toggles still work on this page. */
+let panelsInMemory: Panels | null = null;
+const panelListeners = new Set<() => void>();
+
+function readPanels(): Panels {
+  let raw: string | null;
+  try {
+    raw = window.localStorage.getItem(PANELS_KEY);
+  } catch {
+    return panelsInMemory ?? BOTH_PANELS;
+  }
+  if (panelsCache?.raw === raw) return panelsCache.value;
+  let value = BOTH_PANELS;
+  try {
+    const saved = JSON.parse(raw ?? "null") as unknown;
+    if (saved && typeof saved === "object") {
+      const { left, right } = saved as Record<string, unknown>;
+      if (typeof left === "boolean" && typeof right === "boolean") value = { left, right };
+    }
+  } catch {
+    // Garbage: both panels open.
+  }
+  panelsCache = { raw, value };
+  return value;
+}
+
+function subscribePanels(listener: () => void): () => void {
+  panelListeners.add(listener);
+  window.addEventListener("storage", listener);
+  return () => {
+    panelListeners.delete(listener);
+    window.removeEventListener("storage", listener);
+  };
+}
+
+/**
+ * Which side panels are shown (large screens only; smaller screens stack
+ * everything). Both open in the server HTML, then the last choice.
+ */
+function usePanels(): [Panels, (side: keyof Panels) => void] {
+  const panels = useSyncExternalStore(subscribePanels, readPanels, () => BOTH_PANELS);
+  const toggle = useCallback((side: keyof Panels) => {
+    const prev = readPanels();
+    const next = { ...prev, [side]: !prev[side] };
+    try {
+      window.localStorage.setItem(PANELS_KEY, JSON.stringify(next));
+    } catch {
+      panelsInMemory = next;
+    }
+    for (const listener of panelListeners) listener();
+  }, []);
+  return [panels, toggle];
+}
+
+/**
+ * The tool name as a pill in the middle of the header. With `onSwitch` the
+ * whole pill opens the app's tool switcher; the name stays the page's h1.
+ */
+function ToolSwitcher(props: { toolName: string; onSwitch?: (() => void) | undefined }) {
+  const { toolName, onSwitch } = props;
+  const t = useT();
+  return (
+    <div
+      className={cx(
+        "relative flex h-9 min-w-0 items-center gap-2 rounded-full border border-border bg-background ps-4 pe-2 shadow-xs transition-colors",
+        onSwitch && "focus-within:ring-[3px] focus-within:ring-ring/50 hover:bg-accent",
+        "max-lg:order-first max-lg:basis-full max-lg:justify-center lg:justify-self-center",
+      )}
+      data-testid="tool-switcher"
+    >
+      <span className="text-[11px] font-semibold tracking-[0.06em] text-muted-foreground uppercase">
+        {t("Editor.shell.toolLabel")}
+      </span>
+      <h1 className="min-w-0 truncate text-[15px] font-semibold tracking-tight">{toolName}</h1>
+      {onSwitch ? (
+        <button
+          type="button"
+          onClick={onSwitch}
+          aria-haspopup="dialog"
+          aria-label={t("Editor.shell.switchTool")}
+          title={t("Editor.shell.switchTool")}
+          // The ::after covers the whole pill, so the name is clickable too.
+          className="inline-flex size-6 items-center justify-center rounded-full text-muted-foreground outline-none after:absolute after:inset-0 after:rounded-full after:content-[''] [&_svg]:size-4"
+          data-testid="switch-tool"
+        >
+          <ChevronsUpDownIcon />
+        </button>
+      ) : (
+        <span aria-hidden="true" className="w-2" />
+      )}
+    </div>
+  );
+}
+
+/** The canvas size (presets and free width and height) as a left panel section. */
+function CanvasSizeSection() {
+  const t = useT();
+  const tool = useEditorStore((s) => s.tool);
+  const size = useEditorStore((s) => s.size);
+  const setSize = useEditorStore((s) => s.setSize);
+  return (
+    <PanelSection title={t("Editor.shell.canvasSize")} icon={FrameIcon} data-testid="canvas-size">
+      <SizePicker size={size} onChange={setSize} toolPresets={tool.sizePresets} />
+    </PanelSection>
+  );
+}
+
 /** Back to the tool defaults in one undoable step; disabled while nothing differs. */
 function ResetAllButton() {
   const t = useT();
@@ -582,11 +746,10 @@ function ResetAllButton() {
   );
 }
 
-/** Name field, save button and save state (docs/DESIGN.md 2: title editable, Speichern). */
-function DesignBar(props: {
+/** The design name as an editable title, with its save state (DESIGN.md 2). */
+function DesignName(props: {
   controller: LocalDesignController;
   view: LocalDesignView;
-  onSave(): void;
   enabled: boolean;
 }) {
   const t = useT();
@@ -602,7 +765,7 @@ function DesignBar(props: {
     <div
       role="group"
       aria-label={t("Designs.editor.group")}
-      className="flex min-w-0 flex-[1_1_14rem] items-center gap-2 sm:flex-initial"
+      className="flex min-w-0 flex-1 items-center gap-2"
       data-testid="design-bar"
     >
       <label htmlFor={`${id}-name`} className="sr-only">
@@ -620,27 +783,42 @@ function DesignBar(props: {
           if (event.key === "Enter") void controller.commitName();
         }}
         disabled={!props.enabled}
-        className="h-8 w-full min-w-0 rounded-md border border-input bg-background px-2 text-sm shadow-xs placeholder:text-muted-foreground sm:w-44"
+        title={t("Designs.editor.nameLabel")}
+        className={cx(
+          "h-8 w-full max-w-56 min-w-0 rounded-md border border-transparent bg-transparent px-2 text-sm font-medium transition-colors placeholder:text-muted-foreground",
+          "hover:border-border focus-visible:border-ring focus-visible:bg-background focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
+        )}
         data-testid="design-name"
       />
-      <button
-        type="button"
-        className={BUTTON_CLASS}
-        onClick={props.onSave}
-        disabled={!props.enabled || !view.ready || view.saving}
-        title={`${t("Designs.editor.saveHint")} (⌘/Ctrl+S)`}
-        aria-keyshortcuts="Control+S Meta+S"
-        data-testid="save-design"
-      >
-        <SaveIcon />
-        {view.saving ? t("Designs.editor.saving") : t("Designs.editor.save")}
-      </button>
       {status !== null && (
-        <span className="shrink-0 text-xs text-muted-foreground" data-testid="design-status">
+        <span
+          className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground"
+          data-testid="design-status"
+        >
           {status}
         </span>
       )}
     </div>
+  );
+}
+
+/** Saves the design locally (⌘/Ctrl+S). */
+function SaveButton(props: { view: LocalDesignView; onSave(): void; enabled: boolean }) {
+  const t = useT();
+  const { view } = props;
+  return (
+    <button
+      type="button"
+      className={BUTTON_CLASS}
+      onClick={props.onSave}
+      disabled={!props.enabled || !view.ready || view.saving}
+      title={`${t("Designs.editor.saveHint")} (⌘/Ctrl+S)`}
+      aria-keyshortcuts="Control+S Meta+S"
+      data-testid="save-design"
+    >
+      <SaveIcon />
+      {view.saving ? t("Designs.editor.saving") : t("Designs.editor.save")}
+    </button>
   );
 }
 
@@ -697,11 +875,14 @@ function PreviewSection(props: {
   shownScale: number | null;
   onScaleChange(scale: number): void;
   toolName: string;
+  panels: Panels;
+  onTogglePanel(side: keyof Panels): void;
+  leftPanelId: string;
+  rightPanelId: string;
 }) {
   const t = useT();
   const headingId = useId();
   const tool = useEditorStore((s) => s.tool);
-  const setSize = useEditorStore((s) => s.setSize);
   // Deferred: typing and dragging stay responsive, the preview follows.
   const params = useDeferredValue(useEditorStore((s) => s.params));
   const seed = useDeferredValue(useEditorStore((s) => s.seed));
@@ -727,14 +908,6 @@ function PreviewSection(props: {
   const ratios = useContextContrast(showContext, tool, params, seed, size);
   const tone = shownTone(toneChoice, ratios);
 
-  const zoomButtons: { zoom: Zoom; label: string }[] = [
-    { zoom: "fit", label: t("Editor.shell.zoomFit") },
-    ...ZOOM_LEVELS.map((level) => ({
-      zoom: level,
-      label: t("Editor.shell.zoomPercent", { percent: percent(level) }),
-    })),
-  ];
-
   return (
     <section
       aria-labelledby={headingId}
@@ -743,90 +916,103 @@ function PreviewSection(props: {
       <h2 id={headingId} className="sr-only">
         {t("Editor.shell.preview")}
       </h2>
-      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-border bg-card px-4 py-2">
-        <SizePicker size={liveSize} onChange={setSize} toolPresets={tool.sizePresets} />
-        {/*
-          Wraps instead of overflowing: at 375 px the zoom buttons plus the
-          scale readout are wider than the row (font metrics differ per
-          browser, and the readout only fills in after hydration), which
-          pushed the page 1 px wide in Firefox.
-        */}
-        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-          {contextAvailable && (
-            <ContextControls
-              on={contextOn}
-              onToggle={() => setContextOn((on) => !on)}
-              choice={toneChoice}
-              onChoice={setToneChoice}
-              ratio={ratios ? ratios[tone] : null}
-            />
-          )}
-          <div
-            role="group"
-            aria-label={t("Editor.shell.zoom")}
-            className="flex flex-wrap gap-0.5 rounded-md bg-foreground/[0.06] p-0.5"
-          >
-            {zoomButtons.map((b) => (
-              <button
-                key={String(b.zoom)}
-                type="button"
-                className={cx(
-                  "inline-flex h-7 items-center rounded-[calc(var(--radius-md)-2px)] px-2 text-xs font-medium text-muted-foreground tabular-nums transition-colors hover:text-foreground",
-                  "aria-pressed:bg-background aria-pressed:text-foreground aria-pressed:shadow-[0_1px_2px_oklch(0_0_0/0.12)]",
-                  FOCUS_RING,
+      <div className="relative flex h-[55dvh] min-h-64 flex-col lg:h-auto lg:min-h-0 lg:flex-1">
+        <PreviewStage
+          output={output}
+          size={size}
+          zoom={props.zoom}
+          onZoomChange={props.onZoomChange}
+          onScaleChange={props.onScaleChange}
+          label={t("Editor.shell.previewAlt", {
+            tool: props.toolName,
+            width: size.width,
+            height: size.height,
+          })}
+          transparent={transparent}
+          unsupportedText={t("Editor.shell.unsupported")}
+          overlay={
+            regionEditor || live.frames.length > 0 || showContext ? (
+              <>
+                {showContext && <ContextLayer tone={tone} />}
+                {regionEditor && (
+                  <RegionLayer
+                    tool={tool}
+                    editor={regionEditor}
+                    params={liveParams}
+                    seed={liveSeed}
+                    size={liveSize}
+                  />
                 )}
-                aria-pressed={props.zoom === b.zoom}
-                aria-keyshortcuts={b.zoom === "fit" ? "0" : b.zoom === 1 ? "1" : undefined}
-                onClick={() => props.onZoomChange(b.zoom)}
-              >
-                {b.label}
-              </button>
-            ))}
-          </div>
-          <output
-            className="min-w-10 text-right text-xs text-muted-foreground tabular-nums"
-            aria-label={t("Editor.shell.zoomCurrent")}
-          >
-            {props.shownScale === null
-              ? ""
-              : t("Editor.shell.zoomPercent", { percent: percent(props.shownScale) })}
-          </output>
+                <LiveFrameLayer live={live} size={size} />
+              </>
+            ) : undefined
+          }
+          className="min-h-0 flex-1"
+        />
+        {/* Floating over the stage, outside its scroll area. */}
+        <div className="pointer-events-none absolute inset-x-3 bottom-3 flex flex-wrap items-end justify-between gap-2">
+          <ZoomDock
+            zoom={props.zoom}
+            shownScale={props.shownScale}
+            onZoomChange={props.onZoomChange}
+          />
+          {contextAvailable && (
+            <div className={cx(FLOATING_BAR_CLASS, "ps-1 pe-3")}>
+              <ContextControls
+                on={contextOn}
+                onToggle={() => setContextOn((on) => !on)}
+                choice={toneChoice}
+                onChoice={setToneChoice}
+                ratio={ratios ? ratios[tone] : null}
+              />
+            </div>
+          )}
         </div>
+        <PanelToggle
+          side="left"
+          open={props.panels.left}
+          controls={props.leftPanelId}
+          onToggle={() => props.onTogglePanel("left")}
+        />
+        <PanelToggle
+          side="right"
+          open={props.panels.right}
+          controls={props.rightPanelId}
+          onToggle={() => props.onTogglePanel("right")}
+        />
       </div>
-      <PreviewStage
-        output={output}
-        size={size}
-        zoom={props.zoom}
-        onZoomChange={props.onZoomChange}
-        onScaleChange={props.onScaleChange}
-        label={t("Editor.shell.previewAlt", {
-          tool: props.toolName,
-          width: size.width,
-          height: size.height,
-        })}
-        transparent={transparent}
-        unsupportedText={t("Editor.shell.unsupported")}
-        overlay={
-          regionEditor || live.frames.length > 0 || showContext ? (
-            <>
-              {showContext && <ContextLayer tone={tone} />}
-              {regionEditor && (
-                <RegionLayer
-                  tool={tool}
-                  editor={regionEditor}
-                  params={liveParams}
-                  seed={liveSeed}
-                  size={liveSize}
-                />
-              )}
-              <LiveFrameLayer live={live} size={size} />
-            </>
-          ) : undefined
-        }
-        className="h-[55dvh] min-h-64 lg:h-auto lg:min-h-0 lg:flex-1"
-      />
       <LiveCaptureBar live={live} />
     </section>
+  );
+}
+
+/** The round « / » button at a stage edge that hides or shows a side panel (large screens). */
+function PanelToggle(props: {
+  side: "left" | "right";
+  open: boolean;
+  controls: string;
+  onToggle(): void;
+}) {
+  const t = useT();
+  const label = t(`Editor.shell.panels.${props.side}${props.open ? "Hide" : "Show"}`);
+  const pointsLeft = (props.side === "left") === props.open;
+  return (
+    <button
+      type="button"
+      className={cx(
+        "absolute top-1/2 z-10 hidden size-8 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background text-muted-foreground shadow-sm transition-colors hover:bg-accent hover:text-foreground lg:inline-flex [&_svg]:size-4",
+        props.side === "left" ? "left-2" : "right-2",
+        FOCUS_RING,
+      )}
+      aria-expanded={props.open}
+      aria-controls={props.controls}
+      aria-label={label}
+      title={label}
+      onClick={props.onToggle}
+      data-testid={`toggle-${props.side}-panel`}
+    >
+      {pointsLeft ? <ChevronsLeftIcon /> : <ChevronsRightIcon />}
+    </button>
   );
 }
 
@@ -844,42 +1030,35 @@ function PresetBar() {
   if (tool.presets.length === 0) return null;
 
   return (
-    <section
-      aria-labelledby={headingId}
-      className="min-w-0 border-t border-border bg-card px-4 pb-4 lg:col-start-1 lg:row-start-1 lg:overflow-y-auto lg:border-t-0 lg:border-r"
-    >
-      <h2
-        id={headingId}
-        className="-mx-4 mb-3 flex h-11 items-center border-b border-border px-4 text-[13px] font-semibold"
-      >
-        {t("Editor.shell.presets")}
-      </h2>
-      <ul className="flex gap-2 overflow-x-auto pb-1 lg:grid lg:grid-cols-2 lg:overflow-visible lg:pb-0">
-        {tool.presets.map((preset) => (
-          <li key={preset.id}>
-            <button
-              type="button"
-              className={cx(TILE_CLASS, "w-full")}
-              aria-pressed={activePreset === preset.id}
-              onClick={() => applyPreset(preset.id)}
-              data-preset={preset.id}
-              data-editor-tile=""
-            >
-              <span className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg bg-canvas shadow-[inset_0_0_0_1px_oklch(0_0_0/0.06)]">
-                <Thumbnail
-                  tool={tool}
-                  params={preset.params as typeof params}
-                  seed={preset.seed ?? seed}
-                  size={size}
-                  edge={PRESET_THUMB_EDGE}
-                />
-              </span>
-              <span className="w-full truncate text-center">{t(preset.nameKey)}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <PanelSection title={t("Editor.shell.presets")} titleId={headingId} icon={TemplateIcon}>
+      <section aria-labelledby={headingId} className="min-w-0">
+        <ul className="flex gap-2 overflow-x-auto pb-1 lg:grid lg:grid-cols-2 lg:overflow-visible lg:pb-0">
+          {tool.presets.map((preset) => (
+            <li key={preset.id}>
+              <button
+                type="button"
+                className={cx(TILE_CLASS, "w-full")}
+                aria-pressed={activePreset === preset.id}
+                onClick={() => applyPreset(preset.id)}
+                data-preset={preset.id}
+                data-editor-tile=""
+              >
+                <span className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg bg-canvas shadow-[inset_0_0_0_1px_oklch(0_0_0/0.06)]">
+                  <Thumbnail
+                    tool={tool}
+                    params={preset.params as typeof params}
+                    seed={preset.seed ?? seed}
+                    size={size}
+                    edge={PRESET_THUMB_EDGE}
+                  />
+                </span>
+                <span className="w-full truncate text-center">{t(preset.nameKey)}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </PanelSection>
   );
 }
 

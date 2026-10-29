@@ -72,7 +72,18 @@
       "variantLabel": "Variant {index}",
       "variantAnnouncement": "Variant {index} of {count}",
       "previousVariant": "Previous variant",
-      "nextVariant": "Next variant"
+      "nextVariant": "Next variant",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "toolLabel": "Tool",
+      "switchTool": "Switch tool",
+      "canvasSize": "Canvas size",
+      "panels": {
+        "leftHide": "Hide left panel",
+        "leftShow": "Show left panel",
+        "rightHide": "Hide settings",
+        "rightShow": "Show settings"
+      }
     },
     "size": {
       "label": "Size",

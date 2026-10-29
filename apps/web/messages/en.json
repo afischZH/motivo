@@ -7015,6 +7015,7 @@
     "save": "Save",
     "saving": "Saving …",
     "myDesigns": "My designs",
+    "moreActions": "More actions",
     "saved": "“{name}” saved.",
     "savedCopy": "Copy “{name}” saved.",
     "saveFailed": "Saving did not work. Is the browser's storage full or blocked?",
@@ -7064,7 +7065,9 @@
       "scale": "{scale}× ({width} × {height})",
       "scaleTooLarge": "{scale}× (over {max} px, not available)",
       "running": "Exporting …",
-      "run": "Export"
+      "run": "Export",
+      "title": "Export",
+      "download": "Download"
     },
     "logos": {
       "title": "Logo from the brand kit",
@@ -7626,6 +7629,7 @@
     "open": "Search",
     "title": "Search commands and tools",
     "placeholder": "Search a tool, page or command …",
+    "toolPlaceholder": "Which tool do you want to switch to?",
     "empty": "Nothing found. Try another word.",
     "groups": {
       "actions": "Actions",

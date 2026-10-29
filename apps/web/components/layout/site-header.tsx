@@ -90,6 +90,7 @@ export function SiteHeader() {
     open: tPalette("open"),
     title: tPalette("title"),
     placeholder: tPalette("placeholder"),
+    toolPlaceholder: tPalette("toolPlaceholder"),
     empty: tPalette("empty"),
     groups: {
       actions: tPalette("groups.actions"),

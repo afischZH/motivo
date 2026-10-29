@@ -2,6 +2,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   availableEditorCommands,
+  onToolSwitcherRequest,
+  openToolSwitcher,
   publishEditorCommands,
   runEditorCommand,
   subscribeEditorCommands,
@@ -33,5 +35,15 @@ describe("command bridge", () => {
     expect(availableEditorCommands()).toEqual([]);
     expect(listener).toHaveBeenCalledTimes(3);
     stop();
+  });
+
+  it("forwards tool switcher requests to a mounted palette", () => {
+    expect(openToolSwitcher()).toBe(false);
+    const listener = vi.fn();
+    const stop = onToolSwitcherRequest(listener);
+    expect(openToolSwitcher()).toBe(true);
+    expect(listener).toHaveBeenCalledOnce();
+    stop();
+    expect(openToolSwitcher()).toBe(false);
   });
 });

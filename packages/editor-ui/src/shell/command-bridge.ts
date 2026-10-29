@@ -65,3 +65,23 @@ export function subscribeEditorCommands(listener: () => void): () => void {
     listeners.delete(listener);
   };
 }
+
+const switcherListeners = new Set<() => void>();
+
+/**
+ * Asks the palette to open as a tool switcher (only tools, favourites and
+ * recent ones), e.g. from the tool name pill in an editor header. `false` if
+ * no palette is mounted.
+ */
+export function openToolSwitcher(): boolean {
+  for (const listener of switcherListeners) listener();
+  return switcherListeners.size > 0;
+}
+
+/** The palette listens here for `openToolSwitcher`. */
+export function onToolSwitcherRequest(listener: () => void): () => void {
+  switcherListeners.add(listener);
+  return () => {
+    switcherListeners.delete(listener);
+  };
+}
