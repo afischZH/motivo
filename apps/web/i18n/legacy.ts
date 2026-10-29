@@ -17,6 +17,8 @@ import {
   converterSlug,
   sectionFromAnySlug,
   isCategorySegment,
+  isSocialEditorSegment,
+  SOCIAL_EDITOR_SEGMENT,
   patternIdFromAnySlug,
   patternSlug,
   sectionSlug,
@@ -68,6 +70,10 @@ export function canonicalRedirect(pathname: string): string | null {
     const itemId = segments.length === 3 ? collectionItemFromAnySlug(section, slug) : undefined;
     if (!itemId) return null;
     canonical = `/${locale}/${sectionSlug(section, locale)}/${collectionItemSlug(section, itemId, locale)}`;
+  } else if (section === "socialEditor") {
+    // The editor below the landing page: `/de/social-media-editor/bearbeiten`.
+    if (segments.length !== 3 || !isSocialEditorSegment(slug)) return null;
+    canonical = `/${locale}/${sectionSlug(section, locale)}/${SOCIAL_EDITOR_SEGMENT[locale]}`;
   } else if (section === "convert") {
     const converterId = converterIdFromAnySlug(slug);
     if (!converterId) return null;

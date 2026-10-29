@@ -1,7 +1,7 @@
 import { defineRouting } from "next-intl/routing";
 
 import { DEFAULT_LOCALE, ENABLED_LOCALES, type EnabledLocale } from "./locales";
-import { CATEGORY_SEGMENT, SECTION_SLUGS, type Section } from "./slugs";
+import { CATEGORY_SEGMENT, SECTION_SLUGS, SOCIAL_EDITOR_SEGMENT, type Section } from "./slugs";
 
 /** Localized external pathname of a section, optionally with a dynamic tail. */
 function sectionPath(section: Section, tail = ""): Record<EnabledLocale, string> {
@@ -20,6 +20,15 @@ function categoryPath(): Record<EnabledLocale, string> {
       locale,
       `/${tools[locale]}/${segment[locale]}/[categorySlug]`,
     ]),
+  ) as Record<EnabledLocale, string>;
+}
+
+/** The social editor: `/<social editor section>/<localized "edit">`. */
+function socialEditorAppPath(): Record<EnabledLocale, string> {
+  const section: Record<EnabledLocale, string> = SECTION_SLUGS.socialEditor;
+  const segment: Record<EnabledLocale, string> = SOCIAL_EDITOR_SEGMENT;
+  return Object.fromEntries(
+    ENABLED_LOCALES.map((locale) => [locale, `/${section[locale]}/${segment[locale]}`]),
   ) as Record<EnabledLocale, string>;
 }
 
@@ -55,6 +64,8 @@ export const routing = defineRouting({
     "/privacy": sectionPath("privacy"),
     "/terms": sectionPath("terms"),
     "/support": sectionPath("support"),
+    "/social-editor": sectionPath("socialEditor"),
+    "/social-editor/edit": socialEditorAppPath(),
   },
   // hreflang and canonical come from the Metadata API (lib/seo), which knows
   // the localized slugs; the middleware's Link header would not.
