@@ -5295,6 +5295,413 @@
           "a5": "Not from the exported picture: the details are no longer in it. In Musterli your original stays as long as the design is open or saved, and you can change every setting."
         }
       }
+    },
+    "fluid-type-scale": {
+      "name": "Fluid Type Scale Generator",
+      "description": "Font sizes that grow with the screen width: a modular type scale as CSS clamp(), with CSS variables and a Tailwind theme to copy.",
+      "groups": {
+        "viewport": "Viewport",
+        "scale": "Scale",
+        "code": "Code",
+        "preview": "Preview"
+      },
+      "params": {
+        "minViewport": {
+          "label": "Smallest width"
+        },
+        "maxViewport": {
+          "label": "Largest width"
+        },
+        "minBase": {
+          "label": "Base size small"
+        },
+        "maxBase": {
+          "label": "Base size large"
+        },
+        "minRatio": {
+          "label": "Ratio small"
+        },
+        "maxRatio": {
+          "label": "Ratio large"
+        },
+        "ratio": {
+          "options": {
+            "minor-second": "1.067 (minor second)",
+            "major-second": "1.125 (major second)",
+            "minor-third": "1.2 (minor third)",
+            "major-third": "1.25 (major third)",
+            "perfect-fourth": "1.333 (perfect fourth)",
+            "augmented-fourth": "1.414 (augmented fourth)",
+            "perfect-fifth": "1.5 (perfect fifth)",
+            "golden-ratio": "1.618 (golden ratio)"
+          }
+        },
+        "stepsDown": {
+          "label": "Steps below"
+        },
+        "stepsUp": {
+          "label": "Steps above"
+        },
+        "unit": {
+          "label": "Unit",
+          "options": {
+            "rem": "rem",
+            "px": "px"
+          }
+        },
+        "naming": {
+          "label": "Names",
+          "options": {
+            "steps": "Steps (step-1)",
+            "tshirt": "Sizes (lg, xl)"
+          }
+        },
+        "prefix": {
+          "label": "Prefix in code"
+        },
+        "previewViewport": {
+          "label": "Preview at width"
+        },
+        "sample": {
+          "label": "Sample text"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "background": {
+          "label": "Background"
+        },
+        "ink": {
+          "label": "Text color"
+        },
+        "accent": {
+          "label": "Accent"
+        }
+      },
+      "presets": {
+        "balanced": "Balanced",
+        "compact": "Compact",
+        "editorial": "Editorial",
+        "bold-hero": "Bold hero",
+        "app-ui": "App UI",
+        "tailwind": "Tailwind names",
+        "code": "Code"
+      },
+      "advisories": {
+        "zoom": "The largest step grows {factor} times. Beyond {limit} times, text may stay too small when zoomed to 200% (WCAG 1.4.4). Bring the sizes closer or lower the ratio."
+      },
+      "seo": {
+        "heading": "Fluid Type Scale Generator (CSS clamp)",
+        "whatIs": "A fluid type scale defines every font size of a website, from small print to the big headline. Each step is larger than the one before by a fixed ratio, and all steps grow smoothly with the screen width. The typography fits a phone and a large monitor without breakpoints.",
+        "howTo": "Enter the smallest and the largest screen width, plus the base size and the ratio for both ends. The preview shows every step at a width you choose. Then copy the CSS variables, the ready-made classes or the Tailwind theme into your project.",
+        "useCases": {
+          "u1": {
+            "title": "New website",
+            "text": "Set up the typography once and use the same steps everywhere. Headlines, body text and labels stay in proportion on every device."
+          },
+          "u2": {
+            "title": "Design system",
+            "text": "The steps become variables like --step-2 or Tailwind classes like text-xl. Design and code speak the same language."
+          },
+          "u3": {
+            "title": "Fewer breakpoints",
+            "text": "Instead of overriding font sizes in three media queries, the browser works out the right size by itself."
+          }
+        },
+        "tips": {
+          "t1": "A smaller ratio on phones and a larger one on desktops gives big headlines impact without breaking them on small screens.",
+          "t2": "Stick with rem as the unit. Then text grows when someone sets a larger font size in the browser.",
+          "t3": "Pick sizes as names when you work with Tailwind. The theme then replaces default sizes like text-lg directly."
+        },
+        "faq": {
+          "q1": {
+            "question": "How does clamp() work for font sizes?",
+            "answer": "clamp() takes a minimum size, a preferred value and a maximum size. The preferred value is rem plus vw and grows with the screen width. Below the smallest width the text stays small, above the largest it stays large."
+          },
+          "q2": {
+            "question": "Why rem plus vw and not vw alone?",
+            "answer": "Text in pure vw units does not grow when you zoom. The rem part keeps zoom and the browser font size working. As a rule of thumb, if the largest size of a step is at most 2.5 times its smallest, text can always be zoomed to 200%."
+          },
+          "q3": {
+            "question": "Which browsers support clamp()?",
+            "answer": "All current browsers since 2020: Chrome, Edge, Firefox and Safari. For very old browsers you can put a fixed size before the variable."
+          },
+          "q4": {
+            "question": "How do I use the scale with Tailwind?",
+            "answer": "Copy the Tailwind v4 theme into your CSS file. Tailwind turns every --text-* variable into a class, for example text-xl. With sizes as names, the scale replaces Tailwind's default sizes."
+          }
+        }
+      }
+    },
+    "section-divider": {
+      "name": "Section Divider Generator",
+      "description": "Waves, arcs, slants, peaks and more as the transition between two website sections. One SVG that fits any width, with HTML and CSS to copy.",
+      "params": {
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "wave": "Wave",
+            "curve": "Arc",
+            "tilt": "Slant",
+            "peaks": "Peaks",
+            "arrow": "Arrow",
+            "clouds": "Clouds",
+            "steps": "Steps"
+          }
+        },
+        "position": {
+          "label": "Position",
+          "options": {
+            "bottom": "Bottom",
+            "top": "Top"
+          }
+        },
+        "count": {
+          "label": "Count"
+        },
+        "layers": {
+          "label": "Layers"
+        },
+        "flip": {
+          "label": "Mirror"
+        },
+        "invert": {
+          "label": "Invert"
+        },
+        "color": {
+          "label": "Shape color"
+        },
+        "minHeight": {
+          "label": "Smallest height"
+        }
+      },
+      "presets": {
+        "wave": "Wave",
+        "layered-waves": "Layered waves",
+        "arc": "Arc",
+        "slant": "Slant",
+        "arrow": "Arrow",
+        "mountains": "Mountains",
+        "clouds": "Clouds",
+        "stairs": "Stairs"
+      },
+      "sizes": {
+        "slim": "Slim",
+        "regular": "Regular",
+        "tall": "Tall",
+        "mobile": "Phone"
+      },
+      "seo": {
+        "heading": "Section Divider Generator (SVG Shape Dividers)",
+        "whatIs": "A section divider is the edge between two parts of a website, for example a wave between the hero and the content. Instead of a straight line you get a soft or bold transition. The divider is a small SVG that adapts to every screen width.",
+        "howTo": "Pick a shape such as wave, arc, slant or peaks and set the count and layers. The shape color is the color of the next section. Position, mirror and invert set where the divider sits. Then copy the HTML example or the Tailwind classes, or download SVG and PNG.",
+        "useCases": {
+          "u1": {
+            "title": "Header and hero",
+            "text": "A wave or an arc at the bottom of the hero leads the eye softly into the content."
+          },
+          "u2": {
+            "title": "Landing pages",
+            "text": "Alternating section colors feel livelier with slants or peaks than with straight edges."
+          },
+          "u3": {
+            "title": "Site builders and CMS",
+            "text": "The SVG fits into any HTML block, for example in WordPress, Webflow or Framer, and needs no script."
+          }
+        },
+        "tips": {
+          "t1": "Use exactly the background color of the next section as the shape color. The transition then looks seamless.",
+          "t2": "Two or three layers add depth. The back layers are lighter and peek out behind the front one.",
+          "t3": "The code places the divider one pixel over the edge. That hides a thin gap that browser rounding can leave."
+        },
+        "faq": {
+          "q1": {
+            "question": "How does the divider adapt to the width?",
+            "answer": "The SVG has preserveAspectRatio=\"none\". It stretches to any width and CSS sets the height. In the code, clamp() lets the height grow with the width, between a smallest height and the height of your design."
+          },
+          "q2": {
+            "question": "Do I need JavaScript?",
+            "answer": "No. The divider is plain SVG with a few lines of CSS. It loads instantly and works in every browser."
+          },
+          "q3": {
+            "question": "Is the divider accessible?",
+            "answer": "Yes. It is pure decoration, so aria-hidden hides it from screen readers. It cannot take focus and does not block clicks."
+          },
+          "q4": {
+            "question": "How do I put the divider at the top of a section?",
+            "answer": "Set the position to top. The shape then points down and the code places the divider at the top edge. Invert fills the other side of the edge with the color."
+          }
+        }
+      }
+    },
+    "og-image": {
+      "name": "Open Graph Image Generator",
+      "description": "Preview images for links on Facebook, LinkedIn, X, Slack and WhatsApp: title, logo and site name on a Musterli motif, with the matching meta tags.",
+      "groups": {
+        "content": "Content",
+        "type": "Type",
+        "backdrop": "Background",
+        "panel": "Panel behind the text"
+      },
+      "params": {
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "classic": "Classic",
+            "centered": "Centered",
+            "split": "Split",
+            "minimal": "Minimal"
+          }
+        },
+        "eyebrow": {
+          "label": "Label"
+        },
+        "title": {
+          "label": "Title"
+        },
+        "subtitle": {
+          "label": "Subtitle"
+        },
+        "site": {
+          "label": "Site name"
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "titleWeight": {
+          "label": "Title weight"
+        },
+        "titleSize": {
+          "label": "Title size"
+        },
+        "backdrop": {
+          "label": "Motif",
+          "options": {
+            "solid": "Color",
+            "gradient": "Gradient",
+            "mesh": "Mesh gradient",
+            "blurry": "Blurry gradient",
+            "waves": "Waves",
+            "pattern": "Pattern"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "pattern": {
+          "label": "Pattern"
+        },
+        "patternScale": {
+          "label": "Pattern size"
+        },
+        "patternOpacity": {
+          "label": "Pattern opacity"
+        },
+        "backgroundImage": {
+          "label": "Your own picture",
+          "description": "Replaces the motif with your picture (PNG, JPG, WebP or SVG). It stays in your browser and is left out of share links."
+        },
+        "panel": {
+          "label": "Panel",
+          "options": {
+            "none": "None",
+            "scrim": "Fade",
+            "card": "Card"
+          }
+        },
+        "panelColor": {
+          "label": "Panel color"
+        },
+        "panelOpacity": {
+          "label": "Panel opacity"
+        },
+        "inkAuto": {
+          "label": "Automatic text color"
+        },
+        "ink": {
+          "label": "Text color"
+        },
+        "accent": {
+          "label": "Accent"
+        },
+        "padding": {
+          "label": "Margin"
+        }
+      },
+      "presets": {
+        "launch": "Launch",
+        "article": "Article",
+        "centered": "Centered",
+        "split": "Split",
+        "minimal": "Minimal",
+        "dotted": "Dotted",
+        "night": "Night"
+      },
+      "advisories": {
+        "truncated": "The text is too long and was shortened. Shorten the title or subtitle, or pick a smaller title size.",
+        "pictureContrast": "Musterli cannot check the contrast on your own picture. A panel behind the text (fade or card) keeps it readable.",
+        "textContrast": "The text only reaches {ratio}:1 contrast; WCAG AA needs {required}:1. Pick another text color or a panel behind the text."
+      },
+      "seo": {
+        "heading": "Open Graph Image Generator (OG Image)",
+        "whatIs": "An Open Graph image is the preview picture that appears when someone shares a link, for example on Facebook, LinkedIn, X, Slack or WhatsApp. Without one, the platform picks some image from the page or shows none at all. A designed image makes your link stand out and get more clicks.",
+        "howTo": "Enter the title, label, subtitle and site name, and upload your logo if you like. Choose a layout and a motif or your own picture as the background. Download the image as PNG or JPG, put it on your website and copy the meta tags into the head of the page.",
+        "useCases": {
+          "u1": {
+            "title": "Blog posts",
+            "text": "Every post gets its own preview image with its title. In a feed, people see at once what it is about."
+          },
+          "u2": {
+            "title": "Product and launch",
+            "text": "Share the home page or a new feature with your logo, a label and a striking gradient."
+          },
+          "u3": {
+            "title": "Docs and projects",
+            "text": "Documentation, open source projects and portfolios look more professional in Slack and on GitHub too."
+          }
+        },
+        "tips": {
+          "t1": "Keep the title short, about six to ten words. On phones the image is shown small.",
+          "t2": "Keep important content away from the edges. Some platforms crop the image slightly.",
+          "t3": "Use “Reuse” in another Musterli tool to take its picture straight in as the background."
+        },
+        "faq": {
+          "q1": {
+            "question": "What size does an Open Graph image need?",
+            "answer": "The usual size is 1200 × 630 pixels, about 1.91:1. It is the default here and displays well on Facebook, LinkedIn, X and most chat apps."
+          },
+          "q2": {
+            "question": "How do I add the image to my website?",
+            "answer": "Upload the image to your server and copy the meta tags into the head of the page. Replace the example address with the full address of your image, including https and the domain."
+          },
+          "q3": {
+            "question": "Why does a platform still show the old image?",
+            "answer": "Platforms cache previews. Facebook's Sharing Debugger and LinkedIn's Post Inspector reload the preview. A new file name helps as well."
+          },
+          "q4": {
+            "question": "Are my logo and picture uploaded?",
+            "answer": "No. Everything is made in your browser. Your logo and picture stay on your device and are left out of share links."
+          }
+        }
+      }
     }
   },
   "Converters": {
@@ -7273,9 +7680,9 @@
     },
     "ui-effects": {
       "name": "UI effects",
-      "lead": "Glass, shadows, bento grids and gradients as ready-made code for cards, buttons and layouts. Copy it and paste it into your project.",
+      "lead": "Section dividers, fluid font sizes, glass, shadows, bento grids and gradients as ready-made code for cards, buttons and layouts. Copy it and paste it into your project.",
       "metaTitle": "Free CSS effects for UI and cards | Musterli",
-      "metaDescription": "Glass effect, CSS shadows, bento grid and gradients for cards and layouts, as CSS and Tailwind. Free and without an account."
+      "metaDescription": "Section dividers, fluid type scale, glass effect, CSS shadows, bento grid and gradients as CSS and Tailwind. Free and without an account."
     },
     "color-systems": {
       "name": "Color systems",
@@ -7291,7 +7698,7 @@
     },
     "image-polish": {
       "name": "Image polish",
-      "lead": "Present screenshots in style and give photos their own look with duotone, halftone or glass. Your pictures stay on your device.",
+      "lead": "Design Open Graph images for shared links, present screenshots in style and give photos their own look with duotone, halftone or glass. Your pictures stay on your device.",
       "metaTitle": "Free screenshot and photo effects | Musterli",
       "metaDescription": "Screenshot mockups, duotone, halftone, fractal glass and dithering for website images. Free, in your browser, your pictures stay on your device."
     }
