@@ -250,7 +250,7 @@ Umgesetzt in M6-AP01.
 - **Vorlagen** (7): Mosaik, Retro, Grobe Pixel, Tontrennung (Blockgrösse 1), Abendrot (Palette), Gedämpft (Palette), Feine Pixel.
 - **Exporte**: PNG, JPG, WebP, SVG.
 
-**Leistung (E5 bis E7)**: alles im Raster-Effekt-Worker, Hauptthread wie L4 (E2E mit 12-MP-Foto für alle drei Tools ohne Long Task über 50 ms). Gemessen in Node bei 1500 × 1000 (Standard): God Rays rund 280 ms (64 Abtastpunkte auf 640 × 427), Fractal Glass rund 280 ms ohne Blur, Verpixeln rund 60 ms, SVG des Standards rund 7 ms (20 KB). Die Kosten der Strahlen hängen am gedeckelten Raster, nicht an der Fotogrösse; Fractal Glass wächst linear mit den Ausgabepixeln (12 MP hochgerechnet rund 2 bis 3 s im Worker).
+**Leistung (E5 bis E7)**: alles im Raster-Effekt-Worker, Hauptthread wie L4 (E2E mit 12-MP-Foto für alle drei Tools ohne Long Task über 50 ms, gemessen gegen den Produktions-Build wie in CI: keine Long Tasks; mit `next dev` zeigen alle Bildeffekte, auch Halftone und Dither, 50 bis 80 ms Dev-Overhead von React). Gemessen in Node bei 1500 × 1000 (Standard): God Rays rund 280 ms (64 Abtastpunkte auf 640 × 427), Fractal Glass rund 280 ms ohne Blur, Verpixeln rund 60 ms, SVG des Standards rund 7 ms (20 KB). Die Kosten der Strahlen hängen vor allem am gedeckelten Raster: ein Export mit 12 MP (4000 × 3000) rund 630 ms. Fractal Glass wächst linear mit den Ausgabepixeln, 12 MP rund 1.4 s im Worker.
 
 ## F. Colors
 

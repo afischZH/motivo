@@ -297,7 +297,7 @@ test.describe("pixelate SVG", () => {
     expect(svg.length).toBeLessThan(1_000_000);
 
     await setSize(page, 4000, 3000);
-    const field = page.getByLabel("Pixel size", { exact: true });
+    const field = page.getByRole("textbox", { name: "Pixel size", exact: true });
     await field.fill("1");
     await field.press("Enter");
     const dialog = await openExport(page);

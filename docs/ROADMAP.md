@@ -143,7 +143,7 @@ Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-
 - [ ] Hintergründe aus allen Tools (als parametrische Referenz)
 - [ ] Formate + **Magic Resize** (Constraint-System)
 - [ ] 100 eigene Templates, **Brand-Apply** mit einem Klick
-- [ ] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize**
+- [x] Tools: **God Rays**, **Fractal Glass**, **Pixelate/Posterize** (M6-AP01)
 - [ ] FR- und IT-Übersetzungen live
 
 **DoD**: Ein Template in 6 Formate per Magic Resize, ohne dass Text abgeschnitten wird (automatischer Test für alle Templates).
