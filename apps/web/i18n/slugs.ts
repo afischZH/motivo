@@ -263,7 +263,16 @@ export const SECTION_SLUGS = {
   myDesigns: { de: "meine-designs", en: "my-designs" },
   // The brand kit in this browser: noindex, never in the sitemap.
   brandKit: { de: "brand-kit", en: "brand-kit" },
+  // Social media editor (M6-AP02): SEO landing page; the editor itself is
+  // `/<section>/<SOCIAL_EDITOR_SEGMENT>` (noindex, not in the sitemap).
+  socialEditor: { de: "social-media-editor", en: "social-media-editor" },
 } as const satisfies Record<string, LocalizedSlugs>;
+
+/** Second segment of the social editor itself, below its landing page. */
+export const SOCIAL_EDITOR_SEGMENT = {
+  de: "bearbeiten",
+  en: "edit",
+} as const satisfies LocalizedSlugs;
 
 export type Section = keyof typeof SECTION_SLUGS;
 
@@ -277,6 +286,13 @@ export const RETIRED_SECTION_SLUGS: Readonly<Record<string, Section>> = {
   "founders-warteliste": "support",
   "founders-waitlist": "support",
 };
+
+/** True for the localized "edit" segment of the social editor in any locale. */
+export function isSocialEditorSegment(value: string): boolean {
+  return ALL_LOCALES.some(
+    (locale) => (SOCIAL_EDITOR_SEGMENT as Partial<Record<AnyLocale, string>>)[locale] === value,
+  );
+}
 
 /** Slug format: lowercase ASCII words joined by single hyphens. */
 export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

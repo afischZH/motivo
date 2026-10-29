@@ -11,6 +11,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 
 import { MyDesigns } from "@/components/designs/my-designs";
+import { SocialDesigns } from "@/components/social-editor/social-designs";
 import { routePath } from "@/i18n/paths";
 import { routing } from "@/i18n/routing";
 import { MY_DESIGNS_CLIENT_NAMESPACES, pickMessages } from "@/lib/client-messages";
@@ -52,6 +53,7 @@ export default async function MyDesignsPage({ params }: MyDesignsPageProps) {
       messages={pickMessages(await getMessages({ locale }), MY_DESIGNS_CLIENT_NAMESPACES)}
     >
       <MyDesigns tools={tools} toolsHref={routePath({ page: "tools" }, locale)} />
+      <SocialDesigns editorHref={routePath({ page: "socialEditorApp" }, locale)} />
     </NextIntlClientProvider>
   );
 }

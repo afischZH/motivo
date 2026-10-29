@@ -18,6 +18,7 @@ import {
   converterIdFromSlug,
   converterSlug,
   isCategorySegment,
+  isSocialEditorSegment,
   patternIdFromSlug,
   patternSlug,
   sectionFromAnySlug,
@@ -41,6 +42,8 @@ export type AppRoute =
   | { page: "palette"; paletteId: string }
   | { page: "myDesigns" }
   | { page: "brandKit" }
+  | { page: "socialEditor" }
+  | { page: "socialEditorApp" }
   | { page: "imprint" }
   | { page: "privacy" }
   | { page: "terms" }
@@ -103,6 +106,10 @@ export function routeHref(route: AppRoute, locale: AnyLocale) {
       return "/my-designs" as const;
     case "brandKit":
       return "/brand-kit" as const;
+    case "socialEditor":
+      return "/social-editor" as const;
+    case "socialEditorApp":
+      return "/social-editor/edit" as const;
     case "palette":
       return {
         pathname: "/palettes/[paletteSlug]" as const,
@@ -222,6 +229,12 @@ export function routeFromPathname(
   }
   if (section === "brandKit") {
     return segments.length === 1 ? { page: "brandKit" } : undefined;
+  }
+  if (section === "socialEditor") {
+    if (segments.length === 1) return { page: "socialEditor" };
+    return segments.length === 2 && isSocialEditorSegment(segments[1] ?? "")
+      ? { page: "socialEditorApp" }
+      : undefined;
   }
   if (section === "myDesigns") {
     return segments.length === 1 ? { page: "myDesigns" } : undefined;

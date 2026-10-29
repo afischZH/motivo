@@ -19,6 +19,7 @@ import {
   CATEGORY_SLUGS,
   CONVERTER_SLUGS,
   SECTION_SLUGS,
+  SOCIAL_EDITOR_SEGMENT,
   SLUG_PATTERN,
   categoryIdFromAnySlug,
   categoryIdFromSlug,
@@ -197,6 +198,36 @@ describe("my designs section", () => {
     expect(canonicalRedirect("/de/my-designs")).toBe("/de/meine-designs");
     expect(canonicalRedirect("/en/meine-designs")).toBe("/en/my-designs");
     expect(canonicalRedirect("/de/meine-designs")).toBeNull();
+  });
+});
+
+describe("social editor section", () => {
+  it("has a landing page and the editor below it, in every locale", () => {
+    expect(SECTION_SLUGS.socialEditor).toEqual({
+      de: "social-media-editor",
+      en: "social-media-editor",
+    });
+    expect(SOCIAL_EDITOR_SEGMENT).toEqual({ de: "bearbeiten", en: "edit" });
+    for (const locale of ENABLED_LOCALES) {
+      const landing = routePath({ page: "socialEditor" }, locale);
+      expect(landing).toBe(`/${locale}/social-media-editor`);
+      expect(routeFromPathname(landing, {}, locale)).toEqual({ page: "socialEditor" });
+      const app = routePath({ page: "socialEditorApp" }, locale);
+      expect(app).toBe(`${landing}/${SOCIAL_EDITOR_SEGMENT[locale]}`);
+      expect(routeFromPathname(app, {}, locale)).toEqual({ page: "socialEditorApp" });
+      expect(routeFromPathname(`${landing}/x`, {}, locale)).toBeUndefined();
+      // No tool may take the slug of the section.
+      expect(toolIdFromAnySlug(SECTION_SLUGS.socialEditor[locale])).toBeUndefined();
+    }
+    expect(canonicalRedirect("/de/social-media-editor")).toBeNull();
+    expect(canonicalRedirect("/de/social-media-editor/bearbeiten")).toBeNull();
+    expect(canonicalRedirect("/de/social-media-editor/edit")).toBe(
+      "/de/social-media-editor/bearbeiten",
+    );
+    expect(canonicalRedirect("/en/social-media-editor/bearbeiten")).toBe(
+      "/en/social-media-editor/edit",
+    );
+    expect(canonicalRedirect("/en/social-media-editor/x")).toBeNull();
   });
 });
 

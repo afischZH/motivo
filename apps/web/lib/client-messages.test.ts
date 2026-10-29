@@ -3,7 +3,12 @@ import { describe, expect, it } from "vitest";
 import editorDe from "@musterli/editor-ui/messages/de.json";
 import de from "@/messages/de.json";
 
-import { CONVERTER_CLIENT_NAMESPACES, editorMessages, pickMessages } from "./client-messages";
+import {
+  CONVERTER_CLIENT_NAMESPACES,
+  editorMessages,
+  pickMessages,
+  socialEditorMessages,
+} from "./client-messages";
 
 const all = { ...de, ...editorDe } as Record<string, unknown>;
 
@@ -31,5 +36,13 @@ describe("client messages", () => {
       if (id !== "common") expect(entry, id).toHaveProperty("name");
     }
     expect(JSON.stringify(editor).length).toBeLessThan(JSON.stringify(all).length / 1.5);
+  });
+
+  it("gives the social editor the editor texts and its own, without the landing page", () => {
+    const social = socialEditorMessages(all);
+    expect(Object.keys(social).sort()).toEqual(
+      ["Designs", "Editor", "Shapes", "SocialEditor", "ToolPage", "sizes", "tools"].sort(),
+    );
+    expect(social).not.toHaveProperty("SocialLanding");
   });
 });

@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     "@musterli/shaders",
     "@musterli/editor-ui",
     "@musterli/svg-sanitizer",
+    "@musterli/scene",
   ],
   // Always defined (empty when unset), so Next inlines them into the client
   // bundle and drops the analytics and Sentry code paths from builds without

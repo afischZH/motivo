@@ -6516,5 +6516,347 @@
       "bow": "Bow",
       "mandala": "Mandala"
     }
+  },
+  "SocialLanding": {
+    "nav": "Social editor",
+    "metaTitle": "Social media editor: design posts for Instagram, LinkedIn and YouTube for free",
+    "metaDescription": "Design social media posts with backgrounds, text, shapes and your logo in the browser. Magic Resize fits your design to every format. Free, no account.",
+    "badge": "New",
+    "heading": "Social media editor",
+    "lead": "Posts, stories and thumbnails with a background, text, shapes and your logo. Switch the format and Magic Resize rearranges everything.",
+    "cta": "Open the editor",
+    "ctaHint": "Free, no account. Everything stays in your browser.",
+    "whatIsHeading": "What is the social media editor?",
+    "whatIs": "An editor for images in social media formats. The background comes from one of the Musterli generators; on top you place text, shapes, pictures and the logo from your brand kit. Every layer remembers what it is attached to (a corner, the centre or an edge), so Magic Resize fits the same design to square, portrait, story or landscape without cutting off any text.",
+    "featuresHeading": "What you can do with it",
+    "useCases": {
+      "u1": {
+        "title": "One design, every format",
+        "text": "Design once in square and switch to story, Pinterest pin or YouTube thumbnail. Text gets smaller or wraps instead of being cut off."
+      },
+      "u2": {
+        "title": "Backgrounds from the generators",
+        "text": "Mesh gradients, patterns, blobs or shader gradients as the background. Space gives a new variant; fine-tune it with the controls in the side panel."
+      },
+      "u3": {
+        "title": "On brand",
+        "text": "Colours run through the scene's colour slots. Take over your brand palette and your logo from the brand kit with one click."
+      },
+      "u4": {
+        "title": "Layers as you know them",
+        "text": "Move, scale, rotate, align, distribute and group. With guides, snapping and undo."
+      },
+      "u5": {
+        "title": "Full size export",
+        "text": "PNG or JPG at the format size, or twice as large for crisp pictures on high resolution screens."
+      },
+      "u6": {
+        "title": "Saved in your browser",
+        "text": "Designs go to My designs and a draft is saved as you work. Export them as a file to move them to another device."
+      }
+    },
+    "howToHeading": "How it works",
+    "steps": {
+      "t1": "Open the editor and pick a format, for example Instagram 4:5.",
+      "t2": "Choose a background and press Space until you like the variant.",
+      "t3": "Add text, shapes, pictures or your logo and arrange them.",
+      "t4": "Switch the format if you need another one. Magic Resize rearranges the layers.",
+      "t5": "Export as PNG or JPG and save the design to My designs."
+    },
+    "ctaSecondary": "Start designing in the social media editor",
+    "formatsHeading": "Formats",
+    "formatsLead": "The common sizes for posts, stories, cover images and thumbnails:",
+    "privacyHeading": "Nothing leaves your device",
+    "privacy": "Rendering and saving happen in your browser. Uploaded pictures are checked, SVG files are sanitised, and none of it is sent to a server.",
+    "faqHeading": "Frequently asked questions",
+    "faq": {
+      "q1": "Is the social media editor free?",
+      "a1": "Yes. Musterli is completely free and funded by donations. There is no account, no subscription and no watermark.",
+      "q2": "What does Magic Resize do?",
+      "a2": "Every layer is attached to an edge, to the centre, or stretches across. When the format changes, margins stay the same, sizes follow the short side, and text gets smaller or wraps. Nothing is cut off.",
+      "q3": "Where are my designs stored?",
+      "a3": "In your browser's storage (IndexedDB) on this device. In My designs you can export them as a file and import them again on another device.",
+      "q4": "Can I use my own pictures and my logo?",
+      "a4": "Yes. Upload pictures right in the editor; logos come from your brand kit. Both stay local and are never part of a share link.",
+      "q5": "Does the editor work on a phone?",
+      "a5": "Viewing and exporting work everywhere. For designing, a large screen is the most comfortable."
+    },
+    "teaserTitle": "New: social media editor",
+    "teaserText": "A background from a generator plus text, shapes and your logo. Magic Resize fits the design to every format.",
+    "teaserCta": "Go to the social media editor"
+  },
+  "SocialEditor": {
+    "page": {
+      "metaTitle": "Social media editor",
+      "metaDescription": "Design social media posts with a background, text, shapes and your logo. Free, in the browser."
+    },
+    "title": "Social media editor",
+    "smallScreen": "Best on a large screen. Viewing and exporting work here too.",
+    "toolbar": "Design",
+    "back": "Social editor",
+    "name": "Name",
+    "untitled": "Untitled design",
+    "format": "Format",
+    "customFormat": "Custom format ({width} × {height})",
+    "undo": "Undo",
+    "redo": "Redo",
+    "new": "New",
+    "newConfirm": "Start a new design? Unsaved changes will be lost.",
+    "newDesign": "New design started.",
+    "saveCopy": "Save as copy",
+    "save": "Save",
+    "saving": "Saving …",
+    "myDesigns": "My designs",
+    "saved": "“{name}” saved.",
+    "savedCopy": "Copy “{name}” saved.",
+    "saveFailed": "Saving did not work. Is the browser's storage full or blocked?",
+    "copyName": "{name} (copy)",
+    "layersPanel": "Layers and add",
+    "propertiesPanel": "Properties",
+    "canvasRegion": "Canvas",
+    "canvasRole": "canvas",
+    "canvasLabel": "Design {width} × {height} pixels. Selected: {selection}. Arrow keys move by 1 pixel, with Shift by 10 pixels.",
+    "nothingSelected": "nothing",
+    "loading": "Loading the editor …",
+    "loadFailed": "The editor could not be loaded. Reload the page.",
+    "add": {
+      "title": "Add",
+      "text": "Text",
+      "rect": "Rectangle",
+      "ellipse": "Ellipse",
+      "line": "Line",
+      "library": "Shape",
+      "image": "Picture",
+      "uploading": "Loading …",
+      "logo": "Logo"
+    },
+    "added": {
+      "text": "Text added.",
+      "rect": "Rectangle added.",
+      "ellipse": "Ellipse added.",
+      "line": "Line added.",
+      "library": "Shape added.",
+      "image": "Picture added.",
+      "logo": "Logo added."
+    },
+    "limitLayers": "No more layers fit (at most 100).",
+    "removed": "{count, plural, one {One layer} other {# layers}} removed.",
+    "duplicated": "{count, plural, one {One layer} other {# layers}} duplicated.",
+    "grouped": "Grouped.",
+    "ungrouped": "Group dissolved.",
+    "starterHeadline": "Your headline here",
+    "newText": "New text",
+    "formatChanged": "Format {format}, {width} × {height}. The layers were adjusted.",
+    "logoInvalid": "This logo cannot be used.",
+    "exported": "{file} exported.",
+    "exportFailed": "The export did not work.",
+    "export": {
+      "format": "File format",
+      "size": "Size",
+      "scale": "{scale}× ({width} × {height})",
+      "running": "Exporting …",
+      "run": "Export"
+    },
+    "logos": {
+      "title": "Logo from the brand kit",
+      "empty": "There are no logos in the brand kit yet. <link>Add a logo in the brand kit</link>",
+      "close": "Close",
+      "pick": "Insert {name}",
+      "unnamed": "Logo"
+    },
+    "layers": {
+      "title": "Layers",
+      "hint": "The top one is in front. F2 renames, Alt with arrow up or down moves the layer.",
+      "label": "Layers, topmost first",
+      "renameLabel": "New name for {name}",
+      "rowLabel": "{name}, {kind}, layer {position} of {count}",
+      "kinds": {
+        "background": "Background",
+        "text": "Text",
+        "image": "Picture",
+        "shape": "Shape",
+        "logo": "Logo"
+      },
+      "group": "Group",
+      "hide": "Hide {name}",
+      "show": "Show {name}",
+      "lock": "Lock {name}",
+      "unlock": "Unlock {name}"
+    },
+    "color": {
+      "none": "None",
+      "slot": "Colour slot {n} ({color})",
+      "custom": "Custom colour"
+    },
+    "inspector": {
+      "arrange": "Arrange",
+      "arrangeMany": "Arrange {count} layers",
+      "align": "Align",
+      "alignLeft": "Align left",
+      "alignHCenter": "Centre horizontally",
+      "alignRight": "Align right",
+      "alignTop": "Align top",
+      "alignVCenter": "Centre vertically",
+      "alignBottom": "Align bottom",
+      "distributeX": "Distribute horizontally",
+      "distributeY": "Distribute vertically",
+      "alignHintOne": "A single layer aligns to the canvas.",
+      "alignHintMany": "Several layers align to each other. Distributing needs three or more.",
+      "group": "Group",
+      "ungroup": "Ungroup",
+      "forward": "Bring forward",
+      "backward": "Send backward",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "frame": "Position and size",
+      "x": "X",
+      "y": "Y",
+      "width": "Width",
+      "height": "Height",
+      "rotation": "Rotation (degrees)",
+      "opacity": "Opacity (%)"
+    },
+    "text": {
+      "title": "Text",
+      "content": "Content",
+      "font": "Font",
+      "fonts": {
+        "sans": "Sans serif",
+        "serif": "Serif",
+        "mono": "Monospace"
+      },
+      "size": "Size",
+      "weight": "Weight",
+      "weights": {
+        "400": "Regular",
+        "500": "Medium",
+        "700": "Bold",
+        "900": "Black"
+      },
+      "minSize": "Smallest size",
+      "align": "Alignment",
+      "aligns": {
+        "left": "Left",
+        "center": "Centre",
+        "right": "Right"
+      },
+      "valign": "Vertical",
+      "valigns": {
+        "top": "Top",
+        "middle": "Middle",
+        "bottom": "Bottom"
+      },
+      "lineHeight": "Line height",
+      "letterSpacing": "Letter spacing (em)",
+      "color": "Colour",
+      "italic": "Italic",
+      "shadow": "Shadow",
+      "placeholder": "Placeholder (for templates)"
+    },
+    "shape": {
+      "title": "Shape",
+      "form": "Shape library",
+      "fill": "Fill",
+      "lineColor": "Line colour",
+      "stroke": "Outline",
+      "lineWidth": "Line width",
+      "strokeWidth": "Outline width",
+      "radius": "Corner radius"
+    },
+    "image": {
+      "title": "Picture",
+      "fit": "Fit",
+      "fits": {
+        "cover": "Fill",
+        "contain": "Show all"
+      },
+      "radius": "Corner radius",
+      "placeholder": "Placeholder (for templates)"
+    },
+    "constraints": {
+      "title": "Magic Resize",
+      "hint": "What the layer is attached to when the format changes. Moving the layer sets it again.",
+      "h": "Horizontal",
+      "v": "Vertical",
+      "hAnchors": {
+        "start": "Left",
+        "center": "Centre",
+        "end": "Right",
+        "stretch": "Full width"
+      },
+      "vAnchors": {
+        "start": "Top",
+        "center": "Middle",
+        "end": "Bottom",
+        "stretch": "Full height"
+      },
+      "size": "Size follows",
+      "sizes": {
+        "short": "the short side",
+        "width": "the width",
+        "height": "the height"
+      },
+      "bleed": "May reach past the edge (decoration)"
+    },
+    "background": {
+      "title": "Background",
+      "tool": "Generator",
+      "variant": "New variant",
+      "applyPalette": "Apply scene colours",
+      "variantHint": "Space: new variant. The lock keeps a control as it is.",
+      "newVariant": "New background variant.",
+      "paletteUnsupported": "This background does not take colours.",
+      "paletteApplied": "Scene colours applied to the background."
+    },
+    "palette": {
+      "title": "Scene colours",
+      "hint": "Texts and shapes with a colour slot follow these colours.",
+      "slot": "Slot {n}",
+      "brand": "Use a brand palette",
+      "brandPick": "Choose a palette …",
+      "brandUnnamed": "Unnamed palette"
+    }
+  },
+  "SocialDesigns": {
+    "title": "Social designs",
+    "intro": "Your designs from the social media editor, saved in this browser.",
+    "exportAll": "Export all",
+    "import": "Import",
+    "failed": "That did not work.",
+    "exported": "{count, plural, one {One design} other {# designs}} exported.",
+    "importErrors": {
+      "too-large": "The file is too large. At most 32 MB are allowed.",
+      "empty": "The file is empty.",
+      "malformed": "The file is damaged or not JSON.",
+      "forbidden-keys": "The file contains forbidden entries and was not imported.",
+      "wrong-format": "This is not a Musterli social designs file.",
+      "unsupported-version": "This file comes from a newer version of Musterli.",
+      "too-many": "The file contains too many designs (at most 500).",
+      "designs-file": "This is a tool designs file. Import it above in My designs.",
+      "brand-kit-file": "This is a brand kit file. Import it in the brand kit.",
+      "timeout": "Checking the file took too long.",
+      "aborted": "Import cancelled."
+    },
+    "imported": "{added, plural, =0 {No new designs imported.} one {One design imported.} other {# designs imported.}}",
+    "importDuplicates": "{count, plural, one {One was already there.} other {# were already there.}}",
+    "importSkipped": "{count, plural, one {One was skipped because it is invalid.} other {# were skipped because they are invalid.}}",
+    "undo": "Undo",
+    "dismiss": "Close",
+    "unavailable": "This browser's storage is not available (for example in private mode).",
+    "empty": "No social designs yet.",
+    "emptyCta": "Open the social media editor",
+    "noThumbnail": "No preview",
+    "meta": "{width} × {height} · {date}",
+    "actionsLabel": "Actions for {name}",
+    "openLabel": "Open {name}",
+    "open": "Open",
+    "rename": "Rename",
+    "duplicate": "Duplicate",
+    "copyName": "{name} (copy)",
+    "delete": "Delete",
+    "deleted": "“{name}” deleted.",
+    "renameLabel": "New name for {name}",
+    "renameSave": "Save",
+    "cancel": "Cancel"
   }
 }

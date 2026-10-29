@@ -265,9 +265,9 @@ describe("database upgrade", () => {
 
   it("keeps version 1 data and adds the brand kit stores", async () => {
     await createVersion1();
-    expect(DB_VERSION).toBe(2);
+    expect(DB_VERSION).toBe(3);
     const db = await openDatabase(factory);
-    expect(db.version).toBe(2);
+    expect(db.version).toBe(3);
     expect([...db.objectStoreNames].sort()).toEqual(
       [
         STORE.brandAssets,
@@ -276,6 +276,9 @@ describe("database upgrade", () => {
         STORE.designs,
         STORE.drafts,
         STORE.meta,
+        STORE.socialDesigns,
+        STORE.socialDrafts,
+        STORE.socialScenes,
       ].sort(),
     );
     db.close();

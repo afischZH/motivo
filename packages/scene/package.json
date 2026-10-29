@@ -1,0 +1,23 @@
+{
+  "name": "@musterli/scene",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Scene model of the social media editor: Zod schema, Magic Resize, history, snapping and alignment (pure, no DOM)",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@musterli/engine": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@musterli/config": "workspace:*",
+    "@musterli/tool-registry": "workspace:*"
+  }
+}
