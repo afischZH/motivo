@@ -10,17 +10,23 @@
 import { listShapePacks } from "@musterli/engine";
 import {
   ANCHORS,
-  DEFAULT_FONT_FAMILY,
+  FONT_CATEGORIES,
   FONT_SIZE_MAX,
   FONT_SIZE_MIN,
+  LIBRARY_FONTS,
   SIZE_MODES,
+  SYSTEM_FONT_STACKS,
   TEXT_ALIGNS,
   TEXT_VALIGNS,
   TEXT_MAX_LENGTH,
+  libraryFont,
+  systemFontOf,
   type AlignMode,
   type Layer,
   type Scene,
   type StackMove,
+  type SystemFontId,
+  type TextEffects,
   type TextLayer,
 } from "@musterli/scene";
 import {
@@ -47,24 +53,59 @@ import { cn } from "@/lib/utils";
 
 import { CheckField, ColorRefField, INPUT, LABEL, NumberField, SelectField } from "./fields";
 
-export const FONT_STACKS = {
-  sans: DEFAULT_FONT_FAMILY,
-  serif: 'Georgia, Cambria, "Times New Roman", Times, serif',
-  mono: 'ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
-} as const;
-export type FontStackId = keyof typeof FONT_STACKS;
+/** A choice of the font picker: a library font, a brand font or a system stack. */
+export type FontChoice =
+  | { kind: "library"; id: string }
+  | { kind: "brand"; id: string }
+  | { kind: "system"; id: SystemFontId };
 
-function fontStackOf(family: string): FontStackId {
-  for (const [id, stack] of Object.entries(FONT_STACKS))
-    if (stack === family) return id as FontStackId;
+/** A brand font as the picker lists it (the bytes stay with the editor). */
+export interface BrandFontOption {
+  id: string;
+  name: string;
+}
+
+/** The system stack a family list stands for (AP02 scenes may hold any list). */
+function systemStackOf(family: string): SystemFontId {
+  const exact = systemFontOf(family);
+  if (exact) return exact;
   if (/mono/i.test(family)) return "mono";
   if (/serif/i.test(family) && !/sans-serif/i.test(family)) return "serif";
   return "sans";
 }
 
+/** `<select>` value of a layer's font. */
+export function fontChoiceValue(layer: Pick<TextLayer, "font" | "fontFamily">): string {
+  if (layer.font) return `${layer.font.kind}:${layer.font.id}`;
+  return `system:${systemStackOf(layer.fontFamily)}`;
+}
+
+function parseFontChoice(value: string): FontChoice | null {
+  const [kind, ...rest] = value.split(":");
+  const id = rest.join(":");
+  if (kind === "library" && libraryFont(id)) return { kind, id };
+  if (kind === "brand" && id) return { kind, id };
+  if (kind === "system" && id in SYSTEM_FONT_STACKS) return { kind, id: id as SystemFontId };
+  return null;
+}
+
+/** Weights the weight picker offers: the font's own, or the usual four. */
+function weightOptions(layer: TextLayer): number[] {
+  const own = layer.font?.kind === "library" ? libraryFont(layer.font.id)?.weights : undefined;
+  const list = own ? [...own] : [400, 500, 700, 900];
+  if (!list.includes(layer.fontWeight)) list.push(layer.fontWeight);
+  return list.sort((a, b) => a - b);
+}
+
 export interface InspectorProps {
   scene: Scene;
   layers: readonly Layer[];
+  /** Brand fonts of this browser, in brand kit order. */
+  brandFonts: readonly BrandFontOption[];
+  /** Brand fonts the scene uses that this browser lacks (by id). */
+  missingFonts: ReadonlySet<string>;
+  /** Loads the font, then applies it (one undo step). */
+  onFont(id: string, choice: FontChoice, weight?: number): void;
   /** Id of the text field, focused by a double click on a text layer. */
   textFieldId: string;
   onUpdate(id: string, change: (layer: Layer) => Layer, key: string): void;
@@ -193,6 +234,7 @@ export function Inspector(props: InspectorProps) {
 
       {single && <FrameFields {...props} layer={single} />}
       {single?.kind === "text" && <TextFields {...props} layer={single} />}
+      {single?.kind === "text" && <TextEffectFields {...props} layer={single} />}
       {single?.kind === "shape" && <ShapeFields {...props} layer={single} />}
       {single?.kind === "image" && <ImageFields {...props} layer={single} />}
       {single && <ConstraintFields {...props} layer={single} />}
@@ -306,7 +348,79 @@ function FrameFields({ layer, onUpdate, onCommit }: LayerProps<Layer>) {
   );
 }
 
-function TextFields({ layer, scene, textFieldId, onUpdate, onCommit }: LayerProps<TextLayer>) {
+function FontField({
+  layer,
+  brandFonts,
+  missingFonts,
+  onFont,
+}: Pick<LayerProps<TextLayer>, "layer" | "brandFonts" | "missingFonts" | "onFont">) {
+  const t = useTranslations("SocialEditor.text");
+  const id = useId();
+  const hintId = `${id}-hint`;
+  const value = fontChoiceValue(layer);
+  const brandMissing =
+    layer.font?.kind === "brand" &&
+    (missingFonts.has(layer.font.id) || !brandFonts.some((f) => f.id === layer.font?.id));
+  return (
+    <div className="col-span-2 flex flex-col gap-1">
+      <label htmlFor={id} className={LABEL}>
+        {t("font")}
+      </label>
+      <select
+        id={id}
+        className={INPUT}
+        value={value}
+        aria-describedby={hintId}
+        data-testid="text-font"
+        onChange={(event) => {
+          const choice = parseFontChoice(event.currentTarget.value);
+          if (choice) onFont(layer.id, choice);
+        }}
+      >
+        {(brandFonts.length > 0 || brandMissing) && (
+          <optgroup label={t("fontGroups.brand")}>
+            {brandMissing && layer.font && (
+              <option value={value}>{t("fontMissingOption", { name: layer.font.name })}</option>
+            )}
+            {brandFonts.map((f) => (
+              <option key={f.id} value={`brand:${f.id}`}>
+                {f.name}
+              </option>
+            ))}
+          </optgroup>
+        )}
+        {FONT_CATEGORIES.map((category) => (
+          <optgroup key={category} label={t(`fontGroups.${category}`)}>
+            {LIBRARY_FONTS.filter((f) => f.category === category).map((f) => (
+              <option key={f.id} value={`library:${f.id}`}>
+                {f.name}
+              </option>
+            ))}
+          </optgroup>
+        ))}
+        <optgroup label={t("fontGroups.system")}>
+          {(Object.keys(SYSTEM_FONT_STACKS) as SystemFontId[]).map((s) => (
+            <option key={s} value={`system:${s}`}>
+              {t(`systemFonts.${s}`)}
+            </option>
+          ))}
+        </optgroup>
+      </select>
+      {brandMissing && layer.font ? (
+        <p id={hintId} role="note" className="text-xs text-destructive" data-testid="font-missing">
+          {t("fontMissing", { name: layer.font.name })}
+        </p>
+      ) : (
+        <p id={hintId} className="text-xs text-muted-foreground">
+          {t("fontHint")}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function TextFields(props: LayerProps<TextLayer>) {
+  const { layer, scene, textFieldId, onUpdate, onCommit } = props;
   const t = useTranslations("SocialEditor.text");
   const set = (patch: Partial<TextLayer>, key: string) =>
     onUpdate(layer.id, (l) => ({ ...l, ...patch }) as Layer, `text-${key}`);
@@ -328,16 +442,7 @@ function TextFields({ layer, scene, textFieldId, onUpdate, onCommit }: LayerProp
         />
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <SelectField
-          label={t("font")}
-          value={fontStackOf(layer.fontFamily)}
-          options={(Object.keys(FONT_STACKS) as FontStackId[]).map((id) => ({
-            value: id,
-            label: t(`fonts.${id}`),
-          }))}
-          testId="text-font"
-          onChange={(id) => set({ fontFamily: FONT_STACKS[id] }, "font")}
-        />
+        <FontField {...props} />
         <NumberField
           label={t("size")}
           value={layer.fontSize}
@@ -351,13 +456,23 @@ function TextFields({ layer, scene, textFieldId, onUpdate, onCommit }: LayerProp
         />
         <SelectField
           label={t("weight")}
-          value={String(layer.fontWeight) as "400" | "500" | "700" | "900"}
-          options={(["400", "500", "700", "900"] as const).map((w) => ({
-            value: w,
-            label: t(`weights.${w}`),
+          value={String(layer.fontWeight)}
+          options={weightOptions(layer).map((w) => ({
+            value: String(w),
+            label: ["400", "500", "700", "900"].includes(String(w))
+              ? t(`weights.${String(w) as "400" | "500" | "700" | "900"}`)
+              : String(w),
           }))}
           testId="text-weight"
-          onChange={(w) => set({ fontWeight: Number(w) }, "weight")}
+          onChange={(w) => {
+            const choice = parseFontChoice(fontChoiceValue(layer));
+            // Library fonts load the file of the new weight first.
+            if (choice && choice.kind === "library") {
+              props.onFont(layer.id, choice, Number(w));
+            } else {
+              set({ fontWeight: Number(w) }, "weight");
+            }
+          }}
         />
         <NumberField
           label={t("minSize")}
@@ -416,37 +531,200 @@ function TextFields({ layer, scene, textFieldId, onUpdate, onCommit }: LayerProp
         onChange={(on) => set({ fontStyle: on ? "italic" : "normal" }, "italic")}
       />
       <CheckField
-        label={t("shadow")}
-        checked={layer.effects.shadow !== undefined}
-        testId="text-shadow"
-        onChange={(on) => {
-          const rest = { ...layer.effects };
-          delete rest.shadow;
-          const s = Math.min(scene.format.width, scene.format.height);
-          set(
-            {
-              effects: on
-                ? {
-                    ...rest,
-                    shadow: {
-                      color: "#000000",
-                      blur: Math.round(s * 0.02),
-                      offsetX: 0,
-                      offsetY: Math.round(s * 0.006),
-                      opacity: 0.35,
-                    },
-                  }
-                : rest,
-            },
-            "shadow",
-          );
-        }}
-      />
-      <CheckField
         label={t("placeholder")}
         checked={layer.placeholder}
         onChange={(placeholder) => set({ placeholder }, "placeholder")}
       />
+    </Section>
+  );
+}
+
+type EffectKey = keyof TextEffects;
+
+/** Starting values of an effect, sized to the text and the format. */
+function defaultEffect<K extends EffectKey>(
+  key: K,
+  layer: TextLayer,
+  scene: Scene,
+): NonNullable<TextEffects[K]> {
+  const s = Math.min(scene.format.width, scene.format.height);
+  const f = layer.fontSize;
+  const values: { [E in EffectKey]-?: NonNullable<TextEffects[E]> } = {
+    shadow: {
+      color: "#000000",
+      blur: Math.round(s * 0.02),
+      offsetX: 0,
+      offsetY: Math.round(s * 0.006),
+      opacity: 0.35,
+    },
+    stroke: { color: "#ffffff", width: Math.max(1, Math.round(f * 0.05)) },
+    highlight: { color: "brand-3", padding: Math.max(2, Math.round(f * 0.2)) },
+    gradient: { from: "brand-2", to: "brand-4", angle: 90 },
+  };
+  return values[key] as NonNullable<TextEffects[K]>;
+}
+
+function TextEffectFields({ layer, scene, onUpdate, onCommit }: LayerProps<TextLayer>) {
+  const t = useTranslations("SocialEditor.text.effects");
+  const e = layer.effects;
+  const setEffect = <K extends EffectKey>(key: K, value: TextEffects[K] | undefined) =>
+    onUpdate(
+      layer.id,
+      (l) => {
+        if (l.kind !== "text") return l;
+        const effects = Object.fromEntries(
+          Object.entries({ ...l.effects, [key]: value }).filter(([, v]) => v !== undefined),
+        ) as TextEffects;
+        return { ...l, effects };
+      },
+      `text-effect-${key}`,
+    );
+  const toggle = (key: EffectKey) => (on: boolean) =>
+    setEffect(key, on ? defaultEffect(key, layer, scene) : undefined);
+  const patch = <K extends EffectKey>(key: K, change: Partial<NonNullable<TextEffects[K]>>) => {
+    const current = e[key];
+    if (current) setEffect(key, { ...current, ...change } as TextEffects[K]);
+  };
+  const box = "flex flex-col gap-2 border-s-2 border-border ps-3";
+  return (
+    <Section title={t("title")} testId="text-effects">
+      <CheckField
+        label={t("shadow")}
+        checked={e.shadow !== undefined}
+        testId="text-shadow"
+        onChange={toggle("shadow")}
+      />
+      {e.shadow && (
+        <div className={box}>
+          <ColorRefField
+            label={t("shadowColor")}
+            value={e.shadow.color}
+            palette={scene.palette}
+            onChange={(color) => color !== null && patch("shadow", { color })}
+          />
+          <div className="grid grid-cols-2 gap-2">
+            <NumberField
+              label={t("shadowBlur")}
+              value={e.shadow.blur}
+              min={0}
+              max={500}
+              onChange={(blur) => patch("shadow", { blur })}
+              onCommit={onCommit}
+            />
+            <NumberField
+              label={t("shadowOpacity")}
+              value={Math.round(e.shadow.opacity * 100)}
+              min={0}
+              max={100}
+              onChange={(v) => patch("shadow", { opacity: v / 100 })}
+              onCommit={onCommit}
+            />
+            <NumberField
+              label={t("shadowX")}
+              value={e.shadow.offsetX}
+              min={-500}
+              max={500}
+              onChange={(offsetX) => patch("shadow", { offsetX })}
+              onCommit={onCommit}
+            />
+            <NumberField
+              label={t("shadowY")}
+              value={e.shadow.offsetY}
+              min={-500}
+              max={500}
+              onChange={(offsetY) => patch("shadow", { offsetY })}
+              onCommit={onCommit}
+            />
+          </div>
+        </div>
+      )}
+      <CheckField
+        label={t("stroke")}
+        checked={e.stroke !== undefined}
+        testId="text-stroke"
+        onChange={toggle("stroke")}
+      />
+      {e.stroke && (
+        <div className={box}>
+          <ColorRefField
+            label={t("strokeColor")}
+            value={e.stroke.color}
+            palette={scene.palette}
+            onChange={(color) => color !== null && patch("stroke", { color })}
+          />
+          <NumberField
+            label={t("strokeWidth")}
+            value={e.stroke.width}
+            min={0}
+            max={200}
+            step={0.5}
+            digits={1}
+            onChange={(width) => patch("stroke", { width })}
+            onCommit={onCommit}
+          />
+        </div>
+      )}
+      <CheckField
+        label={t("highlight")}
+        checked={e.highlight !== undefined}
+        testId="text-highlight"
+        onChange={toggle("highlight")}
+      />
+      {e.highlight && (
+        <div className={box}>
+          <ColorRefField
+            label={t("highlightColor")}
+            value={e.highlight.color}
+            palette={scene.palette}
+            testId="text-highlight-color"
+            onChange={(color) => color !== null && patch("highlight", { color })}
+          />
+          <NumberField
+            label={t("highlightPadding")}
+            value={e.highlight.padding}
+            min={0}
+            max={200}
+            testId="text-highlight-padding"
+            onChange={(padding) => patch("highlight", { padding })}
+            onCommit={onCommit}
+          />
+        </div>
+      )}
+      <CheckField
+        label={t("gradient")}
+        checked={e.gradient !== undefined}
+        testId="text-gradient"
+        onChange={toggle("gradient")}
+      />
+      {e.gradient && (
+        <div className={box}>
+          <p className="text-xs text-muted-foreground">{t("gradientHint")}</p>
+          <ColorRefField
+            label={t("gradientFrom")}
+            value={e.gradient.from}
+            palette={scene.palette}
+            testId="text-gradient-from"
+            onChange={(from) => from !== null && patch("gradient", { from })}
+          />
+          <ColorRefField
+            label={t("gradientTo")}
+            value={e.gradient.to}
+            palette={scene.palette}
+            testId="text-gradient-to"
+            onChange={(to) => to !== null && patch("gradient", { to })}
+          />
+          <NumberField
+            label={t("gradientAngle")}
+            value={e.gradient.angle}
+            min={-360}
+            max={360}
+            step={5}
+            testId="text-gradient-angle"
+            onChange={(angle) => patch("gradient", { angle })}
+            onCommit={onCommit}
+          />
+        </div>
+      )}
     </Section>
   );
 }

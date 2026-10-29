@@ -39,3 +39,30 @@ Lizenztext Shadcn Space (Free License, https://shadcnspace.com/license, abgerufe
 > This software is provided "as is". No guarantees. No promise that everything will work perfectly. You use it at your own risk. Shadcn Space is not responsible for bugs, data loss, project issues or any damage caused by using this software.
 
 Hinweis: Nur Gratis-Blöcke ohne Framer Motion (`motion`) und ohne `@iconify/react` werden verwendet. Pro-Blöcke sind ausgeschlossen.
+
+## Schriften des Social-Media-Editors (M6-AP03)
+
+Alle Schriften stehen unter der SIL Open Font License 1.1 (OFL). Quelle sind die Originaldateien im Repository google/fonts (https://github.com/google/fonts, Branch `main`, Ordner `ofl/<familie>/`, Stand 2026-10-29), Lizenz geprüft in `METADATA.pb` (`license: "OFL"`) und `OFL.txt` jeder Familie. Gebaut mit `assets/fonts/build-fonts.py` (fontTools 4.68): variable Schriften auf das Gewicht festgelegt (übrige Achsen auf dem Standardwert), Teilmengen `latin` und `latin-ext` wie bei Google Fonts, ohne Hinting, als WOFF2. Ausgeliefert unter `apps/web/public/fonts/<id>/` mit dem unveränderten `OFL.txt` der Familie daneben (die OFL verlangt den Lizenztext bei jeder Weitergabe). Geladen nur im Editor, von der eigenen Domain (`font-src 'self'`).
+
+| Schrift | Id | Gewichte | Version | Quelle (google/fonts) | Copyright | Lizenz |
+|---|---|---|---|---|---|---|
+| Inter | `inter` | 400, 700 | 4.001 | `ofl/inter/Inter[opsz,wght].ttf` | Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter) | OFL 1.1 |
+| Roboto Flex | `roboto-flex` | 400, 700 | 3.200 | `ofl/robotoflex/RobotoFlex[…,wght].ttf` | Copyright 2017 The Roboto Flex Project Authors (https://github.com/TypeNetwork/Roboto-Flex) | OFL 1.1 |
+| Poppins | `poppins` | 400, 700 | 4.004 | `ofl/poppins/Poppins-Regular.ttf`, `Poppins-Bold.ttf` | Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins) | OFL 1.1 |
+| Montserrat | `montserrat` | 400, 700 | 9.000 | `ofl/montserrat/Montserrat[wght].ttf` | Copyright 2024 The Montserrat.Git Project Authors (https://github.com/JulietaUla/Montserrat.git) | OFL 1.1 |
+| Space Grotesk | `space-grotesk` | 400, 700 | 2.000 | `ofl/spacegrotesk/SpaceGrotesk[wght].ttf` | Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk) | OFL 1.1 |
+| Fraunces | `fraunces` | 400, 700 | 1.000 | `ofl/fraunces/Fraunces[SOFT,WONK,opsz,wght].ttf` | Copyright 2018 The Fraunces Project Authors (https://github.com/undercasetype/Fraunces) | OFL 1.1 |
+| EB Garamond | `eb-garamond` | 400, 700 | 1.003 | `ofl/ebgaramond/EBGaramond[wght].ttf` | Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12) | OFL 1.1 |
+| DM Serif Display | `dm-serif-display` | 400 | 5.200 | `ofl/dmserifdisplay/DMSerifDisplay-Regular.ttf` | Copyright 2014-2018 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'. Copyright 2019 Google LLC. | OFL 1.1 |
+| Bebas Neue | `bebas-neue` | 400 | 2.000 | `ofl/bebasneue/BebasNeue-Regular.ttf` | Copyright © 2010 by Dharma Type | OFL 1.1 |
+| JetBrains Mono | `jetbrains-mono` | 400, 700 | 2.211 | `ofl/jetbrainsmono/JetBrainsMono[wght].ttf` | Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono) | OFL 1.1 |
+| Caveat | `caveat` | 400, 700 | 2.000 | `ofl/caveat/Caveat[wght].ttf` | Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat) | OFL 1.1 |
+| Pacifico | `pacifico` | 400 | 3.001 | `ofl/pacifico/Pacifico-Regular.ttf` | Copyright 2018 The Pacifico Project Authors (https://github.com/googlefonts/Pacifico) | OFL 1.1 |
+
+Hinweise:
+
+- **Reserved Font Names**: Teilmengen sind nach der OFL eine Veränderung, und eine veränderte Fassung darf keinen reservierten Namen tragen. Darum fehlen Lora, Playfair Display und Merriweather (ihr reservierter Name ist ihr Schriftname). DM Serif Display reserviert nur den Namen "Source", den die Schrift nicht trägt.
+- Die Schriften werden nicht verkauft (OFL Abschnitt 1) und nur zusammen mit dem Lizenztext ausgeliefert. Die interne Familie im Browser heisst `musterli-<id>`, damit eine lokal installierte Schrift gleichen Namens die Vorschau nicht verändert.
+- Grösse: 42 Dateien, zusammen 780 KiB; nur `latin` aller Schriften 397 KiB. Der Editor lädt nur, was der Text braucht (meist eine Datei pro Schrift und Gewicht, z. B. Inter 400 latin 20 KiB).
+- **Testschrift** `apps/web/e2e/fixtures/brand-test.ttf` (nur für die E2E-Tests, nicht ausgeliefert): aus Pacifico 3.001 (OFL 1.1, Copyright 2018 The Pacifico Project Authors) auf ASCII reduziert und in "Musterli Test Brand" umbenannt.
+- Brand-Schriften der Nutzerinnen und Nutzer bleiben in deren Browser (IndexedDB) und sind nicht Teil von Musterli. Für ihre Lizenz sind sie selbst verantwortlich; der Hinweis im Brand Kit erinnert daran.

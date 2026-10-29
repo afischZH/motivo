@@ -7,6 +7,9 @@
  */
 import { shapePath } from "@musterli/engine";
 import {
+  HIGHLIGHT_RADIUS_EM,
+  gradientLine,
+  highlightRects,
   resolveColor,
   type ColorRef,
   type Layer,
@@ -17,6 +20,7 @@ import type { Context as KonvaContext } from "konva/lib/Context";
 import type { Layer as KonvaLayer } from "konva/lib/Layer";
 import type { Node as KonvaNode } from "konva/lib/Node";
 import type { Shape as KonvaShape } from "konva/lib/Shape";
+import type { Text as KonvaText } from "konva/lib/shapes/Text";
 
 import type { KonvaKit } from "./konva";
 
@@ -35,6 +39,62 @@ export interface DrawOptions {
 /** Konva font style: `italic 700`, `700`. */
 export function konvaFontStyle(layer: Pick<TextLayer, "fontStyle" | "fontWeight">): string {
   return `${layer.fontStyle === "italic" ? "italic " : ""}${layer.fontWeight}`;
+}
+
+/**
+ * Konva attributes of a text layer's fill: the text colour, or the gradient
+ * (a CSS-like linear gradient over the layer's box, `gradientLine`) while
+ * one is set.
+ */
+export function textFillAttrs(layer: TextLayer, palette: readonly string[]) {
+  const g = layer.effects.gradient;
+  if (!g) return { fill: resolveColor(layer.color, palette), fillPriority: "color" };
+  const line = gradientLine(g.angle, layer.width, layer.height);
+  return {
+    fillPriority: "linear-gradient",
+    fillLinearGradientStartPoint: line.start,
+    fillLinearGradientEndPoint: line.end,
+    fillLinearGradientColorStops: [
+      0,
+      resolveColor(g.from, palette),
+      1,
+      resolveColor(g.to, palette),
+    ],
+  };
+}
+
+/**
+ * Draws the highlight bars behind the lines Konva laid out, then the text
+ * itself. The bars take no shadow (the shadow belongs to the letters).
+ */
+function textWithHighlight(color: string, padding: number) {
+  return function sceneFunc(this: KonvaText, context: KonvaContext, shape: KonvaShape) {
+    const text = shape as KonvaText;
+    const rects = highlightRects(
+      text.textArr,
+      {
+        align: text.align() as TextLayer["align"],
+        valign: text.verticalAlign() as TextLayer["valign"],
+        fontSize: text.fontSize(),
+        lineHeight: text.lineHeight(),
+        width: text.width(),
+        height: text.height(),
+      },
+      padding,
+    );
+    const c = context._context;
+    const radius = text.fontSize() * HIGHLIGHT_RADIUS_EM;
+    c.save();
+    c.shadowColor = "rgba(0, 0, 0, 0)";
+    c.fillStyle = color;
+    for (const r of rects) {
+      c.beginPath();
+      c.roundRect(r.x, r.y, r.width, r.height, Math.min(radius, r.height / 2));
+      c.fill();
+    }
+    c.restore();
+    text._sceneFunc(context as Parameters<KonvaText["_sceneFunc"]>[0]);
+  };
 }
 
 const path2dCache = new Map<string, Path2D>();
@@ -117,6 +177,7 @@ function nodeFor(
     }
     case "text": {
       const e = layer.effects;
+      const highlight = e.highlight ? color(e.highlight.color) : undefined;
       return new kit.Text({
         ...common,
         text: layer.text,
@@ -129,7 +190,10 @@ function nodeFor(
         verticalAlign: layer.valign,
         wrap: "word",
         padding: 0,
-        fill: color(layer.color) ?? "#000000",
+        ...textFillAttrs(layer, scene.palette),
+        ...(e.highlight && highlight
+          ? { sceneFunc: textWithHighlight(highlight, e.highlight.padding) }
+          : {}),
         ...(e.stroke && e.stroke.width > 0
           ? {
               stroke: color(e.stroke.color) ?? "#000000",

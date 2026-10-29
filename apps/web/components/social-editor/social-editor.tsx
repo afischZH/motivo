@@ -41,10 +41,14 @@ import {
   duplicateLayers,
   expandSelection,
   findLayer,
+  fontFamilyFor,
   frameOf,
   groupLayers,
   inferConstraints,
+  libraryFont,
+  libraryFontRef,
   moveInStack,
+  nearestWeight,
   moveLayers,
   removeLayers,
   reorderLayer,
@@ -56,12 +60,16 @@ import {
   unionBoxes,
   updateLayer,
   updateLayers,
+  DEFAULT_LIBRARY_FONT_ID,
+  SYSTEM_FONT_STACKS,
   type BackgroundLayer,
+  type FontRef,
   type Layer,
   type Scene,
   type SceneImage,
   type ShapeLayer,
   type StackMove,
+  type TextLayer,
   type TextMeasure,
 } from "@musterli/scene";
 import {
@@ -107,7 +115,8 @@ import { BackgroundPanel } from "./background-panel";
 import { DEFAULT_BACKGROUND_TOOL, backgroundVariant, isBackgroundTool } from "./backgrounds";
 import { exportFileName, exportScene, sceneThumbnail, type SceneExportFormat } from "./export";
 import { INPUT } from "./fields";
-import { Inspector } from "./inspector";
+import { loadFont, loadSceneFonts, sceneFontKey, setBrandFontSources } from "./fonts";
+import { Inspector, type BrandFontOption, type FontChoice } from "./inspector";
 import { loadKonva, type KonvaKit } from "./konva";
 import { LayerList, useLayerName } from "./layer-list";
 import { createKonvaMeasure } from "./measure";
@@ -176,6 +185,17 @@ function starterScene(headline: string, palette: readonly string[] | null): Scen
     palette: palette && palette.length >= 2 ? [...palette] : scene.palette,
     layers: background ? [background, text] : [text],
   };
+}
+
+/** Text layers grown to fit their text with the current fonts (never cut, never shrunk). */
+function settleTexts(scene: Scene, measure: TextMeasure): Scene {
+  let next = scene;
+  for (const layer of scene.layers) {
+    if (layer.kind !== "text") continue;
+    const settled = settleTextLayer(layer, measure, scene.format);
+    if (settled !== layer) next = updateLayer(next, layer.id, () => settled);
+  }
+  return next;
 }
 
 /** A new layer moved down and right while another one sits at the same place. */
@@ -260,6 +280,10 @@ export function SocialEditor(props: SocialEditorProps) {
   const [brandPalettes, setBrandPalettes] = useState<readonly BrandPalette[]>([]);
   const [bgLocks, setBgLocks] = useState<ReadonlySet<string>>(() => new Set());
   const [logos, setLogos] = useState<readonly BrandAsset[] | null>(null);
+  const [brandFonts, setBrandFonts] = useState<readonly BrandFontOption[]>([]);
+  const [missingFonts, setMissingFonts] = useState<ReadonlySet<string>>(() => new Set());
+  /** Bumped whenever fonts finished loading: the stage redraws with them. */
+  const [fontsVersion, setFontsVersion] = useState(0);
   const pictures = useScenePictures(scene);
 
   const announce = useCallback((text: string) => {
@@ -282,45 +306,65 @@ export function SocialEditor(props: SocialEditorProps) {
   const measure = useMemo<TextMeasure | null>(() => (kit ? createKonvaMeasure(kit) : null), [kit]);
 
   // Start: a saved design from `#design=<id>`, else the draft, else a new scene.
+  // The scene's fonts load first, so the first frame and the first export
+  // never fall back to a system font.
   useEffect(() => {
     let active = true;
     (async () => {
-      const palettes = await brandKit.loadPalettes().catch(() => null);
+      const [palettes, fonts] = await Promise.all([
+        brandKit.loadPalettes().catch(() => null),
+        brandKit.listFonts().catch(() => []),
+      ]);
       if (active && palettes) setBrandPalettes(palettes.palettes);
+      setBrandFontSources(fonts);
+      if (active) setBrandFonts(fonts.map((f) => ({ id: f.id, name: f.name })));
       const brand = palettes?.palettes.find((p) => p.id === palettes.defaultId)?.colors ?? null;
+      const open = async (action: Extract<Parameters<typeof dispatch>[0], { type: "load" }>) => {
+        const [result] = await Promise.all([
+          loadSceneFonts(action.scene),
+          // New text layers use the default font: ready before the first click on "Text".
+          loadFont(libraryFontRef(DEFAULT_LIBRARY_FONT_ID), 700, "normal"),
+        ]);
+        if (!active) return;
+        setMissingFonts(result.missing);
+        dispatch(action);
+        setLoad("ready");
+      };
       const id = designIdFromHash(window.location.hash);
       try {
         if (id) {
           const record = await store.get(id);
           if (record && active) {
-            dispatch({ type: "load", scene: record.scene, name: record.name, designId: record.id });
-            setLoad("ready");
+            await open({
+              type: "load",
+              scene: record.scene,
+              name: record.name,
+              designId: record.id,
+            });
             return;
           }
         }
         const draft = await store.getDraft();
         if (draft && active && !id) {
-          dispatch({
+          await open({
             type: "load",
             scene: draft.scene,
             name: draft.name,
             designId: draft.designId,
             dirty: true,
           });
-          setLoad("ready");
           return;
         }
       } catch {
         // No IndexedDB (private mode): the editor still works, without saving.
       }
       if (!active) return;
-      dispatch({
+      await open({
         type: "load",
         scene: starterScene(t("starterHeadline"), brand),
         name: "",
         designId: null,
       });
-      setLoad("ready");
     })();
     return () => {
       active = false;
@@ -534,6 +578,90 @@ export function SocialEditor(props: SocialEditorProps) {
     [change],
   );
 
+  // ---- fonts --------------------------------------------------------------
+
+  /** Loads the font first, then applies it: text is measured with the real metrics. */
+  const pickFont = useCallback(
+    async (id: string, choice: FontChoice, weight?: number) => {
+      const layer = findLayer(stateRef.current.history.present, id);
+      if (layer?.kind !== "text") return;
+      let patch: Partial<TextLayer> & { font?: FontRef | undefined };
+      if (choice.kind === "system") {
+        patch = { fontFamily: SYSTEM_FONT_STACKS[choice.id], font: undefined };
+      } else {
+        const ref: FontRef =
+          choice.kind === "library"
+            ? libraryFontRef(choice.id)
+            : {
+                kind: "brand",
+                id: choice.id,
+                name:
+                  brandFonts.find((f) => f.id === choice.id)?.name ??
+                  (layer.font?.id === choice.id ? layer.font.name : ""),
+              };
+        const wanted = weight ?? layer.fontWeight;
+        const fontWeight =
+          choice.kind === "library"
+            ? nearestWeight(libraryFont(choice.id)?.weights ?? [], wanted)
+            : wanted;
+        const ok = await loadFont(ref, fontWeight, layer.fontStyle, layer.text);
+        if (!ok) {
+          announce(t("text.fontLoadFailed", { name: ref.name }));
+          if (ref.kind === "brand") setMissingFonts((m) => new Set([...m, ref.id]));
+          return;
+        }
+        if (ref.kind === "brand") {
+          setMissingFonts((m) => {
+            if (!m.has(ref.id)) return m;
+            const next = new Set(m);
+            next.delete(ref.id);
+            return next;
+          });
+        }
+        patch = { fontFamily: fontFamilyFor(ref), font: ref, fontWeight };
+      }
+      updateOne(
+        id,
+        (l) => {
+          if (l.kind !== "text") return l;
+          const next = { ...l, ...patch } as TextLayer;
+          if (patch.font === undefined) delete next.font;
+          return next;
+        },
+        "text-font",
+      );
+      dispatch({ type: "commit" });
+      setFontsVersion((v) => v + 1);
+    },
+    [announce, brandFonts, t, updateOne],
+  );
+
+  // Fonts the scene needs (another font, weight, or characters outside latin):
+  // load them, redraw, and grow text boxes the real font needs more room in.
+  const fontKey = sceneFontKey(scene);
+  useEffect(() => {
+    if (load !== "ready") return;
+    let active = true;
+    void loadSceneFonts(stateRef.current.history.present).then((result) => {
+      if (!active) return;
+      setMissingFonts((m) =>
+        m.size === result.missing.size && [...m].every((id) => result.missing.has(id))
+          ? m
+          : result.missing,
+      );
+      setFontsVersion((v) => v + 1);
+      const m = measureRef.current;
+      const current = stateRef.current.history.present;
+      if (m) {
+        const settled = settleTexts(current, m);
+        if (settled !== current) dispatch({ type: "amend", scene: settled });
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [fontKey, load]);
+
   // ---- background ---------------------------------------------------------
 
   const setBackground = useCallback(
@@ -593,11 +721,14 @@ export function SocialEditor(props: SocialEditorProps) {
   // Switching formats back and forth resizes from the scene before the
   // first switch, so repeated switches do not drift.
   const resizeChain = useRef<{ base: Scene; result: Scene } | null>(null);
-  const changeFormat = (formatId: string) => {
+  const changeFormat = async (formatId: string) => {
     const m = measureRef.current;
     if (!m || formatId === scene.format.id) return;
     const chain = resizeChain.current;
     const base = chain && chain.result === scene ? chain.base : scene;
+    // Text fitting measures with the real fonts, never with a fallback.
+    await loadSceneFonts(base);
+    if (stateRef.current.history.present !== scene) return;
     const next =
       base.format.id === formatId ? base : resizeScene(base, sceneFormat(formatId), { measure: m });
     resizeChain.current = { base, result: next };
@@ -905,11 +1036,13 @@ export function SocialEditor(props: SocialEditorProps) {
 
   useEffect(() => {
     stageRef.current?.update(scene, pictures, state.selection, zoom);
-  }, [scene, pictures, state.selection, zoom, kit, load]);
+  }, [scene, pictures, state.selection, zoom, kit, load, fontsVersion]);
 
   const fitProblems = useMemo(
     () => (measure ? checkSceneFit(scene, measure).length : 0),
-    [scene, measure],
+    // fontsVersion: the same scene measures differently once its fonts are in.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [scene, measure, fontsVersion],
   );
 
   // ---- render -------------------------------------------------------------
@@ -981,7 +1114,7 @@ export function SocialEditor(props: SocialEditorProps) {
             value={scene.format.id ?? ""}
             disabled={!measure}
             data-testid="format"
-            onChange={(event) => changeFormat(event.currentTarget.value)}
+            onChange={(event) => void changeFormat(event.currentTarget.value)}
           >
             {scene.format.id === null && (
               <option value="">
@@ -1178,6 +1311,7 @@ export function SocialEditor(props: SocialEditorProps) {
                 data-testid="stage"
                 data-format={`${scene.format.width}x${scene.format.height}`}
                 data-fit-problems={fitProblems}
+                data-fonts={fontsVersion}
                 data-background={
                   pictures.rendering ? "rendering" : pictures.failed ? "failed" : "ready"
                 }
@@ -1251,6 +1385,9 @@ export function SocialEditor(props: SocialEditorProps) {
             <Inspector
               scene={scene}
               layers={editable}
+              brandFonts={brandFonts}
+              missingFonts={missingFonts}
+              onFont={(id, choice, weight) => void pickFont(id, choice, weight)}
               textFieldId={textFieldId}
               onUpdate={updateOne}
               onCommit={() => dispatch({ type: "commit" })}

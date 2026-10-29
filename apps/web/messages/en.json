@@ -6720,11 +6720,6 @@
       "title": "Text",
       "content": "Content",
       "font": "Font",
-      "fonts": {
-        "sans": "Sans serif",
-        "serif": "Serif",
-        "mono": "Monospace"
-      },
       "size": "Size",
       "weight": "Weight",
       "weights": {
@@ -6750,8 +6745,45 @@
       "letterSpacing": "Letter spacing (em)",
       "color": "Colour",
       "italic": "Italic",
-      "shadow": "Shadow",
-      "placeholder": "Placeholder (for templates)"
+      "placeholder": "Placeholder (for templates)",
+      "fontGroups": {
+        "brand": "Brand fonts",
+        "sans": "Sans serif",
+        "serif": "Serif",
+        "display": "Display",
+        "mono": "Monospace",
+        "handwriting": "Handwriting",
+        "system": "System fonts"
+      },
+      "systemFonts": {
+        "sans": "System sans serif",
+        "serif": "System serif",
+        "mono": "System monospace"
+      },
+      "fontMissingOption": "{name} (missing)",
+      "fontMissing": "The brand font “{name}” is missing in this browser, so you see a fallback font. Add the font to your brand kit and the text looks as planned again.",
+      "fontHint": "Add your own fonts in the brand kit; they show up first here.",
+      "fontLoadFailed": "The font “{name}” could not be loaded.",
+      "effects": {
+        "title": "Effects",
+        "shadow": "Shadow",
+        "shadowColor": "Shadow colour",
+        "shadowBlur": "Blur",
+        "shadowX": "Offset X",
+        "shadowY": "Offset Y",
+        "shadowOpacity": "Opacity (%)",
+        "stroke": "Outline",
+        "strokeColor": "Outline colour",
+        "strokeWidth": "Outline width",
+        "highlight": "Highlight bar",
+        "highlightColor": "Bar colour",
+        "highlightPadding": "Padding",
+        "gradient": "Gradient",
+        "gradientFrom": "Start colour",
+        "gradientTo": "End colour",
+        "gradientAngle": "Angle (degrees)",
+        "gradientHint": "While it is on, the gradient replaces the text colour."
+      }
     },
     "shape": {
       "title": "Shape",

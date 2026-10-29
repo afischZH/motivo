@@ -3,11 +3,14 @@
  * the thumbnails of saved designs. Builds an off-screen Konva stage with
  * `drawScene`, the same function the editor stage uses, from the same
  * pictures; only the background is rendered again at the output size by
- * the tool's render path (in its worker), so it stays sharp. The browser
+ * the tool's render path (in its worker), so it stays sharp. The fonts of
+ * the text layers are loaded before anything is drawn (`loadSceneFonts`),
+ * so even the first export never falls back to a system font. The browser
  * encodes the file asynchronously (`toBlob`).
  */
 import type { Scene } from "@musterli/scene";
 
+import { loadSceneFonts } from "./fonts";
 import type { KonvaKit } from "./konva";
 import { drawScene, type ScenePictures } from "./konva-scene";
 import { decodePicture, renderBackground, type Picture } from "./resources";
@@ -72,6 +75,7 @@ export async function exportScene(
   const [bitmap, images] = await Promise.all([
     background ? renderBackground(background, scene.format, out, options.signal) : null,
     options.images ? Promise.resolve(options.images) : scenePictures(scene),
+    loadSceneFonts(scene),
   ]);
   if (options.signal?.aborted) throw new DOMException("Aborted", "AbortError");
   const pictures: ScenePictures = { background: bitmap, images };

@@ -27,6 +27,11 @@ export interface SocialEditorState {
 
 export type SocialEditorAction =
   | { type: "change"; scene: Scene; key?: string | null; selection?: readonly string[] }
+  /**
+   * Corrects the present scene without an undo step: text boxes grown once
+   * a font finished loading (the text would be cut otherwise).
+   */
+  | { type: "amend"; scene: Scene }
   | { type: "commit" }
   | { type: "undo" }
   | { type: "redo" }
@@ -61,6 +66,10 @@ export function socialEditorReducer(
         dirty: state.dirty || history !== state.history,
       };
     }
+    case "amend":
+      return action.scene === state.history.present
+        ? state
+        : { ...state, history: { ...state.history, present: action.scene } };
     case "commit": {
       const history = commitHistory(state.history);
       return history === state.history ? state : { ...state, history };

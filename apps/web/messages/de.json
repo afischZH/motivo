@@ -6731,11 +6731,6 @@
       "title": "Text",
       "content": "Inhalt",
       "font": "Schrift",
-      "fonts": {
-        "sans": "Ohne Serifen",
-        "serif": "Mit Serifen",
-        "mono": "Monospace"
-      },
       "size": "Grösse",
       "weight": "Stärke",
       "weights": {
@@ -6761,8 +6756,45 @@
       "letterSpacing": "Laufweite (em)",
       "color": "Farbe",
       "italic": "Kursiv",
-      "shadow": "Schatten",
-      "placeholder": "Platzhalter (für Vorlagen)"
+      "placeholder": "Platzhalter (für Vorlagen)",
+      "fontGroups": {
+        "brand": "Brand-Schriften",
+        "sans": "Ohne Serifen",
+        "serif": "Mit Serifen",
+        "display": "Auffällig",
+        "mono": "Monospace",
+        "handwriting": "Handschrift",
+        "system": "Systemschriften"
+      },
+      "systemFonts": {
+        "sans": "System ohne Serifen",
+        "serif": "System mit Serifen",
+        "mono": "System Monospace"
+      },
+      "fontMissingOption": "{name} (fehlt)",
+      "fontMissing": "Die Brand-Schrift „{name}“ fehlt in diesem Browser, darum siehst du eine Ersatzschrift. Füge die Schrift im Brand Kit hinzu, dann sieht der Text wieder wie geplant aus.",
+      "fontHint": "Eigene Schriften fügst du im Brand Kit hinzu, sie stehen hier zuoberst.",
+      "fontLoadFailed": "Die Schrift „{name}“ liess sich nicht laden.",
+      "effects": {
+        "title": "Effekte",
+        "shadow": "Schatten",
+        "shadowColor": "Schattenfarbe",
+        "shadowBlur": "Unschärfe",
+        "shadowX": "Versatz X",
+        "shadowY": "Versatz Y",
+        "shadowOpacity": "Deckkraft (%)",
+        "stroke": "Kontur",
+        "strokeColor": "Konturfarbe",
+        "strokeWidth": "Konturbreite",
+        "highlight": "Markierbalken",
+        "highlightColor": "Balkenfarbe",
+        "highlightPadding": "Innenabstand",
+        "gradient": "Farbverlauf",
+        "gradientFrom": "Startfarbe",
+        "gradientTo": "Endfarbe",
+        "gradientAngle": "Winkel (Grad)",
+        "gradientHint": "Der Verlauf ersetzt die Textfarbe, solange er an ist."
+      }
     },
     "shape": {
       "title": "Form",

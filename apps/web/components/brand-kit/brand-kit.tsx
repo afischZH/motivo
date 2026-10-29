@@ -1,33 +1,42 @@
 "use client";
 
 /**
- * Brand Kit (M3-AP05): palettes (2 to 10 colours, one default), logos and
- * own SVG shapes, kept in this browser (IndexedDB). Uploads run through the
+ * Brand Kit (M3-AP05): palettes (2 to 10 colours, one default), logos,
+ * own SVG shapes and (M6-AP03) own fonts for the social media editor, kept
+ * in this browser (IndexedDB). Fonts are checked by signature and loaded
+ * through `FontFace` before they are saved. Uploads run through the
  * editor's pipeline (magic bytes, sanitizer in a worker, raster re-encoded
  * in a worker), loaded on the first upload. Export and import as a
  * `motivo-brandkit` file; the import is validated in a worker. Nothing is
  * ever sent to a server.
  */
 import {
+  BRAND_FONTS_MAX,
   BRAND_LOGOS_MAX,
   BRAND_PALETTE_MAX,
   BRAND_PALETTE_MIN,
   BRAND_SHAPES_MAX,
   StorageError,
   brandKitFileName,
+  FONT_ACCEPT,
   brandKitFileTexts,
+  checkBrandFontBytes,
   createBrandKitStore,
+  fontNameFromFile,
+  prepareBrandFont,
   normalizeBrandHex,
   readBrandKitFile,
   svgDataUrl,
   type BrandAsset,
   type BrandAssetKind,
+  type BrandFont,
   type BrandKitStore,
   type BrandPalette,
   type SkippedBrandEntry,
   type StorageErrorCode,
 } from "@musterli/editor-ui/brand-kit";
 import { formatOklch } from "@musterli/engine";
+import { brandFamilyName } from "@musterli/scene";
 import { HardDriveIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
@@ -95,10 +104,11 @@ export function BrandKit() {
   const [palettes, setPalettes] = useState<BrandPalette[]>([]);
   const [defaultId, setDefaultId] = useState<string | null>(null);
   const [assets, setAssets] = useState<BrandAsset[]>([]);
+  const [fonts, setFonts] = useState<BrandFont[]>([]);
   const [message, setMessage] = useState<Message | null>(null);
   /** `"new"`, the id of the palette being edited, or nothing. */
   const [editing, setEditing] = useState<string | null>(null);
-  const [busy, setBusy] = useState<"import" | "export" | BrandAssetKind | null>(null);
+  const [busy, setBusy] = useState<"import" | "export" | "font" | BrandAssetKind | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const services = useRef<UploadServices | null>(null);
@@ -116,21 +126,27 @@ export function BrandKit() {
   );
 
   const load = useCallback(async () => {
-    const [p, a] = await Promise.all([store.loadPalettes(), store.listAssets()]);
+    const [p, a, f] = await Promise.all([
+      store.loadPalettes(),
+      store.listAssets(),
+      store.listFonts(),
+    ]);
     setPalettes(p.palettes);
     setDefaultId(p.defaultId);
     setAssets(a);
+    setFonts(f);
     setState("ready");
   }, [store]);
 
   useEffect(() => {
     let active = true;
-    Promise.all([store.loadPalettes(), store.listAssets()]).then(
-      ([p, a]) => {
+    Promise.all([store.loadPalettes(), store.listAssets(), store.listFonts()]).then(
+      ([p, a, f]) => {
         if (!active) return;
         setPalettes(p.palettes);
         setDefaultId(p.defaultId);
         setAssets(a);
+        setFonts(f);
         setState("ready");
       },
       (error: unknown) => {
@@ -243,12 +259,43 @@ export function BrandKit() {
       };
     });
 
+  const addFont = (file: File) =>
+    run(async () => {
+      setBusy("font");
+      try {
+        const result = await prepareBrandFont(file);
+        if (!result.ok) return { tone: "error", text: t(`fonts.errors.${result.error}`) };
+        const added = await store.addFont({
+          name: fontNameFromFile(file.name),
+          format: result.format,
+          data: result.data,
+        });
+        return { tone: "info", text: t("fonts.added", { name: assetName(added) }) };
+      } finally {
+        setBusy(null);
+      }
+    });
+
+  const removeFont = (f: BrandFont) =>
+    run(async () => {
+      await store.removeFont(f.id);
+      headingRef.current?.focus();
+      return {
+        tone: "info",
+        text: t("assets.deleted", { name: assetName(f) }),
+        undo: async () => {
+          await store.restoreFont(f);
+          return t("assets.restored", { name: assetName(f) });
+        },
+      };
+    });
+
   const exportKit = () =>
     run(async () => {
       setBusy("export");
       try {
         const kit = await store.getAll();
-        if (kit.palettes.length === 0 && kit.assets.length === 0) {
+        if (kit.palettes.length === 0 && kit.assets.length === 0 && !kit.fonts?.length) {
           return { tone: "info", text: t("page.exportEmpty") };
         }
         // Several files when large logos make one too large to import again.
@@ -274,6 +321,7 @@ export function BrandKit() {
   const skippedLine = (s: SkippedBrandEntry) => {
     const reason = t(`page.skipReasons.${s.reason}`);
     if (s.name === undefined) return t("page.skippedUnnamed", { index: s.index + 1, reason });
+    if (s.type === "font") return t("page.skippedFont", { name: s.name, reason });
     return s.type === "palette"
       ? t("page.skippedPalette", { name: s.name, reason })
       : t("page.skippedAsset", { name: s.name, reason });
@@ -283,10 +331,32 @@ export function BrandKit() {
     run(async () => {
       setBusy("import");
       try {
-        const parsed = await readBrandKitFile(file);
-        if (!parsed.ok) return { tone: "error", text: t(`page.importErrors.${parsed.error}`) };
+        const read = await readBrandKitFile(file);
+        if (!read.ok) return { tone: "error", text: t(`page.importErrors.${read.error}`) };
+        // Fonts are stored only once this browser loaded them (its font sanitizer).
+        const checked = await Promise.all(read.fonts.map((f) => checkBrandFontBytes(f.data)));
+        const parsed = {
+          ...read,
+          fonts: read.fonts.filter((_, i) => checked[i]?.ok),
+          skipped: [
+            ...read.skipped,
+            ...read.fonts.flatMap((f, i) =>
+              checked[i]?.ok
+                ? []
+                : [
+                    {
+                      type: "font" as const,
+                      index: i,
+                      name: f.name,
+                      reason: "unsafe-font" as const,
+                    },
+                  ],
+            ),
+          ],
+        };
         const outcome = await store.importBrandKit(parsed);
         const lines = [t("page.imported", { palettes: outcome.palettes, assets: outcome.assets })];
+        if (outcome.fonts > 0) lines.push(t("page.importedFonts", { count: outcome.fonts }));
         if (outcome.duplicates > 0) {
           lines.push(t("page.importDuplicates", { count: outcome.duplicates }));
         }
@@ -297,7 +367,7 @@ export function BrandKit() {
         if (parsed.skipped.length > 0) {
           lines.push(t("page.importSkipped", { count: parsed.skipped.length }));
         }
-        const nothing = outcome.palettes + outcome.assets === 0;
+        const nothing = outcome.palettes + outcome.assets + outcome.fonts === 0;
         return {
           tone: nothing && parsed.skipped.length > 0 ? "error" : "info",
           text: lines.join(" "),
@@ -514,6 +584,13 @@ export function BrandKit() {
             onDelete={(a) => void removeAsset(a)}
           />
           <p className="text-sm text-muted-foreground">{t("assets.usage")}</p>
+          <FontSection
+            fonts={fonts}
+            busy={busy}
+            nameOf={assetName}
+            onAdd={(file) => void addFont(file)}
+            onDelete={(f) => void removeFont(f)}
+          />
         </>
       )}
     </div>
@@ -933,6 +1010,143 @@ function AssetSection(props: {
           })}
         </ul>
       )}
+    </section>
+  );
+}
+
+/** Registers a brand font for its sample (same family name as in the editor). */
+function useFontPreview(font: BrandFont): boolean {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (typeof FontFace === "undefined" || !("fonts" in document)) return;
+    let active = true;
+    const face = new FontFace(brandFamilyName(font.id), font.data.slice(0));
+    face.load().then(
+      () => {
+        if (!active) return;
+        document.fonts.add(face);
+        setReady(true);
+      },
+      () => undefined,
+    );
+    return () => {
+      active = false;
+      document.fonts.delete(face);
+    };
+  }, [font]);
+  return ready;
+}
+
+function FontCard(props: { font: BrandFont; name: string; onDelete(): void }) {
+  const t = useTranslations("BrandKit");
+  const ready = useFontPreview(props.font);
+  return (
+    <li
+      className="flex flex-col overflow-hidden rounded-xl border border-border bg-card"
+      data-testid="font-card"
+    >
+      <p
+        className="flex min-h-24 items-center bg-canvas px-4 py-3 text-2xl break-words"
+        style={{ fontFamily: ready ? `${brandFamilyName(props.font.id)}, sans-serif` : undefined }}
+        data-testid="font-sample"
+        data-ready={ready ? "true" : "false"}
+      >
+        {t("fonts.sample")}
+      </p>
+      <div className="flex items-center gap-1 p-2">
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm" title={props.name}>
+            {props.name}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {t("fonts.details", {
+              format: props.font.format.toUpperCase(),
+              size: Math.max(1, Math.round(props.font.data.byteLength / 1024)),
+            })}
+          </p>
+        </div>
+        <button
+          type="button"
+          className={GHOST}
+          onClick={props.onDelete}
+          aria-label={t("assets.deleteLabel", { name: props.name })}
+          title={t("assets.delete")}
+          data-testid="font-delete"
+        >
+          <TrashGlyph />
+        </button>
+      </div>
+    </li>
+  );
+}
+
+function FontSection(props: {
+  fonts: BrandFont[];
+  busy: string | null;
+  nameOf(font: BrandFont): string;
+  onAdd(file: File): void;
+  onDelete(font: BrandFont): void;
+}) {
+  const t = useTranslations("BrandKit");
+  const ids = useId();
+  const full = props.fonts.length >= BRAND_FONTS_MAX;
+  return (
+    <section
+      aria-labelledby={`${ids}-title`}
+      className="flex flex-col gap-4"
+      data-testid="brand-fonts"
+    >
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="flex flex-col gap-1">
+          <h2 id={`${ids}-title`} className="text-xl font-semibold">
+            {t("fonts.title")}
+          </h2>
+          <p id={`${ids}-hint`} className="max-w-prose text-sm text-muted-foreground">
+            {t("fonts.hint")}
+          </p>
+        </div>
+        <div>
+          <input
+            id={`${ids}-file`}
+            type="file"
+            accept={FONT_ACCEPT}
+            className="peer sr-only"
+            aria-describedby={`${ids}-hint`}
+            disabled={props.busy !== null || full}
+            onChange={(event) => {
+              const file = event.currentTarget.files?.[0];
+              if (file) props.onAdd(file);
+              event.currentTarget.value = "";
+            }}
+            data-testid="font-file"
+          />
+          <label
+            htmlFor={`${ids}-file`}
+            className={cn(
+              OUTLINE,
+              "cursor-pointer peer-focus-visible:border-ring peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+            )}
+          >
+            <PlusGlyph />
+            {props.busy === "font" ? t("assets.adding") : t("fonts.add")}
+          </label>
+        </div>
+      </div>
+      {props.fonts.length === 0 ? (
+        <p className="text-muted-foreground">{t("fonts.empty")}</p>
+      ) : (
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {props.fonts.map((font) => (
+            <FontCard
+              key={font.id}
+              font={font}
+              name={props.nameOf(font)}
+              onDelete={() => props.onDelete(font)}
+            />
+          ))}
+        </ul>
+      )}
+      <p className="text-sm text-muted-foreground">{t("fonts.usage")}</p>
     </section>
   );
 }
