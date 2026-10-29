@@ -28,12 +28,20 @@ async function chooseByKeyboard(page: Page, toolId: string) {
   await page.getByTestId("reuse-menu").focus();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("menu")).toBeVisible();
+  // The menu moves focus to its first item a moment after it opens; arrow
+  // keys pressed before that are lost, and each press is waited for.
+  await expect(page.getByRole("menuitem").first()).toBeFocused();
+  const focusedItem = () =>
+    page.evaluate(() => {
+      const active = document.activeElement as HTMLElement | null;
+      const items = [...document.querySelectorAll('[role="menuitem"]')];
+      return { index: active ? items.indexOf(active) : -1, tool: active?.dataset.tool ?? null };
+    });
   for (let i = 0; i < 30; i++) {
-    const focused = await page.evaluate(
-      () => (document.activeElement as HTMLElement | null)?.dataset.tool ?? null,
-    );
-    if (focused === toolId) break;
+    const focused = await focusedItem();
+    if (focused.tool === toolId) break;
     await page.keyboard.press("ArrowDown");
+    await expect.poll(async () => (await focusedItem()).index).not.toBe(focused.index);
   }
   await expect(page.locator(`[data-testid="reuse-target"][data-tool="${toolId}"]`)).toBeFocused();
   await page.keyboard.press("Enter");

@@ -156,7 +156,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
             >
               {text(`Categories.${category}.name`)}
             </Badge>
-            <h1 className="text-4xl font-semibold tracking-[-0.03em] text-balance sm:text-5xl">
+            <h1 className="text-4xl font-semibold tracking-[-0.03em] text-balance break-words hyphens-auto sm:text-5xl">
               {heading}
             </h1>
             <p className="max-w-prose text-lg text-muted-foreground">{description}</p>

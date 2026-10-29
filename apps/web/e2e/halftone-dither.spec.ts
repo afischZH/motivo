@@ -191,7 +191,7 @@ test.use({ deviceScaleFactor: 1 });
 
 test.describe("halftone and dither landing pages", () => {
   const PAGES: { tool: string; locale: Locale; title: string }[] = [
-    { tool: "halftone", locale: "de", title: "Halftone-Effekt" },
+    { tool: "halftone", locale: "de", title: "Halftone-Effekt (Rasterpunkte)" },
     { tool: "halftone", locale: "en", title: "Halftone Effect" },
     { tool: "cmyk-halftone", locale: "de", title: "CMYK-Raster" },
     { tool: "cmyk-halftone", locale: "en", title: "CMYK Halftone" },
