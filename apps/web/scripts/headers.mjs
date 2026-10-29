@@ -21,7 +21,7 @@ const [{ cloudflareHeadersFile }, { externalServices, telemetryEnv }] = await Pr
 // `next build` runs with NODE_ENV=production; this script runs before it.
 const env = { ...telemetryEnv(), NODE_ENV: "production" };
 const services = externalServices(env);
-// `public/` holds only generated files, so a fresh checkout has none.
+// `public/` may not exist yet in a fresh checkout before the first build.
 await mkdir(new URL("../public/", import.meta.url), { recursive: true });
 await writeFile(new URL("../public/_headers", import.meta.url), cloudflareHeadersFile(services));
 

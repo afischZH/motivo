@@ -141,7 +141,7 @@ Plan: Claude Doc "Musterli: Plan zum Ausbau und Feinschliff der Tools" (2026-10-
 Freigabe Andreas 2026-10-29 05:51: Plan mit 7 Paketen, Konva nur als Kern ohne `react-konva` (rund 44 KB gzip, nur im Editor geladen), neuer lokaler Speicher für Social-Designs (IndexedDB-Upgrade), **40 Templates zum Start** statt 100 (weitere nach Nutzerfeedback). 2026-10-29 06:02: FR/IT aus M6 entfernt (Entscheid Andreas), später nur nach neuem Entscheid.
 
 - [x] Konva-Canvas mit Ebenen, Transform, Snapping, Ausrichtungshilfen, Gruppierung (M6-AP02)
-- [ ] Text mit Effekten, Font-Auswahl (OFL-Fonts), Brand-Fonts
+- [x] Text mit Effekten, Font-Auswahl (OFL-Fonts), Brand-Fonts (M6-AP03)
 - [x] Hintergründe aus allen Tools (als parametrische Referenz) (M6-AP02)
 - [x] Formate + **Magic Resize** (Constraint-System) (M6-AP02)
 - [ ] 40 eigene Templates zum Start (Ziel später 100), **Brand-Apply** mit einem Klick
