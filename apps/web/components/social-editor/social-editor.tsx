@@ -125,6 +125,7 @@ import { loadFont, loadSceneFonts, sceneFontKey, setBrandFontSources } from "./f
 import { Inspector, type BrandFontOption, type FontChoice } from "./inspector";
 import { loadKonva, type KonvaKit } from "./konva";
 import { LayerList, useLayerName } from "./layer-list";
+import { SCENE_EXPORT_EDGE_MAX, exportScaleFits } from "./export-size";
 import { createKonvaMeasure } from "./measure";
 import { SocialStage, type FrameChange } from "./stage";
 import {
@@ -1514,7 +1515,7 @@ export function SocialEditor(props: SocialEditorProps) {
               <select
                 id={exportScaleId}
                 className={cn(INPUT, "w-44")}
-                value={exportScale}
+                value={exportScaleFits(scene.format, exportScale) ? exportScale : 1}
                 data-testid="export-scale"
                 onChange={(event) => setExportScale(event.currentTarget.value === "2" ? 2 : 1)}
               >
@@ -1525,12 +1526,15 @@ export function SocialEditor(props: SocialEditorProps) {
                     height: scene.format.height,
                   })}
                 </option>
-                <option value="2">
-                  {t("export.scale", {
-                    scale: 2,
-                    width: scene.format.width * 2,
-                    height: scene.format.height * 2,
-                  })}
+                {/* Over the canvas limit (a huge custom size): 2x is not offered. */}
+                <option value="2" disabled={!exportScaleFits(scene.format, 2)}>
+                  {exportScaleFits(scene.format, 2)
+                    ? t("export.scale", {
+                        scale: 2,
+                        width: scene.format.width * 2,
+                        height: scene.format.height * 2,
+                      })
+                    : t("export.scaleTooLarge", { scale: 2, max: SCENE_EXPORT_EDGE_MAX })}
                 </option>
               </select>
             </div>
