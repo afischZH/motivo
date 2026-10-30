@@ -39,7 +39,7 @@
 | `number` mit min/max | Slider + Zahlenfeld | Shift = 10er-Schritte, Doppelklick = Default |
 | `enum` (≤ 5) | Segmented Control | sonst Select |
 | `boolean` | Switch | |
-| Farbe | Swatch + Popover-Picker (HEX, RGB, HSL, OKLCH, Pipette via EyeDropper-API wo verfügbar) | Tints/Shades-Leiste unter dem Picker |
+| Farbe | Swatch + Popover-Picker: eigene Fläche für Sättigung/Helligkeit und Farbton-Regler (in jedem Browser gleich, per Pfeiltasten bedienbar, Shift = 10 %), HEX-Feld mit Pipette in einer Input Group (EyeDropper-API wo verfügbar), Brand-Farben | Tints/Shades-Leiste unter dem Picker |
 | Palette | Reihe von Swatches, Drag-to-reorder, +/−, "Zufallspalette", Brand-Paletten oben | max. 10 |
 | Shape/Pack | Grid-Picker mit Suche und Mehrfachauswahl | |
 | Bild-Upload | Dropzone + Paste aus Zwischenablage + Crop-Dialog | Hinweis: "Bild bleibt auf deinem Gerät" |
@@ -73,6 +73,7 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 - **Bewegung**: 150 bis 250 ms, `ease-out`; `prefers-reduced-motion` respektieren (keine Animation der Vorschau ohne Interaktion).
 - **Vorschau-Hintergrund**: Editor-Bühne `--stage` mit feinem Punktraster (`--stage-dot`), hell ein ruhiges Grau, dunkel fast Schwarz; Schachbrett nur wenn Transparenz aktiv. Thumbnails behalten `--canvas`.
 - **Werkbank-Look (seit 2026-10-29)**: Startseiten-Hero, Seitenköpfe (`PageHeader`) und der Abschluss der Startseite sind in beiden Themes dunkel (Klasse `dark` am Abschnitt, semantische Tokens lösen pro Abschnitt auf), mit Punktraster und einem Akzentschimmer. Keine Etiketten über Überschriften; Zählungen stehen nach dem Lead.
+- **Hinweise statt `title`**: Icon-Knöpfe im Editor zeigen einen gestalteten Hinweis (`Hint`, Radix Tooltip) bei Hover und Tastaturfokus, mit Tastenkürzel als Tastenkappen (`Kbd`, ⌘ auf Apple-Geräten, sonst Ctrl). Nach dem ersten Hinweis erscheinen die nächsten sofort.
 - **Inspector im Editor**: kompakte Einstellungen als Zeile (Label links, Control rechts) für Slider, Zahl, Auswahl, Farbe und Schalter; breite Controls (Segmente, Paletten, Listen, Kacheln) bleiben gestapelt. Zahlenfelder lassen sich mit der Maus seitwärts ziehen (Shift = 10er-Schritte), ein Klick fokussiert zum Tippen.
 
 ## 6. Wichtige Screens

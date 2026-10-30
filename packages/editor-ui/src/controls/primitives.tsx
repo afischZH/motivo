@@ -19,6 +19,15 @@ export const INPUT_CLASS = cx(
   FOCUS_RING,
 );
 
+/**
+ * One bordered field holding an input plus inline buttons (shadcn/ui
+ * "Input Group"): the ring follows focus anywhere inside.
+ */
+export const INPUT_GROUP_CLASS = cx(
+  "flex h-8 w-full min-w-0 items-center rounded-md border border-input bg-background transition-[color,box-shadow,border-color] hover:border-foreground/40",
+  "has-[input:focus-visible]:border-ring has-[input:focus-visible]:ring-[3px] has-[input:focus-visible]:ring-ring/50",
+);
+
 export const ICON_BUTTON_CLASS = cx(
   "inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground",
   "hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-40",

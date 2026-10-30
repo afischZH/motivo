@@ -6,7 +6,9 @@ import { useId, useState, useSyncExternalStore, type ReactNode } from "react";
 import { brandSwatches, useBrandKit } from "../brand-kit/context";
 import { useT } from "../i18n";
 import type { FieldProps } from "./fields";
-import { FOCUS_RING, ICON_BUTTON_CLASS, INPUT_CLASS, cx } from "./primitives";
+import { ColorArea } from "./color-area";
+import { Hint } from "./hint";
+import { FOCUS_RING, ICON_BUTTON_CLASS, INPUT_GROUP_CLASS, cx } from "./primitives";
 import type { PaletteControl, ResolvedControl } from "./resolve";
 
 /** `#abc` -> `#aabbcc`, lower case. Assumes a valid hex colour. */
@@ -48,8 +50,8 @@ export interface ColorPickerProps {
 }
 
 /**
- * Swatch button that opens a popover with the native colour input, a hex
- * field and, where available, the EyeDropper. Changes apply live.
+ * Swatch button that opens a popover with a colour area and hue slider, a
+ * hex field and, where available, the EyeDropper. Changes apply live.
  */
 export function ColorPicker(props: ColorPickerProps) {
   const t = useT();
@@ -117,28 +119,31 @@ export function ColorPicker(props: ColorPickerProps) {
           aria-labelledby={labelledBy}
           className="z-50 grid w-56 gap-3 rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-md"
         >
-          <input
-            type="color"
-            aria-label={t("Editor.color.picker")}
-            className={cx("h-24 w-full cursor-pointer rounded-md border border-input", FOCUS_RING)}
-            value={toLongHex(props.value)}
-            onChange={(event) => {
-              setDraft(null);
-              props.onChange(event.target.value.toLowerCase());
-            }}
-          />
+          {HEX_COLOR_PATTERN.test(props.value) && (
+            <ColorArea
+              value={props.value}
+              onChange={(next) => {
+                setDraft(null);
+                props.onChange(next);
+              }}
+              {...(props.onCommit ? { onCommit: props.onCommit } : {})}
+            />
+          )}
           <div className="grid gap-1">
             <label htmlFor={hexId} className="text-xs text-muted-foreground">
               {t("Editor.color.hex")}
             </label>
-            <div className="flex items-center gap-1">
+            <div
+              data-slot="input-group"
+              className={cx(INPUT_GROUP_CLASS, invalid && "border-destructive")}
+            >
               <input
                 id={hexId}
                 type="text"
                 spellCheck={false}
                 autoComplete="off"
                 maxLength={7}
-                className={cx(INPUT_CLASS, "w-full font-mono")}
+                className="h-full min-w-0 flex-1 bg-transparent px-2 font-mono text-[13px] text-foreground uppercase outline-none"
                 value={draft ?? props.value}
                 aria-invalid={invalid || undefined}
                 aria-describedby={invalid ? errorId : undefined}
@@ -156,24 +161,25 @@ export function ColorPicker(props: ColorPickerProps) {
                 }}
               />
               {EyeDropper && (
-                <button
-                  type="button"
-                  className={ICON_BUTTON_CLASS}
-                  aria-label={t("Editor.color.eyedropper")}
-                  title={t("Editor.color.eyedropper")}
-                  onClick={() => {
-                    new EyeDropper()
-                      .open()
-                      .then((result) => {
-                        props.onChange(toLongHex(result.sRGBHex));
-                        props.onCommit?.();
-                      })
-                      // Cancelled by the user (Escape): nothing to do.
-                      .catch(() => undefined);
-                  }}
-                >
-                  <EyeDropperIcon />
-                </button>
+                <Hint label={t("Editor.color.eyedropper")}>
+                  <button
+                    type="button"
+                    className={cx(ICON_BUTTON_CLASS, "mr-0.5 size-6")}
+                    aria-label={t("Editor.color.eyedropper")}
+                    onClick={() => {
+                      new EyeDropper()
+                        .open()
+                        .then((result) => {
+                          props.onChange(toLongHex(result.sRGBHex));
+                          props.onCommit?.();
+                        })
+                        // Cancelled by the user (Escape): nothing to do.
+                        .catch(() => undefined);
+                    }}
+                  >
+                    <EyeDropperIcon />
+                  </button>
+                </Hint>
               )}
             </div>
             {invalid && (

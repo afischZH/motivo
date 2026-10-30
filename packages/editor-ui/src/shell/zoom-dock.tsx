@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { Hint } from "../controls/hint";
 import { FOCUS_RING, cx } from "../controls/primitives";
 import { useT } from "../i18n";
 import { FitIcon, MinusIcon, PlusIcon } from "./icons";
@@ -55,54 +56,58 @@ export function ZoomDock(props: {
       className={cx(FLOATING_BAR_CLASS, props.className)}
       data-testid="zoom-dock"
     >
-      <button
-        type="button"
-        className={FLOATING_BUTTON_CLASS}
-        onClick={() => scale !== null && props.onZoomChange(stepZoom(scale, -1))}
-        disabled={scale === null || scale <= SMALLEST_STEP + 0.001}
-        aria-label={t("Editor.shell.zoomOut")}
-        title={t("Editor.shell.zoomOut")}
-      >
-        <MinusIcon />
-      </button>
+      <Hint label={t("Editor.shell.zoomOut")} side="top">
+        <button
+          type="button"
+          className={FLOATING_BUTTON_CLASS}
+          onClick={() => scale !== null && props.onZoomChange(stepZoom(scale, -1))}
+          disabled={scale === null || scale <= SMALLEST_STEP + 0.001}
+          aria-label={t("Editor.shell.zoomOut")}
+        >
+          <MinusIcon />
+        </button>
+      </Hint>
       <output
         className="min-w-12 text-center text-xs font-medium text-foreground tabular-nums"
         aria-label={t("Editor.shell.zoomCurrent")}
       >
         {scale === null ? "" : t("Editor.shell.zoomPercent", { percent: percent(scale) })}
       </output>
-      <button
-        type="button"
-        className={FLOATING_BUTTON_CLASS}
-        onClick={() => scale !== null && props.onZoomChange(stepZoom(scale, 1))}
-        disabled={scale === null || scale >= ZOOM_MAX - 0.001}
-        aria-label={t("Editor.shell.zoomIn")}
-        title={t("Editor.shell.zoomIn")}
-      >
-        <PlusIcon />
-      </button>
+      <Hint label={t("Editor.shell.zoomIn")} side="top">
+        <button
+          type="button"
+          className={FLOATING_BUTTON_CLASS}
+          onClick={() => scale !== null && props.onZoomChange(stepZoom(scale, 1))}
+          disabled={scale === null || scale >= ZOOM_MAX - 0.001}
+          aria-label={t("Editor.shell.zoomIn")}
+        >
+          <PlusIcon />
+        </button>
+      </Hint>
       <span aria-hidden="true" className="mx-0.5 h-5 w-px bg-border" />
-      <button
-        type="button"
-        className={FLOATING_BUTTON_CLASS}
-        aria-pressed={props.zoom === "fit"}
-        aria-keyshortcuts="0"
-        aria-label={t("Editor.shell.zoomFit")}
-        title={`${t("Editor.shell.zoomFit")} (0)`}
-        onClick={() => props.onZoomChange("fit")}
-      >
-        <FitIcon />
-      </button>
-      <button
-        type="button"
-        className={FLOATING_BUTTON_CLASS}
-        aria-pressed={props.zoom === 1}
-        aria-keyshortcuts="1"
-        title={`${t("Editor.shell.zoomPercent", { percent: 100 })} (1)`}
-        onClick={() => props.onZoomChange(1)}
-      >
-        {t("Editor.shell.zoomPercent", { percent: 100 })}
-      </button>
+      <Hint label={t("Editor.shell.zoomFit")} keys={["0"]} side="top">
+        <button
+          type="button"
+          className={FLOATING_BUTTON_CLASS}
+          aria-pressed={props.zoom === "fit"}
+          aria-keyshortcuts="0"
+          aria-label={t("Editor.shell.zoomFit")}
+          onClick={() => props.onZoomChange("fit")}
+        >
+          <FitIcon />
+        </button>
+      </Hint>
+      <Hint label={t("Editor.shell.zoomPercent", { percent: 100 })} keys={["1"]} side="top">
+        <button
+          type="button"
+          className={FLOATING_BUTTON_CLASS}
+          aria-pressed={props.zoom === 1}
+          aria-keyshortcuts="1"
+          onClick={() => props.onZoomChange(1)}
+        >
+          {t("Editor.shell.zoomPercent", { percent: 100 })}
+        </button>
+      </Hint>
       {props.children}
     </div>
   );
