@@ -4,6 +4,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 
 import { Converter } from "@/components/convert/converter";
+import { ImageConverter } from "@/components/convert/image-converter";
 import { JsonLdScript } from "@/components/seo/json-ld";
 import { chipClass } from "@/components/ui/chip";
 import type { EnabledLocale } from "@/i18n/locales";
@@ -22,7 +23,7 @@ type ConverterPageProps = Readonly<{
   params: Promise<{ locale: string; converterSlug: string }>;
 }>;
 
-// Only the six known converters exist under this locale's slugs; anything
+// Only the known converters exist under this locale's slugs; anything
 // else is a 404. Old ids and foreign slugs are redirected by the proxy.
 export const dynamicParams = false;
 
@@ -120,7 +121,7 @@ export default async function ConverterPage({ params }: ConverterPageProps) {
       <NextIntlClientProvider
         messages={pickMessages(await getMessages(), CONVERTER_CLIENT_NAMESPACES)}
       >
-        <Converter id={converterId} />
+        {converterId === "image-converter" ? <ImageConverter /> : <Converter id={converterId} />}
       </NextIntlClientProvider>
 
       <div className="grid gap-10 lg:grid-cols-2">

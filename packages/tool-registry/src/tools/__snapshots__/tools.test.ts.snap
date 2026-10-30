@@ -3570,6 +3570,275 @@ exports[`preset snapshots: blurry-gradient > sorbet 1`] = `"<svg xmlns="http://w
 
 exports[`preset snapshots: blurry-gradient > sunset 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080"><defs><radialGradient id="b1550oty" cx="31.8" cy="1048.6" r="1377" gradientUnits="userSpaceOnUse"><stop stop-color="#e56b6f" offset="0" stop-opacity="0.874"/><stop stop-color="#e56b6f" offset="0.0073" stop-opacity="0.874"/><stop stop-color="#e56b6f" offset="0.028" stop-opacity="0.873"/><stop stop-color="#e56b6f" offset="0.0607" stop-opacity="0.869"/><stop stop-color="#e56b6f" offset="0.104" stop-opacity="0.857"/><stop stop-color="#e56b6f" offset="0.1563" stop-opacity="0.833"/><stop stop-color="#e56b6f" offset="0.216" stop-opacity="0.789"/><stop stop-color="#e56b6f" offset="0.2817" stop-opacity="0.715"/><stop stop-color="#e56b6f" offset="0.352" stop-opacity="0.606"/><stop stop-color="#e56b6f" offset="0.4253" stop-opacity="0.469"/><stop stop-color="#e56b6f" offset="0.5" stop-opacity="0.326"/><stop stop-color="#e56b6f" offset="0.5748" stop-opacity="0.2"/><stop stop-color="#e56b6f" offset="0.648" stop-opacity="0.109"/><stop stop-color="#e56b6f" offset="0.7183" stop-opacity="0.054"/><stop stop-color="#e56b6f" offset="0.784" stop-opacity="0.025"/><stop stop-color="#e56b6f" offset="0.8438" stop-opacity="0.011"/><stop stop-color="#e56b6f" offset="0.896" stop-opacity="0.005"/><stop stop-color="#e56b6f" offset="0.9392" stop-opacity="0.002"/><stop stop-color="#e56b6f" offset="0.972" stop-opacity="0.001"/><stop stop-color="#e56b6f" offset="0.9928" stop-opacity="0.001"/><stop stop-color="#e56b6f" offset="1" stop-opacity="0"/></radialGradient><radialGradient id="b44yaw3" cx="1070.9" cy="1060.1" r="1377" gradientUnits="userSpaceOnUse"><stop stop-color="#b56576" offset="0" stop-opacity="0.874"/><stop stop-color="#b56576" offset="0.0073" stop-opacity="0.874"/><stop stop-color="#b56576" offset="0.028" stop-opacity="0.873"/><stop stop-color="#b56576" offset="0.0607" stop-opacity="0.869"/><stop stop-color="#b56576" offset="0.104" stop-opacity="0.857"/><stop stop-color="#b56576" offset="0.1563" stop-opacity="0.833"/><stop stop-color="#b56576" offset="0.216" stop-opacity="0.789"/><stop stop-color="#b56576" offset="0.2817" stop-opacity="0.715"/><stop stop-color="#b56576" offset="0.352" stop-opacity="0.606"/><stop stop-color="#b56576" offset="0.4253" stop-opacity="0.469"/><stop stop-color="#b56576" offset="0.5" stop-opacity="0.326"/><stop stop-color="#b56576" offset="0.5748" stop-opacity="0.2"/><stop stop-color="#b56576" offset="0.648" stop-opacity="0.109"/><stop stop-color="#b56576" offset="0.7183" stop-opacity="0.054"/><stop stop-color="#b56576" offset="0.784" stop-opacity="0.025"/><stop stop-color="#b56576" offset="0.8438" stop-opacity="0.011"/><stop stop-color="#b56576" offset="0.896" stop-opacity="0.005"/><stop stop-color="#b56576" offset="0.9392" stop-opacity="0.002"/><stop stop-color="#b56576" offset="0.972" stop-opacity="0.001"/><stop stop-color="#b56576" offset="0.9928" stop-opacity="0.001"/><stop stop-color="#b56576" offset="1" stop-opacity="0"/></radialGradient><pattern id="ge7czgc" width="128" height="128" patternUnits="userSpaceOnUse"><image width="128" height="128" style="image-rendering:pixelated" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="png-base64:22108:c4f93bea"/></pattern></defs><rect width="1080" height="1080" fill="#ffcdb2"/><circle cx="31.8" cy="1048.6" r="1377" fill="url(#b1550oty)"/><circle cx="1070.9" cy="1060.1" r="1377" fill="url(#b44yaw3)"/><rect width="1080" height="1080" fill="url(#ge7czgc)" opacity="0.1" style="mix-blend-mode:overlay"/></svg>"`;
 
+exports[`preset snapshots: clip-path > arrow-right 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1nt775v" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#84cc16"/></linearGradient><clipPath id="cpsumjr8"><path d="M0 0 L200 400 L0 800 L600 800 L800 400 L600 0 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1nt775v)" opacity="0.14"/><path d="M0 0 L200 400 L0 800 L600 800 L800 400 L600 0 Z" fill="url(#cg1nt775v)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > blob 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cgn0sz26" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#6366f1"/></linearGradient><clipPath id="cp1m95dsj"><path d="M650.77 571.47 C569.25 690.29 525.3 797.22 397.85 800 C270.4 802.78 95.57 734.2 32.9 584.96 C-29.77 435.72 0.36 190.56 94.02 76.48 C187.69 -37.6 342.8 1.47 486.99 31.9 C631.18 62.32 759.29 112.69 793.07 223.99 C826.85 335.29 732.3 452.66 650.77 571.47 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cgn0sz26)" opacity="0.14"/><path d="M650.77 571.47 C569.25 690.29 525.3 797.22 397.85 800 C270.4 802.78 95.57 734.2 32.9 584.96 C-29.77 435.72 0.36 190.56 94.02 76.48 C187.69 -37.6 342.8 1.47 486.99 31.9 C631.18 62.32 759.29 112.69 793.07 223.99 C826.85 335.29 732.3 452.66 650.77 571.47 Z" fill="url(#cgn0sz26)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > burst 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg991p4" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#f43f5e"/></linearGradient><clipPath id="cpx3t42a"><path d="M400 0 L480.75 98.63 L600 53.59 L620.62 179.38 L746.41 200 L701.37 319.25 L800 400 L701.37 480.75 L746.41 600 L620.62 620.62 L600 746.41 L480.75 701.37 L400 800 L319.25 701.37 L200 746.41 L179.38 620.62 L53.59 600 L98.63 480.75 L0 400 L98.63 319.25 L53.59 200 L179.38 179.38 L200 53.59 L319.25 98.63 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg991p4)" opacity="0.14"/><path d="M400 0 L480.75 98.63 L600 53.59 L620.62 179.38 L746.41 200 L701.37 319.25 L800 400 L701.37 480.75 L746.41 600 L620.62 620.62 L600 746.41 L480.75 701.37 L400 800 L319.25 701.37 L200 746.41 L179.38 620.62 L53.59 600 L98.63 480.75 L0 400 L98.63 319.25 L53.59 200 L179.38 179.38 L200 53.59 L319.25 98.63 Z" fill="url(#cg991p4)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > circle 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1vqyxqi" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#22d3ee"/></linearGradient><clipPath id="cpnlg1q6"><path d="M800 400 C800 620.91 620.91 800 400 800 C179.09 800 0 620.91 0 400 C0 179.09 179.09 0 400 0 C620.91 0 800 179.09 800 400 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1vqyxqi)" opacity="0.14"/><path d="M800 400 C800 620.91 620.91 800 400 800 C179.09 800 0 620.91 0 400 C0 179.09 179.09 0 400 0 C620.91 0 800 179.09 800 400 Z" fill="url(#cg1vqyxqi)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > cut-corners 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1ac84fx" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c026d3"/></linearGradient><clipPath id="cpokjc1u"><path d="M96 0 L704 0 L800 96 L800 704 L704 800 L96 800 L0 704 L0 96 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1ac84fx)" opacity="0.14"/><path d="M96 0 L704 0 L800 96 L800 704 L704 800 L96 800 L0 704 L0 96 Z" fill="url(#cg1ac84fx)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > diamond 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1xjpu97" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#e11d48"/><stop offset="1" stop-color="#9333ea"/></linearGradient><clipPath id="cp1cpjley"><path d="M400 0 L800 400 L400 800 L0 400 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1xjpu97)" opacity="0.14"/><path d="M400 0 L800 400 L400 800 L0 400 Z" fill="url(#cg1xjpu97)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > extra exports of every preset 1`] = `
+{
+  "arrow-right": {
+    "css": ".clipped {
+  clip-path: polygon(0% 0%, 25% 50%, 0% 100%, 75% 100%, 100% 50%, 75% 0%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0 0 L0.25 0.5 L0 1 L0.75 1 L1 0.5 L0.75 0 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(0%_0%,_25%_50%,_0%_100%,_75%_100%,_100%_50%,_75%_0%)]" src="your-image.jpg" alt="">
+",
+  },
+  "blob": {
+    "css": ".clipped {
+  clip-path: polygon(81.35% 71.43%, 77.72% 76.91%, 74.35% 82.11%, 71.07% 86.91%, 67.69% 91.16%, 64.05% 94.72%, 59.96% 97.48%, 55.25% 99.28%, 49.73% 100%, 43.52% 99.71%, 36.98% 98.57%, 30.36% 96.57%, 23.89% 93.69%, 17.79% 89.91%, 12.3% 85.24%, 7.67% 79.65%, 4.11% 73.12%, 1.71% 65.62%, 0.35% 57.32%, 0% 48.57%, 0.6% 39.69%, 2.12% 31.02%, 4.52% 22.88%, 7.74% 15.62%, 11.75% 9.56%, 16.49% 5.07%, 21.83% 2.14%, 27.69% 0.53%, 33.95% 0%, 40.5% 0.32%, 47.24% 1.25%, 54.07% 2.55%, 60.87% 3.99%, 67.52% 5.54%, 73.86% 7.39%, 79.79% 9.59%, 85.18% 12.2%, 89.92% 15.29%, 93.91% 18.91%, 97.02% 23.13%, 99.13% 28%, 100% 33.25%, 99.57% 38.57%, 98.05% 43.94%, 95.65% 49.36%, 92.57% 54.83%, 89.02% 60.34%, 85.21% 65.87%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.8135 0.7143 C0.7116 0.8629 0.6566 0.9965 0.4973 1 C0.338 1.0035 0.1195 0.9177 0.0411 0.7312 C-0.0372 0.5447 0.0004 0.2382 0.1175 0.0956 C0.2346 -0.047 0.4285 0.0018 0.6087 0.0399 C0.789 0.0779 0.9491 0.1409 0.9913 0.28 C1.0336 0.4191 0.9154 0.5658 0.8135 0.7143 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(81.35%_71.43%,_77.72%_76.91%,_74.35%_82.11%,_71.07%_86.91%,_67.69%_91.16%,_64.05%_94.72%,_59.96%_97.48%,_55.25%_99.28%,_49.73%_100%,_43.52%_99.71%,_36.98%_98.57%,_30.36%_96.57%,_23.89%_93.69%,_17.79%_89.91%,_12.3%_85.24%,_7.67%_79.65%,_4.11%_73.12%,_1.71%_65.62%,_0.35%_57.32%,_0%_48.57%,_0.6%_39.69%,_2.12%_31.02%,_4.52%_22.88%,_7.74%_15.62%,_11.75%_9.56%,_16.49%_5.07%,_21.83%_2.14%,_27.69%_0.53%,_33.95%_0%,_40.5%_0.32%,_47.24%_1.25%,_54.07%_2.55%,_60.87%_3.99%,_67.52%_5.54%,_73.86%_7.39%,_79.79%_9.59%,_85.18%_12.2%,_89.92%_15.29%,_93.91%_18.91%,_97.02%_23.13%,_99.13%_28%,_100%_33.25%,_99.57%_38.57%,_98.05%_43.94%,_95.65%_49.36%,_92.57%_54.83%,_89.02%_60.34%,_85.21%_65.87%)]" src="your-image.jpg" alt="">
+",
+  },
+  "burst": {
+    "css": ".clipped {
+  clip-path: polygon(50% 0%, 60.09% 12.33%, 75% 6.7%, 77.58% 22.42%, 93.3% 25%, 87.67% 39.91%, 100% 50%, 87.67% 60.09%, 93.3% 75%, 77.58% 77.58%, 75% 93.3%, 60.09% 87.67%, 50% 100%, 39.91% 87.67%, 25% 93.3%, 22.42% 77.58%, 6.7% 75%, 12.33% 60.09%, 0% 50%, 12.33% 39.91%, 6.7% 25%, 22.42% 22.42%, 25% 6.7%, 39.91% 12.33%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.5 0 L0.6009 0.1233 L0.75 0.067 L0.7758 0.2242 L0.933 0.25 L0.8767 0.3991 L1 0.5 L0.8767 0.6009 L0.933 0.75 L0.7758 0.7758 L0.75 0.933 L0.6009 0.8767 L0.5 1 L0.3991 0.8767 L0.25 0.933 L0.2242 0.7758 L0.067 0.75 L0.1233 0.6009 L0 0.5 L0.1233 0.3991 L0.067 0.25 L0.2242 0.2242 L0.25 0.067 L0.3991 0.1233 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(50%_0%,_60.09%_12.33%,_75%_6.7%,_77.58%_22.42%,_93.3%_25%,_87.67%_39.91%,_100%_50%,_87.67%_60.09%,_93.3%_75%,_77.58%_77.58%,_75%_93.3%,_60.09%_87.67%,_50%_100%,_39.91%_87.67%,_25%_93.3%,_22.42%_77.58%,_6.7%_75%,_12.33%_60.09%,_0%_50%,_12.33%_39.91%,_6.7%_25%,_22.42%_22.42%,_25%_6.7%,_39.91%_12.33%)]" src="your-image.jpg" alt="">
+",
+  },
+  "circle": {
+    "css": ".clipped {
+  clip-path: ellipse(50% 50% at 50% 50%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M1 0.5 C1 0.7761 0.7761 1 0.5 1 C0.2239 1 0 0.7761 0 0.5 C0 0.2239 0.2239 0 0.5 0 C0.7761 0 1 0.2239 1 0.5 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:ellipse(50%_50%_at_50%_50%)]" src="your-image.jpg" alt="">
+",
+  },
+  "cut-corners": {
+    "css": ".clipped {
+  clip-path: polygon(12% 0%, 88% 0%, 100% 12%, 100% 88%, 88% 100%, 12% 100%, 0% 88%, 0% 12%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.12 0 L0.88 0 L1 0.12 L1 0.88 L0.88 1 L0.12 1 L0 0.88 L0 0.12 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(12%_0%,_88%_0%,_100%_12%,_100%_88%,_88%_100%,_12%_100%,_0%_88%,_0%_12%)]" src="your-image.jpg" alt="">
+",
+  },
+  "diamond": {
+    "css": ".clipped {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.5 0 L1 0.5 L0.5 1 L0 0.5 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(50%_0%,_100%_50%,_50%_100%,_0%_50%)]" src="your-image.jpg" alt="">
+",
+  },
+  "hero-slant": {
+    "css": ".clipped {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 82%, 0% 100%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0 0 L1 0 L1 0.82 L0 1 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(0%_0%,_100%_0%,_100%_82%,_0%_100%)]" src="your-image.jpg" alt="">
+",
+  },
+  "hexagon": {
+    "css": ".clipped {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.5 0 L1 0.25 L1 0.75 L0.5 1 L0 0.75 L0 0.25 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(50%_0%,_100%_25%,_100%_75%,_50%_100%,_0%_75%,_0%_25%)]" src="your-image.jpg" alt="">
+",
+  },
+  "speech-bubble": {
+    "css": ".clipped {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 82%, 40% 82%, 22% 100%, 22% 82%, 0% 82%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0 0 L1 0 L1 0.82 L0.4 0.82 L0.22 1 L0.22 0.82 L0 0.82 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(0%_0%,_100%_0%,_100%_82%,_40%_82%,_22%_100%,_22%_82%,_0%_82%)]" src="your-image.jpg" alt="">
+",
+  },
+  "star": {
+    "css": ".clipped {
+  clip-path: polygon(50% 0%, 63.91% 35.15%, 100% 38.2%, 72.5% 62.97%, 80.9% 100%, 50% 80.15%, 19.1% 100%, 27.5% 62.97%, 0% 38.2%, 36.09% 35.15%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.5 0 L0.6391 0.3515 L1 0.382 L0.725 0.6297 L0.809 1 L0.5 0.8015 L0.191 1 L0.275 0.6297 L0 0.382 L0.3609 0.3515 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(50%_0%,_63.91%_35.15%,_100%_38.2%,_72.5%_62.97%,_80.9%_100%,_50%_80.15%,_19.1%_100%,_27.5%_62.97%,_0%_38.2%,_36.09%_35.15%)]" src="your-image.jpg" alt="">
+",
+  },
+  "triangle": {
+    "css": ".clipped {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0.5 0 L1 1 L0 1 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(50%_0%,_100%_100%,_0%_100%)]" src="your-image.jpg" alt="">
+",
+  },
+  "wave-bottom": {
+    "css": ".clipped {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 97.92% 99.54%, 95.83% 98.24%, 93.75% 96.3%, 91.67% 94%, 89.58% 91.7%, 87.5% 89.76%, 85.42% 88.46%, 83.33% 88%, 81.25% 88.46%, 79.17% 89.76%, 77.08% 91.7%, 75% 94%, 72.92% 96.3%, 70.83% 98.24%, 68.75% 99.54%, 66.67% 100%, 64.58% 99.54%, 62.5% 98.24%, 60.42% 96.3%, 58.33% 94%, 56.25% 91.7%, 54.17% 89.76%, 52.08% 88.46%, 50% 88%, 47.92% 88.46%, 45.83% 89.76%, 43.75% 91.7%, 41.67% 94%, 39.58% 96.3%, 37.5% 98.24%, 35.42% 99.54%, 33.33% 100%, 31.25% 99.54%, 29.17% 98.24%, 27.08% 96.3%, 25% 94%, 22.92% 91.7%, 20.83% 89.76%, 18.75% 88.46%, 16.67% 88%, 14.58% 88.46%, 12.5% 89.76%, 10.42% 91.7%, 8.33% 94%, 6.25% 96.3%, 4.17% 98.24%, 2.08% 99.54%, 0% 100%);
+}
+",
+    "svg-clip-path": "<!-- Once per page, e.g. at the end of <body> -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><clipPath id="musterli-clip" clipPathUnits="objectBoundingBox"><path d="M0 0 L1 0 L1 1 L0.9792 0.9954 L0.9583 0.9824 L0.9375 0.963 L0.9167 0.94 L0.8958 0.917 L0.875 0.8976 L0.8542 0.8846 L0.8333 0.88 L0.8125 0.8846 L0.7917 0.8976 L0.7708 0.917 L0.75 0.94 L0.7292 0.963 L0.7083 0.9824 L0.6875 0.9954 L0.6667 1 L0.6458 0.9954 L0.625 0.9824 L0.6042 0.963 L0.5833 0.94 L0.5625 0.917 L0.5417 0.8976 L0.5208 0.8846 L0.5 0.88 L0.4792 0.8846 L0.4583 0.8976 L0.4375 0.917 L0.4167 0.94 L0.3958 0.963 L0.375 0.9824 L0.3542 0.9954 L0.3333 1 L0.3125 0.9954 L0.2917 0.9824 L0.2708 0.963 L0.25 0.94 L0.2292 0.917 L0.2083 0.8976 L0.1875 0.8846 L0.1667 0.88 L0.1458 0.8846 L0.125 0.8976 L0.1042 0.917 L0.0833 0.94 L0.0625 0.963 L0.0417 0.9824 L0.0208 0.9954 L0 1 Z"/></clipPath></svg>
+
+<img class="clipped" src="your-image.jpg" alt="">
+
+<style>
+  /* Smooth curves at any size; the element's box is the 0 to 1 range */
+  .clipped {
+    clip-path: url(#musterli-clip);
+  }
+</style>
+",
+    "tailwind": "<img class="[clip-path:polygon(0%_0%,_100%_0%,_100%_100%,_97.92%_99.54%,_95.83%_98.24%,_93.75%_96.3%,_91.67%_94%,_89.58%_91.7%,_87.5%_89.76%,_85.42%_88.46%,_83.33%_88%,_81.25%_88.46%,_79.17%_89.76%,_77.08%_91.7%,_75%_94%,_72.92%_96.3%,_70.83%_98.24%,_68.75%_99.54%,_66.67%_100%,_64.58%_99.54%,_62.5%_98.24%,_60.42%_96.3%,_58.33%_94%,_56.25%_91.7%,_54.17%_89.76%,_52.08%_88.46%,_50%_88%,_47.92%_88.46%,_45.83%_89.76%,_43.75%_91.7%,_41.67%_94%,_39.58%_96.3%,_37.5%_98.24%,_35.42%_99.54%,_33.33%_100%,_31.25%_99.54%,_29.17%_98.24%,_27.08%_96.3%,_25%_94%,_22.92%_91.7%,_20.83%_89.76%,_18.75%_88.46%,_16.67%_88%,_14.58%_88.46%,_12.5%_89.76%,_10.42%_91.7%,_8.33%_94%,_6.25%_96.3%,_4.17%_98.24%,_2.08%_99.54%,_0%_100%)]" src="your-image.jpg" alt="">
+",
+  },
+}
+`;
+
+exports[`preset snapshots: clip-path > hero-slant 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1hdbf1e" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#334155"/></linearGradient><clipPath id="cp1f55l19"><path d="M0 0 L800 0 L800 656 L0 800 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1hdbf1e)" opacity="0.14"/><path d="M0 0 L800 0 L800 656 L0 800 Z" fill="url(#cg1hdbf1e)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > hexagon 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg15a8sjw" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient><clipPath id="cpufvu76"><path d="M400 0 L800 200 L800 600 L400 800 L0 600 L0 200 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg15a8sjw)" opacity="0.14"/><path d="M400 0 L800 200 L800 600 L400 800 L0 600 L0 200 Z" fill="url(#cg15a8sjw)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > speech-bubble 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1tm6khc" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#7c3aed"/></linearGradient><clipPath id="cps2jk93"><path d="M0 0 L800 0 L800 656 L320 656 L176 800 L176 656 L0 656 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1tm6khc)" opacity="0.14"/><path d="M0 0 L800 0 L800 656 L320 656 L176 800 L176 656 L0 656 Z" fill="url(#cg1tm6khc)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > star 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1on08ah" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#facc15"/><stop offset="1" stop-color="#f97316"/></linearGradient><clipPath id="cpn00hr"><path d="M400 0 L511.25 281.23 L800 305.57 L580 503.72 L647.21 800 L400 641.23 L152.79 800 L220 503.72 L0 305.57 L288.75 281.23 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1on08ah)" opacity="0.14"/><path d="M400 0 L511.25 281.23 L800 305.57 L580 503.72 L647.21 800 L400 641.23 L152.79 800 L220 503.72 L0 305.57 L288.75 281.23 Z" fill="url(#cg1on08ah)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > triangle 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cg1vqo7eb" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#facc15"/></linearGradient><clipPath id="cp1knk22a"><path d="M400 0 L800 800 L0 800 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cg1vqo7eb)" opacity="0.14"/><path d="M400 0 L800 800 L0 800 Z" fill="url(#cg1vqo7eb)"/></svg>"`;
+
+exports[`preset snapshots: clip-path > wave-bottom 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800"><defs><linearGradient id="cgh3w51g" x1="0.146" y1="0.146" x2="0.854" y2="0.854"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#3b82f6"/></linearGradient><clipPath id="cp4tayyv"><path d="M0 0 L800 0 L800 800 L783.33 796.35 L766.67 785.94 L750 770.37 L733.33 752 L716.67 733.63 L700 718.06 L683.33 707.65 L666.67 704 L650 707.65 L633.33 718.06 L616.67 733.63 L600 752 L583.33 770.37 L566.67 785.94 L550 796.35 L533.33 800 L516.67 796.35 L500 785.94 L483.33 770.37 L466.67 752 L450 733.63 L433.33 718.06 L416.67 707.65 L400 704 L383.33 707.65 L366.67 718.06 L350 733.63 L333.33 752 L316.67 770.37 L300 785.94 L283.33 796.35 L266.67 800 L250 796.35 L233.33 785.94 L216.67 770.37 L200 752 L183.33 733.63 L166.67 718.06 L150 707.65 L133.33 704 L116.67 707.65 L100 718.06 L83.33 733.63 L66.67 752 L50 770.37 L33.33 785.94 L16.67 796.35 L0 800 Z"/></clipPath></defs><rect width="800" height="800" fill="url(#cgh3w51g)" opacity="0.14"/><path d="M0 0 L800 0 L800 800 L783.33 796.35 L766.67 785.94 L750 770.37 L733.33 752 L716.67 733.63 L700 718.06 L683.33 707.65 L666.67 704 L650 707.65 L633.33 718.06 L616.67 733.63 L600 752 L583.33 770.37 L566.67 785.94 L550 796.35 L533.33 800 L516.67 796.35 L500 785.94 L483.33 770.37 L466.67 752 L450 733.63 L433.33 718.06 L416.67 707.65 L400 704 L383.33 707.65 L366.67 718.06 L350 733.63 L333.33 752 L316.67 770.37 L300 785.94 L283.33 796.35 L266.67 800 L250 796.35 L233.33 785.94 L216.67 770.37 L200 752 L183.33 733.63 L166.67 718.06 L150 707.65 L133.33 704 L116.67 707.65 L100 718.06 L83.33 733.63 L66.67 752 L50 770.37 L33.33 785.94 L16.67 796.35 L0 800 Z" fill="url(#cgh3w51g)"/></svg>"`;
+
 exports[`preset snapshots: cmyk-halftone > classic 1`] = `"pixels 96x64:7cb083de"`;
 
 exports[`preset snapshots: cmyk-halftone > coarse 1`] = `"pixels 96x64:f60f1ab2"`;

@@ -72,6 +72,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "fluid-type-scale": { de: "fliessende-schriftskala", en: "fluid-type-scale-generator" },
   "section-divider": { de: "abschnittstrenner-generator", en: "section-divider-generator" },
   "og-image": { de: "og-bild-generator", en: "og-image-generator" },
+  "clip-path": { de: "clip-path-generator", en: "clip-path-generator" },
   halftone: { de: "halftone-generator", en: "halftone-generator" },
   "cmyk-halftone": { de: "cmyk-raster-generator", en: "cmyk-halftone-generator" },
   dither: { de: "dithering-generator", en: "dither-generator" },
@@ -219,6 +220,7 @@ export const CONVERTER_SLUGS: Readonly<Record<ConverterId, LocalizedSlugs>> = {
   "base64-to-svg": { de: "base64-zu-svg", en: "base64-to-svg" },
   "image-to-base64": { de: "bild-zu-base64", en: "image-to-base64" },
   "base64-to-image": { de: "base64-zu-bild", en: "base64-to-image" },
+  "image-converter": { de: "bild-komprimieren", en: "image-compressor" },
 };
 
 /**

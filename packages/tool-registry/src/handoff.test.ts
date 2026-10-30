@@ -30,6 +30,7 @@ const EXPECTED = [
   "fractal-glass:photo",
   "pixelate:photo",
   "og-image:backgroundImage",
+  "clip-path:image",
   "palette-from-image:<image-input>",
 ];
 

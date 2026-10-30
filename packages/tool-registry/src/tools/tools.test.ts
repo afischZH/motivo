@@ -162,6 +162,7 @@ describe("built-in tool registration", () => {
       "fluid-type-scale",
       "section-divider",
       "og-image",
+      "clip-path",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
@@ -506,6 +507,7 @@ describe("extra exports", () => {
       "fluid-type-scale",
       "section-divider",
       "og-image",
+      "clip-path",
     ]);
   });
 });

@@ -282,6 +282,8 @@ Umgesetzt in M6-AP01.
 
 SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), Base64 zu SVG, Bild zu Base64 (optional Komprimierung via Canvas), Base64 zu Bild. Jede Seite mit Erklärung, Beispielen und FAQ.
 
+**Bild komprimieren** (W4, Konverter-ID `image-converter`, Slugs `bild-komprimieren`/`image-compressor`): bis 30 Bilder (PNG, JPG, WebP, GIF, je bis 25 MB, Typ aus den Bytes) in WebP, JPG oder PNG, Qualität 1 bis 100, optional längste Kante (16 bis 8192 px, nie vergrössern), Hintergrundfarbe für transparente Stellen bei JPG. Dekodieren, Skalieren und Kodieren im Worker (`createImageBitmap` mit `resizeQuality: "high"`, `OffscreenCanvas.convertToBlob`), ein Bild nach dem anderen; Einstellungen ändern kodiert alle neu (250 ms entprellt). Zeigt alte und neue Grösse, Ersparnis und Masse; Download einzeln oder als ZIP (eigener ZIP-Writer, gespeichert statt komprimiert). SVG bewusst nicht (Worker können SVG nicht dekodieren). Nichts verlässt den Browser.
+
 ## H. Social Media Editor · M6 · G/P
 - **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Musterli-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
 - **Text-Effekte**: Schatten, Outline, Verlauf, "Highlight-Balken", Gradient-Fill; eigene und Google Fonts (Lizenz der Fonts prüfen: nur OFL/Apache).
@@ -596,6 +598,16 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 - **Leertaste**: würfelt Palette, Motiv (ohne Farbe), Winkel, Muster und Akzent; Text, Aufteilung, Fläche und Bilder bleiben. **Brand-Palette**: Palette, Akzent und automatische Textfarbe.
 - **Vorlagen** (7): Lancierung, Artikel, Zentriert, Geteilt, Schlicht, Gepunktet, Nacht.
 
+### M4. Clip-path-Generator · W4 · G
+
+**Umgesetzt (Tool-ID `clip-path`, Slug `clip-path-generator` in DE und EN, Kategorie `css-effects`, Engine `packages/engine/src/tools/clip-path/`)**:
+- **Zweck**: Bilder und Abschnitte in eine Form schneiden und den Code kopieren.
+- **Formen** (`shape`): Vieleck (3 bis 12 Ecken, Drehung), Stern (3 bis 12 Zacken, Innenradius, Drehung), Blob (3 bis 12 Punkte, Variation, folgt dem Seed), Kreis/Ellipse, Wellenkante (1 bis 12 Wellen), Schräge, Pfeil, abgeschrägte Ecken, Sprechblase. Kantenformen mit `side` (unten, oben, links, rechts) und `depth` (0 bis 50 %). Vieleck, Stern und Blob werden auf die ganze Fläche gestreckt, wie das Element, das sie schneiden.
+- **Füllung**: Verlauf aus der Palette mit Winkel oder eigenes Bild (`image`, lokal, nie im Teilen-Link, Ziel von "Weiterverwenden"); optional die ungeschnittene Fläche blass dahinter (`showBox`).
+- **Exporte**: SVG, PNG, JPG, WebP; Code: CSS `clip-path: polygon(...)` in Prozent (Kurven mit 8 bis 12 Punkten pro Segment abgetastet) bzw. `ellipse()`, SVG-`<clipPath>` mit `clipPathUnits="objectBoundingBox"` (echte Bézier-Kurven), Tailwind-Klasse `[clip-path:...]`.
+- **Leertaste**: neue Form mit neuen Einstellungen; Farben und Bild bleiben. **Brand-Palette**: die ersten zwei Farben.
+- **Vorlagen** (12): Sechseck, Dreieck, Stern, Strahlenkranz, Blob, Kreis, Wellenkante, Hero-Schräge, Pfeil, abgeschrägte Ecken, Sprechblase, Raute.
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
@@ -605,4 +617,5 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 5. **M5**: Shader Gradient (+ Video), Perspective Grid, Halftone, CMYK, Dither
 6. **M6**: God Rays, Fractal Glass, Social Media Editor
 7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
-8. **M7**: Composer, Community-Ausbau, API, Plugins, KI
+8. **W4**: Clip-path-Generator, Bild komprimieren, QR-Code, Code-Screenshot
+9. **M7**: Composer, Community-Ausbau, API, Plugins, KI

@@ -27,6 +27,7 @@ export function sampleInput(id: ConverterId): string | null {
     case "base64-to-image":
       return dataUriOf(svgToBase64(SAMPLE_SVG));
     case "image-to-base64":
+    case "image-converter":
       return null;
   }
 }

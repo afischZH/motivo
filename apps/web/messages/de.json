@@ -5817,13 +5817,126 @@
           }
         }
       }
+    },
+    "clip-path": {
+      "name": "Clip-path-Generator",
+      "description": "Schneide Bilder und Abschnitte in Vielecke, Sterne, Blobs, Wellen, Schrägen oder Sprechblasen. Kopiere CSS clip-path, ein SVG-clipPath oder Tailwind.",
+      "params": {
+        "shape": {
+          "label": "Form",
+          "options": {
+            "polygon": "Vieleck",
+            "star": "Stern",
+            "blob": "Blob",
+            "ellipse": "Kreis",
+            "wave": "Wellenkante",
+            "slant": "Schräge",
+            "chevron": "Pfeil",
+            "notch": "Abgeschrägte Ecken",
+            "bubble": "Sprechblase"
+          }
+        },
+        "sides": {
+          "label": "Ecken"
+        },
+        "innerRadius": {
+          "label": "Innenradius"
+        },
+        "rotation": {
+          "label": "Drehung"
+        },
+        "randomness": {
+          "label": "Variation"
+        },
+        "side": {
+          "label": "Seite",
+          "options": {
+            "bottom": "Unten",
+            "top": "Oben",
+            "left": "Links",
+            "right": "Rechts"
+          }
+        },
+        "waves": {
+          "label": "Wellen"
+        },
+        "depth": {
+          "label": "Tiefe"
+        },
+        "image": {
+          "label": "Dein Bild",
+          "description": "Zeigt dein Bild in der Form. Es bleibt auf deinem Gerät und ist nie Teil eines Teilen-Links."
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "showBox": {
+          "label": "Ungeschnittene Fläche zeigen"
+        }
+      },
+      "presets": {
+        "hexagon": "Sechseck",
+        "triangle": "Dreieck",
+        "star": "Stern",
+        "burst": "Strahlenkranz",
+        "blob": "Blob",
+        "circle": "Kreis",
+        "wave-bottom": "Wellenkante",
+        "hero-slant": "Hero-Schräge",
+        "arrow-right": "Pfeil",
+        "cut-corners": "Abgeschrägte Ecken",
+        "speech-bubble": "Sprechblase",
+        "diamond": "Raute"
+      },
+      "seo": {
+        "heading": "CSS-Clip-path-Generator (Formen, Polygone, Masken)",
+        "whatIs": "Die CSS-Eigenschaft clip-path schneidet ein Element in eine Form. Sichtbar bleibt nur der Teil innerhalb der Form, zum Beispiel ein Foto als Sechseck oder ein Hero-Bereich mit schräger Unterkante. Der Generator zeichnet die Form für dich und schreibt den Code.",
+        "howTo": "Wähle eine Form und passe Ecken, Tiefe, Seite oder Variation an. Lade dein eigenes Bild, um die Wirkung zu sehen. Kopiere dann das CSS, das SVG-clipPath für weiche Kurven oder die Tailwind-Klasse. Die Bildexporte zeigen das geschnittene Element als SVG, PNG oder WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Fotos und Avatare",
+            "text": "Teamfotos als Sechsecke, Blobs oder Kreise wirken verspielter als gewöhnliche Rechtecke."
+          },
+          "u2": {
+            "title": "Hero-Bereiche",
+            "text": "Eine schräge oder wellige Unterkante macht den Übergang zum Inhalt lebendiger."
+          },
+          "u3": {
+            "title": "Badges und Hinweise",
+            "text": "Sterne, Pfeile und Sprechblasen machen aus einfachen Boxen auffällige Etiketten."
+          }
+        },
+        "tips": {
+          "t1": "Das CSS rechnet in Prozent. Die Form folgt dem Element darum in jeder Grösse und auf jedem Bildschirm.",
+          "t2": "Kurven bestehen im CSS aus vielen Punkten. Für sehr grosse, runde Formen gibt das SVG-clipPath glattere Kanten.",
+          "t3": "clip-path schneidet auch Schatten weg. Setze filter: drop-shadow() auf ein umgebendes Element, wenn die Form einen Schatten braucht."
+        },
+        "faq": {
+          "q1": {
+            "question": "Welche Browser unterstützen clip-path?",
+            "answer": "Alle aktuellen Browser unterstützen clip-path mit polygon(), ellipse() und url() für SVG-Clip-Pfade."
+          },
+          "q2": {
+            "question": "Reagiert der weggeschnittene Bereich noch auf Klicks?",
+            "answer": "Nein. Klicks und Hover zählen nur innerhalb der sichtbaren Form. Knöpfe und Links bleiben dadurch genau."
+          },
+          "q3": {
+            "question": "Kann ich die Form animieren?",
+            "answer": "Ja, solange beide Polygone gleich viele Punkte haben. Dann blendet ein CSS-Übergang weich von einer Form zur anderen."
+          },
+          "q4": {
+            "question": "Wird mein Bild hochgeladen?",
+            "answer": "Nein. Dein Bild bleibt in deinem Browser. Es wird auf keinem Server gespeichert und reist nie in einem Teilen-Link mit."
+          }
+        }
+      }
     }
   },
   "Converters": {
     "nav": "Konverter",
     "index": {
       "title": "Konverter",
-      "lead": "Wandle SVG, CSS, Base64 und Bilder in beide Richtungen um. Gratis, schnell und direkt in deinem Browser.",
+      "lead": "Wandle SVG, CSS, Base64 und Bilder in beide Richtungen um und komprimiere Bilder. Gratis, schnell und direkt in deinem Browser.",
       "metaTitle": "Konverter für SVG, CSS, Base64 und Bilder",
       "metaDescription": "Gratis Konverter für SVG zu CSS, SVG zu Base64, Bild zu Base64 und zurück. Alles läuft in deinem Browser."
     },
@@ -5985,6 +6098,51 @@
           "q3": "Gibt es eine Grössenbeschränkung?",
           "a3": "Ja, dekodierte Bilder dürfen bis 5 MB gross sein. Alles läuft in deinem Browser."
         }
+      },
+      "image-converter": {
+        "name": "Bild komprimieren",
+        "title": "Bilder komprimieren und umwandeln",
+        "description": "Komprimiere, verkleinere und wandle PNG, JPG, WebP und GIF in WebP, JPG oder PNG um. Viele Dateien auf einmal, direkt im Browser.",
+        "inputLabel": "Bilddateien",
+        "placeholder": "",
+        "whatIs": "Bilder sind oft der schwerste Teil einer Website. Der Kompressor macht sie kleiner, indem er sie in einem modernen Format wie WebP speichert, in der Qualität deiner Wahl und auf Wunsch kleiner skaliert. Seiten laden schneller und sparen Daten auf dem Handy.",
+        "howTo": "Wähle Bilder, zieh sie auf das Feld oder füge sie ein. Wähle Format und Qualität und auf Wunsch eine längste Kante. Jedes Bild zeigt die neue Grösse und wie viel du gespart hast. Lade einzelne Bilder oder alle zusammen als ZIP herunter.",
+        "faq": {
+          "q1": "Welches Format soll ich wählen?",
+          "a1": "WebP für Fotos und Grafiken auf Websites: Es ist meist deutlich kleiner als JPG und behält Transparenz. JPG für Orte, die kein WebP annehmen. PNG, wenn jedes Pixel genau gleich bleiben muss, zum Beispiel bei Screenshots mit feiner Schrift.",
+          "q2": "Welche Qualität passt?",
+          "a2": "Für Fotos sind 75 bis 85 ein guter Start. Unter etwa 60 siehst du eventuell Blöcke und unscharfe Kanten. Vergleiche Vorschau und neue Grösse, um dein Gleichgewicht zu finden.",
+          "q3": "Werden meine Bilder hochgeladen?",
+          "a3": "Nein. Alles passiert in deinem Browser. Deine Bilder verlassen dein Gerät nie und werden nirgends gespeichert."
+        }
+      }
+    },
+    "image": {
+      "settings": "Einstellungen",
+      "dropzone": "Bilder wählen oder hier ablegen",
+      "hint": "Bis zu {count} Bilder mit je {limit}: PNG, JPG, WebP oder GIF. Du kannst auch mit ⌘/Ctrl+V einfügen.",
+      "formats": {
+        "webp": "WebP",
+        "jpeg": "JPG",
+        "png": "PNG"
+      },
+      "quality": "Qualität",
+      "resize": "Grösse begrenzen",
+      "maxEdge": "Längste Kante",
+      "matte": "Hintergrund für transparente Stellen",
+      "empty": "Hier erscheinen deine umgewandelten Bilder.",
+      "total": "Total: {before} → {after} ({percent} % kleiner)",
+      "saved": "{percent} % kleiner",
+      "larger": "{percent} % grösser, behalte das Original",
+      "remove": "Entfernen",
+      "downloadAll": "Alle {count} als ZIP herunterladen",
+      "errors": {
+        "unsupportedType": "Das ist kein unterstütztes Bild. Erlaubt sind PNG, JPG, WebP und GIF.",
+        "tooManyPixels": "Dieses Bild ist auf einer Seite grösser als {limit} px.",
+        "tooManyFiles": "Es passen nur {count} Bilder auf einmal. Der Rest wurde weggelassen.",
+        "decodeFailed": "Das Bild liess sich nicht lesen. Eventuell ist es beschädigt.",
+        "encodeFailed": "Dieser Browser kann in diesem Format nicht speichern. Versuche ein anderes.",
+        "noWorker": "Dieser Browser kann Bilder nicht im Hintergrund umwandeln. Bitte nutze eine aktuelle Chrome-Version."
       }
     }
   },

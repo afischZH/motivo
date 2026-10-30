@@ -177,6 +177,15 @@ Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10
 
 **DoD je Etappe**: wie CLAUDE.md (Chrome, Light/Dark, Tastatur, Tests, DE/EN, Docs); neue Exporte mit Snapshot-Test pro Preset.
 
+## W4: Neue Bereiche (Entscheid Andreas 2026-10-30)
+
+Ideen-Dokument "New tools and areas for Musterli" (Claude Doc, 2026-10-30). Andreas hat die empfohlene Reihenfolge freigegeben.
+
+- [x] Clip-path-Generator (Spec `docs/TOOLS.md` M4)
+- [x] Bild komprimieren und umwandeln, als Konverter (Spec `docs/TOOLS.md` G)
+- [ ] QR-Code mit Stil (eigener Encoder, ohne Dependency)
+- [ ] Code-Screenshot (eigene Syntaxfarben, ohne Dependency)
+
 ## M7: Differenzierung & Wachstum (ab Woche 24)
 
 Reihenfolge nach Nutzerfeedback festlegen. Kandidaten:

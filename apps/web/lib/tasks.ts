@@ -40,6 +40,7 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
   "ui-effects": [
     "section-divider",
     "fluid-type-scale",
+    "clip-path",
     "glass-effects",
     "css-shadow",
     "bento-grid",
