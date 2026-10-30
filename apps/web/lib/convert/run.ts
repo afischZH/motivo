@@ -41,6 +41,9 @@ const asText = (input: ConverterInput) =>
 
 export function runConverter(id: ConverterId, input: ConverterInput): ConverterResult {
   switch (id) {
+    // Encodes pixels, so it runs in its own worker (`image-convert.worker.ts`).
+    case "image-converter":
+      return { ok: false, error: "unsupportedType" };
     case "svg-to-css":
     case "svg-to-base64": {
       const result = (id === "svg-to-css" ? svgToCss : svgToBase64)(asText(input));

@@ -33,6 +33,8 @@ const FILE_ACCEPT: Record<ConverterId, string> = {
   "base64-to-image": ".txt,text/plain",
   "image-to-base64":
     ".png,.jpg,.jpeg,.gif,.webp,.svg,image/png,image/jpeg,image/gif,image/webp,image/svg+xml",
+  // Has its own component (`ImageConverter`); listed for the complete record.
+  "image-converter": ".png,.jpg,.jpeg,.gif,.webp,image/png,image/jpeg,image/gif,image/webp",
 };
 
 /** Text files are only pre-checked roughly; the converter applies the exact limit. */

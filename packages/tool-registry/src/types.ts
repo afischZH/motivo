@@ -132,6 +132,13 @@ export interface ControlHint<P> {
   step?: number;
   /** Unit suffix shown next to numbers, e.g. "px", "%", "°". Not translated. */
   unit?: string;
+  /**
+   * For `kind: "text"`: a multi-line field with this many visible rows
+   * (line breaks are kept), e.g. for code. Default: one line.
+   */
+  rows?: number;
+  /** For `kind: "text"`: monospace font, no spell check (code, ids). */
+  monospace?: boolean;
   /** Collapsed under "Advanced" by default. */
   advanced?: boolean;
   /** Whether the param gets a lock. Default true. */

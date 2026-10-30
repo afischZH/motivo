@@ -282,6 +282,8 @@ Umgesetzt in M6-AP01.
 
 SVG zu CSS (url-encoded data-URI), SVG zu Base64, CSS zu SVG (data-URI parsen), Base64 zu SVG, Bild zu Base64 (optional Komprimierung via Canvas), Base64 zu Bild. Jede Seite mit Erklärung, Beispielen und FAQ.
 
+**Bild komprimieren** (W4, Konverter-ID `image-converter`, Slugs `bild-komprimieren`/`image-compressor`): bis 30 Bilder (PNG, JPG, WebP, GIF, je bis 25 MB, Typ aus den Bytes) in WebP, JPG oder PNG, Qualität 1 bis 100, optional längste Kante (16 bis 8192 px, nie vergrössern), Hintergrundfarbe für transparente Stellen bei JPG. Dekodieren, Skalieren und Kodieren im Worker (`createImageBitmap` mit `resizeQuality: "high"`, `OffscreenCanvas.convertToBlob`), ein Bild nach dem anderen; Einstellungen ändern kodiert alle neu (250 ms entprellt). Zeigt alte und neue Grösse, Ersparnis und Masse; Download einzeln oder als ZIP (eigener ZIP-Writer, gespeichert statt komprimiert). SVG bewusst nicht (Worker können SVG nicht dekodieren). Nichts verlässt den Browser.
+
 ## H. Social Media Editor · M6 · G/P
 - **Canvas** (Konva) mit Ebenen: Hintergrund (beliebiges Musterli-Design als Live-Referenz oder gerendertes Bild), Text, Bilder, Shapes, Logo aus Brand Kit.
 - **Text-Effekte**: Schatten, Outline, Verlauf, "Highlight-Balken", Gradient-Fill; eigene und Google Fonts (Lizenz der Fonts prüfen: nur OFL/Apache).
@@ -596,6 +598,37 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 - **Leertaste**: würfelt Palette, Motiv (ohne Farbe), Winkel, Muster und Akzent; Text, Aufteilung, Fläche und Bilder bleiben. **Brand-Palette**: Palette, Akzent und automatische Textfarbe.
 - **Vorlagen** (7): Lancierung, Artikel, Zentriert, Geteilt, Schlicht, Gepunktet, Nacht.
 
+### M4. Clip-path-Generator · W4 · G
+
+**Umgesetzt (Tool-ID `clip-path`, Slug `clip-path-generator` in DE und EN, Kategorie `css-effects`, Engine `packages/engine/src/tools/clip-path/`)**:
+- **Zweck**: Bilder und Abschnitte in eine Form schneiden und den Code kopieren.
+- **Formen** (`shape`): Vieleck (3 bis 12 Ecken, Drehung), Stern (3 bis 12 Zacken, Innenradius, Drehung), Blob (3 bis 12 Punkte, Variation, folgt dem Seed), Kreis/Ellipse, Wellenkante (1 bis 12 Wellen), Schräge, Pfeil, abgeschrägte Ecken, Sprechblase. Kantenformen mit `side` (unten, oben, links, rechts) und `depth` (0 bis 50 %). Vieleck, Stern und Blob werden auf die ganze Fläche gestreckt, wie das Element, das sie schneiden.
+- **Füllung**: Verlauf aus der Palette mit Winkel oder eigenes Bild (`image`, lokal, nie im Teilen-Link, Ziel von "Weiterverwenden"); optional die ungeschnittene Fläche blass dahinter (`showBox`).
+- **Exporte**: SVG, PNG, JPG, WebP; Code: CSS `clip-path: polygon(...)` in Prozent (Kurven mit 8 bis 12 Punkten pro Segment abgetastet) bzw. `ellipse()`, SVG-`<clipPath>` mit `clipPathUnits="objectBoundingBox"` (echte Bézier-Kurven), Tailwind-Klasse `[clip-path:...]`.
+- **Leertaste**: neue Form mit neuen Einstellungen; Farben und Bild bleiben. **Brand-Palette**: die ersten zwei Farben.
+- **Vorlagen** (12): Sechseck, Dreieck, Stern, Strahlenkranz, Blob, Kreis, Wellenkante, Hero-Schräge, Pfeil, abgeschrägte Ecken, Sprechblase, Raute.
+
+### M5. QR-Code-Generator · W4 · G
+
+**Umgesetzt (Tool-ID `qr-code`, Slug `qr-code-generator` in DE und EN, Kategorie `icons`, Engine `packages/engine/src/tools/qr-code/`)**:
+- **Encoder ohne Library** (`encode.ts`, nach ISO/IEC 18004): nur Byte-Modus (UTF-8, eigener Encoder ohne `TextEncoder`), Versionen 1 bis 40, Fehlerkorrektur L/M/Q/H, Reed-Solomon über GF(256), alle acht Masken mit den Strafregeln. Geprüft mit ZXing (zxing-cpp) über 134 Codes (alle Stufen, Versionen bis 40, erzwungene Masken) und 40 Stil-Kombinationen mit und ohne Logo: alle korrekt gelesen. Die Matrix der letzten Eingabe wird zwischengespeichert (Vorschau, Hinweise, Export).
+- **Params**: `text` (bis 1000 Zeichen, `contentParams`, im Teilen-Link), `ecLevel`, `moduleShape` (Quadrate als Läufe zusammengefasst, Punkte, abgerundet mit runden Ecken nur ohne Nachbarn, Rauten, senkrechte Balken), `eyeShape` (eckig, abgerundet, Kreis, Blatt), `margin` (Ruhezone 0 bis 10 Module), `ink`, optional Verlauf mit `ink2` und Winkel, `eyeColor`, `background` (auch transparent), `logo` (lokal, nie im Teilen-Link) mit `logoSize` 10 bis 30 %; Module hinter dem Logo fallen weg.
+- **Hinweise**: leerer Text, zu lang für die Stufe, Kontrast unter 3:1, heller Code auf dunklem Grund, Logo mit Stufe L oder M, Ruhezone unter 2.
+- **Exporte**: SVG, PNG, JPG, WebP. Gezeichnet in Moduleinheiten in einer skalierten Gruppe, das SVG bleibt klein.
+- **Leertaste**: neue Formen und dunkle Farben; Text, Logo und Hintergrund bleiben. **Brand-Palette**: erste Farbe für Code und Augen, zweite für den Verlauf.
+- **Vorlagen** (10): Abgerundet, Klassisch, Punkte, Ozean, Wald, Rauten, Balken, Abendrot, WLAN, Transparent.
+
+### M6. Code-Screenshot · W4 · G
+
+**Umgesetzt (Tool-ID `code-screenshot`, Slug `code-screenshot` in DE und EN, Kategorie `social`, Engine `packages/engine/src/tools/code-screenshot/`)**:
+- **Zweck**: Code als Bild mit Syntaxfarben, Editorfenster und Musterli-Hintergrund, für Posts, Folien und Dokus.
+- **Syntaxfarben ohne Library** (`highlight.ts`): je Sprache eine Liste klebender regulärer Ausdrücke (Kommentar, String, Zahl, Schlüsselwort, Funktion, Typ, Tag, Attribut, Satzzeichen) für JavaScript, TypeScript, CSS, HTML, Python, JSON, Shell und reinen Text. Kein Parser; jedes Zeichen bleibt erhalten (Test).
+- **Params**: `code` (bis 3000 Zeichen, mehrzeiliges Feld über den neuen generischen Hinweis `rows`/`monospace` am Control), `language`, `title` (Dateiname), `highlight` (Zeilen wie "2, 4-6"), `theme` (6 eigene Farbschemata), `frame` (Fenster mit Ampel oder keiner), `lineNumbers`, `fontSize` (12 bis 64 px; das Fenster wird kleiner, wenn es nicht passt, nie grösser), `radius`, `shadow`, `padding`, Hintergrund (`backdrop`: Verlauf, Mesh, weicher Verlauf, Farbe, keiner) mit `palette`, `background`, `gradientAngle`. Code, Dateiname und Markierung sind `contentParams` und reisen im Teilen-Link (Standardlink rund 520 Zeichen, Ausnahme im Share-Codec-Test).
+- **Layout ohne DOM**: Monospace mit 0.6 em pro Zeichen, Zeilenhöhe 1.6 em; höchstens 80 Zeilen und 160 Spalten, danach "…". Schrift: Monospace des Systems (keine Webfont).
+- **Exporte**: PNG, JPG, WebP, SVG; Grössen Querformat 1600 × 1000, Social-Post 1200 × 675, Quadrat 1080, Folie 1920 × 1080.
+- **Leertaste**: neues Farbschema und Hintergrund; Code und Layout bleiben. **Brand-Palette**: Hintergrundfarben.
+- **Vorlagen** (9): Mitternacht, Papier, Python, CSS, HTML, TypeScript, Terminal, JSON, Nur Fenster.
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
@@ -605,4 +638,5 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 5. **M5**: Shader Gradient (+ Video), Perspective Grid, Halftone, CMYK, Dither
 6. **M6**: God Rays, Fractal Glass, Social Media Editor
 7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
-8. **M7**: Composer, Community-Ausbau, API, Plugins, KI
+8. **W4**: Clip-path-Generator, Bild komprimieren, QR-Code, Code-Screenshot
+9. **M7**: Composer, Community-Ausbau, API, Plugins, KI

@@ -186,6 +186,9 @@ Reihenfolge: AP01, dann parallel AP06 (engine) und AP02 (web), danach AP03, AP04
 
 ## Sitzungsprotokoll
 
+### 2026-10-30
+- W4 (Freigabe Andreas 10:33, "proceed with recommendations" nach dem Ideen-Dokument): Clip-path-Generator (`clip-path`) und Bild-Kompressor (Konverter `image-converter`, eigener Worker, ZIP) umgesetzt. Die sechs Text-Konverter gab es schon; das Ideen-Dokument nannte sie fälschlich als fehlend. Danach QR-Code (`qr-code`, eigener Encoder, mit ZXing geprüft) und Code-Screenshot (`code-screenshot`, eigene Syntaxfarben, neuer Control-Hinweis `rows`/`monospace` für mehrzeiligen Text). Alles in PR #30 (Entwurf).
+
 ### 2026-10-29
 - Editor-Layout modernisiert (Wunsch Andreas, Screenshots von MagicPattern als Referenz): Tool-Pille als Tool-Wechsler (Befehlspalette nur mit Tools), einklappbare Abschnitte mit Symbolen in beiden Seitenleisten (`PanelSection`), Motiv auf Blatt mit schwebender Zoom-Leiste, ausblendbare Seitenleisten, Leinwandgrösse links; Social-Editor mit Format/Hinzufügen/Ebenen links, Export-Popover und Menü «Weitere Aktionen». Tests: Lint, Typecheck, Unit Editor-UI 1233, Web 1749; E2E Chromium betroffene Specs grün (zwei Social-Specs auf das Export-Menü angepasst).
 - Social-Editor, Speichern grosser Bilder (Freigabe Andreas 17:22): CI-Test "20 MB of pictures without long tasks" war seit PR #22 auch auf main rot (51 bis 60 ms). Ursache: IndexedDB kopiert die data-URI-Strings beim Schreiben im Hauptthread. Neu `packages/storage/src/scene-pictures.ts`: grosse Bilddaten als Text-Blob in `social-scenes` und `social-drafts`, in 1-MB-Stücken und einmal pro Bild erzeugt, beim Lesen zurück zu Strings, dann Prüfung wie bisher. Alte Einträge bleiben lesbar, keine neue DB-Version. Tests: Storage 60 (neu 8); E2E 20-MB-Test lokal im Produktions-Build 4 von 4 ohne Long Task, auch mit 2-facher CPU-Drosselung.

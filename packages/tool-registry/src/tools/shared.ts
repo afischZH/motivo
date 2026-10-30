@@ -55,4 +55,5 @@ export const EXTRA_EXPORT_LABELS = {
   htmlPre: "Editor.export.extras.htmlPre",
   utilityClasses: "Editor.export.extras.utilityClasses",
   metaTags: "Editor.export.extras.metaTags",
+  svgClipPath: "Editor.export.extras.svgClipPath",
 } as const;

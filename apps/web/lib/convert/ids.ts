@@ -9,6 +9,7 @@ export const CONVERTER_IDS = [
   "base64-to-svg",
   "image-to-base64",
   "base64-to-image",
+  "image-converter",
 ] as const;
 
 export type ConverterId = (typeof CONVERTER_IDS)[number];
@@ -25,6 +26,7 @@ export const INVERSE_CONVERTER: Record<ConverterId, ConverterId> = {
   "base64-to-svg": "svg-to-base64",
   "image-to-base64": "base64-to-image",
   "base64-to-image": "image-to-base64",
+  "image-converter": "image-to-base64",
 };
 
 /** Number of FAQ entries per converter page (keys faq.q1/a1 ... in messages). */

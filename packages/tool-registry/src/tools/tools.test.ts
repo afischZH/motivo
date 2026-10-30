@@ -162,12 +162,19 @@ describe("built-in tool registration", () => {
       "fluid-type-scale",
       "section-divider",
       "og-image",
+      "clip-path",
+      "qr-code",
+      "code-screenshot",
     ]);
-    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
+    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
+      "favicon-generator",
+      "qr-code",
+    ]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
       "screenshot-beautifier",
       "avatar",
       "og-image",
+      "code-screenshot",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -506,6 +513,7 @@ describe("extra exports", () => {
       "fluid-type-scale",
       "section-divider",
       "og-image",
+      "clip-path",
     ]);
   });
 });

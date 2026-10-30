@@ -40,6 +40,7 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
   "ui-effects": [
     "section-divider",
     "fluid-type-scale",
+    "clip-path",
     "glass-effects",
     "css-shadow",
     "bento-grid",
@@ -54,10 +55,11 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
     "contrast-checker",
     "palette-from-image",
   ],
-  "icons-avatars": ["favicon-generator", "avatar", "placeholder-image", "svg-charts"],
+  "icons-avatars": ["favicon-generator", "qr-code", "avatar", "placeholder-image", "svg-charts"],
   "image-polish": [
     "og-image",
     "screenshot-beautifier",
+    "code-screenshot",
     "duotone",
     "halftone",
     "fractal-glass",

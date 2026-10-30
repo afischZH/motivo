@@ -51,3 +51,6 @@ export * from "./tools/perspective-grid";
 export * from "./tools/fluid-type";
 export * from "./tools/section-divider";
 export * from "./tools/og-image";
+export * from "./tools/clip-path";
+export * from "./tools/qr-code";
+export * from "./tools/code-screenshot";

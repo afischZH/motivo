@@ -226,7 +226,8 @@
         "plainText": "Text (.txt)",
         "htmlPre": "HTML (pre)",
         "utilityClasses": "CSS-Variablen und Klassen",
-        "metaTags": "Meta-Tags (HTML)"
+        "metaTags": "Meta-Tags (HTML)",
+        "svgClipPath": "SVG-clipPath (HTML)"
       },
       "gif": {
         "title": "GIF-Einstellungen",

@@ -190,6 +190,29 @@ export function SwitchField(props: FieldProps<unknown, boolean>) {
 }
 
 export function TextField(props: FieldProps<TextControl, string>) {
+  const { rows, monospace } = props.control;
+  if (rows !== undefined) {
+    return (
+      <textarea
+        id={props.ids.input}
+        className={cx(
+          // The single-line height does not apply to a multi-line field.
+          INPUT_CLASS.replace("h-8 ", ""),
+          "w-full resize-y py-2 leading-relaxed",
+          monospace && "font-mono text-xs",
+        )}
+        rows={rows}
+        value={props.value}
+        maxLength={props.control.maxLength}
+        spellCheck={monospace ? false : undefined}
+        autoCapitalize={monospace ? "off" : undefined}
+        autoCorrect={monospace ? "off" : undefined}
+        aria-describedby={props.ids.description}
+        onChange={(event) => props.onChange(event.target.value)}
+        onBlur={() => props.onCommit?.()}
+      />
+    );
+  }
   return (
     <input
       id={props.ids.input}

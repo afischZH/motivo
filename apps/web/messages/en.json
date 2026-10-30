@@ -5806,13 +5806,393 @@
           }
         }
       }
+    },
+    "clip-path": {
+      "name": "Clip-path Generator",
+      "description": "Cut images and sections into polygons, stars, blobs, waves, slants or speech bubbles. Copy the CSS clip-path, an SVG clipPath or Tailwind.",
+      "params": {
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "polygon": "Polygon",
+            "star": "Star",
+            "blob": "Blob",
+            "ellipse": "Circle",
+            "wave": "Wave edge",
+            "slant": "Slant",
+            "chevron": "Arrow",
+            "notch": "Cut corners",
+            "bubble": "Speech bubble"
+          }
+        },
+        "sides": {
+          "label": "Corners"
+        },
+        "innerRadius": {
+          "label": "Inner radius"
+        },
+        "rotation": {
+          "label": "Rotation"
+        },
+        "randomness": {
+          "label": "Variation"
+        },
+        "side": {
+          "label": "Side",
+          "options": {
+            "bottom": "Bottom",
+            "top": "Top",
+            "left": "Left",
+            "right": "Right"
+          }
+        },
+        "waves": {
+          "label": "Waves"
+        },
+        "depth": {
+          "label": "Depth"
+        },
+        "image": {
+          "label": "Your image",
+          "description": "Shows your picture inside the shape. It stays on your device and is never part of a share link."
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "showBox": {
+          "label": "Show the uncut box"
+        }
+      },
+      "presets": {
+        "hexagon": "Hexagon",
+        "triangle": "Triangle",
+        "star": "Star",
+        "burst": "Burst",
+        "blob": "Blob",
+        "circle": "Circle",
+        "wave-bottom": "Wave edge",
+        "hero-slant": "Hero slant",
+        "arrow-right": "Arrow",
+        "cut-corners": "Cut corners",
+        "speech-bubble": "Speech bubble",
+        "diamond": "Diamond"
+      },
+      "seo": {
+        "heading": "CSS Clip-path Generator (Shapes, Polygons, Masks)",
+        "whatIs": "The CSS property clip-path cuts an element into a shape. Only the part inside the shape stays visible, for example a photo as a hexagon or a hero section with a slanted lower edge. The generator draws the shape for you and writes the code.",
+        "howTo": "Pick a shape and adjust corners, depth, side or variation. Add your own picture to see how it looks. Then copy the CSS, the SVG clipPath for smooth curves, or the Tailwind class. The image exports show the cut element as SVG, PNG or WebP.",
+        "useCases": {
+          "u1": {
+            "title": "Photos and avatars",
+            "text": "Team photos as hexagons, blobs or circles look more playful than plain rectangles."
+          },
+          "u2": {
+            "title": "Hero sections",
+            "text": "A slanted or wavy lower edge makes the transition into the content more lively."
+          },
+          "u3": {
+            "title": "Badges and callouts",
+            "text": "Stars, arrows and speech bubbles turn simple boxes into eye-catching labels."
+          }
+        },
+        "tips": {
+          "t1": "The CSS uses percentages. The shape therefore follows the element at any size and on every screen.",
+          "t2": "Curves in CSS are made of many points. For very large, round shapes the SVG clipPath gives smoother edges.",
+          "t3": "clip-path also cuts away shadows. Use filter: drop-shadow() on a parent element if the shape needs a shadow."
+        },
+        "faq": {
+          "q1": {
+            "question": "Which browsers support clip-path?",
+            "answer": "All current browsers support clip-path with polygon(), ellipse() and url() for SVG clip paths."
+          },
+          "q2": {
+            "question": "Does the clipped area still react to clicks?",
+            "answer": "No. Clicks and hovers only count inside the visible shape, which keeps buttons and links precise."
+          },
+          "q3": {
+            "question": "Can I animate the shape?",
+            "answer": "Yes, as long as both polygons have the same number of points. Then a CSS transition blends smoothly from one to the other."
+          },
+          "q4": {
+            "question": "Is my picture uploaded?",
+            "answer": "No. Your picture stays in your browser. It is not stored on a server and never travels in a share link."
+          }
+        }
+      }
+    },
+    "qr-code": {
+      "name": "QR Code Generator",
+      "description": "Free QR codes with style: dots, rounded modules, custom eyes, gradients and your logo. Download as SVG, PNG, JPG or WebP, no sign-up and no expiry.",
+      "groups": {
+        "content": "Content",
+        "logo": "Logo"
+      },
+      "params": {
+        "text": {
+          "label": "Link or text"
+        },
+        "ecLevel": {
+          "label": "Error correction",
+          "description": "Higher levels keep the code readable when it is damaged or covered by a logo, but need more modules.",
+          "options": {
+            "L": "L 7 %",
+            "M": "M 15 %",
+            "Q": "Q 25 %",
+            "H": "H 30 %"
+          }
+        },
+        "moduleShape": {
+          "label": "Modules",
+          "options": {
+            "square": "Squares",
+            "dots": "Dots",
+            "rounded": "Rounded",
+            "diamond": "Diamonds",
+            "lines": "Bars"
+          }
+        },
+        "eyeShape": {
+          "label": "Eyes",
+          "options": {
+            "square": "Square",
+            "rounded": "Rounded",
+            "circle": "Circle",
+            "leaf": "Leaf"
+          }
+        },
+        "margin": {
+          "label": "Quiet zone"
+        },
+        "ink": {
+          "label": "Color"
+        },
+        "gradient": {
+          "label": "Gradient"
+        },
+        "ink2": {
+          "label": "Second color"
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "eyeColor": {
+          "label": "Eye color"
+        },
+        "logo": {
+          "label": "Logo",
+          "description": "Placed in the middle of the code. It stays on your device and is never part of a share link."
+        },
+        "logoSize": {
+          "label": "Logo size"
+        }
+      },
+      "presets": {
+        "rounded": "Rounded",
+        "classic": "Classic",
+        "dots": "Dots",
+        "ocean": "Ocean",
+        "forest": "Forest",
+        "diamonds": "Diamonds",
+        "bars": "Bars",
+        "sunset": "Sunset",
+        "wifi": "Wi-Fi",
+        "transparent": "Transparent"
+      },
+      "advisories": {
+        "empty": "Enter a link or text to create the code.",
+        "tooLong": "This text is too long for a QR code at this error correction. Shorten it or pick a lower level.",
+        "contrast": "The contrast is only {ratio}:1. Many phones need at least {required}:1, so pick a darker color or a lighter background.",
+        "inverted": "Light code on a dark background: some older scanners cannot read it. Test it with several phones.",
+        "logoLevel": "With a logo, pick error correction Q or H so the code stays readable.",
+        "margin": "A quiet zone below 2 modules can make the code hard to scan. 4 is the standard."
+      },
+      "seo": {
+        "heading": "QR Code Generator with Logo (free, SVG and PNG)",
+        "whatIs": "A QR code stores a link or a short text as a pattern of squares that any phone camera can read. Here you design it to match your brand: with dots or rounded modules, your colors, a gradient and your logo in the middle. The code is static, so it works forever and needs no account.",
+        "howTo": "Enter a link or text and pick the error correction. Choose the module and eye shapes, set the colors and optionally add your logo. Check the hints for contrast, then download the code as SVG for print or PNG for the web.",
+        "useCases": {
+          "u1": {
+            "title": "Flyers, posters and packaging",
+            "text": "The SVG stays sharp at any size, from a business card to a banner."
+          },
+          "u2": {
+            "title": "Menus and events",
+            "text": "Lead guests to the menu, the program or the ticket shop with one scan."
+          },
+          "u3": {
+            "title": "Wi-Fi for guests",
+            "text": "A code in the form WIFI:T:WPA;S:name;P:password;; connects phones without typing."
+          }
+        },
+        "tips": {
+          "t1": "Always test the finished code with two or three phones before you print it.",
+          "t2": "Dark code on a light background scans best. Keep the contrast at 3:1 or more.",
+          "t3": "The shorter the text, the bigger and easier to scan each module. Use a short link for long addresses."
+        },
+        "faq": {
+          "q1": {
+            "question": "Do the QR codes expire?",
+            "answer": "No. The content is stored in the code itself, not on a server. The code works as long as the link behind it works."
+          },
+          "q2": {
+            "question": "Can I put my logo in the middle?",
+            "answer": "Yes. The modules behind the logo are left out and the error correction restores them. Use level Q or H and keep the logo at 30 percent or less."
+          },
+          "q3": {
+            "question": "Which format is best for print?",
+            "answer": "SVG. It is a vector file and stays sharp at any size. For websites and documents PNG works well."
+          },
+          "q4": {
+            "question": "Is anything tracked?",
+            "answer": "No. Your text and logo stay in your browser. There is no redirect and no scan counter."
+          }
+        }
+      }
+    },
+    "code-screenshot": {
+      "name": "Code Screenshot",
+      "description": "Turn code into a beautiful image: syntax colors, an editor window and a gradient background. For posts, slides and docs, as PNG or SVG.",
+      "groups": {
+        "content": "Code",
+        "window": "Window"
+      },
+      "params": {
+        "code": {
+          "label": "Code"
+        },
+        "language": {
+          "label": "Language",
+          "options": {
+            "javascript": "JavaScript",
+            "typescript": "TypeScript",
+            "css": "CSS",
+            "html": "HTML",
+            "python": "Python",
+            "json": "JSON",
+            "bash": "Shell",
+            "plain": "Plain text"
+          }
+        },
+        "title": {
+          "label": "File name"
+        },
+        "highlight": {
+          "label": "Highlight lines",
+          "description": "Line numbers to mark, for example 2, 4-6."
+        },
+        "theme": {
+          "label": "Color theme",
+          "options": {
+            "midnight": "Midnight",
+            "paper": "Paper",
+            "dusk": "Dusk",
+            "ocean": "Ocean",
+            "forest": "Forest",
+            "mono": "Mono"
+          }
+        },
+        "frame": {
+          "label": "Frame",
+          "options": {
+            "window": "Window",
+            "none": "None"
+          }
+        },
+        "lineNumbers": {
+          "label": "Line numbers"
+        },
+        "fontSize": {
+          "label": "Font size"
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "padding": {
+          "label": "Margin"
+        },
+        "backdrop": {
+          "label": "Background",
+          "options": {
+            "gradient": "Gradient",
+            "mesh": "Mesh",
+            "blurry": "Blurry",
+            "solid": "Color",
+            "none": "None"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        }
+      },
+      "presets": {
+        "midnight": "Midnight",
+        "paper": "Paper",
+        "python": "Python",
+        "css": "CSS",
+        "html": "HTML",
+        "typescript": "TypeScript",
+        "terminal": "Terminal",
+        "json": "JSON",
+        "bare": "Window only"
+      },
+      "sizes": {
+        "landscape": "Landscape",
+        "social": "Social post",
+        "square": "Square",
+        "slide": "Slide"
+      },
+      "seo": {
+        "heading": "Code Screenshot Generator (Code to Image)",
+        "whatIs": "A code screenshot shows a piece of code as a polished image: with syntax colors, an editor window and an attractive background. It looks much better than a plain screenshot of your editor and is easy to read in social posts, slides and documentation.",
+        "howTo": "Paste your code, pick the language and enter a file name. Choose a color theme, the window and a background, and mark important lines if you like. Then download the image as PNG, JPG, WebP or SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Social posts",
+            "text": "Share tips and snippets on LinkedIn, X or Mastodon as an image that stands out in the feed."
+          },
+          "u2": {
+            "title": "Slides and talks",
+            "text": "Large, clear code with highlighted lines is easy to follow on a projector."
+          },
+          "u3": {
+            "title": "Docs and blog posts",
+            "text": "A consistent look for every snippet in your article or README."
+          }
+        },
+        "tips": {
+          "t1": "Keep it short: 5 to 20 lines read best in an image. Show the important part only.",
+          "t2": "Highlight the line that matters, for example the fix in a bug story.",
+          "t3": "Images cannot be copied. Always link the code as text as well, for people who use screen readers."
+        },
+        "faq": {
+          "q1": {
+            "question": "Which languages are colored?",
+            "answer": "JavaScript, TypeScript, CSS, HTML, Python, JSON and shell. Other code works as plain text."
+          },
+          "q2": {
+            "question": "Is my code uploaded?",
+            "answer": "No. The image is drawn in your browser. Your code only travels in a share link if you create one."
+          },
+          "q3": {
+            "question": "Which font is used?",
+            "answer": "The monospace font of your system, for example SF Mono on a Mac or Consolas on Windows. No font is loaded from the internet."
+          },
+          "q4": {
+            "question": "Can I use the image commercially?",
+            "answer": "Yes. The image is yours, free of charge and without a watermark."
+          }
+        }
+      }
     }
   },
   "Converters": {
     "nav": "Converters",
     "index": {
       "title": "Converters",
-      "lead": "Convert SVG, CSS, Base64 and images in both directions. Free, fast and right in your browser.",
+      "lead": "Convert SVG, CSS, Base64 and images in both directions, and compress images. Free, fast and right in your browser.",
       "metaTitle": "Converters for SVG, CSS, Base64 and images",
       "metaDescription": "Free converters for SVG to CSS, SVG to Base64, image to Base64 and back. Everything runs in your browser."
     },
@@ -5974,6 +6354,51 @@
           "q3": "Is there a size limit?",
           "a3": "Yes, decoded images can be up to 5 MB. Everything runs in your browser."
         }
+      },
+      "image-converter": {
+        "name": "Image compressor",
+        "title": "Image compressor and converter",
+        "description": "Compress, resize and convert PNG, JPG, WebP and GIF to WebP, JPG or PNG. Many files at once, right in your browser.",
+        "inputLabel": "Image files",
+        "placeholder": "",
+        "whatIs": "Images are often the heaviest part of a website. The compressor makes them smaller by saving them in a modern format such as WebP, at a quality you choose and, if you like, at a smaller size. Pages load faster and save data on phones.",
+        "howTo": "Choose images, drop them onto the field or paste them. Pick the format and quality, and optionally a longest edge. Each image shows its new size and how much you saved. Download single images or all of them as a ZIP.",
+        "faq": {
+          "q1": "Which format should I pick?",
+          "a1": "WebP for photos and graphics on websites: it is usually much smaller than JPG and keeps transparency. JPG for places that do not accept WebP. PNG when every pixel must stay exactly the same, for example for screenshots with fine text.",
+          "q2": "What quality is right?",
+          "a2": "For photos 75 to 85 is a good start. Below about 60 you may see blocks and blurry edges. Compare the preview and the new size to find your balance.",
+          "q3": "Are my images uploaded?",
+          "a3": "No. Everything happens in your browser. Your images never leave your device and are not stored anywhere."
+        }
+      }
+    },
+    "image": {
+      "settings": "Settings",
+      "dropzone": "Choose images or drop them here",
+      "hint": "Up to {count} images of {limit} each: PNG, JPG, WebP or GIF. You can also paste with ⌘/Ctrl+V.",
+      "formats": {
+        "webp": "WebP",
+        "jpeg": "JPG",
+        "png": "PNG"
+      },
+      "quality": "Quality",
+      "resize": "Limit the size",
+      "maxEdge": "Longest edge",
+      "matte": "Background for transparent areas",
+      "empty": "Your converted images appear here.",
+      "total": "Total: {before} → {after} ({percent} % smaller)",
+      "saved": "{percent} % smaller",
+      "larger": "{percent} % larger, keep the original",
+      "remove": "Remove",
+      "downloadAll": "Download all {count} as ZIP",
+      "errors": {
+        "unsupportedType": "This is not a supported image. Allowed are PNG, JPG, WebP and GIF.",
+        "tooManyPixels": "This image is larger than {limit} px on one side.",
+        "tooManyFiles": "Only {count} images fit at once. The rest was left out.",
+        "decodeFailed": "The image could not be read. It may be damaged.",
+        "encodeFailed": "This browser cannot save in this format. Try another one.",
+        "noWorker": "This browser cannot convert images in the background. Please use a current version of Chrome."
       }
     }
   },

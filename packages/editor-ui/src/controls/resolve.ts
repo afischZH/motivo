@@ -122,6 +122,9 @@ export interface ListControl extends ControlBase {
 export interface TextControl extends ControlBase {
   kind: "text";
   maxLength?: number;
+  /** Visible rows of a multi-line field; absent for a single line. */
+  rows?: number;
+  monospace?: boolean;
 }
 
 export interface PaletteControl extends ControlBase {
@@ -413,6 +416,8 @@ export function resolveControl(
       const c: TextControl = { ...base, kind };
       const { max } = lengthBounds(inner);
       if (max !== undefined) c.maxLength = max;
+      if (hint.rows !== undefined && hint.rows > 1) c.rows = Math.round(hint.rows);
+      if (hint.monospace) c.monospace = true;
       return c;
     }
     case "palette": {

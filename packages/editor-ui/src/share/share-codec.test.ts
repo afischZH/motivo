@@ -66,10 +66,12 @@ const design = (tool: AnyToolDefinition, over: Partial<Design> = {}): Design => 
  * Tools whose default link may be a bit longer, with the reason.
  * glass-effects: 26 params plus the own card text (title, body, alignment).
  * og-image: 24 params plus four texts (kicker, title, subtitle, site name).
+ * code-screenshot: the sample code itself (eight lines) travels in the link.
  */
 const SHORT_LINK_EXCEPTIONS: Readonly<Record<string, number>> = {
   "glass-effects": 430,
   "og-image": 480,
+  "code-screenshot": 560,
 };
 
 describe.each(builtInTools.map((t) => [t.id, t] as const))("round trip: %s", (_, tool) => {
