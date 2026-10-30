@@ -3,7 +3,14 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "public/og/**", "public/_headers"],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        "public/og/**",
+        "public/motifs/**",
+        "public/_headers"
+      ],
       "env": ["NEXT_PUBLIC_*"]
     },
     "dev": {

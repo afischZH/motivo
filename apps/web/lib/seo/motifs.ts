@@ -2,7 +2,7 @@
  * Static motifs for SEO pages, catalogue cards and OG images. Everything is
  * rendered through the tool's single render function with the
  * tool's default size, so a preset thumbnail looks exactly like the preset
- * in the editor. Server only: pages and route handlers call it at build time.
+ * in the editor. Server only: pages and build scripts call it at build time.
  */
 import { designToHash } from "@musterli/editor-ui/share";
 import { toBase64 } from "@musterli/engine";
@@ -159,7 +159,7 @@ export function hasStaticMotif(tool: AnyToolDefinition): boolean {
   );
 }
 
-/** Public path of a static motif SVG (see `app/motifs/[toolId]/[file]/route.ts`). */
+/** Public path of a static motif SVG (written by `scripts/motifs.mjs`). */
 export function motifPath(toolId: string, designId: string): string {
   return `/motifs/${toolId}/${designId}.svg`;
 }

@@ -13,6 +13,8 @@ import {
   LIVE_VIEW_PATHS,
   liveViewHeaderRules,
   localHostHeaderRule,
+  MOTIF_CSP,
+  motifHeaderRule,
   securityHeaders,
 } from "./security-headers";
 import { toolSlug } from "../i18n/slugs";
@@ -327,5 +329,23 @@ describe("live view pages (M4b-AP07)", () => {
     const site = file.slice(0, file.indexOf(`\n${LIVE_VIEW_PATHS[0]}\n`));
     expect(site).not.toContain("frame-src");
     expect(site).toContain("display-capture=()");
+  });
+});
+
+describe("motif SVGs", () => {
+  // Static files from scripts/motifs.mjs: no scripts, no external loads.
+  it("get a strict CSP of their own in next.config", () => {
+    const rule = motifHeaderRule();
+    expect(rule.source).toBe("/motifs/:path*");
+    expect(rule.headers).toEqual([{ key: "Content-Security-Policy", value: MOTIF_CSP }]);
+    expect(directives(MOTIF_CSP).get("default-src")).toEqual(["'none'"]);
+    expect(MOTIF_CSP).not.toContain("script-src");
+  });
+
+  it("are in public/_headers with the site-wide CSP detached first", () => {
+    const file = cloudflareHeadersFile();
+    const block = file.slice(file.indexOf("\n/motifs/*\n"));
+    expect(block).toContain("  ! Content-Security-Policy\n");
+    expect(block).toContain(`  Content-Security-Policy: ${MOTIF_CSP}\n`);
   });
 });

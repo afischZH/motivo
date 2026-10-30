@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-import { liveViewHeaderRules, localHostHeaderRule, securityHeaders } from "./lib/security-headers";
+import {
+  liveViewHeaderRules,
+  localHostHeaderRule,
+  motifHeaderRule,
+  securityHeaders,
+} from "./lib/security-headers";
 import { noindexHeaderRule } from "./lib/seo/indexing";
 import { externalServices, telemetryEnv } from "./lib/telemetry/config";
 
@@ -44,6 +49,8 @@ const nextConfig: NextConfig = {
       localHostHeaderRule(options),
       // Screenshot beautifier only: live view frames (any https page) and tab capture.
       ...liveViewHeaderRules(options),
+      // Static motif SVGs (scripts/motifs.mjs): a stricter CSP of their own.
+      motifHeaderRule(),
       noindexHeaderRule(),
     ];
   },

@@ -36,7 +36,6 @@ import {
   collectionMotifs,
   cssGradientCode,
   cssToStyle,
-  findCollectionMotif,
   gradientDesign,
   gradientVariants,
   paletteCode,
@@ -250,11 +249,8 @@ describe("collection designs", () => {
       const presets = new Set(staticDesigns(tool).map((d) => d.id));
       for (const m of motifs) {
         expect(presets.has(m.id)).toBe(false);
-        expect(findCollectionMotif(toolId, m.id)).toEqual(m);
       }
     }
-    expect(findCollectionMotif("mesh-gradient", "gradient-nope")).toBeUndefined();
-    expect(findCollectionMotif("css-gradient", "gradient-alpenglow")).toBeUndefined();
   });
 
   it("have one OG image per item", () => {
