@@ -9,8 +9,15 @@
  * as images. The pass and the recoloured copies come from `svgAssetFor`
  * (../svg-asset.ts): the editor prepares them in its sanitize worker, so a
  * render only joins strings on the main thread.
+ *
+ * Motif sources (`motif`): a built-in shape or an upload (logo, own file),
+ * a list of emoji (spread over the cells) or a short word or monogram. Emoji
+ * and text use system fonts; the SVG embeds no font, so another app may draw
+ * them with its own emoji set. Raster exports are made in the browser that
+ * shows the preview and match it.
  */
 import {
+  SEAMLESS_ALTERNATES,
   SEAMLESS_SHAPES,
   SEAMLESS_TILINGS,
   tileShapeIds,
@@ -40,14 +47,45 @@ import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
 const ID = "seamless-patterns";
 
 export const SEAMLESS_COLOR_MODES = ["single", "palette"] as const;
+/** `shape` covers the built-in shapes and uploads (logos, own files). */
+export const SEAMLESS_MOTIFS = ["shape", "emoji", "text"] as const;
+export const SEAMLESS_TEXT_FONTS = ["sans", "serif", "mono", "rounded"] as const;
+export type SeamlessTextFont = (typeof SEAMLESS_TEXT_FONTS)[number];
+
+/** Most emoji spread over one pattern. */
+export const SEAMLESS_MAX_EMOJI = 8;
+export const SEAMLESS_TEXT_MAX = 24;
+
+/** System font stacks (no web font: nothing to load, nothing embedded). */
+const TEXT_FONTS: Record<SeamlessTextFont, string> = {
+  sans: "system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+  serif: "Georgia, 'Times New Roman', Times, serif",
+  mono: "ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace",
+  rounded: "ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', system-ui, sans-serif",
+};
+const EMOJI_FONT = "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif";
+/** Average advance of a bold glyph in em, a safe guess for the motif box. */
+const TEXT_ADVANCE = 0.68;
+/** Emoji font size in the 100-unit box: emoji are slightly wider than 1 em in some fonts. */
+const EMOJI_EM = 84;
 
 const schema = visualParamsSchema.extend({
+  motif: z.enum(SEAMLESS_MOTIFS),
   shape: z.enum(SEAMLESS_SHAPES),
   /** The user's own SVG or picture; `null` = the built-in shape. Local only. */
   upload: imageAssetSchema.nullable(),
   /** Uploads: keep their colours instead of painting them in the motif colour. */
   keepOriginalColors: z.boolean(),
+  /** Emoji to repeat, mixed over the cells (up to `SEAMLESS_MAX_EMOJI`, spaces ignored). */
+  emoji: z.string().max(96),
+  /** Emoji: paint them in the motif colours instead of their own colours. */
+  emojiTint: z.boolean(),
+  /** Word, name or monogram to repeat. */
+  text: z.string().max(SEAMLESS_TEXT_MAX),
+  textFont: z.enum(SEAMLESS_TEXT_FONTS),
   tiling: z.enum(SEAMLESS_TILINGS),
+  /** Turn every second row or checkerboard cell by 180° (logo walls). */
+  alternate: z.enum(SEAMLESS_ALTERNATES),
   /** Element size in px (longer side of the motif). */
   size: z.int().min(8).max(400),
   spacingX: z.int().min(0).max(400),
@@ -67,10 +105,16 @@ export type SeamlessPatternsParams = z.output<typeof schema>;
 const defaults: SeamlessPatternsParams = {
   background: "#fefae0",
   palette: ["#bc6c25", "#606c38", "#dda15e"],
+  motif: "shape",
   shape: "flower",
   upload: null,
   keepOriginalColors: false,
+  emoji: "🌸🍋🌿",
+  emojiTint: false,
+  text: "Musterli",
+  textFont: "sans",
   tiling: "brick",
+  alternate: "none",
   size: 48,
   spacingX: 32,
   spacingY: 28,
@@ -157,8 +201,71 @@ function uploadMotif(p: SeamlessPatternsParams, upload: ImageAsset): ResolvedMot
   return { motif: { kind: "image", hrefs, tint: false }, colors: used, aspect };
 }
 
+/** Splits user text into graphemes (emoji with skin tones and ZWJ stay whole). */
+function graphemes(text: string): string[] {
+  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
+    const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
+    return Array.from(segmenter.segment(text), (s) => s.segment);
+  }
+  return Array.from(text);
+}
+
+/** The emoji list of the params: graphemes without whitespace, at most `SEAMLESS_MAX_EMOJI`. */
+export function seamlessEmojiList(text: string): string[] {
+  return graphemes(text)
+    .filter((g) => g.trim() !== "")
+    .slice(0, SEAMLESS_MAX_EMOJI);
+}
+
+function motifColors(p: SeamlessPatternsParams): string[] {
+  return p.colorMode === "palette" ? [...p.palette] : [p.color];
+}
+
+function emojiMotif(p: SeamlessPatternsParams): ResolvedMotif | null {
+  const glyphs = seamlessEmojiList(p.emoji);
+  if (glyphs.length === 0) return null;
+  return {
+    motif: {
+      kind: "glyphs",
+      glyphs,
+      fontFamily: EMOJI_FONT,
+      fontWeight: 400,
+      em: EMOJI_EM,
+      paint: p.emojiTint ? "tint" : "original",
+    },
+    colors: p.emojiTint ? motifColors(p) : [p.color],
+    aspect: 1,
+  };
+}
+
+function textMotif(p: SeamlessPatternsParams): ResolvedMotif | null {
+  const text = p.text.trim();
+  if (text === "") return null;
+  const width = Math.max(0.6, graphemes(text).length * TEXT_ADVANCE);
+  return {
+    motif: {
+      kind: "glyphs",
+      glyphs: [text],
+      fontFamily: TEXT_FONTS[p.textFont],
+      fontWeight: 700,
+      // Longer side = 100 units: the width for words, the line height for one letter.
+      em: width >= 1 ? 100 / width : 100,
+      paint: "fill",
+    },
+    colors: motifColors(p),
+    aspect: width,
+  };
+}
+
 function resolve(p: SeamlessPatternsParams): ResolvedMotif {
+  if (p.motif === "emoji") return emojiMotif(p) ?? shapeMotif(p);
+  if (p.motif === "text") return textMotif(p) ?? shapeMotif(p);
   return (p.upload && uploadMotif(p, p.upload)) ?? shapeMotif(p);
+}
+
+/** Number of motifs to spread over the cells (only emoji lists have several). */
+function motifCount(m: ResolvedMotif): number {
+  return m.motif.kind === "glyphs" ? m.motif.glyphs.length : 1;
 }
 
 function layoutFor(
@@ -178,6 +285,10 @@ function layoutFor(
     jitter: p.jitter,
     colorCount: m.colors.length,
     aspect: m.aspect,
+    alternate: p.alternate,
+    // Words are wide: flat cells keep the rows close (shapes and uploads keep square cells).
+    cellFromBox: p.motif === "text",
+    motifCount: motifCount(m),
     rng: ctx.rng,
   });
 }
@@ -192,8 +303,10 @@ function shapePreview(value: string | number, p: SeamlessPatternsParams): { read
 const TILE_SHAPES: ReadonlySet<string> = new Set(tileShapeIds());
 const RANDOM_SHAPES = SEAMLESS_SHAPES.filter((s) => !TILE_SHAPES.has(s));
 
-const hasUpload = (p: SeamlessPatternsParams): boolean => p.upload !== null;
-const usesColors = (p: SeamlessPatternsParams): boolean => !(hasUpload(p) && p.keepOriginalColors);
+const isShape = (p: SeamlessPatternsParams): boolean => p.motif === "shape";
+const hasUpload = (p: SeamlessPatternsParams): boolean => isShape(p) && p.upload !== null;
+const usesColors = (p: SeamlessPatternsParams): boolean =>
+  p.motif === "emoji" ? p.emojiTint : !(hasUpload(p) && p.keepOriginalColors);
 
 export const seamlessPatternsTool = defineTool({
   id: ID,
@@ -202,6 +315,19 @@ export const seamlessPatternsTool = defineTool({
   schema,
   defaults,
   localParams: ["upload"],
+  migrateParams(raw) {
+    // Before emoji and text (2026-10-30): no motif source, no alternation.
+    if ("motif" in raw) return raw;
+    return {
+      ...raw,
+      motif: "shape",
+      emoji: defaults.emoji,
+      emojiTint: defaults.emojiTint,
+      text: defaults.text,
+      textFont: defaults.textFont,
+      alternate: defaults.alternate,
+    };
+  },
   presets: [
     preset("meadow", {}),
     preset("sweethearts", {
@@ -283,14 +409,82 @@ export const seamlessPatternsTool = defineTool({
       sizeVariance: 0,
       jitter: 0,
     }),
+    preset("fruit-salad", {
+      background: "#fff8e7",
+      motif: "emoji",
+      emoji: "🍋🍓🍊🥝🍑",
+      tiling: "halfDrop",
+      size: 44,
+      spacingX: 36,
+      spacingY: 30,
+      cells: 3,
+      rotationJitter: 25,
+      sizeVariance: 0.2,
+      jitter: 0.15,
+    }),
+    preset("party-night", {
+      background: "#1b1340",
+      palette: ["#ff5d8f", "#ffd166", "#06d6a0", "#4cc9f0"],
+      motif: "emoji",
+      emoji: "🎉⭐🎈💖",
+      emojiTint: true,
+      tiling: "brick",
+      size: 34,
+      spacingX: 40,
+      spacingY: 30,
+      cells: 3,
+      rotationJitter: 30,
+      sizeVariance: 0.25,
+      jitter: 0.2,
+    }),
+    preset("wordmark", {
+      background: "#0f172a",
+      motif: "text",
+      text: "Musterli",
+      textFont: "sans",
+      colorMode: "single",
+      color: "#38bdf8",
+      tiling: "brick",
+      alternate: "rows",
+      size: 120,
+      spacingX: 40,
+      spacingY: 36,
+      cells: 1,
+      rotationJitter: 0,
+      sizeVariance: 0,
+      jitter: 0,
+    }),
+    preset("monogram", {
+      background: "#f5efe6",
+      palette: ["#7f5539", "#b08968"],
+      motif: "text",
+      text: "AM",
+      textFont: "serif",
+      tiling: "grid",
+      alternate: "checker",
+      size: 56,
+      spacingX: 30,
+      spacingY: 30,
+      cells: 2,
+      rotation: 0,
+      rotationJitter: 0,
+      sizeVariance: 0,
+      jitter: 0,
+    }),
   ],
   controls: {
     groups: [COMMON_GROUPS.shape, COMMON_GROUPS.layout, COMMON_GROUPS.colors],
     order: [
+      "motif",
       "upload",
       "shape",
       "keepOriginalColors",
+      "emoji",
+      "emojiTint",
+      "text",
+      "textFont",
       "tiling",
+      "alternate",
       "size",
       "spacingX",
       "spacingY",
@@ -305,7 +499,13 @@ export const seamlessPatternsTool = defineTool({
       "background",
     ],
     params: {
-      upload: { group: "shape", kind: "image", lockable: false },
+      motif: {
+        group: "shape",
+        kind: "segmented",
+        optionLabelKeys: optionLabels(ID, "motif", SEAMLESS_MOTIFS),
+        lockable: false,
+      },
+      upload: { group: "shape", kind: "image", lockable: false, visibleWhen: isShape },
       shape: {
         group: "shape",
         kind: "thumbnails",
@@ -313,10 +513,32 @@ export const seamlessPatternsTool = defineTool({
         optionPreview: shapePreview,
         optionGroups: shapePackGroups(),
         brandShapesParam: "upload",
-        visibleWhen: (p) => !hasUpload(p),
+        visibleWhen: (p) => isShape(p) && !hasUpload(p),
       },
       keepOriginalColors: { group: "shape", visibleWhen: hasUpload },
+      emoji: {
+        group: "shape",
+        kind: "text",
+        lockable: false,
+        visibleWhen: (p) => p.motif === "emoji",
+      },
+      emojiTint: { group: "shape", visibleWhen: (p) => p.motif === "emoji" },
+      text: {
+        group: "shape",
+        kind: "text",
+        lockable: false,
+        visibleWhen: (p) => p.motif === "text",
+      },
+      textFont: {
+        group: "shape",
+        optionLabelKeys: optionLabels(ID, "textFont", SEAMLESS_TEXT_FONTS),
+        visibleWhen: (p) => p.motif === "text",
+      },
       tiling: { group: "layout", optionLabelKeys: optionLabels(ID, "tiling", SEAMLESS_TILINGS) },
+      alternate: {
+        group: "layout",
+        optionLabelKeys: optionLabels(ID, "alternate", SEAMLESS_ALTERNATES),
+      },
       size: { group: "layout", step: 1, unit: "px" },
       spacingX: { group: "layout", step: 1, unit: "px" },
       spacingY: { group: "layout", step: 1, unit: "px" },
@@ -346,11 +568,17 @@ export const seamlessPatternsTool = defineTool({
     const next: SeamlessPatternsParams = {
       background: rng.bool(0.5) ? current.background : background,
       palette: colors.length >= 2 ? colors : randomPalette(rng, 3),
+      // The motif source and the user's own content (file, emoji, text) stay.
+      motif: current.motif,
       shape: rng.pick(RANDOM_SHAPES),
-      // The user's own file is never replaced by a random value.
       upload: current.upload,
       keepOriginalColors: current.keepOriginalColors,
+      emoji: current.emoji,
+      emojiTint: current.emojiTint,
+      text: current.text,
+      textFont: current.textFont,
       tiling: rng.pick(SEAMLESS_TILINGS),
+      alternate: current.alternate,
       size,
       spacingX: rng.int(Math.round(size * 0.1), Math.round(size * 1.2)),
       spacingY: rng.int(Math.round(size * 0.1), Math.round(size * 1.2)),
