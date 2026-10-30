@@ -13,7 +13,7 @@ import { libraryPatterns } from "@/lib/css-patterns";
 import { LEGAL_CONFIG } from "@/lib/legal/config";
 
 import { hasStaticMotif } from "./motifs";
-import { sitemapEntries } from "./sitemap";
+import { sitemapEntries, sitemapXml } from "./sitemap";
 
 const base = new URL("https://example.test");
 
@@ -156,5 +156,28 @@ describe("sitemap", () => {
       en: "https://example.test/en/css-patterns/zigzag",
       "x-default": "https://example.test/en/css-patterns/zigzag",
     });
+  });
+});
+
+describe("sitemap XML", () => {
+  it("writes every entry with its alternates and images", () => {
+    const entries = sitemapEntries(base);
+    const out = sitemapXml(entries);
+    expect(out.startsWith('<?xml version="1.0" encoding="UTF-8"?>\n<urlset ')).toBe(true);
+    expect(out).toContain('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
+    expect(out).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
+    expect(out.match(/<url>/g)).toHaveLength(entries.length);
+    expect(out).toContain(
+      `<loc>${entries[0]?.url}</loc>\n<xhtml:link rel="alternate" hreflang="de"`,
+    );
+    expect(out).toContain("<image:image>\n<image:loc>https://example.test/motifs/");
+    expect(out.endsWith("</url>\n</urlset>\n")).toBe(true);
+  });
+
+  it("escapes XML special characters and leaves out unused namespaces", () => {
+    const out = sitemapXml([{ url: "https://example.test/a?b=1&c=<2>" }]);
+    expect(out).toContain("<loc>https://example.test/a?b=1&amp;c=&lt;2&gt;</loc>");
+    expect(out).not.toContain("xmlns:image");
+    expect(out).not.toContain("xmlns:xhtml");
   });
 });
