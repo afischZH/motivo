@@ -6197,6 +6197,260 @@
           }
         }
       }
+    },
+    "holographic-gradient": {
+      "name": "Holografie-Verlauf",
+      "description": "Schillernde Folien-Hintergründe mit wandernden Regenbogenbändern, Falten und Glanz. Als PNG, JPG, WebP, SVG oder GIF exportieren.",
+      "groups": {
+        "effects": "Falten, Glanz und Körnung"
+      },
+      "params": {
+        "angle": {
+          "label": "Richtung"
+        },
+        "bands": {
+          "label": "Wiederholungen"
+        },
+        "layers": {
+          "label": "Ring-Ebenen"
+        },
+        "rings": {
+          "label": "Stärke der Ringe"
+        },
+        "creases": {
+          "label": "Falten"
+        },
+        "sheen": {
+          "label": "Glanz"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "foil": "Folie",
+        "pearl": "Perlmutt",
+        "oil": "Ölfilm",
+        "chrome": "Chrom",
+        "sticker": "Holo-Sticker",
+        "opal": "Opal",
+        "sunset": "Abendrot",
+        "aurora": "Polarlicht"
+      },
+      "seo": {
+        "heading": "Holografie-Verlauf (Holographic Gradient)",
+        "whatIs": "Ein Holografie-Verlauf ahmt schillernde Folie nach: Regenbogenbänder, die sich biegen und dort die Farbe wechseln, wo sie sich kreuzen, wie bei einem Hologramm-Sticker oder einer Seifenblase. Der Look ist ein beliebter Trend für Albumcover, Verpackungen, Y2K-Designs und Social Posts.",
+        "howTo": "Wähle deine Folienfarben und lege dann Richtung und Anzahl Wiederholungen fest. Ring-Ebenen fügen gebogene Bänder hinzu, die die geraden kreuzen. Falten und Glanz bringen Licht, Körnung wirkt wie gedruckt. Mit der Leertaste würfelst du neue Varianten. Exportiere als PNG, JPG, WebP, SVG oder animiertes GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Cover und Verpackungen",
+            "text": "Holografische Folie ist ein Klassiker für Albumcover, Kosmetik und limitierte Editionen. Hier bekommst du den Look als flaches Bild, ganz ohne Spezialdruck."
+          },
+          "u2": {
+            "title": "Y2K und Trend-Posts",
+            "text": "Schillernde Hintergründe geben Social Posts, Stories und Event-Grafiken den glänzenden Y2K-Look, der im Feed auffällt."
+          },
+          "u3": {
+            "title": "Hero-Bereiche von Websites",
+            "text": "Als SVG bleibt die Folie in jeder Breite scharf und lädt schnell. Dunkler Text auf heller Folie gibt guten Kontrast."
+          }
+        },
+        "tips": {
+          "t1": "Helle, kräftige Farben wirken am ehesten wie echte Folie. Dunkle Farben ergeben eher einen Ölfilm.",
+          "t2": "Mehr Wiederholungen geben schmale Bänder wie bei einem Hologramm-Sticker, weniger Wiederholungen weiche, breite Farbflächen.",
+          "t3": "Der GIF-Export mit neuen Zufallswerten lässt die Folie schimmern, als würdest du sie kippen."
+        },
+        "faq": {
+          "q1": {
+            "question": "Ist das ein echtes Hologramm?",
+            "answer": "Nein. Es ist ein flaches Bild, das den Look holografischer Folie mit Verläufen und Mischmodi nachahmt. Für echte Folie brauchst du einen Spezialdruck; als Druckvorlage oder für Bildschirme eignet sich das Bild gut."
+          },
+          "q2": {
+            "question": "Warum nutzt das SVG keine Filter?",
+            "answer": "Der Look besteht nur aus Verläufen und Mischmodi. So bleibt das SVG klein, sieht in jeder Grösse gleich aus und vermeidet Unterschiede zwischen Browsern."
+          },
+          "q3": {
+            "question": "Kann ich die Folie animieren?",
+            "answer": "Ja. Exportiere ein GIF mit neuen Zufallswerten oder Farbwechsel, dann bewegen sich die Bänder wie Folie im Licht."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, berechnet aus dem Zufallswert. Gleiche Einstellungen und gleicher Zufallswert ergeben immer dasselbe Ergebnis."
+          }
+        }
+      }
+    },
+    "neon-shapes": {
+      "name": "Neon-Formen",
+      "description": "Leuchtende Neon-Umrisse (Kreise, Dreiecke, Linien und Wellen) auf dunklem Grund. Als PNG, JPG, WebP, SVG oder GIF exportieren.",
+      "groups": {
+        "glow": "Röhre und Leuchten"
+      },
+      "params": {
+        "count": {
+          "label": "Anzahl Formen"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "variance": {
+          "label": "Grössenunterschied"
+        },
+        "stroke": {
+          "label": "Röhrenbreite"
+        },
+        "glow": {
+          "label": "Leuchten"
+        },
+        "core": {
+          "label": "Weisser Kern"
+        },
+        "haze": {
+          "label": "Schimmer"
+        },
+        "kind": {
+          "label": "Formen",
+          "options": {
+            "mixed": "Gemischt",
+            "rounds": "Kreise und Wellen",
+            "polygons": "Vielecke",
+            "lines": "Linien und Zickzack"
+          }
+        }
+      },
+      "presets": {
+        "arcade": "Spielhalle",
+        "sign": "Leuchtreklame",
+        "geometry": "Geometrie",
+        "laser": "Laser",
+        "miami": "Miami",
+        "soft": "Sanftes Leuchten",
+        "party": "Party",
+        "minimal": "Minimal"
+      },
+      "seo": {
+        "heading": "Neon-Formen (Neon Shapes)",
+        "whatIs": "Neon-Formen sind helle Umrisse, die auf dunklem Grund leuchten, wie gebogene Glasröhren einer Leuchtreklame. Der Look passt zu Gaming, Musik, Nachtleben und Retro-Designs im Stil der 80er.",
+        "howTo": "Wähle, welche Formen erscheinen und wie viele, und lege dann Grösse, Röhrenbreite und Leuchten fest. Ein weisser Kern lässt die Röhren heiss wirken, der Schimmer hellt den Hintergrund sanft auf. Mit der Leertaste würfelst du neue Varianten. Exportiere als PNG, JPG, WebP, SVG oder animiertes GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Gaming und Streaming",
+            "text": "Neon-Formen sind starke Hintergründe für Stream-Overlays, Thumbnails und Discord-Banner."
+          },
+          "u2": {
+            "title": "Musik und Events",
+            "text": "Partyplakate, DJ-Flyer und Club-Grafiken bekommen Nachtstimmung, ganz ohne Foto."
+          },
+          "u3": {
+            "title": "Retro und Synthwave",
+            "text": "Zusammen mit dem 3D-Perspektivgitter machen Neon-Formen den 80er-Look komplett."
+          }
+        },
+        "tips": {
+          "t1": "Wenige grosse Formen mit starkem Leuchten wirken wie echte Leuchtreklame. Viele kleine Formen wirken wie Konfetti aus Licht.",
+          "t2": "Das Leuchten wirkt am besten auf sehr dunklem, leicht farbigem Grund statt auf reinem Schwarz.",
+          "t3": "Im SVG ist jedes Leuchten ein Stapel von Strichen. In Figma oder Illustrator kannst du die Formen umfärben."
+        },
+        "faq": {
+          "q1": {
+            "question": "Wie entsteht das Leuchten?",
+            "answer": "Jede Form wird mehrmals gezeichnet, jedes Mal breiter und blasser, unter der eigentlichen Röhre. Das wirkt wie eine weiche Unschärfe, braucht aber keinen Filter und sieht deshalb in jeder Grösse gleich aus."
+          },
+          "q2": {
+            "question": "Kann ich das SVG bearbeiten?",
+            "answer": "Ja. Es besteht aus einfachen Pfaden mit Strichen. Design-Apps öffnen es als bearbeitbare Formen."
+          },
+          "q3": {
+            "question": "Warum ist mein Hintergrund im JPG nicht transparent?",
+            "answer": "JPG kennt keine Transparenz, darum ist die Hintergrundfarbe immer dabei. Für einen transparenten Hintergrund exportiere PNG oder SVG und stelle den Hintergrund auf transparent."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, berechnet aus dem Zufallswert. Gleiche Einstellungen und gleicher Zufallswert ergeben immer dasselbe Ergebnis."
+          }
+        }
+      }
+    },
+    "glitch-background": {
+      "name": "Glitch-Hintergrund",
+      "description": "Zerrissene, verschobene Streifen mit RGB-Versatz, Farbblöcken und Scanlines, wie ein gestörtes Videosignal. Als PNG, JPG, WebP, SVG oder GIF exportieren.",
+      "groups": {
+        "effects": "RGB-Versatz, Scanlines und Körnung"
+      },
+      "params": {
+        "angle": {
+          "label": "Richtung des Verlaufs"
+        },
+        "slices": {
+          "label": "Risse"
+        },
+        "shift": {
+          "label": "Ausschlag"
+        },
+        "split": {
+          "label": "RGB-Versatz"
+        },
+        "blocks": {
+          "label": "Blöcke"
+        },
+        "scanlines": {
+          "label": "Scanlines"
+        },
+        "grain": {
+          "label": "Körnung"
+        }
+      },
+      "presets": {
+        "signal": "Signal",
+        "vhs": "VHS",
+        "cyber": "Cyber",
+        "soft": "Pastell",
+        "error": "Fehler",
+        "sunset": "Abendrot",
+        "mono": "Schwarzweiss"
+      },
+      "seo": {
+        "heading": "Glitch-Hintergrund (Glitch Effect)",
+        "whatIs": "Ein Glitch-Hintergrund ahmt ein gestörtes Digital- oder Videosignal nach: Streifen des Bildes reissen und verschieben sich, Farben spalten sich in Rot und Cyan, und Scanlines laufen darüber. Das passt zu Tech, Gaming, Musik und Cyberpunk.",
+        "howTo": "Wähle Farben und Richtung des Grundverlaufs und lege dann fest, wie viele Risse es gibt und wie weit sie sich verschieben. Der RGB-Versatz fügt rote und cyanfarbene Säume hinzu, Blöcke und Scanlines bringen Störungen. Mit der Leertaste würfelst du neue Varianten. Exportiere als PNG, JPG, WebP, SVG oder als flackerndes GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Tech und Cyberpunk",
+            "text": "Glitch-Hintergründe geben Produktlancierungen, Hackathons und Tech-Vorträgen einen kantigen, digitalen Look."
+          },
+          "u2": {
+            "title": "Musikcover und Visuals",
+            "text": "Elektronische Musik, Visualizer und Eventplakate passen perfekt zum gestörten Signal."
+          },
+          "u3": {
+            "title": "Animierte Social Posts",
+            "text": "Als GIF mit neuen Zufallswerten reisst jedes Bild anders, und das Bild flackert wie ein defekter Bildschirm."
+          }
+        },
+        "tips": {
+          "t1": "Wenige, breite Risse wirken ruhig und grafisch. Viele dünne Risse mit starker Verschiebung wirken chaotisch.",
+          "t2": "Stelle den RGB-Versatz auf 0 für einen sauberen, farblosen Glitch, zum Beispiel mit der Vorlage Schwarzweiss.",
+          "t3": "Scanlines und Körnung lassen das Bild wie einen alten Monitor oder eine VHS-Kassette wirken."
+        },
+        "faq": {
+          "q1": {
+            "question": "Kann ich den Glitch-Effekt auf mein eigenes Foto legen?",
+            "answer": "Noch nicht. Dieses Tool macht Glitch-Hintergründe aus einem Verlauf. Für Fotos sind die Pixel- und Dither-Effekte in der Kategorie Bildeffekte ein guter Start."
+          },
+          "q2": {
+            "question": "Wie bringe ich es zum Flackern?",
+            "answer": "Exportiere ein GIF und wähle neue Zufallswerte als Quelle der Bilder. Jedes Bild bekommt neue Risse und Blöcke."
+          },
+          "q3": {
+            "question": "Warum ist das SVG so klein?",
+            "answer": "Es besteht nur aus Rechtecken, Verläufen und einem Linienmuster, ohne Filter. So bleibt es klein und in jeder Grösse scharf."
+          },
+          "q4": {
+            "question": "Sieht der Export aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export verwenden dieselbe Grafik, berechnet aus dem Zufallswert. Gleiche Einstellungen und gleicher Zufallswert ergeben immer dasselbe Ergebnis."
+          }
+        }
+      }
     }
   },
   "Converters": {

@@ -6186,6 +6186,257 @@
           }
         }
       }
+    },
+    "holographic-gradient": {
+      "name": "Holographic Gradient",
+      "description": "Iridescent foil backgrounds with shifting rainbow bands, folds and sheen. Export as PNG, JPG, WebP, SVG or GIF.",
+      "groups": {
+        "effects": "Folds, sheen and grain"
+      },
+      "params": {
+        "angle": {
+          "label": "Direction"
+        },
+        "bands": {
+          "label": "Repeats"
+        },
+        "layers": {
+          "label": "Ring layers"
+        },
+        "rings": {
+          "label": "Ring strength"
+        },
+        "creases": {
+          "label": "Folds"
+        },
+        "sheen": {
+          "label": "Sheen"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "foil": "Foil",
+        "pearl": "Pearl",
+        "oil": "Oil slick",
+        "chrome": "Chrome",
+        "sticker": "Holo sticker",
+        "opal": "Opal",
+        "sunset": "Sunset",
+        "aurora": "Aurora"
+      },
+      "seo": {
+        "whatIs": "A holographic gradient imitates iridescent foil: rainbow bands that bend and shift color where they cross, like a hologram sticker or a soap bubble. It is a popular trend look for album covers, packaging, Y2K designs and social posts.",
+        "howTo": "Pick your foil colors, then set the direction and how often the colors repeat. Ring layers add curved bands that cross the straight ones. Folds and sheen add light, grain adds a printed feel. Press Space for new variants and export as PNG, JPG, WebP, SVG or animated GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Covers and packaging",
+            "text": "Holographic foil is a classic for album covers, cosmetics and limited editions. Here you get the look as a flat image without special printing."
+          },
+          "u2": {
+            "title": "Y2K and trend posts",
+            "text": "Iridescent backgrounds give social posts, stories and event graphics the shiny Y2K look that stands out in a feed."
+          },
+          "u3": {
+            "title": "Website hero sections",
+            "text": "As SVG the foil stays sharp at any width and loads fast. Place dark text on light foil for good contrast."
+          }
+        },
+        "tips": {
+          "t1": "Light, saturated colors look most like real foil. Dark colors give an oil slick look instead.",
+          "t2": "More repeats give narrow bands like a hologram sticker, fewer repeats give soft, wide color fields.",
+          "t3": "The GIF export with new seeds makes the foil shimmer as if you were tilting it."
+        },
+        "faq": {
+          "q1": {
+            "question": "Is this a real hologram?",
+            "answer": "No. It is a flat image that imitates the look of holographic foil with gradients and blend modes. For real foil you need special printing; the image works well as a print template or for screens."
+          },
+          "q2": {
+            "question": "Why does the SVG not use filters?",
+            "answer": "The look is built only from gradients and blend modes. That keeps the SVG small, renders the same in every size and avoids differences between browsers."
+          },
+          "q3": {
+            "question": "Can I animate the foil?",
+            "answer": "Yes. Export a GIF with new seeds or color cycling, and the bands move like foil catching the light."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, computed from the seed. The same settings and seed always give the same result."
+          }
+        }
+      }
+    },
+    "neon-shapes": {
+      "name": "Neon Shapes",
+      "description": "Glowing neon outlines (circles, triangles, lines and waves) on a dark background. Export as PNG, JPG, WebP, SVG or GIF.",
+      "groups": {
+        "glow": "Tube and glow"
+      },
+      "params": {
+        "count": {
+          "label": "Shapes"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "variance": {
+          "label": "Size variation"
+        },
+        "stroke": {
+          "label": "Tube width"
+        },
+        "glow": {
+          "label": "Glow"
+        },
+        "core": {
+          "label": "White core"
+        },
+        "haze": {
+          "label": "Haze"
+        },
+        "kind": {
+          "label": "Shapes",
+          "options": {
+            "mixed": "Mixed",
+            "rounds": "Circles and waves",
+            "polygons": "Polygons",
+            "lines": "Lines and zigzags"
+          }
+        }
+      },
+      "presets": {
+        "arcade": "Arcade",
+        "sign": "Neon sign",
+        "geometry": "Geometry",
+        "laser": "Laser",
+        "miami": "Miami",
+        "soft": "Soft glow",
+        "party": "Party",
+        "minimal": "Minimal"
+      },
+      "seo": {
+        "whatIs": "Neon shapes are bright outline shapes that glow on a dark background, like bent glass tubes in a bar sign. The look fits gaming, music, nightlife and retro 80s designs.",
+        "howTo": "Choose which shapes appear and how many, then set their size, the tube width and the glow. A white core makes the tubes look hot, the haze lights up the background softly. Press Space for new variants and export as PNG, JPG, WebP, SVG or animated GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Gaming and streaming",
+            "text": "Neon shapes make strong backgrounds for stream overlays, thumbnails and Discord banners."
+          },
+          "u2": {
+            "title": "Music and events",
+            "text": "Party posters, DJ flyers and club graphics get a night-time feel without a photo."
+          },
+          "u3": {
+            "title": "Retro and synthwave",
+            "text": "Combined with the 3D perspective grid, neon shapes complete the 80s look."
+          }
+        },
+        "tips": {
+          "t1": "Few large shapes with strong glow look like a real neon sign. Many small shapes look like confetti of light.",
+          "t2": "The glow shows best on very dark, slightly colored backgrounds instead of pure black.",
+          "t3": "In the SVG every glow is a stack of strokes. You can recolor the shapes in Figma or Illustrator."
+        },
+        "faq": {
+          "q1": {
+            "question": "How is the glow made?",
+            "answer": "Every shape is drawn several times, wider and fainter each time, under the tube itself. That looks like a soft blur but needs no filter, so it renders the same at every size."
+          },
+          "q2": {
+            "question": "Can I edit the SVG?",
+            "answer": "Yes. It consists of plain paths with strokes. Design apps open it as editable shapes."
+          },
+          "q3": {
+            "question": "Why is my background gone in the JPG?",
+            "answer": "It is not: JPG has no transparency, so the background color is always included. For a transparent background export PNG or SVG with the background set to transparent."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, computed from the seed. The same settings and seed always give the same result."
+          }
+        }
+      }
+    },
+    "glitch-background": {
+      "name": "Glitch Background",
+      "description": "Torn, shifted slices with RGB split, color blocks and scanlines, like a broken video signal. Export as PNG, JPG, WebP, SVG or GIF.",
+      "groups": {
+        "effects": "RGB split, scanlines and grain"
+      },
+      "params": {
+        "angle": {
+          "label": "Gradient direction"
+        },
+        "slices": {
+          "label": "Tears"
+        },
+        "shift": {
+          "label": "Shift"
+        },
+        "split": {
+          "label": "RGB split"
+        },
+        "blocks": {
+          "label": "Blocks"
+        },
+        "scanlines": {
+          "label": "Scanlines"
+        },
+        "grain": {
+          "label": "Grain"
+        }
+      },
+      "presets": {
+        "signal": "Signal",
+        "vhs": "VHS",
+        "cyber": "Cyber",
+        "soft": "Pastel",
+        "error": "Error",
+        "sunset": "Sunset",
+        "mono": "Mono"
+      },
+      "seo": {
+        "whatIs": "A glitch background imitates a disturbed digital or video signal: slices of the image are torn and shifted, colors split into red and cyan, and scanlines run across. It suits tech, gaming, music and cyberpunk designs.",
+        "howTo": "Pick the colors and direction of the base gradient, then set how many tears there are and how far they shift. RGB split adds the red and cyan fringes, blocks and scanlines add noise. Press Space for new variants. Export as PNG, JPG, WebP, SVG or as a flickering GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Tech and cyberpunk",
+            "text": "Glitch backgrounds give product launches, hackathons and tech talks an edgy, digital look."
+          },
+          "u2": {
+            "title": "Music covers and visuals",
+            "text": "Electronic music, visualizers and event posters love the broken signal look."
+          },
+          "u3": {
+            "title": "Animated social posts",
+            "text": "Exported as a GIF with new seeds, every frame tears differently and the image flickers like a faulty screen."
+          }
+        },
+        "tips": {
+          "t1": "Few, wide tears look calm and graphic. Many thin tears with a strong shift look chaotic.",
+          "t2": "Set the RGB split to 0 for a clean, colorless glitch, for example with the Mono preset.",
+          "t3": "Scanlines and grain make the image look like an old monitor or a VHS tape."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I put the glitch effect on my own photo?",
+            "answer": "Not yet. This tool makes glitch backgrounds from a gradient. For photos, the pixel and dither effects in the image effects category are a good start."
+          },
+          "q2": {
+            "question": "How do I make it flicker?",
+            "answer": "Export a GIF and choose new seeds as the frame source. Every frame gets new tears and blocks."
+          },
+          "q3": {
+            "question": "Why is the SVG so small?",
+            "answer": "It consists only of rectangles, gradients and a line pattern, without filters. That keeps it small and sharp at every size."
+          },
+          "q4": {
+            "question": "Does the export look like the preview?",
+            "answer": "Yes. Preview and export use the same graphic, computed from the seed. The same settings and seed always give the same result."
+          }
+        }
+      }
     }
   },
   "Converters": {

@@ -54,3 +54,6 @@ export * from "./tools/og-image";
 export * from "./tools/clip-path";
 export * from "./tools/qr-code";
 export * from "./tools/code-screenshot";
+export * from "./tools/holographic";
+export * from "./tools/neon";
+export * from "./tools/glitch";
