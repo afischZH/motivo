@@ -6782,6 +6782,319 @@
           }
         }
       }
+    },
+    "starburst-badge": {
+      "name": "Störer und Badges",
+      "description": "Preisschilder, Siegel und Sticker mit Zacken-, Wellen- oder Bogenrand und eigenem Text, als SVG, PNG oder drehendes GIF.",
+      "groups": {
+        "text": "Text",
+        "sticker": "Sticker"
+      },
+      "params": {
+        "shape": {
+          "label": "Rand",
+          "options": {
+            "spiky": "Zacken",
+            "scallop": "Bogen",
+            "wavy": "Wellen",
+            "zigzag": "Sägezahn",
+            "circle": "Kreis"
+          }
+        },
+        "points": {
+          "label": "Spitzen"
+        },
+        "depth": {
+          "label": "Tiefe"
+        },
+        "rotation": {
+          "label": "Drehung des Rands"
+        },
+        "tilt": {
+          "label": "Neigung"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "line1": {
+          "label": "Haupttext"
+        },
+        "line2": {
+          "label": "Zweite Zeile"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Serifenlos",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Gerundet"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "textSize": {
+          "label": "Textgrösse"
+        },
+        "ring": {
+          "label": "Innerer Ring",
+          "options": {
+            "none": "Keiner",
+            "solid": "Linie",
+            "dashed": "Gestrichelt",
+            "dotted": "Gepunktet"
+          }
+        },
+        "border": {
+          "label": "Sticker-Rand"
+        },
+        "borderColor": {
+          "label": "Randfarbe"
+        },
+        "shadow": {
+          "label": "Schatten"
+        },
+        "shadowColor": {
+          "label": "Schattenfarbe"
+        },
+        "fill": {
+          "label": "Badge-Farbe"
+        },
+        "gradient": {
+          "label": "Verlauf"
+        },
+        "fill2": {
+          "label": "Zweite Farbe"
+        },
+        "ink": {
+          "label": "Textfarbe"
+        }
+      },
+      "presets": {
+        "sale": "Sale",
+        "new": "Neu",
+        "seal": "Siegel",
+        "sticker": "Sticker",
+        "price": "Preisschild",
+        "retro": "Retro",
+        "burst": "Explosion",
+        "quality": "Qualität"
+      },
+      "seo": {
+        "heading": "Störer und Badges (Starburst-Generator)",
+        "whatIs": "Ein Störer (englisch Starburst Badge) ist ein rundes Etikett mit gezacktem oder gewelltem Rand, die klassische Form für Preise, Rabatte und «Neu»-Sticker. Er zieht den Blick auf sich, auf Produktbildern, Shop-Bannern, Plakaten und Social Posts.",
+        "howTo": "Wähle einen Rand und stelle Anzahl der Spitzen, Tiefe und Neigung ein. Tippe einen Haupttext und optional eine zweite Zeile, wähle eine Schrift und ergänze einen Ring, einen Sticker-Rand oder einen harten Schatten. Exportiere als SVG, als PNG mit transparentem Hintergrund oder als GIF mit drehendem Rand. Mit der Leertaste kommen neue Farben und ein neuer Rand.",
+        "useCases": {
+          "u1": {
+            "title": "Shop und Produktbilder",
+            "text": "Markiere Rabatte, Neuheiten und Bestseller direkt auf dem Produktfoto."
+          },
+          "u2": {
+            "title": "Plakate und Flyer",
+            "text": "Ein kräftiger Störer mit Datum oder Preis lenkt den Blick auf das Wichtigste."
+          },
+          "u3": {
+            "title": "Social Posts und Sticker",
+            "text": "Nutze ihn als Sticker in Stories und Thumbnails oder als Siegel für Qualität und Auszeichnungen."
+          }
+        },
+        "tips": {
+          "t1": "Kurzer Text wirkt am besten: ein Wort oder eine Zahl im Haupttext, darunter eine kleine Zeile.",
+          "t2": "Heller Text auf dunklem Badge oder umgekehrt bleibt auch aus der Ferne lesbar.",
+          "t3": "Wähle einen transparenten Hintergrund, um den Störer auf Fotos zu setzen."
+        },
+        "faq": {
+          "q1": {
+            "question": "Darf ich die Badges kommerziell nutzen?",
+            "answer": "Ja. Alles, was du mit Musterli erstellst, darfst du frei nutzen, auch in kommerziellen Projekten und ohne Quellenangabe."
+          },
+          "q2": {
+            "question": "Warum wird der Text kleiner?",
+            "answer": "Der Text verkleinert sich automatisch, damit er immer ins Badge passt. Kürzerer Text bleibt grösser."
+          },
+          "q3": {
+            "question": "Kann ich ohne Hintergrund exportieren?",
+            "answer": "Ja. Stelle den Hintergrund auf transparent und exportiere als PNG, WebP oder SVG."
+          },
+          "q4": {
+            "question": "Enthält das SVG den Text als Pfade?",
+            "answer": "Nein. Es enthält echten Text mit Systemschriften, darum bleibt es klein und bearbeitbar. Auf anderen Computern kann die Schrift leicht anders aussehen."
+          }
+        }
+      }
+    },
+    "squiggle-lines": {
+      "name": "Kringellinien",
+      "description": "Wellen-, Zickzack- und Schlaufenlinien wie von Hand gezeichnet: Trenner, Linienmuster und verstreute Kringel als SVG, dazu eine gewellte Unterstreichung in CSS.",
+      "params": {
+        "style": {
+          "label": "Linie",
+          "options": {
+            "wave": "Welle",
+            "zigzag": "Zickzack",
+            "loops": "Schlaufen",
+            "bumps": "Bögen",
+            "scribble": "Gekritzel"
+          }
+        },
+        "wavelength": {
+          "label": "Wellenlänge"
+        },
+        "amplitude": {
+          "label": "Höhe"
+        },
+        "stroke": {
+          "label": "Linienstärke"
+        },
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "single": "Eine Linie",
+            "stack": "Gestapelt",
+            "scatter": "Verstreut"
+          }
+        },
+        "count": {
+          "label": "Anzahl"
+        },
+        "length": {
+          "label": "Länge"
+        },
+        "angle": {
+          "label": "Winkel"
+        }
+      },
+      "presets": {
+        "stacked": "Gestapelte Wellen",
+        "divider": "Trenner",
+        "zigzag": "Zickzack",
+        "loops": "Schlaufen",
+        "confetti": "Konfetti",
+        "scribbles": "Gekritzel",
+        "bumps": "Bögen",
+        "memphis": "Memphis"
+      },
+      "seo": {
+        "heading": "Kringellinien (Squiggle-Generator)",
+        "whatIs": "Kringellinien (englisch Squiggle Lines) sind verspielte Wellen-, Zickzack- oder Schlaufenstriche, die wie von Hand gezeichnet wirken. Sie schmücken Überschriften, trennen Abschnitte, füllen Hintergründe und geben einem Design einen freundlichen, lebendigen Look.",
+        "howTo": "Wähle eine Linienform und stelle Wellenlänge, Höhe und Linienstärke ein. Nimm eine einzelne Linie, gestapelte Linien oder verstreute Kringel und bestimme Anzahl und Winkel. Exportiere als SVG, PNG oder bewegtes GIF oder kopiere das CSS für eine gewellte Unterstreichung. Mit der Leertaste kommen eine neue Linie und neue Farben.",
+        "useCases": {
+          "u1": {
+            "title": "Abschnittstrenner",
+            "text": "Eine einzelne Wellenlinie zwischen zwei Abschnitten wirkt leichter als ein gerader Strich."
+          },
+          "u2": {
+            "title": "Hintergründe und Muster",
+            "text": "Gestapelte Wellen oder verstreute Kringel ergeben lebendige Hintergründe für Plakate und Folien."
+          },
+          "u3": {
+            "title": "Unterstreichungen",
+            "text": "Der CSS-Export zeichnet eine gewellte Linie unter Links oder hervorgehobene Wörter."
+          }
+        },
+        "tips": {
+          "t1": "Runde Linienenden wirken freundlicher; dickere Striche lesen sich auf kleinen Bildschirmen besser.",
+          "t2": "Für eine Unterstreichung sehen kurze Wellenlänge und geringe Höhe am besten aus.",
+          "t3": "Verstreute Kringel in drei oder vier Farben ergeben einen klassischen Memphis-Look."
+        },
+        "faq": {
+          "q1": {
+            "question": "Darf ich die Linien kommerziell nutzen?",
+            "answer": "Ja. Alles, was du mit Musterli erstellst, darfst du frei nutzen, auch in kommerziellen Projekten und ohne Quellenangabe."
+          },
+          "q2": {
+            "question": "Wie funktioniert die gewellte Unterstreichung?",
+            "answer": "Sie ist ein kleines SVG mit einer Welle, das sich als Hintergrundbild unter dem Text waagrecht wiederholt. Es wächst mit der Schriftgrösse."
+          },
+          "q3": {
+            "question": "Kann ich die Linien in Figma oder Illustrator bearbeiten?",
+            "answer": "Ja. Das SVG enthält einfache Striche mit runden Enden, die du umfärben und verformen kannst."
+          },
+          "q4": {
+            "question": "Läuft die Animation nahtlos?",
+            "answer": "Ja. Das GIF über die Zeit verschiebt die Linien um genau eine Welle, so passt das Ende zum Anfang."
+          }
+        }
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus-Muster",
+      "description": "Geometrische Rastermuster mit Viertelkreisen, Halbkreisen, Ringen und Dreiecken in kräftigen Flächenfarben, als SVG und PNG.",
+      "params": {
+        "set": {
+          "label": "Figuren",
+          "options": {
+            "mixed": "Gemischt",
+            "curves": "Rundungen",
+            "angles": "Ecken"
+          }
+        },
+        "density": {
+          "label": "Dichte"
+        },
+        "columns": {
+          "label": "Spalten"
+        },
+        "gap": {
+          "label": "Abstand"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "primary": "Grundfarben",
+        "curves": "Rundungen",
+        "angles": "Ecken",
+        "pastel": "Pastell",
+        "night": "Nacht",
+        "calm": "Erdtöne",
+        "mosaic": "Mosaik"
+      },
+      "seo": {
+        "heading": "Bauhaus-Muster (Bauhaus Pattern Generator)",
+        "whatIs": "Ein Bauhaus-Muster ist ein Raster aus quadratischen Kacheln mit je einer einfachen geometrischen Figur wie Viertelkreis, Halbkreis, Ring oder Dreieck in flachen Farben. Der Stil erinnert an Plakate der Moderne und passt zu Markengrafik, Covern und Wandbildern.",
+        "howTo": "Wähle gemischte, runde oder eckige Figuren und bestimme, wie viele Kacheln eine Figur erhalten. Stelle Spalten, Abstand und Eckenradius ein und wähle Palette und Hintergrund. Mit der Leertaste kommt eine neue Anordnung; exportiere als SVG, PNG oder GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Marke und Verpackung",
+            "text": "Ein Bauhaus-Raster in Markenfarben ergibt eine starke, wiedererkennbare Fläche für Verpackungen und Merch."
+          },
+          "u2": {
+            "title": "Cover und Plakate",
+            "text": "Buchcover, Albumcover und Eventplakate erhalten einen kräftigen Look der Moderne."
+          },
+          "u3": {
+            "title": "Website-Hintergründe",
+            "text": "Wenige grosse Kacheln in gedeckten Farben eignen sich als ruhiger Hero- oder Footer-Hintergrund."
+          }
+        },
+        "tips": {
+          "t1": "Drei bis fünf Farben mit einem hellen Neutralton wirken am ausgewogensten.",
+          "t2": "Wenige Spalten ergeben grosse, plakative Figuren; viele Spalten ein feines Mosaik.",
+          "t3": "Ein kleiner Abstand und runde Ecken lassen das Raster freundlicher und zeitgemässer wirken."
+        },
+        "faq": {
+          "q1": {
+            "question": "Darf ich die Muster kommerziell nutzen?",
+            "answer": "Ja. Alles, was du mit Musterli erstellst, darfst du frei nutzen, auch in kommerziellen Projekten und ohne Quellenangabe."
+          },
+          "q2": {
+            "question": "Wie erhalte ich eine neue Anordnung?",
+            "answer": "Drücke die Leertaste oder den Würfel. Jede Variante verteilt Figuren und Drehungen neu; deine Einstellungen bleiben."
+          },
+          "q3": {
+            "question": "Kann ich das SVG bearbeiten?",
+            "answer": "Ja. Jede Kachel und jede Figur ist eine eigene Form, die du in Figma, Illustrator oder Inkscape umfärben kannst."
+          },
+          "q4": {
+            "question": "Kann ich das Muster animieren?",
+            "answer": "Ja. Exportiere ein GIF, dann werden die Figuren in jedem Bild neu verteilt oder die Farben wandern durch die Palette."
+          }
+        }
+      }
     }
   },
   "Converters": {

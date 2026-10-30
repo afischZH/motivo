@@ -60,3 +60,6 @@ export * from "./tools/glitch";
 export * from "./tools/spacing-scale";
 export * from "./tools/gradient-text";
 export * from "./tools/css-easing";
+export * from "./tools/starburst";
+export * from "./tools/squiggles";
+export * from "./tools/bauhaus";

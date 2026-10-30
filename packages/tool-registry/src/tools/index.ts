@@ -27,6 +27,9 @@ import { glitchBackgroundTool } from "./glitch-background";
 import { cssEasingTool } from "./css-easing";
 import { spacingScaleTool } from "./spacing-scale";
 import { gradientTextTool } from "./gradient-text";
+import { starburstBadgeTool } from "./starburst-badge";
+import { squiggleLinesTool } from "./squiggle-lines";
+import { bauhausPatternTool } from "./bauhaus-pattern";
 import { svgChartsTool } from "./svg-charts";
 import { svgWavesTool } from "./svg-waves";
 import { tailwindPaletteTool } from "./tailwind-palette";
@@ -122,11 +125,17 @@ export {
   cssEasingTool,
   spacingScaleTool,
   gradientTextTool,
+  starburstBadgeTool,
+  squiggleLinesTool,
+  bauhausPatternTool,
 };
+export type { BauhausPatternParams } from "./bauhaus-pattern";
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
 export type { BlurryGradientParams } from "./blurry-gradient";
 export type { ConfettiParams } from "./confetti";
+export type { SquiggleLinesParams } from "./squiggle-lines";
+export type { StarburstBadgeParams } from "./starburst-badge";
 export type { CssGradientParams } from "./css-gradient";
 export type { CssPatternsParams } from "./css-patterns";
 export { cssPatternDescriptionKey, cssPatternNameKey, cssPatternShowcase } from "./css-patterns";
@@ -280,6 +289,9 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   cssEasingTool,
   spacingScaleTool,
   gradientTextTool,
+  starburstBadgeTool,
+  squiggleLinesTool,
+  bauhausPatternTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

@@ -194,6 +194,14 @@ Letzter offener Top-Vorschlag aus dem Ideen-Dokument, gewählt von Andreas.
 - [x] Neon-Formen (Spec `docs/TOOLS.md` D6)
 - [x] Glitch-Hintergrund (Spec `docs/TOOLS.md` C6)
 
+## Formen und Sticker (Entscheid Andreas 2026-10-30)
+
+Bereich "Shapes and stickers" aus dem Ideen-Dokument, gewählt von Andreas nach W5.
+
+- [x] Störer und Badges (Spec `docs/TOOLS.md` D7)
+- [x] Kringellinien (Spec `docs/TOOLS.md` D8)
+- [x] Bauhaus-Muster (Spec `docs/TOOLS.md` A5)
+
 ## M7: Differenzierung & Wachstum (ab Woche 24)
 
 Reihenfolge nach Nutzerfeedback festlegen. Kandidaten:

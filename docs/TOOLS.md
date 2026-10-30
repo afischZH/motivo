@@ -49,6 +49,17 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 - Handgezeichnet wirkende Formen: Linien/Pfade mit leichtem Rauschen (Perlin-Offset der Kontrollpunkte), runde Linienenden, Verteilung per Poisson-Disk.
 - **Umsetzung M3** (Tool-ID `doodles`): acht eigene, prozedurale Strichformen (Kringel, Zickzack, Spirale, Kreis mit Überschwung, Dreieck, Stern, Kreuz, Bogen) als Polylinien in Einheitskoordinaten; jeder Punkt wird mit 1D-Gradientenrauschen (Perlin-Konstruktion, `noise.ts`) entlang der Strichlänge verschoben (`wobble`), danach Catmull-Rom-Glättung (eckige Formen mit tiefer Spannung). Params `shape` (gemischt oder eine Form), `spacing` (Poisson-Disk in Prozent der kürzeren Kante), `size`, `sizeVariance`, `rotation`, `wobble`, `strokeWidth` (px). Ein Rauschpaar pro Render, pro Doodle nur eine Phase (fünf RNG-Ziehungen pro Position, damit Optionen die Anordnung nicht verschieben). Alle Striche einer Farbe in einem Pfad mit runden Enden. Schutz: Abstand mindestens 8 px, höchstens 2500 Doodles. Exporte: SVG, CSS, PNG, JPG, WebP.
 
+### A5. Bauhaus-Muster · Formen und Sticker · G
+
+**Umgesetzt (Tool-ID `bauhaus-pattern`, Slugs `bauhaus-muster-generator`/`bauhaus-pattern-generator`, Kategorien `patterns` und `backgrounds`, Engine `packages/engine/src/tools/bauhaus/`)**:
+- **Zweck**: Raster aus quadratischen Kacheln mit je einer flachen Hintergrundfarbe und einer kräftigen Figur, im Stil von Plakaten der Moderne.
+- **Figuren** (9, in Vierteldrehungen): Viertelkreis, Halbkreis, Kreis, Punkt, Ring (Even-Odd), Linse (zwei Viertelbögen), Dreieck, Quadrat, Streifen. Sets (`set`): gemischt, Rundungen, Ecken. Figuren werden auf ihre Kachel beschnitten (ein gemeinsamer `clipPath`).
+- **Parameter**: `columns` (1 bis 32, Zellen quadratisch, Zeilen füllen die Höhe, höchstens 2400 Zellen), `gap` (0 bis 30 % der Zelle, Farbe = Hintergrund), `density` (Anteil Kacheln mit Figur), `radius` (Eckenradius 0 bis 50 %), `palette` (Kachel- und Figurfarben; die Figur nimmt nie die Kachelfarbe), `background`.
+- **Zufall**: fünf Ziehungen pro Zelle (Kachelfarbe, Farbversatz, Figur, Anzeige, Drehung), Zeile für Zeile.
+- **Exporte**: SVG, PNG, JPG, WebP, GIF (Seeds und Farben). Kacheln nach Farbe zu einem Pfad zusammengefasst.
+- **Leertaste**: neue Palette (mit hellem Neutralton), Spalten und Dichte; der Seed verteilt die Figuren.
+- **Vorlagen** (8): Klassisch, Grundfarben, Rundungen, Ecken, Pastell, Nacht, Erdtöne, Mosaik.
+
 ## B. CSS-Patterns
 
 ### B1. CSS Pattern Library + Editor · M2 · G
@@ -178,6 +189,27 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 - **Params**: `background`, `palette`, `kind`, `count` (1 bis 30), `size`, `variance`, `stroke` (Promille der kurzen Kante), `glow`, `core`, `haze`. Sechs Züge pro Platz für alle 30 Plätze, mehr Formen verschieben die anderen nicht.
 - Exporte: PNG, JPG, WebP, SVG, GIF.
 - **Vorlagen** (8): Spielhalle, Leuchtreklame, Geometrie, Laser, Miami, Sanftes Leuchten, Party, Minimal.
+
+### D7. Störer und Badges · Formen und Sticker · G
+
+**Umgesetzt (Tool-ID `starburst-badge`, Slugs `stoerer-badge-generator`/`starburst-badge-generator`, Kategorien `icons` und `social`, Engine `packages/engine/src/tools/starburst/`)**:
+- **Zweck**: Preisschilder, Siegel und Sticker mit eigenem Text.
+- **Rand** (`shape`): Zacken (Spitzen zwischen inneren Ecken), Bogen (quadratische Bögen über den Radius hinaus), Wellen (Sinus um den Kreis, 8 Punkte pro Welle), Sägezahn (doppelt so viele, halb so tiefe Zacken), Kreis. `points` 5 bis 60, `depth` 0 bis 50 % des Radius, `rotation` des Rands, `tilt` (Neigung des ganzen Badges mit Text, −45 bis 45°), `size` (10 bis 100 % der kürzeren Kante).
+- **Text** (`contentParams`, im Teilen-Link): `line1` und `line2` (je bis 24 Zeichen), `font` (Systemschriften wie Avatar), `fontWeight`, `textSize`. Ohne DOM eingepasst (`estimateTextWidth`, Breite 1.6 × innerer Radius), zwei Zeilen als Block zentriert, Text escaped.
+- **Sticker**: innerer Ring (keiner, Linie, gestrichelt, gepunktet), Sticker-Rand (Kontur der Randform in eigener Farbe), harter Schatten (versetzte Kopie). Farben: `fill`, optional Verlauf von oben nach unten mit `fill2`, `ink`, Hintergrund auch transparent.
+- **Exporte**: SVG, PNG, JPG, WebP, GIF. GIF über die Zeit dreht den Rand um genau eine Spitze (nahtlos, Bild 0 = Vorschau). Standardgrösse 1080 × 1080.
+- **Leertaste**: neuer Rand und neue Farben, Textfarbe Weiss oder Fast-Schwarz nach dem besseren Kontrast; Text, Schrift und Sticker-Einstellungen bleiben. **Brand-Palette**: erste Farbe als Badge-Farbe, zweite für den Verlauf.
+- **Vorlagen** (8): Sale, Neu, Siegel, Sticker, Preisschild, Retro, Explosion, Qualität.
+
+### D8. Kringellinien · Formen und Sticker · G
+
+**Umgesetzt (Tool-ID `squiggle-lines`, Slugs `kringellinien-generator`/`squiggle-line-generator`, Kategorien `patterns` und `backgrounds`, Engine `packages/engine/src/tools/squiggles/`)**:
+- **Linien** (`style`): Welle (quadratische Halbbögen), Zickzack, Schlaufen (verlängerte Zykloide, Catmull-Rom), Bögen (Ellipsenbögen), Gekritzel (jede Halbwelle mit eigener Höhe und Länge aus dem Seed). Alle als runde Striche ohne Füllung.
+- **Anordnung** (`layout`): eine Linie (Trenner), gestapelt (`count` parallele Linien über die Fläche, gemeinsam gedreht um `angle`; eine gemeinsame Linie über `<use>`, nur Gekritzel zeichnet jede Linie einzeln), verstreut (`count` kurze Kringel mit `length`, feste Ziehungen pro Platz, eigenes Gekritzel pro Platz).
+- **Grössen** relativ zur kürzeren Kante: `wavelength` 1 bis 100 %, `amplitude` (Höhe von Spitze zu Spitze) 0 bis 60 %, `stroke` 2 bis 200 ‰. Höchstens 400 Wellen pro Linie.
+- **Exporte**: SVG, PNG, JPG, WebP, GIF; Code: CSS-Unterstreichung (`.squiggle`, eine Welle als SVG-data-URI mit `repeat-x`, Grösse in em, Farbe = zweite Palettenfarbe; Gekritzel als Welle). GIF über die Zeit verschiebt Linien um eine Wellenlänge (nahtlos); verstreute Kringel bleiben dabei stehen.
+- **Leertaste**: neue Linienform, Masse, Winkel und Farben; die Anordnung bleibt.
+- **Vorlagen** (8): Gestapelte Wellen, Trenner, Zickzack, Schlaufen, Konfetti, Gekritzel, Bögen, Memphis.
 
 ## E. Image Effects (alle im Web Worker auf ImageData)
 
@@ -701,4 +733,5 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild; danach Easing-Kurven, Abstandsskala, Verlaufstext
 8. **W4**: Clip-path-Generator, Bild komprimieren, QR-Code, Code-Screenshot
 9. **W5**: Holografie-Verlauf, Neon-Formen, Glitch-Hintergrund
-10. **M7**: Composer, Community-Ausbau, API, Plugins, KI
+10. **Formen und Sticker**: Störer und Badges, Kringellinien, Bauhaus-Muster
+11. **M7**: Composer, Community-Ausbau, API, Plugins, KI

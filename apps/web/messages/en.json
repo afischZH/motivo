@@ -6765,6 +6765,316 @@
           }
         }
       }
+    },
+    "starburst-badge": {
+      "name": "Starburst Badge Generator",
+      "description": "Price tags, seals and stickers with a spiky, scalloped or wavy edge and your own text, as SVG, PNG or a spinning GIF.",
+      "groups": {
+        "text": "Text",
+        "sticker": "Sticker"
+      },
+      "params": {
+        "shape": {
+          "label": "Edge",
+          "options": {
+            "spiky": "Spiky",
+            "scallop": "Scalloped",
+            "wavy": "Wavy",
+            "zigzag": "Zigzag",
+            "circle": "Circle"
+          }
+        },
+        "points": {
+          "label": "Points"
+        },
+        "depth": {
+          "label": "Depth"
+        },
+        "rotation": {
+          "label": "Edge rotation"
+        },
+        "tilt": {
+          "label": "Tilt"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "line1": {
+          "label": "Main text"
+        },
+        "line2": {
+          "label": "Second line"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "textSize": {
+          "label": "Text size"
+        },
+        "ring": {
+          "label": "Inner ring",
+          "options": {
+            "none": "None",
+            "solid": "Solid",
+            "dashed": "Dashed",
+            "dotted": "Dotted"
+          }
+        },
+        "border": {
+          "label": "Sticker border"
+        },
+        "borderColor": {
+          "label": "Border color"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "shadowColor": {
+          "label": "Shadow color"
+        },
+        "fill": {
+          "label": "Badge color"
+        },
+        "gradient": {
+          "label": "Gradient"
+        },
+        "fill2": {
+          "label": "Second color"
+        },
+        "ink": {
+          "label": "Text color"
+        }
+      },
+      "presets": {
+        "sale": "Sale",
+        "new": "New",
+        "seal": "Seal",
+        "sticker": "Sticker",
+        "price": "Price tag",
+        "retro": "Retro",
+        "burst": "Burst",
+        "quality": "Quality"
+      },
+      "seo": {
+        "whatIs": "A starburst badge is a round label with a spiky or wavy edge, the classic shape for prices, discounts and \"new\" stickers. It catches the eye on product images, shop banners, posters and social posts.",
+        "howTo": "Pick an edge, then set the number of points, the depth and the tilt. Type a main text and an optional second line, choose a font and add a ring, a sticker border or a hard shadow. Export as SVG, PNG with a transparent background or as a GIF where the edge turns. Press Space for new colors and a new edge.",
+        "useCases": {
+          "u1": {
+            "title": "Shop and product images",
+            "text": "Mark discounts, new arrivals and bestsellers right on the product photo."
+          },
+          "u2": {
+            "title": "Posters and flyers",
+            "text": "A bold badge with a date or price draws the eye to the key fact."
+          },
+          "u3": {
+            "title": "Social posts and stickers",
+            "text": "Use it as a sticker on stories and thumbnails, or as a seal for quality and awards."
+          }
+        },
+        "tips": {
+          "t1": "Short text works best: one word or a number in the main line, a small label below.",
+          "t2": "A light text color on a dark badge, or the other way round, keeps it readable from afar.",
+          "t3": "Choose a transparent background to place the badge on photos."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the badges commercially?",
+            "answer": "Yes. Everything you create with Musterli is yours to use, also in commercial projects, without credit."
+          },
+          "q2": {
+            "question": "Why does the text get smaller?",
+            "answer": "The text shrinks automatically so it always fits inside the badge. Shorter text stays bigger."
+          },
+          "q3": {
+            "question": "Can I export it without a background?",
+            "answer": "Yes. Set the background to transparent and export as PNG, WebP or SVG."
+          },
+          "q4": {
+            "question": "Does the SVG contain the text as outlines?",
+            "answer": "No. It contains real text with a system font stack, so it stays small and editable. Fonts can look slightly different on other computers."
+          }
+        }
+      }
+    },
+    "squiggle-lines": {
+      "name": "Squiggle Line Generator",
+      "description": "Hand-drawn looking wavy, zigzag and looping lines: dividers, line patterns and scattered squiggles as SVG, plus a CSS squiggly underline.",
+      "params": {
+        "style": {
+          "label": "Line",
+          "options": {
+            "wave": "Wave",
+            "zigzag": "Zigzag",
+            "loops": "Loops",
+            "bumps": "Bumps",
+            "scribble": "Scribble"
+          }
+        },
+        "wavelength": {
+          "label": "Wavelength"
+        },
+        "amplitude": {
+          "label": "Height"
+        },
+        "stroke": {
+          "label": "Line width"
+        },
+        "layout": {
+          "label": "Arrangement",
+          "options": {
+            "single": "One line",
+            "stack": "Stacked",
+            "scatter": "Scattered"
+          }
+        },
+        "count": {
+          "label": "Count"
+        },
+        "length": {
+          "label": "Length"
+        },
+        "angle": {
+          "label": "Angle"
+        }
+      },
+      "presets": {
+        "stacked": "Stacked waves",
+        "divider": "Divider",
+        "zigzag": "Zigzag",
+        "loops": "Loops",
+        "confetti": "Confetti",
+        "scribbles": "Scribbles",
+        "bumps": "Bumps",
+        "memphis": "Memphis"
+      },
+      "seo": {
+        "whatIs": "Squiggle lines are playful wavy, zigzag or looping strokes that look drawn by hand. They decorate headlines, separate sections, fill backgrounds and give a design a friendly, energetic look.",
+        "howTo": "Choose a line shape and set wavelength, height and line width. Pick one line, a stack of parallel lines or scattered squiggles, then set the count and angle. Export as SVG, PNG or a moving GIF, or copy the CSS for a squiggly underline. Press Space for a new line and colors.",
+        "useCases": {
+          "u1": {
+            "title": "Section dividers",
+            "text": "A single wavy line between two sections feels lighter than a straight rule."
+          },
+          "u2": {
+            "title": "Backgrounds and patterns",
+            "text": "Stacked waves or scattered squiggles make lively backgrounds for posters and slides."
+          },
+          "u3": {
+            "title": "Underlines",
+            "text": "The CSS export draws a squiggly underline under links or highlighted words."
+          }
+        },
+        "tips": {
+          "t1": "Round line ends make the lines look friendlier; thicker strokes read better on small screens.",
+          "t2": "For an underline, a short wavelength and low height look best.",
+          "t3": "Scattered squiggles in three or four colors give a classic Memphis look."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the lines commercially?",
+            "answer": "Yes. Everything you create with Musterli is yours to use, also in commercial projects, without credit."
+          },
+          "q2": {
+            "question": "How does the squiggly underline work?",
+            "answer": "It is a small SVG of one wave that repeats horizontally as a background image under the text. It scales with the font size."
+          },
+          "q3": {
+            "question": "Can I edit the lines in Figma or Illustrator?",
+            "answer": "Yes. The SVG contains plain strokes with round ends that you can recolor and reshape."
+          },
+          "q4": {
+            "question": "Does the animation loop seamlessly?",
+            "answer": "Yes. The GIF over time moves the lines by exactly one wave, so the end matches the start."
+          }
+        }
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus Pattern Generator",
+      "description": "Geometric grid patterns with quarter circles, half circles, rings and triangles in bold flat colors, as SVG and PNG.",
+      "params": {
+        "set": {
+          "label": "Figures",
+          "options": {
+            "mixed": "Mixed",
+            "curves": "Curves",
+            "angles": "Angles"
+          }
+        },
+        "density": {
+          "label": "Density"
+        },
+        "columns": {
+          "label": "Columns"
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "radius": {
+          "label": "Corner radius"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "primary": "Primary colors",
+        "curves": "Curves",
+        "angles": "Angles",
+        "pastel": "Pastel",
+        "night": "Night",
+        "calm": "Earthy",
+        "mosaic": "Mosaic"
+      },
+      "seo": {
+        "whatIs": "A Bauhaus pattern is a grid of square tiles, each with a simple geometric figure like a quarter circle, half circle, ring or triangle in flat colors. The style recalls modernist posters and suits brand graphics, covers and wall art.",
+        "howTo": "Choose mixed, curved or angular figures and set how many tiles get a figure. Set the number of columns, the gap and the corner radius, then pick a palette and a background. Press Space for a new arrangement and export as SVG, PNG or GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Brand and packaging",
+            "text": "A Bauhaus grid in brand colors makes a strong, recognizable surface for packaging and merch."
+          },
+          "u2": {
+            "title": "Covers and posters",
+            "text": "Book covers, album art and event posters gain a bold modernist look."
+          },
+          "u3": {
+            "title": "Website backgrounds",
+            "text": "A few large tiles in muted colors work as a calm hero or footer background."
+          }
+        },
+        "tips": {
+          "t1": "Three to five colors with one light neutral look most balanced.",
+          "t2": "Fewer columns give large, poster-like figures; more columns give a fine mosaic.",
+          "t3": "A small gap and corner radius make the grid look friendlier and more contemporary."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the patterns commercially?",
+            "answer": "Yes. Everything you create with Musterli is yours to use, also in commercial projects, without credit."
+          },
+          "q2": {
+            "question": "How do I get a new arrangement?",
+            "answer": "Press Space or the dice button. Each variant deals new figures and turns; your settings stay."
+          },
+          "q3": {
+            "question": "Can I edit the SVG?",
+            "answer": "Yes. Every tile and figure is a separate shape that you can recolor in Figma, Illustrator or Inkscape."
+          },
+          "q4": {
+            "question": "Can I animate the pattern?",
+            "answer": "Yes. Export a GIF and the figures are dealt anew in every frame, or the colors cycle through the palette."
+          }
+        }
+      }
     }
   },
   "Converters": {

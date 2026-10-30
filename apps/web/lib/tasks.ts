@@ -39,6 +39,8 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
     "doodles",
     "guilloche",
     "svg-waves",
+    "bauhaus-pattern",
+    "squiggle-lines",
   ],
   "ui-effects": [
     "section-divider",
@@ -61,7 +63,14 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
     "contrast-checker",
     "palette-from-image",
   ],
-  "icons-avatars": ["favicon-generator", "qr-code", "avatar", "placeholder-image", "svg-charts"],
+  "icons-avatars": [
+    "favicon-generator",
+    "qr-code",
+    "avatar",
+    "starburst-badge",
+    "placeholder-image",
+    "svg-charts",
+  ],
   "image-polish": [
     "og-image",
     "screenshot-beautifier",
