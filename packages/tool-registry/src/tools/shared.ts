@@ -56,4 +56,5 @@ export const EXTRA_EXPORT_LABELS = {
   utilityClasses: "Editor.export.extras.utilityClasses",
   metaTags: "Editor.export.extras.metaTags",
   svgClipPath: "Editor.export.extras.svgClipPath",
+  cssAnimation: "Editor.export.extras.cssAnimation",
 } as const;

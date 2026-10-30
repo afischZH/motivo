@@ -169,6 +169,9 @@ describe("built-in tool registration", () => {
       "holographic-gradient",
       "neon-shapes",
       "glitch-background",
+      "css-easing",
+      "spacing-scale",
+      "gradient-text",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
       "favicon-generator",
@@ -520,6 +523,9 @@ describe("extra exports", () => {
       "section-divider",
       "og-image",
       "clip-path",
+      "css-easing",
+      "spacing-scale",
+      "gradient-text",
     ]);
   });
 });

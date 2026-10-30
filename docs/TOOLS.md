@@ -656,6 +656,40 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 - **Leertaste**: neues Farbschema und Hintergrund; Code und Layout bleiben. **Brand-Palette**: Hintergrundfarben.
 - **Vorlagen** (9): Mitternacht, Papier, Python, CSS, HTML, TypeScript, Terminal, JSON, Nur Fenster.
 
+### M7. Fliessende Abstandsskala · W3 · G
+
+**Umgesetzt (Tool-ID `spacing-scale`, Slugs `fliessende-abstandsskala`/`fluid-spacing-scale-generator`, Kategorie `css-effects`, Engine `packages/engine/src/tools/spacing-scale/`)**:
+- **Zweck**: Abstände (Polsterung, Lücken, Ränder) als T-Shirt-Grössen, die zwischen zwei Bildschirmbreiten mitwachsen, passend zur fliessenden Schriftskala (M1).
+- **Grössen**: feste Vielfache der Grundgrösse `s`: 3xs 0.25, 2xs 0.5, xs 0.75, s 1, m 1.5, l 2, xl 3, 2xl 4, 3xl 6. `sizesDown` (0 bis 3) und `sizesUp` (0 bis 5) wählen den Ausschnitt.
+- **Paare** (`pairs`): keine, eine Stufe höher (`s-m`, `m-l` …) oder eines selbst gewählt (`pairFrom`, `pairTo`, z. B. `m-3xl`): von der kleineren Grösse bei der kleinsten Breite zur grösseren bei der grössten Breite, für Abstände, die stärker wachsen sollen.
+- **Parameter**: `minViewport`, `maxViewport`, `minBase`, `maxBase` (4 bis 64 px), `unit` (rem, px), `prefix` (über `toCssName`, Rückfall `space`), Vorschau `previewViewport`, `background`, `ink`, `accent`.
+- **Algorithmus**: wie M1 (`fluidClamp`, gleiche Rundung, nie `vw` allein).
+- **Vorschau**: Lineal mit Vorschaubreite, eine Zeile pro Grösse mit Name, Bereich in px, Quadrat und Balken in echter Grösse; Paare in der Textfarbe.
+- **Exporte**: SVG, PNG, JPG, WebP; Code: CSS-Variablen, Variablen plus Hilfsklassen (`.gap-*`, `.p-*`, `.flow-* > * + *`), Tailwind v4 `@theme` (`--spacing-*`). Standardgrösse 1280 × 960.
+- **Leertaste**: würfelt Grundgrössen und Ausschnitt; Breiten, Code und Aussehen bleiben. **Brand-Palette**: nur der Akzent.
+- **Vorlagen** (7): Ausgewogen, Kompakt, Luftig, Mit Paaren, Hero-Abstand, App-Oberfläche, Tailwind.
+
+### M8. Verlaufstext · W3 · G
+
+**Umgesetzt (Tool-ID `gradient-text`, Slugs `verlaufstext-generator`/`gradient-text-generator`, Kategorie `css-effects`, Engine `packages/engine/src/tools/gradient-text/`)**:
+- **Zweck**: Überschriften mit Farbverlauf als Bild und als CSS mit `background-clip: text`.
+- **Parameter**: `text` (bis 60 Zeichen, `contentParams`), `font` (Systemschriften wie Avatar), `fontWeight`, `italic`, `letterSpacing` (−0.1 bis 0.3 em), `size` (16 bis 400 px, wird kleiner, wenn der Text nicht passt), `palette` (2 bis 6 Farben), `angle`, `shine` (wandernder Glanz), `speed` (1 bis 20 s, nur CSS), `background`.
+- **Glanz**: der Verlauf läuft hin und zurück, ist doppelt so breit und wird verschoben (`spreadMethod="repeat"` im SVG, `background-size: 200%` und `@keyframes` im CSS, mit `prefers-reduced-motion`). GIF über die Zeit, Bild 0 = Vorschau.
+- **Exporte**: SVG, PNG, JPG, WebP, GIF; Code: CSS (`.gradient-text`, mit `-webkit-background-clip`), Tailwind-Klassen (`bg-[linear-gradient(...)] bg-clip-text text-transparent`). Standardgrösse 1600 × 600.
+- **Leertaste**: neue Farben und Richtung; Text und Schrift bleiben.
+- **Vorlagen** (8): Abendrot, Ozean, Minze, Gold, Neon, Tinte, Code, Bonbon.
+
+### M9. Easing-Kurven · W3 · G
+
+**Umgesetzt (Tool-ID `css-easing`, Slugs `easing-kurven-generator`/`css-easing-generator`, Kategorie `css-effects`, Engine `packages/engine/src/tools/css-easing/`)**:
+- **Zweck**: Zeitfunktionen für Übergänge und Animationen gestalten und kopieren.
+- **Arten** (`kind`): Bézier (`x1`, `x2` in 0 bis 1, `y1`, `y2` in −1 bis 2, ergibt `cubic-bezier()`) und Feder (`stiffness` 10 bis 1000, `damping` 1 bis 100, Masse 1; gedämpfte Schwingung bis der Ausschlag unter 0.1 % fällt, 41 Werte als CSS `linear()`).
+- **Parameter**: `duration` (50 bis 5000 ms), `name` (Variablenname über `toCssName`, Rückfall `ease`), Vorschau `progress` (Stand des Punkts im Standbild), `background`, `ink`, `accent`.
+- **Vorschau**: Kurve auf Raster mit Griffen (Bézier), Überschwung bleibt sichtbar, CSS-Wert (ab 64 Zeichen mit "…") und Dauer; daneben eine Bahn mit dem bewegten Punkt und blassen Vorgängern. GIF über die Zeit spielt die Bewegung ab, Bild 0 = Standbild.
+- **Exporte**: SVG, PNG, JPG, WebP, GIF; Code: CSS-Transition (Variable plus `.button`), CSS-Animation (`@keyframes slide-in`), Tailwind v4 `@theme` (`--ease-*`), alle mit `prefers-reduced-motion`. Standardgrösse 1200 × 800.
+- **Leertaste**: neue Kurve bzw. Feder; Code und Farben bleiben. **Brand-Palette**: nur der Akzent.
+- **Vorlagen** (8): Sanft auslaufend, Weich rein und raus, Mit Überschwung, Zackig, Mit Anlauf, Federnd, Sanfte Feder, Wackelig.
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)
@@ -664,7 +698,7 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 4. **M4**: Geometric + Seamless Patterns, Packs, GIF; Code-first-Welle: Kontrast-Checker (F6), CSS-Schatten (J1), Glas- und Rahmen-Effekte (J2), Bento-Grid (J3)
 5. **M5**: Shader Gradient (+ Video), Perspective Grid, Halftone, CMYK, Dither
 6. **M6**: God Rays, Fractal Glass, Social Media Editor
-7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
+7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild; danach Easing-Kurven, Abstandsskala, Verlaufstext
 8. **W4**: Clip-path-Generator, Bild komprimieren, QR-Code, Code-Screenshot
 9. **W5**: Holografie-Verlauf, Neon-Formen, Glitch-Hintergrund
 10. **M7**: Composer, Community-Ausbau, API, Plugins, KI

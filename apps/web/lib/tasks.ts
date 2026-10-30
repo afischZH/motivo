@@ -43,6 +43,9 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
   "ui-effects": [
     "section-divider",
     "fluid-type-scale",
+    "spacing-scale",
+    "gradient-text",
+    "css-easing",
     "clip-path",
     "glass-effects",
     "css-shadow",
