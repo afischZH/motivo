@@ -246,7 +246,11 @@
         "prism": "Prisma",
         "meadow": "Wiese",
         "dusk": "Abenddämmerung",
-        "citrus": "Zitrus"
+        "citrus": "Zitrus",
+        "aurora": "Polarlicht",
+        "peach": "Pfirsich",
+        "galaxy": "Galaxie",
+        "rainbow": "Regenbogen"
       },
       "seo": {
         "whatIs": "Ein CSS-Verlauf ist ein Farbübergang, den der Browser selbst zeichnet. Er braucht keine Bilddatei, lädt sofort und bleibt in jeder Grösse scharf. Der Generator mischt die Farben im Farbraum OKLCH, darum wirken Übergänge gleichmässig und ohne graue Mitte.",
@@ -324,7 +328,11 @@
         "seventies": "Siebziger",
         "seaside": "Meeresbrise",
         "highland": "Highland",
-        "night-dots": "Nachtpunkte"
+        "night-dots": "Nachtpunkte",
+        "terracotta": "Terrakotta",
+        "notebook": "Notizheft",
+        "mint-check": "Minzkaro",
+        "art-deco": "Art déco"
       },
       "categories": {
         "dots": "Punkte",
@@ -1053,7 +1061,11 @@
         "midnight": "Mitternacht",
         "aurora": "Polarlicht",
         "sand": "Sand",
-        "overlay": "Overlay"
+        "overlay": "Overlay",
+        "peach": "Pfirsich",
+        "ocean": "Ozean",
+        "concrete": "Beton",
+        "ember": "Glut"
       },
       "seo": {
         "heading": "Körnung und Rauschen (Noise und Grain)",
@@ -1776,7 +1788,11 @@
         "moss": "Moos",
         "harbour": "Hafen",
         "berry": "Beeren",
-        "primaries": "Grundfarben"
+        "primaries": "Grundfarben",
+        "nordic": "Nordisch",
+        "sunset": "Sonnenuntergang",
+        "neon": "Neon",
+        "earth": "Erde"
       },
       "seo": {
         "whatIs": "Ein Farbpaletten-Generator stellt Farben zusammen, die gut miteinander harmonieren. Musterli rechnet im OKLCH-Farbraum, damit Helligkeit und Farbton für das Auge gleichmässig wirken.",
@@ -1848,7 +1864,11 @@
         "sand": "Sand",
         "forest": "Wald",
         "slate": "Schiefer",
-        "sunflower": "Sonnenblume"
+        "sunflower": "Sonnenblume",
+        "rose": "Rose",
+        "ocean": "Ozean",
+        "plum": "Pflaume",
+        "mint": "Minze"
       },
       "seo": {
         "heading": "Farbabstufungen (Tints und Shades)",
@@ -1914,7 +1934,11 @@
         "amber": "Bernstein",
         "grape": "Traube",
         "stone": "Stein",
-        "rose": "Rose"
+        "rose": "Rose",
+        "teal": "Petrol",
+        "sky": "Himmel",
+        "lime": "Limette",
+        "ink": "Tinte"
       },
       "seo": {
         "whatIs": "Tailwind CSS ordnet jede Farbe in elf Stufen von 50 (sehr hell) bis 950 (sehr dunkel). Dieser Generator berechnet eine solche Skala aus deiner Markenfarbe, die Farbe selbst liegt genau auf 500.",
@@ -1983,7 +2007,11 @@
         "color-wheel": "Farbkreis",
         "full-spectrum": "Alle zehn",
         "quiet": "Schlicht",
-        "contrast-check": "Kontrastcheck"
+        "contrast-check": "Kontrastcheck",
+        "quartet": "Quartett",
+        "swatch-card": "Farbkarte",
+        "eight-shares": "Acht Anteile",
+        "ten-by-light": "Zehn nach Helligkeit"
       },
       "seo": {
         "whatIs": "Palette aus Bild findet die Farben, die ein Foto oder eine Grafik prägen, und zeigt, wie viel Fläche jede davon einnimmt. Die Analyse läuft komplett in deinem Browser: Dein Bild wird nicht hochgeladen und nirgends gespeichert.",
@@ -2048,7 +2076,11 @@
         "nebula": "Nebel",
         "citrus": "Zitrus",
         "dusk": "Dämmerung",
-        "ice": "Eis"
+        "ice": "Eis",
+        "peach": "Pfirsich",
+        "aurora": "Polarlicht",
+        "candy": "Zuckerwatte",
+        "ocean": "Ozean"
       },
       "seo": {
         "whatIs": "Ein Mesh-Verlauf mischt mehrere Farben über die ganze Fläche statt entlang einer Linie. Das Ergebnis wirkt wie weiches, fliessendes Licht und passt zu Website-Headern, App-Hintergründen, Präsentationen und Social-Media-Posts.",
@@ -2133,7 +2165,11 @@
         "sunset": "Sonnenuntergang",
         "forest": "Wald",
         "mono": "Mono",
-        "neon": "Neon"
+        "neon": "Neon",
+        "lavender": "Lavendel",
+        "aurora": "Polarlicht",
+        "peach": "Pfirsich",
+        "lagoon": "Lagune"
       },
       "seo": {
         "whatIs": "Ein verschwommener Verlauf ist ein Hintergrund aus wenigen grossen Farbkreisen, die so stark weichgezeichnet sind, dass nur noch weiche Farbwolken bleiben. Er eignet sich hinter Text, als Website-Header, in Präsentationen und als Wallpaper.",
@@ -2210,7 +2246,11 @@
         "forest": "Wald",
         "retro": "Retro",
         "silk": "Seide",
-        "ink": "Tinte"
+        "ink": "Tinte",
+        "sunset": "Sonnenuntergang",
+        "mint": "Minze",
+        "gold": "Gold",
+        "neon": "Neon"
       },
       "seo": {
         "whatIs": "Ein Streifenverlauf teilt einen Farbverlauf in senkrechte Bänder und verschiebt jedes Band ein wenig. Das wirkt wie Licht hinter Riffelglas oder wie Stoff mit Falten und gibt Covern, Plakaten und Websites einen markanten Hintergrund.",
@@ -2397,7 +2437,11 @@
         "neon-ring": "Neonring",
         "sunset-frame": "Abendrot-Rahmen",
         "mint-glow": "Minzleuchten",
-        "violet-glow": "Violettes Leuchten"
+        "violet-glow": "Violettes Leuchten",
+        "ocean-glass": "Ozeanglas",
+        "peach-glass": "Pfirsichglas",
+        "rainbow-frame": "Regenbogenrahmen",
+        "amber-glow": "Bernsteinglühen"
       },
       "advisories": {
         "textContrast": "Text auf dem Glas erreicht nur {ratio}:1 Kontrast, für WCAG AA brauchst du {required}:1. Wähle eine kräftigere Tönung oder eine andere Textfarbe.",
@@ -2526,7 +2570,11 @@
         "story": "Hochformat Story",
         "mosaic": "Mosaik",
         "calm": "Ruhig",
-        "blocks": "Blöcke"
+        "blocks": "Blöcke",
+        "landing": "Landingpage",
+        "night": "Nacht",
+        "earthy": "Erdtöne",
+        "gallery": "Galerie"
       },
       "seo": {
         "whatIs": "Ein Bento-Grid ordnet Inhalte in Kacheln unterschiedlicher Grösse an, wie die Fächer einer Bento-Box. Das Layout ist beliebt für Feature-Sektionen, Portfolios, Dashboards und Social-Media-Grafiken. Der Generator füllt das Raster immer vollständig, ohne Lücken.",
@@ -2635,7 +2683,11 @@
         "traffic-light": "Ampel",
         "sky": "Himmel und Sonne",
         "grey-scale": "Graustufen",
-        "palette-pairs": "Palettenpaare"
+        "palette-pairs": "Palettenpaare",
+        "forest": "Wald",
+        "sand": "Sand",
+        "button": "Knopf",
+        "red-green": "Rot-Grün"
       },
       "suggestions": {
         "foreground-aa": "Textfarbe für AA: {color} ({ratio}:1)",
@@ -2760,7 +2812,11 @@
         "deep": "Tief",
         "inner": "Innen",
         "button": "Button",
-        "sunset": "Abendlicht"
+        "sunset": "Abendlicht",
+        "hairline": "Haarlinie",
+        "glow": "Leuchten",
+        "pill": "Pille",
+        "side-light": "Seitenlicht"
       },
       "seo": {
         "whatIs": "Ein CSS-Schatten-Generator erzeugt den Code für box-shadow. Statt eines einzelnen harten Schattens legt Musterli mehrere Ebenen übereinander, deren Abstand und Unschärfe nach einer Kurve wachsen. So wirken Karten und Buttons weich und natürlich beleuchtet.",
@@ -3959,7 +4015,11 @@
         "chameleon": "Chamäleon",
         "ocean": "Ozean",
         "lava": "Lavalampe",
-        "pastel": "Pastellwolken"
+        "pastel": "Pastellwolken",
+        "candy": "Zuckerwatte",
+        "neon-ring": "Neonring",
+        "forest": "Wald",
+        "galaxy": "Galaxie"
       },
       "seo": {
         "whatIs": "Ein animierter Farbverlauf ist ein Hintergrund, der sich langsam bewegt: Der Verlauf wandert, dreht sich, wechselt seine Farben, oder weiche Flecken schweben darüber. Musterli schreibt ihn als reines CSS mit Keyframes, ohne JavaScript und ohne Video. So bleibt er leicht und in jeder Grösse scharf.",
@@ -4285,7 +4345,11 @@
         "sunset": "Abendrot",
         "cyanotype": "Cyanotypie",
         "sepia": "Sepia",
-        "aurora": "Polarlicht"
+        "aurora": "Polarlicht",
+        "lime-navy": "Limette und Marine",
+        "rose-gold": "Roségold",
+        "noir": "Noir",
+        "vapor": "Vaporwave"
       },
       "seo": {
         "heading": "Duotone und Verlaufsumsetzung (Gradient Map)",
@@ -4413,7 +4477,11 @@
         "led": "LED",
         "halftone": "Rasterpunkte",
         "braille": "Braille",
-        "blocks": "Blöcke"
+        "blocks": "Blöcke",
+        "amber": "Bernstein-Monitor",
+        "binary": "Binär",
+        "led-square": "LED-Matrix",
+        "big-dots": "Grosse Punkte"
       },
       "seo": {
         "whatIs": "ASCII-Art ist ein Bild aus Schriftzeichen: Dunkle Stellen bekommen dichte Zeichen wie @ oder #, helle Stellen Punkte oder Leerzeichen. Aus etwas Abstand entsteht wieder das Foto. Musterli zeichnet daraus auch farbige Zeichen, eine LED- oder Punktmatrix und Braille-Muster, für Plakate, Terminal-Ästhetik, README-Dateien und Websites.",
@@ -4644,7 +4712,11 @@
         "engraving": "Kupferstich",
         "mosaic": "Mosaik",
         "diamonds": "Rauten",
-        "night": "Nacht"
+        "night": "Nacht",
+        "risograph": "Risografie",
+        "blueprint": "Blaupause",
+        "coarse": "Grobraster",
+        "forest": "Wald"
       },
       "seo": {
         "heading": "Halftone-Effekt (Rasterpunkte)",
@@ -4762,7 +4834,11 @@
         "fine": "Feinraster",
         "newsprint": "Zeitung",
         "pastel": "Pastell",
-        "squares": "Quadrate"
+        "squares": "Quadrate",
+        "coarse": "Grobraster",
+        "diamonds": "Rauten",
+        "risograph": "Risografie",
+        "lines": "Linien"
       },
       "seo": {
         "whatIs": "Der CMYK-Rasterdruck ist das Verfahren hinter fast jedem gedruckten Farbfoto: Das Bild wird in die vier Druckfarben Cyan, Magenta, Gelb und Schwarz zerlegt, und jede Farbe wird als eigenes Punktraster gedruckt. Damit sich die Raster nicht zu störenden Mustern (Moiré) überlagern, hat jede Farbe ihren eigenen Winkel, klassisch Cyan 15, Magenta 75, Gelb 0 und Schwarz 45 Grad. Aus der Nähe entstehen die typischen Rosetten, die Comics und Pop-Art berühmt gemacht haben.",
@@ -4870,7 +4946,11 @@
         "cga": "Frühe PC-Grafik",
         "ordered": "Bayer-Raster",
         "grayscale": "Graustufen",
-        "sunset": "Abendrot"
+        "sunset": "Abendrot",
+        "blueprint": "Blaupause",
+        "newspaper": "Zeitung",
+        "vaporwave": "Vaporwave",
+        "big-pixels": "Grosse Pixel"
       },
       "seo": {
         "whatIs": "Dithering ist ein Verfahren, mit dem ein Bild mit nur wenigen Farben auskommt und trotzdem Verläufe und Details zeigt: Statt eine Farbe zu runden, verteilt der Algorithmus die Abweichung auf die Nachbarpixel (Fehlerdiffusion wie Floyd-Steinberg, Atkinson oder Stucki) oder vergleicht jedes Pixel mit einem festen Schwellenmuster (Bayer-Raster). Der körnige Look erinnert an frühe Computer, Spielkonsolen und Faxgeräte und ist heute beliebt für Retro-Grafiken, Poster und Webseiten.",
@@ -4984,7 +5064,11 @@
         "marble": "Marmor",
         "ripple": "Lagune",
         "aurora": "Polarlicht",
-        "retro-dither": "Retro-Dithering"
+        "retro-dither": "Retro-Dithering",
+        "deep-sea": "Tiefsee",
+        "peach-silk": "Pfirsichseide",
+        "ember": "Glut",
+        "mono-dither": "Schwarzweiss gerastert"
       },
       "seo": {
         "whatIs": "Ein Shader-Farbverlauf ist ein Verlauf, den ein kleines Programm direkt auf der Grafikkarte berechnet. Statt weniger fester Farbstopps entsteht ein lebendiges Feld aus Rauschen, das sich mit Domain Warping verbiegt und dann deine Farben durchläuft. So entstehen flüssige, seidige oder körnige Hintergründe, die keine Bilddatei als Vorlage brauchen. Musterli rechnet alles in deinem Browser, nichts verlässt dein Gerät.",
@@ -5089,7 +5173,11 @@
         "cathedral": "Kathedrale",
         "neon": "Neon",
         "subtle": "Dezent",
-        "eclipse": "Finsternis"
+        "eclipse": "Finsternis",
+        "underwater": "Unter Wasser",
+        "sunrise": "Sonnenaufgang",
+        "forest": "Waldlicht",
+        "moonlight": "Mondlicht"
       },
       "seo": {
         "heading": "Lichtstrahlen-Effekt (God Rays)",
@@ -5184,7 +5272,11 @@
         "diagonal": "Diagonal",
         "horizontal": "Waagrecht",
         "fragments": "Fragmente",
-        "fine": "Feine Rillen"
+        "fine": "Feine Rillen",
+        "wide": "Breite Rillen",
+        "tinted": "Getönt",
+        "soft-ridges": "Weiche Rippen",
+        "steep": "Steil"
       },
       "seo": {
         "heading": "Fractal-Glass-Effekt (Riffelglas)",
@@ -5268,7 +5360,11 @@
         "poster": "Tontrennung",
         "sunset": "Abendrot",
         "muted": "Gedämpft",
-        "fine": "Feine Pixel"
+        "fine": "Feine Pixel",
+        "eight-bit": "8-Bit",
+        "ocean": "Ozean",
+        "mono": "Graustufen",
+        "huge": "Riesenblöcke"
       },
       "seo": {
         "heading": "Bild verpixeln (Pixelate und Posterize)",
@@ -5405,7 +5501,11 @@
         "bold-hero": "Grosser Auftritt",
         "app-ui": "App-Oberfläche",
         "tailwind": "Tailwind-Namen",
-        "code": "Code"
+        "code": "Code",
+        "playful": "Verspielt",
+        "golden": "Goldener Schnitt",
+        "docs": "Dokumentation",
+        "magazine": "Illustrierte"
       },
       "advisories": {
         "zoom": "Die grösste Stufe wächst um das {factor}-Fache. Über {limit}-fach kann Text beim Zoomen auf 200 % zu klein bleiben (WCAG 1.4.4). Nähere die Grössen an oder verkleinere das Verhältnis."
@@ -5503,7 +5603,11 @@
         "arrow": "Pfeil",
         "mountains": "Berge",
         "clouds": "Wolken",
-        "stairs": "Treppe"
+        "stairs": "Treppe",
+        "hills": "Hügel",
+        "top-wave": "Welle oben",
+        "sharp-peaks": "Spitze Zacken",
+        "ocean": "Ozean"
       },
       "sizes": {
         "slim": "Schmal",

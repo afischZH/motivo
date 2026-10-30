@@ -137,6 +137,15 @@ export const contrastCheckerTool = defineTool({
       simulation: "achromatopsia",
     }),
     preset("palette-pairs", { pairs: true }),
+    preset("forest", { foreground: "#f1faee", background: "#1b4332", sample: "heading" }),
+    preset("sand", { foreground: "#a68a64", background: "#fefae0", sample: "body" }),
+    preset("button", { foreground: "#ffffff", background: "#4f46e5", sample: "ui" }),
+    preset("red-green", {
+      foreground: "#e63946",
+      background: "#52b788",
+      sample: "heading",
+      simulation: "protanopia",
+    }),
   ],
   controls: {
     groups: [

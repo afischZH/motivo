@@ -111,6 +111,17 @@ export const tintsShadesTool = defineTool({
       method: "oklab",
       labels: "rgb",
     }),
+    preset("rose", { base: "#e5989b", name: "rose", tints: 4, shades: 4, range: 0.85 }),
+    preset("ocean", { base: "#0077b6", name: "info", tints: 5, shades: 3, labels: "oklch" }),
+    preset("plum", { base: "#7b2cbf", name: "plum", tints: 6, shades: 6, range: 1 }),
+    preset("mint", {
+      base: "#52b788",
+      name: "success",
+      tints: 4,
+      shades: 4,
+      method: "srgb",
+      contrast: false,
+    }),
   ],
   controls: {
     groups: [{ id: "scale", labelKey: `tools.${ID}.groups.scale` }, DISPLAY_GROUP],

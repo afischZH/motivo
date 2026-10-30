@@ -139,6 +139,20 @@ export const paletteGeneratorTool = defineTool({
       harmony: "triadic",
       labels: "oklch",
     }),
+    preset("nordic", ["#eceff4", "#d8dee9", "#88c0d0", "#5e81ac", "#2e3440"], {
+      harmony: "analogous",
+    }),
+    preset("sunset", ["#ffcdb2", "#ffb4a2", "#e5989b", "#b5838d", "#6d6875"], {
+      harmony: "analogous",
+      labels: "hsl",
+    }),
+    preset("neon", ["#0d0221", "#ff2a6d", "#05d9e8", "#d1f7ff", "#f9c80e"], {
+      harmony: "split",
+    }),
+    preset("earth", ["#fefae0", "#dda15e", "#bc6c25", "#606c38", "#283618"], {
+      harmony: "complementary",
+      matrix: true,
+    }),
   ],
   controls: {
     groups: [{ id: "palette", labelKey: `tools.${ID}.groups.palette` }, DISPLAY_GROUP],

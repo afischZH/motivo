@@ -28,7 +28,7 @@ export const STATIC_SEED = 1;
 export const DEFAULT_MOTIF = "default";
 
 /** How many preset thumbnails a landing page shows. */
-export const LANDING_PRESET_COUNT = 4;
+export const LANDING_PRESET_COUNT = 8;
 
 export interface StaticDesign {
   /** `DEFAULT_MOTIF` or a preset id. */

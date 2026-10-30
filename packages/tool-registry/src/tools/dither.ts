@@ -145,6 +145,32 @@ export const ditherTool = defineTool({
     }),
     preset("grayscale", { palette: "gray", algorithm: "stucki", pixelSize: 2, contrast: 10 }),
     preset("sunset", { palette: "custom", algorithm: "floyd-steinberg", pixelSize: 3 }),
+    preset("blueprint", {
+      algorithm: "atkinson",
+      ink: "#e8f1ff",
+      paper: "#0b3d91",
+      pixelSize: 2,
+      contrast: 20,
+    }),
+    preset("newspaper", {
+      algorithm: "bayer4",
+      ink: "#22201c",
+      paper: "#ece6d6",
+      pixelSize: 2,
+      contrast: 20,
+    }),
+    preset("vaporwave", {
+      palette: "custom",
+      algorithm: "stucki",
+      colors: ["#2b0f54", "#ab1f65", "#ff4f69", "#47e5bc", "#fff4e0"],
+      pixelSize: 3,
+    }),
+    preset("big-pixels", {
+      palette: "handheld",
+      algorithm: "bayer2",
+      pixelSize: 8,
+      contrast: 25,
+    }),
   ],
   brandPalette(colors) {
     const sorted = byLightness(colors);

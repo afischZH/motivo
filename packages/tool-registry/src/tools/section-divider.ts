@@ -157,6 +157,22 @@ export const sectionDividerTool = defineTool({
     preset("mountains", { shape: "peaks", count: 5, layers: 2, color: "#166534" }),
     preset("clouds", { shape: "clouds", count: 9, color: "#ffffff", background: "#93c5fd" }),
     preset("stairs", { shape: "steps", count: 6, color: "#7c3aed", flip: true }),
+    preset("hills", {
+      shape: "curve",
+      count: 3,
+      layers: 2,
+      color: "#65a30d",
+      background: "#ecfccb",
+    }),
+    preset("top-wave", { position: "top", count: 3, color: "#db2777", minHeight: 50 }),
+    preset("sharp-peaks", { shape: "peaks", count: 12, color: "#1e293b", minHeight: 30 }),
+    preset("ocean", {
+      layers: 3,
+      count: 4,
+      color: "#0369a1",
+      background: "#e0f2fe",
+      minHeight: 60,
+    }),
   ],
   controls: {
     groups: [COMMON_GROUPS.shape, COMMON_GROUPS.colors, COMMON_GROUPS.layout],

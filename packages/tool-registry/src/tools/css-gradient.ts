@@ -105,6 +105,26 @@ export const cssGradientTool = defineTool({
       interpolation: "oklab",
       loop: true,
     }),
+    preset("aurora", {
+      palette: ["#0b132b", "#1c7c54", "#73e2a7", "#c4fff9"],
+      angle: 200,
+      easing: "ease-out",
+    }),
+    preset("peach", { palette: ["#ffe5d9", "#f4acb7", "#9d8189"], angle: 45, easing: "linear" }),
+    preset("galaxy", {
+      palette: ["#e0aaff", "#5a189a", "#10002b"],
+      type: "radial",
+      shape: "circle",
+      centerX: 70,
+      centerY: 30,
+      easing: "ease-in",
+    }),
+    preset("rainbow", {
+      palette: ["#ff595e", "#1982c4"],
+      angle: 90,
+      hue: "longer",
+      easing: "linear",
+    }),
   ],
   controls: {
     groups: [

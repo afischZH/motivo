@@ -278,6 +278,20 @@ export const cssPatternsTool = defineTool({
       layer({ pattern: "crosses", color: "#1e293b", size: 18, opacity: 100 }),
       layer({ pattern: "grid-lines", color: "#334155", size: 72, angle: 0, opacity: 80 }),
     ]),
+    preset("terracotta", "#f4e1d2", [
+      layer({ pattern: "scales", color: "#c0582f", accent: "#e9a178", size: 72, angle: 0 }),
+    ]),
+    preset("notebook", "#fffdf6", [
+      layer({ pattern: "pinstripes", color: "#e63946", size: 120, angle: 90, opacity: 50 }),
+      layer({ pattern: "grid-lines", color: "#a8dadc", size: 24, angle: 0, opacity: 90 }),
+    ]),
+    preset("mint-check", "#f1faee", [
+      layer({ pattern: "checkerboard", color: "#95d5b2", accent: "#d8f3dc", size: 40, angle: 0 }),
+    ]),
+    preset("art-deco", "#14213d", [
+      layer({ pattern: "sunrise", color: "#fca311", accent: "#14213d", size: 64, angle: 0 }),
+      layer({ pattern: "diamonds", color: "#e5e5e5", size: 32, angle: 0, opacity: 20 }),
+    ]),
   ],
   controls: {
     order: ["layers", "background"],

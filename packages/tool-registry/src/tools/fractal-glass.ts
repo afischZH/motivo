@@ -123,6 +123,22 @@ export const fractalGlassTool = defineTool({
       highlight: 15,
     }),
     preset("fine", { stripWidth: 14, profile: "ridged", distortion: 80, highlight: 45 }),
+    preset("wide", { stripWidth: 160, profile: "rounded", distortion: 40, highlight: 30 }),
+    preset("tinted", {
+      stripWidth: 40,
+      distortion: 50,
+      highlight: 30,
+      tint: "#f4a6c1",
+      tintAmount: 35,
+    }),
+    preset("soft-ridges", {
+      stripWidth: 28,
+      profile: "ridged",
+      distortion: 45,
+      blur: 6,
+      highlight: 25,
+    }),
+    preset("steep", { angle: 135, stripWidth: 56, profile: "rounded", distortion: 70 }),
   ],
   brandPalette(colors, current) {
     // The most colourful brand colour tints the glass; a clear glass gets a light tint.
