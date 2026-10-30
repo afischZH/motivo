@@ -9,8 +9,10 @@ next-env.d.ts
 .wrangler/
 .dev.vars*
 
-# Generated at build time by scripts/og-images.mjs
+# Generated at build time by scripts/og-images.mjs, scripts/motifs.mjs and scripts/sitemap.mjs
 /public/og/
+/public/motifs/
+/public/sitemap.xml
 
 # Generated at build time by scripts/headers.mjs (depends on the build env)
 /public/_headers

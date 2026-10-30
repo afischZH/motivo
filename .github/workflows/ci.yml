@@ -71,6 +71,8 @@ jobs:
             apps/web/.next/
             !apps/web/.next/cache/
             apps/web/public/og/
+            apps/web/public/motifs/
+            apps/web/public/sitemap.xml
             apps/web/public/_headers
 
   e2e:

@@ -22,6 +22,8 @@ export interface KonvaKit {
 let loading: Promise<KonvaKit> | null = null;
 
 export function loadKonva(): Promise<KonvaKit> {
+  // Browser only: the guard keeps Konva out of the server bundle (Worker size).
+  if (typeof window === "undefined") return Promise.reject(new Error("browser only"));
   loading ??= Promise.all([
     import("konva/lib/Core"),
     import("konva/lib/shapes/Rect"),

@@ -27,6 +27,8 @@ const importer: FileImporter<DesignsFileParseResult> = {
     return createTransferWorker();
   },
   async parseOnMain(file) {
+    // Browser only: the guard keeps these imports out of the server bundle (Worker size).
+    if (typeof window === "undefined") return { ok: false, error: "malformed" };
     const [{ parseDesignsFile }, { registry }] = await Promise.all([
       import("./transfer"),
       import("@musterli/tool-registry"),

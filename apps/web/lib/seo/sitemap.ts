@@ -6,6 +6,10 @@
  * from a hand-written list. Editor pages are reachable from every landing
  * page and stay indexable, but the sitemap points crawlers at the landing
  * pages, which carry the text.
+ *
+ * `scripts/sitemap.mjs` writes the XML (`sitemapXml`) to `public/sitemap.xml`
+ * before the build: a static file, so the Worker carries no route (and no
+ * copy of the registry) for it.
  */
 import type { MetadataRoute } from "next";
 
@@ -77,4 +81,48 @@ export function sitemapEntries(base: URL = siteUrl()): MetadataRoute.Sitemap {
       };
     }),
   );
+}
+
+const XML_ESCAPES: Record<string, string> = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&apos;",
+};
+
+function xml(value: string): string {
+  return value.replace(/[&<>"']/g, (c) => XML_ESCAPES[c] ?? c);
+}
+
+/**
+ * The entries as sitemap XML with hreflang alternates (`xhtml:link`) and
+ * image entries (`image:image`), in the layout Next.js uses for metadata
+ * sitemap routes (one element per line).
+ */
+export function sitemapXml(entries: MetadataRoute.Sitemap): string {
+  const hasImages = entries.some((e) => (e.images?.length ?? 0) > 0);
+  const hasAlternates = entries.some((e) => Object.keys(e.alternates?.languages ?? {}).length > 0);
+  const lines = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"${
+      hasImages ? ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' : ""
+    }${hasAlternates ? ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' : ""}>`,
+  ];
+  for (const entry of entries) {
+    lines.push("<url>", `<loc>${xml(entry.url)}</loc>`);
+    for (const [lang, href] of Object.entries(entry.alternates?.languages ?? {})) {
+      if (href) {
+        lines.push(
+          `<xhtml:link rel="alternate" hreflang="${xml(lang)}" href="${xml(String(href))}" />`,
+        );
+      }
+    }
+    for (const image of entry.images ?? []) {
+      lines.push("<image:image>", `<image:loc>${xml(image)}</image:loc>`, "</image:image>");
+    }
+    lines.push("</url>");
+  }
+  lines.push("</urlset>", "");
+  return lines.join("\n");
 }

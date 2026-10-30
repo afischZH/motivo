@@ -4,9 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node scripts/headers.mjs && node scripts/og-images.mjs && NEXT_TELEMETRY_DISABLED=1 next dev",
-    "build": "node scripts/headers.mjs && node scripts/og-images.mjs && NEXT_TELEMETRY_DISABLED=1 next build",
+    "dev": "node scripts/headers.mjs && node scripts/motifs.mjs && node scripts/sitemap.mjs && node scripts/og-images.mjs && NEXT_TELEMETRY_DISABLED=1 next dev",
+    "build": "node scripts/headers.mjs && node scripts/motifs.mjs && node scripts/sitemap.mjs && node scripts/og-images.mjs && NEXT_TELEMETRY_DISABLED=1 next build",
     "og": "node scripts/og-images.mjs",
+    "motifs": "node scripts/motifs.mjs",
+    "sitemap": "node scripts/sitemap.mjs",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests --exclude 'e2e/**'",

@@ -152,6 +152,8 @@ test.describe("sitemap and robots", () => {
   test("sitemap.xml lists landing pages with hreflang alternates", async ({ request }) => {
     const response = await request.get("/sitemap.xml");
     expect(response.status()).toBe(200);
+    // A static file from scripts/sitemap.mjs since the Worker diet.
+    expect(response.headers()["content-type"]).toMatch(/xml/);
     const xml = await response.text();
     const de = new URL("/de/punktmuster-generator", SITE).toString();
     const en = new URL("/en/polka-dot-pattern-generator", SITE).toString();

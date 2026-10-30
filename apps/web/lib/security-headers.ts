@@ -17,6 +17,10 @@
  * rule per path; the proxy only answers redirects, which keep the
  * site-wide set (the target page then gets its own headers).
  *
+ * Static motif SVGs (`/motifs/...`, `scripts/motifs.mjs`) get a stricter
+ * CSP of their own (`MOTIF_CSP`): next.config adds it with
+ * `motifHeaderRule`, `_headers` with a rule for the folder.
+ *
  * Pure strings, safe for the proxy runtime. The theme script hash lives in
  * `csp-hash.ts` (node:crypto) and is not part of the policy yet.
  */
@@ -84,6 +88,20 @@ export const LIVE_VIEW_PATHS: readonly string[] = [
   "/de/tools/screenshot-verschoenerer",
   "/en/tools/screenshot-beautifier",
 ];
+
+/**
+ * CSP of the static motif SVGs (`/motifs/...`): generated motifs contain no
+ * scripts, and this keeps it that way if one is opened directly.
+ */
+export const MOTIF_CSP = "default-src 'none'; img-src data:; style-src 'unsafe-inline'";
+
+/** next.config `headers()` rule for the motif SVGs. Listed last, so its CSP wins. */
+export function motifHeaderRule() {
+  return {
+    source: "/motifs/:path*",
+    headers: [{ key: "Content-Security-Policy", value: MOTIF_CSP }],
+  };
+}
 
 /**
  * Hosts served over plain http during local and CI runs, as a Next `has`
@@ -275,12 +293,18 @@ export function cloudflareHeadersFile(services: ExternalServices = NO_EXTERNAL_S
     ...live.map(({ key }) => `  ! ${key}`),
     ...live.map(({ key, value }) => `  ${key}: ${value}`),
   ]);
+  const motifRules = [
+    "/motifs/*",
+    "  ! Content-Security-Policy",
+    `  Content-Security-Policy: ${MOTIF_CSP}`,
+  ];
   return [
     "# Generated from lib/security-headers.ts by scripts/headers.mjs at build time. Do not edit.",
     "# Applies to files served by Workers Static Assets; the Worker sets the same headers via next.config.ts.",
     "/*",
     ...lines,
     ...liveRules,
+    ...motifRules,
     "",
   ].join("\n");
 }

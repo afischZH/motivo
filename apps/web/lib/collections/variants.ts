@@ -12,8 +12,8 @@ import { createRenderContext, registry, type AnyToolDefinition } from "@musterli
 
 import { STATIC_SEED, designSvg, toolSize, type StaticDesign } from "@/lib/seo/motifs";
 
-import { findGradient, curatedGradients, type CuratedGradient } from "./gradients";
-import { curatedPalettes, findPalette, type CuratedPalette } from "./palettes";
+import { curatedGradients, type CuratedGradient } from "./gradients";
+import { curatedPalettes, type CuratedPalette } from "./palettes";
 
 export const CSS_GRADIENT_TOOL = "css-gradient";
 export const PALETTE_TOOL = "palette-generator";
@@ -210,7 +210,7 @@ export function cssGradientCode(gradientDesign: StaticDesign): CssCode {
 
 /**
  * Every collection design of a tool that has a static SVG thumbnail, for
- * `app/motifs/[toolId]/[file]/route.ts`.
+ * `scripts/motifs.mjs`.
  */
 export function collectionMotifs(toolId: string): StaticDesign[] {
   const fromGradients = curatedGradients().flatMap((g) => gradientVariants(g).gradient);
@@ -218,24 +218,6 @@ export function collectionMotifs(toolId: string): StaticDesign[] {
   return [...fromGradients, ...fromPalettes]
     .filter((v) => v.thumb === "svg" && v.toolId === toolId)
     .map((v) => v.design);
-}
-
-export function findCollectionMotif(toolId: string, designId: string): StaticDesign | undefined {
-  const [kind, ...rest] = designId.split("-");
-  const itemId = rest.join("-");
-  const variants =
-    kind === "gradient"
-      ? (() => {
-          const g = findGradient(itemId);
-          return g ? gradientVariants(g).gradient : [];
-        })()
-      : kind === "palette"
-        ? (() => {
-            const p = findPalette(itemId);
-            return p ? paletteVariants(p).gradient : [];
-          })()
-        : [];
-  return variants.find((v) => v.thumb === "svg" && v.toolId === toolId)?.design;
 }
 
 /** SVG of a collection design in a tool (thumbnails, OG images). */
