@@ -6048,6 +6048,144 @@
           }
         }
       }
+    },
+    "code-screenshot": {
+      "name": "Code Screenshot",
+      "description": "Turn code into a beautiful image: syntax colors, an editor window and a gradient background. For posts, slides and docs, as PNG or SVG.",
+      "groups": {
+        "content": "Code",
+        "window": "Window"
+      },
+      "params": {
+        "code": {
+          "label": "Code"
+        },
+        "language": {
+          "label": "Language",
+          "options": {
+            "javascript": "JavaScript",
+            "typescript": "TypeScript",
+            "css": "CSS",
+            "html": "HTML",
+            "python": "Python",
+            "json": "JSON",
+            "bash": "Shell",
+            "plain": "Plain text"
+          }
+        },
+        "title": {
+          "label": "File name"
+        },
+        "highlight": {
+          "label": "Highlight lines",
+          "description": "Line numbers to mark, for example 2, 4-6."
+        },
+        "theme": {
+          "label": "Color theme",
+          "options": {
+            "midnight": "Midnight",
+            "paper": "Paper",
+            "dusk": "Dusk",
+            "ocean": "Ocean",
+            "forest": "Forest",
+            "mono": "Mono"
+          }
+        },
+        "frame": {
+          "label": "Frame",
+          "options": {
+            "window": "Window",
+            "none": "None"
+          }
+        },
+        "lineNumbers": {
+          "label": "Line numbers"
+        },
+        "fontSize": {
+          "label": "Font size"
+        },
+        "radius": {
+          "label": "Corner radius"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "padding": {
+          "label": "Margin"
+        },
+        "backdrop": {
+          "label": "Background",
+          "options": {
+            "gradient": "Gradient",
+            "mesh": "Mesh",
+            "blurry": "Blurry",
+            "solid": "Color",
+            "none": "None"
+          }
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        }
+      },
+      "presets": {
+        "midnight": "Midnight",
+        "paper": "Paper",
+        "python": "Python",
+        "css": "CSS",
+        "html": "HTML",
+        "typescript": "TypeScript",
+        "terminal": "Terminal",
+        "json": "JSON",
+        "bare": "Window only"
+      },
+      "sizes": {
+        "landscape": "Landscape",
+        "social": "Social post",
+        "square": "Square",
+        "slide": "Slide"
+      },
+      "seo": {
+        "heading": "Code Screenshot Generator (Code to Image)",
+        "whatIs": "A code screenshot shows a piece of code as a polished image: with syntax colors, an editor window and an attractive background. It looks much better than a plain screenshot of your editor and is easy to read in social posts, slides and documentation.",
+        "howTo": "Paste your code, pick the language and enter a file name. Choose a color theme, the window and a background, and mark important lines if you like. Then download the image as PNG, JPG, WebP or SVG.",
+        "useCases": {
+          "u1": {
+            "title": "Social posts",
+            "text": "Share tips and snippets on LinkedIn, X or Mastodon as an image that stands out in the feed."
+          },
+          "u2": {
+            "title": "Slides and talks",
+            "text": "Large, clear code with highlighted lines is easy to follow on a projector."
+          },
+          "u3": {
+            "title": "Docs and blog posts",
+            "text": "A consistent look for every snippet in your article or README."
+          }
+        },
+        "tips": {
+          "t1": "Keep it short: 5 to 20 lines read best in an image. Show the important part only.",
+          "t2": "Highlight the line that matters, for example the fix in a bug story.",
+          "t3": "Images cannot be copied. Always link the code as text as well, for people who use screen readers."
+        },
+        "faq": {
+          "q1": {
+            "question": "Which languages are colored?",
+            "answer": "JavaScript, TypeScript, CSS, HTML, Python, JSON and shell. Other code works as plain text."
+          },
+          "q2": {
+            "question": "Is my code uploaded?",
+            "answer": "No. The image is drawn in your browser. Your code only travels in a share link if you create one."
+          },
+          "q3": {
+            "question": "Which font is used?",
+            "answer": "The monospace font of your system, for example SF Mono on a Mac or Consolas on Windows. No font is loaded from the internet."
+          },
+          "q4": {
+            "question": "Can I use the image commercially?",
+            "answer": "Yes. The image is yours, free of charge and without a watermark."
+          }
+        }
+      }
     }
   },
   "Converters": {

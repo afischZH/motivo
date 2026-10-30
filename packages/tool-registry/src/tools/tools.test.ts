@@ -164,6 +164,7 @@ describe("built-in tool registration", () => {
       "og-image",
       "clip-path",
       "qr-code",
+      "code-screenshot",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
       "favicon-generator",
@@ -173,6 +174,7 @@ describe("built-in tool registration", () => {
       "screenshot-beautifier",
       "avatar",
       "og-image",
+      "code-screenshot",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",

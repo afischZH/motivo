@@ -48,6 +48,7 @@ import { sectionDividerTool } from "./section-divider";
 import { ogImageTool } from "./og-image";
 import { clipPathTool } from "./clip-path";
 import { qrCodeTool } from "./qr-code";
+import { codeScreenshotTool } from "./code-screenshot";
 import { halftoneTool } from "./halftone";
 import { cmykHalftoneTool } from "./cmyk-halftone";
 import { ditherTool } from "./dither";
@@ -108,6 +109,7 @@ export {
   ogImageTool,
   clipPathTool,
   qrCodeTool,
+  codeScreenshotTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -177,6 +179,7 @@ export { dividerHeightCss } from "./section-divider";
 export type { OgImageParams } from "./og-image";
 export type { ClipPathParams } from "./clip-path";
 export type { QrCodeParams } from "./qr-code";
+export type { CodeScreenshotParams } from "./code-screenshot";
 export { OG_BACKDROPS, ogMetaTags } from "./og-image";
 export type { HalftoneParams } from "./halftone";
 export { HALFTONE_SVG_MAX_SHAPES, halftoneOptions } from "./halftone";
@@ -252,6 +255,7 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   ogImageTool,
   clipPathTool,
   qrCodeTool,
+  codeScreenshotTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

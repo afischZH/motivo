@@ -298,6 +298,12 @@ Eigene Seite `/[locale]/social-media-editor/bearbeiten` bzw. `/edit` (noindex) m
   - **Quelle**: Standard-Palette (sonst die erste), die ersten zwei Brand-Schriften und das erste Logo aus dem Brand Kit (IndexedDB). Ist das Brand Kit leer, erklärt ein Dialog den Weg dorthin.
 - **DoD-Test Vorlagen** (`lib/social-editor/templates.test.ts`): jede Vorlage auf DE und EN mit zwei Stub-Breiten (0.5 und 0.64 em je Zeichen) nativ und per Magic Resize in alle 13 Formate (dazu eine Kette durch alle): Schema gültig, `checkSceneFit` ohne Probleme (kein Text abgeschnitten oder ausserhalb), Schrift mindestens 10 px bzw. 2 % der kurzen Seite; nativ zusätzlich "wie entworfen" (kein Wachsen der Boxen). Die Stubs sind deterministisch und decken alle 40 × 13 × 2 Fälle in rund 2 s ab, die breitere Breite liegt über den Durchschnittsbreiten der Bibliotheksschriften (auch Bebas Neue und Pacifico). Echte Schriften prüft `e2e/social-templates.spec.ts` in Chromium: alle 40 Vorlagen auf DE in 6 Formaten (1:1, 4:5, Story, Querformat, Banner, YouTube) mit `data-fit-problems = 0` der Bühne. Dazu Brand-Apply und Rückgängig in einem Schritt, gesperrte Ebenen, leeres Brand Kit, Tastatur und Fokus, axe hell und dunkel, 375 px.
 
+### 4.21 Neue Bereiche W4 (ab 2026-10-30)
+
+- **Mehrzeiliger Text**: `ControlHint.rows` (sichtbare Zeilen) und `monospace` machen aus einem `kind: "text"` ein mehrzeiliges Feld (Code-Screenshot). Die Leertaste bleibt im Feld, weil `isEditableTarget` Textareas schon kennt.
+- **QR-Encoder** (`packages/engine/src/tools/qr-code/encode.ts`): ohne Library, nur Byte-Modus mit eigenem UTF-8-Encoder (die Engine kennt weder DOM- noch Node-Typen). Die Matrix der letzten Eingabe wird zwischengespeichert, weil Vorschau, Hinweise und Exporte sie nacheinander brauchen.
+- **Bild-Kompressor**: eigener Worker `apps/web/lib/convert/image-convert.worker.ts` neben dem Text-Konverter-Worker, weil er Pixel kodiert (`createImageBitmap`, `OffscreenCanvas.convertToBlob`) und Blobs statt Text liefert. Ein Bild nach dem anderen, damit der Speicher bei 30 Bildern flach bleibt.
+
 ## 5. Render- und Export-Pipeline
 
 ```

@@ -184,7 +184,7 @@ Ideen-Dokument "New tools and areas for Musterli" (Claude Doc, 2026-10-30). Andr
 - [x] Clip-path-Generator (Spec `docs/TOOLS.md` M4)
 - [x] Bild komprimieren und umwandeln, als Konverter (Spec `docs/TOOLS.md` G)
 - [x] QR-Code mit Stil (eigener Encoder, ohne Dependency, Spec `docs/TOOLS.md` M5)
-- [ ] Code-Screenshot (eigene Syntaxfarben, ohne Dependency)
+- [x] Code-Screenshot (eigene Syntaxfarben, ohne Dependency, Spec `docs/TOOLS.md` M6)
 
 ## M7: Differenzierung & Wachstum (ab Woche 24)
 

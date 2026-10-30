@@ -6059,6 +6059,144 @@
           }
         }
       }
+    },
+    "code-screenshot": {
+      "name": "Code-Screenshot",
+      "description": "Mach aus Code ein schönes Bild: Syntaxfarben, ein Editorfenster und ein Verlauf im Hintergrund. Für Posts, Folien und Dokus, als PNG oder SVG.",
+      "groups": {
+        "content": "Code",
+        "window": "Fenster"
+      },
+      "params": {
+        "code": {
+          "label": "Code"
+        },
+        "language": {
+          "label": "Sprache",
+          "options": {
+            "javascript": "JavaScript",
+            "typescript": "TypeScript",
+            "css": "CSS",
+            "html": "HTML",
+            "python": "Python",
+            "json": "JSON",
+            "bash": "Shell",
+            "plain": "Reiner Text"
+          }
+        },
+        "title": {
+          "label": "Dateiname"
+        },
+        "highlight": {
+          "label": "Zeilen hervorheben",
+          "description": "Zeilennummern zum Markieren, zum Beispiel 2, 4-6."
+        },
+        "theme": {
+          "label": "Farbschema",
+          "options": {
+            "midnight": "Mitternacht",
+            "paper": "Papier",
+            "dusk": "Dämmerung",
+            "ocean": "Ozean",
+            "forest": "Wald",
+            "mono": "Mono"
+          }
+        },
+        "frame": {
+          "label": "Rahmen",
+          "options": {
+            "window": "Fenster",
+            "none": "Keiner"
+          }
+        },
+        "lineNumbers": {
+          "label": "Zeilennummern"
+        },
+        "fontSize": {
+          "label": "Schriftgrösse"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        },
+        "shadow": {
+          "label": "Schatten"
+        },
+        "padding": {
+          "label": "Rand"
+        },
+        "backdrop": {
+          "label": "Hintergrund",
+          "options": {
+            "gradient": "Verlauf",
+            "mesh": "Mesh",
+            "blurry": "Weich",
+            "solid": "Farbe",
+            "none": "Keiner"
+          }
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        }
+      },
+      "presets": {
+        "midnight": "Mitternacht",
+        "paper": "Papier",
+        "python": "Python",
+        "css": "CSS",
+        "html": "HTML",
+        "typescript": "TypeScript",
+        "terminal": "Terminal",
+        "json": "JSON",
+        "bare": "Nur Fenster"
+      },
+      "sizes": {
+        "landscape": "Querformat",
+        "social": "Social-Post",
+        "square": "Quadrat",
+        "slide": "Folie"
+      },
+      "seo": {
+        "heading": "Code-Screenshot-Generator (Code als Bild)",
+        "whatIs": "Ein Code-Screenshot zeigt ein Stück Code als gepflegtes Bild: mit Syntaxfarben, einem Editorfenster und einem ansprechenden Hintergrund. Das wirkt viel besser als ein gewöhnlicher Screenshot deines Editors und lässt sich in Social Posts, Folien und Dokus gut lesen.",
+        "howTo": "Füge deinen Code ein, wähle die Sprache und gib einen Dateinamen ein. Wähle Farbschema, Fenster und Hintergrund und markiere auf Wunsch wichtige Zeilen. Lade das Bild dann als PNG, JPG, WebP oder SVG herunter.",
+        "useCases": {
+          "u1": {
+            "title": "Social Posts",
+            "text": "Teile Tipps und Snippets auf LinkedIn, X oder Mastodon als Bild, das im Feed auffällt."
+          },
+          "u2": {
+            "title": "Folien und Vorträge",
+            "text": "Grosser, klarer Code mit hervorgehobenen Zeilen lässt sich am Beamer gut verfolgen."
+          },
+          "u3": {
+            "title": "Dokus und Blogartikel",
+            "text": "Ein einheitlicher Look für jedes Snippet in deinem Artikel oder README."
+          }
+        },
+        "tips": {
+          "t1": "Halte es kurz: 5 bis 20 Zeilen lesen sich im Bild am besten. Zeig nur den wichtigen Teil.",
+          "t2": "Hebe die entscheidende Zeile hervor, zum Beispiel den Fix in einer Fehlergeschichte.",
+          "t3": "Bilder lassen sich nicht kopieren. Verlinke den Code immer auch als Text, auch für Menschen mit Screenreader."
+        },
+        "faq": {
+          "q1": {
+            "question": "Welche Sprachen werden eingefärbt?",
+            "answer": "JavaScript, TypeScript, CSS, HTML, Python, JSON und Shell. Anderer Code funktioniert als reiner Text."
+          },
+          "q2": {
+            "question": "Wird mein Code hochgeladen?",
+            "answer": "Nein. Das Bild entsteht in deinem Browser. Dein Code reist nur in einem Teilen-Link mit, wenn du einen erstellst."
+          },
+          "q3": {
+            "question": "Welche Schrift wird verwendet?",
+            "answer": "Die Monospace-Schrift deines Systems, zum Beispiel SF Mono auf dem Mac oder Consolas unter Windows. Es wird keine Schrift aus dem Internet geladen."
+          },
+          "q4": {
+            "question": "Darf ich das Bild kommerziell nutzen?",
+            "answer": "Ja. Das Bild gehört dir, gratis und ohne Wasserzeichen."
+          }
+        }
+      }
     }
   },
   "Converters": {

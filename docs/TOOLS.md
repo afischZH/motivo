@@ -618,6 +618,17 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 - **Leertaste**: neue Formen und dunkle Farben; Text, Logo und Hintergrund bleiben. **Brand-Palette**: erste Farbe für Code und Augen, zweite für den Verlauf.
 - **Vorlagen** (10): Abgerundet, Klassisch, Punkte, Ozean, Wald, Rauten, Balken, Abendrot, WLAN, Transparent.
 
+### M6. Code-Screenshot · W4 · G
+
+**Umgesetzt (Tool-ID `code-screenshot`, Slug `code-screenshot` in DE und EN, Kategorie `social`, Engine `packages/engine/src/tools/code-screenshot/`)**:
+- **Zweck**: Code als Bild mit Syntaxfarben, Editorfenster und Musterli-Hintergrund, für Posts, Folien und Dokus.
+- **Syntaxfarben ohne Library** (`highlight.ts`): je Sprache eine Liste klebender regulärer Ausdrücke (Kommentar, String, Zahl, Schlüsselwort, Funktion, Typ, Tag, Attribut, Satzzeichen) für JavaScript, TypeScript, CSS, HTML, Python, JSON, Shell und reinen Text. Kein Parser; jedes Zeichen bleibt erhalten (Test).
+- **Params**: `code` (bis 3000 Zeichen, mehrzeiliges Feld über den neuen generischen Hinweis `rows`/`monospace` am Control), `language`, `title` (Dateiname), `highlight` (Zeilen wie "2, 4-6"), `theme` (6 eigene Farbschemata), `frame` (Fenster mit Ampel oder keiner), `lineNumbers`, `fontSize` (12 bis 64 px; das Fenster wird kleiner, wenn es nicht passt, nie grösser), `radius`, `shadow`, `padding`, Hintergrund (`backdrop`: Verlauf, Mesh, weicher Verlauf, Farbe, keiner) mit `palette`, `background`, `gradientAngle`. Code, Dateiname und Markierung sind `contentParams` und reisen im Teilen-Link (Standardlink rund 520 Zeichen, Ausnahme im Share-Codec-Test).
+- **Layout ohne DOM**: Monospace mit 0.6 em pro Zeichen, Zeilenhöhe 1.6 em; höchstens 80 Zeilen und 160 Spalten, danach "…". Schrift: Monospace des Systems (keine Webfont).
+- **Exporte**: PNG, JPG, WebP, SVG; Grössen Querformat 1600 × 1000, Social-Post 1200 × 675, Quadrat 1080, Folie 1920 × 1080.
+- **Leertaste**: neues Farbschema und Hintergrund; Code und Layout bleiben. **Brand-Palette**: Hintergrundfarben.
+- **Vorlagen** (9): Mitternacht, Papier, Python, CSS, HTML, TypeScript, Terminal, JSON, Nur Fenster.
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)

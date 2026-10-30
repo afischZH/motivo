@@ -59,6 +59,7 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
   "image-polish": [
     "og-image",
     "screenshot-beautifier",
+    "code-screenshot",
     "duotone",
     "halftone",
     "fractal-glass",
