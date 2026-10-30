@@ -169,16 +169,24 @@ describe("built-in tool registration", () => {
       "holographic-gradient",
       "neon-shapes",
       "glitch-background",
+      "css-easing",
+      "spacing-scale",
+      "gradient-text",
+      "starburst-badge",
+      "squiggle-lines",
+      "bauhaus-pattern",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
       "favicon-generator",
       "qr-code",
+      "starburst-badge",
     ]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
       "screenshot-beautifier",
       "avatar",
       "og-image",
       "code-screenshot",
+      "starburst-badge",
     ]);
     expect(registry.listByCategory("colors").map((t) => t.id)).toEqual([
       "palette-generator",
@@ -212,6 +220,8 @@ describe("built-in tool registration", () => {
       "low-poly",
       "terrazzo",
       "avatar",
+      "squiggle-lines",
+      "bauhaus-pattern",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual([
       "noise-grain",
@@ -520,6 +530,10 @@ describe("extra exports", () => {
       "section-divider",
       "og-image",
       "clip-path",
+      "css-easing",
+      "spacing-scale",
+      "gradient-text",
+      "squiggle-lines",
     ]);
   });
 });

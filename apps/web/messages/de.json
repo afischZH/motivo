@@ -6451,6 +6451,650 @@
           }
         }
       }
+    },
+    "css-easing": {
+      "name": "Easing-Kurven",
+      "description": "Easing-Kurven für Übergänge und Animationen gestalten: cubic-bezier() oder eine Feder als linear(), mit CSS- und Tailwind-Code zum Kopieren.",
+      "groups": {
+        "curve": "Kurve",
+        "code": "Code",
+        "preview": "Vorschau"
+      },
+      "params": {
+        "kind": {
+          "label": "Art",
+          "options": {
+            "bezier": "Bezier",
+            "spring": "Feder"
+          }
+        },
+        "x1": {
+          "label": "Griff 1 Zeit"
+        },
+        "y1": {
+          "label": "Griff 1 Fortschritt"
+        },
+        "x2": {
+          "label": "Griff 2 Zeit"
+        },
+        "y2": {
+          "label": "Griff 2 Fortschritt"
+        },
+        "stiffness": {
+          "label": "Steifigkeit"
+        },
+        "damping": {
+          "label": "Dämpfung"
+        },
+        "duration": {
+          "label": "Dauer"
+        },
+        "name": {
+          "label": "Variablenname"
+        },
+        "progress": {
+          "label": "Position des Punkts"
+        },
+        "background": {
+          "label": "Hintergrund"
+        },
+        "ink": {
+          "label": "Textfarbe"
+        },
+        "accent": {
+          "label": "Akzent"
+        }
+      },
+      "presets": {
+        "smooth-out": "Sanft auslaufend",
+        "ease-in-out": "Weich rein und raus",
+        "back-out": "Mit Überschwung",
+        "snappy": "Zackig",
+        "anticipate": "Mit Anlauf",
+        "spring": "Federnd",
+        "gentle-spring": "Sanfte Feder",
+        "wobbly": "Wackelig"
+      },
+      "seo": {
+        "heading": "Easing-Kurven (CSS cubic-bezier und linear)",
+        "whatIs": "Eine Easing-Kurve bestimmt, wie schnell sich eine Animation in jedem Moment bewegt: langsam am Anfang, schnell am Ende oder mit einem kleinen Nachfedern. In CSS ist sie die Zeitfunktion von transition und animation, geschrieben als cubic-bezier() oder für Federn als linear() mit vielen Punkten.",
+        "howTo": "Wähle eine Bezier-Kurve oder eine Feder. Verschiebe die beiden Griffe oder stelle Steifigkeit und Dämpfung ein und sieh dem Punkt auf der Bahn zu. Lege Dauer und Variablennamen fest und kopiere Übergang, Animation oder Tailwind-Theme. Mit der Leertaste würfelst du eine neue Kurve.",
+        "useCases": {
+          "u1": {
+            "title": "Knöpfe und Hover-Effekte",
+            "text": "Ein kurzes Auslaufen lässt Knöpfe und Links direkt reagieren, ohne zu ruckeln."
+          },
+          "u2": {
+            "title": "Dialoge und Menüs",
+            "text": "Overlays, die mit einer weichen Kurve hereingleiten, wirken natürlich; ein kleiner Überschwung gibt Charakter."
+          },
+          "u3": {
+            "title": "Designsysteme",
+            "text": "Benenne deine Kurven einmal als CSS-Variablen oder Tailwind-Tokens und nutze überall dieselbe Bewegung."
+          }
+        },
+        "tips": {
+          "t1": "Auslaufende Kurven passen zu Elementen, die erscheinen, anlaufende zu Elementen, die verschwinden.",
+          "t2": "Übergänge in Oberflächen sollten 150 bis 400 ms dauern; länger wirkt träge.",
+          "t3": "Jeder Code-Export schaltet die Bewegung für Menschen ab, die weniger Bewegung wünschen."
+        },
+        "faq": {
+          "q1": {
+            "question": "Was ist der Unterschied zwischen cubic-bezier und linear()?",
+            "answer": "cubic-bezier() beschreibt eine glatte Kurve mit zwei Griffen. linear() listet viele Punkte auf und kann darum Federn und Abpraller zeichnen, die eine einzelne Bezier-Kurve nicht schafft."
+          },
+          "q2": {
+            "question": "Unterstützen alle Browser linear()?",
+            "answer": "Aktuelle Versionen von Chrome, Edge, Firefox und Safari unterstützen es. Ältere Browser ignorieren den Wert und nehmen das Standard-Easing; ergänze bei Bedarf ein cubic-bezier als Rückfall."
+          },
+          "q3": {
+            "question": "Warum gehen manche Griffe über 1?",
+            "answer": "Ein Fortschritt über 1 oder unter 0 heisst, dass das Element über sein Ziel hinausschiesst oder vor dem Start kurz zurückweicht. So entstehen Überschwung und Anlauf."
+          },
+          "q4": {
+            "question": "Kann ich die Bewegung als GIF exportieren?",
+            "answer": "Ja. Exportiere ein GIF über die Zeit, dann spielt der Punkt die Kurve ab der Position in der Vorschau ab."
+          }
+        }
+      }
+    },
+    "spacing-scale": {
+      "name": "Fliessende Abstandsskala",
+      "description": "Abstände, die mit der Bildschirmbreite wachsen: Grössen von 3xs bis 3xl als CSS clamp(), mit CSS-Variablen, Hilfsklassen und Tailwind-Theme.",
+      "groups": {
+        "viewport": "Bildschirmbreite",
+        "scale": "Skala",
+        "code": "Code",
+        "preview": "Vorschau"
+      },
+      "params": {
+        "minViewport": {
+          "label": "Kleinste Breite"
+        },
+        "maxViewport": {
+          "label": "Grösste Breite"
+        },
+        "minBase": {
+          "label": "Grundabstand klein"
+        },
+        "maxBase": {
+          "label": "Grundabstand gross"
+        },
+        "sizesDown": {
+          "label": "Grössen darunter"
+        },
+        "sizesUp": {
+          "label": "Grössen darüber"
+        },
+        "pairs": {
+          "label": "Paare",
+          "options": {
+            "none": "Keine",
+            "one-up": "Eine Grösse höher",
+            "custom": "Eigenes"
+          }
+        },
+        "pairFrom": {
+          "label": "Paar von"
+        },
+        "pairTo": {
+          "label": "Paar bis"
+        },
+        "size": {
+          "options": {
+            "3xs": "3xs",
+            "2xs": "2xs",
+            "xs": "xs",
+            "s": "s",
+            "m": "m",
+            "l": "l",
+            "xl": "xl",
+            "2xl": "2xl",
+            "3xl": "3xl"
+          }
+        },
+        "unit": {
+          "label": "Einheit",
+          "options": {
+            "rem": "rem",
+            "px": "px"
+          }
+        },
+        "prefix": {
+          "label": "Präfix im Code"
+        },
+        "previewViewport": {
+          "label": "Vorschau bei Breite"
+        },
+        "background": {
+          "label": "Hintergrund"
+        },
+        "ink": {
+          "label": "Textfarbe"
+        },
+        "accent": {
+          "label": "Akzent"
+        }
+      },
+      "presets": {
+        "balanced": "Ausgewogen",
+        "compact": "Kompakt",
+        "airy": "Luftig",
+        "pairs": "Mit Paaren",
+        "hero-gap": "Hero-Abstand",
+        "app-ui": "App-Oberfläche",
+        "tailwind": "Tailwind"
+      },
+      "seo": {
+        "heading": "Fliessende Abstandsskala (Fluid Spacing mit clamp)",
+        "whatIs": "Eine fliessende Abstandsskala ist eine Reihe von Abständen (Innenabstand, Lücken, Ränder), die mit der Bildschirmbreite gleichmässig wachsen. Jede Grösse ist ein festes Vielfaches eines Grundabstands und steht als CSS clamp() im Code. So sind Abstände auf kleinen Bildschirmen enger und auf grossen grosszügiger, ganz ohne Breakpoints.",
+        "howTo": "Lege die kleinste und grösste Bildschirmbreite und den Grundabstand für beide fest. Wähle, wie viele Grössen du unter und über dem Grundabstand brauchst, und füge Paare hinzu, die über den Bereich von einer Grösse zur nächsten springen. Prüfe die Grössen in der Vorschau bei jeder Breite und kopiere CSS-Variablen, Hilfsklassen oder ein Tailwind-Theme.",
+        "useCases": {
+          "u1": {
+            "title": "Einheitliche Layouts",
+            "text": "Eine Skala für alle Abstände hält eine Website ruhig und stimmig, vom Knopf bis zum ganzen Abschnitt."
+          },
+          "u2": {
+            "title": "Weniger Breakpoints",
+            "text": "Abstände, die mit dem Bildschirm wachsen, ersetzen viele Media Queries für Innen- und Aussenabstände."
+          },
+          "u3": {
+            "title": "Design-Tokens",
+            "text": "Die Variablen passen direkt in ein Designsystem oder ein Tailwind-v4-Theme."
+          }
+        },
+        "tips": {
+          "t1": "Kombiniere die Abstandsskala mit der fliessenden Schriftskala und nutze für beide denselben Breitenbereich.",
+          "t2": "Paare wie s-l eignen sich für Abschnittsabstände, die sich zwischen Handy und Desktop stark ändern sollen.",
+          "t3": "Halte den Grundabstand nahe an deiner Textgrösse, oft 16 bis 20 px."
+        },
+        "faq": {
+          "q1": {
+            "question": "Wie werden die Grössen berechnet?",
+            "answer": "Jede Grösse ist ein festes Vielfaches des Grundabstands: 3xs ist ein Viertel, s der Grundabstand, m das 1,5-Fache, l das Doppelte, bis 3xl mit dem Sechsfachen. Der Grundabstand selbst wächst linear zwischen den beiden Bildschirmbreiten."
+          },
+          "q2": {
+            "question": "Was sind Paare?",
+            "answer": "Ein Paar geht auf kleinen Bildschirmen von einer Grösse zu einer grösseren auf grossen Bildschirmen, zum Beispiel von s bis l. Es wächst schneller als eine einzelne Grösse."
+          },
+          "q3": {
+            "question": "Funktioniert das mit Tailwind?",
+            "answer": "Ja. Der Tailwind-Export definiert --spacing-*-Variablen für Tailwind v4, damit Klassen wie p-s, gap-m oder mt-xl die fliessenden Werte nutzen."
+          },
+          "q4": {
+            "question": "Ist clamp() sicher beim Zoomen?",
+            "answer": "Ja. Die Werte verbinden rem und vw, darum wachsen sie mit, wenn jemand die Seite zoomt."
+          }
+        }
+      }
+    },
+    "gradient-text": {
+      "name": "Verlaufstext",
+      "description": "Überschriften mit Farbverlauf, auf Wunsch mit wanderndem Glanz: CSS mit background-clip, Tailwind-Klassen, SVG und PNG.",
+      "groups": {
+        "text": "Text",
+        "gradient": "Verlauf"
+      },
+      "params": {
+        "text": {
+          "label": "Text"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Serifenlos",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Gerundet"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "italic": {
+          "label": "Kursiv"
+        },
+        "letterSpacing": {
+          "label": "Laufweite"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "angle": {
+          "label": "Richtung"
+        },
+        "shine": {
+          "label": "Glanz-Animation"
+        },
+        "speed": {
+          "label": "Dauer des Glanzes"
+        }
+      },
+      "presets": {
+        "sunset": "Abendrot",
+        "ocean": "Ozean",
+        "mint": "Minze",
+        "gold": "Gold",
+        "neon": "Neon",
+        "ink": "Tinte",
+        "code": "Code",
+        "candy": "Bonbon"
+      },
+      "seo": {
+        "heading": "Verlaufstext (Gradient Text mit CSS)",
+        "whatIs": "Verlaufstext füllt Buchstaben mit einem Farbverlauf statt mit einer einzelnen Farbe. Im Web klappt das mit background-clip: text, das den Hintergrund nur innerhalb der Buchstaben zeigt. So fallen Überschriften, Hero-Bereiche und Logos auf.",
+        "howTo": "Tippe deinen Text und wähle Schrift, Stärke und Grösse. Bestimme Farben und Richtung des Verlaufs und schalte den Glanz ein, wenn die Farben durch den Text wandern sollen. Kopiere das CSS oder die Tailwind-Klassen oder exportiere die Überschrift als SVG, PNG oder GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Hero-Überschriften",
+            "text": "Eine Überschrift mit Verlauf gibt einer Landingpage einen Blickfang, ganz ohne Bild."
+          },
+          "u2": {
+            "title": "Knöpfe und Hervorhebungen",
+            "text": "Hebe ein Wort im Satz oder die Beschriftung eines Call-to-Action hervor."
+          },
+          "u3": {
+            "title": "Social Media und Folien",
+            "text": "Exportiere den Text als PNG oder SVG für Social Posts, Thumbnails und Präsentationen."
+          }
+        },
+        "tips": {
+          "t1": "Wähle Farben mit ähnlicher Helligkeit, damit jeder Buchstabe lesbar bleibt.",
+          "t2": "Fette Schriften zeigen Verläufe am besten; dünne Buchstaben lassen den Farben wenig Platz.",
+          "t3": "Die Glanz-Animation stoppt automatisch für Menschen, die weniger Bewegung wünschen."
+        },
+        "faq": {
+          "q1": {
+            "question": "Ist Verlaufstext barrierefrei?",
+            "answer": "Ja, er bleibt echter Text, den Screenreader vorlesen und man markieren kann. Prüfe den Kontrast der dunkelsten und hellsten Farbe zum Hintergrund."
+          },
+          "q2": {
+            "question": "Wozu brauche ich -webkit-background-clip?",
+            "answer": "Einige Browser brauchen noch die Eigenschaft mit Präfix. Der Export enthält beide, damit der Effekt überall funktioniert."
+          },
+          "q3": {
+            "question": "Kann ich meine eigene Schrift nutzen?",
+            "answer": "Ja. Das CSS funktioniert mit jeder Schrift deiner Website; die Vorschau nutzt Systemschriften als Platzhalter."
+          },
+          "q4": {
+            "question": "Enthält das SVG den Text als Pfade?",
+            "answer": "Nein. Es enthält echten Text mit Systemschriften, darum bleibt es klein und bearbeitbar. Auf anderen Computern kann die Schrift leicht anders aussehen."
+          }
+        }
+      }
+    },
+    "starburst-badge": {
+      "name": "Störer und Badges",
+      "description": "Preisschilder, Siegel und Sticker mit Zacken-, Wellen- oder Bogenrand und eigenem Text, als SVG, PNG oder drehendes GIF.",
+      "groups": {
+        "text": "Text",
+        "sticker": "Sticker"
+      },
+      "params": {
+        "shape": {
+          "label": "Rand",
+          "options": {
+            "spiky": "Zacken",
+            "scallop": "Bogen",
+            "wavy": "Wellen",
+            "zigzag": "Sägezahn",
+            "circle": "Kreis"
+          }
+        },
+        "points": {
+          "label": "Spitzen"
+        },
+        "depth": {
+          "label": "Tiefe"
+        },
+        "rotation": {
+          "label": "Drehung des Rands"
+        },
+        "tilt": {
+          "label": "Neigung"
+        },
+        "size": {
+          "label": "Grösse"
+        },
+        "line1": {
+          "label": "Haupttext"
+        },
+        "line2": {
+          "label": "Zweite Zeile"
+        },
+        "font": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Serifenlos",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Gerundet"
+          }
+        },
+        "fontWeight": {
+          "label": "Schriftstärke"
+        },
+        "textSize": {
+          "label": "Textgrösse"
+        },
+        "ring": {
+          "label": "Innerer Ring",
+          "options": {
+            "none": "Keiner",
+            "solid": "Linie",
+            "dashed": "Gestrichelt",
+            "dotted": "Gepunktet"
+          }
+        },
+        "border": {
+          "label": "Sticker-Rand"
+        },
+        "borderColor": {
+          "label": "Randfarbe"
+        },
+        "shadow": {
+          "label": "Schatten"
+        },
+        "shadowColor": {
+          "label": "Schattenfarbe"
+        },
+        "fill": {
+          "label": "Badge-Farbe"
+        },
+        "gradient": {
+          "label": "Verlauf"
+        },
+        "fill2": {
+          "label": "Zweite Farbe"
+        },
+        "ink": {
+          "label": "Textfarbe"
+        }
+      },
+      "presets": {
+        "sale": "Sale",
+        "new": "Neu",
+        "seal": "Siegel",
+        "sticker": "Sticker",
+        "price": "Preisschild",
+        "retro": "Retro",
+        "burst": "Explosion",
+        "quality": "Qualität"
+      },
+      "seo": {
+        "heading": "Störer und Badges (Starburst-Generator)",
+        "whatIs": "Ein Störer (englisch Starburst Badge) ist ein rundes Etikett mit gezacktem oder gewelltem Rand, die klassische Form für Preise, Rabatte und «Neu»-Sticker. Er zieht den Blick auf sich, auf Produktbildern, Shop-Bannern, Plakaten und Social Posts.",
+        "howTo": "Wähle einen Rand und stelle Anzahl der Spitzen, Tiefe und Neigung ein. Tippe einen Haupttext und optional eine zweite Zeile, wähle eine Schrift und ergänze einen Ring, einen Sticker-Rand oder einen harten Schatten. Exportiere als SVG, als PNG mit transparentem Hintergrund oder als GIF mit drehendem Rand. Mit der Leertaste kommen neue Farben und ein neuer Rand.",
+        "useCases": {
+          "u1": {
+            "title": "Shop und Produktbilder",
+            "text": "Markiere Rabatte, Neuheiten und Bestseller direkt auf dem Produktfoto."
+          },
+          "u2": {
+            "title": "Plakate und Flyer",
+            "text": "Ein kräftiger Störer mit Datum oder Preis lenkt den Blick auf das Wichtigste."
+          },
+          "u3": {
+            "title": "Social Posts und Sticker",
+            "text": "Nutze ihn als Sticker in Stories und Thumbnails oder als Siegel für Qualität und Auszeichnungen."
+          }
+        },
+        "tips": {
+          "t1": "Kurzer Text wirkt am besten: ein Wort oder eine Zahl im Haupttext, darunter eine kleine Zeile.",
+          "t2": "Heller Text auf dunklem Badge oder umgekehrt bleibt auch aus der Ferne lesbar.",
+          "t3": "Wähle einen transparenten Hintergrund, um den Störer auf Fotos zu setzen."
+        },
+        "faq": {
+          "q1": {
+            "question": "Darf ich die Badges kommerziell nutzen?",
+            "answer": "Ja. Alles, was du mit Musterli erstellst, darfst du frei nutzen, auch in kommerziellen Projekten und ohne Quellenangabe."
+          },
+          "q2": {
+            "question": "Warum wird der Text kleiner?",
+            "answer": "Der Text verkleinert sich automatisch, damit er immer ins Badge passt. Kürzerer Text bleibt grösser."
+          },
+          "q3": {
+            "question": "Kann ich ohne Hintergrund exportieren?",
+            "answer": "Ja. Stelle den Hintergrund auf transparent und exportiere als PNG, WebP oder SVG."
+          },
+          "q4": {
+            "question": "Enthält das SVG den Text als Pfade?",
+            "answer": "Nein. Es enthält echten Text mit Systemschriften, darum bleibt es klein und bearbeitbar. Auf anderen Computern kann die Schrift leicht anders aussehen."
+          }
+        }
+      }
+    },
+    "squiggle-lines": {
+      "name": "Kringellinien",
+      "description": "Wellen-, Zickzack- und Schlaufenlinien wie von Hand gezeichnet: Trenner, Linienmuster und verstreute Kringel als SVG, dazu eine gewellte Unterstreichung in CSS.",
+      "params": {
+        "style": {
+          "label": "Linie",
+          "options": {
+            "wave": "Welle",
+            "zigzag": "Zickzack",
+            "loops": "Schlaufen",
+            "bumps": "Bögen",
+            "scribble": "Gekritzel"
+          }
+        },
+        "wavelength": {
+          "label": "Wellenlänge"
+        },
+        "amplitude": {
+          "label": "Höhe"
+        },
+        "stroke": {
+          "label": "Linienstärke"
+        },
+        "layout": {
+          "label": "Anordnung",
+          "options": {
+            "single": "Eine Linie",
+            "stack": "Gestapelt",
+            "scatter": "Verstreut"
+          }
+        },
+        "count": {
+          "label": "Anzahl"
+        },
+        "length": {
+          "label": "Länge"
+        },
+        "angle": {
+          "label": "Winkel"
+        }
+      },
+      "presets": {
+        "stacked": "Gestapelte Wellen",
+        "divider": "Trenner",
+        "zigzag": "Zickzack",
+        "loops": "Schlaufen",
+        "confetti": "Konfetti",
+        "scribbles": "Gekritzel",
+        "bumps": "Bögen",
+        "memphis": "Memphis"
+      },
+      "seo": {
+        "heading": "Kringellinien (Squiggle-Generator)",
+        "whatIs": "Kringellinien (englisch Squiggle Lines) sind verspielte Wellen-, Zickzack- oder Schlaufenstriche, die wie von Hand gezeichnet wirken. Sie schmücken Überschriften, trennen Abschnitte, füllen Hintergründe und geben einem Design einen freundlichen, lebendigen Look.",
+        "howTo": "Wähle eine Linienform und stelle Wellenlänge, Höhe und Linienstärke ein. Nimm eine einzelne Linie, gestapelte Linien oder verstreute Kringel und bestimme Anzahl und Winkel. Exportiere als SVG, PNG oder bewegtes GIF oder kopiere das CSS für eine gewellte Unterstreichung. Mit der Leertaste kommen eine neue Linie und neue Farben.",
+        "useCases": {
+          "u1": {
+            "title": "Abschnittstrenner",
+            "text": "Eine einzelne Wellenlinie zwischen zwei Abschnitten wirkt leichter als ein gerader Strich."
+          },
+          "u2": {
+            "title": "Hintergründe und Muster",
+            "text": "Gestapelte Wellen oder verstreute Kringel ergeben lebendige Hintergründe für Plakate und Folien."
+          },
+          "u3": {
+            "title": "Unterstreichungen",
+            "text": "Der CSS-Export zeichnet eine gewellte Linie unter Links oder hervorgehobene Wörter."
+          }
+        },
+        "tips": {
+          "t1": "Runde Linienenden wirken freundlicher; dickere Striche lesen sich auf kleinen Bildschirmen besser.",
+          "t2": "Für eine Unterstreichung sehen kurze Wellenlänge und geringe Höhe am besten aus.",
+          "t3": "Verstreute Kringel in drei oder vier Farben ergeben einen klassischen Memphis-Look."
+        },
+        "faq": {
+          "q1": {
+            "question": "Darf ich die Linien kommerziell nutzen?",
+            "answer": "Ja. Alles, was du mit Musterli erstellst, darfst du frei nutzen, auch in kommerziellen Projekten und ohne Quellenangabe."
+          },
+          "q2": {
+            "question": "Wie funktioniert die gewellte Unterstreichung?",
+            "answer": "Sie ist ein kleines SVG mit einer Welle, das sich als Hintergrundbild unter dem Text waagrecht wiederholt. Es wächst mit der Schriftgrösse."
+          },
+          "q3": {
+            "question": "Kann ich die Linien in Figma oder Illustrator bearbeiten?",
+            "answer": "Ja. Das SVG enthält einfache Striche mit runden Enden, die du umfärben und verformen kannst."
+          },
+          "q4": {
+            "question": "Läuft die Animation nahtlos?",
+            "answer": "Ja. Das GIF über die Zeit verschiebt die Linien um genau eine Welle, so passt das Ende zum Anfang."
+          }
+        }
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus-Muster",
+      "description": "Geometrische Rastermuster mit Viertelkreisen, Halbkreisen, Ringen und Dreiecken in kräftigen Flächenfarben, als SVG und PNG.",
+      "params": {
+        "set": {
+          "label": "Figuren",
+          "options": {
+            "mixed": "Gemischt",
+            "curves": "Rundungen",
+            "angles": "Ecken"
+          }
+        },
+        "density": {
+          "label": "Dichte"
+        },
+        "columns": {
+          "label": "Spalten"
+        },
+        "gap": {
+          "label": "Abstand"
+        },
+        "radius": {
+          "label": "Eckenradius"
+        }
+      },
+      "presets": {
+        "classic": "Klassisch",
+        "primary": "Grundfarben",
+        "curves": "Rundungen",
+        "angles": "Ecken",
+        "pastel": "Pastell",
+        "night": "Nacht",
+        "calm": "Erdtöne",
+        "mosaic": "Mosaik"
+      },
+      "seo": {
+        "heading": "Bauhaus-Muster (Bauhaus Pattern Generator)",
+        "whatIs": "Ein Bauhaus-Muster ist ein Raster aus quadratischen Kacheln mit je einer einfachen geometrischen Figur wie Viertelkreis, Halbkreis, Ring oder Dreieck in flachen Farben. Der Stil erinnert an Plakate der Moderne und passt zu Markengrafik, Covern und Wandbildern.",
+        "howTo": "Wähle gemischte, runde oder eckige Figuren und bestimme, wie viele Kacheln eine Figur erhalten. Stelle Spalten, Abstand und Eckenradius ein und wähle Palette und Hintergrund. Mit der Leertaste kommt eine neue Anordnung; exportiere als SVG, PNG oder GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Marke und Verpackung",
+            "text": "Ein Bauhaus-Raster in Markenfarben ergibt eine starke, wiedererkennbare Fläche für Verpackungen und Merch."
+          },
+          "u2": {
+            "title": "Cover und Plakate",
+            "text": "Buchcover, Albumcover und Eventplakate erhalten einen kräftigen Look der Moderne."
+          },
+          "u3": {
+            "title": "Website-Hintergründe",
+            "text": "Wenige grosse Kacheln in gedeckten Farben eignen sich als ruhiger Hero- oder Footer-Hintergrund."
+          }
+        },
+        "tips": {
+          "t1": "Drei bis fünf Farben mit einem hellen Neutralton wirken am ausgewogensten.",
+          "t2": "Wenige Spalten ergeben grosse, plakative Figuren; viele Spalten ein feines Mosaik.",
+          "t3": "Ein kleiner Abstand und runde Ecken lassen das Raster freundlicher und zeitgemässer wirken."
+        },
+        "faq": {
+          "q1": {
+            "question": "Darf ich die Muster kommerziell nutzen?",
+            "answer": "Ja. Alles, was du mit Musterli erstellst, darfst du frei nutzen, auch in kommerziellen Projekten und ohne Quellenangabe."
+          },
+          "q2": {
+            "question": "Wie erhalte ich eine neue Anordnung?",
+            "answer": "Drücke die Leertaste oder den Würfel. Jede Variante verteilt Figuren und Drehungen neu; deine Einstellungen bleiben."
+          },
+          "q3": {
+            "question": "Kann ich das SVG bearbeiten?",
+            "answer": "Ja. Jede Kachel und jede Figur ist eine eigene Form, die du in Figma, Illustrator oder Inkscape umfärben kannst."
+          },
+          "q4": {
+            "question": "Kann ich das Muster animieren?",
+            "answer": "Ja. Exportiere ein GIF, dann werden die Figuren in jedem Bild neu verteilt oder die Farben wandern durch die Palette."
+          }
+        }
+      }
     }
   },
   "Converters": {

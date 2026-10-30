@@ -172,7 +172,7 @@ Plan: Claude Doc "Musterli als Web Designer Toolbox: Verbesserungsplan" (2026-10
 
 **W3 Webdesign-Werkzeuge** (Auswahl Andreas 2026-10-29: nur Hoch)
 - [x] Hoch: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild (Specs `docs/TOOLS.md` M1 bis M3)
-- [ ] Mittel: Easing und CSS-Animation, Abstandsskala, Verlaufstext
+- [x] Mittel: Easing und CSS-Animation, Abstandsskala, Verlaufstext (Specs `docs/TOOLS.md` M7 bis M9, 2026-10-30)
 - [ ] Niedrig: CSS-Loader, SVG-Aufräumer (ohne SVGO)
 
 **DoD je Etappe**: wie CLAUDE.md (Chrome, Light/Dark, Tastatur, Tests, DE/EN, Docs); neue Exporte mit Snapshot-Test pro Preset.
@@ -193,6 +193,14 @@ Letzter offener Top-Vorschlag aus dem Ideen-Dokument, gewählt von Andreas.
 - [x] Holografie-Verlauf (Spec `docs/TOOLS.md` C5)
 - [x] Neon-Formen (Spec `docs/TOOLS.md` D6)
 - [x] Glitch-Hintergrund (Spec `docs/TOOLS.md` C6)
+
+## Formen und Sticker (Entscheid Andreas 2026-10-30)
+
+Bereich "Shapes and stickers" aus dem Ideen-Dokument, gewählt von Andreas nach W5.
+
+- [x] Störer und Badges (Spec `docs/TOOLS.md` D7)
+- [x] Kringellinien (Spec `docs/TOOLS.md` D8)
+- [x] Bauhaus-Muster (Spec `docs/TOOLS.md` A5)
 
 ## M7: Differenzierung & Wachstum (ab Woche 24)
 

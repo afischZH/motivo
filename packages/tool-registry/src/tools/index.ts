@@ -24,6 +24,12 @@ import { stripedGradientTool } from "./striped-gradient";
 import { holographicGradientTool } from "./holographic-gradient";
 import { neonShapesTool } from "./neon-shapes";
 import { glitchBackgroundTool } from "./glitch-background";
+import { cssEasingTool } from "./css-easing";
+import { spacingScaleTool } from "./spacing-scale";
+import { gradientTextTool } from "./gradient-text";
+import { starburstBadgeTool } from "./starburst-badge";
+import { squiggleLinesTool } from "./squiggle-lines";
+import { bauhausPatternTool } from "./bauhaus-pattern";
 import { svgChartsTool } from "./svg-charts";
 import { svgWavesTool } from "./svg-waves";
 import { tailwindPaletteTool } from "./tailwind-palette";
@@ -116,11 +122,20 @@ export {
   holographicGradientTool,
   neonShapesTool,
   glitchBackgroundTool,
+  cssEasingTool,
+  spacingScaleTool,
+  gradientTextTool,
+  starburstBadgeTool,
+  squiggleLinesTool,
+  bauhausPatternTool,
 };
+export type { BauhausPatternParams } from "./bauhaus-pattern";
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
 export type { BlurryGradientParams } from "./blurry-gradient";
 export type { ConfettiParams } from "./confetti";
+export type { SquiggleLinesParams } from "./squiggle-lines";
+export type { StarburstBadgeParams } from "./starburst-badge";
 export type { CssGradientParams } from "./css-gradient";
 export type { CssPatternsParams } from "./css-patterns";
 export { cssPatternDescriptionKey, cssPatternNameKey, cssPatternShowcase } from "./css-patterns";
@@ -139,6 +154,9 @@ export type { StripedGradientParams } from "./striped-gradient";
 export type { HolographicGradientParams } from "./holographic-gradient";
 export type { NeonShapesParams } from "./neon-shapes";
 export type { GlitchBackgroundParams } from "./glitch-background";
+export type { CssEasingParams } from "./css-easing";
+export type { SpacingScaleParams } from "./spacing-scale";
+export type { GradientTextParams } from "./gradient-text";
 export type { SvgChartsParams } from "./svg-charts";
 export type { SvgWavesParams } from "./svg-waves";
 export type { TailwindPaletteParams } from "./tailwind-palette";
@@ -268,6 +286,12 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   holographicGradientTool,
   neonShapesTool,
   glitchBackgroundTool,
+  cssEasingTool,
+  spacingScaleTool,
+  gradientTextTool,
+  starburstBadgeTool,
+  squiggleLinesTool,
+  bauhausPatternTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

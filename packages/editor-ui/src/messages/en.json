@@ -227,7 +227,8 @@
         "htmlPre": "HTML (pre)",
         "utilityClasses": "CSS variables and classes",
         "metaTags": "Meta tags (HTML)",
-        "svgClipPath": "SVG clipPath (HTML)"
+        "svgClipPath": "SVG clipPath (HTML)",
+        "cssAnimation": "CSS animation"
       },
       "gif": {
         "title": "GIF settings",

@@ -6437,6 +6437,644 @@
           }
         }
       }
+    },
+    "css-easing": {
+      "name": "CSS Easing Generator",
+      "description": "Design easing curves for transitions and animations: cubic-bezier() or a spring as linear(), with CSS and Tailwind code to copy.",
+      "groups": {
+        "curve": "Curve",
+        "code": "Code",
+        "preview": "Preview"
+      },
+      "params": {
+        "kind": {
+          "label": "Type",
+          "options": {
+            "bezier": "Bezier",
+            "spring": "Spring"
+          }
+        },
+        "x1": {
+          "label": "Handle 1 time"
+        },
+        "y1": {
+          "label": "Handle 1 progress"
+        },
+        "x2": {
+          "label": "Handle 2 time"
+        },
+        "y2": {
+          "label": "Handle 2 progress"
+        },
+        "stiffness": {
+          "label": "Stiffness"
+        },
+        "damping": {
+          "label": "Damping"
+        },
+        "duration": {
+          "label": "Duration"
+        },
+        "name": {
+          "label": "Variable name"
+        },
+        "progress": {
+          "label": "Dot position"
+        },
+        "background": {
+          "label": "Background"
+        },
+        "ink": {
+          "label": "Text color"
+        },
+        "accent": {
+          "label": "Accent"
+        }
+      },
+      "presets": {
+        "smooth-out": "Smooth out",
+        "ease-in-out": "Ease in and out",
+        "back-out": "Back out",
+        "snappy": "Snappy",
+        "anticipate": "Anticipate",
+        "spring": "Bouncy spring",
+        "gentle-spring": "Gentle spring",
+        "wobbly": "Wobbly"
+      },
+      "seo": {
+        "whatIs": "An easing curve decides how fast an animation moves at each moment: slow at the start, quick at the end, or with a little bounce. In CSS it is the timing function of transition and animation, written as cubic-bezier() or, for springs, as linear() with many points.",
+        "howTo": "Choose a Bezier curve or a spring. Move the two handles or set stiffness and damping, and watch the dot move along the track. Set the duration and a variable name, then copy the transition, the animation or the Tailwind theme. Press Space for a new curve.",
+        "useCases": {
+          "u1": {
+            "title": "Buttons and hover effects",
+            "text": "A short ease-out makes buttons and links feel responsive without being jumpy."
+          },
+          "u2": {
+            "title": "Modals and menus",
+            "text": "Overlays that slide in with a soft curve feel natural; a small overshoot adds character."
+          },
+          "u3": {
+            "title": "Design systems",
+            "text": "Name your curves once as CSS variables or Tailwind tokens and use the same motion everywhere."
+          }
+        },
+        "tips": {
+          "t1": "Ease-out curves suit things that enter, ease-in suits things that leave the screen.",
+          "t2": "Keep interface transitions between 150 and 400 ms; longer feels slow.",
+          "t3": "Every code export switches the motion off for people who ask for reduced motion."
+        },
+        "faq": {
+          "q1": {
+            "question": "What is the difference between cubic-bezier and linear()?",
+            "answer": "cubic-bezier() describes a smooth curve with two handles. linear() lists many points and can therefore draw springs and bounces that one Bezier curve cannot."
+          },
+          "q2": {
+            "question": "Do all browsers support linear()?",
+            "answer": "Current versions of Chrome, Edge, Firefox and Safari support it. Older browsers ignore the value and fall back to the default easing, so add a cubic-bezier fallback if you need them."
+          },
+          "q3": {
+            "question": "Why do some handles go above 1?",
+            "answer": "Progress above 1 or below 0 means the element overshoots its end or pulls back before it starts. That gives back and anticipate effects."
+          },
+          "q4": {
+            "question": "Can I export the motion as a GIF?",
+            "answer": "Yes. Export a GIF over time and the dot plays the curve from the position shown in the preview."
+          }
+        }
+      }
+    },
+    "spacing-scale": {
+      "name": "Fluid Spacing Scale Generator",
+      "description": "Spacing that grows with the screen width: t-shirt sizes from 3xs to 3xl as CSS clamp(), with CSS variables, utility classes and a Tailwind theme.",
+      "groups": {
+        "viewport": "Viewport",
+        "scale": "Scale",
+        "code": "Code",
+        "preview": "Preview"
+      },
+      "params": {
+        "minViewport": {
+          "label": "Smallest width"
+        },
+        "maxViewport": {
+          "label": "Largest width"
+        },
+        "minBase": {
+          "label": "Base space small"
+        },
+        "maxBase": {
+          "label": "Base space large"
+        },
+        "sizesDown": {
+          "label": "Sizes below"
+        },
+        "sizesUp": {
+          "label": "Sizes above"
+        },
+        "pairs": {
+          "label": "Pairs",
+          "options": {
+            "none": "None",
+            "one-up": "One size up",
+            "custom": "Custom"
+          }
+        },
+        "pairFrom": {
+          "label": "Pair from"
+        },
+        "pairTo": {
+          "label": "Pair to"
+        },
+        "size": {
+          "options": {
+            "3xs": "3xs",
+            "2xs": "2xs",
+            "xs": "xs",
+            "s": "s",
+            "m": "m",
+            "l": "l",
+            "xl": "xl",
+            "2xl": "2xl",
+            "3xl": "3xl"
+          }
+        },
+        "unit": {
+          "label": "Unit",
+          "options": {
+            "rem": "rem",
+            "px": "px"
+          }
+        },
+        "prefix": {
+          "label": "Prefix in code"
+        },
+        "previewViewport": {
+          "label": "Preview at width"
+        },
+        "background": {
+          "label": "Background"
+        },
+        "ink": {
+          "label": "Text color"
+        },
+        "accent": {
+          "label": "Accent"
+        }
+      },
+      "presets": {
+        "balanced": "Balanced",
+        "compact": "Compact",
+        "airy": "Airy",
+        "pairs": "With pairs",
+        "hero-gap": "Hero gap",
+        "app-ui": "App UI",
+        "tailwind": "Tailwind"
+      },
+      "seo": {
+        "whatIs": "A fluid spacing scale is a set of space values (padding, gaps, margins) that grow smoothly with the screen width. Each size is a fixed multiple of a base space and is written as CSS clamp(), so small screens get tighter and large screens get more generous spacing without breakpoints.",
+        "howTo": "Set the smallest and largest screen width and the base space at both. Choose how many sizes you need below and above the base, and add pairs that jump from one size to the next across the range. Check the sizes at any width in the preview, then copy CSS variables, utility classes or a Tailwind theme.",
+        "useCases": {
+          "u1": {
+            "title": "Consistent layouts",
+            "text": "One scale for all gaps keeps a site calm and consistent, from buttons to whole sections."
+          },
+          "u2": {
+            "title": "Fewer breakpoints",
+            "text": "Spacing that grows with the viewport replaces many media queries for padding and margins."
+          },
+          "u3": {
+            "title": "Design tokens",
+            "text": "The variables fit straight into a design system or a Tailwind v4 theme."
+          }
+        },
+        "tips": {
+          "t1": "Pair the spacing scale with the fluid type scale and use the same viewport range for both.",
+          "t2": "Pairs such as s-l are great for section padding that should change a lot between phone and desktop.",
+          "t3": "Keep the base space close to your body text size, often 16 to 20 px."
+        },
+        "faq": {
+          "q1": {
+            "question": "How are the sizes calculated?",
+            "answer": "Every size is a fixed multiple of the base: 3xs is a quarter, s is the base, m is 1.5 times, l twice, up to 3xl at six times. The base itself grows linearly between the two screen widths."
+          },
+          "q2": {
+            "question": "What are pairs?",
+            "answer": "A pair goes from one size on small screens to a larger size on large screens, for example from s to l. It grows faster than a single size."
+          },
+          "q3": {
+            "question": "Does it work with Tailwind?",
+            "answer": "Yes. The Tailwind theme export defines --spacing-* variables for Tailwind v4, so classes like p-s, gap-m or mt-xl use the fluid values."
+          },
+          "q4": {
+            "question": "Is clamp() safe for zoom?",
+            "answer": "Yes. The values combine rem and vw, so they still grow when people zoom the page."
+          }
+        }
+      }
+    },
+    "gradient-text": {
+      "name": "Gradient Text Generator",
+      "description": "Headlines with a color gradient, optionally with a sliding shine: CSS with background-clip, Tailwind classes, SVG and PNG.",
+      "groups": {
+        "text": "Text",
+        "gradient": "Gradient"
+      },
+      "params": {
+        "text": {
+          "label": "Text"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "italic": {
+          "label": "Italic"
+        },
+        "letterSpacing": {
+          "label": "Letter spacing"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "angle": {
+          "label": "Direction"
+        },
+        "shine": {
+          "label": "Shine animation"
+        },
+        "speed": {
+          "label": "Shine duration"
+        }
+      },
+      "presets": {
+        "sunset": "Sunset",
+        "ocean": "Ocean",
+        "mint": "Mint",
+        "gold": "Gold",
+        "neon": "Neon",
+        "ink": "Ink",
+        "code": "Code",
+        "candy": "Candy"
+      },
+      "seo": {
+        "whatIs": "Gradient text fills letters with a color gradient instead of one color. On the web it works with background-clip: text, which shows the background only inside the letters. It is a popular way to make headlines, hero sections and logos stand out.",
+        "howTo": "Type your text, then choose font, weight and size. Pick the gradient colors and direction, and switch on the shine if the colors should slide through the text. Copy the CSS or Tailwind classes, or export the headline as SVG, PNG or GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Hero headlines",
+            "text": "A gradient headline gives a landing page an eye-catching focus without an image."
+          },
+          "u2": {
+            "title": "Buttons and highlights",
+            "text": "Highlight one word in a sentence or the label of a call to action."
+          },
+          "u3": {
+            "title": "Social and slides",
+            "text": "Export the text as PNG or SVG for social posts, thumbnails and presentations."
+          }
+        },
+        "tips": {
+          "t1": "Choose colors with similar lightness so every letter stays readable.",
+          "t2": "Bold fonts show gradients best; thin letters leave little room for the colors.",
+          "t3": "The shine animation stops automatically for people who prefer reduced motion."
+        },
+        "faq": {
+          "q1": {
+            "question": "Is gradient text accessible?",
+            "answer": "Yes, it stays real text that screen readers read and people can select. Check the contrast of the darkest and lightest color against the background."
+          },
+          "q2": {
+            "question": "Why do I need -webkit-background-clip?",
+            "answer": "Some browsers still need the prefixed property. The export contains both, so the effect works everywhere."
+          },
+          "q3": {
+            "question": "Can I use my own font?",
+            "answer": "Yes. The CSS works with any font on your site; the preview uses system fonts as a stand-in."
+          },
+          "q4": {
+            "question": "Does the SVG contain the text as outlines?",
+            "answer": "No. It contains real text with a system font stack, so it stays small and editable. Fonts can look slightly different on other computers."
+          }
+        }
+      }
+    },
+    "starburst-badge": {
+      "name": "Starburst Badge Generator",
+      "description": "Price tags, seals and stickers with a spiky, scalloped or wavy edge and your own text, as SVG, PNG or a spinning GIF.",
+      "groups": {
+        "text": "Text",
+        "sticker": "Sticker"
+      },
+      "params": {
+        "shape": {
+          "label": "Edge",
+          "options": {
+            "spiky": "Spiky",
+            "scallop": "Scalloped",
+            "wavy": "Wavy",
+            "zigzag": "Zigzag",
+            "circle": "Circle"
+          }
+        },
+        "points": {
+          "label": "Points"
+        },
+        "depth": {
+          "label": "Depth"
+        },
+        "rotation": {
+          "label": "Edge rotation"
+        },
+        "tilt": {
+          "label": "Tilt"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "line1": {
+          "label": "Main text"
+        },
+        "line2": {
+          "label": "Second line"
+        },
+        "font": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
+        },
+        "fontWeight": {
+          "label": "Font weight"
+        },
+        "textSize": {
+          "label": "Text size"
+        },
+        "ring": {
+          "label": "Inner ring",
+          "options": {
+            "none": "None",
+            "solid": "Solid",
+            "dashed": "Dashed",
+            "dotted": "Dotted"
+          }
+        },
+        "border": {
+          "label": "Sticker border"
+        },
+        "borderColor": {
+          "label": "Border color"
+        },
+        "shadow": {
+          "label": "Shadow"
+        },
+        "shadowColor": {
+          "label": "Shadow color"
+        },
+        "fill": {
+          "label": "Badge color"
+        },
+        "gradient": {
+          "label": "Gradient"
+        },
+        "fill2": {
+          "label": "Second color"
+        },
+        "ink": {
+          "label": "Text color"
+        }
+      },
+      "presets": {
+        "sale": "Sale",
+        "new": "New",
+        "seal": "Seal",
+        "sticker": "Sticker",
+        "price": "Price tag",
+        "retro": "Retro",
+        "burst": "Burst",
+        "quality": "Quality"
+      },
+      "seo": {
+        "whatIs": "A starburst badge is a round label with a spiky or wavy edge, the classic shape for prices, discounts and \"new\" stickers. It catches the eye on product images, shop banners, posters and social posts.",
+        "howTo": "Pick an edge, then set the number of points, the depth and the tilt. Type a main text and an optional second line, choose a font and add a ring, a sticker border or a hard shadow. Export as SVG, PNG with a transparent background or as a GIF where the edge turns. Press Space for new colors and a new edge.",
+        "useCases": {
+          "u1": {
+            "title": "Shop and product images",
+            "text": "Mark discounts, new arrivals and bestsellers right on the product photo."
+          },
+          "u2": {
+            "title": "Posters and flyers",
+            "text": "A bold badge with a date or price draws the eye to the key fact."
+          },
+          "u3": {
+            "title": "Social posts and stickers",
+            "text": "Use it as a sticker on stories and thumbnails, or as a seal for quality and awards."
+          }
+        },
+        "tips": {
+          "t1": "Short text works best: one word or a number in the main line, a small label below.",
+          "t2": "A light text color on a dark badge, or the other way round, keeps it readable from afar.",
+          "t3": "Choose a transparent background to place the badge on photos."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the badges commercially?",
+            "answer": "Yes. Everything you create with Musterli is yours to use, also in commercial projects, without credit."
+          },
+          "q2": {
+            "question": "Why does the text get smaller?",
+            "answer": "The text shrinks automatically so it always fits inside the badge. Shorter text stays bigger."
+          },
+          "q3": {
+            "question": "Can I export it without a background?",
+            "answer": "Yes. Set the background to transparent and export as PNG, WebP or SVG."
+          },
+          "q4": {
+            "question": "Does the SVG contain the text as outlines?",
+            "answer": "No. It contains real text with a system font stack, so it stays small and editable. Fonts can look slightly different on other computers."
+          }
+        }
+      }
+    },
+    "squiggle-lines": {
+      "name": "Squiggle Line Generator",
+      "description": "Hand-drawn looking wavy, zigzag and looping lines: dividers, line patterns and scattered squiggles as SVG, plus a CSS squiggly underline.",
+      "params": {
+        "style": {
+          "label": "Line",
+          "options": {
+            "wave": "Wave",
+            "zigzag": "Zigzag",
+            "loops": "Loops",
+            "bumps": "Bumps",
+            "scribble": "Scribble"
+          }
+        },
+        "wavelength": {
+          "label": "Wavelength"
+        },
+        "amplitude": {
+          "label": "Height"
+        },
+        "stroke": {
+          "label": "Line width"
+        },
+        "layout": {
+          "label": "Arrangement",
+          "options": {
+            "single": "One line",
+            "stack": "Stacked",
+            "scatter": "Scattered"
+          }
+        },
+        "count": {
+          "label": "Count"
+        },
+        "length": {
+          "label": "Length"
+        },
+        "angle": {
+          "label": "Angle"
+        }
+      },
+      "presets": {
+        "stacked": "Stacked waves",
+        "divider": "Divider",
+        "zigzag": "Zigzag",
+        "loops": "Loops",
+        "confetti": "Confetti",
+        "scribbles": "Scribbles",
+        "bumps": "Bumps",
+        "memphis": "Memphis"
+      },
+      "seo": {
+        "whatIs": "Squiggle lines are playful wavy, zigzag or looping strokes that look drawn by hand. They decorate headlines, separate sections, fill backgrounds and give a design a friendly, energetic look.",
+        "howTo": "Choose a line shape and set wavelength, height and line width. Pick one line, a stack of parallel lines or scattered squiggles, then set the count and angle. Export as SVG, PNG or a moving GIF, or copy the CSS for a squiggly underline. Press Space for a new line and colors.",
+        "useCases": {
+          "u1": {
+            "title": "Section dividers",
+            "text": "A single wavy line between two sections feels lighter than a straight rule."
+          },
+          "u2": {
+            "title": "Backgrounds and patterns",
+            "text": "Stacked waves or scattered squiggles make lively backgrounds for posters and slides."
+          },
+          "u3": {
+            "title": "Underlines",
+            "text": "The CSS export draws a squiggly underline under links or highlighted words."
+          }
+        },
+        "tips": {
+          "t1": "Round line ends make the lines look friendlier; thicker strokes read better on small screens.",
+          "t2": "For an underline, a short wavelength and low height look best.",
+          "t3": "Scattered squiggles in three or four colors give a classic Memphis look."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the lines commercially?",
+            "answer": "Yes. Everything you create with Musterli is yours to use, also in commercial projects, without credit."
+          },
+          "q2": {
+            "question": "How does the squiggly underline work?",
+            "answer": "It is a small SVG of one wave that repeats horizontally as a background image under the text. It scales with the font size."
+          },
+          "q3": {
+            "question": "Can I edit the lines in Figma or Illustrator?",
+            "answer": "Yes. The SVG contains plain strokes with round ends that you can recolor and reshape."
+          },
+          "q4": {
+            "question": "Does the animation loop seamlessly?",
+            "answer": "Yes. The GIF over time moves the lines by exactly one wave, so the end matches the start."
+          }
+        }
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus Pattern Generator",
+      "description": "Geometric grid patterns with quarter circles, half circles, rings and triangles in bold flat colors, as SVG and PNG.",
+      "params": {
+        "set": {
+          "label": "Figures",
+          "options": {
+            "mixed": "Mixed",
+            "curves": "Curves",
+            "angles": "Angles"
+          }
+        },
+        "density": {
+          "label": "Density"
+        },
+        "columns": {
+          "label": "Columns"
+        },
+        "gap": {
+          "label": "Gap"
+        },
+        "radius": {
+          "label": "Corner radius"
+        }
+      },
+      "presets": {
+        "classic": "Classic",
+        "primary": "Primary colors",
+        "curves": "Curves",
+        "angles": "Angles",
+        "pastel": "Pastel",
+        "night": "Night",
+        "calm": "Earthy",
+        "mosaic": "Mosaic"
+      },
+      "seo": {
+        "whatIs": "A Bauhaus pattern is a grid of square tiles, each with a simple geometric figure like a quarter circle, half circle, ring or triangle in flat colors. The style recalls modernist posters and suits brand graphics, covers and wall art.",
+        "howTo": "Choose mixed, curved or angular figures and set how many tiles get a figure. Set the number of columns, the gap and the corner radius, then pick a palette and a background. Press Space for a new arrangement and export as SVG, PNG or GIF.",
+        "useCases": {
+          "u1": {
+            "title": "Brand and packaging",
+            "text": "A Bauhaus grid in brand colors makes a strong, recognizable surface for packaging and merch."
+          },
+          "u2": {
+            "title": "Covers and posters",
+            "text": "Book covers, album art and event posters gain a bold modernist look."
+          },
+          "u3": {
+            "title": "Website backgrounds",
+            "text": "A few large tiles in muted colors work as a calm hero or footer background."
+          }
+        },
+        "tips": {
+          "t1": "Three to five colors with one light neutral look most balanced.",
+          "t2": "Fewer columns give large, poster-like figures; more columns give a fine mosaic.",
+          "t3": "A small gap and corner radius make the grid look friendlier and more contemporary."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the patterns commercially?",
+            "answer": "Yes. Everything you create with Musterli is yours to use, also in commercial projects, without credit."
+          },
+          "q2": {
+            "question": "How do I get a new arrangement?",
+            "answer": "Press Space or the dice button. Each variant deals new figures and turns; your settings stay."
+          },
+          "q3": {
+            "question": "Can I edit the SVG?",
+            "answer": "Yes. Every tile and figure is a separate shape that you can recolor in Figma, Illustrator or Inkscape."
+          },
+          "q4": {
+            "question": "Can I animate the pattern?",
+            "answer": "Yes. Export a GIF and the figures are dealt anew in every frame, or the colors cycle through the palette."
+          }
+        }
+      }
     }
   },
   "Converters": {
