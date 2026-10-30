@@ -5919,6 +5919,135 @@
           }
         }
       }
+    },
+    "qr-code": {
+      "name": "QR Code Generator",
+      "description": "Free QR codes with style: dots, rounded modules, custom eyes, gradients and your logo. Download as SVG, PNG, JPG or WebP, no sign-up and no expiry.",
+      "groups": {
+        "content": "Content",
+        "logo": "Logo"
+      },
+      "params": {
+        "text": {
+          "label": "Link or text"
+        },
+        "ecLevel": {
+          "label": "Error correction",
+          "description": "Higher levels keep the code readable when it is damaged or covered by a logo, but need more modules.",
+          "options": {
+            "L": "L 7 %",
+            "M": "M 15 %",
+            "Q": "Q 25 %",
+            "H": "H 30 %"
+          }
+        },
+        "moduleShape": {
+          "label": "Modules",
+          "options": {
+            "square": "Squares",
+            "dots": "Dots",
+            "rounded": "Rounded",
+            "diamond": "Diamonds",
+            "lines": "Bars"
+          }
+        },
+        "eyeShape": {
+          "label": "Eyes",
+          "options": {
+            "square": "Square",
+            "rounded": "Rounded",
+            "circle": "Circle",
+            "leaf": "Leaf"
+          }
+        },
+        "margin": {
+          "label": "Quiet zone"
+        },
+        "ink": {
+          "label": "Color"
+        },
+        "gradient": {
+          "label": "Gradient"
+        },
+        "ink2": {
+          "label": "Second color"
+        },
+        "gradientAngle": {
+          "label": "Gradient angle"
+        },
+        "eyeColor": {
+          "label": "Eye color"
+        },
+        "logo": {
+          "label": "Logo",
+          "description": "Placed in the middle of the code. It stays on your device and is never part of a share link."
+        },
+        "logoSize": {
+          "label": "Logo size"
+        }
+      },
+      "presets": {
+        "rounded": "Rounded",
+        "classic": "Classic",
+        "dots": "Dots",
+        "ocean": "Ocean",
+        "forest": "Forest",
+        "diamonds": "Diamonds",
+        "bars": "Bars",
+        "sunset": "Sunset",
+        "wifi": "Wi-Fi",
+        "transparent": "Transparent"
+      },
+      "advisories": {
+        "empty": "Enter a link or text to create the code.",
+        "tooLong": "This text is too long for a QR code at this error correction. Shorten it or pick a lower level.",
+        "contrast": "The contrast is only {ratio}:1. Many phones need at least {required}:1, so pick a darker color or a lighter background.",
+        "inverted": "Light code on a dark background: some older scanners cannot read it. Test it with several phones.",
+        "logoLevel": "With a logo, pick error correction Q or H so the code stays readable.",
+        "margin": "A quiet zone below 2 modules can make the code hard to scan. 4 is the standard."
+      },
+      "seo": {
+        "heading": "QR Code Generator with Logo (free, SVG and PNG)",
+        "whatIs": "A QR code stores a link or a short text as a pattern of squares that any phone camera can read. Here you design it to match your brand: with dots or rounded modules, your colors, a gradient and your logo in the middle. The code is static, so it works forever and needs no account.",
+        "howTo": "Enter a link or text and pick the error correction. Choose the module and eye shapes, set the colors and optionally add your logo. Check the hints for contrast, then download the code as SVG for print or PNG for the web.",
+        "useCases": {
+          "u1": {
+            "title": "Flyers, posters and packaging",
+            "text": "The SVG stays sharp at any size, from a business card to a banner."
+          },
+          "u2": {
+            "title": "Menus and events",
+            "text": "Lead guests to the menu, the program or the ticket shop with one scan."
+          },
+          "u3": {
+            "title": "Wi-Fi for guests",
+            "text": "A code in the form WIFI:T:WPA;S:name;P:password;; connects phones without typing."
+          }
+        },
+        "tips": {
+          "t1": "Always test the finished code with two or three phones before you print it.",
+          "t2": "Dark code on a light background scans best. Keep the contrast at 3:1 or more.",
+          "t3": "The shorter the text, the bigger and easier to scan each module. Use a short link for long addresses."
+        },
+        "faq": {
+          "q1": {
+            "question": "Do the QR codes expire?",
+            "answer": "No. The content is stored in the code itself, not on a server. The code works as long as the link behind it works."
+          },
+          "q2": {
+            "question": "Can I put my logo in the middle?",
+            "answer": "Yes. The modules behind the logo are left out and the error correction restores them. Use level Q or H and keep the logo at 30 percent or less."
+          },
+          "q3": {
+            "question": "Which format is best for print?",
+            "answer": "SVG. It is a vector file and stays sharp at any size. For websites and documents PNG works well."
+          },
+          "q4": {
+            "question": "Is anything tracked?",
+            "answer": "No. Your text and logo stay in your browser. There is no redirect and no scan counter."
+          }
+        }
+      }
     }
   },
   "Converters": {

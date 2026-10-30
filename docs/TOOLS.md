@@ -608,6 +608,16 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 - **Leertaste**: neue Form mit neuen Einstellungen; Farben und Bild bleiben. **Brand-Palette**: die ersten zwei Farben.
 - **Vorlagen** (12): Sechseck, Dreieck, Stern, Strahlenkranz, Blob, Kreis, Wellenkante, Hero-Schräge, Pfeil, abgeschrägte Ecken, Sprechblase, Raute.
 
+### M5. QR-Code-Generator · W4 · G
+
+**Umgesetzt (Tool-ID `qr-code`, Slug `qr-code-generator` in DE und EN, Kategorie `icons`, Engine `packages/engine/src/tools/qr-code/`)**:
+- **Encoder ohne Library** (`encode.ts`, nach ISO/IEC 18004): nur Byte-Modus (UTF-8, eigener Encoder ohne `TextEncoder`), Versionen 1 bis 40, Fehlerkorrektur L/M/Q/H, Reed-Solomon über GF(256), alle acht Masken mit den Strafregeln. Geprüft mit ZXing (zxing-cpp) über 134 Codes (alle Stufen, Versionen bis 40, erzwungene Masken) und 40 Stil-Kombinationen mit und ohne Logo: alle korrekt gelesen. Die Matrix der letzten Eingabe wird zwischengespeichert (Vorschau, Hinweise, Export).
+- **Params**: `text` (bis 1000 Zeichen, `contentParams`, im Teilen-Link), `ecLevel`, `moduleShape` (Quadrate als Läufe zusammengefasst, Punkte, abgerundet mit runden Ecken nur ohne Nachbarn, Rauten, senkrechte Balken), `eyeShape` (eckig, abgerundet, Kreis, Blatt), `margin` (Ruhezone 0 bis 10 Module), `ink`, optional Verlauf mit `ink2` und Winkel, `eyeColor`, `background` (auch transparent), `logo` (lokal, nie im Teilen-Link) mit `logoSize` 10 bis 30 %; Module hinter dem Logo fallen weg.
+- **Hinweise**: leerer Text, zu lang für die Stufe, Kontrast unter 3:1, heller Code auf dunklem Grund, Logo mit Stufe L oder M, Ruhezone unter 2.
+- **Exporte**: SVG, PNG, JPG, WebP. Gezeichnet in Moduleinheiten in einer skalierten Gruppe, das SVG bleibt klein.
+- **Leertaste**: neue Formen und dunkle Farben; Text, Logo und Hintergrund bleiben. **Brand-Palette**: erste Farbe für Code und Augen, zweite für den Verlauf.
+- **Vorlagen** (10): Abgerundet, Klassisch, Punkte, Ozean, Wald, Rauten, Balken, Abendrot, WLAN, Transparent.
+
 ## Umsetzungsreihenfolge (Zusammenfassung)
 
 1. **M1**: CSS Gradient, Blob, Waves, Converters (einfach, beweisen die Tool-Architektur)

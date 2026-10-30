@@ -5930,6 +5930,135 @@
           }
         }
       }
+    },
+    "qr-code": {
+      "name": "QR-Code-Generator",
+      "description": "Gratis QR-Codes mit Stil: Punkte, runde Module, eigene Augen, Verläufe und dein Logo. Download als SVG, PNG, JPG oder WebP, ohne Anmeldung und ohne Ablaufdatum.",
+      "groups": {
+        "content": "Inhalt",
+        "logo": "Logo"
+      },
+      "params": {
+        "text": {
+          "label": "Link oder Text"
+        },
+        "ecLevel": {
+          "label": "Fehlerkorrektur",
+          "description": "Höhere Stufen halten den Code lesbar, wenn er beschädigt oder von einem Logo verdeckt ist, brauchen aber mehr Module.",
+          "options": {
+            "L": "L 7 %",
+            "M": "M 15 %",
+            "Q": "Q 25 %",
+            "H": "H 30 %"
+          }
+        },
+        "moduleShape": {
+          "label": "Module",
+          "options": {
+            "square": "Quadrate",
+            "dots": "Punkte",
+            "rounded": "Abgerundet",
+            "diamond": "Rauten",
+            "lines": "Balken"
+          }
+        },
+        "eyeShape": {
+          "label": "Augen",
+          "options": {
+            "square": "Eckig",
+            "rounded": "Abgerundet",
+            "circle": "Kreis",
+            "leaf": "Blatt"
+          }
+        },
+        "margin": {
+          "label": "Ruhezone"
+        },
+        "ink": {
+          "label": "Farbe"
+        },
+        "gradient": {
+          "label": "Verlauf"
+        },
+        "ink2": {
+          "label": "Zweite Farbe"
+        },
+        "gradientAngle": {
+          "label": "Verlaufswinkel"
+        },
+        "eyeColor": {
+          "label": "Farbe der Augen"
+        },
+        "logo": {
+          "label": "Logo",
+          "description": "Sitzt in der Mitte des Codes. Es bleibt auf deinem Gerät und ist nie Teil eines Teilen-Links."
+        },
+        "logoSize": {
+          "label": "Logogrösse"
+        }
+      },
+      "presets": {
+        "rounded": "Abgerundet",
+        "classic": "Klassisch",
+        "dots": "Punkte",
+        "ocean": "Ozean",
+        "forest": "Wald",
+        "diamonds": "Rauten",
+        "bars": "Balken",
+        "sunset": "Abendrot",
+        "wifi": "WLAN",
+        "transparent": "Transparent"
+      },
+      "advisories": {
+        "empty": "Gib einen Link oder Text ein, um den Code zu erstellen.",
+        "tooLong": "Dieser Text ist für einen QR-Code mit dieser Fehlerkorrektur zu lang. Kürze ihn oder wähle eine tiefere Stufe.",
+        "contrast": "Der Kontrast beträgt nur {ratio}:1. Viele Handys brauchen mindestens {required}:1. Wähle eine dunklere Farbe oder einen helleren Hintergrund.",
+        "inverted": "Heller Code auf dunklem Hintergrund: Manche ältere Scanner können ihn nicht lesen. Teste ihn mit mehreren Handys.",
+        "logoLevel": "Wähle mit Logo die Fehlerkorrektur Q oder H, damit der Code lesbar bleibt.",
+        "margin": "Eine Ruhezone unter 2 Modulen kann das Scannen erschweren. Standard sind 4."
+      },
+      "seo": {
+        "heading": "QR-Code-Generator mit Logo (gratis, SVG und PNG)",
+        "whatIs": "Ein QR-Code speichert einen Link oder einen kurzen Text als Muster aus Quadraten, das jede Handykamera lesen kann. Hier gestaltest du ihn passend zu deiner Marke: mit Punkten oder runden Modulen, deinen Farben, einem Verlauf und deinem Logo in der Mitte. Der Code ist statisch, funktioniert also für immer und braucht kein Konto.",
+        "howTo": "Gib einen Link oder Text ein und wähle die Fehlerkorrektur. Wähle die Form der Module und Augen, setze die Farben und füge auf Wunsch dein Logo hinzu. Beachte die Hinweise zum Kontrast und lade den Code als SVG für den Druck oder als PNG fürs Web herunter.",
+        "useCases": {
+          "u1": {
+            "title": "Flyer, Plakate und Verpackungen",
+            "text": "Das SVG bleibt in jeder Grösse scharf, von der Visitenkarte bis zum Banner."
+          },
+          "u2": {
+            "title": "Speisekarten und Anlässe",
+            "text": "Führe Gäste mit einem Scan zur Karte, zum Programm oder zum Ticketshop."
+          },
+          "u3": {
+            "title": "WLAN für Gäste",
+            "text": "Ein Code in der Form WIFI:T:WPA;S:Name;P:Passwort;; verbindet Handys ohne Tippen."
+          }
+        },
+        "tips": {
+          "t1": "Teste den fertigen Code immer mit zwei oder drei Handys, bevor du ihn druckst.",
+          "t2": "Dunkler Code auf hellem Hintergrund lässt sich am besten scannen. Halte den Kontrast bei 3:1 oder mehr.",
+          "t3": "Je kürzer der Text, desto grösser und leichter lesbar ist jedes Modul. Nutze für lange Adressen einen Kurzlink."
+        },
+        "faq": {
+          "q1": {
+            "question": "Laufen die QR-Codes ab?",
+            "answer": "Nein. Der Inhalt steckt im Code selbst, nicht auf einem Server. Der Code funktioniert, solange der Link dahinter funktioniert."
+          },
+          "q2": {
+            "question": "Kann ich mein Logo in die Mitte setzen?",
+            "answer": "Ja. Die Module hinter dem Logo fallen weg und die Fehlerkorrektur stellt sie wieder her. Nutze Stufe Q oder H und halte das Logo bei höchstens 30 Prozent."
+          },
+          "q3": {
+            "question": "Welches Format eignet sich für den Druck?",
+            "answer": "SVG. Es ist eine Vektordatei und bleibt in jeder Grösse scharf. Für Websites und Dokumente eignet sich PNG."
+          },
+          "q4": {
+            "question": "Wird etwas getrackt?",
+            "answer": "Nein. Dein Text und dein Logo bleiben in deinem Browser. Es gibt keine Weiterleitung und keinen Scan-Zähler."
+          }
+        }
+      }
     }
   },
   "Converters": {

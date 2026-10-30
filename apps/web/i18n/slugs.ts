@@ -73,6 +73,7 @@ export const TOOL_SLUGS: Readonly<Record<string, LocalizedSlugs>> = {
   "section-divider": { de: "abschnittstrenner-generator", en: "section-divider-generator" },
   "og-image": { de: "og-bild-generator", en: "og-image-generator" },
   "clip-path": { de: "clip-path-generator", en: "clip-path-generator" },
+  "qr-code": { de: "qr-code-generator", en: "qr-code-generator" },
   halftone: { de: "halftone-generator", en: "halftone-generator" },
   "cmyk-halftone": { de: "cmyk-raster-generator", en: "cmyk-halftone-generator" },
   dither: { de: "dithering-generator", en: "dither-generator" },

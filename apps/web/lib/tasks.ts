@@ -55,7 +55,7 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
     "contrast-checker",
     "palette-from-image",
   ],
-  "icons-avatars": ["favicon-generator", "avatar", "placeholder-image", "svg-charts"],
+  "icons-avatars": ["favicon-generator", "qr-code", "avatar", "placeholder-image", "svg-charts"],
   "image-polish": [
     "og-image",
     "screenshot-beautifier",

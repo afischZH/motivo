@@ -54,10 +54,13 @@ describe("catalogue", () => {
   });
 
   it("tops up a category's only tool from nearby categories, taking turns", () => {
-    const lonely = registry
-      .list()
-      .find((tool) => tool.category.every((c) => categoryTools(c).length === 1));
-    if (!lonely) throw new Error("expected a tool that is alone in its categories");
+    // Since the QR code joined the favicon in "icons", no registered tool is
+    // alone; a stand-in in the still empty "composer" category takes its place.
+    const first = registry.list()[0];
+    if (!first) throw new Error("expected registered tools");
+    const lonely =
+      registry.list().find((tool) => tool.category.every((c) => categoryTools(c).length === 1)) ??
+      ({ ...first, id: "lonely-stand-in", category: ["composer"] } as typeof first);
     const nearby = [...new Set(lonely.category.flatMap((c) => NEARBY_CATEGORIES[c]))];
     const related = relatedTools(lonely);
     expect(related).toHaveLength(RELATED_TOOL_COUNT);

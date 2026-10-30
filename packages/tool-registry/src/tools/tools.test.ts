@@ -163,8 +163,12 @@ describe("built-in tool registration", () => {
       "section-divider",
       "og-image",
       "clip-path",
+      "qr-code",
     ]);
-    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual(["favicon-generator"]);
+    expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
+      "favicon-generator",
+      "qr-code",
+    ]);
     expect(registry.listByCategory("social").map((t) => t.id)).toEqual([
       "screenshot-beautifier",
       "avatar",
