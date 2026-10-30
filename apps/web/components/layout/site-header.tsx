@@ -171,7 +171,7 @@ export function SiteHeader() {
             className={buttonVariants({
               variant: "outline",
               size: "sm",
-              className: "rounded-full max-lg:hidden",
+              className: "rounded-full bg-background max-lg:hidden",
             })}
           >
             <HeartIcon aria-hidden="true" className="text-link" />

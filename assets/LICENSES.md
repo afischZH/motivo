@@ -19,7 +19,7 @@ Hinweise:
 
 | Quelle | Umfang | Herkunft | Lizenz |
 |---|---|---|---|
-| shadcn/ui (`apps/web/components/ui/`) | Basiselemente Button, Badge, Card, Input, Separator, Sheet | https://ui.shadcn.com, per `shadcn add` | MIT, Copyright (c) 2023 shadcn |
+| shadcn/ui (`apps/web/components/ui/`) | Basiselemente Button, Badge, Card, Input, Separator, Sheet; Button, Badge und Input im Stil Maia (Registry `radix-maia`), Tooltip- und Kbd-Muster im Editor | https://ui.shadcn.com, per `shadcn add` | MIT, Copyright (c) 2023 shadcn |
 | Shadcn Space, freie Blöcke `navbar-01`, `footer-01`, `faq-01`, `bento-grid-03` | Als Vorlage für Kopf, Fuss, FAQ und Funktionsraster; stark angepasst, eigene Texte, keine Bilder, Logos oder Animationen übernommen | https://shadcnspace.com, Registry `@shadcn-space` in `apps/web/components.json` | Shadcn Space Free License (siehe unten) |
 | Lucide (`lucide-react`) | Icons in den UI-Bausteinen | https://lucide.dev | ISC |
 | Konva 10.9.0 (`konva`, nur `konva/lib/Core` und einzelne Formen) | Bühne des Social-Media-Editors (M6-AP02), nur auf der Editor-Seite per `import()` geladen | https://konvajs.org, https://github.com/konvajs/konva | MIT, Copyright (C) 2011 - 2013 Eric Rowell (KineticJS), (C) 2014 - present Anton Lavrenov (Konva) |

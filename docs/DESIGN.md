@@ -39,7 +39,7 @@
 | `number` mit min/max | Slider + Zahlenfeld | Shift = 10er-Schritte, Doppelklick = Default |
 | `enum` (≤ 5) | Segmented Control | sonst Select |
 | `boolean` | Switch | |
-| Farbe | Swatch + Popover-Picker (HEX, RGB, HSL, OKLCH, Pipette via EyeDropper-API wo verfügbar) | Tints/Shades-Leiste unter dem Picker |
+| Farbe | Swatch + Popover-Picker: eigene Fläche für Sättigung/Helligkeit und Farbton-Regler (in jedem Browser gleich, per Pfeiltasten bedienbar, Shift = 10 %), HEX-Feld mit Pipette in einer Input Group (EyeDropper-API wo verfügbar), Brand-Farben | Tints/Shades-Leiste unter dem Picker |
 | Palette | Reihe von Swatches, Drag-to-reorder, +/−, "Zufallspalette", Brand-Paletten oben | max. 10 |
 | Shape/Pack | Grid-Picker mit Suche und Mehrfachauswahl | |
 | Bild-Upload | Dropzone + Paste aus Zwischenablage + Crop-Dialog | Hinweis: "Bild bleibt auf deinem Gerät" |
@@ -73,6 +73,7 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 - **Bewegung**: 150 bis 250 ms, `ease-out`; `prefers-reduced-motion` respektieren (keine Animation der Vorschau ohne Interaktion).
 - **Vorschau-Hintergrund**: Editor-Bühne `--stage` mit feinem Punktraster (`--stage-dot`), hell ein ruhiges Grau, dunkel fast Schwarz; Schachbrett nur wenn Transparenz aktiv. Thumbnails behalten `--canvas`.
 - **Werkbank-Look (seit 2026-10-29)**: Startseiten-Hero, Seitenköpfe (`PageHeader`) und der Abschluss der Startseite sind in beiden Themes dunkel (Klasse `dark` am Abschnitt, semantische Tokens lösen pro Abschnitt auf), mit Punktraster und einem Akzentschimmer. Keine Etiketten über Überschriften; Zählungen stehen nach dem Lead.
+- **Hinweise statt `title`**: Icon-Knöpfe im Editor zeigen einen gestalteten Hinweis (`Hint`, Radix Tooltip) bei Hover und Tastaturfokus, mit Tastenkürzel als Tastenkappen (`Kbd`, ⌘ auf Apple-Geräten, sonst Ctrl). Nach dem ersten Hinweis erscheinen die nächsten sofort.
 - **Inspector im Editor**: kompakte Einstellungen als Zeile (Label links, Control rechts) für Slider, Zahl, Auswahl, Farbe und Schalter; breite Controls (Segmente, Paletten, Listen, Kacheln) bleiben gestapelt. Zahlenfelder lassen sich mit der Maus seitwärts ziehen (Shift = 10er-Schritte), ein Klick fokussiert zum Tippen.
 
 ## 6. Wichtige Screens
@@ -84,13 +85,14 @@ Leertaste darf nie auslösen, wenn ein Textfeld fokussiert ist.
 5. **Brand Kit**: Paletten, Logos, eigene Shapes/Packs, Fonts; "Aus Website importieren" (P2).
 6. **Export-Dialog**: Formatwahl als Karten (Bild · Vektor · Code · Animation), Grösse als 1×/2×/4× des Designs oder "Eigene Grösse" plus Auswahlfeld "Gängige Grösse" (derselbe gruppierte Katalog wie der Grössen-Wähler, Tool-Grössen zuoberst; die Wahl setzt "Eigene Grösse" mit Breite und Höhe der Vorlage, bei anderem Seitenverhältnis wird das Motiv in dieser Grösse neu berechnet), Qualität, Transparenz, Dateiname, Vorschau der Dateigrösse; Code-Formate mit Copy-Button und Syntax-Highlighting.
 7. **Unterstützen** (`/de/unterstuetzen`, `/en/support`, seit M3-AP14): kurzer, ehrlicher Text (gratis, ohne Konto, ohne Tracking, Exporte frei nutzbar), wofür Spenden gebraucht werden (Domain, Hosting, Weiterentwicklung), hervorgehobener Block mit Knopf "Jetzt spenden" zum externen Anbieter. Ohne konfigurierten Link (`NEXT_PUBLIC_DONATION_URL`) neutraler Hinweis "Spenden-Link folgt bald", kein toter Knopf. Dezente Hinweise nur im Footer ("Musterli unterstützen") und als eine leise Zeile im Export-Dialog nach erfolgreichem Export (öffnet in neuem Tab, damit das Design im Editor bleibt). Nie ein Popup, nie eine Sperre, nie ein Wasserzeichen.
-8. **Kopfzeile** (alle Seiten): klebt oben, halbtransparent mit Unschärfe. Ab 1024 px eine Pillen-Leiste (aktueller Bereich mit `aria-current="page"` und heller Pille), rechts "Unterstützen" und Theme-Knopf. Darunter ein Seitenmenü (Sheet, Radix Dialog) mit Icons und Link "Musterli unterstützen"; `Esc` schliesst und gibt den Fokus zurück, schliesst auch bei Navigation. Die Desktop-Links bleiben in jeder Breite im HTML (crawlbar).
-9. **Fusszeile**: Logo, Claim und Spendenlink, drei Spalten (Musterli, Sammlungen, Rechtliches), darunter Copyright und Sprachwahl.
+8. **Basiselemente** (`apps/web/components/ui/`): Knopf, Badge und Feld im shadcn-Stil Maia (Pillenform, Zweitknöpfe leicht gefüllt, Felder rund mit leichter Füllung); Karten behalten ihren eigenen Radius.
+9. **Kopfzeile** (alle Seiten): klebt oben, halbtransparent mit Unschärfe. Ab 1024 px eine Pillen-Leiste (aktueller Bereich mit `aria-current="page"` und heller Pille), rechts "Unterstützen" und Theme-Knopf. Darunter ein Seitenmenü (Sheet, Radix Dialog) mit Icons und Link "Musterli unterstützen"; `Esc` schliesst und gibt den Fokus zurück, schliesst auch bei Navigation. Die Desktop-Links bleiben in jeder Breite im HTML (crawlbar).
+10. **Fusszeile**: Logo, Claim und Spendenlink, drei Spalten (Musterli, Sammlungen, Rechtliches), darunter Copyright und Sprachwahl.
 
-10. **Befehlspalette** (seit W1-AP01): Knopf "Suchen ⌘K" in der Kopfzeile (auf Mobile nur Lupe), Dialog oben mittig. Combobox mit Listbox nach WAI-ARIA APG: Fokus bleibt im Eingabefeld, Pfeiltasten bewegen die aktive Option, Enter öffnet, Esc schliesst und gibt den Fokus zurück. Gruppen ohne Suche: Aktionen, Favoriten, Zuletzt benutzt, Seiten, Tools; beim Suchen Aktionen, Tools, Seiten (Tools zuerst nach Treffer im Namen). Die englische Tool-Id ist mit durchsuchbar ("flow field" findet das Tool auch auf Deutsch).
-11. **Favoriten und Zuletzt benutzt** (W1-AP03): Stern-Knopf (`aria-pressed`) auf jeder Tool-Karte und im Editor-Kopf; im Katalog oben "Deine Tools" mit Favoriten und den letzten 6 Tools (ohne Wiederholung), nur wenn etwas gespeichert ist. Nur im Browser (localStorage).
-12. **Im Kontext** (W1-AP02): Umschalter in der Vorschau-Leiste für Tools mit Hintergrund-Kategorie. Legt eine Muster-Website (Marke, Navigation, Titel, Text, Knopf) über das Motiv, Textfarbe Auto/Dunkel/Hell, daneben "Kontrast 8.6:1 · AAA" nach WCAG 2, gemessen auf 95 % der Fläche unter dem Text.
-13. **Aufgabenseiten** (W1-AP04): Chips "Nach Aufgabe" oben im Katalog, je eine Seite mit Seitenkopf, Tool-Karten und Links zu den anderen Aufgaben.
+11. **Befehlspalette** (seit W1-AP01): Knopf "Suchen ⌘K" in der Kopfzeile (auf Mobile nur Lupe), Dialog oben mittig. Combobox mit Listbox nach WAI-ARIA APG: Fokus bleibt im Eingabefeld, Pfeiltasten bewegen die aktive Option, Enter öffnet, Esc schliesst und gibt den Fokus zurück. Gruppen ohne Suche: Aktionen, Favoriten, Zuletzt benutzt, Seiten, Tools; beim Suchen Aktionen, Tools, Seiten (Tools zuerst nach Treffer im Namen). Die englische Tool-Id ist mit durchsuchbar ("flow field" findet das Tool auch auf Deutsch).
+12. **Favoriten und Zuletzt benutzt** (W1-AP03): Stern-Knopf (`aria-pressed`) auf jeder Tool-Karte und im Editor-Kopf; im Katalog oben "Deine Tools" mit Favoriten und den letzten 6 Tools (ohne Wiederholung), nur wenn etwas gespeichert ist. Nur im Browser (localStorage).
+13. **Im Kontext** (W1-AP02): Umschalter in der Vorschau-Leiste für Tools mit Hintergrund-Kategorie. Legt eine Muster-Website (Marke, Navigation, Titel, Text, Knopf) über das Motiv, Textfarbe Auto/Dunkel/Hell, daneben "Kontrast 8.6:1 · AAA" nach WCAG 2, gemessen auf 95 % der Fläche unter dem Text.
+14. **Aufgabenseiten** (W1-AP04): Chips "Nach Aufgabe" oben im Katalog, je eine Seite mit Seitenkopf, Tool-Karten und Links zu den anderen Aufgaben.
 
 ## 7. Barrierefreiheit (WCAG 2.2 AA)
 

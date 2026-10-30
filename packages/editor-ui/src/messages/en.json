@@ -38,7 +38,10 @@
       "picker": "Pick a color",
       "hex": "Hex value",
       "invalid": "Enter a hex value like #1e90ff.",
-      "eyedropper": "Pick a color from the screen"
+      "eyedropper": "Pick a color from the screen",
+      "area": "Saturation and brightness",
+      "areaValue": "Saturation {saturation}%, brightness {brightness}%",
+      "hue": "Hue"
     },
     "background": {
       "transparent": "Transparent"

@@ -1,4 +1,4 @@
-import { act, fireEvent, screen, within } from "@testing-library/react";
+import { act, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createEditorStore, type EditorStoreApi } from "../store/editor-store";
@@ -6,6 +6,7 @@ import { EditorStoreProvider } from "../store/react";
 import { createFixtureRegistry, fixtureDefaults, fixtureTool } from "../test/fixture-tool";
 import { renderWithIntl } from "../test/render";
 import { ControlPanel, EditorControls } from "./control-panel";
+import { hsvToHex } from "./hsv";
 
 let store: EditorStoreApi;
 
@@ -237,13 +238,20 @@ describe("colors", () => {
     expect(screen.queryByRole("alert")).toBeNull();
   });
 
-  it("native color input applies lower-case hex", async () => {
+  it("colour area and hue slider edit the colour with the keyboard", async () => {
     const { user } = renderEditor();
     await user.click(screen.getByRole("button", { name: "Hintergrund #ffffff" }));
-    const picker = await screen.findByLabelText("Farbe wählen");
-    // user-event cannot drive <input type=color>; fire the change directly.
-    fireEvent.change(picker, { target: { value: "#AABBCC" } });
-    expect(params().background).toBe("#aabbcc");
+    const area = await screen.findByRole("slider", { name: "Sättigung und Helligkeit" });
+    expect(area.getAttribute("aria-valuetext")).toBe("Sättigung 0 %, Helligkeit 100 %");
+    area.focus();
+    await user.keyboard("{Shift>}{ArrowRight}{/Shift}{ArrowDown}");
+    expect(params().background).toBe(hsvToHex({ h: 0, s: 0.1, v: 0.99 }));
+    expect(area.getAttribute("aria-valuetext")).toBe("Sättigung 10 %, Helligkeit 99 %");
+
+    const hue = screen.getByRole("slider", { name: "Farbton" });
+    hue.focus();
+    await user.keyboard("{PageUp}");
+    expect(params().background).toBe(hsvToHex({ h: 10, s: 0.1, v: 0.99 }));
   });
 
   it("background switches to transparent and back to the last colour", async () => {

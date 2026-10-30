@@ -38,7 +38,10 @@
       "picker": "Farbe wählen",
       "hex": "HEX-Wert",
       "invalid": "Gib einen HEX-Wert wie #1e90ff ein.",
-      "eyedropper": "Farbe vom Bildschirm aufnehmen"
+      "eyedropper": "Farbe vom Bildschirm aufnehmen",
+      "area": "Sättigung und Helligkeit",
+      "areaValue": "Sättigung {saturation} %, Helligkeit {brightness} %",
+      "hue": "Farbton"
     },
     "background": {
       "transparent": "Transparent"

@@ -4,6 +4,14 @@ export * from "./share/share-codec";
 export * from "./controls/resolve";
 export { ControlPanel, EditorControls, type ControlPanelProps } from "./controls/control-panel";
 export { ColorPicker, toLongHex, type ColorPickerProps } from "./controls/color";
+export {
+  Hint,
+  HintProvider,
+  Kbd,
+  KbdGroup,
+  type HintProps,
+  type ShortcutKeys,
+} from "./controls/hint";
 export { useT, type Translate } from "./i18n";
 export { EditorShell, type EditorShellProps } from "./shell/editor-shell";
 export {
