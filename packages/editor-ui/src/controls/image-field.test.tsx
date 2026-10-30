@@ -234,7 +234,7 @@ describe("shape picker with packs", () => {
     expect(packSelect().options).toHaveLength(12);
   });
 
-  it("offers Brand Kit shapes, which go through the upload pipeline", async () => {
+  it("offers Brand Kit logos and shapes, which go through the upload pipeline", async () => {
     const kit = createBrandKitStore({ indexedDB: new IDBFactory() });
     await kit.addAsset({
       kind: "shape",
@@ -249,10 +249,13 @@ describe("shape picker with packs", () => {
     const { params } = setup(kit);
     fireEvent.change(packSelect(), { target: { value: "__brand-kit" } });
     const items = await screen.findAllByTestId("thumbnail-brand-item");
-    // Shapes only, no logos.
-    expect(items).toHaveLength(1);
-    expect(items[0]?.getAttribute("aria-label")).toBe("Acme verwenden");
-    fireEvent.click(items[0] as HTMLElement);
+    // Logos and shapes (logo patterns).
+    expect(items.map((i) => i.getAttribute("aria-label")).sort()).toEqual([
+      "Acme verwenden",
+      "Logo verwenden",
+    ]);
+    const acme = items.find((i) => i.getAttribute("aria-label") === "Acme verwenden");
+    fireEvent.click(acme as HTMLElement);
     const dialog = await cropDialog();
     fireEvent.click(within(dialog).getByRole("button", { name: "Übernehmen" }));
     await waitFor(() => expect(params().upload).not.toBeNull());
@@ -269,7 +272,7 @@ describe("shape picker with packs", () => {
     const kit = createBrandKitStore({ indexedDB: new IDBFactory() });
     setup(kit);
     fireEvent.change(packSelect(), { target: { value: "__brand-kit" } });
-    expect(await screen.findByText(/Noch keine eigenen Shapes/)).toBeTruthy();
+    expect(await screen.findByText(/Noch keine Logos oder Formen/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Zum Brand Kit" }).getAttribute("href")).toBe(
       "/de/brand-kit",
     );

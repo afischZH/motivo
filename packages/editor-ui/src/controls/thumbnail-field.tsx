@@ -17,7 +17,7 @@
  *   select; the group follows the value when it changes elsewhere
  *   (variant, undo, preset).
  * - With `brandShapesParam` and a Brand Kit, an extra "Brand Kit" group
- *   lists the kit's own shapes. Picking one runs it through the upload
+ *   lists the kit's own logos and shapes. Picking one runs it through the upload
  *   pipeline (checks, sanitizer worker, crop dialog) into that image param.
  */
 import type { BrandAsset } from "@musterli/storage";
@@ -318,7 +318,7 @@ function ThumbnailGrid(props: ThumbnailFieldProps & { options: ControlOption[] }
 }
 
 /**
- * The Brand Kit's own shapes as a source for an image param. A picked shape
+ * The Brand Kit's own logos and shapes as a source for an image param. A picked one
  * goes through the same checks, sanitizer and crop dialog as a file from
  * disk; afterwards the focus moves to that param's upload field (this
  * picker hides once a file is set).
@@ -341,7 +341,7 @@ function BrandShapeGroup(props: {
     let active = true;
     kit.listAssets().then(
       (all) => {
-        if (active) setAssets(all.filter((a) => a.kind === "shape"));
+        if (active) setAssets(all.filter((a) => a.kind === "shape" || a.kind === "logo"));
       },
       () => {
         if (active) setAssets([]);

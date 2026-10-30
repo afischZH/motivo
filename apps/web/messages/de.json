@@ -903,16 +903,42 @@
     },
     "seamless-patterns": {
       "name": "Nahtlose Muster",
-      "description": "Nahtlos kachelbare Muster aus Formen oder deiner eigenen Grafik. Als SVG, CSS, Kachel oder Bild exportieren.",
+      "description": "Nahtlos kachelbare Muster aus Formen, Logos, Emoji oder Text. Als SVG, CSS, Kachel oder Bild exportieren.",
       "params": {
+        "motif": {
+          "label": "Motiv",
+          "options": {
+            "shape": "Form oder Logo",
+            "emoji": "Emoji",
+            "text": "Text"
+          }
+        },
         "upload": {
-          "label": "Eigene Grafik"
+          "label": "Logo oder eigene Grafik"
         },
         "shape": {
           "label": "Form"
         },
         "keepOriginalColors": {
           "label": "Originalfarben behalten"
+        },
+        "emoji": {
+          "label": "Emoji"
+        },
+        "emojiTint": {
+          "label": "In Motivfarben einfärben"
+        },
+        "text": {
+          "label": "Text oder Monogramm"
+        },
+        "textFont": {
+          "label": "Schrift",
+          "options": {
+            "sans": "Grotesk",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rund"
+          }
         },
         "tiling": {
           "label": "Kachelung",
@@ -921,6 +947,14 @@
             "brick": "Ziegel",
             "halfDrop": "Halb versetzt",
             "mirror": "Gespiegelt"
+          }
+        },
+        "alternate": {
+          "label": "Wechsel",
+          "options": {
+            "none": "Kein",
+            "rows": "Jede zweite Reihe",
+            "checker": "Schachbrett"
           }
         },
         "size": {
@@ -965,11 +999,15 @@
         "starlight": "Sternenlicht",
         "botanical": "Botanisch",
         "bauhaus": "Bauhaus",
-        "waves": "Wellen"
+        "waves": "Wellen",
+        "fruit-salad": "Fruchtsalat",
+        "party-night": "Partynacht",
+        "wordmark": "Wortmarke",
+        "monogram": "Monogramm"
       },
       "seo": {
         "whatIs": "Ein nahtloses Muster ist eine Kachel, die sich ohne sichtbare Kanten beliebig oft wiederholen lässt. Motive, die über den Rand ragen, erscheinen auf der gegenüberliegenden Seite wieder, darum fällt der Übergang nicht auf. Solche Muster eignen sich für Website-Hintergründe, Geschenkpapier, Stoffe, Tapeten und Verpackungen.",
-        "howTo": "Wähl eine der eingebauten Formen oder lade eine eigene SVG-, PNG-, JPG- oder WebP-Datei und schneide sie zu. Bestimme die Kachelung (Raster, Ziegel, halb versetzt oder gespiegelt), Grösse, Abstände und Drehung und färbe die Motive mit einer Farbe oder einer Palette. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, als CSS-Hintergrund, als einzelne PNG-Kachel oder als Bild.",
+        "howTo": "Wähl eine der eingebauten Formen, dein Logo aus dem Brand Kit oder eine eigene SVG-, PNG-, JPG- oder WebP-Datei. Alternativ tippst du ein paar Emoji oder ein Wort, einen Namen oder ein Monogramm ein. Bestimme die Kachelung (Raster, Ziegel, halb versetzt oder gespiegelt), Grösse, Abstände und Drehung und färbe die Motive mit einer Farbe oder einer Palette. Mit der Leertaste würfelst du neue Varianten. Exportiere als SVG, als CSS-Hintergrund, als einzelne PNG-Kachel oder als Bild.",
         "useCases": {
           "u1": {
             "title": "Website-Hintergrund",
@@ -977,7 +1015,7 @@
           },
           "u2": {
             "title": "Geschenkpapier und Stoff",
-            "text": "Lade dein Logo oder eine eigene Grafik hoch und erstelle daraus einen Rapport für Papier, Textilien oder Tapeten. Die Übergänge zwischen den Kacheln sind nicht zu sehen."
+            "text": "Lade dein Logo oder eine eigene Grafik hoch oder tippe deinen Namen ein und erstelle daraus einen Rapport für Papier, Textilien oder Tapeten. Die Übergänge zwischen den Kacheln sind nicht zu sehen."
           },
           "u3": {
             "title": "Merch und Verpackung",
@@ -987,7 +1025,7 @@
         "tips": {
           "t1": "Halb versetzt und Ziegel verbergen die Wiederholung besser als das gerade Raster. Gespiegelt eignet sich besonders für symmetrische Motive.",
           "t2": "Zufällige Drehung und Grössenvariation lassen das Muster natürlicher wirken. Für ein strenges, ordentliches Muster stell beide auf 0.",
-          "t3": "Formen und Logos aus deinem Brand Kit stehen direkt im Upload-Feld bereit. Deine Dateien bleiben im Browser und gelangen nie in den Teilen-Link."
+          "t3": "Logos und Formen aus deinem Brand Kit stehen direkt im Formen-Picker bereit, deine Dateien bleiben im Browser. Für eine Logo-Wand stellst du Wechsel auf «Jede zweite Reihe», dann steht jede zweite Reihe auf dem Kopf."
         },
         "faq": {
           "q1": {
@@ -995,8 +1033,8 @@
             "answer": "Nein. Deine Datei wird nur in deinem Browser verarbeitet, nie an einen Server geschickt und nicht in Links übernommen. Wer deinen Link öffnet, sieht das Muster mit der gewählten Form."
           },
           "q2": {
-            "question": "Was ist der Unterschied zwischen Ziegel und halb versetzt?",
-            "answer": "Beim Ziegel ist jede zweite Reihe um eine halbe Kachelbreite verschoben, wie bei einer Backsteinmauer. Halb versetzt verschiebt stattdessen jede zweite Spalte um eine halbe Höhe."
+            "question": "Warum sehen Emoji in meiner SVG-Datei anders aus?",
+            "answer": "Emoji und Text verwenden die Schriften deines Geräts, die SVG-Datei bettet keine Schrift ein. Andere Programme zeichnen die Emoji darum mit ihrem eigenen Emoji-Satz. PNG, JPG und WebP entstehen in deinem Browser und sehen genau so aus wie die Vorschau."
           },
           "q3": {
             "question": "Wie verwende ich das Muster als CSS-Hintergrund?",

@@ -14,6 +14,14 @@
  * - `mirror`: the cell block is mirrored to the right and down (2 × 2 blocks),
  *   elements flipped with it.
  *
+ * Alternation (`alternate`) turns every second row, or every second cell
+ * in a checkerboard, by 180°: the classic logo wall. The affected side is
+ * made even so the tile still wraps.
+ *
+ * Several motifs (a list of emoji, for example) are spread over the cells
+ * with extra draws after all cell draws, so a single motif keeps the exact
+ * output of earlier versions.
+ *
  * The full design is an SVG `<pattern>` of that tile on a rect, so the
  * element count does not grow with the canvas size. The same tile markup
  * also builds the standalone tile (CSS background, PNG tile export).
@@ -21,12 +29,15 @@
 import { formatNumber } from "../../curves";
 import { toBase64 } from "../../png";
 import type { Rng } from "../../rng";
-import { stableId, svgBackground, svgDocument } from "../../svg";
+import { escapeXml, stableId, svgBackground, svgDocument } from "../../svg";
 
 export * from "./shapes";
 
 export const SEAMLESS_TILINGS = ["grid", "brick", "halfDrop", "mirror"] as const;
 export type SeamlessTiling = (typeof SEAMLESS_TILINGS)[number];
+
+export const SEAMLESS_ALTERNATES = ["none", "rows", "checker"] as const;
+export type SeamlessAlternate = (typeof SEAMLESS_ALTERNATES)[number];
 
 /** Smallest cell edge in px; guards share links with tiny sizes. */
 export const SEAMLESS_MIN_CELL = 8;
@@ -56,6 +67,15 @@ export interface SeamlessLayoutOptions {
   readonly colorCount: number;
   /** Width / height of the motif (1 for the built-in shapes). */
   readonly aspect: number;
+  /** Turn every second row or checkerboard cell by 180°. Default `none`. */
+  readonly alternate?: SeamlessAlternate;
+  /**
+   * Size cells from the motif box instead of a square of `size` (wide words
+   * get flat cells). Default false: square cells, as for shapes and uploads.
+   */
+  readonly cellFromBox?: boolean;
+  /** Number of different motifs spread over the cells. Default 1. */
+  readonly motifCount?: number;
   readonly rng: Rng;
 }
 
@@ -70,6 +90,8 @@ export interface SeamlessPlacement {
   readonly flipX: boolean;
   readonly flipY: boolean;
   readonly color: number;
+  /** Motif index (0 with a single motif). */
+  readonly motif: number;
   /** Index of the base element this is (a copy of). */
   readonly base: number;
 }
@@ -132,8 +154,17 @@ function wrapOffsets(c: number, r: number, period: number): number[] {
 /** Computes the repeat tile and every element in it. Pure, seeded only by `rng`. */
 export function seamlessLayout(o: SeamlessLayoutOptions): SeamlessLayout {
   const size = Math.max(1, o.size);
-  const cellWidth = Math.max(SEAMLESS_MIN_CELL, size + Math.max(0, o.spacingX));
-  const cellHeight = Math.max(SEAMLESS_MIN_CELL, size + Math.max(0, o.spacingY));
+  const aspect = Number.isFinite(o.aspect) && o.aspect > 0 ? o.aspect : 1;
+  const boxWidth = aspect >= 1 ? size : size * aspect;
+  const boxHeight = aspect >= 1 ? size / aspect : size;
+  const cellWidth = Math.max(
+    SEAMLESS_MIN_CELL,
+    (o.cellFromBox ? boxWidth : size) + Math.max(0, o.spacingX),
+  );
+  const cellHeight = Math.max(
+    SEAMLESS_MIN_CELL,
+    (o.cellFromBox ? boxHeight : size) + Math.max(0, o.spacingY),
+  );
   const n = clamp(Math.round(o.cells), 1, SEAMLESS_MAX_CELLS);
   const even = (v: number): number => (v % 2 === 0 ? v : v * 2);
   let cols = n;
@@ -144,11 +175,11 @@ export function seamlessLayout(o: SeamlessLayoutOptions): SeamlessLayout {
     cols = 2 * n;
     rows = 2 * n;
   }
+  const alternate = o.alternate ?? "none";
+  if (alternate !== "none") rows = even(rows);
+  if (alternate === "checker") cols = even(cols);
   const tileWidth = cols * cellWidth;
   const tileHeight = rows * cellHeight;
-  const aspect = Number.isFinite(o.aspect) && o.aspect > 0 ? o.aspect : 1;
-  const boxWidth = aspect >= 1 ? size : size * aspect;
-  const boxHeight = aspect >= 1 ? size / aspect : size;
   const jitter = clamp(o.jitter, 0, 0.5);
   const variance = clamp(o.sizeVariance, 0, 1);
   const colors = Math.max(1, Math.floor(o.colorCount));
@@ -158,6 +189,10 @@ export function seamlessLayout(o: SeamlessLayoutOptions): SeamlessLayout {
   const drawRows = o.tiling === "mirror" ? n : rows;
   const random: CellRandom[] = [];
   for (let i = 0; i < drawCols * drawRows; i++) random.push(drawCell(o.rng));
+  // Drawn after every cell, only with several motifs: one motif keeps older output.
+  const motifs = Math.max(1, Math.floor(o.motifCount ?? 1));
+  const motifOf: number[] = [];
+  if (motifs > 1) for (let i = 0; i < random.length; i++) motifOf.push(o.rng.int(0, motifs - 1));
 
   const base: SeamlessPlacement[] = [];
   for (let r = 0; r < rows; r++) {
@@ -166,7 +201,10 @@ export function seamlessLayout(o: SeamlessLayoutOptions): SeamlessLayout {
       const mirrorY = o.tiling === "mirror" && r >= n;
       const bc = mirrorX ? 2 * n - 1 - c : c;
       const br = mirrorY ? 2 * n - 1 - r : r;
-      const cell = random[br * drawCols + bc] as CellRandom;
+      const cellIndex = (br % drawRows) * drawCols + (bc % drawCols);
+      const cell = random[cellIndex] as CellRandom;
+      const turned =
+        (alternate === "rows" && r % 2 === 1) || (alternate === "checker" && (r + c) % 2 === 1);
       let x = (c + 0.5) * cellWidth;
       let y = (r + 0.5) * cellHeight;
       if (o.tiling === "brick" && r % 2 === 1) x += cellWidth / 2;
@@ -176,11 +214,12 @@ export function seamlessLayout(o: SeamlessLayoutOptions): SeamlessLayout {
       base.push({
         x,
         y,
-        rotation: o.rotation + cell.rot * o.rotationJitter,
+        rotation: o.rotation + cell.rot * o.rotationJitter + (turned ? 180 : 0),
         scale: Math.max(0.05, 1 + cell.scale * variance),
         flipX: mirrorX,
         flipY: mirrorY,
         color: colors === 1 ? 0 : Math.min(colors - 1, Math.floor(cell.color * colors)),
+        motif: motifOf[cellIndex] ?? 0,
         base: base.length,
       });
     }
@@ -230,6 +269,21 @@ export type SeamlessMotif =
       readonly hrefs: readonly string[];
       /** Paint the silhouette in the element colour (filter on the colour group). */
       readonly tint: boolean;
+    }
+  | {
+      readonly kind: "glyphs";
+      /** One text per motif (an emoji or a word); `placement.motif` indexes into it. */
+      readonly glyphs: readonly string[];
+      /** CSS font family list (system fonts; the SVG embeds no font). */
+      readonly fontFamily: string;
+      readonly fontWeight: number;
+      /** Font size in the 100-unit motif box (longer side = 100). */
+      readonly em: number;
+      /**
+       * `fill`: glyphs in the element colour (text); `tint`: silhouette in the
+       * element colour (monochrome emoji); `original`: the font's own colours.
+       */
+      readonly paint: "fill" | "tint" | "original";
     };
 
 export interface SeamlessSvgOptions {
@@ -283,6 +337,8 @@ function tileMarkup(o: SeamlessSvgOptions): { defs: string; body: string } {
     return { defs, body };
   }
 
+  if (motif.kind === "glyphs") return glyphMarkup(o, motif, used, byColor, colors);
+
   // Images: one <image> per distinct source, centred on the origin at box size.
   const w = n2(layout.boxWidth);
   const h = n2(layout.boxHeight);
@@ -309,15 +365,56 @@ function tileMarkup(o: SeamlessSvgOptions): { defs: string; body: string } {
       .map((p) => `<use href="#${id}" transform="${transformOf(p, 1)}"/>`)
       .join("");
     if (motif.tint) {
-      const color = colors[c] ?? "#000000";
-      const fid = stableId("st", `${c}:${color}`);
-      defs +=
-        `<filter id="${fid}" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">` +
-        `<feFlood flood-color="${color}"/><feComposite in2="SourceAlpha" operator="in"/></filter>`;
-      body += `<g filter="url(#${fid})">${uses}</g>`;
+      const f = tintFilter(c, colors[c] ?? "#000000");
+      defs += f.markup;
+      body += `<g filter="url(#${f.id})">${uses}</g>`;
     } else {
       body += `<g>${uses}</g>`;
     }
+  }
+  return { defs, body };
+}
+
+/** Filter that paints whatever it is applied to in one colour (keeps alpha). */
+function tintFilter(c: number, color: string): { id: string; markup: string } {
+  const id = stableId("st", `${c}:${color}`);
+  return {
+    id,
+    markup:
+      `<filter id="${id}" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">` +
+      `<feFlood flood-color="${color}"/><feComposite in2="SourceAlpha" operator="in"/></filter>`,
+  };
+}
+
+/** Emoji and words: one `<text>` per motif in defs, centred on the origin. */
+function glyphMarkup(
+  o: SeamlessSvgOptions,
+  motif: Extract<SeamlessMotif, { kind: "glyphs" }>,
+  used: readonly number[],
+  byColor: ReadonlyMap<number, SeamlessPlacement[]>,
+  colors: readonly string[],
+): { defs: string; body: string } {
+  const glyphs = motif.glyphs.length > 0 ? motif.glyphs : [""];
+  const unit = Math.max(o.layout.boxWidth, o.layout.boxHeight) / 100;
+  const font = escapeXml(motif.fontFamily);
+  const ids = glyphs.map((g, i) => stableId("sg", `${i}:${g}:${motif.fontFamily}`));
+  // Font attributes sit on every <text>: a <use> copy inherits from the <use>, not from defs.
+  const attrs =
+    `font-family="${font}" font-weight="${Math.round(motif.fontWeight)}" ` +
+    `font-size="${n2(motif.em)}" text-anchor="middle" dominant-baseline="central"`;
+  let defs = glyphs.map((g, i) => `<text id="${ids[i]}" ${attrs}>${escapeXml(g)}</text>`).join("");
+  let body = "";
+  for (const c of used) {
+    const uses = (byColor.get(c) ?? [])
+      .map((p) => `<use href="#${ids[p.motif % ids.length]}" transform="${transformOf(p, unit)}"/>`)
+      .join("");
+    const color = colors[c] ?? "#000000";
+    if (motif.paint === "fill") body += `<g fill="${color}">${uses}</g>`;
+    else if (motif.paint === "tint") {
+      const f = tintFilter(c, color);
+      defs += f.markup;
+      body += `<g filter="url(#${f.id})">${uses}</g>`;
+    } else body += `<g>${uses}</g>`;
   }
   return { defs, body };
 }

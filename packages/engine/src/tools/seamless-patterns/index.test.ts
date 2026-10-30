@@ -272,3 +272,98 @@ describe("seamless shapes", () => {
     }
   });
 });
+
+describe("seamless alternation and motifs", () => {
+  it("keeps the exact output of one motif when motifCount is 1 or missing", () => {
+    const a = seamlessLayout(opts({ rng: createRng(7) }));
+    const b = seamlessLayout(opts({ rng: createRng(7), motifCount: 1, alternate: "none" }));
+    expect(b).toEqual(a);
+    expect(a.placements.every((p) => p.motif === 0)).toBe(true);
+  });
+
+  it("turns every second row by 180° and keeps the rows even", () => {
+    const l = seamlessLayout(
+      opts({ cells: 3, rotationJitter: 0, rotation: 0, alternate: "rows", jitter: 0 }),
+    );
+    expect(l.rows % 2).toBe(0);
+    for (const [i, p] of l.base.entries()) {
+      const row = Math.floor(i / l.cols);
+      expect(p.rotation).toBe(row % 2 === 1 ? 180 : 0);
+    }
+    expectWrapsExactly(l);
+  });
+
+  it("turns checkerboard cells with even rows and columns", () => {
+    const l = seamlessLayout(
+      opts({ cells: 3, rotationJitter: 0, rotation: 0, alternate: "checker" }),
+    );
+    expect(l.rows % 2).toBe(0);
+    expect(l.cols % 2).toBe(0);
+    for (const [i, p] of l.base.entries()) {
+      const r = Math.floor(i / l.cols);
+      const c = i % l.cols;
+      expect(p.rotation).toBe((r + c) % 2 === 1 ? 180 : 0);
+    }
+  });
+
+  it("spreads several motifs over the cells, mirrored cells share theirs", () => {
+    const l = seamlessLayout(opts({ cells: 4, motifCount: 3 }));
+    const used = new Set(l.base.map((p) => p.motif));
+    expect(used.size).toBeGreaterThan(1);
+    for (const p of l.base) expect(p.motif).toBeLessThan(3);
+    const m = seamlessLayout(opts({ tiling: "mirror", cells: 2, motifCount: 4 }));
+    const at = (r: number, c: number) => m.base[r * m.cols + c]?.motif;
+    expect(at(0, 3)).toBe(at(0, 0));
+    expect(at(3, 0)).toBe(at(0, 0));
+  });
+
+  it("draws emoji and words as escaped text with the font on every copy source", () => {
+    const l = seamlessLayout(opts({ motifCount: 2 }));
+    const svg = seamlessTileSvg({
+      layout: l,
+      motif: {
+        kind: "glyphs",
+        glyphs: ["🍋", "<b>&"],
+        fontFamily: "'Apple Color Emoji', sans-serif",
+        fontWeight: 400,
+        em: 84,
+        paint: "original",
+      },
+      colors: ["#000000"],
+      background: "#ffffff",
+    });
+    expect(svg).toContain(">🍋</text>");
+    expect(svg).toContain(">&lt;b&gt;&amp;</text>");
+    expect(svg).not.toContain("<b>");
+    expect(svg.match(/font-family="&#39;Apple Color Emoji&#39;, sans-serif"/g)).toHaveLength(2);
+    expect(svg).not.toContain("<filter");
+  });
+
+  it("fills text in the element colour and tints emoji silhouettes", () => {
+    const l = seamlessLayout(opts());
+    const base = {
+      layout: l,
+      colors: ["#ff0000", "#00ff00", "#0000ff"],
+      background: "transparent",
+    };
+    const glyphs = { glyphs: ["AB"], fontFamily: "serif", fontWeight: 700, em: 70 } as const;
+    const text = seamlessTileSvg({ ...base, motif: { kind: "glyphs", ...glyphs, paint: "fill" } });
+    expect(text).toContain('<g fill="#ff0000">');
+    const tinted = seamlessTileSvg({
+      ...base,
+      motif: { kind: "glyphs", ...glyphs, paint: "tint" },
+    });
+    expect(tinted).toContain('<feFlood flood-color="#00ff00"/>');
+  });
+});
+
+describe("seamless cells from the motif box", () => {
+  it("makes flat cells for wide motifs and still wraps", () => {
+    const l = seamlessLayout(
+      opts({ aspect: 4, size: 80, spacingX: 10, spacingY: 10, cellFromBox: true }),
+    );
+    expect(l.cellWidth).toBe(90);
+    expect(l.cellHeight).toBe(30);
+    expectWrapsExactly(l);
+  });
+});

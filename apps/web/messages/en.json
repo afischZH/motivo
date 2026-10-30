@@ -902,16 +902,42 @@
     },
     "seamless-patterns": {
       "name": "Seamless Patterns",
-      "description": "Seamlessly tiling patterns made of shapes or your own graphic. Export as SVG, CSS, tile or image.",
+      "description": "Seamlessly tiling patterns made of shapes, logos, emoji or text. Export as SVG, CSS, tile or image.",
       "params": {
+        "motif": {
+          "label": "Motif",
+          "options": {
+            "shape": "Shape or logo",
+            "emoji": "Emoji",
+            "text": "Text"
+          }
+        },
         "upload": {
-          "label": "Your graphic"
+          "label": "Logo or your graphic"
         },
         "shape": {
           "label": "Shape"
         },
         "keepOriginalColors": {
           "label": "Keep original colors"
+        },
+        "emoji": {
+          "label": "Emoji"
+        },
+        "emojiTint": {
+          "label": "Color with motif colors"
+        },
+        "text": {
+          "label": "Text or monogram"
+        },
+        "textFont": {
+          "label": "Font",
+          "options": {
+            "sans": "Sans",
+            "serif": "Serif",
+            "mono": "Mono",
+            "rounded": "Rounded"
+          }
         },
         "tiling": {
           "label": "Tiling",
@@ -920,6 +946,14 @@
             "brick": "Brick",
             "halfDrop": "Half drop",
             "mirror": "Mirror"
+          }
+        },
+        "alternate": {
+          "label": "Alternate",
+          "options": {
+            "none": "None",
+            "rows": "Every other row",
+            "checker": "Checkerboard"
           }
         },
         "size": {
@@ -964,11 +998,15 @@
         "starlight": "Starlight",
         "botanical": "Botanical",
         "bauhaus": "Bauhaus",
-        "waves": "Waves"
+        "waves": "Waves",
+        "fruit-salad": "Fruit salad",
+        "party-night": "Party night",
+        "wordmark": "Wordmark",
+        "monogram": "Monogram"
       },
       "seo": {
         "whatIs": "A seamless pattern is a tile that repeats any number of times without visible edges. Motifs that cross the border reappear on the opposite side, so the joins disappear. Seamless patterns work well for website backgrounds, wrapping paper, fabric, wallpaper and packaging.",
-        "howTo": "Pick one of the built-in shapes or load your own SVG, PNG, JPG or WebP file and crop it. Choose the tiling (grid, brick, half drop or mirror), size, spacing and rotation, and color the motifs with one color or a palette. Press the space bar for new variations. Export as SVG, as a CSS background, as a single PNG tile or as an image.",
+        "howTo": "Pick one of the built-in shapes, your logo from the Brand Kit or your own SVG, PNG, JPG or WebP file. Or type a few emoji, or a word, name or monogram. Choose the tiling (grid, brick, half drop or mirror), size, spacing and rotation, and color the motifs with one color or a palette. Press the space bar for new variations. Export as SVG, as a CSS background, as a single PNG tile or as an image.",
         "useCases": {
           "u1": {
             "title": "Website backgrounds",
@@ -976,7 +1014,7 @@
           },
           "u2": {
             "title": "Wrapping paper and fabric",
-            "text": "Upload your logo or your own graphic and turn it into a repeat for paper, textiles or wallpaper. The joins between tiles stay invisible."
+            "text": "Upload your logo or your own graphic, or type your name, and turn it into a repeat for paper, textiles or wallpaper. The joins between tiles stay invisible."
           },
           "u3": {
             "title": "Merch and packaging",
@@ -986,7 +1024,7 @@
         "tips": {
           "t1": "Half drop and brick hide the repetition better than a straight grid. Mirror works best for symmetric motifs.",
           "t2": "Random rotation and size variation make the pattern look more natural. For a strict, orderly pattern, set both to 0.",
-          "t3": "Shapes and logos from your Brand Kit are ready in the upload field. Your files stay in your browser and never go into share links."
+          "t3": "Logos and shapes from your Brand Kit are right in the shape picker, and your files stay in your browser. For a logo wall, set Alternate to Every other row so every second row turns upside down."
         },
         "faq": {
           "q1": {
@@ -994,8 +1032,8 @@
             "answer": "No. Your file is processed only in your browser, never sent to a server and never put into links. Anyone opening your link sees the pattern with the chosen shape."
           },
           "q2": {
-            "question": "What is the difference between brick and half drop?",
-            "answer": "Brick shifts every other row by half a tile width, like a brick wall. Half drop shifts every other column by half a tile height instead."
+            "question": "Why do emoji look different in my SVG file?",
+            "answer": "Emoji and text use your device's fonts; the SVG file embeds no font. Other apps therefore draw the emoji with their own emoji set. PNG, JPG and WebP are made in your browser and look exactly like the preview."
           },
           "q3": {
             "question": "How do I use the pattern as a CSS background?",
