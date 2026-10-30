@@ -141,6 +141,27 @@ export const duotoneTool = defineTool({
       grain: 20,
     }),
     preset("aurora", { mode: "gradient", contrast: 20, gamma: 1.1 }),
+    preset("lime-navy", { shadows: "#0d1b4c", highlights: "#c6f432", contrast: 20 }),
+    preset("rose-gold", {
+      mode: "tritone",
+      shadows: "#3d1f2b",
+      midtones: "#c97b84",
+      highlights: "#f7e1d7",
+      contrast: 10,
+      gamma: 1.1,
+    }),
+    preset("noir", {
+      shadows: "#0a0a0a",
+      highlights: "#f2f2f2",
+      contrast: 35,
+      grain: 25,
+      grainSize: 1.5,
+    }),
+    preset("vapor", {
+      mode: "gradient",
+      palette: ["#2b0f54", "#ab1f65", "#ff4f69", "#ff8142", "#ffda45"],
+      contrast: 15,
+    }),
   ],
   brandPalette(colors) {
     const sorted = byLightness(colors);

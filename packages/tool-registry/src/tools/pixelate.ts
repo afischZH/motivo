@@ -134,6 +134,32 @@ export const pixelateTool = defineTool({
       colors: ["#22223b", "#4a4e69", "#9a8c98", "#c9ada7", "#f2e9e4"],
     }),
     preset("fine", { blockSize: 6, levels: 8 }),
+    preset("eight-bit", {
+      blockSize: 14,
+      colorMode: "palette",
+      colors: [
+        "#1a1c2c",
+        "#5d275d",
+        "#b13e53",
+        "#ef7d57",
+        "#ffcd75",
+        "#a7f070",
+        "#38b764",
+        "#41a6f6",
+      ],
+    }),
+    preset("ocean", {
+      blockSize: 18,
+      colorMode: "palette",
+      colors: ["#03045e", "#0077b6", "#00b4d8", "#90e0ef", "#caf0f8"],
+    }),
+    preset("mono", {
+      blockSize: 12,
+      colorMode: "palette",
+      colors: ["#111111", "#555555", "#aaaaaa", "#f5f5f5"],
+      contrast: 20,
+    }),
+    preset("huge", { blockSize: 64, colorMode: "original", contrast: 5 }),
   ],
   brandPalette(colors) {
     return { colorMode: "palette" as const, colors: byLightness(colors).slice(0, 10) };

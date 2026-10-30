@@ -246,7 +246,11 @@
         "prism": "Prism",
         "meadow": "Meadow",
         "dusk": "Dusk",
-        "citrus": "Citrus"
+        "citrus": "Citrus",
+        "aurora": "Aurora",
+        "peach": "Peach",
+        "galaxy": "Galaxy",
+        "rainbow": "Rainbow"
       },
       "seo": {
         "whatIs": "A CSS gradient is a color transition the browser draws itself. It needs no image file, loads instantly and stays sharp at any size. This generator mixes colors in the OKLCH color space, so transitions look even and avoid a muddy gray middle.",
@@ -324,7 +328,11 @@
         "seventies": "Seventies",
         "seaside": "Seaside",
         "highland": "Highland",
-        "night-dots": "Night Dots"
+        "night-dots": "Night Dots",
+        "terracotta": "Terracotta",
+        "notebook": "Notebook",
+        "mint-check": "Mint check",
+        "art-deco": "Art deco"
       },
       "categories": {
         "dots": "Dots",
@@ -1052,7 +1060,11 @@
         "midnight": "Midnight",
         "aurora": "Aurora",
         "sand": "Sand",
-        "overlay": "Overlay"
+        "overlay": "Overlay",
+        "peach": "Peach",
+        "ocean": "Ocean",
+        "concrete": "Concrete",
+        "ember": "Ember"
       },
       "seo": {
         "whatIs": "Grain is fine random noise on top of a surface. It takes the sterile smoothness out of digital colors and gradients, hides banding in gradients and evokes analog film or paper.",
@@ -1772,7 +1784,11 @@
         "moss": "Moss",
         "harbour": "Harbour",
         "berry": "Berry",
-        "primaries": "Primaries"
+        "primaries": "Primaries",
+        "nordic": "Nordic",
+        "sunset": "Sunset",
+        "neon": "Neon",
+        "earth": "Earth"
       },
       "seo": {
         "whatIs": "A color palette generator puts together colors that work well with each other. Musterli works in the OKLCH color space, so lightness and hue steps look even to the eye.",
@@ -1844,7 +1860,11 @@
         "sand": "Sand",
         "forest": "Forest",
         "slate": "Slate",
-        "sunflower": "Sunflower"
+        "sunflower": "Sunflower",
+        "rose": "Rose",
+        "ocean": "Ocean",
+        "plum": "Plum",
+        "mint": "Mint"
       },
       "seo": {
         "whatIs": "Tints are lighter versions of a color, shades are darker ones. Together they form a scale for hover states, backgrounds and borders.",
@@ -1909,7 +1929,11 @@
         "amber": "Amber",
         "grape": "Grape",
         "stone": "Stone",
-        "rose": "Rose"
+        "rose": "Rose",
+        "teal": "Teal",
+        "sky": "Sky",
+        "lime": "Lime",
+        "ink": "Ink"
       },
       "seo": {
         "whatIs": "Tailwind CSS arranges every color in eleven steps from 50 (very light) to 950 (very dark). This generator builds such a scale from your brand color, with the color itself exactly on 500.",
@@ -1978,7 +2002,11 @@
         "color-wheel": "Color wheel",
         "full-spectrum": "All ten",
         "quiet": "Quiet",
-        "contrast-check": "Contrast check"
+        "contrast-check": "Contrast check",
+        "quartet": "Quartet",
+        "swatch-card": "Swatch card",
+        "eight-shares": "Eight shares",
+        "ten-by-light": "Ten by lightness"
       },
       "seo": {
         "whatIs": "Palette from Image finds the colors that define a photo or graphic and shows how much of the area each one covers. The analysis runs entirely in your browser: your image is never uploaded and never stored.",
@@ -2043,7 +2071,11 @@
         "nebula": "Nebula",
         "citrus": "Citrus",
         "dusk": "Dusk",
-        "ice": "Ice"
+        "ice": "Ice",
+        "peach": "Peach",
+        "aurora": "Aurora",
+        "candy": "Cotton candy",
+        "ocean": "Ocean"
       },
       "seo": {
         "whatIs": "A mesh gradient blends several colors across a surface instead of along a single line. The result looks like soft, flowing light and suits website heroes, app backgrounds, slides and social media posts.",
@@ -2128,7 +2160,11 @@
         "sunset": "Sunset",
         "forest": "Forest",
         "mono": "Mono",
-        "neon": "Neon"
+        "neon": "Neon",
+        "lavender": "Lavender",
+        "aurora": "Aurora",
+        "peach": "Peach",
+        "lagoon": "Lagoon"
       },
       "seo": {
         "whatIs": "A blurry gradient is a background made of a few large color circles, blurred so strongly that only soft clouds of color remain. It works well behind text, as a website hero, in presentations and as a wallpaper.",
@@ -2205,7 +2241,11 @@
         "forest": "Forest",
         "retro": "Retro",
         "silk": "Silk",
-        "ink": "Ink"
+        "ink": "Ink",
+        "sunset": "Sunset",
+        "mint": "Mint",
+        "gold": "Gold",
+        "neon": "Neon"
       },
       "seo": {
         "whatIs": "A striped gradient splits a color gradient into vertical bands and shifts each band a little. It looks like light through ribbed glass or folded fabric and makes a striking background for covers, posters and websites.",
@@ -2392,7 +2432,11 @@
         "neon-ring": "Neon ring",
         "sunset-frame": "Sunset frame",
         "mint-glow": "Mint glow",
-        "violet-glow": "Violet glow"
+        "violet-glow": "Violet glow",
+        "ocean-glass": "Ocean glass",
+        "peach-glass": "Peach glass",
+        "rainbow-frame": "Rainbow frame",
+        "amber-glow": "Amber glow"
       },
       "advisories": {
         "textContrast": "Text on the glass only reaches a contrast of {ratio}:1, WCAG AA needs {required}:1. Try a stronger tint or another text color.",
@@ -2520,7 +2564,11 @@
         "story": "Portrait story",
         "mosaic": "Mosaic",
         "calm": "Calm",
-        "blocks": "Blocks"
+        "blocks": "Blocks",
+        "landing": "Landing page",
+        "night": "Night",
+        "earthy": "Earthy",
+        "gallery": "Gallery"
       },
       "seo": {
         "whatIs": "A bento grid arranges content in tiles of different sizes, like the compartments of a bento box. The layout is popular for feature sections, portfolios, dashboards and social media graphics. The generator always fills the whole grid, without gaps.",
@@ -2629,7 +2677,11 @@
         "traffic-light": "Traffic light",
         "sky": "Sky and sun",
         "grey-scale": "Grayscale",
-        "palette-pairs": "Palette pairs"
+        "palette-pairs": "Palette pairs",
+        "forest": "Forest",
+        "sand": "Sand",
+        "button": "Button",
+        "red-green": "Red-green"
       },
       "suggestions": {
         "foreground-aa": "Text color for AA: {color} ({ratio}:1)",
@@ -2754,7 +2806,11 @@
         "deep": "Deep",
         "inner": "Inner",
         "button": "Button",
-        "sunset": "Evening light"
+        "sunset": "Evening light",
+        "hairline": "Hairline",
+        "glow": "Glow",
+        "pill": "Pill",
+        "side-light": "Side light"
       },
       "seo": {
         "whatIs": "A CSS shadow generator writes the code for box-shadow. Instead of one hard shadow, Musterli stacks several layers whose distance and blur grow along a curve. Cards and buttons look soft and naturally lit.",
@@ -3953,7 +4009,11 @@
         "chameleon": "Chameleon",
         "ocean": "Ocean",
         "lava": "Lava lamp",
-        "pastel": "Pastel clouds"
+        "pastel": "Pastel clouds",
+        "candy": "Cotton candy",
+        "neon-ring": "Neon ring",
+        "forest": "Forest",
+        "galaxy": "Galaxy"
       },
       "seo": {
         "whatIs": "An animated gradient is a background that moves slowly: the gradient pans, turns, changes its colors or soft blobs drift across it. Musterli writes it as pure CSS with keyframes, without JavaScript or video, so it stays light and sharp at any size.",
@@ -4279,7 +4339,11 @@
         "sunset": "Sunset",
         "cyanotype": "Cyanotype",
         "sepia": "Sepia",
-        "aurora": "Aurora"
+        "aurora": "Aurora",
+        "lime-navy": "Lime and navy",
+        "rose-gold": "Rose gold",
+        "noir": "Noir",
+        "vapor": "Vaporwave"
       },
       "seo": {
         "whatIs": "Duotone is an image effect that reduces a photo to two colors: dark areas take the shadow color, light areas the highlight color, with a smooth blend in between. With three colors it is called tritone, with any number a gradient map. The look is popular for posters, album covers, social media and websites because it tints photos in brand colors.",
@@ -4406,7 +4470,11 @@
         "led": "LED",
         "halftone": "Halftone dots",
         "braille": "Braille",
-        "blocks": "Blocks"
+        "blocks": "Blocks",
+        "amber": "Amber monitor",
+        "binary": "Binary",
+        "led-square": "LED matrix",
+        "big-dots": "Big dots"
       },
       "seo": {
         "whatIs": "ASCII art is a picture made of text characters: dark areas get dense characters such as @ or #, light areas dots or spaces. From a little distance the photo appears again. Musterli also draws colored characters, an LED or dot matrix and braille patterns, for posters, terminal aesthetics, README files and websites.",
@@ -4636,7 +4704,11 @@
         "engraving": "Engraving",
         "mosaic": "Mosaic",
         "diamonds": "Diamonds",
-        "night": "Night"
+        "night": "Night",
+        "risograph": "Risograph",
+        "blueprint": "Blueprint",
+        "coarse": "Coarse",
+        "forest": "Forest"
       },
       "seo": {
         "whatIs": "Halftone is the technique newspapers and posters use to print photos with a single ink: the picture is split into a grid of cells, and each cell gets a dot that grows the darker the picture is at that spot. Up close you see dots, from a distance a photo. Today the look is popular for posters, merch, social media and websites with a retro or pop art style.",
@@ -4753,7 +4825,11 @@
         "fine": "Fine screen",
         "newsprint": "Newsprint",
         "pastel": "Pastel",
-        "squares": "Squares"
+        "squares": "Squares",
+        "coarse": "Coarse",
+        "diamonds": "Diamonds",
+        "risograph": "Risograph",
+        "lines": "Lines"
       },
       "seo": {
         "whatIs": "CMYK halftone printing is the process behind almost every printed color photo: the picture is separated into the four process inks cyan, magenta, yellow and black, and each ink is printed as its own dot screen. So the screens do not interfere into distracting patterns (moiré), each ink has its own angle, classically cyan 15, magenta 75, yellow 0 and black 45 degrees. Up close you see the typical rosettes that comics and pop art made famous.",
@@ -4861,7 +4937,11 @@
         "cga": "Early PC graphics",
         "ordered": "Bayer pattern",
         "grayscale": "Grayscale",
-        "sunset": "Sunset"
+        "sunset": "Sunset",
+        "blueprint": "Blueprint",
+        "newspaper": "Newspaper",
+        "vaporwave": "Vaporwave",
+        "big-pixels": "Big pixels"
       },
       "seo": {
         "whatIs": "Dithering lets a picture get by with only a few colors and still show gradients and detail: instead of rounding a color, the algorithm spreads the difference to the neighboring pixels (error diffusion such as Floyd-Steinberg, Atkinson or Stucki) or compares each pixel with a fixed threshold pattern (Bayer matrix). The grainy look recalls early computers, game consoles and fax machines and is popular today for retro graphics, posters and websites.",
@@ -4975,7 +5055,11 @@
         "marble": "Marble",
         "ripple": "Lagoon",
         "aurora": "Aurora",
-        "retro-dither": "Retro dither"
+        "retro-dither": "Retro dither",
+        "deep-sea": "Deep sea",
+        "peach-silk": "Peach silk",
+        "ember": "Ember",
+        "mono-dither": "Mono dither"
       },
       "seo": {
         "whatIs": "A shader gradient is a gradient computed by a small program right on your graphics card. Instead of a few fixed color stops, it builds a living field of noise, bends it with domain warping and then runs it through your colors. The result is liquid, silky or grainy backgrounds that need no image as a starting point. Musterli renders everything in your browser, nothing leaves your device.",
@@ -5080,7 +5164,11 @@
         "cathedral": "Cathedral",
         "neon": "Neon",
         "subtle": "Subtle",
-        "eclipse": "Eclipse"
+        "eclipse": "Eclipse",
+        "underwater": "Underwater",
+        "sunrise": "Sunrise",
+        "forest": "Forest light",
+        "moonlight": "Moonlight"
       },
       "seo": {
         "whatIs": "God rays, also called crepuscular rays or light shafts, are visible beams of light falling through gaps in clouds, trees or windows. This effect recreates them: the bright parts of your photo become the light, and every pixel gathers how much light reaches it along the line toward the light source. Dark shapes such as mountains, branches or window frames cast streaks of shadow. The result is a radial blur laid over the picture as rays.",
@@ -5174,7 +5262,11 @@
         "diagonal": "Diagonal",
         "horizontal": "Horizontal",
         "fragments": "Fragments",
-        "fine": "Fine flutes"
+        "fine": "Fine flutes",
+        "wide": "Wide ribs",
+        "tinted": "Tinted",
+        "soft-ridges": "Soft ridges",
+        "steep": "Steep"
       },
       "seo": {
         "whatIs": "Fractal glass, also known as reeded or fluted glass, is a popular look in graphic design and photography: a picture appears to sit behind a pane made of many narrow glass rods. Each strip bends the light a little differently and shows a shifted, squeezed or mirrored slice, with fine gloss lines along the edges. The effect turns photos and gradients into abstract, refined backgrounds.",
@@ -5257,7 +5349,11 @@
         "poster": "Posterize",
         "sunset": "Sunset",
         "muted": "Muted",
-        "fine": "Fine pixels"
+        "fine": "Fine pixels",
+        "eight-bit": "8-bit",
+        "ocean": "Ocean",
+        "mono": "Greyscale",
+        "huge": "Huge blocks"
       },
       "seo": {
         "heading": "Pixelate Image (Posterize)",
@@ -5394,7 +5490,11 @@
         "bold-hero": "Bold hero",
         "app-ui": "App UI",
         "tailwind": "Tailwind names",
-        "code": "Code"
+        "code": "Code",
+        "playful": "Playful",
+        "golden": "Golden ratio",
+        "docs": "Docs",
+        "magazine": "Magazine"
       },
       "advisories": {
         "zoom": "The largest step grows {factor} times. Beyond {limit} times, text may stay too small when zoomed to 200% (WCAG 1.4.4). Bring the sizes closer or lower the ratio."
@@ -5492,7 +5592,11 @@
         "arrow": "Arrow",
         "mountains": "Mountains",
         "clouds": "Clouds",
-        "stairs": "Stairs"
+        "stairs": "Stairs",
+        "hills": "Hills",
+        "top-wave": "Top wave",
+        "sharp-peaks": "Sharp peaks",
+        "ocean": "Ocean"
       },
       "sizes": {
         "slim": "Slim",

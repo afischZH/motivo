@@ -111,6 +111,28 @@ export const noiseGrainTool = defineTool({
     }),
     preset("sand", { color: "#e9c46a", blend: "multiply", amount: 40, size: 2.5 }),
     preset("overlay", { base: "none", amount: 50 }),
+    preset("peach", {
+      base: "linear",
+      palette: ["#ffcdb2", "#e5989b"],
+      angle: 200,
+      mono: false,
+      amount: 35,
+      size: 1.5,
+    }),
+    preset("ocean", {
+      base: "radial",
+      palette: ["#48cae4", "#023e8a"],
+      blend: "soft-light",
+      amount: 50,
+    }),
+    preset("concrete", { color: "#adb5bd", blend: "multiply", amount: 55, size: 3 }),
+    preset("ember", {
+      base: "linear",
+      palette: ["#ffba08", "#dc2f02", "#370617"],
+      angle: 90,
+      mono: false,
+      amount: 45,
+    }),
   ],
   controls: {
     groups: [

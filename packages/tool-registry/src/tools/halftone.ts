@@ -154,6 +154,37 @@ export const halftoneTool = defineTool({
       invert: true,
       contrast: 20,
     }),
+    preset("risograph", {
+      cellSize: 9,
+      angle: 22,
+      ink: "#0078bf",
+      background: "#fdf6e3",
+      contrast: 25,
+    }),
+    preset("blueprint", {
+      shape: "line",
+      cellSize: 6,
+      angle: 90,
+      ink: "#e8f1ff",
+      background: "#0b3d91",
+      invert: true,
+      contrast: 15,
+    }),
+    preset("coarse", {
+      cellSize: 32,
+      angle: 45,
+      ink: "#111111",
+      background: "#ffffff",
+      contrast: 30,
+    }),
+    preset("forest", {
+      shape: "square",
+      cellSize: 10,
+      angle: 30,
+      ink: "#1b4332",
+      background: "#e9f5db",
+      contrast: 15,
+    }),
   ],
   brandPalette(colors, current) {
     const sorted = byLightness(colors);

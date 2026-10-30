@@ -109,6 +109,38 @@ export const meshGradientTool = defineTool({
       warp: 10,
       grain: 8,
     }),
+    preset("peach", {
+      background: "#fff1e6",
+      palette: ["#ffb4a2", "#e5989b", "#ffcdb2", "#fec89a"],
+      points: 4,
+      blur: 80,
+      warp: 35,
+      grain: 6,
+    }),
+    preset("aurora", {
+      background: "#03071e",
+      palette: ["#06d6a0", "#118ab2", "#8338ec", "#073b4c"],
+      points: 5,
+      blur: 60,
+      warp: 85,
+      grain: 14,
+    }),
+    preset("candy", {
+      background: "#ffe5ec",
+      palette: ["#ff8fab", "#c8b6ff", "#a0e7e5", "#fbf8cc", "#ffc8dd"],
+      points: 6,
+      blur: 70,
+      warp: 55,
+      grain: 0,
+    }),
+    preset("ocean", {
+      background: "#012a4a",
+      palette: ["#2a6f97", "#61a5c2", "#a9d6e5", "#014f86"],
+      points: 8,
+      blur: 50,
+      warp: 65,
+      grain: 10,
+    }),
   ],
   controls: {
     groups: [

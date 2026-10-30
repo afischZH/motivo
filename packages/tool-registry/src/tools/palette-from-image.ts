@@ -157,6 +157,10 @@ export const paletteFromImageTool = defineTool({
     preset("full-spectrum", 10, { sort: "hue", shares: false }),
     preset("quiet", 4, { sort: "lightness", shares: false, labels: "none" }),
     preset("contrast-check", 5, { sort: "lightness", contrast: true }),
+    preset("quartet", 4, { sort: "hue" }),
+    preset("swatch-card", 6, { labels: "rgb", shares: false }),
+    preset("eight-shares", 8),
+    preset("ten-by-light", 10, { sort: "lightness", labels: "none" }),
   ],
   controls: {
     groups: [{ id: "palette", labelKey: `tools.${ID}.groups.palette` }, DISPLAY_GROUP],

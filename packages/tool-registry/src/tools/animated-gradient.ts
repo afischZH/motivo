@@ -185,6 +185,37 @@ export const animatedGradientTool = defineTool({
       motion: 60,
       duration: 20,
     }),
+    preset("candy", {
+      palette: ["#ff4d8d", "#c084fc", "#60a5fa", "#34d399"],
+      angle: 45,
+      duration: 8,
+      direction: "reverse",
+      motion: 90,
+    }),
+    preset("neon-ring", {
+      mode: "rotate",
+      palette: ["#f72585", "#7209b7", "#4cc9f0", "#f72585"],
+      angle: 90,
+      duration: 6,
+      timing: "linear",
+      direction: "reverse",
+    }),
+    preset("forest", {
+      mode: "shift",
+      palette: ["#081c15", "#2d6a4f", "#95d5b2"],
+      angle: 160,
+      duration: 22,
+      timing: "ease",
+    }),
+    preset("galaxy", {
+      mode: "blobs",
+      background: "#030014",
+      palette: ["#7c3aed", "#2563eb", "#db2777", "#06b6d4"],
+      blur: 80,
+      intensity: 70,
+      motion: 45,
+      duration: 26,
+    }),
   ],
   controls: {
     groups: [

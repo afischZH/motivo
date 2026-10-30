@@ -154,6 +154,20 @@ export const cmykHalftoneTool = defineTool({
       brightness: 10,
     }),
     preset("squares", { shape: "square", cellSize: 12, contrast: 20 }),
+    preset("coarse", { cellSize: 28, gcr: 80, contrast: 25 }),
+    preset("diamonds", { shape: "diamond", cellSize: 14, gcr: 60, contrast: 15 }),
+    preset("risograph", {
+      cellSize: 11,
+      cyan: "#0078bf",
+      magenta: "#ff48b0",
+      yellow: "#ffe800",
+      black: "#3d5588",
+      paper: "#fdf6e3",
+      offset: 3,
+      offsetAngle: 120,
+      contrast: 15,
+    }),
+    preset("lines", { shape: "line", cellSize: 9, gcr: 70, contrast: 20 }),
   ],
   brandPalette(colors) {
     const sorted = byLightness(colors);

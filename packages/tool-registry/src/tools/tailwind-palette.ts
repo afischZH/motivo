@@ -91,6 +91,16 @@ export const tailwindPaletteTool = defineTool({
     preset("grape", { base: "#8b5cf6", name: "grape", labels: "oklch" }),
     preset("stone", { base: "#78716c", name: "stone", chromaFalloff: 0.6, lightest: 0.985 }),
     preset("rose", { base: "#e11d74", name: "rose", hueShift: 6, darkest: 0.25 }),
+    preset("teal", { base: "#14b8a6", name: "teal", hueShift: -6 }),
+    preset("sky", { base: "#0ea5e9", name: "sky", lightest: 0.98, darkest: 0.3 }),
+    preset("lime", { base: "#84cc16", name: "lime", hueShift: 10, chromaFalloff: 0.45 }),
+    preset("ink", {
+      base: "#1e3a8a",
+      name: "ink",
+      darkest: 0.18,
+      chromaFalloff: 0.2,
+      labels: "rgb",
+    }),
   ],
   controls: {
     groups: [{ id: "scale", labelKey: `tools.${ID}.groups.scale` }, DISPLAY_GROUP],

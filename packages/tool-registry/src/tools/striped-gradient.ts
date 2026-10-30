@@ -113,6 +113,35 @@ export const stripedGradientTool = defineTool({
       shading: 30,
       grain: 14,
     }),
+    preset("sunset", {
+      palette: ["#ffcdb2", "#e5989b", "#6d597a", "#355070"],
+      stripes: 9,
+      offset: 35,
+      shading: 15,
+      grain: 8,
+    }),
+    preset("mint", {
+      palette: ["#d8f3dc", "#74c69d", "#1b4332"],
+      stripes: 20,
+      offset: 20,
+      shading: 45,
+      alternate: true,
+    }),
+    preset("gold", {
+      palette: ["#3d2c00", "#b08968", "#ffe8a3", "#7f5539"],
+      stripes: 18,
+      offset: 12,
+      variance: 20,
+      shading: 60,
+    }),
+    preset("neon", {
+      palette: ["#10002b", "#f72585", "#4cc9f0", "#7209b7"],
+      stripes: 7,
+      offset: 70,
+      variance: 40,
+      shading: 20,
+      grain: 10,
+    }),
   ],
   controls: {
     groups: [
