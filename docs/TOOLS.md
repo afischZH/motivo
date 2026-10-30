@@ -95,6 +95,24 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 - **Umgesetzt in M3 (M3-AP07, Tool-ID `striped-gradient`)**: `palette` (Stopps von oben nach unten), `stripes` (2 bis 40), `variance` (Breitenvariation), `offset` (zufällige Höhenverschiebung je Band, der Verlauf ist um den Versatz länger, damit nie eine einfarbige Kante entsteht), `alternate` (jedes zweite Band umgekehrt), `shading` (Licht links, Schatten rechts je Band, wie Riffelglas), `grain`. Nur Rechtecke mit linearen Verläufen; Bänder überlappen um 1 px gegen Haarlinien. Exporte: PNG, JPG, WebP, SVG, CSS.
 - **Körnung der Verlaufs-Tools (C1 bis C3)**: dieselbe Gauss-Kachel wie Noise/Grain (E1), hier 128 px, monochrom, `overlay`, Deckkraft = `grain` in Prozent, aus eigenem Zufallsstrom (`deriveSeed(seed, "grain")`), damit sie die Geometrie nicht verschiebt. "Neue Variante" behält die Körnung.
 
+### C5. Holografie-Verlauf · W5 · G
+
+**Umgesetzt (Tool-ID `holographic-gradient`, Slugs `holografie-verlauf-generator` / `holographic-gradient-generator`, Kategorien `gradients`, `backgrounds`, Engine `packages/engine/src/tools/holographic/`)**:
+- Schillernde Folie: ein linearer Verlauf wiederholt die Palette gespiegelt (`spreadMethod="reflect"`, keine Naht), darüber bis 3 Ring-Ebenen (radiale Verläufe, ebenfalls gespiegelt, geseedete Mittelpunkte, Palette rotiert) in den Mischmodi `hard-light`, `overlay`, `color-dodge`. Wo sich Bänder kreuzen, wechselt die Farbe wie bei Folie.
+- **Params**: `palette`, `angle`, `bands` (1 bis 12 Wiederholungen), `layers` (0 bis 3), `rings` (Stärke), `creases` (weiche weisse Falten, `soft-light`), `sheen` (zwei helle Flecken, `screen`), `grain` (Kachel wie C1 bis C3). Für alle 3 Ebenen wird immer gezogen, mehr Ebenen verschieben die anderen nicht.
+- Nur Verläufe und Mischmodi, kein Filter. Exporte: PNG, JPG, WebP, SVG, GIF (Zufallswerte, Farben).
+- **Leertaste**: Folienpalette (Farbtöne gleichmässig ums Rad, hell, mittlere Sättigung), Richtung, Ebenen; Körnung bleibt.
+- **Vorlagen** (8): Folie, Perlmutt, Ölfilm, Chrom, Holo-Sticker, Opal, Abendrot, Polarlicht.
+
+### C6. Glitch-Hintergrund · W5 · G
+
+**Umgesetzt (Tool-ID `glitch-background`, Slugs `glitch-hintergrund-generator` / `glitch-background-generator`, Kategorien `backgrounds`, `gradients`, Engine `packages/engine/src/tools/glitch/`)**:
+- Ein Palettenverlauf (Winkel wie CSS) wird in waagrechte Risse zerlegt: jeder Riss ist ein Rechteck (oft nicht über die ganze Breite) mit einer Kopie des Verlaufs, seitlich verschoben über `gradientTransform`, jeder vierte rückwärts. Rote und cyanfarbene Säume über und unter dem Riss (RGB-Versatz, `screen`), Blöcke in Palettenfarben, Weiss und Schwarz, Scanlines als Linienmuster (rund 270 Linien, mindestens 2 px Periode), Körnung.
+- **Params**: `palette`, `angle`, `slices` (0 bis 40), `shift` (Prozent der Breite), `split`, `blocks` (0 bis 60), `scanlines`, `grain`. Es wird immer für die Höchstzahl gezogen.
+- Ohne Filter und ohne Verlaufs-`href` (ältere Design-Apps lösen ihn nicht auf). Exporte: PNG, JPG, WebP, SVG, GIF; mit Zufallswerten als Bildquelle flackert das GIF.
+- **Leertaste**: Palette, Richtung, Risse, Blöcke, Scanlines; Körnung bleibt.
+- **Vorlagen** (7): Signal, VHS, Cyber, Pastell, Fehler, Abendrot, Schwarzweiss.
+
 ### C4. Shader Gradient Editor · M5 · G/P
 - **Parameter**: 2 bis 6 Farben, `style` (Liquid, Silk, Streaked, Grainy als Presets), `frequency`, `amplitude`, `warp` (Domain-Warping-Stärke), `speed`, `dither` (aus/Bayer 2/4/8, Stufenanzahl), `grain`, `vignette`, `angle`, `zoom`.
 - **Algorithmus (GLSL, WebGL2)**: Simplex/Value-Noise, Domain Warping (`p += warp * noise(p)` mehrfach), Ergebnis als Index in eine Farbrampe (Palette als 1D-Texture), danach Bayer-Dithering (Schwellwert-Matrix), Film Grain (Hash-Noise pro Pixel und Frame), Vignette.
@@ -151,6 +169,15 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 ### D5. SVG Charts (Platzhalter-Charts) · M3 · G
 - Linien- und Balken-Diagramme mit Zufallsdaten für Mockups. Glättung, Achsen ein/aus, Farben.
 - **Umsetzung M3** (Tool-ID `svg-charts`): `type` (Linie, Fläche, gruppierte Balken), `series` (1 bis 4), `points` (2 bis 24), Daten als geseedeter Random Walk mit `trend` und `volatility` (es werden immer 4 × 24 Werte gezogen, Stiländerungen behalten die Daten), `smoothing` (Catmull-Rom), `lineWidth`, `markers`, `barGap`, `barRadius`, `axes`, `grid`, `axisColor`, `margin`. Bewusst ohne Text (keine Schriften, überall gleiche Darstellung). Leertaste würfelt Daten, Trend und Farben, der Stil bleibt. Exporte: SVG, CSS, PNG, JPG, WebP.
+
+### D6. Neon-Formen · W5 · G
+
+**Umgesetzt (Tool-ID `neon-shapes`, Slugs `neon-formen-generator` / `neon-shapes-generator`, Kategorie `backgrounds`, Engine `packages/engine/src/tools/neon/`)**:
+- Leuchtende Umrisse auf dunklem Grund: Kreis, Dreieck, Quadrat, Sechseck, Linie, Zickzack, Welle, gewählt über `kind` (gemischt, Kreise und Wellen, Vielecke, Linien und Zickzack).
+- **Leuchten ohne Filter**: jede Form wird 12-mal unter der Röhre gezeichnet, jedes Mal breiter (bis 16 Röhrenbreiten) und blasser. Wirkt wie eine weiche Unschärfe, bleibt in Design-Apps bearbeitbar und sieht in 8K gleich aus (Browser kappen `feGaussianBlur`, siehe Mesh-Verlauf). Optional weisser Kern und farbiger Schimmer (feste Flecken, nicht geseedet).
+- **Params**: `background`, `palette`, `kind`, `count` (1 bis 30), `size`, `variance`, `stroke` (Promille der kurzen Kante), `glow`, `core`, `haze`. Sechs Züge pro Platz für alle 30 Plätze, mehr Formen verschieben die anderen nicht.
+- Exporte: PNG, JPG, WebP, SVG, GIF.
+- **Vorlagen** (8): Spielhalle, Leuchtreklame, Geometrie, Laser, Miami, Sanftes Leuchten, Party, Minimal.
 
 ## E. Image Effects (alle im Web Worker auf ImageData)
 
@@ -639,4 +666,5 @@ Drei Code-first-Tools für Webdesigner (Auswahl Andreas 2026-10-29). Keine neuen
 6. **M6**: God Rays, Fractal Glass, Social Media Editor
 7. **W3**: fliessende Schriftskala, Abschnittstrenner, Open-Graph-Bild
 8. **W4**: Clip-path-Generator, Bild komprimieren, QR-Code, Code-Screenshot
-9. **M7**: Composer, Community-Ausbau, API, Plugins, KI
+9. **W5**: Holografie-Verlauf, Neon-Formen, Glitch-Hintergrund
+10. **M7**: Composer, Community-Ausbau, API, Plugins, KI

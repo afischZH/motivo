@@ -29,6 +29,7 @@ import {
   starrySkyTool,
   stripedGradientTool,
   svgWavesTool,
+  holographicGradientTool,
 } from "./index";
 import type { CssPatternLayer, CssPatternsParams } from "./css-patterns";
 import { GRADIENT_GRAIN_EDGE, grainTileCacheSize } from "./grain";
@@ -165,6 +166,9 @@ describe("built-in tool registration", () => {
       "clip-path",
       "qr-code",
       "code-screenshot",
+      "holographic-gradient",
+      "neon-shapes",
+      "glitch-background",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
       "favicon-generator",
@@ -190,6 +194,8 @@ describe("built-in tool registration", () => {
       "striped-gradient",
       "animated-gradient",
       "shader-gradient",
+      "holographic-gradient",
+      "glitch-background",
     ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
@@ -702,6 +708,7 @@ describe.each([
   ["mesh-gradient", meshGradientTool],
   ["blurry-gradient", blurryGradientTool],
   ["striped-gradient", stripedGradientTool],
+  ["holographic-gradient", holographicGradientTool],
 ] as const)("%s", (_, tool) => {
   const size = { width: 600, height: 400 };
   const anyTool = tool as unknown as AnyToolDefinition;

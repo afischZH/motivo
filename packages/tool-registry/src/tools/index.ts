@@ -21,6 +21,9 @@ import { polkaDotsTool } from "./polka-dots";
 import { seamlessPatternsTool } from "./seamless-patterns";
 import { starrySkyTool } from "./starry-sky";
 import { stripedGradientTool } from "./striped-gradient";
+import { holographicGradientTool } from "./holographic-gradient";
+import { neonShapesTool } from "./neon-shapes";
+import { glitchBackgroundTool } from "./glitch-background";
 import { svgChartsTool } from "./svg-charts";
 import { svgWavesTool } from "./svg-waves";
 import { tailwindPaletteTool } from "./tailwind-palette";
@@ -110,6 +113,9 @@ export {
   clipPathTool,
   qrCodeTool,
   codeScreenshotTool,
+  holographicGradientTool,
+  neonShapesTool,
+  glitchBackgroundTool,
 };
 export type { BlobParams } from "./blob";
 export type { BlobCompositionBlob, BlobCompositionParams } from "./blob-composition";
@@ -130,6 +136,9 @@ export type { SeamlessPatternsParams } from "./seamless-patterns";
 export { SEAMLESS_COLOR_MODES } from "./seamless-patterns";
 export type { StarrySkyParams } from "./starry-sky";
 export type { StripedGradientParams } from "./striped-gradient";
+export type { HolographicGradientParams } from "./holographic-gradient";
+export type { NeonShapesParams } from "./neon-shapes";
+export type { GlitchBackgroundParams } from "./glitch-background";
 export type { SvgChartsParams } from "./svg-charts";
 export type { SvgWavesParams } from "./svg-waves";
 export type { TailwindPaletteParams } from "./tailwind-palette";
@@ -256,6 +265,9 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   clipPathTool,
   qrCodeTool,
   codeScreenshotTool,
+  holographicGradientTool,
+  neonShapesTool,
+  glitchBackgroundTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

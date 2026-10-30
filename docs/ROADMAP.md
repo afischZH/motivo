@@ -186,6 +186,14 @@ Ideen-Dokument "New tools and areas for Musterli" (Claude Doc, 2026-10-30). Andr
 - [x] QR-Code mit Stil (eigener Encoder, ohne Dependency, Spec `docs/TOOLS.md` M5)
 - [x] Code-Screenshot (eigene Syntaxfarben, ohne Dependency, Spec `docs/TOOLS.md` M6)
 
+## W5: Trend-Looks (Entscheid Andreas 2026-10-30)
+
+Letzter offener Top-Vorschlag aus dem Ideen-Dokument, gewählt von Andreas.
+
+- [x] Holografie-Verlauf (Spec `docs/TOOLS.md` C5)
+- [x] Neon-Formen (Spec `docs/TOOLS.md` D6)
+- [x] Glitch-Hintergrund (Spec `docs/TOOLS.md` C6)
+
 ## M7: Differenzierung & Wachstum (ab Woche 24)
 
 Reihenfolge nach Nutzerfeedback festlegen. Kandidaten:

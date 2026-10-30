@@ -23,6 +23,9 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
     "topo-lines",
     "low-poly",
     "starry-sky",
+    "holographic-gradient",
+    "neon-shapes",
+    "glitch-background",
     "noise-grain",
   ],
   "surface-patterns": [
