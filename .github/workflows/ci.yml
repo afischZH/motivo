@@ -55,6 +55,7 @@ jobs:
         env:
           # Placeholder donation link, so e2e/support.spec.ts checks the button
           # (without it, the spec checks the "link follows soon" state instead).
+          # The e2e job sets the same value for the spec.
           NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
         run: pnpm build
 
@@ -78,6 +79,9 @@ jobs:
     if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # Must match the value the checks job built with (e2e/support.spec.ts).
+      NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
     steps:
       - uses: actions/checkout@v5
 
