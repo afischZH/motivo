@@ -89,6 +89,8 @@ export function SocialDesigns({ editorHref }: { editorHref: string }) {
       try {
         const all = await store.getAll();
         const texts = await socialFileTexts(all, Date.now());
+        // Browser only: the guard keeps this import out of the server bundle (Worker size).
+        if (typeof window === "undefined") throw new Error("browser only");
         const { downloadBlob } = await import("@musterli/exporters");
         const now = new Date();
         texts.forEach((text, i) =>

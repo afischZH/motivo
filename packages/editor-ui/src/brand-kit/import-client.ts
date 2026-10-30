@@ -25,6 +25,8 @@ const importer: FileImporter<BrandKitFileParseResult> = {
     return createBrandKitWorker();
   },
   async parseOnMain(file) {
+    // Browser only: the guard keeps this import out of the server bundle (Worker size).
+    if (typeof window === "undefined") return { ok: false, error: "malformed" };
     const { parseBrandKitFile } = await import("./transfer");
     try {
       return parseBrandKitFile(await file.text());

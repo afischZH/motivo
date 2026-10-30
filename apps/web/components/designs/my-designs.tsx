@@ -172,6 +172,8 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
     if (missingKey === "") return;
     let cancelled = false;
     const queue = missingKey.split(",");
+    // Browser only: the guard keeps these imports out of the server bundle (Worker size).
+    if (typeof window === "undefined") return;
     void (async () => {
       const [{ createDesignThumbnail }, { registry, parseToolParams }] = await Promise.all([
         import("@musterli/editor-ui/designs/thumbnail"),
@@ -269,6 +271,8 @@ export function MyDesigns({ tools, toolsHref }: MyDesignsProps) {
         if (all.length === 0) return { tone: "info", text: tPage("exportEmpty") };
         // Several files when uploads make one too large to import again.
         const texts = await designsFileTexts(all, Date.now());
+        // Browser only: the guard keeps this import out of the server bundle (Worker size).
+        if (typeof window === "undefined") throw new Error("browser only");
         const { downloadBlob } = await import("@musterli/exporters");
         const date = new Date();
         texts.forEach((text, part) => {

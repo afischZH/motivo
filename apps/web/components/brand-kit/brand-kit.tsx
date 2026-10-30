@@ -209,6 +209,8 @@ export function BrandKit() {
     });
 
   const uploadServices = async (): Promise<UploadServices & { mod: Upload }> => {
+    // Browser only: the guard keeps this import out of the server bundle (Worker size).
+    if (typeof window === "undefined") throw new Error("browser only");
     const mod = await import("@musterli/editor-ui/brand-kit/upload");
     services.current ??= {
       crop: mod.browserImageInputServices(),
@@ -300,6 +302,8 @@ export function BrandKit() {
         }
         // Several files when large logos make one too large to import again.
         const texts = await brandKitFileTexts(kit, Date.now());
+        // Browser only: the guard keeps this import out of the server bundle (Worker size).
+        if (typeof window === "undefined") throw new Error("browser only");
         const { downloadBlob } = await import("@musterli/exporters");
         const date = new Date();
         texts.forEach((text, part) => {

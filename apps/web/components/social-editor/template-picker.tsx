@@ -46,6 +46,8 @@ let libraryPromise: Promise<TemplateLibrary> | null = null;
 
 /** The template library chunk, loaded once. */
 export function loadTemplateLibrary(): Promise<TemplateLibrary> {
+  // Browser only: the guard keeps the templates out of the server bundle (Worker size).
+  if (typeof window === "undefined") return Promise.reject(new Error("browser only"));
   libraryPromise ??= import("@musterli/scene/templates").catch((error: unknown) => {
     libraryPromise = null;
     throw error;
