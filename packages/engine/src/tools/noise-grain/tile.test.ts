@@ -50,8 +50,11 @@ describe("grainTile", () => {
     const a = grainTile(createRng(1), { size: 1, mono: true, blend: "overlay" });
     const b = grainTile(createRng(1), { size: 1, mono: true, blend: "overlay" });
     const c = grainTile(createRng(2), { size: 1, mono: true, blend: "overlay" });
-    expect(a.data).toEqual(b.data);
-    expect(a.data).not.toEqual(c.data);
+    // A plain loop instead of toEqual: deep-equal on the full tile took up to 5 s in CI.
+    const same = (x: Uint8ClampedArray, y: Uint8ClampedArray) =>
+      x.length === y.length && x.every((v, i) => v === y[i]);
+    expect(same(a.data, b.data)).toBe(true);
+    expect(same(a.data, c.data)).toBe(false);
     expect([a.width, a.height]).toEqual([GRAIN_TILE_EDGE, GRAIN_TILE_EDGE]);
   });
 

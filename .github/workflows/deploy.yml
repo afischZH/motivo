@@ -8,10 +8,13 @@ name: Deploy (Cloudflare)
 # NEXT_PUBLIC_SENTRY_DSN (production only), NEXT_PUBLIC_DONATION_URL (production
 # and previews); see docs/ARCHITECTURE.md. The Worker needs no secrets.
 
+# Docs-only changes do not change the site and skip the deploy.
 on:
   push:
     branches: [main]
+    paths-ignore: ["docs/**", "*.md", ".claude/**"]
   pull_request:
+    paths-ignore: ["docs/**", "*.md", ".claude/**"]
 
 concurrency:
   group: deploy-${{ github.ref }}

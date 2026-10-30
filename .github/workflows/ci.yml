@@ -2,11 +2,16 @@ name: CI
 
 # E2E runs in Chromium only (decision Andreas 2026-10-28). Firefox and WebKit
 # projects stay in playwright.config.ts for manual runs (`pnpm test:e2e`).
+# To save Actions minutes (decision Andreas 2026-10-30): E2E runs on main and on
+# PRs that are ready for review, not on drafts; it reuses the build of the
+# checks job and only starts once those are green. Docs-only changes skip CI.
 on:
   push:
     branches: [main]
+    paths-ignore: ["docs/**", "*.md", ".claude/**"]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore: ["docs/**", "*.md", ".claude/**"]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -47,15 +52,35 @@ jobs:
         run: pnpm test
 
       - name: Build
+        env:
+          # Placeholder donation link, so e2e/support.spec.ts checks the button
+          # (without it, the spec checks the "link follows soon" state instead).
+          # The e2e job sets the same value for the spec.
+          NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
         run: pnpm build
+
+      # Only apps/web has a build step; the packages export their sources.
+      - name: Upload build for E2E
+        if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: web-build
+          include-hidden-files: true
+          retention-days: 1
+          path: |
+            apps/web/.next/
+            !apps/web/.next/cache/
+            apps/web/public/og/
+            apps/web/public/_headers
 
   e2e:
     name: E2E (Playwright, chromium)
+    needs: checks
+    if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      # Placeholder donation link, so e2e/support.spec.ts checks the button
-      # (without it, the spec checks the "link follows soon" state instead).
+      # Must match the value the checks job built with (e2e/support.spec.ts).
       NEXT_PUBLIC_DONATION_URL: https://donate.example/musterli
     steps:
       - uses: actions/checkout@v5
@@ -72,9 +97,12 @@ jobs:
       - name: Install Playwright browser
         run: pnpm --filter @musterli/web exec playwright install --with-deps chromium
 
-      # The Playwright web server runs `next start` in CI, so the app must be built first.
-      - name: Build
-        run: pnpm build
+      # The Playwright web server runs `next start` in CI on the build of the checks job.
+      - name: Download build
+        uses: actions/download-artifact@v5
+        with:
+          name: web-build
+          path: apps/web
 
       - name: Run E2E tests
         run: pnpm --filter @musterli/web exec playwright test --project=chromium
