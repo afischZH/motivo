@@ -4,7 +4,8 @@
 
 ## Aktueller Stand
 
-- **2026-11-04 Web-Shader S1** (Entscheid Andreas, Plan "Musterli: Web Shader plan"): Live-Einbettung für WebGL-Tools (Web Component, React, HTML, GLSL), Branch `claude/project-thread-g5cj3m`, Draft-PR. Nächster Schritt: Review und Merge durch Andreas, danach Entscheid zu S2 (neue Shader-Hintergründe) oder S3 (Video).
+- **2026-11-04 Web-Shader S2** (Entscheid Andreas): vier neue Shader-Hintergründe (Punktwellen, Flüssiges Chrom, Kaustik und Zellen, Lichtkegel) mit Live-Einbettung, Branch `claude/project-thread-g5cj3m`, Draft-PR. Körnungs-Overlay entfällt (bestehendes Tool Körnung). Nächster Schritt: Review und Merge durch Andreas, danach Entscheid zu S3 (Video).
+- **2026-11-04 Web-Shader S1**: Live-Einbettung für WebGL-Tools (Web Component, React, HTML, GLSL), PR #34, gemergt.
 - **Meilenstein**: M6 (Social Media Editor und restliche Effekte) abgeschlossen, live nach Freigabe Andreas 2026-10-29 09:55 (PR #20). M5b live seit 2026-10-29 05:16 (PR #18, Merge b09677f, Deploy grün). M4-AP08 (Launch-Vorbereitung) noch offen.
 - **Letzte Sitzung**: 2026-10-29 (Cloud-Sitzung)
 - **Nächster Schritt**: AP01 (Effekte) und AP02 (Editor-Grundlage inkl. Magic Resize) parallel, danach AP03 (Text, Schriften) und AP05 (Templates, Brand-Apply), zuletzt AP07. Offen für Andreas: Gerichtsstand, Impressum-Angaben, juristische Prüfung (inkl. Datenschutz Live-Ansicht), Analytics-Token, Sentry-DSN, echte Test-Spende, Markenprüfung.
