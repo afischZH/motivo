@@ -511,6 +511,116 @@
         "sonar": "Sonar",
         "aurora-beam": "Aurora beam"
       }
+    },
+    "light-leaks": {
+      "name": "Light leaks",
+      "presets": {
+        "film": "Film",
+        "rose": "Rose",
+        "golden": "Golden",
+        "cool": "Cool",
+        "polaroid": "Polaroid",
+        "burn": "Burn"
+      }
+    },
+    "bokeh": {
+      "name": "Bokeh",
+      "presets": {
+        "city": "City",
+        "fairy": "Fairy lights",
+        "neon": "Neon",
+        "rain": "Rain",
+        "festive": "Festive",
+        "dawn": "Dawn"
+      }
+    },
+    "sky-gradient": {
+      "name": "Sky",
+      "presets": {
+        "dusk": "Dusk",
+        "sunrise": "Sunrise",
+        "blue-hour": "Blue hour",
+        "midday": "Midday",
+        "desert-night": "Desert night",
+        "golden-hour": "Golden hour"
+      }
+    },
+    "japandi": {
+      "name": "Japandi",
+      "presets": {
+        "stones": "Stones",
+        "torii": "Torii",
+        "moon": "Moon",
+        "sage": "Sage",
+        "night": "Night",
+        "clay": "Clay"
+      }
+    },
+    "neo-brutalism": {
+      "name": "Neo-brutalism",
+      "presets": {
+        "playground": "Playground",
+        "lemon": "Lemon",
+        "night": "Night",
+        "mint": "Mint",
+        "poster": "Poster",
+        "crowd": "Crowd"
+      }
+    },
+    "memphis": {
+      "name": "Memphis",
+      "presets": {
+        "classic": "Classic",
+        "pastel": "Pastel",
+        "bold": "Bold",
+        "midnight": "Midnight",
+        "sparse": "Sparse",
+        "confetti": "Confetti"
+      }
+    },
+    "halftone-fade": {
+      "name": "Halftone",
+      "presets": {
+        "print": "Print",
+        "sunspot": "Sunspot",
+        "ink": "Ink",
+        "duotone": "Duotone",
+        "mint": "Mint",
+        "fine": "Fine"
+      }
+    },
+    "crt": {
+      "name": "CRT screen",
+      "presets": {
+        "oscilloscope": "Oscilloscope",
+        "amber": "Amber",
+        "radar": "Radar",
+        "ice": "Ice",
+        "magenta": "Magenta",
+        "mono": "Mono"
+      }
+    },
+    "bento": {
+      "name": "Bento grid",
+      "presets": {
+        "dark": "Dark",
+        "paper": "Paper",
+        "pastel": "Pastel",
+        "mono": "Mono",
+        "ocean": "Ocean",
+        "calm": "Calm"
+      }
+    },
+    "bit-dither": {
+      "name": "1-bit dither",
+      "presets": {
+        "classic": "Classic",
+        "terminal": "Terminal",
+        "sunset": "Sunset",
+        "blueprint": "Blueprint",
+        "gameboy": "Handheld",
+        "fine": "Fine"
+      }
     }
   }
 }

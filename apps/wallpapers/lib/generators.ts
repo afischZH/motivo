@@ -12,6 +12,10 @@ registerWallpaperStyles();
  */
 export const WALLPAPER_STYLE_GROUPS = {
   soft: [
+    "japandi",
+    "sky-gradient",
+    "bokeh",
+    "light-leaks",
     "liquid-glass",
     "silk-folds",
     "dunes",
@@ -29,6 +33,12 @@ export const WALLPAPER_STYLE_GROUPS = {
     "starry-sky",
   ],
   graphic: [
+    "bento",
+    "crt",
+    "bit-dither",
+    "halftone-fade",
+    "memphis",
+    "neo-brutalism",
     "swiss-poster",
     "iso-cubes",
     "op-art",

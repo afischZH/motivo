@@ -18,6 +18,16 @@ import { paperFoldsTool } from "./paper-folds";
 import { pixelGradientTool } from "./pixel-gradient";
 import { planetTool } from "./planet";
 import { retroArcsTool } from "./retro-arcs";
+import { lightLeaksTool } from "./light-leaks";
+import { bokehTool } from "./bokeh";
+import { skyGradientTool } from "./sky-gradient";
+import { japandiTool } from "./japandi";
+import { neoBrutalismTool } from "./neo-brutalism";
+import { memphisTool } from "./memphis";
+import { halftoneFadeTool } from "./halftone-fade";
+import { bitDitherTool } from "./bit-dither";
+import { crtTool } from "./crt";
+import { bentoTool } from "./bento";
 
 /** Styles made for this app only; Musterli does not have them. */
 export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
@@ -39,6 +49,16 @@ export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
   silkFoldsTool,
   dunesTool,
   islandHaloTool,
+  lightLeaksTool,
+  bokehTool,
+  skyGradientTool,
+  japandiTool,
+  neoBrutalismTool,
+  memphisTool,
+  halftoneFadeTool,
+  bitDitherTool,
+  crtTool,
+  bentoTool,
 ];
 
 /**

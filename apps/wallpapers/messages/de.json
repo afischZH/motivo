@@ -511,6 +511,116 @@
         "sonar": "Sonar",
         "aurora-beam": "Polarlicht-Strahl"
       }
+    },
+    "light-leaks": {
+      "name": "Lichtlecks",
+      "presets": {
+        "film": "Film",
+        "rose": "Rosé",
+        "golden": "Golden",
+        "cool": "Kühl",
+        "polaroid": "Polaroid",
+        "burn": "Glut"
+      }
+    },
+    "bokeh": {
+      "name": "Bokeh",
+      "presets": {
+        "city": "Stadt",
+        "fairy": "Lichterkette",
+        "neon": "Neon",
+        "rain": "Regen",
+        "festive": "Festlich",
+        "dawn": "Morgen"
+      }
+    },
+    "sky-gradient": {
+      "name": "Himmel",
+      "presets": {
+        "dusk": "Abenddämmerung",
+        "sunrise": "Sonnenaufgang",
+        "blue-hour": "Blaue Stunde",
+        "midday": "Mittag",
+        "desert-night": "Wüstennacht",
+        "golden-hour": "Goldene Stunde"
+      }
+    },
+    "japandi": {
+      "name": "Japandi",
+      "presets": {
+        "stones": "Steine",
+        "torii": "Torii",
+        "moon": "Mond",
+        "sage": "Salbei",
+        "night": "Nacht",
+        "clay": "Ton"
+      }
+    },
+    "neo-brutalism": {
+      "name": "Neo-Brutalismus",
+      "presets": {
+        "playground": "Spielplatz",
+        "lemon": "Zitrone",
+        "night": "Nacht",
+        "mint": "Minze",
+        "poster": "Plakat",
+        "crowd": "Gewimmel"
+      }
+    },
+    "memphis": {
+      "name": "Memphis",
+      "presets": {
+        "classic": "Klassisch",
+        "pastel": "Pastell",
+        "bold": "Kräftig",
+        "midnight": "Mitternacht",
+        "sparse": "Luftig",
+        "confetti": "Konfetti"
+      }
+    },
+    "halftone-fade": {
+      "name": "Rasterpunkte",
+      "presets": {
+        "print": "Druck",
+        "sunspot": "Sonnenfleck",
+        "ink": "Tinte",
+        "duotone": "Duoton",
+        "mint": "Minze",
+        "fine": "Fein"
+      }
+    },
+    "crt": {
+      "name": "Röhrenbildschirm",
+      "presets": {
+        "oscilloscope": "Oszilloskop",
+        "amber": "Bernstein",
+        "radar": "Radar",
+        "ice": "Eis",
+        "magenta": "Magenta",
+        "mono": "Mono"
+      }
+    },
+    "bento": {
+      "name": "Bento-Raster",
+      "presets": {
+        "dark": "Dunkel",
+        "paper": "Papier",
+        "pastel": "Pastell",
+        "mono": "Mono",
+        "ocean": "Ozean",
+        "calm": "Ruhig"
+      }
+    },
+    "bit-dither": {
+      "name": "1-Bit-Dither",
+      "presets": {
+        "classic": "Klassisch",
+        "terminal": "Terminal",
+        "sunset": "Abendrot",
+        "blueprint": "Blaupause",
+        "gameboy": "Handkonsole",
+        "fine": "Fein"
+      }
     }
   }
 }
