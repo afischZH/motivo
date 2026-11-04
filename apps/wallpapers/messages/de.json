@@ -61,7 +61,11 @@
     "sets": "Sets",
     "downloadPair": "Helle und dunkle Version (ZIP)",
     "downloadSet": "Alle Grössen für {group} (ZIP)",
-    "progress": "Exportiere {done} von {total}…"
+    "progress": "Exportiere {done} von {total}…",
+    "styleGroups": {
+      "soft": "Weich",
+      "graphic": "Grafisch"
+    }
   },
   "Device": {
     "title": "Hintergrundbilder für {device}",
@@ -176,6 +180,133 @@
         "ink": "Tusche",
         "meadow": "Wiese",
         "dune": "Wüstenwind"
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus",
+      "presets": {
+        "classic": "Klassisch",
+        "primary": "Grundfarben",
+        "curves": "Rundungen",
+        "angles": "Ecken",
+        "pastel": "Pastell",
+        "night": "Nacht",
+        "calm": "Erdtöne",
+        "mosaic": "Mosaik"
+      }
+    },
+    "geometric-patterns": {
+      "name": "Geometrisch",
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Labyrinth",
+        "mosaic": "Mosaik",
+        "night-garden": "Nachtgarten",
+        "blueprint": "Blaupause",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Sternschnuppen"
+      }
+    },
+    "neon-shapes": {
+      "name": "Neon",
+      "presets": {
+        "arcade": "Spielhalle",
+        "sign": "Leuchtreklame",
+        "geometry": "Geometrie",
+        "laser": "Laser",
+        "miami": "Miami",
+        "soft": "Sanftes Leuchten",
+        "party": "Party",
+        "minimal": "Minimal"
+      }
+    },
+    "glitch-background": {
+      "name": "Glitch",
+      "presets": {
+        "signal": "Signal",
+        "vhs": "VHS",
+        "cyber": "Cyber",
+        "soft": "Pastell",
+        "error": "Fehler",
+        "sunset": "Abendrot",
+        "mono": "Schwarzweiss"
+      }
+    },
+    "perspective-grid": {
+      "name": "Retro-Gitter",
+      "presets": {
+        "synthwave": "Synthwave",
+        "terminal": "Terminal",
+        "ice": "Gletscher",
+        "sunset": "Sonnenuntergang",
+        "mono": "Schwarzweiss",
+        "blueprint": "Blaupause",
+        "night-drive": "Nachtfahrt",
+        "tunnel": "Tunnel"
+      }
+    },
+    "striped-gradient": {
+      "name": "Streifen",
+      "presets": {
+        "fluted": "Riffelglas",
+        "candy": "Bonbon",
+        "dusk": "Dämmerung",
+        "forest": "Wald",
+        "retro": "Retro",
+        "silk": "Seide",
+        "ink": "Tinte",
+        "sunset": "Sonnenuntergang",
+        "mint": "Minze",
+        "gold": "Gold",
+        "neon": "Neon"
+      }
+    },
+    "guilloche": {
+      "name": "Guilloche",
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Urkunde",
+        "voucher": "Gutschein",
+        "spirograph": "Spirograph",
+        "seal": "Siegel",
+        "lace": "Spitze",
+        "ribbon": "Bordüre"
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo",
+      "presets": {
+        "classic": "Klassisch",
+        "venetian": "Venezianisch",
+        "midnight": "Mitternacht",
+        "pastel": "Pastell",
+        "pebbles": "Kiesel",
+        "pop": "Pop",
+        "granite": "Granit"
+      }
+    },
+    "dieter-dots": {
+      "name": "Punktringe",
+      "presets": {
+        "grille": "Lautsprecher",
+        "radar": "Radar",
+        "swirl": "Wirbel",
+        "target": "Zielscheibe",
+        "ripple": "Wellenkreis",
+        "sunburst": "Sonnenrad",
+        "mono": "Mono"
+      }
+    },
+    "starry-sky": {
+      "name": "Sternenhimmel",
+      "presets": {
+        "midnight": "Mitternacht",
+        "dusk": "Abenddämmerung",
+        "milky-way": "Milchstrasse",
+        "polar": "Polarnacht",
+        "lullaby": "Schlaflied",
+        "daybreak": "Morgengrauen",
+        "cosmic": "Kosmos"
       }
     }
   }

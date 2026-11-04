@@ -9,7 +9,13 @@ import { useCallback, useEffect, useId, useState } from "react";
 import { downloadSet, rasterWallpaper } from "@/lib/download";
 import { clampFinish, DIM_MAX, NO_FINISH, type Finish } from "@/lib/finish";
 import { formatSize } from "@/lib/format";
-import { WALLPAPER_TOOL_IDS, wallpaperTool, type WallpaperToolId } from "@/lib/generators";
+import {
+  WALLPAPER_STYLE_GROUPS,
+  WALLPAPER_TOOL_IDS,
+  wallpaperTool,
+  type WallpaperStyleGroup,
+  type WallpaperToolId,
+} from "@/lib/generators";
 import { hasClockZone, wallpaperSvg } from "@/lib/render";
 import { groupItems, pairItems, wallpaperBaseName } from "@/lib/sets";
 import { stateFromHash, stateToHash, type WallpaperState } from "@/lib/share";
@@ -23,6 +29,7 @@ export interface EditorLabels {
   width: string;
   height: string;
   style: string;
+  styleGroups: Record<WallpaperStyleGroup, string>;
   look: string;
   newLook: string;
   newLookHint: string;
@@ -327,19 +334,26 @@ export default function WallpaperEditor({ locale, labels, initialDeviceId }: Wal
 
         <fieldset className="flex flex-col gap-2">
           <legend className="mb-2 text-sm font-medium">{labels.style}</legend>
-          <div className="flex flex-wrap gap-2">
-            {WALLPAPER_TOOL_IDS.map((id) => (
-              <button
-                key={id}
-                type="button"
-                aria-pressed={state.toolId === id}
-                onClick={() => setState((s) => startState(id, s.target, s.finish))}
-                className="border-border hover:bg-surface aria-pressed:bg-accent aria-pressed:border-accent rounded-full border px-3 py-1.5 text-sm aria-pressed:text-white"
-              >
-                {labels.tools[id]?.name ?? id}
-              </button>
-            ))}
-          </div>
+          {(Object.keys(WALLPAPER_STYLE_GROUPS) as WallpaperStyleGroup[]).map((group) => (
+            <div key={group} className="flex flex-col gap-1.5">
+              <p className="text-muted text-xs font-medium tracking-wide uppercase">
+                {labels.styleGroups[group]}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {WALLPAPER_STYLE_GROUPS[group].map((id) => (
+                  <button
+                    key={id}
+                    type="button"
+                    aria-pressed={state.toolId === id}
+                    onClick={() => setState((s) => startState(id, s.target, s.finish))}
+                    className="border-border hover:bg-surface aria-pressed:bg-accent aria-pressed:border-accent rounded-full border px-3 py-1.5 text-sm aria-pressed:text-white"
+                  >
+                    {labels.tools[id]?.name ?? id}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </fieldset>
 
         <div className="flex flex-col gap-2">

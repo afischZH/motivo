@@ -16,6 +16,7 @@ export async function editorLabels(locale: AppLocale): Promise<EditorLabels> {
     width: e("width"),
     height: e("height"),
     style: e("style"),
+    styleGroups: { soft: e("styleGroups.soft"), graphic: e("styleGroups.graphic") },
     look: e("look"),
     newLook: e("newLook"),
     newLookHint: e("newLookHint"),
