@@ -43,7 +43,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           {t("skipLink")}
         </a>
         <header className="border-border border-b">
-          <div className="mx-auto flex h-14 max-w-5xl items-center gap-3 px-4">
+          <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
             <span className="font-semibold tracking-tight">{t("brand")}</span>
             <span className="bg-accent-soft text-accent-text rounded-full px-2.5 py-0.5 text-xs font-medium">
               {t("badge")}
@@ -67,7 +67,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           {children}
         </main>
         <footer className="border-border text-muted border-t text-sm">
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-6">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-6">
             <p>{t("footer")}</p>
             <a
               href="https://musterli.app"
