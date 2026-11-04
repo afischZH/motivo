@@ -1,4 +1,4 @@
-import { mixHex, oklchToHex, type Rng } from "@musterli/engine";
+import { mixHex, type Noise2D, oklchToHex, type Rng } from "@musterli/engine";
 import type { Preset } from "@musterli/tool-registry";
 
 /**
@@ -101,4 +101,42 @@ export function luminance(hex: string): number {
   const v = Number.parseInt(hex.slice(1, 7), 16);
   if (!Number.isFinite(v)) return 0;
   return (0.2126 * ((v >> 16) & 255) + 0.7152 * ((v >> 8) & 255) + 0.0722 * (v & 255)) / 255;
+}
+
+/** Fractal noise: `octaves` layers of 2D noise, each finer and weaker; range about -1..1. */
+export function fbm(noise: Noise2D, x: number, y: number, octaves = 4): number {
+  let v = 0;
+  let amp = 0.5;
+  let f = 1;
+  let norm = 0;
+  for (let i = 0; i < octaves; i++) {
+    v += amp * noise(x * f, y * f);
+    norm += amp;
+    amp *= 0.5;
+    f *= 2.03;
+  }
+  return v / norm;
+}
+
+/** Hermite step from 0 at `a` to 1 at `b`. */
+export function smoothstep(a: number, b: number, x: number): number {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+}
+
+/** Raster size for a smooth field: longest edge `edge`, same aspect as the canvas. */
+export function fieldSize(w: number, h: number, edge: number): { cols: number; rows: number } {
+  const scale = edge / Math.max(w, h);
+  return {
+    cols: Math.max(8, Math.round(w * scale)),
+    rows: Math.max(8, Math.round(h * scale)),
+  };
+}
+
+/** A raster field stretched over the whole canvas, under a solid fallback colour. */
+export function fieldSvg(w: number, h: number, fallback: string, href: string): string {
+  return (
+    `${svgOpen(w, h)}<rect width="${w}" height="${h}" fill="${fallback}"/>` +
+    `<image width="${n(w)}" height="${n(h)}" preserveAspectRatio="none" href="${href}"/></svg>`
+  );
 }

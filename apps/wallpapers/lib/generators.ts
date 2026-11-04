@@ -12,6 +12,9 @@ registerWallpaperStyles();
  */
 export const WALLPAPER_STYLE_GROUPS = {
   soft: [
+    "watercolour",
+    "marble",
+    "iridescent-foil",
     "line-art",
     "botanical-shadows",
     "puffy-shapes",
@@ -38,6 +41,7 @@ export const WALLPAPER_STYLE_GROUPS = {
     "starry-sky",
   ],
   graphic: [
+    "depth-subject",
     "vaporwave",
     "y2k",
     "art-deco",

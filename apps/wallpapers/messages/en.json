@@ -742,6 +742,50 @@
         "mint": "Mint",
         "sunset": "Sunset"
       }
+    },
+    "iridescent-foil": {
+      "name": "Iridescent foil",
+      "presets": {
+        "holo": "Holo",
+        "oil": "Oil slick",
+        "pearl": "Pearl",
+        "rose-gold": "Rose gold",
+        "crumpled": "Crumpled",
+        "aurora": "Aurora"
+      }
+    },
+    "marble": {
+      "name": "Marble & pour",
+      "presets": {
+        "carrara": "Carrara",
+        "nero": "Nero",
+        "verde": "Verde",
+        "rosa": "Rosa",
+        "ocean-pour": "Ocean pour",
+        "sunset-pour": "Sunset pour"
+      }
+    },
+    "watercolour": {
+      "name": "Watercolour",
+      "presets": {
+        "spring": "Spring",
+        "indigo": "Indigo",
+        "blush": "Blush",
+        "sage": "Sage",
+        "sunset": "Sunset",
+        "ink": "Ink"
+      }
+    },
+    "depth-subject": {
+      "name": "Depth subject",
+      "presets": {
+        "alpine": "Alpine",
+        "dusk-peak": "Dusk peak",
+        "saturn": "Saturn",
+        "ice-world": "Ice world",
+        "boho-arch": "Boho arch",
+        "candy-arch": "Candy arch"
+      }
     }
   }
 }

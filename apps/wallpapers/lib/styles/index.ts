@@ -39,6 +39,10 @@ import { midCenturyTool } from "./mid-century";
 import { artDecoTool } from "./art-deco";
 import { y2kTool } from "./y2k";
 import { vaporwaveTool } from "./vaporwave";
+import { iridescentFoilTool } from "./iridescent-foil";
+import { marbleTool } from "./marble";
+import { watercolourTool } from "./watercolour";
+import { depthSubjectTool } from "./depth-subject";
 
 /** Styles made for this app only; Musterli does not have them. */
 export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
@@ -81,6 +85,10 @@ export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
   artDecoTool,
   y2kTool,
   vaporwaveTool,
+  iridescentFoilTool,
+  marbleTool,
+  watercolourTool,
+  depthSubjectTool,
 ];
 
 /**

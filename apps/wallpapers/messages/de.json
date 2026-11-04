@@ -742,6 +742,50 @@
         "mint": "Minze",
         "sunset": "Abendrot"
       }
+    },
+    "iridescent-foil": {
+      "name": "Schillerfolie",
+      "presets": {
+        "holo": "Holo",
+        "oil": "Ölfilm",
+        "pearl": "Perlmutt",
+        "rose-gold": "Roségold",
+        "crumpled": "Zerknittert",
+        "aurora": "Polarlicht"
+      }
+    },
+    "marble": {
+      "name": "Marmor & Pouring",
+      "presets": {
+        "carrara": "Carrara",
+        "nero": "Nero",
+        "verde": "Verde",
+        "rosa": "Rosa",
+        "ocean-pour": "Meer-Pouring",
+        "sunset-pour": "Abend-Pouring"
+      }
+    },
+    "watercolour": {
+      "name": "Aquarell",
+      "presets": {
+        "spring": "Frühling",
+        "indigo": "Indigo",
+        "blush": "Rosé",
+        "sage": "Salbei",
+        "sunset": "Abendrot",
+        "ink": "Tusche"
+      }
+    },
+    "depth-subject": {
+      "name": "Tiefenmotiv",
+      "presets": {
+        "alpine": "Alpen",
+        "dusk-peak": "Gipfel am Abend",
+        "saturn": "Saturn",
+        "ice-world": "Eiswelt",
+        "boho-arch": "Boho-Bogen",
+        "candy-arch": "Bonbon-Bogen"
+      }
     }
   }
 }
