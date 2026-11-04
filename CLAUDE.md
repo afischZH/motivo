@@ -19,6 +19,7 @@
 | `docs/PRODUCT.md` | Vision, Personas, Pläne, Nicht-Ziele | Bei Scope-Fragen |
 | `docs/ANALYSE.md` | Reverse Engineering des Vorbilds | Hintergrund, bei Feature-Fragen |
 | `docs/WALLPAPERS.md` | Hintergrundbild-App (`apps/wallpapers`, `packages/devices`): Entscheide, Aufbau, Etappen | Vor Arbeit an der Hintergrundbild-App |
+| `docs/WALLPAPERS.md` | Hintergrundbild-App (`apps/wallpapers`, `packages/devices`): Entscheide, Aufbau, Etappen | Vor Arbeit an der Hintergrundbild-App |
 
 ## Arbeitsweise
 
