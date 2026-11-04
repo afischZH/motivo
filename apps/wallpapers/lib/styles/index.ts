@@ -18,6 +18,31 @@ import { paperFoldsTool } from "./paper-folds";
 import { pixelGradientTool } from "./pixel-gradient";
 import { planetTool } from "./planet";
 import { retroArcsTool } from "./retro-arcs";
+import { lightLeaksTool } from "./light-leaks";
+import { bokehTool } from "./bokeh";
+import { skyGradientTool } from "./sky-gradient";
+import { japandiTool } from "./japandi";
+import { neoBrutalismTool } from "./neo-brutalism";
+import { memphisTool } from "./memphis";
+import { halftoneFadeTool } from "./halftone-fade";
+import { bitDitherTool } from "./bit-dither";
+import { crtTool } from "./crt";
+import { bentoTool } from "./bento";
+import { clayShapesTool } from "./clay-shapes";
+import { chromeFlowTool } from "./chrome-flow";
+import { puffyShapesTool } from "./puffy-shapes";
+import { botanicalShadowsTool } from "./botanical-shadows";
+import { lineArtTool } from "./line-art";
+import { risographTool } from "./risograph";
+import { bigTypeTool } from "./big-type";
+import { midCenturyTool } from "./mid-century";
+import { artDecoTool } from "./art-deco";
+import { y2kTool } from "./y2k";
+import { vaporwaveTool } from "./vaporwave";
+import { iridescentFoilTool } from "./iridescent-foil";
+import { marbleTool } from "./marble";
+import { watercolourTool } from "./watercolour";
+import { depthSubjectTool } from "./depth-subject";
 
 /** Styles made for this app only; Musterli does not have them. */
 export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
@@ -39,6 +64,31 @@ export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
   silkFoldsTool,
   dunesTool,
   islandHaloTool,
+  lightLeaksTool,
+  bokehTool,
+  skyGradientTool,
+  japandiTool,
+  neoBrutalismTool,
+  memphisTool,
+  halftoneFadeTool,
+  bitDitherTool,
+  crtTool,
+  bentoTool,
+  clayShapesTool,
+  chromeFlowTool,
+  puffyShapesTool,
+  botanicalShadowsTool,
+  lineArtTool,
+  risographTool,
+  bigTypeTool,
+  midCenturyTool,
+  artDecoTool,
+  y2kTool,
+  vaporwaveTool,
+  iridescentFoilTool,
+  marbleTool,
+  watercolourTool,
+  depthSubjectTool,
 ];
 
 /**

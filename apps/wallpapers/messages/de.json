@@ -511,6 +511,281 @@
         "sonar": "Sonar",
         "aurora-beam": "Polarlicht-Strahl"
       }
+    },
+    "light-leaks": {
+      "name": "Lichtlecks",
+      "presets": {
+        "film": "Film",
+        "rose": "Rosé",
+        "golden": "Golden",
+        "cool": "Kühl",
+        "polaroid": "Polaroid",
+        "burn": "Glut"
+      }
+    },
+    "bokeh": {
+      "name": "Bokeh",
+      "presets": {
+        "city": "Stadt",
+        "fairy": "Lichterkette",
+        "neon": "Neon",
+        "rain": "Regen",
+        "festive": "Festlich",
+        "dawn": "Morgen"
+      }
+    },
+    "sky-gradient": {
+      "name": "Himmel",
+      "presets": {
+        "dusk": "Abenddämmerung",
+        "sunrise": "Sonnenaufgang",
+        "blue-hour": "Blaue Stunde",
+        "midday": "Mittag",
+        "desert-night": "Wüstennacht",
+        "golden-hour": "Goldene Stunde"
+      }
+    },
+    "japandi": {
+      "name": "Japandi",
+      "presets": {
+        "stones": "Steine",
+        "torii": "Torii",
+        "moon": "Mond",
+        "sage": "Salbei",
+        "night": "Nacht",
+        "clay": "Ton"
+      }
+    },
+    "neo-brutalism": {
+      "name": "Neo-Brutalismus",
+      "presets": {
+        "playground": "Spielplatz",
+        "lemon": "Zitrone",
+        "night": "Nacht",
+        "mint": "Minze",
+        "poster": "Plakat",
+        "crowd": "Gewimmel"
+      }
+    },
+    "memphis": {
+      "name": "Memphis",
+      "presets": {
+        "classic": "Klassisch",
+        "pastel": "Pastell",
+        "bold": "Kräftig",
+        "midnight": "Mitternacht",
+        "sparse": "Luftig",
+        "confetti": "Konfetti"
+      }
+    },
+    "halftone-fade": {
+      "name": "Rasterpunkte",
+      "presets": {
+        "print": "Druck",
+        "sunspot": "Sonnenfleck",
+        "ink": "Tinte",
+        "duotone": "Duoton",
+        "mint": "Minze",
+        "fine": "Fein"
+      }
+    },
+    "crt": {
+      "name": "Röhrenbildschirm",
+      "presets": {
+        "oscilloscope": "Oszilloskop",
+        "amber": "Bernstein",
+        "radar": "Radar",
+        "ice": "Eis",
+        "magenta": "Magenta",
+        "mono": "Mono"
+      }
+    },
+    "bento": {
+      "name": "Bento-Raster",
+      "presets": {
+        "dark": "Dunkel",
+        "paper": "Papier",
+        "pastel": "Pastell",
+        "mono": "Mono",
+        "ocean": "Ozean",
+        "calm": "Ruhig"
+      }
+    },
+    "bit-dither": {
+      "name": "1-Bit-Dither",
+      "presets": {
+        "classic": "Klassisch",
+        "terminal": "Terminal",
+        "sunset": "Abendrot",
+        "blueprint": "Blaupause",
+        "gameboy": "Handkonsole",
+        "fine": "Fein"
+      }
+    },
+    "clay-shapes": {
+      "name": "Knetformen",
+      "presets": {
+        "candy": "Bonbon",
+        "peach": "Pfirsich",
+        "mint": "Minze",
+        "night": "Nacht",
+        "sand": "Sand",
+        "toybox": "Spielkiste"
+      }
+    },
+    "chrome-flow": {
+      "name": "Chromfluss",
+      "presets": {
+        "mercury": "Quecksilber",
+        "sunset": "Abendrot",
+        "ice": "Eis",
+        "gold": "Gold",
+        "holo": "Holo",
+        "single": "Einzeln"
+      }
+    },
+    "puffy-shapes": {
+      "name": "Aufgeblasen",
+      "presets": {
+        "bubblegum": "Kaugummi",
+        "sky": "Himmel",
+        "lime": "Limette",
+        "love": "Liebe",
+        "sunny": "Sonnig",
+        "party": "Party"
+      }
+    },
+    "botanical-shadows": {
+      "name": "Blattschatten",
+      "presets": {
+        "afternoon": "Nachmittag",
+        "palm": "Palme",
+        "sage": "Salbei",
+        "terracotta": "Terrakotta",
+        "dusk": "Dämmerung",
+        "linen": "Leinen"
+      }
+    },
+    "line-art": {
+      "name": "Linienkunst",
+      "presets": {
+        "gallery": "Galerie",
+        "noir": "Noir",
+        "terracotta": "Terrakotta",
+        "blue": "Blau",
+        "busy": "Lebhaft",
+        "pure": "Pur"
+      }
+    },
+    "risograph": {
+      "name": "Risografie",
+      "presets": {
+        "classic": "Klassisch",
+        "sunrise": "Sonnenaufgang",
+        "mint": "Minze",
+        "night": "Nacht",
+        "blueprint": "Blaupause",
+        "bold": "Kräftig"
+      }
+    },
+    "big-type": {
+      "name": "Grosse Schrift",
+      "presets": {
+        "year": "Jahr",
+        "hello": "Hallo",
+        "calm": "Ruhe",
+        "focus": "Fokus",
+        "code": "Code",
+        "initial": "Initiale"
+      }
+    },
+    "mid-century": {
+      "name": "Fünfzigerjahre",
+      "presets": {
+        "atomic": "Atomar",
+        "diner": "Diner",
+        "lounge": "Lounge",
+        "olive": "Olive",
+        "sparse": "Luftig",
+        "fabric": "Stoff"
+      }
+    },
+    "art-deco": {
+      "name": "Art déco",
+      "presets": {
+        "gatsby": "Gatsby",
+        "scales": "Schuppen",
+        "emerald": "Smaragd",
+        "ivory": "Elfenbein",
+        "ruby": "Rubin",
+        "midnight": "Mitternacht"
+      }
+    },
+    "y2k": {
+      "name": "Y2K",
+      "presets": {
+        "millennium": "Millennium",
+        "bubblegum": "Kaugummi",
+        "cyber": "Cyber",
+        "silver": "Silber",
+        "lime": "Limette",
+        "galaxy": "Galaxie"
+      }
+    },
+    "vaporwave": {
+      "name": "Vaporwave",
+      "presets": {
+        "aesthetic": "Ästhetik",
+        "mall": "Einkaufszentrum",
+        "night": "Nacht",
+        "sorbet": "Sorbet",
+        "mint": "Minze",
+        "sunset": "Abendrot"
+      }
+    },
+    "iridescent-foil": {
+      "name": "Schillerfolie",
+      "presets": {
+        "holo": "Holo",
+        "oil": "Ölfilm",
+        "pearl": "Perlmutt",
+        "rose-gold": "Roségold",
+        "crumpled": "Zerknittert",
+        "aurora": "Polarlicht"
+      }
+    },
+    "marble": {
+      "name": "Marmor & Pouring",
+      "presets": {
+        "carrara": "Carrara",
+        "nero": "Nero",
+        "verde": "Verde",
+        "rosa": "Rosa",
+        "ocean-pour": "Meer-Pouring",
+        "sunset-pour": "Abend-Pouring"
+      }
+    },
+    "watercolour": {
+      "name": "Aquarell",
+      "presets": {
+        "spring": "Frühling",
+        "indigo": "Indigo",
+        "blush": "Rosé",
+        "sage": "Salbei",
+        "sunset": "Abendrot",
+        "ink": "Tusche"
+      }
+    },
+    "depth-subject": {
+      "name": "Tiefenmotiv",
+      "presets": {
+        "alpine": "Alpen",
+        "dusk-peak": "Gipfel am Abend",
+        "saturn": "Saturn",
+        "ice-world": "Eiswelt",
+        "boho-arch": "Boho-Bogen",
+        "candy-arch": "Bonbon-Bogen"
+      }
     }
   }
 }

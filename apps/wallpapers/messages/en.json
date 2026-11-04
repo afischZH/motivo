@@ -511,6 +511,281 @@
         "sonar": "Sonar",
         "aurora-beam": "Aurora beam"
       }
+    },
+    "light-leaks": {
+      "name": "Light leaks",
+      "presets": {
+        "film": "Film",
+        "rose": "Rose",
+        "golden": "Golden",
+        "cool": "Cool",
+        "polaroid": "Polaroid",
+        "burn": "Burn"
+      }
+    },
+    "bokeh": {
+      "name": "Bokeh",
+      "presets": {
+        "city": "City",
+        "fairy": "Fairy lights",
+        "neon": "Neon",
+        "rain": "Rain",
+        "festive": "Festive",
+        "dawn": "Dawn"
+      }
+    },
+    "sky-gradient": {
+      "name": "Sky",
+      "presets": {
+        "dusk": "Dusk",
+        "sunrise": "Sunrise",
+        "blue-hour": "Blue hour",
+        "midday": "Midday",
+        "desert-night": "Desert night",
+        "golden-hour": "Golden hour"
+      }
+    },
+    "japandi": {
+      "name": "Japandi",
+      "presets": {
+        "stones": "Stones",
+        "torii": "Torii",
+        "moon": "Moon",
+        "sage": "Sage",
+        "night": "Night",
+        "clay": "Clay"
+      }
+    },
+    "neo-brutalism": {
+      "name": "Neo-brutalism",
+      "presets": {
+        "playground": "Playground",
+        "lemon": "Lemon",
+        "night": "Night",
+        "mint": "Mint",
+        "poster": "Poster",
+        "crowd": "Crowd"
+      }
+    },
+    "memphis": {
+      "name": "Memphis",
+      "presets": {
+        "classic": "Classic",
+        "pastel": "Pastel",
+        "bold": "Bold",
+        "midnight": "Midnight",
+        "sparse": "Sparse",
+        "confetti": "Confetti"
+      }
+    },
+    "halftone-fade": {
+      "name": "Halftone",
+      "presets": {
+        "print": "Print",
+        "sunspot": "Sunspot",
+        "ink": "Ink",
+        "duotone": "Duotone",
+        "mint": "Mint",
+        "fine": "Fine"
+      }
+    },
+    "crt": {
+      "name": "CRT screen",
+      "presets": {
+        "oscilloscope": "Oscilloscope",
+        "amber": "Amber",
+        "radar": "Radar",
+        "ice": "Ice",
+        "magenta": "Magenta",
+        "mono": "Mono"
+      }
+    },
+    "bento": {
+      "name": "Bento grid",
+      "presets": {
+        "dark": "Dark",
+        "paper": "Paper",
+        "pastel": "Pastel",
+        "mono": "Mono",
+        "ocean": "Ocean",
+        "calm": "Calm"
+      }
+    },
+    "bit-dither": {
+      "name": "1-bit dither",
+      "presets": {
+        "classic": "Classic",
+        "terminal": "Terminal",
+        "sunset": "Sunset",
+        "blueprint": "Blueprint",
+        "gameboy": "Handheld",
+        "fine": "Fine"
+      }
+    },
+    "clay-shapes": {
+      "name": "Clay shapes",
+      "presets": {
+        "candy": "Candy",
+        "peach": "Peach",
+        "mint": "Mint",
+        "night": "Night",
+        "sand": "Sand",
+        "toybox": "Toy box"
+      }
+    },
+    "chrome-flow": {
+      "name": "Chrome flow",
+      "presets": {
+        "mercury": "Mercury",
+        "sunset": "Sunset",
+        "ice": "Ice",
+        "gold": "Gold",
+        "holo": "Holo",
+        "single": "Single"
+      }
+    },
+    "puffy-shapes": {
+      "name": "Puffy shapes",
+      "presets": {
+        "bubblegum": "Bubblegum",
+        "sky": "Sky",
+        "lime": "Lime",
+        "love": "Love",
+        "sunny": "Sunny",
+        "party": "Party"
+      }
+    },
+    "botanical-shadows": {
+      "name": "Leaf shadows",
+      "presets": {
+        "afternoon": "Afternoon",
+        "palm": "Palm",
+        "sage": "Sage",
+        "terracotta": "Terracotta",
+        "dusk": "Dusk",
+        "linen": "Linen"
+      }
+    },
+    "line-art": {
+      "name": "Line art",
+      "presets": {
+        "gallery": "Gallery",
+        "noir": "Noir",
+        "terracotta": "Terracotta",
+        "blue": "Blue",
+        "busy": "Busy",
+        "pure": "Pure"
+      }
+    },
+    "risograph": {
+      "name": "Risograph",
+      "presets": {
+        "classic": "Classic",
+        "sunrise": "Sunrise",
+        "mint": "Mint",
+        "night": "Night",
+        "blueprint": "Blueprint",
+        "bold": "Bold"
+      }
+    },
+    "big-type": {
+      "name": "Big type",
+      "presets": {
+        "year": "Year",
+        "hello": "Hello",
+        "calm": "Calm",
+        "focus": "Focus",
+        "code": "Code",
+        "initial": "Initial"
+      }
+    },
+    "mid-century": {
+      "name": "Mid-century",
+      "presets": {
+        "atomic": "Atomic",
+        "diner": "Diner",
+        "lounge": "Lounge",
+        "olive": "Olive",
+        "sparse": "Sparse",
+        "fabric": "Fabric"
+      }
+    },
+    "art-deco": {
+      "name": "Art Deco",
+      "presets": {
+        "gatsby": "Gatsby",
+        "scales": "Scales",
+        "emerald": "Emerald",
+        "ivory": "Ivory",
+        "ruby": "Ruby",
+        "midnight": "Midnight"
+      }
+    },
+    "y2k": {
+      "name": "Y2K",
+      "presets": {
+        "millennium": "Millennium",
+        "bubblegum": "Bubblegum",
+        "cyber": "Cyber",
+        "silver": "Silver",
+        "lime": "Lime",
+        "galaxy": "Galaxy"
+      }
+    },
+    "vaporwave": {
+      "name": "Vaporwave",
+      "presets": {
+        "aesthetic": "Aesthetic",
+        "mall": "Mall",
+        "night": "Night",
+        "sorbet": "Sorbet",
+        "mint": "Mint",
+        "sunset": "Sunset"
+      }
+    },
+    "iridescent-foil": {
+      "name": "Iridescent foil",
+      "presets": {
+        "holo": "Holo",
+        "oil": "Oil slick",
+        "pearl": "Pearl",
+        "rose-gold": "Rose gold",
+        "crumpled": "Crumpled",
+        "aurora": "Aurora"
+      }
+    },
+    "marble": {
+      "name": "Marble & pour",
+      "presets": {
+        "carrara": "Carrara",
+        "nero": "Nero",
+        "verde": "Verde",
+        "rosa": "Rosa",
+        "ocean-pour": "Ocean pour",
+        "sunset-pour": "Sunset pour"
+      }
+    },
+    "watercolour": {
+      "name": "Watercolour",
+      "presets": {
+        "spring": "Spring",
+        "indigo": "Indigo",
+        "blush": "Blush",
+        "sage": "Sage",
+        "sunset": "Sunset",
+        "ink": "Ink"
+      }
+    },
+    "depth-subject": {
+      "name": "Depth subject",
+      "presets": {
+        "alpine": "Alpine",
+        "dusk-peak": "Dusk peak",
+        "saturn": "Saturn",
+        "ice-world": "Ice world",
+        "boho-arch": "Boho arch",
+        "candy-arch": "Candy arch"
+      }
     }
   }
 }
