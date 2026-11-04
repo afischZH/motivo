@@ -1,5 +1,5 @@
 /**
- * Embed config (docs/ARCHITECTURE.md 4.21): everything the standalone
+ * Embed config (docs/ARCHITECTURE.md 4.22): everything the standalone
  * player needs to loop a shader on any web page, as plain JSON. The same
  * fragment shader and the same uniforms as the editor, so the embed shows
  * the editor preview. Uniforms that change over the loop are sampled at

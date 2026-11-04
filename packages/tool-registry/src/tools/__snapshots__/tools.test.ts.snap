@@ -9642,8 +9642,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [17943 chars, fnv1a 9a63faf6]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9652,7 +9651,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18564 chars, fnv1a 3799b9ca]",
+    var noop = { destroy: function () {} };
+… [18591 chars, fnv1a 47b6c5e9]",
   },
   "deep-sea": {
     "glsl": "#version 300 es
@@ -9696,8 +9696,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18010 chars, fnv1a 5afa4ac4]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9706,7 +9705,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18631 chars, fnv1a cc2a0e54]",
+    var noop = { destroy: function () {} };
+… [18658 chars, fnv1a 75ec1c65]",
   },
   "ember": {
     "glsl": "#version 300 es
@@ -9750,8 +9750,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [17943 chars, fnv1a bdba7728]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9760,7 +9759,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18564 chars, fnv1a b3f95b5c]",
+    var noop = { destroy: function () {} };
+… [18591 chars, fnv1a 4102bf27]",
   },
   "grainy": {
     "glsl": "#version 300 es
@@ -9804,8 +9804,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [17941 chars, fnv1a 8dbed876]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9814,7 +9813,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18562 chars, fnv1a 1decb38a]",
+    var noop = { destroy: function () {} };
+… [18589 chars, fnv1a a054d7cd]",
   },
   "liquid": {
     "glsl": "#version 300 es
@@ -9858,8 +9858,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [17944 chars, fnv1a 71881458]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9868,7 +9867,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18565 chars, fnv1a 0d89991c]",
+    var noop = { destroy: function () {} };
+… [18592 chars, fnv1a c0f2fbf9]",
   },
   "marble": {
     "glsl": "#version 300 es
@@ -9912,8 +9912,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18004 chars, fnv1a c8708626]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9922,7 +9921,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18625 chars, fnv1a 5ce888b2]",
+    var noop = { destroy: function () {} };
+… [18652 chars, fnv1a 843c82ef]",
   },
   "mono-dither": {
     "glsl": "#version 300 es
@@ -9966,8 +9966,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18448 chars, fnv1a 0d298b4d]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -9976,7 +9975,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [19069 chars, fnv1a c1f7eb53]",
+    var noop = { destroy: function () {} };
+… [19096 chars, fnv1a 56300be2]",
   },
   "peach-silk": {
     "glsl": "#version 300 es
@@ -10020,8 +10020,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18006 chars, fnv1a 81d91091]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -10030,7 +10029,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18627 chars, fnv1a a022496b]",
+    var noop = { destroy: function () {} };
+… [18654 chars, fnv1a 5d8ad492]",
   },
   "retro-dither": {
     "glsl": "#version 300 es
@@ -10074,8 +10074,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18028 chars, fnv1a 8a2989f9]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -10084,7 +10083,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18649 chars, fnv1a 76a60bf7]",
+    var noop = { destroy: function () {} };
+… [18676 chars, fnv1a 97806546]",
   },
   "ripple": {
     "glsl": "#version 300 es
@@ -10128,8 +10128,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [17939 chars, fnv1a 80df7c0f]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -10138,7 +10137,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18560 chars, fnv1a cec9cb39]",
+    var noop = { destroy: function () {} };
+… [18587 chars, fnv1a 77590a1e]",
   },
   "silk": {
     "glsl": "#version 300 es
@@ -10182,8 +10182,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18003 chars, fnv1a ee125e94]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -10192,7 +10191,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18624 chars, fnv1a 7858daac]",
+    var noop = { destroy: function () {} };
+… [18651 chars, fnv1a a103eec7]",
   },
   "streaked": {
     "glsl": "#version 300 es
@@ -10236,8 +10236,7 @@ const play = function musterliShader(host, cfg, opt) {
 … [18008 chars, fnv1a deca081c]",
     "web-component": "// Shader gradient: live shader background made with Musterli (musterli.app).
 // Free to use in any project, no attribution needed. Runs fully in the browser.
-// Usage:
-//   <script src="musterli-shader.js" defer></script>
+// Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write
 //   <musterli-shader style="height: 720px">Your content</musterli-shader>
 // Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).
 // Two different backgrounds on one page: change TAG in the second file.
@@ -10246,7 +10245,8 @@ const play = function musterliShader(host, cfg, opt) {
   var play = function musterliShader(host, cfg, opt) {
     "use strict";
     opt = opt || {};
-… [18629 chars, fnv1a d5421f6c]",
+    var noop = { destroy: function () {} };
+… [18656 chars, fnv1a fb7d3fa5]",
   },
 }
 `;

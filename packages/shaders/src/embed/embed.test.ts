@@ -42,7 +42,7 @@ describe("toBase64", () => {
   it("matches Buffer for all padding cases", () => {
     for (const bytes of [[], [1], [1, 2], [1, 2, 3], [255, 0, 128, 7]]) {
       const data = Uint8Array.from(bytes);
-      expect(toBase64(data)).toBe(Buffer.from(data).toString("base64"));
+      expect(toBase64(data)).toBe(btoa(String.fromCharCode(...data)));
     }
   });
 });
@@ -73,7 +73,7 @@ describe("buildEmbedConfig", () => {
     expect(still.l).toBe(0);
     expect(still.d).toEqual({});
     expect(still.u.u_off).toEqual(shaderGradientUniforms(OPTIONS, 0).u_off);
-    expect(still.p).toBe(Buffer.from(palette).toString("base64"));
+    expect(atob(still.p)).toBe(String.fromCharCode(...palette));
     expect(still.b).toMatch(/^#[0-9a-f]{6}$/);
   });
 
@@ -180,7 +180,7 @@ function runPlayer(config: EmbedConfig, opts: Record<string, unknown> = {}, redu
       return ++frames;
     },
     () => {},
-    (s: string) => Buffer.from(s, "base64").toString("binary"),
+    (s: string) => atob(s),
   );
   const player = play(host, config, opts);
   return { calls, canvas, host, player, frameQueue };
@@ -251,6 +251,12 @@ describe("snippets", () => {
     expect(() => new Function(react)).not.toThrow();
   });
 
+  it("never close a surrounding script tag (snippets get inlined)", () => {
+    for (const snippet of [embedWebComponent, embedReact]) {
+      expect(snippet(config, opts)).not.toMatch(/<\/script/i);
+    }
+  });
+
   it("keep comments closed whatever the title", () => {
     const html = embedHtml(config, opts);
     expect(html.indexOf("-->")).toBe(html.indexOf("\n-->") + 1);
@@ -266,9 +272,14 @@ describe("snippets", () => {
 
 describe("size budget", () => {
   it("player under 3 KB and a full Web Component under 8 KB gzip", async () => {
-    const { gzipSync } = await import("node:zlib");
-    const player = gzipSync(EMBED_PLAYER_JS).length;
-    const wc = gzipSync(embedWebComponent(buildEmbedConfig(source), { title: "x" })).length;
+    const gzipSize = async (text: string) =>
+      (
+        await new Response(
+          new Blob([text]).stream().pipeThrough(new CompressionStream("gzip")),
+        ).arrayBuffer()
+      ).byteLength;
+    const player = await gzipSize(EMBED_PLAYER_JS);
+    const wc = await gzipSize(embedWebComponent(buildEmbedConfig(source), { title: "x" }));
     console.info(`embed player ${player} B gzip, web component ${wc} B gzip`);
     expect(player).toBeLessThan(3 * 1024);
     expect(wc).toBeLessThan(8 * 1024);

@@ -1,5 +1,5 @@
 /**
- * Live web embeds for WebGL tools (docs/ARCHITECTURE.md 4.21): extra
+ * Live web embeds for WebGL tools (docs/ARCHITECTURE.md 4.22): extra
  * exports that wrap the tool's own fragment shader and uniforms in the
  * standalone player of `@musterli/shaders`. One line per tool:
  * `extraExports: webEmbedExports("Shader gradient", render)`.

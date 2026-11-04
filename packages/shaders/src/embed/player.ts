@@ -1,5 +1,5 @@
 /**
- * The standalone embed player (docs/ARCHITECTURE.md 4.21) as JavaScript
+ * The standalone embed player (docs/ARCHITECTURE.md 4.22) as JavaScript
  * source, pasted into every embed snippet. No dependencies, no network,
  * no storage. It mirrors `createShaderRuntime` (same vertex shader, same
  * context attributes, same runtime uniforms with one tile = the whole

@@ -5019,7 +5019,7 @@
     },
     "shader-gradient": {
       "name": "Shader Gradient",
-      "description": "Liquid, silky and grainy gradients from a GPU shader. With domain warping, Bayer dithering, grain and vignette. PNG, JPG and WebP up to 8K, plus seamless GIF loops.",
+      "description": "Liquid, silky and grainy gradients from a GPU shader. With domain warping, Bayer dithering, grain and vignette. PNG, JPG and WebP up to 8K, seamless GIF loops and live code for your website.",
       "params": {
         "style": {
           "label": "Style",
@@ -5101,11 +5101,11 @@
       },
       "seo": {
         "whatIs": "A shader gradient is a gradient computed by a small program right on your graphics card. Instead of a few fixed color stops, it builds a living field of noise, bends it with domain warping and then runs it through your colors. The result is liquid, silky or grainy backgrounds that need no image as a starting point. Musterli renders everything in your browser, nothing leaves your device.",
-        "howTo": "Pick a style such as Liquid, Silk or Aurora and choose two to six colors. Shape the field with frequency, warp and angle, then give it a surface with grain, vignette and Bayer dithering. Press Space for new colors and a new shape. The moment slider picks the still frame for exports. Then export a PNG, JPG or WebP up to 8K, or a seamless GIF loop.",
+        "howTo": "Pick a style such as Liquid, Silk or Aurora and choose two to six colors. Shape the field with frequency, warp and angle, then give it a surface with grain, vignette and Bayer dithering. Press Space for new colors and a new shape. The moment slider picks the still frame for exports. Then export a PNG, JPG or WebP up to 8K, a seamless GIF loop, or live code for your website.",
         "useCases": {
           "u1": {
             "title": "Hero sections and apps",
-            "text": "Liquid, silky gradients make an eye-catching background for product and AI websites. Every variation is unique and needs no photo to start from."
+            "text": "Copy the gradient as a live, animated background into your site: as a Web Component, a React component or plain HTML. The player is tiny, has no dependencies and pauses off screen."
           },
           "u2": {
             "title": "Wallpapers up to 8K",
@@ -5135,8 +5135,8 @@
             "answer": "It reduces the gradient to a few color steps and spreads the transitions in a regular dot pattern. That gives a retro look like old computers and printers, and it prevents visible banding in soft gradients."
           },
           "q4": {
-            "question": "Can I use the gradient as an animation?",
-            "answer": "The GIF export draws a seamless loop whose first frame is exactly your still image. The preview moves at the speed you set, unless you have turned on reduced motion in your system."
+            "question": "Can I use the gradient as an animated website background?",
+            "answer": "Yes. In the export dialog, choose Web Component, React component or HTML embed and paste the code into your site. It runs the same shader live in the visitor's browser, pauses off screen and in hidden tabs, and stands still for people who prefer reduced motion. For slides and social posts there is also a seamless GIF loop."
           },
           "q5": {
             "question": "Does the same gradient always look the same?",

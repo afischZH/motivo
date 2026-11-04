@@ -1,5 +1,5 @@
 /**
- * Embed snippets (docs/ARCHITECTURE.md 4.21): the same player and config
+ * Embed snippets (docs/ARCHITECTURE.md 4.22): the same player and config
  * wrapped for a plain HTML page, a Web Component and React, plus the raw
  * GLSL for developers with their own WebGL setup. Pure text, nothing is
  * loaded from musterli.app.
@@ -27,6 +27,7 @@ function configJson(config: EmbedConfig): string {
 
 function safeTitle(title: string): string {
   return title
+    .replace(/[<>]/g, "")
     .replace(/[\r\n]+/g, " ")
     .replace(/\*\//g, "* /")
     .replace(/--/g, "- -");
@@ -78,8 +79,7 @@ export function embedWebComponent(config: EmbedConfig, opts: EmbedSnippetOptions
   return [
     header("//", opts.title, [
       FREE_NOTE,
-      "Usage:",
-      '  <script src="musterli-shader.js" defer></script>',
+      'Usage: load this file with a deferred script tag (src="musterli-shader.js"), then write',
       `  <musterli-shader style="height: ${height}px">Your content</musterli-shader>`,
       "Attributes: fps (1 to 60), max-dpr (sharpness, default 1.5), still (no motion).",
       "Two different backgrounds on one page: change TAG in the second file.",
