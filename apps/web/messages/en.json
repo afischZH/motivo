@@ -7113,6 +7113,424 @@
           }
         }
       }
+    },
+    "dot-wave": {
+      "name": "Dot Wave Grid",
+      "description": "A grid of dots, squares or dashes that swell and shrink with a wave or noise field. Animated with a GPU shader, as PNG up to 8K, seamless GIF loop or live code for your website.",
+      "params": {
+        "field": {
+          "label": "Field",
+          "options": {
+            "noise": "Noise",
+            "waves": "Waves",
+            "ripple": "Ripple"
+          }
+        },
+        "shape": {
+          "label": "Shape",
+          "options": {
+            "dot": "Dot",
+            "square": "Square",
+            "dash": "Dash",
+            "cross": "Cross",
+            "ring": "Ring"
+          }
+        },
+        "spacing": {
+          "label": "Spacing"
+        },
+        "minSize": {
+          "label": "Smallest size"
+        },
+        "maxSize": {
+          "label": "Largest size"
+        },
+        "frequency": {
+          "label": "Frequency"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "fade": {
+          "label": "Edge fade"
+        },
+        "time": {
+          "label": "Moment",
+          "description": "Position in the loop. Every export shows exactly this moment, and the GIF loop starts here."
+        },
+        "speed": {
+          "label": "Speed",
+          "description": "How fast the preview moves. 0 stops it. With reduced motion turned on in your system, the preview always stands still."
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Motion",
+        "texture": "Texture"
+      },
+      "presets": {
+        "signal": "Signal",
+        "halftone-swell": "Halftone swell",
+        "ripple-pond": "Pond ripples",
+        "dash-field": "Dash field",
+        "plus-grid": "Plus grid",
+        "ring-radar": "Ring radar",
+        "paper-squares": "Paper squares"
+      },
+      "seo": {
+        "whatIs": "A dot wave grid is a regular grid of small shapes whose size follows an invisible field. Where the field is high, the dots grow; where it is low, they shrink or vanish. That gives the calm, technical look you know from AI and developer websites. Musterli computes the field with a shader in your browser, so the grid can move smoothly and nothing leaves your device.",
+        "howTo": "Pick a field (noise, waves or ripple) and a shape such as dot, square or ring. Set the spacing and the smallest and largest size, then shape the motion with frequency, angle and warp. Edge fade lets the grid dissolve toward the borders. Press Space for a new variant. Export a PNG, JPG or WebP up to 8K, a seamless GIF loop, or live code for your website.",
+        "useCases": {
+          "u1": {
+            "title": "Hero sections for tech products",
+            "text": "A quiet, moving dot grid behind a headline signals precision without stealing attention. Paste it as a Web Component, React component or HTML."
+          },
+          "u2": {
+            "title": "Slides and keynotes",
+            "text": "As a dark background with light dots, the grid frames charts and quotes. Export it in the exact slide size."
+          },
+          "u3": {
+            "title": "Print and posters",
+            "text": "With a fixed moment and squares or crosses, the grid looks like a modern halftone, sharp up to 8K."
+          }
+        },
+        "tips": {
+          "t1": "Set the smallest size to 0 so dots in the troughs disappear completely. The wave then looks lighter.",
+          "t2": "Ripple with a high frequency gives rings like a drop in water; Waves with a low frequency gives broad bands.",
+          "t3": "Two colors are often enough: dots run from the first to the last color depending on their size."
+        },
+        "faq": {
+          "q1": {
+            "question": "Can I use the dot grid as an animated website background?",
+            "answer": "Yes. In the export dialog, choose Web Component, React component or HTML embed and paste the code into your site. The shader runs live, pauses off screen and stands still for people who prefer reduced motion."
+          },
+          "q2": {
+            "question": "Are the dots sharp in large exports?",
+            "answer": "Yes. The shapes are computed per pixel with soft edges, so they stay crisp up to 8K. Spacing scales with the canvas, so the picture looks the same at every size."
+          },
+          "q3": {
+            "question": "Can I get the grid as SVG?",
+            "answer": "Not from this tool, because the dots come from a shader. For static dot patterns as SVG, use the Polka Dots or Dieter Dots tool."
+          },
+          "q4": {
+            "question": "Does the same grid always look the same?",
+            "answer": "Yes. The field depends only on the seed and your settings. A share link or a saved design gives the same picture on every device."
+          }
+        }
+      }
+    },
+    "liquid-chrome": {
+      "name": "Liquid Chrome",
+      "description": "Molten metal from a GPU shader: mercury, gold, black chrome or oil-slick rainbow with real reflections and highlights. PNG up to 8K, seamless GIF loop or live code for your website.",
+      "params": {
+        "highlight": {
+          "label": "Highlight"
+        },
+        "frequency": {
+          "label": "Frequency"
+        },
+        "warp": {
+          "label": "Flow"
+        },
+        "detail": {
+          "label": "Detail"
+        },
+        "relief": {
+          "label": "Relief"
+        },
+        "bands": {
+          "label": "Reflections"
+        },
+        "light": {
+          "label": "Light angle"
+        },
+        "specular": {
+          "label": "Shine"
+        },
+        "iridescence": {
+          "label": "Iridescence"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "time": {
+          "label": "Moment",
+          "description": "Position in the loop. Every export shows exactly this moment, and the GIF loop starts here."
+        },
+        "speed": {
+          "label": "Speed",
+          "description": "How fast the preview moves. 0 stops it. With reduced motion turned on in your system, the preview always stands still."
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Motion",
+        "texture": "Texture"
+      },
+      "presets": {
+        "mercury": "Mercury",
+        "soft-silver": "Soft silver",
+        "gold-leaf": "Gold leaf",
+        "oil-slick": "Oil slick",
+        "black-chrome": "Black chrome",
+        "rose-metal": "Rose metal",
+        "ice-folds": "Ice folds"
+      },
+      "seo": {
+        "whatIs": "Liquid chrome is the look of molten, mirror-like metal: soft folds that catch the light and reflect bright and dark bands. Musterli builds a flowing surface from noise, computes how light bounces off it and runs the reflection through your colors. That gives chrome, gold or rainbow metal without 3D software, right in your browser.",
+        "howTo": "Pick two to six colors for the reflection and a highlight color. Frequency and flow shape the folds, relief makes them deeper, and reflections sets how many bright bands appear. Iridescence adds a rainbow shimmer like oil on water. Press Space for a new variant. Export PNG, JPG or WebP up to 8K, a seamless GIF loop, or live code for your website.",
+        "useCases": {
+          "u1": {
+            "title": "Y2K and music artwork",
+            "text": "Chrome surfaces are a staple of album covers, posters and fashion. Export them in square or story format and add type on top."
+          },
+          "u2": {
+            "title": "Product launches",
+            "text": "A slowly flowing metal background behind a product shot feels premium. Paste it as a live embed into your landing page."
+          },
+          "u3": {
+            "title": "Wallpapers",
+            "text": "Black chrome or soft silver works as a calm desktop or phone wallpaper, sharp up to 8K."
+          }
+        },
+        "tips": {
+          "t1": "Dark and light colors in alternation give the strongest chrome effect. A palette from black to white looks like real mirror metal.",
+          "t2": "Low relief makes satin metal, high relief makes deep, glossy folds.",
+          "t3": "Turn iridescence up and shine down for an oil-slick look; do the opposite for clean chrome."
+        },
+        "faq": {
+          "q1": {
+            "question": "Is this rendered in 3D?",
+            "answer": "No. The shader computes a surface and its lighting for each pixel in 2D. That is much faster than a 3D scene, still looks like real reflections and runs in any current browser with WebGL2."
+          },
+          "q2": {
+            "question": "Can I use it as a moving website background?",
+            "answer": "Yes. In the export dialog, choose Web Component, React component or HTML embed. The metal flows live in the visitor's browser, pauses off screen and stands still for people who prefer reduced motion."
+          },
+          "q3": {
+            "question": "Does the export look exactly like the preview?",
+            "answer": "Yes. Preview and export run the same shader with the same values. Large exports up to 8K are rendered in tiles without visible seams."
+          },
+          "q4": {
+            "question": "Can I use my brand colors?",
+            "answer": "Yes. Apply a palette from your Brand Kit and the reflections run through your brand colors. Space then only changes the shape of the metal."
+          }
+        }
+      }
+    },
+    "caustics": {
+      "name": "Caustics & Cells",
+      "description": "Shimmering pool light, organic Voronoi cells or crystal facets from a GPU shader. PNG up to 8K, seamless GIF loop or live code for your website.",
+      "params": {
+        "style": {
+          "label": "Style",
+          "options": {
+            "caustics": "Caustics",
+            "cells": "Cells",
+            "crystal": "Crystal"
+          }
+        },
+        "scale": {
+          "label": "Cell size"
+        },
+        "jitter": {
+          "label": "Irregularity"
+        },
+        "warp": {
+          "label": "Warp"
+        },
+        "edge": {
+          "label": "Line width"
+        },
+        "contrast": {
+          "label": "Contrast"
+        },
+        "angle": {
+          "label": "Angle"
+        },
+        "time": {
+          "label": "Moment",
+          "description": "Position in the loop. Every export shows exactly this moment, and the GIF loop starts here."
+        },
+        "speed": {
+          "label": "Speed",
+          "description": "How fast the preview moves. 0 stops it. With reduced motion turned on in your system, the preview always stands still."
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Motion",
+        "texture": "Texture"
+      },
+      "presets": {
+        "pool": "Pool",
+        "tropical-lagoon": "Tropical lagoon",
+        "stained-glass": "Stained glass",
+        "cell-culture": "Cell culture",
+        "ice-crystal": "Ice crystal",
+        "amethyst": "Amethyst",
+        "night-swim": "Night swim"
+      },
+      "seo": {
+        "whatIs": "Caustics are the bright, wobbly light lines you see on the floor of a swimming pool. They form where curved water focuses sunlight. Musterli recreates them with moving Voronoi cells (a pattern that splits the area into cells around scattered points). The same technique also gives organic cells and faceted crystal surfaces, all computed live in your browser.",
+        "howTo": "Pick a style: Caustics for pool light, Cells for organic shapes, or Crystal for facets. Set the cell size, irregularity and warp, then line width and contrast for the look of the edges. Choose two to six colors, from the deep tone to the brightest light. Press Space for a new variant. Export PNG, JPG or WebP up to 8K, a seamless GIF loop, or live code for your website.",
+        "useCases": {
+          "u1": {
+            "title": "Summer and travel campaigns",
+            "text": "A moving pool background instantly says holiday. Use it for hotels, swimwear or summer sales, live on the site or as a story."
+          },
+          "u2": {
+            "title": "Science and health",
+            "text": "The Cells style looks like a microscope image and suits biotech, labs and health topics."
+          },
+          "u3": {
+            "title": "Glass and jewellery looks",
+            "text": "Crystal and stained glass give faceted, gem-like surfaces for packaging, posters and cards."
+          }
+        },
+        "tips": {
+          "t1": "A thin line width with high contrast gives sharp light lines; a wide line width gives soft, glowing water.",
+          "t2": "Put the darkest color first and the brightest last: the light lines always take the last color.",
+          "t3": "Low speed feels like calm water, high speed like a busy pool."
+        },
+        "faq": {
+          "q1": {
+            "question": "Does the pattern repeat?",
+            "answer": "No. The cells come from seeded noise and never form a visible tile. Every seed gives a new, unique arrangement."
+          },
+          "q2": {
+            "question": "Can I use the caustics as an animated website background?",
+            "answer": "Yes. In the export dialog, choose Web Component, React component or HTML embed. The water moves live, pauses off screen and stands still for people who prefer reduced motion."
+          },
+          "q3": {
+            "question": "What are Voronoi cells?",
+            "answer": "Scatter points over an area and give every spot to its nearest point: you get cells like soap bubbles or giraffe spots. The borders between those cells become the light lines of the caustics."
+          },
+          "q4": {
+            "question": "Does the export look exactly like the preview?",
+            "answer": "Yes. Preview and export run the same shader with the same values, and large exports up to 8K are rendered in tiles without seams."
+          }
+        }
+      }
+    },
+    "light-beams": {
+      "name": "Light Beams",
+      "description": "Soft rays of light from a source of your choice, with haze and slow motion. A GPU shader as PNG up to 8K, seamless GIF loop or live code for your website.",
+      "params": {
+        "sourceX": {
+          "label": "Source X"
+        },
+        "sourceY": {
+          "label": "Source Y"
+        },
+        "direction": {
+          "label": "Direction"
+        },
+        "spread": {
+          "label": "Spread"
+        },
+        "density": {
+          "label": "Ray count"
+        },
+        "sharpness": {
+          "label": "Sharpness"
+        },
+        "decay": {
+          "label": "Falloff"
+        },
+        "intensity": {
+          "label": "Brightness"
+        },
+        "haze": {
+          "label": "Haze"
+        },
+        "time": {
+          "label": "Moment",
+          "description": "Position in the loop. Every export shows exactly this moment, and the GIF loop starts here."
+        },
+        "speed": {
+          "label": "Speed",
+          "description": "How fast the preview moves. 0 stops it. With reduced motion turned on in your system, the preview always stands still."
+        },
+        "grain": {
+          "label": "Grain"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Motion",
+        "texture": "Texture"
+      },
+      "presets": {
+        "blue-hour": "Blue hour",
+        "golden-rays": "Golden rays",
+        "stage": "Stage",
+        "cathedral": "Cathedral",
+        "forest-sun": "Forest sun",
+        "sunburst": "Sunburst",
+        "underwater": "Underwater"
+      },
+      "seo": {
+        "whatIs": "Light beams are rays that fan out from a bright source, like sunlight through clouds, a spotlight on a stage or light falling into water. This tool creates them from scratch as a background, without a photo. If you want rays on top of your own picture, use the God Rays effect instead. Musterli computes the beams with a shader in your browser, nothing leaves your device.",
+        "howTo": "Place the light source with Source X and Y; it can also sit outside the canvas. Direction and spread set the cone, ray count and sharpness set the look of the rays, and falloff decides how far the light reaches. Haze adds soft mist. Pick two to six colors from dark background to brightest light. Press Space for a new variant. Export PNG, JPG or WebP up to 8K, a seamless GIF loop, or live code for your website.",
+        "useCases": {
+          "u1": {
+            "title": "Dramatic hero sections",
+            "text": "Light falling from above draws the eye to a headline or product. Use it live as a slow, moving background."
+          },
+          "u2": {
+            "title": "Events and stages",
+            "text": "Spotlights in brand colors suit event announcements, tickets and concert posters."
+          },
+          "u3": {
+            "title": "Calm wallpapers",
+            "text": "Underwater or forest light makes quiet backgrounds for phones and desktops, sharp up to 8K."
+          }
+        },
+        "tips": {
+          "t1": "Put the source just above the top edge (Source Y below 0) for light that falls in from outside the picture.",
+          "t2": "A spread of 360° turns the beams into a sunburst around the source.",
+          "t3": "Less falloff and more haze make the light softer and fill the whole picture."
+        },
+        "faq": {
+          "q1": {
+            "question": "What is the difference to the God Rays effect?",
+            "answer": "God Rays adds rays to your own photo. Light Beams creates the whole picture from scratch as a background and can move as a live loop or embed."
+          },
+          "q2": {
+            "question": "Can I use the light beams as a website background?",
+            "answer": "Yes. In the export dialog, choose Web Component, React component or HTML embed. The rays move live, pause off screen and stand still for people who prefer reduced motion."
+          },
+          "q3": {
+            "question": "Can the light source sit outside the picture?",
+            "answer": "Yes. Source X and Y run from -50 to 150 percent of the canvas, so the light can fall in from any side."
+          },
+          "q4": {
+            "question": "Does the export look exactly like the preview?",
+            "answer": "Yes. Preview and export run the same shader with the same values, and large exports up to 8K are rendered in tiles without seams."
+          }
+        }
+      }
     }
   },
   "Converters": {

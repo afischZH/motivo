@@ -65,6 +65,10 @@ import { shaderGradientTool } from "./shader-gradient";
 import { godRaysTool } from "./god-rays";
 import { fractalGlassTool } from "./fractal-glass";
 import { pixelateTool } from "./pixelate";
+import { dotWaveTool } from "./dot-wave";
+import { liquidChromeTool } from "./liquid-chrome";
+import { causticsTool } from "./caustics";
+import { lightBeamsTool } from "./light-beams";
 
 export {
   blobTool,
@@ -128,6 +132,10 @@ export {
   starburstBadgeTool,
   squiggleLinesTool,
   bauhausPatternTool,
+  dotWaveTool,
+  liquidChromeTool,
+  causticsTool,
+  lightBeamsTool,
 };
 export type { BauhausPatternParams } from "./bauhaus-pattern";
 export type { BlobParams } from "./blob";
@@ -221,6 +229,10 @@ export {
   ditherPalette,
 } from "./dither";
 export type { ShaderGradientParams } from "./shader-gradient";
+export type { DotWaveParams } from "./dot-wave";
+export type { LiquidChromeParams } from "./liquid-chrome";
+export type { CausticsParams } from "./caustics";
+export type { LightBeamsParams } from "./light-beams";
 export { shaderGradientOptions } from "./shader-gradient";
 export type { GodRaysParams } from "./god-rays";
 export { godRaysOptions } from "./god-rays";
@@ -292,6 +304,10 @@ export const builtInTools: readonly AnyToolDefinition[] = [
   starburstBadgeTool,
   squiggleLinesTool,
   bauhausPatternTool,
+  dotWaveTool,
+  liquidChromeTool,
+  causticsTool,
+  lightBeamsTool,
 ];
 
 for (const tool of builtInTools) registry.register(tool);

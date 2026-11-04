@@ -175,6 +175,10 @@ describe("built-in tool registration", () => {
       "starburst-badge",
       "squiggle-lines",
       "bauhaus-pattern",
+      "dot-wave",
+      "liquid-chrome",
+      "caustics",
+      "light-beams",
     ]);
     expect(registry.listByCategory("icons").map((t) => t.id)).toEqual([
       "favicon-generator",
@@ -204,6 +208,7 @@ describe("built-in tool registration", () => {
       "shader-gradient",
       "holographic-gradient",
       "glitch-background",
+      "liquid-chrome",
     ]);
     expect(registry.listByCategory("patterns").map((t) => t.id)).toEqual([
       "css-patterns",
@@ -222,6 +227,8 @@ describe("built-in tool registration", () => {
       "avatar",
       "squiggle-lines",
       "bauhaus-pattern",
+      "dot-wave",
+      "caustics",
     ]);
     expect(registry.listByCategory("image-effects").map((t) => t.id)).toEqual([
       "noise-grain",
@@ -535,6 +542,10 @@ describe("extra exports", () => {
       "spacing-scale",
       "gradient-text",
       "squiggle-lines",
+      "dot-wave",
+      "liquid-chrome",
+      "caustics",
+      "light-beams",
     ]);
   });
 });

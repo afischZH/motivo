@@ -15,6 +15,10 @@ export const TASK_TOOLS: Readonly<Record<TaskId, readonly string[]>> = {
   "hero-backgrounds": [
     "mesh-gradient",
     "shader-gradient",
+    "liquid-chrome",
+    "dot-wave",
+    "light-beams",
+    "caustics",
     "blurry-gradient",
     "animated-gradient",
     "blob-composition",

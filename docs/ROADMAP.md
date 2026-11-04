@@ -207,7 +207,7 @@ Bereich "Shapes and stickers" aus dem Ideen-Dokument, gewählt von Andreas nach 
 Plan: Claude Doc "Musterli: Web Shader plan" (2026-11-04). Andreas hat S1 zuerst gewählt; S2 und S3 brauchen einen eigenen Entscheid.
 
 - [x] **S1 Shader auf der Website**: Embed-Player (unter 3 KB gzip), Web Component, React, HTML, GLSL im Export-Dialog, Pause ausserhalb des Bildschirms, Standbild bei weniger Bewegung; E2E: Einbettung gleich PNG-Export (`ARCHITECTURE.md` 4.22). Die Ansicht "Im Kontext" zeigt Shader-Tools bereits live.
-- [ ] **S2 Neue Shader-Hintergründe**: Punktwellen-Raster, Flüssiges Chrom, Kaustik und Zellen, Lichtstrahlen, Körnungs-Overlay
+- [x] **S2 Neue Shader-Hintergründe**: Punktwellen-Raster, Flüssiges Chrom, Kaustik und Zellen, Lichtkegel (`TOOLS.md` C7, D9 bis D11). Das Körnungs-Overlay entfällt: Körnung (`noise-grain`) mit Basis "Keine" liefert es bereits transparent als PNG und SVG.
 - [ ] **S3 Video-Loops**: MP4 und WebM über WebCodecs, Muxer nur nach Messung (über 50 KB gzip nur mit Entscheid Andreas)
 
 ## M7: Differenzierung & Wachstum (ab Woche 24)
