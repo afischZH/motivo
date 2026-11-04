@@ -1,7 +1,7 @@
 import { defineTool, keepLocked, paletteSchema } from "@musterli/tool-registry";
 import * as z from "zod";
 
-import { gradientAt, huePalette, n, presetsFor, svgOpen } from "./shared";
+import { gradientLookup, huePalette, n, presetsFor, svgOpen } from "./shared";
 
 /**
  * Pixel gradient: a gradient broken into square cells, each cell one flat
@@ -91,6 +91,7 @@ export const pixelGradientTool = defineTool({
   render: {
     kind: "svg",
     render(p, { rng, width: w, height: h }) {
+      const color = gradientLookup(p.palette);
       const cell = Math.max(p.cell, Math.sqrt((w * h) / MAX_CELLS));
       const cols = Math.ceil(w / cell);
       const rows = Math.ceil(h / cell);
@@ -117,7 +118,7 @@ export const pixelGradientTool = defineTool({
           const t = (proj(x + cell / 2, y + cell / 2) - lo) / span;
           const shifted = t + (rng.next() - 0.5) * (p.jitter / 100) * 0.35;
           parts.push(
-            `<rect x="${n(x + inset)}" y="${n(y + inset)}" width="${n(size)}" height="${n(size)}"${rx} fill="${gradientAt(p.palette, shifted)}"/>`,
+            `<rect x="${n(x + inset)}" y="${n(y + inset)}" width="${n(size)}" height="${n(size)}"${rx} fill="${color(shifted)}"/>`,
           );
         }
       }

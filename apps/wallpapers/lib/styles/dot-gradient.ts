@@ -1,7 +1,7 @@
 import { colorSchema, defineTool, keepLocked, paletteSchema } from "@musterli/tool-registry";
 import * as z from "zod";
 
-import { gradientAt, huePalette, n, presetsFor, svgOpen } from "./shared";
+import { gradientLookup, huePalette, n, presetsFor, svgOpen } from "./shared";
 
 /**
  * Dot gradient: a halftone field. Dots on a grid grow and change colour
@@ -111,6 +111,7 @@ export const dotGradientTool = defineTool({
   render: {
     kind: "svg",
     render(p, { width: w, height: h }) {
+      const color = gradientLookup(p.palette);
       const step = Math.max(p.spacing, Math.sqrt((w * h) / MAX_DOTS));
       const a = (p.angle * Math.PI) / 180;
       const ux = Math.sin(a);
@@ -136,9 +137,7 @@ export const dotGradientTool = defineTool({
           const t = Math.min(1, Math.max(0, field(x, y)));
           const r = maxR * Math.pow(t, 1.15);
           if (r < 0.4) continue;
-          parts.push(
-            `<circle cx="${n(x)}" cy="${n(y)}" r="${n(r)}" fill="${gradientAt(p.palette, t)}"/>`,
-          );
+          parts.push(`<circle cx="${n(x)}" cy="${n(y)}" r="${n(r)}" fill="${color(t)}"/>`);
         }
       }
       return `${svgOpen(w, h)}${parts.join("")}</svg>`;

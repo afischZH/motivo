@@ -19,6 +19,15 @@ export function gradientAt(colors: readonly string[], t: number): string {
   return mixHex(colors[i] ?? first, colors[i + 1] ?? first, x - i, "oklab");
 }
 
+/**
+ * `gradientAt` sampled once into 256 steps: for styles that colour
+ * thousands of cells, where mixing in OKLab per cell would be slow.
+ */
+export function gradientLookup(colors: readonly string[]): (t: number) => string {
+  const table = Array.from({ length: 256 }, (_, i) => gradientAt(colors, i / 255));
+  return (t) => table[Math.round(Math.min(1, Math.max(0, t)) * 255)] ?? table[0] ?? "#000000";
+}
+
 /** Gradient stops for an SVG `<linearGradient>`/`<radialGradient>`. */
 export function stops(colors: readonly string[]): string {
   const last = Math.max(1, colors.length - 1);
