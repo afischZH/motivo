@@ -1,0 +1,18 @@
+{
+  "name": "@musterli/devices",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Device catalog for wallpapers: native pixel sizes, groups, safe zones, screen detection",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@musterli/config": "workspace:*"
+  }
+}

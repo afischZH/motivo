@@ -18,6 +18,7 @@
 | `docs/DESIGN.md` | Layout, Controls, Shortcuts, Tokens, Microcopy | Vor UI-Arbeit |
 | `docs/PRODUCT.md` | Vision, Personas, Pläne, Nicht-Ziele | Bei Scope-Fragen |
 | `docs/ANALYSE.md` | Reverse Engineering des Vorbilds | Hintergrund, bei Feature-Fragen |
+| `docs/WALLPAPERS.md` | Hintergrundbild-App (`apps/wallpapers`, `packages/devices`): Entscheide, Aufbau, Etappen | Vor Arbeit an der Hintergrundbild-App |
 
 ## Arbeitsweise
 
@@ -75,6 +76,7 @@ pnpm test:affected      # Vitest nur geänderte Pakete (Standard nach jeder Aufg
 pnpm test:e2e           # Playwright (alle Browser, nur manuell)
 pnpm test:e2e:chromium  # Playwright nur Chromium
 pnpm --filter @musterli/web cf:preview  # Build für Cloudflare + lokale Vorschau in workerd
+pnpm --filter @musterli/wallpapers dev   # Hintergrundbild-App lokal (Port 3100, docs/WALLPAPERS.md)
 pnpm lint && pnpm typecheck
 ```
 
@@ -165,3 +167,4 @@ Der Einheitlichkeitstest (`apps/web/lib/tool-consistency.test.ts`, läuft mit `p
 | 2026-10-30 | Formen und Sticker (Entscheid Andreas): Störer und Badges, Kringellinien, Bauhaus-Muster als `svg`-Tools ohne neue Hooks und ohne Dependency; Badge-Text ohne DOM eingepasst, gestapelte Kringellinien teilen einen Pfad über `<use>`, Bauhaus-Figuren auf die Kachel beschnitten | Gefragte Deko-Grafiken für Shops, Social und Plakate; kleine, bearbeitbare SVGs (Details `docs/TOOLS.md` A5, D7, D8) |
 | 2026-11-04 | Web-Shader S1 (Entscheid Andreas, Plan S1 bis S3): Shader-Tools exportieren eine Live-Einbettung (Web Component, React ohne JSX, HTML, GLSL) mit eigenem Player als JS-String in `@musterli/shaders` (2.8 KB gzip), bewegte Uniforms als 48 Stichproben pro Schleife; nur kopieren oder herunterladen, kein Hosting; generisch über `webEmbedExports`, Pflicht für jedes WebGL-Tool | Der Weg des Shaders in die Website fehlte; keine Dependency, keine Kosten, Vorschau gleich Einbettung (Details `docs/ARCHITECTURE.md` 4.22) |
 | 2026-11-04 | Web-Shader S2 (Entscheid Andreas): Punktwellen, Flüssiges Chrom, Kaustik und Zellen, Lichtkegel als `webgl`-Tools mit CPU-Zwilling und Live-Einbettung, gemeinsame Zeit- und Oberflächen-Params (`shader-common.ts`); Körnungs-Overlay entfällt | Gefragte Webdesign-Hintergründe ohne Dependency und ohne Kosten; das Overlay gibt es schon transparent im Tool Körnung (Basis "Keine"), ein eigener Shader hätte Alpha in Laufzeit, Player und Export gebraucht (Details `docs/TOOLS.md` C7, D9 bis D11) |
+| 2026-11-04 | Hintergrundbild-App als Schwesterprojekt (Entscheid Andreas): eigene App `apps/wallpapers` im selben Monorepo mit eigenem Worker `wallpapers-web` auf workers.dev (noch ohne Name und Domain, bis zum Launch noindex), Gerätekatalog in `packages/devices`; EN Standardsprache | Generatoren, Shader und Exporte ohne Kopie wiederverwenden, eigene Marke und Bedienung ab Gerät möglich (Details `docs/WALLPAPERS.md`) |

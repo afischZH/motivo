@@ -6,8 +6,8 @@ import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-/** The Next.js web app. React and Next rules apply only here. */
-const WEB_APP = ["apps/web/**/*.{ts,tsx,js,mjs}"];
+/** The Next.js apps (Musterli and the wallpaper app). React and Next rules apply only here. */
+const WEB_APP = ["apps/web/**/*.{ts,tsx,js,mjs}", "apps/wallpapers/**/*.{ts,tsx,js,mjs}"];
 
 /** Packages with React components: hook rules and browser globals apply. */
 const REACT_PACKAGES = ["packages/editor-ui/**/*.{ts,tsx}", "packages/ui/**/*.{ts,tsx}"];
@@ -82,7 +82,7 @@ export default tseslint.config(
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
     },
-    settings: { next: { rootDir: "apps/web/" } },
+    settings: { next: { rootDir: ["apps/web/", "apps/wallpapers/"] } },
   },
   {
     files: REACT_PACKAGES,

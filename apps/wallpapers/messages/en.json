@@ -1,0 +1,36 @@
+{
+  "Metadata": {
+    "title": "Wallpaper generator for every screen",
+    "description": "Generate wallpapers that fit your exact phone, tablet, laptop or monitor. Free, in your browser, no sign-up."
+  },
+  "Layout": {
+    "skipLink": "Skip to content",
+    "brand": "Wallpapers",
+    "badge": "Preview",
+    "footer": "A sister project of Musterli. Free, donation-funded, everything stays in your browser.",
+    "musterli": "Visit Musterli"
+  },
+  "Home": {
+    "title": "Wallpapers that fit your exact screen",
+    "lead": "Pick your device, press space for a new look and download a wallpaper in its native size. The generator is on its way; below is the device list it will use.",
+    "screenHeading": "Your screen",
+    "detecting": "Detecting your screen…",
+    "matched": "Device",
+    "unknown": "Not in the list yet, the custom size will fit.",
+    "nativeSize": "Native size",
+    "catalogHeading": "Supported devices",
+    "catalogLead": "{count} devices with their native pixel sizes.",
+    "groups": {
+      "iphone": "iPhone",
+      "android": "Android phones",
+      "tablet": "Tablets",
+      "laptop": "Laptops",
+      "monitor": "Monitors",
+      "ultrawide": "Ultrawide monitors"
+    }
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "back": "Back to the start page"
+  }
+}

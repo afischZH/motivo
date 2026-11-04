@@ -1,0 +1,36 @@
+{
+  "Metadata": {
+    "title": "Hintergrundbild-Generator für jeden Bildschirm",
+    "description": "Erstelle Hintergrundbilder in der genauen Grösse deines Handys, Tablets, Laptops oder Monitors. Gratis, im Browser, ohne Anmeldung."
+  },
+  "Layout": {
+    "skipLink": "Zum Inhalt springen",
+    "brand": "Wallpapers",
+    "badge": "Vorschau",
+    "footer": "Ein Schwesterprojekt von Musterli. Gratis, spendenfinanziert, alles bleibt in deinem Browser.",
+    "musterli": "Zu Musterli"
+  },
+  "Home": {
+    "title": "Hintergrundbilder, die genau auf deinen Bildschirm passen",
+    "lead": "Wähle dein Gerät, drücke die Leertaste für einen neuen Look und lade das Bild in der nativen Grösse herunter. Der Generator ist unterwegs; unten siehst du die Geräteliste, die er verwenden wird.",
+    "screenHeading": "Dein Bildschirm",
+    "detecting": "Bildschirm wird erkannt…",
+    "matched": "Gerät",
+    "unknown": "Noch nicht in der Liste, die eigene Grösse passt trotzdem.",
+    "nativeSize": "Native Grösse",
+    "catalogHeading": "Unterstützte Geräte",
+    "catalogLead": "{count} Geräte mit ihrer nativen Pixelgrösse.",
+    "groups": {
+      "iphone": "iPhone",
+      "android": "Android-Handys",
+      "tablet": "Tablets",
+      "laptop": "Laptops",
+      "monitor": "Monitore",
+      "ultrawide": "Ultrawide-Monitore"
+    }
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "back": "Zurück zur Startseite"
+  }
+}

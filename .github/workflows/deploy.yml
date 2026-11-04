@@ -8,13 +8,30 @@ name: Deploy (Cloudflare)
 # NEXT_PUBLIC_SENTRY_DSN (production only), NEXT_PUBLIC_DONATION_URL (production
 # and previews); see docs/ARCHITECTURE.md. The Worker needs no secrets.
 
-# Docs-only changes do not change the site and skip the deploy.
+# Docs-only changes do not change the site and skip the deploy, as do changes
+# that only touch the wallpaper app (deployed by deploy-wallpapers.yml).
 on:
   push:
     branches: [main]
-    paths-ignore: ["docs/**", "*.md", ".claude/**"]
+    paths-ignore:
+      [
+        "docs/**",
+        "*.md",
+        ".claude/**",
+        "apps/wallpapers/**",
+        "packages/devices/**",
+        ".github/workflows/deploy-wallpapers.yml",
+      ]
   pull_request:
-    paths-ignore: ["docs/**", "*.md", ".claude/**"]
+    paths-ignore:
+      [
+        "docs/**",
+        "*.md",
+        ".claude/**",
+        "apps/wallpapers/**",
+        "packages/devices/**",
+        ".github/workflows/deploy-wallpapers.yml",
+      ]
 
 concurrency:
   group: deploy-${{ github.ref }}
