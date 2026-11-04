@@ -12,6 +12,8 @@ registerWallpaperStyles();
  */
 export const WALLPAPER_STYLE_GROUPS = {
   soft: [
+    "aurora-ribbons",
+    "glass-orbs",
     "layered-hills",
     "planet",
     "mesh-gradient",
@@ -23,6 +25,12 @@ export const WALLPAPER_STYLE_GROUPS = {
     "starry-sky",
   ],
   graphic: [
+    "swiss-poster",
+    "iso-cubes",
+    "op-art",
+    "ridgelines",
+    "moire",
+    "sunburst",
     "retro-arcs",
     "pixel-gradient",
     "dot-gradient",

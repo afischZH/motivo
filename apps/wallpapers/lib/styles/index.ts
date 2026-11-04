@@ -1,6 +1,14 @@
 import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 
+import { auroraRibbonsTool } from "./aurora-ribbons";
 import { dotGradientTool } from "./dot-gradient";
+import { glassOrbsTool } from "./glass-orbs";
+import { isoCubesTool } from "./iso-cubes";
+import { moireTool } from "./moire";
+import { opArtTool } from "./op-art";
+import { ridgelinesTool } from "./ridgelines";
+import { sunburstTool } from "./sunburst";
+import { swissPosterTool } from "./swiss-poster";
 import { layeredHillsTool } from "./layered-hills";
 import { paperFoldsTool } from "./paper-folds";
 import { pixelGradientTool } from "./pixel-gradient";
@@ -15,6 +23,14 @@ export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
   dotGradientTool,
   paperFoldsTool,
   planetTool,
+  swissPosterTool,
+  auroraRibbonsTool,
+  isoCubesTool,
+  moireTool,
+  sunburstTool,
+  glassOrbsTool,
+  opArtTool,
+  ridgelinesTool,
 ];
 
 /**

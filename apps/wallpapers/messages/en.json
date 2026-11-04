@@ -375,6 +375,94 @@
         "dawn": "Dawn",
         "void": "Void"
       }
+    },
+    "swiss-poster": {
+      "name": "Swiss poster",
+      "presets": {
+        "basel": "Basel",
+        "riso": "Riso",
+        "noir": "Noir",
+        "sage": "Sage",
+        "bauhaus": "Bauhaus",
+        "pastel": "Pastel"
+      }
+    },
+    "aurora-ribbons": {
+      "name": "Aurora",
+      "presets": {
+        "borealis": "Borealis",
+        "sunset": "Sunset",
+        "ice": "Ice",
+        "silk": "Silk",
+        "gold": "Gold",
+        "ocean": "Ocean"
+      }
+    },
+    "iso-cubes": {
+      "name": "Iso cubes",
+      "presets": {
+        "arcade": "Arcade",
+        "marble": "Marble",
+        "midnight": "Midnight",
+        "candy": "Candy",
+        "mono": "Mono",
+        "terra": "Terra"
+      }
+    },
+    "moire": {
+      "name": "Moiré",
+      "presets": {
+        "print": "Print",
+        "night": "Night",
+        "chroma": "Chroma",
+        "deep": "Deep sea",
+        "ripple": "Ripple",
+        "bold": "Bold"
+      }
+    },
+    "sunburst": {
+      "name": "Sunburst",
+      "presets": {
+        "vintage": "Vintage",
+        "candy": "Candy",
+        "night": "Night",
+        "mint": "Mint",
+        "circus": "Circus",
+        "swirl": "Swirl"
+      }
+    },
+    "glass-orbs": {
+      "name": "Glass orbs",
+      "presets": {
+        "dream": "Dream",
+        "midnight": "Midnight",
+        "citrus": "Citrus",
+        "mono": "Mono",
+        "ocean": "Ocean",
+        "bubbles": "Bubbles"
+      }
+    },
+    "op-art": {
+      "name": "Op art",
+      "presets": {
+        "classic": "Classic",
+        "twin": "Twin",
+        "neon": "Neon",
+        "ocean": "Ocean",
+        "fine": "Fine",
+        "sunny": "Sunny"
+      }
+    },
+    "ridgelines": {
+      "name": "Ridgelines",
+      "presets": {
+        "pulsar": "Pulsar",
+        "sunset": "Sunset",
+        "paper": "Paper",
+        "aqua": "Aqua",
+        "dense": "Dense",
+        "bold": "Bold"
+      }
     }
   }
 }

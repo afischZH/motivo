@@ -375,6 +375,94 @@
         "dawn": "Morgenrot",
         "void": "Leere"
       }
+    },
+    "swiss-poster": {
+      "name": "Schweizer Plakat",
+      "presets": {
+        "basel": "Basel",
+        "riso": "Riso",
+        "noir": "Noir",
+        "sage": "Salbei",
+        "bauhaus": "Bauhaus",
+        "pastel": "Pastell"
+      }
+    },
+    "aurora-ribbons": {
+      "name": "Polarlicht",
+      "presets": {
+        "borealis": "Nordlicht",
+        "sunset": "Abendrot",
+        "ice": "Eis",
+        "silk": "Seide",
+        "gold": "Gold",
+        "ocean": "Ozean"
+      }
+    },
+    "iso-cubes": {
+      "name": "Iso-Würfel",
+      "presets": {
+        "arcade": "Arcade",
+        "marble": "Marmor",
+        "midnight": "Mitternacht",
+        "candy": "Bonbon",
+        "mono": "Mono",
+        "terra": "Terra"
+      }
+    },
+    "moire": {
+      "name": "Moiré",
+      "presets": {
+        "print": "Druck",
+        "night": "Nacht",
+        "chroma": "Chroma",
+        "deep": "Tiefsee",
+        "ripple": "Kräuseln",
+        "bold": "Kräftig"
+      }
+    },
+    "sunburst": {
+      "name": "Strahlen",
+      "presets": {
+        "vintage": "Vintage",
+        "candy": "Bonbon",
+        "night": "Nacht",
+        "mint": "Minze",
+        "circus": "Zirkus",
+        "swirl": "Wirbel"
+      }
+    },
+    "glass-orbs": {
+      "name": "Glaskugeln",
+      "presets": {
+        "dream": "Traum",
+        "midnight": "Mitternacht",
+        "citrus": "Zitrus",
+        "mono": "Mono",
+        "ocean": "Ozean",
+        "bubbles": "Seifenblasen"
+      }
+    },
+    "op-art": {
+      "name": "Op-Art",
+      "presets": {
+        "classic": "Klassisch",
+        "twin": "Doppelt",
+        "neon": "Neon",
+        "ocean": "Ozean",
+        "fine": "Fein",
+        "sunny": "Sonnig"
+      }
+    },
+    "ridgelines": {
+      "name": "Kammlinien",
+      "presets": {
+        "pulsar": "Pulsar",
+        "sunset": "Abendrot",
+        "paper": "Papier",
+        "aqua": "Aqua",
+        "dense": "Dicht",
+        "bold": "Kräftig"
+      }
     }
   }
 }
