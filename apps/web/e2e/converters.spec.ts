@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
+import { CONVERTER_IDS } from "../lib/convert/ids";
+
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 
 async function expectNoAxeViolations(page: Page) {
@@ -132,8 +134,9 @@ test("image to Base64 reads a picked file", async ({ page }) => {
   );
 });
 
-test("converter index links to all six converters", async ({ page }) => {
+test("converter index links to every converter", async ({ page }) => {
   await page.goto("/en/convert");
-  await expect(page.getByRole("main").getByRole("link")).toHaveCount(6);
+  // The image compressor (W4) made it seven; follow the catalogue instead of a number.
+  await expect(page.getByRole("main").getByRole("link")).toHaveCount(CONVERTER_IDS.length);
   await expectNoAxeViolations(page);
 });

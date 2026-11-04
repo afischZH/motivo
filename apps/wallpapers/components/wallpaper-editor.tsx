@@ -2,18 +2,22 @@
 
 import { DEVICE_GROUPS, DEVICES, detectScreen, type SafeZone } from "@musterli/devices";
 import { createRng } from "@musterli/engine";
-import {
-  defaultRasterEnv,
-  downloadBlob,
-  exportRaster,
-  renderDesignSvg,
-  svgToDataUri,
-} from "@musterli/exporters";
-import { createRenderContext, type AnyToolDefinition } from "@musterli/tool-registry";
-import { useCallback, useEffect, useState } from "react";
+import { downloadBlob, svgToDataUri } from "@musterli/exporters";
+import type { AnyToolDefinition } from "@musterli/tool-registry";
+import { useCallback, useEffect, useId, useState } from "react";
 
+import { downloadSet, rasterWallpaper } from "@/lib/download";
+import { clampFinish, DIM_MAX, NO_FINISH, type Finish } from "@/lib/finish";
 import { formatSize } from "@/lib/format";
-import { WALLPAPER_TOOL_IDS, wallpaperTool, type WallpaperToolId } from "@/lib/generators";
+import {
+  WALLPAPER_STYLE_GROUPS,
+  WALLPAPER_TOOL_IDS,
+  wallpaperTool,
+  type WallpaperStyleGroup,
+  type WallpaperToolId,
+} from "@/lib/generators";
+import { hasClockZone, wallpaperSvg } from "@/lib/render";
+import { groupItems, pairItems, wallpaperBaseName } from "@/lib/sets";
 import { stateFromHash, stateToHash, type WallpaperState } from "@/lib/share";
 import { clampEdge, resolveTarget, type Target } from "@/lib/target";
 
@@ -25,6 +29,7 @@ export interface EditorLabels {
   width: string;
   height: string;
   style: string;
+  styleGroups: Record<WallpaperStyleGroup, string>;
   look: string;
   newLook: string;
   newLookHint: string;
@@ -37,6 +42,14 @@ export interface EditorLabels {
   linkCopied: string;
   previewAlt: string;
   sizeNote: string;
+  finish: string;
+  grain: string;
+  dim: string;
+  calmClock: string;
+  sets: string;
+  downloadPair: string;
+  downloadSet: string;
+  progress: string;
   groups: Record<string, string>;
   zones: Record<SafeZone["kind"], string>;
   tools: Record<string, { name: string; presets: Record<string, string> }>;
@@ -45,6 +58,8 @@ export interface EditorLabels {
 interface WallpaperEditorProps {
   locale: string;
   labels: EditorLabels;
+  /** Device preselected by a device page; a shared link still wins. */
+  initialDeviceId?: string | undefined;
 }
 
 const CUSTOM_VALUE = "custom";
@@ -55,7 +70,7 @@ function randomSeed(): number {
 }
 
 /** Starts from the first look of a generator. */
-function startState(toolId: WallpaperToolId, target: Target): WallpaperState {
+function startState(toolId: WallpaperToolId, target: Target, finish: Finish): WallpaperState {
   const tool = wallpaperTool(toolId);
   const preset = tool.presets[0];
   return {
@@ -63,6 +78,7 @@ function startState(toolId: WallpaperToolId, target: Target): WallpaperState {
     params: (preset?.params ?? tool.defaults) as Record<string, unknown>,
     seed: preset?.seed ?? randomSeed(),
     target,
+    finish,
   };
 }
 
@@ -78,8 +94,11 @@ function detectedTarget(): Target {
   return { kind: "device", id: "iphone-6-3" };
 }
 
-function initialState(): WallpaperState {
-  return stateFromHash(window.location.hash) ?? startState(WALLPAPER_TOOL_IDS[0], detectedTarget());
+function initialState(deviceId: string | undefined): WallpaperState {
+  const target: Target = deviceId ? { kind: "device", id: deviceId } : detectedTarget();
+  return (
+    stateFromHash(window.location.hash) ?? startState(WALLPAPER_TOOL_IDS[0], target, NO_FINISH)
+  );
 }
 
 /** Keys typed into a form control must not trigger the space shortcut. */
@@ -90,11 +109,13 @@ function isTypingTarget(target: EventTarget | null): boolean {
   );
 }
 
-export default function WallpaperEditor({ locale, labels }: WallpaperEditorProps) {
-  const [state, setState] = useState<WallpaperState>(initialState);
+export default function WallpaperEditor({ locale, labels, initialDeviceId }: WallpaperEditorProps) {
+  const [state, setState] = useState<WallpaperState>(() => initialState(initialDeviceId));
   const [detected] = useState<Target>(detectedTarget);
   const [showZones, setShowZones] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
+  const finishId = useId();
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -102,10 +123,8 @@ export default function WallpaperEditor({ locale, labels }: WallpaperEditorProps
   const resolved = resolveTarget(state.target) ?? resolveTarget(detected);
   const sizeText = resolved ? formatSize(resolved.width, resolved.height, locale) : "";
 
-  // Plain computation: the React Compiler memoizes it per (tool, params, seed, size).
-  const svg = resolved
-    ? renderDesignSvg(tool, state.params, createRenderContext(state.seed, resolved.design))
-    : "";
+  // Plain computation: the React Compiler memoizes it per (look, size).
+  const svg = resolved ? wallpaperSvg(state, resolved) : "";
   const src = svg ? svgToDataUri(svg) : "";
 
   // Keep the address shareable; replaceState adds no history entries.
@@ -134,26 +153,47 @@ export default function WallpaperEditor({ locale, labels }: WallpaperEditorProps
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [newLook]);
 
-  async function download(format: "png" | "jpg") {
-    if (!resolved) return;
+  async function run(job: () => Promise<void>) {
     setBusy(true);
     setError(false);
     try {
-      const result = await exportRaster(
-        tool,
-        state.params,
-        createRenderContext(state.seed, resolved.design),
-        { format, size: { width: resolved.width, height: resolved.height }, svg },
-        await defaultRasterEnv(),
-      );
-      const name =
-        state.target.kind === "device" ? state.target.id : `${resolved.width}x${resolved.height}`;
-      downloadBlob(result.blob, `wallpaper-${name}-${state.toolId}-${state.seed}.${format}`);
+      await job();
     } catch {
       setError(true);
     } finally {
       setBusy(false);
+      setProgress(null);
     }
+  }
+
+  function download(format: "png" | "jpg") {
+    if (!resolved) return;
+    void run(async () => {
+      const blob = await rasterWallpaper(state, resolved, format);
+      downloadBlob(blob, `${wallpaperBaseName(state.target, state.toolId, state.seed)}.${format}`);
+    });
+  }
+
+  function downloadZip(kind: "pair" | "group") {
+    const device = resolved?.device;
+    const items =
+      kind === "pair"
+        ? pairItems(state.target, state.toolId, state.seed, state.finish)
+        : device
+          ? groupItems(device, state.toolId, state.seed, state.finish)
+          : [];
+    if (items.length === 0) return;
+    const name =
+      kind === "pair"
+        ? wallpaperBaseName(state.target, state.toolId, state.seed)
+        : `wallpapers-${device?.group ?? "set"}-${state.toolId}-${state.seed}`;
+    void run(() =>
+      downloadSet(state, items, `${name}.zip`, (done, total) => setProgress({ done, total })),
+    );
+  }
+
+  function setFinish(patch: Partial<Finish>) {
+    setState((s) => ({ ...s, finish: clampFinish({ ...s.finish, ...patch }) }));
   }
 
   async function copyLink() {
@@ -294,19 +334,26 @@ export default function WallpaperEditor({ locale, labels }: WallpaperEditorProps
 
         <fieldset className="flex flex-col gap-2">
           <legend className="mb-2 text-sm font-medium">{labels.style}</legend>
-          <div className="flex flex-wrap gap-2">
-            {WALLPAPER_TOOL_IDS.map((id) => (
-              <button
-                key={id}
-                type="button"
-                aria-pressed={state.toolId === id}
-                onClick={() => setState((s) => startState(id, s.target))}
-                className="border-border hover:bg-surface aria-pressed:bg-accent aria-pressed:border-accent rounded-full border px-3 py-1.5 text-sm aria-pressed:text-white"
-              >
-                {labels.tools[id]?.name ?? id}
-              </button>
-            ))}
-          </div>
+          {(Object.keys(WALLPAPER_STYLE_GROUPS) as WallpaperStyleGroup[]).map((group) => (
+            <div key={group} className="flex flex-col gap-1.5">
+              <p className="text-muted text-xs font-medium tracking-wide uppercase">
+                {labels.styleGroups[group]}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {WALLPAPER_STYLE_GROUPS[group].map((id) => (
+                  <button
+                    key={id}
+                    type="button"
+                    aria-pressed={state.toolId === id}
+                    onClick={() => setState((s) => startState(id, s.target, s.finish))}
+                    className="border-border hover:bg-surface aria-pressed:bg-accent aria-pressed:border-accent rounded-full border px-3 py-1.5 text-sm aria-pressed:text-white"
+                  >
+                    {labels.tools[id]?.name ?? id}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </fieldset>
 
         <div className="flex flex-col gap-2">
@@ -347,6 +394,46 @@ export default function WallpaperEditor({ locale, labels }: WallpaperEditorProps
           </kbd>
         </button>
 
+        <fieldset className="flex flex-col gap-3">
+          <legend className="mb-1 text-sm font-medium">{labels.finish}</legend>
+          {(
+            [
+              ["grain", labels.grain, 100],
+              ["dim", labels.dim, DIM_MAX],
+            ] as const
+          ).map(([key, label, max]) => (
+            <div key={key} className="flex flex-col gap-1">
+              <div className="flex justify-between text-sm">
+                <label htmlFor={`${finishId}-${key}`}>{label}</label>
+                <output htmlFor={`${finishId}-${key}`} className="text-muted tabular-nums">
+                  {state.finish[key]}
+                </output>
+              </div>
+              <input
+                id={`${finishId}-${key}`}
+                type="range"
+                min={0}
+                max={max}
+                step={1}
+                value={state.finish[key]}
+                onChange={(event) => setFinish({ [key]: event.target.valueAsNumber })}
+                className="accent-accent w-full"
+              />
+            </div>
+          ))}
+          {hasClockZone(resolved) ? (
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={state.finish.calmClock}
+                onChange={(event) => setFinish({ calmClock: event.target.checked })}
+                className="accent-accent size-4"
+              />
+              {labels.calmClock}
+            </label>
+          ) : null}
+        </fieldset>
+
         {resolved?.device ? (
           <label className="flex items-center gap-2 text-sm">
             <input
@@ -364,23 +451,54 @@ export default function WallpaperEditor({ locale, labels }: WallpaperEditorProps
             <button
               type="button"
               disabled={busy}
-              onClick={() => void download("png")}
-              className="bg-accent h-11 rounded-full font-medium text-white disabled:opacity-60"
+              onClick={() => download("png")}
+              className="bg-accent h-11 rounded-full px-3 text-sm font-medium text-white disabled:opacity-60"
             >
               {busy ? labels.exporting : labels.downloadPng}
             </button>
             <button
               type="button"
               disabled={busy}
-              onClick={() => void download("jpg")}
-              className="border-border hover:bg-surface h-11 rounded-full border font-medium disabled:opacity-60"
+              onClick={() => download("jpg")}
+              className="border-border hover:bg-surface h-11 rounded-full border px-3 text-sm font-medium disabled:opacity-60"
             >
               {labels.downloadJpg}
             </button>
           </div>
           <p className="text-muted text-sm" aria-live="polite">
-            {error ? labels.exportFailed : labels.sizeNote.replace("{size}", sizeText)}
+            {error
+              ? labels.exportFailed
+              : progress
+                ? labels.progress
+                    .replace("{done}", String(progress.done))
+                    .replace("{total}", String(progress.total))
+                : labels.sizeNote.replace("{size}", sizeText)}
           </p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <h3 className="text-sm font-medium">{labels.sets}</h3>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => downloadZip("pair")}
+            className="border-border hover:bg-surface h-10 rounded-full border px-4 text-sm font-medium disabled:opacity-60"
+          >
+            {labels.downloadPair}
+          </button>
+          {resolved?.device ? (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => downloadZip("group")}
+              className="border-border hover:bg-surface h-10 rounded-full border px-4 text-sm font-medium disabled:opacity-60"
+            >
+              {labels.downloadSet.replace(
+                "{group}",
+                labels.groups[resolved.device.group] ?? resolved.device.group,
+              )}
+            </button>
+          ) : null}
         </div>
 
         <button

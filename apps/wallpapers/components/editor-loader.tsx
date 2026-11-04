@@ -17,13 +17,14 @@ interface EditorLoaderProps {
   locale: string;
   labels: EditorLabels;
   loading: string;
+  initialDeviceId?: string;
 }
 
-export function EditorLoader({ locale, labels, loading }: EditorLoaderProps) {
+export function EditorLoader({ locale, labels, loading, initialDeviceId }: EditorLoaderProps) {
   return (
     <div className="relative min-h-[480px]">
       <p className="text-muted absolute inset-x-0 top-8 -z-10 text-center">{loading}</p>
-      <WallpaperEditor locale={locale} labels={labels} />
+      <WallpaperEditor locale={locale} labels={labels} initialDeviceId={initialDeviceId} />
     </div>
   );
 }

@@ -1,20 +1,51 @@
 import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 
+import { registerWallpaperStyles } from "./styles";
+
+registerWallpaperStyles();
+
 /**
- * Musterli generators offered as wallpaper styles (T1, docs/WALLPAPERS.md).
- * All render SVG, so preview and export share one render path and the
- * raster export scales to any device size. WebGL tools (shader gradient)
- * follow once the shader worker is wired in.
+ * Musterli generators plus the app's own styles (`lib/styles`) offered as wallpaper styles (docs/WALLPAPERS.md), in
+ * two groups for the style picker. All render SVG, so preview and export
+ * share one render path and the raster export scales to any device size.
+ * WebGL tools (shader gradient) follow once the shader worker is wired in.
  */
+export const WALLPAPER_STYLE_GROUPS = {
+  soft: [
+    "layered-hills",
+    "planet",
+    "mesh-gradient",
+    "blurry-gradient",
+    "holographic-gradient",
+    "striped-gradient",
+    "blob-composition",
+    "svg-waves",
+    "starry-sky",
+  ],
+  graphic: [
+    "retro-arcs",
+    "pixel-gradient",
+    "dot-gradient",
+    "paper-folds",
+    "bauhaus-pattern",
+    "geometric-patterns",
+    "neon-shapes",
+    "glitch-background",
+    "perspective-grid",
+    "low-poly",
+    "topo-lines",
+    "flow-field",
+    "guilloche",
+    "terrazzo",
+    "dieter-dots",
+  ],
+} as const;
+
+export type WallpaperStyleGroup = keyof typeof WALLPAPER_STYLE_GROUPS;
+
 export const WALLPAPER_TOOL_IDS = [
-  "mesh-gradient",
-  "blurry-gradient",
-  "holographic-gradient",
-  "blob-composition",
-  "svg-waves",
-  "low-poly",
-  "topo-lines",
-  "flow-field",
+  ...WALLPAPER_STYLE_GROUPS.soft,
+  ...WALLPAPER_STYLE_GROUPS.graphic,
 ] as const;
 
 export type WallpaperToolId = (typeof WALLPAPER_TOOL_IDS)[number];

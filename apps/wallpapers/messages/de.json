@@ -53,7 +53,27 @@
       "statusBar": "Statusleiste",
       "menuBar": "Menüleiste",
       "dock": "Dock"
+    },
+    "finish": "Feinschliff",
+    "grain": "Körnung",
+    "dim": "Abdunkeln",
+    "calmClock": "Ruhige Fläche hinter der Uhr",
+    "sets": "Sets",
+    "downloadPair": "Helle und dunkle Version (ZIP)",
+    "downloadSet": "Alle Grössen für {group} (ZIP)",
+    "progress": "Exportiere {done} von {total}…",
+    "styleGroups": {
+      "soft": "Weich",
+      "graphic": "Grafisch"
     }
+  },
+  "Device": {
+    "title": "Hintergrundbilder für {device}",
+    "lead": "Gemacht für {device} mit {size} px, mit Uhr und Dock im Blick. Drücke die Leertaste für einen neuen Look.",
+    "metaTitle": "Hintergrundbild-Generator für {device} ({size} px)",
+    "metaDescription": "Gratis Hintergrundbilder für {device} in der nativen Grösse von {size} px. Stil wählen, Leertaste für einen neuen Look, PNG oder helles und dunkles Paar herunterladen.",
+    "otherDevices": "Weitere {group}",
+    "allDevices": "Alle Geräte"
   },
   "Tools": {
     "mesh-gradient": {
@@ -160,6 +180,200 @@
         "ink": "Tusche",
         "meadow": "Wiese",
         "dune": "Wüstenwind"
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus",
+      "presets": {
+        "classic": "Klassisch",
+        "primary": "Grundfarben",
+        "curves": "Rundungen",
+        "angles": "Ecken",
+        "pastel": "Pastell",
+        "night": "Nacht",
+        "calm": "Erdtöne",
+        "mosaic": "Mosaik"
+      }
+    },
+    "geometric-patterns": {
+      "name": "Geometrisch",
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Labyrinth",
+        "mosaic": "Mosaik",
+        "night-garden": "Nachtgarten",
+        "blueprint": "Blaupause",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Sternschnuppen"
+      }
+    },
+    "neon-shapes": {
+      "name": "Neon",
+      "presets": {
+        "arcade": "Spielhalle",
+        "sign": "Leuchtreklame",
+        "geometry": "Geometrie",
+        "laser": "Laser",
+        "miami": "Miami",
+        "soft": "Sanftes Leuchten",
+        "party": "Party",
+        "minimal": "Minimal"
+      }
+    },
+    "glitch-background": {
+      "name": "Glitch",
+      "presets": {
+        "signal": "Signal",
+        "vhs": "VHS",
+        "cyber": "Cyber",
+        "soft": "Pastell",
+        "error": "Fehler",
+        "sunset": "Abendrot",
+        "mono": "Schwarzweiss"
+      }
+    },
+    "perspective-grid": {
+      "name": "Retro-Gitter",
+      "presets": {
+        "synthwave": "Synthwave",
+        "terminal": "Terminal",
+        "ice": "Gletscher",
+        "sunset": "Sonnenuntergang",
+        "mono": "Schwarzweiss",
+        "blueprint": "Blaupause",
+        "night-drive": "Nachtfahrt",
+        "tunnel": "Tunnel"
+      }
+    },
+    "striped-gradient": {
+      "name": "Streifen",
+      "presets": {
+        "fluted": "Riffelglas",
+        "candy": "Bonbon",
+        "dusk": "Dämmerung",
+        "forest": "Wald",
+        "retro": "Retro",
+        "silk": "Seide",
+        "ink": "Tinte",
+        "sunset": "Sonnenuntergang",
+        "mint": "Minze",
+        "gold": "Gold",
+        "neon": "Neon"
+      }
+    },
+    "guilloche": {
+      "name": "Guilloche",
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Urkunde",
+        "voucher": "Gutschein",
+        "spirograph": "Spirograph",
+        "seal": "Siegel",
+        "lace": "Spitze",
+        "ribbon": "Bordüre"
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo",
+      "presets": {
+        "classic": "Klassisch",
+        "venetian": "Venezianisch",
+        "midnight": "Mitternacht",
+        "pastel": "Pastell",
+        "pebbles": "Kiesel",
+        "pop": "Pop",
+        "granite": "Granit"
+      }
+    },
+    "dieter-dots": {
+      "name": "Punktringe",
+      "presets": {
+        "grille": "Lautsprecher",
+        "radar": "Radar",
+        "swirl": "Wirbel",
+        "target": "Zielscheibe",
+        "ripple": "Wellenkreis",
+        "sunburst": "Sonnenrad",
+        "mono": "Mono"
+      }
+    },
+    "starry-sky": {
+      "name": "Sternenhimmel",
+      "presets": {
+        "midnight": "Mitternacht",
+        "dusk": "Abenddämmerung",
+        "milky-way": "Milchstrasse",
+        "polar": "Polarnacht",
+        "lullaby": "Schlaflied",
+        "daybreak": "Morgengrauen",
+        "cosmic": "Kosmos"
+      }
+    },
+    "layered-hills": {
+      "name": "Hügelkette",
+      "presets": {
+        "peach": "Pfirsich",
+        "fjord": "Fjord",
+        "dusk": "Abenddämmerung",
+        "forest": "Wald",
+        "desert": "Wüste",
+        "night": "Nacht",
+        "lavender": "Lavendel"
+      }
+    },
+    "retro-arcs": {
+      "name": "Retro-Bögen",
+      "presets": {
+        "seventies": "Siebziger",
+        "sorbet": "Sorbet",
+        "midnight": "Mitternacht",
+        "earth": "Erde",
+        "mono": "Mono",
+        "ocean": "Ozean"
+      }
+    },
+    "pixel-gradient": {
+      "name": "Pixelverlauf",
+      "presets": {
+        "sunset": "Sonnenuntergang",
+        "lagoon": "Lagune",
+        "mint": "Minze",
+        "ember": "Glut",
+        "candy": "Bonbon",
+        "mono": "Mono"
+      }
+    },
+    "dot-gradient": {
+      "name": "Punktverlauf",
+      "presets": {
+        "electric": "Elektrisch",
+        "sun": "Sonne",
+        "ink": "Tinte",
+        "aqua": "Aqua",
+        "pop": "Pop",
+        "silver": "Silber"
+      }
+    },
+    "paper-folds": {
+      "name": "Papierfalten",
+      "presets": {
+        "terracotta": "Terrakotta",
+        "arctic": "Arktis",
+        "neon": "Neon",
+        "sand": "Sand",
+        "graphite": "Graphit",
+        "sunrise": "Sonnenaufgang"
+      }
+    },
+    "planet": {
+      "name": "Planet",
+      "presets": {
+        "saturn": "Mit Ring",
+        "ice": "Eisriese",
+        "mars": "Roter Planet",
+        "emerald": "Smaragd",
+        "dawn": "Morgenrot",
+        "void": "Leere"
       }
     }
   }

@@ -1,6 +1,7 @@
 import { decodeDesign, encodeDesign } from "@musterli/editor-ui/share";
 import { getDevice } from "@musterli/devices";
 
+import { clampFinish, isPlainFinish, NO_FINISH, type Finish } from "./finish";
 import { isWallpaperToolId, type WallpaperToolId } from "./generators";
 import { clampEdge, resolveTarget, type Target } from "./target";
 
@@ -10,9 +11,26 @@ export interface WallpaperState {
   readonly params: Readonly<Record<string, unknown>>;
   readonly seed: number;
   readonly target: Target;
+  readonly finish: Finish;
 }
 
 const CUSTOM = /^(\d{2,5})x(\d{2,5})$/;
+const FINISH = /^(\d{1,3})\.(\d{1,3})\.([01])$/;
+
+/** `<grain>.<dim>.<calm clock 0|1>`, e.g. `30.0.1`. */
+function finishToken(finish: Finish): string {
+  return `${finish.grain}.${finish.dim}.${finish.calmClock ? 1 : 0}`;
+}
+
+function parseFinish(token: string | null): Finish {
+  const match = token ? FINISH.exec(token) : null;
+  if (!match) return NO_FINISH;
+  return clampFinish({
+    grain: Number(match[1]),
+    dim: Number(match[2]),
+    calmClock: match[3] === "1",
+  });
+}
 
 function targetToken(target: Target): string {
   return target.kind === "device" ? target.id : `${target.width}x${target.height}`;
@@ -34,7 +52,8 @@ function parseTarget(token: string | null): Target | undefined {
 /**
  * URL hash of a wallpaper: `d` is Musterli's share code (tool, params, seed,
  * design size; validated through the tool schema on the way back), `t` the
- * device id or `<width>x<height>` for a custom size. Returns undefined when
+ * device id or `<width>x<height>` for a custom size, `f` the finish (left
+ * out when plain, so T1 links stay valid). Returns undefined when
  * the design does not fit into a link.
  */
 export function stateToHash(state: WallpaperState): string | undefined {
@@ -48,6 +67,7 @@ export function stateToHash(state: WallpaperState): string | undefined {
   });
   if (!code.ok) return undefined;
   const query = new URLSearchParams({ d: code.value, t: targetToken(state.target) });
+  if (!isPlainFinish(state.finish)) query.set("f", finishToken(state.finish));
   return `#${query.toString()}`;
 }
 
@@ -64,5 +84,6 @@ export function stateFromHash(hash: string): WallpaperState | undefined {
     params: decoded.design.params,
     seed: decoded.design.seed,
     target,
+    finish: parseFinish(query.get("f")),
   };
 }

@@ -53,7 +53,27 @@
       "statusBar": "Status bar",
       "menuBar": "Menu bar",
       "dock": "Dock"
+    },
+    "finish": "Finish",
+    "grain": "Grain",
+    "dim": "Darken",
+    "calmClock": "Calm area behind the clock",
+    "sets": "Sets",
+    "downloadPair": "Light and dark version (ZIP)",
+    "downloadSet": "Every size for {group} (ZIP)",
+    "progress": "Exporting {done} of {total}…",
+    "styleGroups": {
+      "soft": "Soft",
+      "graphic": "Graphic"
     }
+  },
+  "Device": {
+    "title": "Wallpapers for {device}",
+    "lead": "Made for the {size} px screen of the {device}, with the clock and dock areas in view. Press space for a new look.",
+    "metaTitle": "{device} wallpaper generator ({size} px)",
+    "metaDescription": "Free wallpapers for the {device} in its native {size} px. Pick a style, press space for a new look, download PNG or a light and dark pair.",
+    "otherDevices": "Other {group}",
+    "allDevices": "All devices"
   },
   "Tools": {
     "mesh-gradient": {
@@ -160,6 +180,200 @@
         "ink": "Ink",
         "meadow": "Meadow",
         "dune": "Desert wind"
+      }
+    },
+    "bauhaus-pattern": {
+      "name": "Bauhaus",
+      "presets": {
+        "classic": "Classic",
+        "primary": "Primary colors",
+        "curves": "Curves",
+        "angles": "Angles",
+        "pastel": "Pastel",
+        "night": "Night",
+        "calm": "Earthy",
+        "mosaic": "Mosaic"
+      }
+    },
+    "geometric-patterns": {
+      "name": "Geometric",
+      "presets": {
+        "atelier": "Atelier",
+        "truchet-maze": "Maze",
+        "mosaic": "Mosaic",
+        "night-garden": "Night garden",
+        "blueprint": "Blueprint",
+        "patchwork": "Patchwork",
+        "shooting-stars": "Shooting stars"
+      }
+    },
+    "neon-shapes": {
+      "name": "Neon",
+      "presets": {
+        "arcade": "Arcade",
+        "sign": "Neon sign",
+        "geometry": "Geometry",
+        "laser": "Laser",
+        "miami": "Miami",
+        "soft": "Soft glow",
+        "party": "Party",
+        "minimal": "Minimal"
+      }
+    },
+    "glitch-background": {
+      "name": "Glitch",
+      "presets": {
+        "signal": "Signal",
+        "vhs": "VHS",
+        "cyber": "Cyber",
+        "soft": "Pastel",
+        "error": "Error",
+        "sunset": "Sunset",
+        "mono": "Mono"
+      }
+    },
+    "perspective-grid": {
+      "name": "Retro grid",
+      "presets": {
+        "synthwave": "Synthwave",
+        "terminal": "Terminal",
+        "ice": "Glacier",
+        "sunset": "Sunset",
+        "mono": "Mono",
+        "blueprint": "Blueprint",
+        "night-drive": "Night drive",
+        "tunnel": "Tunnel"
+      }
+    },
+    "striped-gradient": {
+      "name": "Stripes",
+      "presets": {
+        "fluted": "Fluted glass",
+        "candy": "Candy",
+        "dusk": "Dusk",
+        "forest": "Forest",
+        "retro": "Retro",
+        "silk": "Silk",
+        "ink": "Ink",
+        "sunset": "Sunset",
+        "mint": "Mint",
+        "gold": "Gold",
+        "neon": "Neon"
+      }
+    },
+    "guilloche": {
+      "name": "Guilloche",
+      "presets": {
+        "banknote": "Banknote",
+        "certificate": "Certificate",
+        "voucher": "Voucher",
+        "spirograph": "Spirograph",
+        "seal": "Seal",
+        "lace": "Lace",
+        "ribbon": "Border"
+      }
+    },
+    "terrazzo": {
+      "name": "Terrazzo",
+      "presets": {
+        "classic": "Classic",
+        "venetian": "Venetian",
+        "midnight": "Midnight",
+        "pastel": "Pastel",
+        "pebbles": "Pebbles",
+        "pop": "Pop",
+        "granite": "Granite"
+      }
+    },
+    "dieter-dots": {
+      "name": "Dot rings",
+      "presets": {
+        "grille": "Grille",
+        "radar": "Radar",
+        "swirl": "Swirl",
+        "target": "Target",
+        "ripple": "Ripple",
+        "sunburst": "Sunburst",
+        "mono": "Mono"
+      }
+    },
+    "starry-sky": {
+      "name": "Starry sky",
+      "presets": {
+        "midnight": "Midnight",
+        "dusk": "Dusk",
+        "milky-way": "Milky Way",
+        "polar": "Polar night",
+        "lullaby": "Lullaby",
+        "daybreak": "Daybreak",
+        "cosmic": "Cosmic"
+      }
+    },
+    "layered-hills": {
+      "name": "Layered hills",
+      "presets": {
+        "peach": "Peach",
+        "fjord": "Fjord",
+        "dusk": "Dusk",
+        "forest": "Forest",
+        "desert": "Desert",
+        "night": "Night",
+        "lavender": "Lavender"
+      }
+    },
+    "retro-arcs": {
+      "name": "Retro arcs",
+      "presets": {
+        "seventies": "Seventies",
+        "sorbet": "Sorbet",
+        "midnight": "Midnight",
+        "earth": "Earth",
+        "mono": "Mono",
+        "ocean": "Ocean"
+      }
+    },
+    "pixel-gradient": {
+      "name": "Pixel gradient",
+      "presets": {
+        "sunset": "Sunset",
+        "lagoon": "Lagoon",
+        "mint": "Mint",
+        "ember": "Ember",
+        "candy": "Candy",
+        "mono": "Mono"
+      }
+    },
+    "dot-gradient": {
+      "name": "Dot gradient",
+      "presets": {
+        "electric": "Electric",
+        "sun": "Sun",
+        "ink": "Ink",
+        "aqua": "Aqua",
+        "pop": "Pop",
+        "silver": "Silver"
+      }
+    },
+    "paper-folds": {
+      "name": "Paper folds",
+      "presets": {
+        "terracotta": "Terracotta",
+        "arctic": "Arctic",
+        "neon": "Neon",
+        "sand": "Sand",
+        "graphite": "Graphite",
+        "sunrise": "Sunrise"
+      }
+    },
+    "planet": {
+      "name": "Planet",
+      "presets": {
+        "saturn": "Ringed",
+        "ice": "Ice giant",
+        "mars": "Red planet",
+        "emerald": "Emerald",
+        "dawn": "Dawn",
+        "void": "Void"
       }
     }
   }

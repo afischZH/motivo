@@ -1,11 +1,13 @@
 import { DEVICE_GROUPS, DEVICES, devicesInGroup } from "@musterli/devices";
 import { hasLocale } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { EditorLoader } from "@/components/editor-loader";
-import type { EditorLabels } from "@/components/wallpaper-editor";
 import { routing } from "@/i18n/routing";
+import { devicePath } from "@/lib/device-pages";
+import { editorLabels } from "@/lib/editor-labels";
 import { formatSize } from "@/lib/format";
 
 type HomeProps = Readonly<{ params: Promise<{ locale: string }> }>;
@@ -16,36 +18,7 @@ export default async function Home({ params }: HomeProps) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Home" });
   const e = await getTranslations({ locale, namespace: "Editor" });
-  const { Tools: tools } = await getMessages({ locale });
-
-  const labels: EditorLabels = {
-    device: e("device"),
-    yourScreen: e("yourScreen", { size: "{size}" }),
-    customSize: e("customSize"),
-    width: e("width"),
-    height: e("height"),
-    style: e("style"),
-    look: e("look"),
-    newLook: e("newLook"),
-    newLookHint: e("newLookHint"),
-    safeZones: e("safeZones"),
-    downloadPng: e("download", { format: "PNG" }),
-    downloadJpg: e("download", { format: "JPG" }),
-    exporting: e("exporting"),
-    exportFailed: e("exportFailed"),
-    copyLink: e("copyLink"),
-    linkCopied: e("linkCopied"),
-    previewAlt: e("previewAlt", { size: "{size}" }),
-    sizeNote: e("sizeNote", { size: "{size}" }),
-    groups: Object.fromEntries(DEVICE_GROUPS.map((group) => [group, t(`groups.${group}`)])),
-    zones: {
-      clock: e("zones.clock"),
-      statusBar: e("zones.statusBar"),
-      menuBar: e("zones.menuBar"),
-      dock: e("zones.dock"),
-    },
-    tools,
-  };
+  const labels = await editorLabels(locale);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
@@ -81,7 +54,12 @@ export default async function Home({ params }: HomeProps) {
               <ul className="mt-3 space-y-1.5 text-sm">
                 {devicesInGroup(group).map((device) => (
                   <li key={device.id} className="flex justify-between gap-3">
-                    <span>{device.name}</span>
+                    <Link
+                      href={devicePath(locale, device.id)}
+                      className="hover:text-accent-text underline-offset-4 hover:underline"
+                    >
+                      {device.name}
+                    </Link>
                     <span className="text-muted shrink-0 tabular-nums">
                       {formatSize(device.width, device.height, locale)}
                     </span>
