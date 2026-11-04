@@ -526,6 +526,7 @@ describe("extra exports", () => {
       "css-shadow",
       "animated-gradient",
       "ascii-art",
+      "shader-gradient",
       "fluid-type-scale",
       "section-divider",
       "og-image",

@@ -18,12 +18,14 @@
  * - sitemap: lib/seo/sitemap.test.ts; catalogue and category pages:
  *   lib/catalogue.test.ts; changelog entry: lib/changelog.test.ts
  *
- * This file adds what no other suite checks: export formats, related
+ * This file adds what no other suite checks: export formats (including the
+ * live web embeds of every WebGL tool), related
  * tools, parity between the DE and EN texts and the strict dash rule.
  */
 import { supportsAnimatedExport, supportsExport } from "@musterli/exporters";
 import {
   DEFAULT_CANVAS_SIZE,
+  WEB_EMBED_EXPORT_IDS,
   createRenderContext,
   registry,
   type AnyToolDefinition,
@@ -191,6 +193,14 @@ describe.each(registry.list().map((t) => [t.id, t] as const))("tool %s", (id, to
     it("gives extra exports ids that do not shadow a declared format", () => {
       const ids = (tool.extraExports ?? []).map((e) => e.id);
       expect(ids.filter((x) => (tool.exports as readonly string[]).includes(x))).toEqual([]);
+    });
+
+    it("offers the live web embeds when it is a WebGL tool (S1)", () => {
+      const ids = (tool.extraExports ?? []).map((e) => e.id);
+      const expected = tool.render.kind === "webgl" ? [...WEB_EMBED_EXPORT_IDS] : [];
+      expect(ids.filter((x) => (WEB_EMBED_EXPORT_IDS as readonly string[]).includes(x))).toEqual(
+        expected,
+      );
     });
 
     it("can export the GIF its `animation` opts into", () => {

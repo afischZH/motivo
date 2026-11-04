@@ -236,6 +236,7 @@ function fmtPx(value: number): string {
 export interface ExtraExportInfo {
   id: string;
   labelKey: string;
+  descriptionKey?: string;
   language: CodeLanguage;
   mime: string;
   extension: string;
@@ -246,6 +247,7 @@ export function listExtraExports(tool: AnyToolDefinition): ExtraExportInfo[] {
   return (tool.extraExports ?? []).map((e) => ({
     id: e.id,
     labelKey: e.labelKey,
+    ...(e.descriptionKey !== undefined ? { descriptionKey: e.descriptionKey } : {}),
     language: e.language,
     ...CODE_LANGUAGE_FILES[e.language],
   }));

@@ -13,3 +13,4 @@ export { GLSL_NOISE, GLSL_PRELUDE } from "./glsl/common";
 export * from "./shader-gradient/uniforms";
 export { SHADER_GRADIENT_FRAGMENT } from "./shader-gradient/fragment";
 export { renderShaderGradientCpu } from "./shader-gradient/cpu";
+export * from "./embed";

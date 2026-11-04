@@ -19,7 +19,8 @@ import * as z from "zod";
 import { colorSchema } from "../common";
 import { keepLocked } from "../randomize";
 import { defineTool } from "../registry";
-import type { Preset } from "../types";
+import type { Preset, WebglRenderer } from "../types";
+import { webEmbedExports } from "../web-embed";
 import { COMMON_GROUPS, COMMON_LABELS, optionLabels, roundTo } from "./shared";
 
 const ID = "shader-gradient";
@@ -112,6 +113,15 @@ export function shaderGradientOptions(
 }
 
 const dithered = (p: ShaderGradientParams) => p.dither !== "off";
+
+const render: WebglRenderer<ShaderGradientParams> = {
+  kind: "webgl",
+  fragment: SHADER_GRADIENT_FRAGMENT,
+  uniforms: (p, ctx) => shaderGradientUniforms(shaderGradientOptions(p, ctx.seed), ctx.t ?? 0),
+  palette: (p) => p.palette,
+  loopSeconds: (p) => (p.speed > 0 ? SHADER_LOOP_SECONDS / p.speed : 0),
+  reference: renderShaderGradientCpu,
+};
 
 export const shaderGradientTool = defineTool({
   id: ID,
@@ -239,15 +249,9 @@ export const shaderGradientTool = defineTool({
     return keepLocked(next, current, locks);
   },
   brandPalette: (colors) => ({ palette: colors.slice(0, SHADER_GRADIENT_COLORS_MAX) }),
-  render: {
-    kind: "webgl",
-    fragment: SHADER_GRADIENT_FRAGMENT,
-    uniforms: (p, ctx) => shaderGradientUniforms(shaderGradientOptions(p, ctx.seed), ctx.t ?? 0),
-    palette: (p) => p.palette,
-    loopSeconds: (p) => (p.speed > 0 ? SHADER_LOOP_SECONDS / p.speed : 0),
-    reference: renderShaderGradientCpu,
-  },
+  render,
   exports: ["png", "jpg", "webp"],
+  extraExports: webEmbedExports("Shader gradient", render),
   animation: { sources: ["time", "colors"] },
   controls: {
     groups: [

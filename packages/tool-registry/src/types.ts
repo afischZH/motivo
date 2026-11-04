@@ -493,7 +493,7 @@ export interface TileRenderer<P> {
 // ---------------------------------------------------------------------------
 
 /** Language of a text output, for syntax highlighting and the file type. */
-export type CodeLanguage = "css" | "html" | "js" | "json" | "text";
+export type CodeLanguage = "css" | "html" | "js" | "json" | "text" | "glsl";
 
 /**
  * A tool-specific text output beyond the generic formats, shown in the
@@ -504,6 +504,8 @@ export interface ExtraExport<P> {
   id: string;
   /** i18n key of the label in the export dialog. */
   labelKey: string;
+  /** i18n key of a one-line hint shown under the code (e.g. how to use an embed). */
+  descriptionKey?: string;
   language: CodeLanguage;
   /** Pure and deterministic, with the same inputs as the tool's `render`. */
   render(params: P, ctx: RenderContext): string;
