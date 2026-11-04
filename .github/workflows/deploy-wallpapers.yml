@@ -90,7 +90,18 @@ jobs:
         run: |
           # Preview aliases allow lowercase letters, digits and dashes only.
           alias=$(echo "$BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g' | cut -c1-40)
-          pnpm exec opennextjs-cloudflare upload --preview-alias "$alias" --message "PR #${{ github.event.pull_request.number }} ${HEAD_SHA::7}" 2>&1 | tee upload.log
+          set -o pipefail
+          upload() {
+            pnpm exec opennextjs-cloudflare upload --preview-alias "$alias" --message "PR #${{ github.event.pull_request.number }} ${HEAD_SHA::7}" 2>&1 | tee upload.log
+          }
+          # Versions can only be uploaded to an existing Worker. The very first
+          # run creates wallpapers-web with a normal deploy (the app is noindex
+          # until launch), then uploads the preview as usual.
+          if ! upload; then
+            grep -q "Worker that does not yet exist" upload.log || exit 1
+            pnpm exec opennextjs-cloudflare deploy
+            upload
+          fi
           url=$(grep -oE "https://${alias}-[a-z0-9.-]+\.workers\.dev" upload.log | head -1)
           [ -z "$url" ] && url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' upload.log | tail -1)
           echo "url=$url" >> "$GITHUB_OUTPUT"
