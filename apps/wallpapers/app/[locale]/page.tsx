@@ -21,18 +21,18 @@ export default async function Home({ params }: HomeProps) {
   const labels = await editorLabels(locale);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+    <div className="mx-auto max-w-6xl px-4 py-5 sm:py-8">
       <section aria-labelledby="home-title" className="max-w-2xl">
         <h1
           id="home-title"
-          className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
+          className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl lg:text-4xl"
         >
           {t("title")}
         </h1>
-        <p className="text-muted mt-4 text-lg text-pretty">{t("lead")}</p>
+        <p className="text-muted mt-2 text-[15px] text-pretty sm:text-lg">{t("lead")}</p>
       </section>
 
-      <section aria-label={e("heading")} className="mt-10">
+      <section aria-label={e("heading")} className="mt-5 sm:mt-6">
         <EditorLoader locale={locale} labels={labels} loading={e("loading")} />
       </section>
 
@@ -51,12 +51,12 @@ export default async function Home({ params }: HomeProps) {
               <h3 id={`group-${group}`} className="font-medium">
                 {t(`groups.${group}`)}
               </h3>
-              <ul className="mt-3 space-y-1.5 text-sm">
+              <ul className="mt-2 text-sm lg:mt-3 lg:space-y-1.5">
                 {devicesInGroup(group).map((device) => (
-                  <li key={device.id} className="flex justify-between gap-3">
+                  <li key={device.id} className="flex items-center justify-between gap-3">
                     <Link
                       href={devicePath(locale, device.id)}
-                      className="hover:text-accent-text underline-offset-4 hover:underline"
+                      className="hover:text-accent-text inline-flex min-h-11 items-center underline-offset-4 hover:underline lg:min-h-0"
                     >
                       {device.name}
                     </Link>

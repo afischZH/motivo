@@ -69,3 +69,36 @@ export function presetsFor<P>(
 
 export const svgOpen = (w: number, h: number): string =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+
+/** Lighter (amount > 0, towards white) or darker (amount < 0, towards black), in OKLab. */
+export function shade(hex: string, amount: number): string {
+  return amount >= 0
+    ? mixHex(hex, "#ffffff", Math.min(1, amount), "oklab")
+    : mixHex(hex, "#000000", Math.min(1, -amount), "oklab");
+}
+
+/** Smooth path through points (Catmull-Rom as cubic Béziers), open. */
+export function smoothPath(points: readonly (readonly [number, number])[]): string {
+  const first = points[0];
+  if (!first) return "";
+  let d = `M${n(first[0])} ${n(first[1])}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i - 1] ?? points[i] ?? first;
+    const p1 = points[i] ?? first;
+    const p2 = points[i + 1] ?? p1;
+    const p3 = points[i + 2] ?? p2;
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += `C${n(c1x)} ${n(c1y)} ${n(c2x)} ${n(c2y)} ${n(p2[0])} ${n(p2[1])}`;
+  }
+  return d;
+}
+
+/** Relative brightness 0..1 of a `#rrggbb` colour (sRGB average, good enough to pick a blend mode). */
+export function luminance(hex: string): number {
+  const v = Number.parseInt(hex.slice(1, 7), 16);
+  if (!Number.isFinite(v)) return 0;
+  return (0.2126 * ((v >> 16) & 255) + 0.7152 * ((v >> 8) & 255) + 0.0722 * (v & 255)) / 255;
+}
