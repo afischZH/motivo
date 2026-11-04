@@ -53,7 +53,23 @@
       "statusBar": "Status bar",
       "menuBar": "Menu bar",
       "dock": "Dock"
-    }
+    },
+    "finish": "Finish",
+    "grain": "Grain",
+    "dim": "Darken",
+    "calmClock": "Calm area behind the clock",
+    "sets": "Sets",
+    "downloadPair": "Light and dark version (ZIP)",
+    "downloadSet": "Every size for {group} (ZIP)",
+    "progress": "Exporting {done} of {total}…"
+  },
+  "Device": {
+    "title": "Wallpapers for {device}",
+    "lead": "Made for the {size} px screen of the {device}, with the clock and dock areas in view. Press space for a new look.",
+    "metaTitle": "{device} wallpaper generator ({size} px)",
+    "metaDescription": "Free wallpapers for the {device} in its native {size} px. Pick a style, press space for a new look, download PNG or a light and dark pair.",
+    "otherDevices": "Other {group}",
+    "allDevices": "All devices"
   },
   "Tools": {
     "mesh-gradient": {

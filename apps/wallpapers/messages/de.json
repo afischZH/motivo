@@ -53,7 +53,23 @@
       "statusBar": "Statusleiste",
       "menuBar": "Menüleiste",
       "dock": "Dock"
-    }
+    },
+    "finish": "Feinschliff",
+    "grain": "Körnung",
+    "dim": "Abdunkeln",
+    "calmClock": "Ruhige Fläche hinter der Uhr",
+    "sets": "Sets",
+    "downloadPair": "Helle und dunkle Version (ZIP)",
+    "downloadSet": "Alle Grössen für {group} (ZIP)",
+    "progress": "Exportiere {done} von {total}…"
+  },
+  "Device": {
+    "title": "Hintergrundbilder für {device}",
+    "lead": "Gemacht für {device} mit {size} px, mit Uhr und Dock im Blick. Drücke die Leertaste für einen neuen Look.",
+    "metaTitle": "Hintergrundbild-Generator für {device} ({size} px)",
+    "metaDescription": "Gratis Hintergrundbilder für {device} in der nativen Grösse von {size} px. Stil wählen, Leertaste für einen neuen Look, PNG oder helles und dunkles Paar herunterladen.",
+    "otherDevices": "Weitere {group}",
+    "allDevices": "Alle Geräte"
   },
   "Tools": {
     "mesh-gradient": {
