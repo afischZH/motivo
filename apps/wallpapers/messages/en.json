@@ -65,7 +65,11 @@
     "styleGroups": {
       "soft": "Soft",
       "graphic": "Graphic"
-    }
+    },
+    "tapHint": "Tap the wallpaper for a new look",
+    "clickHint": "Click the wallpaper or press Space for a new look",
+    "downloadAction": "Download",
+    "close": "Close"
   },
   "Device": {
     "title": "Wallpapers for {device}",

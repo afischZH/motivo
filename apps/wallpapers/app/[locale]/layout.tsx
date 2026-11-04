@@ -42,9 +42,15 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         >
           {t("skipLink")}
         </a>
-        <header className="border-border border-b">
+        <header className="border-border/60 bg-background/80 sticky top-0 z-30 border-b backdrop-blur-xl">
           <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
-            <span className="font-semibold tracking-tight">{t("brand")}</span>
+            <span className="flex items-center gap-2 font-semibold tracking-tight">
+              <span
+                aria-hidden="true"
+                className="size-6 rounded-lg bg-[conic-gradient(from_200deg,#7c6cff,#ff7ab6,#ffc36b,#5ee0c1,#7c6cff)] shadow-sm"
+              />
+              {t("brand")}
+            </span>
             <span className="bg-accent-soft text-accent-text rounded-full px-2.5 py-0.5 text-xs font-medium">
               {t("badge")}
             </span>
@@ -55,7 +61,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
                   href={`/${code}`}
                   hrefLang={code}
                   aria-current={code === locale ? "page" : undefined}
-                  className="text-muted hover:text-foreground aria-[current=page]:text-foreground rounded-full px-2.5 py-1 uppercase aria-[current=page]:font-semibold"
+                  className="text-muted hover:text-foreground aria-[current=page]:text-foreground inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-2.5 uppercase aria-[current=page]:font-semibold"
                 >
                   {code}
                 </Link>

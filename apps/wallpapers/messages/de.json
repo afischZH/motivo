@@ -65,7 +65,11 @@
     "styleGroups": {
       "soft": "Weich",
       "graphic": "Grafisch"
-    }
+    },
+    "tapHint": "Tippe aufs Bild für einen neuen Look",
+    "clickHint": "Klicke aufs Bild oder drücke die Leertaste für einen neuen Look",
+    "downloadAction": "Herunterladen",
+    "close": "Schliessen"
   },
   "Device": {
     "title": "Hintergrundbilder für {device}",
