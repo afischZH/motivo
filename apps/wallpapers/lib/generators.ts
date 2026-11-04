@@ -1,13 +1,19 @@
 import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 
+import { registerWallpaperStyles } from "./styles";
+
+registerWallpaperStyles();
+
 /**
- * Musterli generators offered as wallpaper styles (docs/WALLPAPERS.md), in
+ * Musterli generators plus the app's own styles (`lib/styles`) offered as wallpaper styles (docs/WALLPAPERS.md), in
  * two groups for the style picker. All render SVG, so preview and export
  * share one render path and the raster export scales to any device size.
  * WebGL tools (shader gradient) follow once the shader worker is wired in.
  */
 export const WALLPAPER_STYLE_GROUPS = {
   soft: [
+    "layered-hills",
+    "planet",
     "mesh-gradient",
     "blurry-gradient",
     "holographic-gradient",
@@ -17,6 +23,10 @@ export const WALLPAPER_STYLE_GROUPS = {
     "starry-sky",
   ],
   graphic: [
+    "retro-arcs",
+    "pixel-gradient",
+    "dot-gradient",
+    "paper-folds",
     "bauhaus-pattern",
     "geometric-patterns",
     "neon-shapes",

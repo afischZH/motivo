@@ -308,6 +308,73 @@
         "daybreak": "Daybreak",
         "cosmic": "Cosmic"
       }
+    },
+    "layered-hills": {
+      "name": "Layered hills",
+      "presets": {
+        "peach": "Peach",
+        "fjord": "Fjord",
+        "dusk": "Dusk",
+        "forest": "Forest",
+        "desert": "Desert",
+        "night": "Night",
+        "lavender": "Lavender"
+      }
+    },
+    "retro-arcs": {
+      "name": "Retro arcs",
+      "presets": {
+        "seventies": "Seventies",
+        "sorbet": "Sorbet",
+        "midnight": "Midnight",
+        "earth": "Earth",
+        "mono": "Mono",
+        "ocean": "Ocean"
+      }
+    },
+    "pixel-gradient": {
+      "name": "Pixel gradient",
+      "presets": {
+        "sunset": "Sunset",
+        "lagoon": "Lagoon",
+        "mint": "Mint",
+        "ember": "Ember",
+        "candy": "Candy",
+        "mono": "Mono"
+      }
+    },
+    "dot-gradient": {
+      "name": "Dot gradient",
+      "presets": {
+        "electric": "Electric",
+        "sun": "Sun",
+        "ink": "Ink",
+        "aqua": "Aqua",
+        "pop": "Pop",
+        "silver": "Silver"
+      }
+    },
+    "paper-folds": {
+      "name": "Paper folds",
+      "presets": {
+        "terracotta": "Terracotta",
+        "arctic": "Arctic",
+        "neon": "Neon",
+        "sand": "Sand",
+        "graphite": "Graphite",
+        "sunrise": "Sunrise"
+      }
+    },
+    "planet": {
+      "name": "Planet",
+      "presets": {
+        "saturn": "Ringed",
+        "ice": "Ice giant",
+        "mars": "Red planet",
+        "emerald": "Emerald",
+        "dawn": "Dawn",
+        "void": "Void"
+      }
     }
   }
 }
