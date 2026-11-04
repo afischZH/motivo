@@ -15,6 +15,10 @@
   },
   "dependencies": {
     "@musterli/devices": "workspace:*",
+    "@musterli/editor-ui": "workspace:*",
+    "@musterli/engine": "workspace:*",
+    "@musterli/exporters": "workspace:*",
+    "@musterli/tool-registry": "workspace:*",
     "@opennextjs/cloudflare": "^1.20.13",
     "next": "^16.4.3",
     "next-intl": "4.14.9",

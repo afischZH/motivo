@@ -12,12 +12,7 @@
   },
   "Home": {
     "title": "Wallpapers that fit your exact screen",
-    "lead": "Pick your device, press space for a new look and download a wallpaper in its native size. The generator is on its way; below is the device list it will use.",
-    "screenHeading": "Your screen",
-    "detecting": "Detecting your screen…",
-    "matched": "Device",
-    "unknown": "Not in the list yet, the custom size will fit.",
-    "nativeSize": "Native size",
+    "lead": "Pick your device, press space for a new look and download a wallpaper in its native size. Free, in your browser, no sign-up.",
     "catalogHeading": "Supported devices",
     "catalogLead": "{count} devices with their native pixel sizes.",
     "groups": {
@@ -32,5 +27,140 @@
   "NotFound": {
     "title": "Page not found",
     "back": "Back to the start page"
+  },
+  "Editor": {
+    "heading": "Make your wallpaper",
+    "loading": "Loading the generator…",
+    "device": "Device",
+    "yourScreen": "Your screen ({size})",
+    "customSize": "Custom size",
+    "width": "Width",
+    "height": "Height",
+    "style": "Style",
+    "look": "Look",
+    "newLook": "New look",
+    "newLookHint": "Space",
+    "safeZones": "Show clock and dock areas",
+    "download": "Download {format}",
+    "exporting": "Exporting…",
+    "exportFailed": "The export did not work. Try again or pick a smaller size.",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "previewAlt": "Wallpaper preview, {size} pixels",
+    "sizeNote": "Exported at {size} px, the native size of this screen.",
+    "zones": {
+      "clock": "Clock and widgets",
+      "statusBar": "Status bar",
+      "menuBar": "Menu bar",
+      "dock": "Dock"
+    }
+  },
+  "Tools": {
+    "mesh-gradient": {
+      "name": "Mesh gradient",
+      "presets": {
+        "lagoon": "Lagoon",
+        "ember": "Ember",
+        "meadow": "Meadow",
+        "nebula": "Nebula",
+        "citrus": "Citrus",
+        "dusk": "Dusk",
+        "ice": "Ice",
+        "peach": "Peach",
+        "aurora": "Aurora",
+        "candy": "Cotton candy",
+        "ocean": "Ocean"
+      }
+    },
+    "blurry-gradient": {
+      "name": "Soft blur",
+      "presets": {
+        "midnight": "Midnight",
+        "sorbet": "Sorbet",
+        "ocean": "Ocean",
+        "sunset": "Sunset",
+        "forest": "Forest",
+        "mono": "Mono",
+        "neon": "Neon",
+        "lavender": "Lavender",
+        "aurora": "Aurora",
+        "peach": "Peach",
+        "lagoon": "Lagoon"
+      }
+    },
+    "holographic-gradient": {
+      "name": "Holographic",
+      "presets": {
+        "foil": "Foil",
+        "pearl": "Pearl",
+        "oil": "Oil slick",
+        "chrome": "Chrome",
+        "sticker": "Holo sticker",
+        "opal": "Opal",
+        "sunset": "Sunset",
+        "aurora": "Aurora"
+      }
+    },
+    "blob-composition": {
+      "name": "Blobs",
+      "presets": {
+        "corners": "Corners",
+        "sunrise": "Sunrise",
+        "mint": "Mint",
+        "outline": "Outlines",
+        "dusk": "Dusk",
+        "paper": "Paper",
+        "pop": "Pop"
+      }
+    },
+    "svg-waves": {
+      "name": "Waves",
+      "presets": {
+        "tide": "Tide",
+        "dunes": "Dunes",
+        "aurora": "Aurora",
+        "shallows": "Shallows",
+        "ridges": "Ridges",
+        "storm": "Storm",
+        "ribbon": "Ribbon"
+      }
+    },
+    "low-poly": {
+      "name": "Low poly",
+      "presets": {
+        "crystal": "Crystal",
+        "ember": "Ember",
+        "glacier": "Glacier",
+        "wireframe": "Wireframe",
+        "mosaic": "Mosaic",
+        "stained-glass": "Stained glass",
+        "cells": "Cells",
+        "dusk": "Dusk"
+      }
+    },
+    "topo-lines": {
+      "name": "Topographic",
+      "presets": {
+        "survey": "Survey",
+        "lagoon": "Lagoon",
+        "night-map": "Night map",
+        "terraces": "Terraces",
+        "marble": "Marble",
+        "alpine": "Alpine",
+        "candy": "Cotton candy"
+      }
+    },
+    "flow-field": {
+      "name": "Flow lines",
+      "presets": {
+        "current": "Current",
+        "silk": "Silk",
+        "whirlpool": "Whirlpool",
+        "breeze": "Breeze",
+        "ink": "Ink",
+        "meadow": "Meadow",
+        "dune": "Desert wind"
+      }
+    }
   }
 }

@@ -12,12 +12,7 @@
   },
   "Home": {
     "title": "Hintergrundbilder, die genau auf deinen Bildschirm passen",
-    "lead": "Wähle dein Gerät, drücke die Leertaste für einen neuen Look und lade das Bild in der nativen Grösse herunter. Der Generator ist unterwegs; unten siehst du die Geräteliste, die er verwenden wird.",
-    "screenHeading": "Dein Bildschirm",
-    "detecting": "Bildschirm wird erkannt…",
-    "matched": "Gerät",
-    "unknown": "Noch nicht in der Liste, die eigene Grösse passt trotzdem.",
-    "nativeSize": "Native Grösse",
+    "lead": "Wähle dein Gerät, drücke die Leertaste für einen neuen Look und lade das Bild in der nativen Grösse herunter. Gratis, im Browser, ohne Anmeldung.",
     "catalogHeading": "Unterstützte Geräte",
     "catalogLead": "{count} Geräte mit ihrer nativen Pixelgrösse.",
     "groups": {
@@ -32,5 +27,140 @@
   "NotFound": {
     "title": "Seite nicht gefunden",
     "back": "Zurück zur Startseite"
+  },
+  "Editor": {
+    "heading": "Gestalte dein Hintergrundbild",
+    "loading": "Generator wird geladen…",
+    "device": "Gerät",
+    "yourScreen": "Dein Bildschirm ({size})",
+    "customSize": "Eigene Grösse",
+    "width": "Breite",
+    "height": "Höhe",
+    "style": "Stil",
+    "look": "Look",
+    "newLook": "Neuer Look",
+    "newLookHint": "Leertaste",
+    "safeZones": "Bereiche für Uhr und Dock zeigen",
+    "download": "{format} herunterladen",
+    "exporting": "Wird exportiert…",
+    "exportFailed": "Der Export hat nicht geklappt. Versuche es nochmals oder wähle eine kleinere Grösse.",
+    "copyLink": "Link kopieren",
+    "linkCopied": "Link kopiert",
+    "previewAlt": "Vorschau des Hintergrundbilds, {size} Pixel",
+    "sizeNote": "Export in {size} px, der nativen Grösse dieses Bildschirms.",
+    "zones": {
+      "clock": "Uhr und Widgets",
+      "statusBar": "Statusleiste",
+      "menuBar": "Menüleiste",
+      "dock": "Dock"
+    }
+  },
+  "Tools": {
+    "mesh-gradient": {
+      "name": "Mesh-Verlauf",
+      "presets": {
+        "lagoon": "Lagune",
+        "ember": "Glut",
+        "meadow": "Wiese",
+        "nebula": "Nebel",
+        "citrus": "Zitrus",
+        "dusk": "Dämmerung",
+        "ice": "Eis",
+        "peach": "Pfirsich",
+        "aurora": "Polarlicht",
+        "candy": "Zuckerwatte",
+        "ocean": "Ozean"
+      }
+    },
+    "blurry-gradient": {
+      "name": "Weicher Verlauf",
+      "presets": {
+        "midnight": "Mitternacht",
+        "sorbet": "Sorbet",
+        "ocean": "Ozean",
+        "sunset": "Sonnenuntergang",
+        "forest": "Wald",
+        "mono": "Mono",
+        "neon": "Neon",
+        "lavender": "Lavendel",
+        "aurora": "Polarlicht",
+        "peach": "Pfirsich",
+        "lagoon": "Lagune"
+      }
+    },
+    "holographic-gradient": {
+      "name": "Holografie",
+      "presets": {
+        "foil": "Folie",
+        "pearl": "Perlmutt",
+        "oil": "Ölfilm",
+        "chrome": "Chrom",
+        "sticker": "Holo-Sticker",
+        "opal": "Opal",
+        "sunset": "Abendrot",
+        "aurora": "Polarlicht"
+      }
+    },
+    "blob-composition": {
+      "name": "Blobs",
+      "presets": {
+        "corners": "Ecken",
+        "sunrise": "Sonnenaufgang",
+        "mint": "Minze",
+        "outline": "Konturen",
+        "dusk": "Dämmerung",
+        "paper": "Papier",
+        "pop": "Pop"
+      }
+    },
+    "svg-waves": {
+      "name": "Wellen",
+      "presets": {
+        "tide": "Flut",
+        "dunes": "Dünen",
+        "aurora": "Polarlicht",
+        "shallows": "Untiefe",
+        "ridges": "Bergkämme",
+        "storm": "Sturm",
+        "ribbon": "Band"
+      }
+    },
+    "low-poly": {
+      "name": "Low Poly",
+      "presets": {
+        "crystal": "Kristall",
+        "ember": "Glut",
+        "glacier": "Gletscher",
+        "wireframe": "Drahtgitter",
+        "mosaic": "Mosaik",
+        "stained-glass": "Kirchenfenster",
+        "cells": "Zellen",
+        "dusk": "Dämmerung"
+      }
+    },
+    "topo-lines": {
+      "name": "Höhenlinien",
+      "presets": {
+        "survey": "Vermessung",
+        "lagoon": "Lagune",
+        "night-map": "Nachtkarte",
+        "terraces": "Terrassen",
+        "marble": "Marmor",
+        "alpine": "Hochalpin",
+        "candy": "Zuckerwatte"
+      }
+    },
+    "flow-field": {
+      "name": "Fliesslinien",
+      "presets": {
+        "current": "Strömung",
+        "silk": "Seide",
+        "whirlpool": "Strudel",
+        "breeze": "Brise",
+        "ink": "Tusche",
+        "meadow": "Wiese",
+        "dune": "Wüstenwind"
+      }
+    }
   }
 }

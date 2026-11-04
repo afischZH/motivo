@@ -222,11 +222,12 @@ export const DEVICES: readonly Device[] = [
       pixelRatio: 2,
       year: 2022,
     },
-    { id: "monitor-4k", name: "4K UHD", width: 3840, height: 2160, pixelRatio: 1.5, year: 2015 },
+    // 4K is usually scaled 150 % (Windows) or 200 % (macOS); 2 keeps lines as thick as on screen.
+    { id: "monitor-4k", name: "4K UHD", width: 3840, height: 2160, pixelRatio: 2, year: 2015 },
     { id: "monitor-qhd", name: "QHD 1440p", width: 2560, height: 1440, pixelRatio: 1, year: 2015 },
     {
       id: "monitor-wuxga",
-      name: "WUXGA 1920 × 1200",
+      name: "WUXGA 16:10",
       width: 1920,
       height: 1200,
       pixelRatio: 1,
@@ -260,7 +261,7 @@ export const DEVICES: readonly Device[] = [
     },
     {
       id: "ultrawide-uwqhd",
-      name: "Ultrawide 3440 × 1440",
+      name: "Ultrawide 21:9 QHD",
       width: 3440,
       height: 1440,
       pixelRatio: 1,
@@ -268,7 +269,7 @@ export const DEVICES: readonly Device[] = [
     },
     {
       id: "ultrawide-uwfhd",
-      name: "Ultrawide 2560 × 1080",
+      name: "Ultrawide 21:9 Full HD",
       width: 2560,
       height: 1080,
       pixelRatio: 1,
