@@ -2,14 +2,18 @@ import { registry, type AnyToolDefinition } from "@musterli/tool-registry";
 
 import { auroraRibbonsTool } from "./aurora-ribbons";
 import { dotGradientTool } from "./dot-gradient";
+import { dunesTool } from "./dunes";
 import { glassOrbsTool } from "./glass-orbs";
+import { islandHaloTool } from "./island-halo";
 import { isoCubesTool } from "./iso-cubes";
 import { moireTool } from "./moire";
 import { opArtTool } from "./op-art";
 import { ridgelinesTool } from "./ridgelines";
+import { silkFoldsTool } from "./silk-folds";
 import { sunburstTool } from "./sunburst";
 import { swissPosterTool } from "./swiss-poster";
 import { layeredHillsTool } from "./layered-hills";
+import { liquidGlassTool } from "./liquid-glass";
 import { paperFoldsTool } from "./paper-folds";
 import { pixelGradientTool } from "./pixel-gradient";
 import { planetTool } from "./planet";
@@ -31,6 +35,10 @@ export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
   glassOrbsTool,
   opArtTool,
   ridgelinesTool,
+  liquidGlassTool,
+  silkFoldsTool,
+  dunesTool,
+  islandHaloTool,
 ];
 
 /**

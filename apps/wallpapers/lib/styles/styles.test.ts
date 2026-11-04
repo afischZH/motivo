@@ -6,6 +6,9 @@ import { registerWallpaperStyles, WALLPAPER_ONLY_TOOLS } from ".";
 
 registerWallpaperStyles();
 
+/** Embedded images are base64, which can spell "NaN" by chance. */
+const withoutData = (svg: string) => svg.replace(/base64,[A-Za-z0-9+/=]+/g, "base64,");
+
 const SIZES: [{ width: number; height: number }, ...{ width: number; height: number }[]] = [
   { width: 402, height: 874 }, // iPhone design size
   { width: 3008, height: 1692 }, // 6K design size
@@ -35,7 +38,7 @@ describe.each(WALLPAPER_ONLY_TOOLS.map((tool) => [tool.id, tool] as const))("%s"
     if (tool.render.kind !== "svg") throw new Error("expected svg");
     for (const preset of tool.presets) {
       const svg = tool.render.render(preset.params, createRenderContext(7, SIZES[0]));
-      expect(svg).not.toMatch(/NaN|undefined|Infinity/);
+      expect(withoutData(svg)).not.toMatch(/NaN|undefined|Infinity/);
     }
   });
 
@@ -47,7 +50,7 @@ describe.each(WALLPAPER_ONLY_TOOLS.map((tool) => [tool.id, tool] as const))("%s"
     ).params;
     const svg = tool.render.render(params, createRenderContext(7, size));
     expect(svg).toContain(`viewBox="0 0 ${size.width} ${size.height}"`);
-    expect(svg).not.toMatch(/NaN|undefined|Infinity/);
+    expect(withoutData(svg)).not.toMatch(/NaN|undefined|Infinity/);
     // Keeps the preview fast and the export memory small.
     expect(svg.length).toBeLessThan(2_500_000);
     expect(tool.render.render(params, createRenderContext(7, size))).toBe(svg);

@@ -467,6 +467,50 @@
         "dense": "Dense",
         "bold": "Bold"
       }
+    },
+    "liquid-glass": {
+      "name": "Liquid glass",
+      "presets": {
+        "prism": "Prism",
+        "daylight": "Daylight",
+        "sunset": "Sunset",
+        "lagoon": "Lagoon",
+        "mono": "Mono",
+        "lavender": "Lavender"
+      }
+    },
+    "silk-folds": {
+      "name": "Silk",
+      "presets": {
+        "rose": "Rose",
+        "champagne": "Champagne",
+        "emerald": "Emerald",
+        "midnight": "Midnight",
+        "pearl": "Pearl",
+        "ink": "Ink"
+      }
+    },
+    "dunes": {
+      "name": "Dunes",
+      "presets": {
+        "sahara": "Sahara",
+        "dusk": "Dusk",
+        "night": "Night",
+        "gypsum": "White sands",
+        "mars": "Mars",
+        "noon": "Noon"
+      }
+    },
+    "island-halo": {
+      "name": "Island halo",
+      "presets": {
+        "corona": "Corona",
+        "ripples": "Ripples",
+        "spotlight": "Spotlight",
+        "eclipse": "Eclipse",
+        "sonar": "Sonar",
+        "aurora-beam": "Aurora beam"
+      }
     }
   }
 }
