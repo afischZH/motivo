@@ -28,6 +28,17 @@ import { halftoneFadeTool } from "./halftone-fade";
 import { bitDitherTool } from "./bit-dither";
 import { crtTool } from "./crt";
 import { bentoTool } from "./bento";
+import { clayShapesTool } from "./clay-shapes";
+import { chromeFlowTool } from "./chrome-flow";
+import { puffyShapesTool } from "./puffy-shapes";
+import { botanicalShadowsTool } from "./botanical-shadows";
+import { lineArtTool } from "./line-art";
+import { risographTool } from "./risograph";
+import { bigTypeTool } from "./big-type";
+import { midCenturyTool } from "./mid-century";
+import { artDecoTool } from "./art-deco";
+import { y2kTool } from "./y2k";
+import { vaporwaveTool } from "./vaporwave";
 
 /** Styles made for this app only; Musterli does not have them. */
 export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
@@ -59,6 +70,17 @@ export const WALLPAPER_ONLY_TOOLS: readonly AnyToolDefinition[] = [
   bitDitherTool,
   crtTool,
   bentoTool,
+  clayShapesTool,
+  chromeFlowTool,
+  puffyShapesTool,
+  botanicalShadowsTool,
+  lineArtTool,
+  risographTool,
+  bigTypeTool,
+  midCenturyTool,
+  artDecoTool,
+  y2kTool,
+  vaporwaveTool,
 ];
 
 /**

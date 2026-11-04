@@ -621,6 +621,127 @@
         "gameboy": "Handkonsole",
         "fine": "Fein"
       }
+    },
+    "clay-shapes": {
+      "name": "Knetformen",
+      "presets": {
+        "candy": "Bonbon",
+        "peach": "Pfirsich",
+        "mint": "Minze",
+        "night": "Nacht",
+        "sand": "Sand",
+        "toybox": "Spielkiste"
+      }
+    },
+    "chrome-flow": {
+      "name": "Chromfluss",
+      "presets": {
+        "mercury": "Quecksilber",
+        "sunset": "Abendrot",
+        "ice": "Eis",
+        "gold": "Gold",
+        "holo": "Holo",
+        "single": "Einzeln"
+      }
+    },
+    "puffy-shapes": {
+      "name": "Aufgeblasen",
+      "presets": {
+        "bubblegum": "Kaugummi",
+        "sky": "Himmel",
+        "lime": "Limette",
+        "love": "Liebe",
+        "sunny": "Sonnig",
+        "party": "Party"
+      }
+    },
+    "botanical-shadows": {
+      "name": "Blattschatten",
+      "presets": {
+        "afternoon": "Nachmittag",
+        "palm": "Palme",
+        "sage": "Salbei",
+        "terracotta": "Terrakotta",
+        "dusk": "Dämmerung",
+        "linen": "Leinen"
+      }
+    },
+    "line-art": {
+      "name": "Linienkunst",
+      "presets": {
+        "gallery": "Galerie",
+        "noir": "Noir",
+        "terracotta": "Terrakotta",
+        "blue": "Blau",
+        "busy": "Lebhaft",
+        "pure": "Pur"
+      }
+    },
+    "risograph": {
+      "name": "Risografie",
+      "presets": {
+        "classic": "Klassisch",
+        "sunrise": "Sonnenaufgang",
+        "mint": "Minze",
+        "night": "Nacht",
+        "blueprint": "Blaupause",
+        "bold": "Kräftig"
+      }
+    },
+    "big-type": {
+      "name": "Grosse Schrift",
+      "presets": {
+        "year": "Jahr",
+        "hello": "Hallo",
+        "calm": "Ruhe",
+        "focus": "Fokus",
+        "code": "Code",
+        "initial": "Initiale"
+      }
+    },
+    "mid-century": {
+      "name": "Fünfzigerjahre",
+      "presets": {
+        "atomic": "Atomar",
+        "diner": "Diner",
+        "lounge": "Lounge",
+        "olive": "Olive",
+        "sparse": "Luftig",
+        "fabric": "Stoff"
+      }
+    },
+    "art-deco": {
+      "name": "Art déco",
+      "presets": {
+        "gatsby": "Gatsby",
+        "scales": "Schuppen",
+        "emerald": "Smaragd",
+        "ivory": "Elfenbein",
+        "ruby": "Rubin",
+        "midnight": "Mitternacht"
+      }
+    },
+    "y2k": {
+      "name": "Y2K",
+      "presets": {
+        "millennium": "Millennium",
+        "bubblegum": "Kaugummi",
+        "cyber": "Cyber",
+        "silver": "Silber",
+        "lime": "Limette",
+        "galaxy": "Galaxie"
+      }
+    },
+    "vaporwave": {
+      "name": "Vaporwave",
+      "presets": {
+        "aesthetic": "Ästhetik",
+        "mall": "Einkaufszentrum",
+        "night": "Nacht",
+        "sorbet": "Sorbet",
+        "mint": "Minze",
+        "sunset": "Abendrot"
+      }
     }
   }
 }

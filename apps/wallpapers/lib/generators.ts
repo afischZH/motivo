@@ -12,6 +12,11 @@ registerWallpaperStyles();
  */
 export const WALLPAPER_STYLE_GROUPS = {
   soft: [
+    "line-art",
+    "botanical-shadows",
+    "puffy-shapes",
+    "chrome-flow",
+    "clay-shapes",
     "japandi",
     "sky-gradient",
     "bokeh",
@@ -33,6 +38,12 @@ export const WALLPAPER_STYLE_GROUPS = {
     "starry-sky",
   ],
   graphic: [
+    "vaporwave",
+    "y2k",
+    "art-deco",
+    "mid-century",
+    "big-type",
+    "risograph",
     "bento",
     "crt",
     "bit-dither",

@@ -621,6 +621,127 @@
         "gameboy": "Handheld",
         "fine": "Fine"
       }
+    },
+    "clay-shapes": {
+      "name": "Clay shapes",
+      "presets": {
+        "candy": "Candy",
+        "peach": "Peach",
+        "mint": "Mint",
+        "night": "Night",
+        "sand": "Sand",
+        "toybox": "Toy box"
+      }
+    },
+    "chrome-flow": {
+      "name": "Chrome flow",
+      "presets": {
+        "mercury": "Mercury",
+        "sunset": "Sunset",
+        "ice": "Ice",
+        "gold": "Gold",
+        "holo": "Holo",
+        "single": "Single"
+      }
+    },
+    "puffy-shapes": {
+      "name": "Puffy shapes",
+      "presets": {
+        "bubblegum": "Bubblegum",
+        "sky": "Sky",
+        "lime": "Lime",
+        "love": "Love",
+        "sunny": "Sunny",
+        "party": "Party"
+      }
+    },
+    "botanical-shadows": {
+      "name": "Leaf shadows",
+      "presets": {
+        "afternoon": "Afternoon",
+        "palm": "Palm",
+        "sage": "Sage",
+        "terracotta": "Terracotta",
+        "dusk": "Dusk",
+        "linen": "Linen"
+      }
+    },
+    "line-art": {
+      "name": "Line art",
+      "presets": {
+        "gallery": "Gallery",
+        "noir": "Noir",
+        "terracotta": "Terracotta",
+        "blue": "Blue",
+        "busy": "Busy",
+        "pure": "Pure"
+      }
+    },
+    "risograph": {
+      "name": "Risograph",
+      "presets": {
+        "classic": "Classic",
+        "sunrise": "Sunrise",
+        "mint": "Mint",
+        "night": "Night",
+        "blueprint": "Blueprint",
+        "bold": "Bold"
+      }
+    },
+    "big-type": {
+      "name": "Big type",
+      "presets": {
+        "year": "Year",
+        "hello": "Hello",
+        "calm": "Calm",
+        "focus": "Focus",
+        "code": "Code",
+        "initial": "Initial"
+      }
+    },
+    "mid-century": {
+      "name": "Mid-century",
+      "presets": {
+        "atomic": "Atomic",
+        "diner": "Diner",
+        "lounge": "Lounge",
+        "olive": "Olive",
+        "sparse": "Sparse",
+        "fabric": "Fabric"
+      }
+    },
+    "art-deco": {
+      "name": "Art Deco",
+      "presets": {
+        "gatsby": "Gatsby",
+        "scales": "Scales",
+        "emerald": "Emerald",
+        "ivory": "Ivory",
+        "ruby": "Ruby",
+        "midnight": "Midnight"
+      }
+    },
+    "y2k": {
+      "name": "Y2K",
+      "presets": {
+        "millennium": "Millennium",
+        "bubblegum": "Bubblegum",
+        "cyber": "Cyber",
+        "silver": "Silver",
+        "lime": "Lime",
+        "galaxy": "Galaxy"
+      }
+    },
+    "vaporwave": {
+      "name": "Vaporwave",
+      "presets": {
+        "aesthetic": "Aesthetic",
+        "mall": "Mall",
+        "night": "Night",
+        "sorbet": "Sorbet",
+        "mint": "Mint",
+        "sunset": "Sunset"
+      }
     }
   }
 }
