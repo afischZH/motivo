@@ -7133,6 +7133,428 @@
           }
         }
       }
+    },
+    "dot-wave": {
+      "name": "Punktwellen",
+      "description": "Ein Raster aus Punkten, Quadraten oder Strichen, die mit einer Welle oder einem Rauschfeld wachsen und schrumpfen. Animiert per Shader auf der Grafikkarte, als PNG bis 8K, nahtlose GIF-Schleife oder Live-Code für deine Website.",
+      "params": {
+        "field": {
+          "label": "Feld",
+          "options": {
+            "noise": "Rauschen",
+            "waves": "Wellen",
+            "ripple": "Kreiswellen"
+          }
+        },
+        "shape": {
+          "label": "Form",
+          "options": {
+            "dot": "Punkt",
+            "square": "Quadrat",
+            "dash": "Strich",
+            "cross": "Kreuz",
+            "ring": "Ring"
+          }
+        },
+        "spacing": {
+          "label": "Abstand"
+        },
+        "minSize": {
+          "label": "Kleinste Grösse"
+        },
+        "maxSize": {
+          "label": "Grösste Grösse"
+        },
+        "frequency": {
+          "label": "Frequenz"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "fade": {
+          "label": "Randverlauf"
+        },
+        "time": {
+          "label": "Zeitpunkt",
+          "description": "Stelle in der Schleife. Jeder Export zeigt genau diesen Zeitpunkt, die GIF-Schleife beginnt hier."
+        },
+        "speed": {
+          "label": "Tempo",
+          "description": "Wie schnell sich die Vorschau bewegt. 0 hält sie an. Bei reduzierter Bewegung im System steht die Vorschau immer still."
+        },
+        "grain": {
+          "label": "Körnung"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Bewegung",
+        "texture": "Oberfläche"
+      },
+      "presets": {
+        "signal": "Signal",
+        "halftone-swell": "Rasterwelle",
+        "ripple-pond": "Teich",
+        "dash-field": "Strichfeld",
+        "plus-grid": "Pluszeichen",
+        "ring-radar": "Ringradar",
+        "paper-squares": "Papierquadrate"
+      },
+      "seo": {
+        "heading": "Punktwellen-Raster (Dot Grid Wave)",
+        "whatIs": "Ein Punktwellen-Raster ist ein regelmässiges Raster aus kleinen Formen, deren Grösse einem unsichtbaren Feld folgt. Wo das Feld hoch ist, wachsen die Punkte, wo es tief ist, schrumpfen sie oder verschwinden. So entsteht der ruhige, technische Look, den du von KI- und Entwickler-Websites kennst. Musterli berechnet das Feld mit einem Shader in deinem Browser, darum bewegt sich das Raster flüssig und nichts verlässt dein Gerät.",
+        "howTo": "Wähl ein Feld (Rauschen, Wellen oder Kreiswellen) und eine Form wie Punkt, Quadrat oder Ring. Stell Abstand sowie kleinste und grösste Grösse ein und form die Bewegung mit Frequenz, Winkel und Verzerrung. Mit dem Randverlauf löst sich das Raster gegen den Rand hin auf. Die Leertaste würfelt eine neue Variante. Exportier danach als PNG, JPG oder WebP bis 8K, als nahtlose GIF-Schleife oder als Live-Code für deine Website.",
+        "useCases": {
+          "u1": {
+            "title": "Hero-Bereiche für Tech-Produkte",
+            "text": "Ein ruhiges, bewegtes Punktraster hinter einer Schlagzeile wirkt präzise, ohne abzulenken. Füg es als Web Component, React-Komponente oder HTML ein."
+          },
+          "u2": {
+            "title": "Präsentationen",
+            "text": "Als dunkler Hintergrund mit hellen Punkten rahmt das Raster Diagramme und Zitate. Exportier es genau im Folienformat."
+          },
+          "u3": {
+            "title": "Druck und Plakate",
+            "text": "Mit festem Zeitpunkt und Quadraten oder Kreuzen wirkt das Raster wie ein modernes Halbtonmuster, scharf bis 8K."
+          }
+        },
+        "tips": {
+          "t1": "Stell die kleinste Grösse auf 0, dann verschwinden die Punkte in den Wellentälern ganz. Die Welle wirkt so leichter.",
+          "t2": "Kreiswellen mit hoher Frequenz ergeben Ringe wie ein Tropfen im Wasser, Wellen mit tiefer Frequenz breite Bänder.",
+          "t3": "Oft reichen zwei Farben: Die Punkte laufen je nach Grösse von der ersten zur letzten Farbe."
+        },
+        "faq": {
+          "q1": {
+            "question": "Kann ich das Punktraster als animierten Website-Hintergrund verwenden?",
+            "answer": "Ja. Wähl im Export-Dialog Web Component, React-Komponente oder HTML-Einbettung und füg den Code in deine Website ein. Der Shader läuft live, pausiert ausserhalb des Bildschirms und steht still, wenn jemand weniger Bewegung eingestellt hat."
+          },
+          "q2": {
+            "question": "Bleiben die Punkte in grossen Exporten scharf?",
+            "answer": "Ja. Die Formen werden pro Pixel mit weichen Kanten berechnet und bleiben bis 8K scharf. Der Abstand wächst mit der Leinwand, darum sieht das Bild in jeder Grösse gleich aus."
+          },
+          "q3": {
+            "question": "Gibt es das Raster auch als SVG?",
+            "answer": "In diesem Tool nicht, weil die Punkte aus einem Shader kommen. Für statische Punktmuster als SVG nimm das Punktmuster oder die Punktringe."
+          },
+          "q4": {
+            "question": "Sieht dasselbe Raster immer gleich aus?",
+            "answer": "Ja. Das Feld hängt nur vom Seed und von deinen Einstellungen ab. Ein Teilen-Link oder ein gespeichertes Design ergibt auf jedem Gerät dasselbe Bild."
+          }
+        }
+      }
+    },
+    "liquid-chrome": {
+      "name": "Flüssiges Chrom",
+      "description": "Geschmolzenes Metall aus einem Shader: Quecksilber, Gold, schwarzes Chrom oder schillernder Ölfilm mit echten Spiegelungen und Glanzlichtern. PNG bis 8K, nahtlose GIF-Schleife oder Live-Code für deine Website.",
+      "params": {
+        "highlight": {
+          "label": "Glanzlicht"
+        },
+        "frequency": {
+          "label": "Frequenz"
+        },
+        "warp": {
+          "label": "Fluss"
+        },
+        "detail": {
+          "label": "Feinheit"
+        },
+        "relief": {
+          "label": "Relief"
+        },
+        "bands": {
+          "label": "Spiegelungen"
+        },
+        "light": {
+          "label": "Lichtwinkel"
+        },
+        "specular": {
+          "label": "Glanz"
+        },
+        "iridescence": {
+          "label": "Schillern"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "time": {
+          "label": "Zeitpunkt",
+          "description": "Stelle in der Schleife. Jeder Export zeigt genau diesen Zeitpunkt, die GIF-Schleife beginnt hier."
+        },
+        "speed": {
+          "label": "Tempo",
+          "description": "Wie schnell sich die Vorschau bewegt. 0 hält sie an. Bei reduzierter Bewegung im System steht die Vorschau immer still."
+        },
+        "grain": {
+          "label": "Körnung"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Bewegung",
+        "texture": "Oberfläche"
+      },
+      "presets": {
+        "mercury": "Quecksilber",
+        "soft-silver": "Mattes Silber",
+        "gold-leaf": "Blattgold",
+        "oil-slick": "Ölfilm",
+        "black-chrome": "Schwarzes Chrom",
+        "rose-metal": "Roségold",
+        "ice-folds": "Eisfalten"
+      },
+      "seo": {
+        "heading": "Flüssiges Chrom (Liquid Chrome)",
+        "whatIs": "Flüssiges Chrom ist der Look von geschmolzenem, spiegelndem Metall: weiche Falten, die das Licht einfangen und helle und dunkle Bänder spiegeln. Musterli baut aus Rauschen eine fliessende Oberfläche, berechnet, wie das Licht daran abprallt, und schickt die Spiegelung durch deine Farben. So entstehen Chrom, Gold oder schillerndes Metall ohne 3D-Software, direkt in deinem Browser.",
+        "howTo": "Wähl zwei bis sechs Farben für die Spiegelung und eine Farbe für das Glanzlicht. Frequenz und Fluss formen die Falten, das Relief macht sie tiefer, und Spiegelungen bestimmt, wie viele helle Bänder erscheinen. Schillern legt einen Regenbogenschimmer wie Öl auf Wasser darüber. Die Leertaste würfelt eine neue Variante. Exportier als PNG, JPG oder WebP bis 8K, als nahtlose GIF-Schleife oder als Live-Code für deine Website.",
+        "useCases": {
+          "u1": {
+            "title": "Y2K-Look und Musik-Artwork",
+            "text": "Chromflächen sind ein Klassiker für Albumcover, Plakate und Mode. Exportier im Quadrat- oder Story-Format und setz Schrift darüber."
+          },
+          "u2": {
+            "title": "Produktlancierungen",
+            "text": "Ein langsam fliessender Metallhintergrund hinter einem Produktbild wirkt edel. Füg ihn als Live-Einbettung in deine Landingpage ein."
+          },
+          "u3": {
+            "title": "Wallpaper",
+            "text": "Schwarzes Chrom oder mattes Silber passt als ruhiges Hintergrundbild für Desktop und Handy, scharf bis 8K."
+          }
+        },
+        "tips": {
+          "t1": "Dunkle und helle Farben im Wechsel geben den stärksten Chromeffekt. Eine Palette von Schwarz bis Weiss wirkt wie echtes Spiegelmetall.",
+          "t2": "Wenig Relief ergibt seidiges Metall, viel Relief tiefe, glänzende Falten.",
+          "t3": "Dreh Schillern hoch und Glanz herunter für einen Ölfilm, umgekehrt für sauberes Chrom."
+        },
+        "faq": {
+          "q1": {
+            "question": "Wird das in 3D gerechnet?",
+            "answer": "Nein. Der Shader berechnet für jedes Pixel eine Oberfläche und ihr Licht in 2D. Das ist viel schneller als eine 3D-Szene, sieht trotzdem nach echten Spiegelungen aus und läuft in jedem aktuellen Browser mit WebGL2."
+          },
+          "q2": {
+            "question": "Kann ich das als bewegten Website-Hintergrund verwenden?",
+            "answer": "Ja. Wähl im Export-Dialog Web Component, React-Komponente oder HTML-Einbettung. Das Metall fliesst live im Browser der Besucher, pausiert ausserhalb des Bildschirms und steht still, wenn jemand weniger Bewegung eingestellt hat."
+          },
+          "q3": {
+            "question": "Sieht der Export genauso aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export nutzen denselben Shader mit denselben Werten. Grosse Exporte bis 8K rechnet Musterli in Kacheln ohne sichtbare Nähte."
+          },
+          "q4": {
+            "question": "Kann ich meine Markenfarben verwenden?",
+            "answer": "Ja. Mit einer Palette aus deinem Brand Kit laufen die Spiegelungen durch deine Markenfarben. Die Leertaste ändert dann nur noch die Form des Metalls."
+          }
+        }
+      }
+    },
+    "caustics": {
+      "name": "Kaustik und Zellen",
+      "description": "Schimmerndes Poollicht, organische Voronoi-Zellen oder Kristallfacetten aus einem Shader. PNG bis 8K, nahtlose GIF-Schleife oder Live-Code für deine Website.",
+      "params": {
+        "style": {
+          "label": "Stil",
+          "options": {
+            "caustics": "Kaustik",
+            "cells": "Zellen",
+            "crystal": "Kristall"
+          }
+        },
+        "scale": {
+          "label": "Zellgrösse"
+        },
+        "jitter": {
+          "label": "Unregelmässigkeit"
+        },
+        "warp": {
+          "label": "Verzerrung"
+        },
+        "edge": {
+          "label": "Linienbreite"
+        },
+        "contrast": {
+          "label": "Kontrast"
+        },
+        "angle": {
+          "label": "Winkel"
+        },
+        "time": {
+          "label": "Zeitpunkt",
+          "description": "Stelle in der Schleife. Jeder Export zeigt genau diesen Zeitpunkt, die GIF-Schleife beginnt hier."
+        },
+        "speed": {
+          "label": "Tempo",
+          "description": "Wie schnell sich die Vorschau bewegt. 0 hält sie an. Bei reduzierter Bewegung im System steht die Vorschau immer still."
+        },
+        "grain": {
+          "label": "Körnung"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Bewegung",
+        "texture": "Oberfläche"
+      },
+      "presets": {
+        "pool": "Schwimmbad",
+        "tropical-lagoon": "Tropische Lagune",
+        "stained-glass": "Kirchenfenster",
+        "cell-culture": "Zellkultur",
+        "ice-crystal": "Eiskristall",
+        "amethyst": "Amethyst",
+        "night-swim": "Nachtschwimmen"
+      },
+      "seo": {
+        "heading": "Kaustik und Zellen (Caustics, Voronoi)",
+        "whatIs": "Kaustiken sind die hellen, tanzenden Lichtlinien, die du am Boden eines Schwimmbads siehst. Sie entstehen, wo gewelltes Wasser das Sonnenlicht bündelt. Musterli bildet sie mit bewegten Voronoi-Zellen nach (ein Muster, das die Fläche in Zellen rund um verstreute Punkte teilt). Mit derselben Technik entstehen auch organische Zellen und facettierte Kristallflächen, alles live in deinem Browser gerechnet.",
+        "howTo": "Wähl einen Stil: Kaustik für Poollicht, Zellen für organische Formen oder Kristall für Facetten. Stell Zellgrösse, Unregelmässigkeit und Verzerrung ein, danach Linienbreite und Kontrast für die Kanten. Such zwei bis sechs Farben aus, vom tiefen Grundton bis zum hellsten Licht. Die Leertaste würfelt eine neue Variante. Exportier als PNG, JPG oder WebP bis 8K, als nahtlose GIF-Schleife oder als Live-Code für deine Website.",
+        "useCases": {
+          "u1": {
+            "title": "Sommer- und Reisekampagnen",
+            "text": "Ein bewegter Poolhintergrund sagt sofort Ferien. Ideal für Hotels, Bademode oder Sommeraktionen, live auf der Website oder als Story."
+          },
+          "u2": {
+            "title": "Wissenschaft und Gesundheit",
+            "text": "Der Stil Zellen wirkt wie ein Bild unter dem Mikroskop und passt zu Biotech, Labors und Gesundheitsthemen."
+          },
+          "u3": {
+            "title": "Glas und Schmuck",
+            "text": "Kristall und Kirchenfenster ergeben facettierte Flächen wie Edelsteine, passend für Verpackungen, Plakate und Karten."
+          }
+        },
+        "tips": {
+          "t1": "Eine schmale Linienbreite mit hohem Kontrast gibt scharfe Lichtlinien, eine breite Linienbreite weiches, leuchtendes Wasser.",
+          "t2": "Setz die dunkelste Farbe an den Anfang und die hellste ans Ende: Die Lichtlinien nehmen immer die letzte Farbe.",
+          "t3": "Tiefes Tempo wirkt wie ruhiges Wasser, hohes Tempo wie ein belebtes Becken."
+        },
+        "faq": {
+          "q1": {
+            "question": "Wiederholt sich das Muster?",
+            "answer": "Nein. Die Zellen entstehen aus Rauschen mit Seed und bilden nie eine sichtbare Kachel. Jeder Seed ergibt eine neue, einzigartige Anordnung."
+          },
+          "q2": {
+            "question": "Kann ich die Kaustik als animierten Website-Hintergrund verwenden?",
+            "answer": "Ja. Wähl im Export-Dialog Web Component, React-Komponente oder HTML-Einbettung. Das Wasser bewegt sich live, pausiert ausserhalb des Bildschirms und steht still, wenn jemand weniger Bewegung eingestellt hat."
+          },
+          "q3": {
+            "question": "Was sind Voronoi-Zellen?",
+            "answer": "Verteil Punkte auf einer Fläche und gib jede Stelle dem nächsten Punkt: Es entstehen Zellen wie Seifenblasen oder Giraffenflecken. Die Grenzen zwischen diesen Zellen werden zu den Lichtlinien der Kaustik."
+          },
+          "q4": {
+            "question": "Sieht der Export genauso aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export nutzen denselben Shader mit denselben Werten. Grosse Exporte bis 8K rechnet Musterli in Kacheln ohne Nähte."
+          }
+        }
+      }
+    },
+    "light-beams": {
+      "name": "Lichtkegel",
+      "description": "Weiche Lichtstrahlen aus einer frei wählbaren Quelle, mit Dunst und langsamer Bewegung. Ein Shader als PNG bis 8K, nahtlose GIF-Schleife oder Live-Code für deine Website.",
+      "params": {
+        "sourceX": {
+          "label": "Quelle X"
+        },
+        "sourceY": {
+          "label": "Quelle Y"
+        },
+        "direction": {
+          "label": "Richtung"
+        },
+        "spread": {
+          "label": "Öffnung"
+        },
+        "density": {
+          "label": "Anzahl Strahlen"
+        },
+        "sharpness": {
+          "label": "Schärfe"
+        },
+        "decay": {
+          "label": "Abfall"
+        },
+        "intensity": {
+          "label": "Helligkeit"
+        },
+        "haze": {
+          "label": "Dunst"
+        },
+        "time": {
+          "label": "Zeitpunkt",
+          "description": "Stelle in der Schleife. Jeder Export zeigt genau diesen Zeitpunkt, die GIF-Schleife beginnt hier."
+        },
+        "speed": {
+          "label": "Tempo",
+          "description": "Wie schnell sich die Vorschau bewegt. 0 hält sie an. Bei reduzierter Bewegung im System steht die Vorschau immer still."
+        },
+        "grain": {
+          "label": "Körnung"
+        },
+        "vignette": {
+          "label": "Vignette"
+        }
+      },
+      "groups": {
+        "motion": "Bewegung",
+        "texture": "Oberfläche"
+      },
+      "presets": {
+        "blue-hour": "Blaue Stunde",
+        "golden-rays": "Goldene Strahlen",
+        "stage": "Bühne",
+        "cathedral": "Kathedrale",
+        "forest-sun": "Waldsonne",
+        "sunburst": "Strahlenkranz",
+        "underwater": "Unter Wasser"
+      },
+      "seo": {
+        "heading": "Lichtkegel-Hintergrund (Light Beams)",
+        "whatIs": "Lichtkegel sind Strahlen, die sich von einer hellen Quelle aus auffächern, wie Sonnenlicht durch Wolken, ein Scheinwerfer auf der Bühne oder Licht, das ins Wasser fällt. Dieses Tool erzeugt sie ohne Foto als eigenen Hintergrund. Möchtest du Strahlen über ein eigenes Bild legen, nimm den Lichtstrahlen-Effekt. Musterli berechnet die Lichtkegel mit einem Shader in deinem Browser, nichts verlässt dein Gerät.",
+        "howTo": "Platzier die Lichtquelle mit Quelle X und Y, sie darf auch ausserhalb der Leinwand liegen. Richtung und Öffnung bestimmen den Kegel, Anzahl Strahlen und Schärfe den Look der Strahlen, der Abfall, wie weit das Licht reicht. Dunst legt weichen Nebel darüber. Such zwei bis sechs Farben aus, vom dunklen Hintergrund bis zum hellsten Licht. Die Leertaste würfelt eine neue Variante. Exportier als PNG, JPG oder WebP bis 8K, als nahtlose GIF-Schleife oder als Live-Code für deine Website.",
+        "useCases": {
+          "u1": {
+            "title": "Dramatische Hero-Bereiche",
+            "text": "Licht, das von oben fällt, lenkt den Blick auf eine Schlagzeile oder ein Produkt. Setz es live als langsam bewegten Hintergrund ein."
+          },
+          "u2": {
+            "title": "Events und Bühnen",
+            "text": "Scheinwerfer in Markenfarben passen zu Event-Ankündigungen, Tickets und Konzertplakaten."
+          },
+          "u3": {
+            "title": "Ruhige Wallpaper",
+            "text": "Licht unter Wasser oder im Wald ergibt ruhige Hintergründe für Handy und Desktop, scharf bis 8K."
+          }
+        },
+        "tips": {
+          "t1": "Setz die Quelle knapp über den oberen Rand (Quelle Y unter 0), dann fällt das Licht von ausserhalb ins Bild.",
+          "t2": "Mit einer Öffnung von 360° werden die Strahlen zu einem Strahlenkranz rund um die Quelle.",
+          "t3": "Weniger Abfall und mehr Dunst machen das Licht weicher und füllen das ganze Bild."
+        },
+        "faq": {
+          "q1": {
+            "question": "Was ist der Unterschied zum Lichtstrahlen-Effekt?",
+            "answer": "Der Lichtstrahlen-Effekt legt Strahlen über dein eigenes Foto. Die Lichtkegel erzeugen das ganze Bild ohne Vorlage als Hintergrund und bewegen sich als Schleife oder Live-Einbettung."
+          },
+          "q2": {
+            "question": "Kann ich die Lichtkegel als Website-Hintergrund verwenden?",
+            "answer": "Ja. Wähl im Export-Dialog Web Component, React-Komponente oder HTML-Einbettung. Die Strahlen bewegen sich live, pausieren ausserhalb des Bildschirms und stehen still, wenn jemand weniger Bewegung eingestellt hat."
+          },
+          "q3": {
+            "question": "Darf die Lichtquelle ausserhalb des Bildes liegen?",
+            "answer": "Ja. Quelle X und Y reichen von -50 bis 150 Prozent der Leinwand, so fällt das Licht von jeder Seite ins Bild."
+          },
+          "q4": {
+            "question": "Sieht der Export genauso aus wie die Vorschau?",
+            "answer": "Ja. Vorschau und Export nutzen denselben Shader mit denselben Werten. Grosse Exporte bis 8K rechnet Musterli in Kacheln ohne Nähte."
+          }
+        }
+      }
     }
   },
   "Converters": {

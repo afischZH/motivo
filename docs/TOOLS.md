@@ -145,6 +145,13 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 - **Leertaste**: würfelt Palette (harmonisch in OKLCH, 3 bis 5 Farben), Frequenz, Amplitude, Warping, Winkel und Phase, über den Seed das Rauschen; Stil, Dithering, Körnung, Vignette, Zoom, Detail und Tempo bleiben.
 - **Vorlagen** (8, je ein Stil plus Retro-Dither): Flüssiges Violett (`liquid`), Graue Seide (`silk`), Morgenschlieren (`streaked`), Körniger Sommer (`grainy`, Körnung 45 %), Marmor (`marble`), Lagune (`ripple`), Polarlicht (`aurora`), Retro-Dithering (`retro-dither`: Flüssig mit Bayer 4×4, 5 Stufen, Zelle 4 px).
 
+### C7. Flüssiges Chrom · S2 · G
+**Umgesetzt (S2, 2026-11-04, Tool-ID `liquid-chrome`, Slugs `fluessiges-chrom-generator`/`liquid-chrome-generator`, Kategorien `gradients`, `backgrounds`)**. Render-Art `webgl` mit CPU-Zwilling für statische Motive und Snapshots, Standardgrösse 1600 × 1000, gemeinsame Params `time`, `speed` (Schleife 12 s / `speed`), `grain`, `vignette` wie C4 (`shader-common.ts`). Exporte wie C4: PNG, JPG, WebP bis 8K in Kacheln, GIF über die Zeitquelle, Live-Einbettung (Web Component, React, HTML, GLSL, `webEmbedExports`). Zeit nur über Uniforms auf Kreisen, also nahtlose Schleifen; Zufall nur über Seed-Salze.
+- **Parameter**: `palette` (2 bis 6, Umgebung von Schatten bis Himmel), `highlight` (Farbe des Glanzlichts), `frequency` (0.2 bis 6), `warp` (0 bis 3, Fluss), `detail` (1 bis 6 Oktaven), `relief` (0.05 bis 2), `bands` (0.5 bis 6, Anzahl Spiegelbänder), `light` (0 bis 360°), `specular` (0 bis 100 %), `iridescence` (0 bis 100 %), `angle`.
+- **Algorithmus**: Höhenfeld aus verbogenem fbm, Normale aus zentralen Differenzen, Reflexion gegen einen Lichtvektor; Spiegelbänder `v = 0.5 − 0.5 cos(e · π · bands)` durch die Rampe, Schillern als Regenbogen über dieselbe Grösse, Glanzlicht `pow(·, 48)` in `highlight`. Kein 3D, eine Funktion pro Pixel.
+- **Leertaste**: Form, Licht, Winkel und Zeitpunkt; Palette nur in jedem zweiten Wurf.
+- **Vorlagen** (7): Quecksilber, Mattes Silber, Blattgold, Ölfilm, Schwarzes Chrom, Roségold, Eisfalten.
+
 ## D. Backgrounds
 
 ### D1. Blob Generator · M1 · G
@@ -212,6 +219,24 @@ Teilen zwei Einträge eine Grösse (YouTube-Thumbnail und 4K UHD, YouTube-Banner
 - **Exporte**: SVG, PNG, JPG, WebP, GIF; Code: CSS-Unterstreichung (`.squiggle`, eine Welle als SVG-data-URI mit `repeat-x`, Grösse in em, Farbe = zweite Palettenfarbe; Gekritzel als Welle). GIF über die Zeit verschiebt Linien um eine Wellenlänge (nahtlos); verstreute Kringel bleiben dabei stehen.
 - **Leertaste**: neue Linienform, Masse, Winkel und Farben; die Anordnung bleibt.
 - **Vorlagen** (8): Gestapelte Wellen, Trenner, Zickzack, Schlaufen, Konfetti, Gekritzel, Bögen, Memphis.
+
+### D9. Punktwellen-Raster · S2 · G
+**Umgesetzt (S2, 2026-11-04, Tool-ID `dot-wave`, Slugs `punktwellen-generator`/`dot-wave-grid-generator`, Kategorien `backgrounds`, `patterns`)**. Render-Art `webgl` mit CPU-Zwilling für statische Motive und Snapshots, Standardgrösse 1600 × 1000, gemeinsame Params `time`, `speed` (Schleife 12 s / `speed`), `grain`, `vignette` wie C4 (`shader-common.ts`). Exporte wie C4: PNG, JPG, WebP bis 8K in Kacheln, GIF über die Zeitquelle, Live-Einbettung (Web Component, React, HTML, GLSL, `webEmbedExports`). Zeit nur über Uniforms auf Kreisen, also nahtlose Schleifen; Zufall nur über Seed-Salze.
+- **Parameter**: `palette` (1 bis 5, Farbe nach Grösse), `background`, `field` (`noise`, `waves`, `ripple`), `shape` (`dot`, `square`, `dash`, `cross`, `ring`), `spacing` (6 bis 120 Design-Pixel), `minSize`/`maxSize` (Prozent der Zelle), `frequency`, `angle`, `warp`, `fade` (Randverlauf, Prozent).
+- **Algorithmus**: Rasterzelle pro Pixel, Zellmitte relativ zur Designmitte; Feldwert an der Zellmitte (fbm, Sinuswellen entlang `angle` oder Kreiswellen um die Mitte, je mit fbm-Verzerrung) bestimmt Grösse und Farbe; Form als Distanzfunktion mit Kantenglättung in Design-Pixeln, darum gleich scharf in jeder Exportgrösse.
+- **Vorlagen** (7): Signal, Rasterwelle, Teich, Strichfeld, Pluszeichen, Ringradar, Papierquadrate.
+
+### D10. Kaustik und Zellen · S2 · G
+**Umgesetzt (S2, 2026-11-04, Tool-ID `caustics`, Slugs `kaustik-generator`/`caustics-generator`, Kategorien `backgrounds`, `patterns`)**. Render-Art `webgl` mit CPU-Zwilling für statische Motive und Snapshots, Standardgrösse 1600 × 1000, gemeinsame Params `time`, `speed` (Schleife 12 s / `speed`), `grain`, `vignette` wie C4 (`shader-common.ts`). Exporte wie C4: PNG, JPG, WebP bis 8K in Kacheln, GIF über die Zeitquelle, Live-Einbettung (Web Component, React, HTML, GLSL, `webEmbedExports`). Zeit nur über Uniforms auf Kreisen, also nahtlose Schleifen; Zufall nur über Seed-Salze.
+- **Parameter**: `palette` (2 bis 6, tief bis hell; die Lichtlinien nehmen die letzte Farbe), `style` (`caustics`, `cells`, `crystal`), `scale` (2 bis 40 Zellen pro kürzerer Kante), `jitter` (0 bis 100 %), `warp` (0 bis 2), `edge` (Linienbreite, Prozent), `contrast` (0.5 bis 2), `angle`.
+- **Algorithmus**: animiertes Voronoi über 3 × 3 Nachbarzellen (Punkte kreisen mit eigener Phase aus dem Hash), Eingabe mit fbm verbogen; Kaustik aus F2 − F1 zweier überlagerter Lagen, Zellen mit weichen Rändern, Kristall mit flacher Füllfarbe pro Zelle. Kantenglättung in Zelleinheiten.
+- **Vorlagen** (7): Schwimmbad, Tropische Lagune, Kirchenfenster, Zellkultur, Eiskristall, Amethyst, Nachtschwimmen.
+
+### D11. Lichtkegel · S2 · G
+**Umgesetzt (S2, 2026-11-04, Tool-ID `light-beams`, Slugs `lichtkegel-generator`/`light-beams-generator`, Kategorie `backgrounds`)**. Abgrenzung: E5 God Rays legt Strahlen über ein Foto, D11 erzeugt den Hintergrund ohne Vorlage. Render-Art `webgl` mit CPU-Zwilling für statische Motive und Snapshots, Standardgrösse 1600 × 1000, gemeinsame Params `time`, `speed` (Schleife 12 s / `speed`), `grain`, `vignette` wie C4 (`shader-common.ts`). Exporte wie C4: PNG, JPG, WebP bis 8K in Kacheln, GIF über die Zeitquelle, Live-Einbettung (Web Component, React, HTML, GLSL, `webEmbedExports`). Zeit nur über Uniforms auf Kreisen, also nahtlose Schleifen; Zufall nur über Seed-Salze.
+- **Parameter**: `palette` (2 bis 6, Dunkel bis hellstes Licht), `sourceX`/`sourceY` (−50 bis 150 % der Leinwand, auch ausserhalb), `direction`, `spread` (10 bis 360°), `density` (1 bis 24), `sharpness` (1 bis 8), `decay` (0 bis 4), `intensity` (0 bis 2), `haze` (0 bis 100 %).
+- **Algorithmus**: Strahlen aus Rauschen über dem Richtungsvektor von der Quelle (nicht über den Winkel, darum ohne Naht), hoch `sharpness`; Kegel per `smoothstep` um `direction`; Helligkeit fällt mit `exp(−Abstand · decay)`, Dunst aus fbm; Ergebnis durch die Rampe.
+- **Vorlagen** (7): Blaue Stunde, Goldene Strahlen, Bühne, Kathedrale, Waldsonne, Strahlenkranz, Unter Wasser.
 
 ## E. Image Effects (alle im Web Worker auf ImageData)
 

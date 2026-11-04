@@ -311,6 +311,7 @@ Shader-Hintergründe laufen als lebendiger Hintergrund auf der Website der Nutze
 - **Exporte**: `webEmbedExports(title, renderer)` in `tool-registry/src/web-embed.ts` liefert vier `extraExports` (Web Component, React ohne JSX, HTML-Einbettung, GLSL mit Werten); eine Zeile pro WebGL-Tool, der Einheitlichkeitstest verlangt sie für jedes WebGL-Tool. Neu `ExtraExport.descriptionKey` (Hinweis unter dem Code im Export-Dialog) und die Code-Sprache `glsl`. Snippets enthalten nie `</script` (werden oft inline eingefügt).
 - **Snapshots**: Zusatzexporte über 5000 Zeichen werden als Kopf plus FNV-1a-Prüfsumme gespeichert (`testing.ts`), jede Änderung fällt trotzdem auf.
 - **Bewusst nicht gemacht**: Hosting oder CDN auf musterli.app, npm-Paket (später möglich), Zeiger-Interaktion, WebGPU.
+- **Weitere Shader-Tools (S2)**: `dot-wave`, `liquid-chrome`, `caustics`, `light-beams` je als Ordner in `@musterli/shaders/src/<tool>/` (`uniforms.ts`, `fragment.ts` mit `GLSL_PRELUDE` und `GLSL_NOISE`, `cpu.ts` als float64-Zwilling). Gemeinsames in `cpu-common.ts` (Kachelschleife, `orbitOffsets` für die Kreisbahnen der Zeit) und in der Registry `shader-common.ts` (Params, Controls und Schleifenlänge für Zeitpunkt, Tempo, Körnung, Vignette). Ausgabe immer deckend; ein transparenter Shader bräuchte `alpha: true` in Laufzeit, Player und JPG-Export und wurde darum nicht gebaut.
 
 ## 5. Render- und Export-Pipeline
 
