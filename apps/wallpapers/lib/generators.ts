@@ -12,6 +12,10 @@ registerWallpaperStyles();
  */
 export const WALLPAPER_STYLE_GROUPS = {
   soft: [
+    "liquid-glass",
+    "silk-folds",
+    "dunes",
+    "island-halo",
     "aurora-ribbons",
     "glass-orbs",
     "layered-hills",

@@ -467,6 +467,50 @@
         "dense": "Dicht",
         "bold": "Kräftig"
       }
+    },
+    "liquid-glass": {
+      "name": "Flüssiges Glas",
+      "presets": {
+        "prism": "Prisma",
+        "daylight": "Tageslicht",
+        "sunset": "Abendrot",
+        "lagoon": "Lagune",
+        "mono": "Mono",
+        "lavender": "Lavendel"
+      }
+    },
+    "silk-folds": {
+      "name": "Seide",
+      "presets": {
+        "rose": "Rosé",
+        "champagne": "Champagner",
+        "emerald": "Smaragd",
+        "midnight": "Mitternacht",
+        "pearl": "Perlmutt",
+        "ink": "Tinte"
+      }
+    },
+    "dunes": {
+      "name": "Dünen",
+      "presets": {
+        "sahara": "Sahara",
+        "dusk": "Dämmerung",
+        "night": "Nacht",
+        "gypsum": "Weisse Dünen",
+        "mars": "Mars",
+        "noon": "Mittag"
+      }
+    },
+    "island-halo": {
+      "name": "Kamera-Halo",
+      "presets": {
+        "corona": "Korona",
+        "ripples": "Wellenringe",
+        "spotlight": "Scheinwerfer",
+        "eclipse": "Finsternis",
+        "sonar": "Sonar",
+        "aurora-beam": "Polarlicht-Strahl"
+      }
     }
   }
 }
