@@ -5028,7 +5028,7 @@
     },
     "shader-gradient": {
       "name": "Shader-Farbverlauf",
-      "description": "Fliessende, seidige und körnige Verläufe aus einem Shader auf der Grafikkarte. Mit Domain Warping, Bayer-Dithering, Körnung und Vignette. PNG, JPG und WebP bis 8K, dazu nahtlose GIF-Schleifen.",
+      "description": "Fliessende, seidige und körnige Verläufe aus einem Shader auf der Grafikkarte. Mit Domain Warping, Bayer-Dithering, Körnung und Vignette. PNG, JPG und WebP bis 8K, nahtlose GIF-Schleifen und Live-Code für deine Website.",
       "params": {
         "style": {
           "label": "Stil",
@@ -5110,11 +5110,11 @@
       },
       "seo": {
         "whatIs": "Ein Shader-Farbverlauf ist ein Verlauf, den ein kleines Programm direkt auf der Grafikkarte berechnet. Statt weniger fester Farbstopps entsteht ein lebendiges Feld aus Rauschen, das sich mit Domain Warping verbiegt und dann deine Farben durchläuft. So entstehen flüssige, seidige oder körnige Hintergründe, die keine Bilddatei als Vorlage brauchen. Musterli rechnet alles in deinem Browser, nichts verlässt dein Gerät.",
-        "howTo": "Wähl einen Stil wie Flüssig, Seide oder Polarlicht und such zwei bis sechs Farben aus. Mit Frequenz, Verzerrung und Winkel formst du das Feld, mit Körnung, Vignette und Bayer-Dithering gibst du ihm eine Oberfläche. Die Leertaste würfelt neue Farben und eine neue Form. Mit dem Zeitpunkt wählst du das Standbild für den Export. Exportier danach als PNG, JPG oder WebP bis 8K oder als nahtlose GIF-Schleife.",
+        "howTo": "Wähl einen Stil wie Flüssig, Seide oder Polarlicht und such zwei bis sechs Farben aus. Mit Frequenz, Verzerrung und Winkel formst du das Feld, mit Körnung, Vignette und Bayer-Dithering gibst du ihm eine Oberfläche. Die Leertaste würfelt neue Farben und eine neue Form. Mit dem Zeitpunkt wählst du das Standbild für den Export. Exportier danach als PNG, JPG oder WebP bis 8K, als nahtlose GIF-Schleife oder als Live-Code für deine Website.",
         "useCases": {
           "u1": {
             "title": "Hero-Bereiche und Apps",
-            "text": "Flüssige, seidige Verläufe sind ein auffälliger Hintergrund für Produkt- und KI-Websites. Jede Variante ist einzigartig und braucht kein Foto als Vorlage."
+            "text": "Kopier den Verlauf als lebendigen, animierten Hintergrund in deine Website: als Web Component, React-Komponente oder reines HTML. Der Player ist winzig, braucht keine Abhängigkeiten und pausiert ausserhalb des Bildschirms."
           },
           "u2": {
             "title": "Wallpaper in 8K",
@@ -5144,8 +5144,8 @@
             "answer": "Es reduziert den Verlauf auf wenige Farbstufen und verteilt die Übergänge in einem regelmässigen Punktraster. Das ergibt einen Retro-Look wie bei alten Computern und Druckern und verhindert sichtbare Streifen in weichen Verläufen."
           },
           "q4": {
-            "question": "Kann ich den Verlauf animiert verwenden?",
-            "answer": "Der GIF-Export zeichnet eine nahtlose Schleife, deren erstes Bild genau dein Standbild ist. Die Vorschau bewegt sich mit dem eingestellten Tempo, ausser du hast im System weniger Bewegung eingestellt."
+            "question": "Kann ich den Verlauf als animierten Website-Hintergrund verwenden?",
+            "answer": "Ja. Wähl im Export-Dialog Web Component, React-Komponente oder HTML-Einbettung und füg den Code in deine Website ein. Er rechnet denselben Shader live im Browser der Besucher, pausiert ausserhalb des Bildschirms und in Tabs im Hintergrund und steht still, wenn jemand weniger Bewegung eingestellt hat. Für Präsentationen und Social Posts gibt es zusätzlich die nahtlose GIF-Schleife."
           },
           "q5": {
             "question": "Sieht derselbe Verlauf immer gleich aus?",

@@ -439,6 +439,30 @@ export function describeToolContract<S extends ParamsSchema>(
   });
 }
 
+/** Extra exports longer than this are snapshotted as head plus digest. */
+const LONG_TEXT = 5000;
+
+/** FNV-1a (32 bit) of a string, as 8 hex digits. */
+function fnv1a(text: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(16).padStart(8, "0");
+}
+
+/**
+ * Keeps snapshots of long text exports (live shader embeds carry the whole
+ * player and shader) small: the first lines plus length and digest, so any
+ * change still fails the snapshot.
+ */
+function digestLongText<T>(output: T): T | string {
+  if (typeof output !== "string" || output.length <= LONG_TEXT) return output;
+  const head = output.split("\n").slice(0, 12).join("\n");
+  return `${head}\n… [${output.length} chars, fnv1a ${fnv1a(output)}]`;
+}
+
 /** Relative archive path: `/` separated segments of letters, digits, `.`, `_` and `-`. */
 const BUNDLE_PATH = /^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*$/;
 
@@ -479,8 +503,13 @@ export function describePresetSnapshots<S extends ParamsSchema>(
           Object.fromEntries(
             extras.map((e) => [
               e.id,
-              normalize(
-                e.render(anyTool.schema.parse(p.params), createRenderContext(p.seed ?? seed, size)),
+              digestLongText(
+                normalize(
+                  e.render(
+                    anyTool.schema.parse(p.params),
+                    createRenderContext(p.seed ?? seed, size),
+                  ),
+                ),
               ),
             ]),
           ),

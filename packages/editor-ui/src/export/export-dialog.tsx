@@ -663,6 +663,11 @@ function ExportDialogBody({
           }
         />
       )}
+      {text !== null && choice.kind === "extra" && choice.extra.descriptionKey !== undefined && (
+        <p className="text-xs text-muted-foreground" data-testid="export-code-hint">
+          {t(choice.extra.descriptionKey)}
+        </p>
+      )}
 
       <div className="grid gap-3 border-t border-border pt-4">
         <StatusLine status={status} />

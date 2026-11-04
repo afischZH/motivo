@@ -228,7 +228,15 @@
         "utilityClasses": "CSS-Variablen und Klassen",
         "metaTags": "Meta-Tags (HTML)",
         "svgClipPath": "SVG-clipPath (HTML)",
-        "cssAnimation": "CSS-Animation"
+        "cssAnimation": "CSS-Animation",
+        "webComponent": "Web Component (live)",
+        "reactComponent": "React-Komponente (live)",
+        "htmlEmbed": "HTML-Einbettung (live)",
+        "glsl": "GLSL-Shader",
+        "webComponentHint": "Als musterli-shader.js speichern und das Element musterli-shader verwenden. Läuft live auf deiner Website, pausiert ausserhalb des Bildschirms und steht still, wenn Besucher weniger Bewegung wünschen. Tipp: zusätzlich ein WebP als Standbild exportieren.",
+        "reactComponentHint": "Für React und Next.js: als ShaderBackground.jsx speichern und um deinen Abschnitt legen. Gleicher Player wie die Web Component, ohne Abhängigkeit.",
+        "htmlEmbedHint": "In jede Seite oder jeden Website-Baukasten einfügen, der HTML erlaubt. Bis der Shader läuft, zeigt die Box ihre Hintergrundfarbe.",
+        "glslHint": "Der Fragment-Shader mit den Werten dieses Designs, für three.js oder eigenen WebGL-Code."
       },
       "gif": {
         "title": "GIF-Einstellungen",

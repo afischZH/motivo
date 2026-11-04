@@ -57,4 +57,8 @@ export const EXTRA_EXPORT_LABELS = {
   metaTags: "Editor.export.extras.metaTags",
   svgClipPath: "Editor.export.extras.svgClipPath",
   cssAnimation: "Editor.export.extras.cssAnimation",
+  webComponent: "Editor.export.extras.webComponent",
+  reactComponent: "Editor.export.extras.reactComponent",
+  htmlEmbed: "Editor.export.extras.htmlEmbed",
+  glsl: "Editor.export.extras.glsl",
 } as const;

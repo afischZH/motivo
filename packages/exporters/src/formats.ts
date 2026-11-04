@@ -51,6 +51,7 @@ export const CODE_LANGUAGE_FILES: Readonly<
   js: { mime: "text/javascript", extension: "js" },
   json: { mime: "application/json", extension: "json" },
   text: { mime: "text/plain", extension: "txt" },
+  glsl: { mime: "text/plain", extension: "glsl" },
 };
 
 /** Encoder quality in [0, 1] for lossy formats; PNG is lossless and ignores it. */
